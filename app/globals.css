@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply text-dark leading-relaxed text-sm font-normal tracking-normal antialiased;
+  }
+
+  h1 {
+    @apply font-semibold leading-tight tracking-tight;
+  }
+
+  h2 {
+    @apply text-2xl font-semibold leading-tight tracking-tight;
+  }
+
+  h3 {
+    @apply text-xl font-semibold;
+  }
+
+  h4 {
+    @apply text-lg font-semibold;
+  }
+
+  a {
+    @apply no-underline outline-none;
+  }
+
+  img {
+    @apply border-none align-top max-w-full h-auto;
+  }
+
+  ul {
+    @apply list-none;
+  }
+}
+
+@layer components {
+  .container-main {
+    @apply w-full max-w-container mx-auto px-5;
+  }
+
+  .container-wide {
+    @apply w-full max-w-container-lg mx-auto px-5;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24 lg:py-28 px-4 md:px-8 lg:px-32;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center rounded-full font-medium cursor-pointer text-base px-6 py-2.5 transition-all duration-200;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary text-white border border-primary hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25;
+  }
+
+  .btn-outline-white {
+    @apply btn bg-transparent text-white border border-white/30 hover:bg-white/10;
+  }
+
+  /* Neumorphism card (light sections) */
+  .card-neu {
+    @apply border border-[#F4F5F6] rounded-[32px] p-3 bg-[#F4F5F680];
+  }
+  .card-neu-inner {
+    @apply bg-white rounded-[24px] p-6 md:p-8 h-full shadow-[0px_0px_12px_0px_rgba(0,0,0,0.08)];
+  }
+
+  /* Glassmorphism card (dark sections) */
+  .card-glass {
+    @apply bg-[#1e2530] border border-[#2a3340] rounded-3xl p-6 md:p-8 backdrop-blur-sm;
+  }
+  .card-glass-active {
+    @apply bg-[#334155] border-[#475569];
+  }
+
+  /* Dark section with rounded top transition */
+  .section-dark-top {
+    @apply bg-[#141414] rounded-t-[2.5rem] md:rounded-t-[3rem];
+  }
+
+  /* White section with rounded top transition (from dark) */
+  .section-light-top {
+    @apply bg-white rounded-t-[2.5rem] md:rounded-t-[3rem];
+  }
+}
+
+/* Dark noise/dot texture overlay */
+.hero-texture {
+  background-image: radial-gradient(circle at 1px 1px, rgba(59, 94, 255, 0.15) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Animated gradient text - purple to blue */
+.gradient-text-animated {
+  background: linear-gradient(
+    90deg,
+    #8b5cf6 0%,
+    #6366f1 20%,
+    #3b82f6 40%,
+    #6366f1 60%,
+    #8b5cf6 80%,
+    #6366f1 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-snake 32s linear infinite;
+}
+
+/* Animated gradient text - teal to blue */
+.gradient-text-animated-teal {
+  background: linear-gradient(
+    90deg,
+    #5EEAD4 0%,
+    #4AE0C8 10%,
+    #3DD6BC 20%,
+    #38C9B4 30%,
+    #3BB8C0 40%,
+    #3EA6CC 50%,
+    #4094D8 60%,
+    #4282E4 70%,
+    #3B82F6 80%,
+    #4A9AE8 90%,
+    #5EEAD4 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-snake 32s linear infinite;
+}
+
+@keyframes gradient-snake {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Animated gradient border button */
+.gradient-border-animated {
+  position: relative;
+  background: transparent;
+  z-index: 0;
+}
+
+.gradient-border-animated::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    90deg,
+    #8b5cf6 0%,
+    #6366f1 20%,
+    #3b82f6 40%,
+    #6366f1 60%,
+    #8b5cf6 80%,
+    #6366f1 100%
+  );
+  background-size: 200% 100%;
+  animation: gradient-snake 32s linear infinite;
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+/* Scrollbar hide */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
