@@ -1,7 +1,19 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
+
+const companies = [
+  { name: 'Shopify', logo: '/img/shopify.svg' },
+  { name: 'Audi', logo: '/img/audi-logo.svg' },
+  { name: 'Deloitte', logo: '/img/deloitte.svg' },
+  { name: 'Leafworks', logo: '/img/leafworks.svg' },
+  { name: 'Tracesafe', logo: '/img/tracesafe.svg' },
+  { name: 'Carmen', logo: '/img/carmen.svg' },
+  { name: 'BringLiesel', logo: '/img/bringliesel.svg' },
+  { name: 'Quilk', logo: '/img/quilk.svg' },
+]
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false)
@@ -42,7 +54,8 @@ export default function Hero() {
                   transitionDelay: mounted ? '100ms' : '0ms',
                 }}
               >
-                Helping people and teams use AI mindfully
+                Transform your company into{' '}
+                <span className="gradient-text-animated">AI‑Native</span>
               </h1>
             </div>
 
@@ -60,8 +73,9 @@ export default function Hero() {
               }}
             >
               <p className="text-white/70 text-base md:text-lg leading-relaxed mb-10">
-                In three years, AI literacy will be as essential as reading or
-                using a computer. You can start making that shift today.
+                We drive full lifecycle transformation — modernizing platforms,
+                data, talent, workflows and processes — and leverage AI as your
+                unique strategic advantage.
               </p>
 
               {/* CTA Links */}
@@ -71,7 +85,7 @@ export default function Hero() {
                   className="group flex items-center justify-between py-5 border-t border-white/15 transition-colors hover:border-white/30"
                 >
                   <span className="text-sm md:text-base font-mono uppercase tracking-widest text-white">
-                    Team Training
+                    AI Strategy &amp; Team Training
                   </span>
                   <svg
                     className="w-5 h-5 text-white/50 group-hover:text-white group-hover:translate-x-1 transition-all"
@@ -87,12 +101,16 @@ export default function Hero() {
                     />
                   </svg>
                 </Link>
-                <Link
-                  href="/automations"
+                <a
+                  href="#services"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })
+                  }}
                   className="group flex items-center justify-between py-5 border-t border-b border-white/15 transition-colors hover:border-white/30"
                 >
                   <span className="text-sm md:text-base font-mono uppercase tracking-widest text-white">
-                    Custom AI Automations
+                    Enterprise-ready AI
                   </span>
                   <svg
                     className="w-5 h-5 text-white/50 group-hover:text-white group-hover:translate-x-1 transition-all"
@@ -107,15 +125,15 @@ export default function Hero() {
                       d="M17 7l-10 10M17 7H7m10 0v10"
                     />
                   </svg>
-                </Link>
+                </a>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Trusted By */}
-      <div className="relative z-10 pb-16 md:pb-20">
+      {/* Trusted By — Company logos */}
+      <div className="relative z-10 pb-12 md:pb-16">
         <div className="w-full max-w-7xl mx-auto px-6 md:px-8">
           <p
             className={`text-white/40 text-sm mb-6 ${
@@ -132,7 +150,7 @@ export default function Hero() {
             Trusted by
           </p>
           <div
-            className={`flex flex-wrap items-center gap-8 md:gap-12 ${
+            className={`bg-[#1a1a2e] rounded-2xl md:rounded-3xl p-4 md:p-6 ${
               mounted
                 ? 'opacity-100 translate-y-0'
                 : 'opacity-0 translate-y-6'
@@ -143,23 +161,38 @@ export default function Hero() {
               transitionDelay: mounted ? '600ms' : '0ms',
             }}
           >
-            {/* Placeholder company logos - white text style */}
-            {['epic growth', 'HAOM', 'SMSTRETCHING'].map(
-              (company) => (
-                <span
-                  key={company}
-                  className="text-white/50 text-lg md:text-xl font-bold tracking-wide"
-                  style={{
-                    fontStyle:
-                      company === 'SMSTRETCHING'
-                        ? 'italic'
-                        : 'normal',
-                  }}
+            <div className="grid grid-cols-3 md:grid-cols-8 gap-4 md:gap-6 items-center justify-items-center">
+              {/* Mobile: first 3 logos */}
+              {companies.slice(0, 3).map((company) => (
+                <div
+                  key={`mobile-${company.name}`}
+                  className="flex items-center justify-center md:hidden"
                 >
-                  {company}
-                </span>
-              )
-            )}
+                  <Image
+                    src={company.logo}
+                    alt={company.name}
+                    width={120}
+                    height={40}
+                    className="h-8 w-auto brightness-0 invert opacity-50"
+                  />
+                </div>
+              ))}
+              {/* Desktop: all logos */}
+              {companies.map((company) => (
+                <div
+                  key={company.name}
+                  className="hidden md:flex items-center justify-center"
+                >
+                  <Image
+                    src={company.logo}
+                    alt={company.name}
+                    width={120}
+                    height={40}
+                    className="h-8 w-auto brightness-0 invert opacity-50"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

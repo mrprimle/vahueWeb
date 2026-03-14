@@ -1,4 +1,5 @@
 import Hero from '@/components/Hero'
+import ServicesSection from '@/components/ServicesSection'
 import WhoWeAre from '@/components/WhoWeAre'
 import WhatWeDo from '@/components/WhatWeDo'
 import CaseStudies from '@/components/CaseStudies'
@@ -11,6 +12,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <ServicesSection />
       <WhoWeAre />
       <WhatWeDo />
       <CaseStudies />

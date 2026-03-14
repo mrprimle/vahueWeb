@@ -8,6 +8,7 @@ import { usePathname } from 'next/navigation'
 // Per-page nav links — each maps to section IDs on that page
 const navConfig: Record<string, { href: string; label: string }[]> = {
   '/': [
+    { href: '#services', label: 'Services' },
     { href: '#products', label: 'Products' },
     { href: '#cases', label: 'Cases' },
     { href: '#approach', label: 'Approach' },
@@ -27,6 +28,10 @@ const navConfig: Record<string, { href: string; label: string }[]> = {
     { href: '#cases', label: 'Cases' },
     { href: '#contact', label: 'Contact' },
   ],
+  '/ai-native-engineering': [
+    { href: '#case-studies', label: 'Cases' },
+    { href: '#contact', label: 'Contact' },
+  ],
 }
 
 export default function Navbar() {
@@ -36,6 +41,7 @@ export default function Navbar() {
 
   const cleanPath = pathname.replace(/\/$/, '') || '/'
   const isDarkPage = cleanPath === '/' || cleanPath === '/teams' || cleanPath === '/automations'
+  const isLightHeroPage = cleanPath === '/ai-native-engineering' || cleanPath.startsWith('/ai-native-engineering/')
 
   // Pick links for current page, fallback to main
   const navLinks = useMemo(() => {

@@ -35,17 +35,19 @@ export default function Footer() {
           {/* Spacer */}
           <div className="hidden lg:block" />
 
-          {/* Products */}
+          {/* Services */}
           <div className="flex flex-col items-center md:items-start">
-            <h4 className="text-lg font-normal text-white mb-4">Products</h4>
-            <Link href="/teams" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">AI Training for Teams</Link>
-            <Link href="/automations" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">Custom AI Automations</Link>
+            <h4 className="text-lg font-normal text-white mb-4">Services</h4>
+            <Link href="/teams" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">AI Strategy &amp; Team Training</Link>
+            <Link href="/automations" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">Agentic AI Automations</Link>
+            <Link href="/ai-native-engineering" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">AI-Native Engineering</Link>
           </div>
 
           {/* Company */}
           <div className="flex flex-col items-center md:items-start">
             <h4 className="text-lg font-normal text-white mb-4">Company</h4>
-            <Link href="/#cases" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">Case Studies</Link>
+            <Link href="/case-studies" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">Case Studies</Link>
+            <Link href="/blog" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">Blog</Link>
             <Link href="/#approach" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">Our Approach</Link>
           </div>
         </div>
