@@ -3,11 +3,12 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import QualityPlates from '@/components/engineering/QualityPlates'
+import CoreServices from '@/components/engineering/CoreServices'
+import SubpageApproach from '@/components/shared/SubpageApproach'
 import Problems from '@/components/engineering/Problems'
 import Press from '@/components/engineering/Press'
 import ClientsSection from '@/components/engineering/ClientsSection'
-import QualityPlates from '@/components/engineering/QualityPlates'
-import CoreServices from '@/components/engineering/CoreServices'
 import AwardsSlider from '@/components/engineering/AwardsSlider'
 import ExpertiseIndustries from '@/components/engineering/ExpertiseIndustries'
 import CaseStudies from '@/components/engineering/CaseStudies'
@@ -96,7 +97,7 @@ function EngHero() {
                 transitionDelay: mounted ? '150ms' : '0ms',
               }}
             >
-              Build your own remote engineering team.
+              Engineering Teams Built for the AI Era.
             </h1>
 
             <p
@@ -108,7 +109,7 @@ function EngHero() {
                 transitionDelay: mounted ? '330ms' : '0ms',
               }}
             >
-              Top-tier software engineering talent for startups and Fortune 500 companies.
+              Dedicated development teams that use AI-augmented workflows across the entire SDLC. Ship faster with senior engineers who build with AI, not around it.
             </p>
 
             <div
@@ -164,17 +165,32 @@ function EngHero() {
   )
 }
 
+const approachSteps = [
+  { title: 'Discovery', description: 'Understand your product, team, and technical landscape' },
+  { title: 'Architecture', description: 'Design AI-augmented workflows and system architecture' },
+  { title: 'Sprint Delivery', description: 'Iterative development with AI-native engineering practices' },
+  { title: 'QA & Security', description: 'Automated testing, code review, and security audits' },
+  { title: 'Deployment', description: 'CI/CD pipelines, monitoring, and production readiness' },
+  { title: 'Continuous Improvement', description: 'Performance optimization, tech debt reduction, and feature iteration' },
+]
+
 export default function AINativeEngineeringPage() {
   return (
     <>
       <EngHero />
-      <Problems />
-      <Press />
-      <ClientsSection />
       <QualityPlates />
       <CoreServices />
-      <AwardsSlider />
+      <SubpageApproach
+        frameworkName="The Vahue AI-Native SDLC"
+        title="How we deliver"
+        subtitle="AI-augmented engineering across every stage of the development lifecycle."
+        steps={approachSteps}
+      />
+      <Problems />
       <ExpertiseIndustries />
+      <AwardsSlider />
+      <Press />
+      <ClientsSection />
       <CaseStudies />
       <Stats />
       <FounderCTA />

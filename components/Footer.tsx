@@ -38,9 +38,11 @@ export default function Footer() {
           {/* Services */}
           <div className="flex flex-col items-center md:items-start">
             <h4 className="text-lg font-normal text-white mb-4">Services</h4>
-            <Link href="/teams" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">AI Strategy &amp; Team Training</Link>
-            <Link href="/automations" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">Agentic AI Automations</Link>
-            <Link href="/ai-native-engineering" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">AI-Native Engineering</Link>
+            <Link href="/strategy" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">AI Strategy</Link>
+            <Link href="/teams" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">AI Training</Link>
+            <Link href="/automations" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">AI Automations</Link>
+            <Link href="/ai-native-engineering" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">AI Engineering</Link>
+            <Link href="/ai-seo" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">AI SEO</Link>
           </div>
 
           {/* Company */}
@@ -48,7 +50,6 @@ export default function Footer() {
             <h4 className="text-lg font-normal text-white mb-4">Company</h4>
             <Link href="/case-studies" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">Case Studies</Link>
             <Link href="/blog" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">Blog</Link>
-            <Link href="/#approach" className="text-sm font-medium text-white/70 hover:text-white transition-colors mb-2">Our Approach</Link>
           </div>
         </div>
 

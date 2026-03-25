@@ -40,9 +40,15 @@ export default function CaseStudies() {
       <div className="section-dark-top py-16 md:py-24 lg:py-28">
         <div className="w-full max-w-7xl mx-auto px-6 md:px-8">
           {/* Header */}
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-12 md:mb-16">
-            Case studies
+          <p className="font-semibold uppercase tracking-wider text-sm mb-4 gradient-text-animated">
+            Success Stories
+          </p>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+            Where Ideas Become Impact
           </h2>
+          <p className="text-white text-base md:text-lg mb-12 md:mb-16 max-w-2xl">
+            Behind every product we build is a story of transformation. From reimagining customer experiences to reinventing industries, these are the moments where ambition and uncertainty became impact and confidence.
+          </p>
 
           {/* Case Study Cards — Glassmorphism */}
           <div className="flex flex-col gap-8">
@@ -69,7 +75,7 @@ export default function CaseStudies() {
                       <p className="text-xs font-mono uppercase tracking-widest text-primary mb-3">
                         Objective
                       </p>
-                      <p className="text-white/70 text-base leading-relaxed">
+                      <p className="text-white text-base leading-relaxed">
                         {cs.objective}
                       </p>
                     </div>
@@ -88,7 +94,7 @@ export default function CaseStudies() {
                             <p className="text-2xl md:text-3xl font-bold text-white mb-1">
                               {result.value}
                             </p>
-                            <p className="text-white/40 text-sm leading-relaxed">
+                            <p className="text-white text-sm leading-relaxed">
                               {result.description}
                             </p>
                           </div>
@@ -101,7 +107,7 @@ export default function CaseStudies() {
                       <p className="text-xs font-mono uppercase tracking-widest text-primary mb-3">
                         Stack
                       </p>
-                      <p className="text-white/40 text-sm leading-relaxed">
+                      <p className="text-white text-sm leading-relaxed">
                         {cs.stack}
                       </p>
                     </div>

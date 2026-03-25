@@ -10,9 +10,9 @@ const awards = [
     title: 'Top 1% on Clutch Global',
   },
   {
-    id: 'clutch-ai-2024',
-    image: '/img/awards/top_clutch.co_ai_strategy_company_2024.png',
-    title: 'Top AI Strategy Company 2024',
+    id: 'clutch-ai-2025',
+    image: '/img/awards/AI_Strategy_hero.png',
+    title: 'Top AI Strategy Company 2025',
   },
   {
     id: 'clutch-fall-2024',
@@ -23,11 +23,6 @@ const awards = [
     id: 'inc-5000',
     image: '/img/awards/Inc.-5000-Color-Medallion-Logo.png',
     title: 'Inc. 5000 Fastest Growing',
-  },
-  {
-    id: 'best-web-dev',
-    image: '/img/awards/best_web_dev.0b9f241f.svg',
-    title: 'Best Web Development 2023',
   },
   {
     id: 'upwork-badge',
@@ -45,11 +40,6 @@ const awards = [
     title: 'Voice & Speech Recognition 2024',
   },
   {
-    id: 'upwork-top',
-    image: '/img/awards/upworktop.webp',
-    title: 'Top Rated Plus on Upwork',
-  },
-  {
     id: 'blockchain-education-2024',
     image: '/img/awards/top_clutch.co_blockchain_company_education_2024.png',
     title: 'Top Blockchain Company 2024',
@@ -63,11 +53,6 @@ const awards = [
     id: 'goodfirms',
     image: '/img/awards/goodfirms.avif',
     title: 'GoodFirms Top Company',
-  },
-  {
-    id: 'techreviewer',
-    image: '/img/awards/techreviewer.svg',
-    title: 'TechReviewer Top Company',
   },
 ]
 
@@ -158,13 +143,13 @@ export default function AwardsSlider() {
 
 
   return (
-    <section className="bg-[#141414]">
+    <section className="bg-dark">
       <div className="py-16 md:py-20 pb-20 md:pb-24">
         <div className="w-full max-w-7xl mx-auto px-6 md:px-8">
           {/* Header */}
           <div className="flex items-center justify-between mb-10 md:mb-12">
             <h2 className="text-sm md:text-base font-semibold tracking-widest uppercase text-white">
-              Multiawarded company mentioned in global media
+              Proud moments
             </h2>
             
             {/* Navigation Arrows */}
@@ -199,24 +184,21 @@ export default function AwardsSlider() {
           </div>
         </div>
 
-        {/* Slider Container with fade edges - scoped to content width */}
+        {/* Slider Container with fade edges */}
         <div className="w-full max-w-7xl mx-auto px-6 md:px-8">
           <div className="relative">
-            {/* Left fade */}
             <div 
-              className={`absolute left-0 top-0 bottom-0 w-12 md:w-16 bg-gradient-to-r from-[#141414] to-transparent z-10 pointer-events-none transition-opacity ${
+              className={`absolute left-0 top-0 bottom-0 w-12 md:w-16 bg-gradient-to-r from-dark to-transparent z-10 pointer-events-none transition-opacity ${
                 canScrollLeft ? 'opacity-100' : 'opacity-0'
               }`} 
             />
             
-            {/* Right fade */}
             <div 
-              className={`absolute right-0 top-0 bottom-0 w-12 md:w-16 bg-gradient-to-l from-[#141414] to-transparent z-10 pointer-events-none transition-opacity ${
+              className={`absolute right-0 top-0 bottom-0 w-12 md:w-16 bg-gradient-to-l from-dark to-transparent z-10 pointer-events-none transition-opacity ${
                 canScrollRight ? 'opacity-100' : 'opacity-0'
               }`}
             />
 
-            {/* Scrollable content */}
             <div
               ref={scrollRef}
               onMouseDown={handleMouseDown}
@@ -237,7 +219,6 @@ export default function AwardsSlider() {
                   key={award.id}
                   className="flex-shrink-0 w-[160px] md:w-[180px] snap-start"
                 >
-                  {/* Award Card */}
                   <div className="bg-[#1e2530] border border-[#2a3340] rounded-xl p-4 h-[140px] md:h-[160px] flex items-center justify-center mb-3 pointer-events-none">
                     <Image
                       src={award.image}
@@ -249,8 +230,7 @@ export default function AwardsSlider() {
                     />
                   </div>
                   
-                  {/* Award Title */}
-                  <p className="text-white/80 text-xs md:text-sm text-center leading-snug font-medium pointer-events-none">
+                  <p className="text-white text-xs md:text-sm text-center leading-snug font-medium pointer-events-none">
                     {award.title}
                   </p>
                 </div>

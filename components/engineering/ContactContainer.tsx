@@ -118,7 +118,7 @@ export default function ContactContainer({ extraMargin }: ContactContainerProps)
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
             {/* Left: Title */}
             <div className="flex flex-col justify-start">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#E8F751] uppercase leading-tight mb-6 italic">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-tight mb-6 italic gradient-text-orange">
                 Thrilled to meet you!
               </h2>
               <p className="text-xl md:text-2xl font-bold text-white uppercase tracking-wide">
@@ -131,7 +131,7 @@ export default function ContactContainer({ extraMargin }: ContactContainerProps)
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                 {/* Full Name */}
                 <div>
-                  <label className="block text-white/60 text-sm mb-2">Full Name</label>
+                  <label className="block text-white text-sm mb-2">Full Name</label>
                   <input
                     type="text"
                     name="name"
@@ -144,7 +144,7 @@ export default function ContactContainer({ extraMargin }: ContactContainerProps)
 
                 {/* Your Email */}
                 <div>
-                  <label className="block text-white/60 text-sm mb-2">Your Email</label>
+                  <label className="block text-white text-sm mb-2">Your Email</label>
                   <input
                     type="email"
                     name="email"
@@ -164,7 +164,7 @@ export default function ContactContainer({ extraMargin }: ContactContainerProps)
 
                 {/* Company Headcount */}
                 <div>
-                  <label className="block text-white/60 text-sm mb-2">Company Headcount</label>
+                  <label className="block text-white text-sm mb-2">Company Headcount</label>
                   <input
                     type="text"
                     name="headcount"
@@ -177,7 +177,7 @@ export default function ContactContainer({ extraMargin }: ContactContainerProps)
 
                 {/* Company Name */}
                 <div>
-                  <label className="block text-white/60 text-sm mb-2">Company Name</label>
+                  <label className="block text-white text-sm mb-2">Company Name</label>
                   <input
                     type="text"
                     name="company"
@@ -197,7 +197,7 @@ export default function ContactContainer({ extraMargin }: ContactContainerProps)
 
                 {/* I'm interested in... */}
                 <div>
-                  <label className="block text-white/60 text-sm mb-4">I&apos;m interested in ...</label>
+                  <label className="block text-white text-sm mb-4">I&apos;m interested in ...</label>
                   <div className="flex flex-wrap gap-3">
                     {interestOptions.map((option) => (
                       <button
@@ -218,7 +218,7 @@ export default function ContactContainer({ extraMargin }: ContactContainerProps)
 
                 {/* Message */}
                 <div>
-                  <label className="block text-white/60 text-sm mb-2">Message</label>
+                  <label className="block text-white text-sm mb-2">Message</label>
                   <textarea
                     name="message"
                     value={message}
@@ -254,7 +254,7 @@ export default function ContactContainer({ extraMargin }: ContactContainerProps)
                 </button>
 
                 {/* Privacy Policy */}
-                <p className="text-white/50 text-sm">
+                <p className="text-white text-sm">
                   By proceeding, I agree with the collection and processing of my personal data as described in the{' '}
                   <Link href="/privacy-policy" className="text-[#4ADE80] hover:underline">
                     Privacy Policy

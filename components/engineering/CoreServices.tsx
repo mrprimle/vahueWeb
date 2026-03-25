@@ -72,8 +72,8 @@ const services = [
     id: 'dedicated-teams',
     Icon: HeartHandshakeIcon,
     label: 'Ideal for strategic goals',
-    title: 'Dedicated Development Teams',
-    description: 'We build sustainable nearshore teams of software engineers and other tech experts to increase your capacity. You manage your dedicated developers directly, while Vahue takes care of infrastructure and supports you in maintaining a tight-knit, cohesive, and effective team.',
+    title: 'Dedicated AI-Native Dev Teams',
+    description: 'Sustained engineering teams that use AI-native workflows to ship faster and smarter. You manage your dedicated developers directly, while Vahue takes care of infrastructure, onboarding, and AI toolchain setup.',
     cta: 'Build your dream team',
     href: 'https://calendly.com/mike_at_pletava/vahue-ai-discovery',
   },
@@ -81,8 +81,8 @@ const services = [
     id: 'project-based',
     Icon: LaptopCheckIcon,
     label: 'Ideal for short-to-midterm goals',
-    title: 'Project-Based Solutions',
-    description: 'We provide you with extra capacity to solve a specific task or fix an unexpected problem. Tap into our cross-domain expertise and fast team sourcing to clear your backlog, accelerate time-to-market for your custom software solution, or test out the waters before committing to long-term team extension.',
+    title: 'Project-Based AI Solutions',
+    description: 'End-to-end delivery of a specific AI product, feature, or system — from architecture to production. Tap into our cross-domain expertise and fast team sourcing to accelerate time-to-market.',
     cta: 'Submit your project',
     href: 'https://calendly.com/mike_at_pletava/vahue-ai-discovery',
   },
@@ -91,7 +91,7 @@ const services = [
     Icon: GraduationCapIcon,
     label: 'Ideal for agile teams',
     title: 'Tech Upskilling Workshops',
-    description: 'Backed by a network of 400+ industry pros, our custom 1–2 day workshops support both technical and non-technical teams. Covering topics from cybersecurity and genAI to green coding and web accessibility, these hands-on sessions build confidence and equip your employees to tackle challenges in the digital economy.',
+    description: 'Intensive 1-2 day workshops on AI engineering practices, from GenAI tooling to security and cloud-native development. Hands-on lab exercises with real tools.',
     cta: 'Upskill your team',
     href: 'https://calendly.com/mike_at_pletava/vahue-ai-discovery',
   },
@@ -103,12 +103,12 @@ export default function CoreServices() {
       <div className="py-16 md:py-20">
         <div className="w-full max-w-7xl mx-auto px-6 md:px-8">
           {/* Header */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20 md:mb-24">
+          <div id="services" className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20 md:mb-24 scroll-mt-20">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
-              Core services for sustainable software development
+              AI-native engineering services
             </h2>
             <p className="text-white/80 text-lg md:text-xl leading-relaxed lg:pt-2">
-              Whether you need to extend your tech team, bring in niche expertise to develop a project milestone, or upskill your employees in the latest tech — we&apos;re here to help.
+              From dedicated teams to full project delivery, we build software the AI-native way. Our engineers use AI-augmented workflows across the entire development lifecycle.
             </p>
           </div>
 

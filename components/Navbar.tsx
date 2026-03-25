@@ -9,27 +9,43 @@ import { usePathname } from 'next/navigation'
 const navConfig: Record<string, { href: string; label: string }[]> = {
   '/': [
     { href: '#services', label: 'Services' },
-    { href: '#products', label: 'Products' },
+    { href: '#why-us', label: 'Why Us' },
     { href: '#cases', label: 'Cases' },
+    { href: '#results', label: 'Results' },
+    { href: '#contact', label: 'Contact' },
+  ],
+  '/strategy': [
+    { href: '#services', label: 'Services' },
     { href: '#approach', label: 'Approach' },
-    { href: '#contact', label: 'Contacts' },
+    { href: '#why-us', label: 'Why Us' },
+    { href: '#cases', label: 'Cases' },
+    { href: '#contact', label: 'Contact' },
   ],
   '/teams': [
-    { href: '#results', label: 'Results' },
-    { href: '#products', label: 'Products' },
+    { href: '#benefits', label: 'Benefits' },
+    { href: '#services', label: 'Services' },
+    { href: '#approach', label: 'Approach' },
     { href: '#cases', label: 'Cases' },
-    { href: '#team', label: 'Team' },
     { href: '#faq', label: 'FAQ' },
     { href: '#contact', label: 'Contact' },
   ],
   '/automations': [
     { href: '#services', label: 'Services' },
-    { href: '#process', label: 'Process' },
+    { href: '#copilots', label: 'Copilots' },
+    { href: '#approach', label: 'Process' },
     { href: '#cases', label: 'Cases' },
     { href: '#contact', label: 'Contact' },
   ],
   '/ai-native-engineering': [
+    { href: '#services', label: 'Services' },
+    { href: '#approach', label: 'Approach' },
     { href: '#case-studies', label: 'Cases' },
+    { href: '#contact', label: 'Contact' },
+  ],
+  '/ai-seo': [
+    { href: '#services', label: 'Services' },
+    { href: '#approach', label: 'Approach' },
+    { href: '#why-us', label: 'Why Us' },
     { href: '#contact', label: 'Contact' },
   ],
 }
@@ -40,8 +56,8 @@ export default function Navbar() {
   const pathname = usePathname()
 
   const cleanPath = pathname.replace(/\/$/, '') || '/'
-  const isDarkPage = cleanPath === '/' || cleanPath === '/teams' || cleanPath === '/automations'
-  const isLightHeroPage = cleanPath === '/ai-native-engineering' || cleanPath.startsWith('/ai-native-engineering/')
+  const isDarkPage = cleanPath === '/' || cleanPath === '/teams' || cleanPath === '/automations' || cleanPath === '/ai-seo'
+  const isLightHeroPage = cleanPath === '/ai-native-engineering' || cleanPath.startsWith('/ai-native-engineering/') || cleanPath === '/strategy'
 
   // Pick links for current page, fallback to main
   const navLinks = useMemo(() => {

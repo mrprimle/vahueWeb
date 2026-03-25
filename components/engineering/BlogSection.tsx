@@ -39,8 +39,11 @@ export default function BlogSection() {
       <div className="w-full max-w-7xl mx-auto px-6 md:px-8">
         {/* Header */}
         <div className="mb-6 md:mb-8">
+          <p className="font-semibold uppercase tracking-wider text-sm mb-3 gradient-text-animated">
+            Thought Leadership
+          </p>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1d1d1f] mb-1.5">
-            BLOG
+            Perspectives That Matter
           </h2>
           <div className="flex items-center justify-between">
             <p className="text-[#86868b] text-sm md:text-base">
