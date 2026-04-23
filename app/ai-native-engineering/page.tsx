@@ -1,19 +1,18 @@
 import type { Metadata } from 'next'
-import SegmentLanding from '@/components/segments/SegmentLanding'
-import { engineeringContent } from '@/components/segments/content/engineering'
+import AINativeEngineeringPage from '@/components/pages/AINativeEngineeringPage'
 
 export const metadata: Metadata = {
-  title: 'AI-Native Engineering',
+  title: 'AI-Native Engineering | Vahue',
   description:
-    'Ship AI features to production — with evals, guardrails, and CI you can trust. AI-native engineering pods embedded in your team.',
+    'Ship 10× faster with AI without losing senior control. AI-assisted software development with human senior oversight — production-grade quality, enterprise security, predictable delivery.',
   openGraph: {
     title: 'AI-Native Engineering | Vahue',
     description:
-      'Ship AI features to production. AI-native engineering pods embedded in your team.',
+      'AI-assisted software development with human senior oversight. 10× faster delivery, 40–60% lower cost, 80% fewer bugs.',
     url: 'https://vahue.ai/ai-native-engineering',
   },
 }
 
 export default function Page() {
-  return <SegmentLanding content={engineeringContent} />
+  return <AINativeEngineeringPage />
 }

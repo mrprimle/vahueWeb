@@ -26,7 +26,7 @@ const Svg24 = (props: IconProps) => (
   />
 )
 
-// talent.svg — AI-Native Talent
+// talent.svg — AI-Native Engineering
 const UsersIcon = (p: IconProps) => (
   <Svg24
     {...p}
@@ -290,8 +290,8 @@ const navGroups: NavGroup[] = [
           badge: 'NEW',
         },
         {
-          href: '/ai-native-talent',
-          label: 'AI-Native Talent',
+          href: '/ai-native-engineering',
+          label: 'AI-Native Engineering',
           Icon: UsersIcon,
         },
         {

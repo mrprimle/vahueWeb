@@ -36,7 +36,7 @@ export const engineeringContent: SegmentContent = {
     },
   ],
   values: [
-    { metric: '3–5×', label: 'AI feature velocity' },
+    { metric: '5–10×', label: 'AI feature velocity' },
     { metric: '<2 wk', label: 'demo-to-prod' },
     { metric: '90%+', label: 'eval pass rate' },
     { metric: '−40%', label: 'post-ship bugs' },
@@ -75,7 +75,7 @@ export const engineeringContent: SegmentContent = {
       oneLiner:
         'Roll out Cursor/Copilot/code-review agents with measured velocity lift and safe patterns.',
       deliverables: ['Tooling rollout', 'Prompt/patterns library', 'Velocity baseline', 'Review playbook'],
-      outcome: '3–5× velocity',
+      outcome: '5–10× velocity',
     },
     {
       key: 'evals-guardrails',

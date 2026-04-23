@@ -105,10 +105,6 @@ const technicalAgents: Agent[] = [
 
 const horizontalAgents: Agent[] = [
   {
-    title: 'Engineering',
-    body: 'Agents embedded across the SDLC — from ticket refinement and code review to test generation and incident triage, accelerating delivery without losing rigor.',
-  },
-  {
     title: 'Intelligent Document Processing',
     body: 'AI-powered extraction, classification, and summarization across enterprise documents — from contracts and invoices to regulatory filings and technical specs.',
   },
@@ -177,10 +173,10 @@ export default function EngagementModels() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
           {/* Top row — 3 equal service cards */}
           <BentoCard
-            category="Staffing"
-            title="AI-Native Talent"
+            category="Engineering"
+            title="AI-Native Engineering"
             body="The next evolution of engineering is here: building and scaling AI-native, agentic ways of working across the software development life cycle to enable high-performance teams."
-            href="/ai-native-talent"
+            href="/ai-native-engineering"
             Icon={TalentIcon}
           />
           <BentoCard
