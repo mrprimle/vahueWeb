@@ -324,7 +324,7 @@ function AutomationsHero() {
           with guardrails, audit trails, and measurable ROI.
         </p>
         <Link
-          href="https://calendly.com/mike_at_pletava/vahue-ai-discovery"
+          href="https://calendly.com/vahue/meeting-with-mike-from-vahue"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center bg-white text-dark font-mono text-sm uppercase tracking-widest px-8 py-4 rounded-full hover:bg-white/90 transition-colors"

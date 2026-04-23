@@ -143,58 +143,57 @@ export default function AwardsSlider() {
 
 
   return (
-    <section className="bg-dark">
-      <div className="py-16 md:py-20 pb-20 md:pb-24">
-        <div className="w-full max-w-7xl mx-auto px-6 md:px-8">
+    <section className="bg-bg border-y border-border-soft">
+      <div className="py-16 md:py-20">
+        <div className="w-full max-w-wide mx-auto px-6 md:px-8">
           {/* Header */}
           <div className="flex items-center justify-between mb-10 md:mb-12">
-            <h2 className="text-sm md:text-base font-semibold tracking-widest uppercase text-white">
-              Proud moments
-            </h2>
-            
+            <div>
+              <p className="eyebrow mb-2">Awards</p>
+              <h2 className="text-display font-display text-2xl md:text-3xl font-semibold tracking-tight text-white">
+                Proud moments.
+              </h2>
+            </div>
+
             {/* Navigation Arrows */}
             <div className="flex gap-3">
-              <button
-                onClick={() => scroll('left')}
-                disabled={!canScrollLeft}
-                className={`w-10 h-10 md:w-12 md:h-12 rounded-full border flex items-center justify-center transition-all ${
-                  canScrollLeft
-                    ? 'border-[#475569] bg-[#1e2530] hover:bg-[#334155] text-white'
-                    : 'border-[#2a3340] bg-[#1e2530]/50 text-white/30 cursor-not-allowed'
-                }`}
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <button
-                onClick={() => scroll('right')}
-                disabled={!canScrollRight}
-                className={`w-10 h-10 md:w-12 md:h-12 rounded-full border flex items-center justify-center transition-all ${
-                  canScrollRight
-                    ? 'border-[#475569] bg-[#1e2530] hover:bg-[#334155] text-white'
-                    : 'border-[#2a3340] bg-[#1e2530]/50 text-white/30 cursor-not-allowed'
-                }`}
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
+              {canScrollLeft && (
+                <button
+                  onClick={() => scroll('left')}
+                  className="w-10 h-10 md:w-11 md:h-11 rounded-full border border-border-mid bg-surface hover:bg-surface-2 text-white flex items-center justify-center transition-all"
+                  aria-label="Scroll left"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+              )}
+              {canScrollRight && (
+                <button
+                  onClick={() => scroll('right')}
+                  className="w-10 h-10 md:w-11 md:h-11 rounded-full border border-border-mid bg-surface hover:bg-surface-2 text-white flex items-center justify-center transition-all"
+                  aria-label="Scroll right"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              )}
             </div>
           </div>
         </div>
 
         {/* Slider Container with fade edges */}
-        <div className="w-full max-w-7xl mx-auto px-6 md:px-8">
+        <div className="w-full max-w-wide mx-auto px-6 md:px-8">
           <div className="relative">
-            <div 
-              className={`absolute left-0 top-0 bottom-0 w-12 md:w-16 bg-gradient-to-r from-dark to-transparent z-10 pointer-events-none transition-opacity ${
+            <div
+              className={`absolute left-0 top-0 bottom-0 w-12 md:w-16 bg-gradient-to-r from-bg to-transparent z-10 pointer-events-none transition-opacity ${
                 canScrollLeft ? 'opacity-100' : 'opacity-0'
-              }`} 
+              }`}
             />
-            
-            <div 
-              className={`absolute right-0 top-0 bottom-0 w-12 md:w-16 bg-gradient-to-l from-dark to-transparent z-10 pointer-events-none transition-opacity ${
+
+            <div
+              className={`absolute right-0 top-0 bottom-0 w-12 md:w-16 bg-gradient-to-l from-bg to-transparent z-10 pointer-events-none transition-opacity ${
                 canScrollRight ? 'opacity-100' : 'opacity-0'
               }`}
             />
@@ -219,7 +218,7 @@ export default function AwardsSlider() {
                   key={award.id}
                   className="flex-shrink-0 w-[160px] md:w-[180px] snap-start"
                 >
-                  <div className="bg-[#1e2530] border border-[#2a3340] rounded-xl p-4 h-[140px] md:h-[160px] flex items-center justify-center mb-3 pointer-events-none">
+                  <div className="bg-surface border border-border-soft rounded-2xl p-4 h-[140px] md:h-[160px] flex items-center justify-center mb-3 pointer-events-none">
                     <Image
                       src={award.image}
                       alt={award.title}
@@ -229,8 +228,8 @@ export default function AwardsSlider() {
                       draggable={false}
                     />
                   </div>
-                  
-                  <p className="text-white text-xs md:text-sm text-center leading-snug font-medium pointer-events-none">
+
+                  <p className="text-white/75 text-xs md:text-sm text-center leading-snug pointer-events-none">
                     {award.title}
                   </p>
                 </div>

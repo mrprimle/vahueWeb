@@ -75,7 +75,7 @@ const services = [
     title: 'Dedicated AI-Native Dev Teams',
     description: 'Sustained engineering teams that use AI-native workflows to ship faster and smarter. You manage your dedicated developers directly, while Vahue takes care of infrastructure, onboarding, and AI toolchain setup.',
     cta: 'Build your dream team',
-    href: 'https://calendly.com/mike_at_pletava/vahue-ai-discovery',
+    href: 'https://calendly.com/vahue/meeting-with-mike-from-vahue',
   },
   {
     id: 'project-based',
@@ -84,7 +84,7 @@ const services = [
     title: 'Project-Based AI Solutions',
     description: 'End-to-end delivery of a specific AI product, feature, or system — from architecture to production. Tap into our cross-domain expertise and fast team sourcing to accelerate time-to-market.',
     cta: 'Submit your project',
-    href: 'https://calendly.com/mike_at_pletava/vahue-ai-discovery',
+    href: 'https://calendly.com/vahue/meeting-with-mike-from-vahue',
   },
   {
     id: 'workshops',
@@ -93,7 +93,7 @@ const services = [
     title: 'Tech Upskilling Workshops',
     description: 'Intensive 1-2 day workshops on AI engineering practices, from GenAI tooling to security and cloud-native development. Hands-on lab exercises with real tools.',
     cta: 'Upskill your team',
-    href: 'https://calendly.com/mike_at_pletava/vahue-ai-discovery',
+    href: 'https://calendly.com/vahue/meeting-with-mike-from-vahue',
   },
 ]
 

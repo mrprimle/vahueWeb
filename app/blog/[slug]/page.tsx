@@ -461,7 +461,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               Let&apos;s discuss how Vahue can help you achieve your technology goals.
             </p>
             <Link
-              href="https://calendly.com/mike_at_pletava/vahue-ai-discovery"
+              href="https://calendly.com/vahue/meeting-with-mike-from-vahue"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 bg-[#3b82f6] text-white rounded-full font-medium hover:bg-[#2563eb] transition-colors"

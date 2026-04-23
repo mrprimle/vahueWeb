@@ -307,7 +307,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
                 <h3 className="text-lg font-bold text-white mb-2">Ready to start your project?</h3>
                 <p className="text-white/70 text-sm mb-4">Let&apos;s discuss how we can help.</p>
                 <Link
-                  href="https://calendly.com/mike_at_pletava/vahue-ai-discovery"
+                  href="https://calendly.com/vahue/meeting-with-mike-from-vahue"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#3b82f6] text-white rounded-full font-medium hover:bg-[#2563eb] transition-colors text-sm"

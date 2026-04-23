@@ -1,32 +1,21 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
-
-const companies = [
-  { name: 'Shopify', logo: '/img/shopify.svg' },
-  { name: 'Audi', logo: '/img/audi-logo.svg' },
-  { name: 'Deloitte', logo: '/img/deloitte.svg' },
-  { name: 'Leafworks', logo: '/img/leafworks.svg' },
-  { name: 'Tracesafe', logo: '/img/tracesafe.svg' },
-  { name: 'Carmen', logo: '/img/carmen.svg' },
-  { name: 'BringLiesel', logo: '/img/bringliesel.svg' },
-  { name: 'Quilk', logo: '/img/quilk.svg' },
-]
+import { DISCOVERY_CALL_URL } from '@/lib/links'
 
 const pillars = [
   {
-    label: 'Systems',
-    description: 'replace repetitive work with agents and workflows that run your operations',
-  },
-  {
-    label: 'Enablement',
-    description: 'enable your team to use AI mindfully with hands-on training',
-  },
-  {
     label: 'Talent',
-    description: 'embed AI-native engineers into your team to accelerate delivery and execution',
+    description: 'extend your team with Vahue\'s AI-Native engineers to ship 10x faster',
+  },
+  {
+    label: 'Training',
+    description: 'supercharge your team with domain-specific workshops to use AI mindfully',
+  },
+  {
+    label: 'Systems',
+    description: 'Deploy reliable agents that learn your unique enterprise data, tools, and skills',
   },
 ]
 
@@ -38,87 +27,108 @@ export default function Hero() {
   }, [])
 
   return (
-    <section className="relative min-h-screen flex flex-col bg-dark overflow-hidden">
-      <div className="absolute inset-0 hero-texture opacity-40" />
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            'linear-gradient(135deg, transparent 25%, rgba(3, 137, 244, 0.07) 45%, rgba(132, 52, 233, 0.06) 55%, transparent 75%)',
-        }}
-      />
+    <section className="relative flex flex-col bg-bg overflow-hidden">
+      {/* Subtle dot texture */}
+      <div className="absolute inset-0 hero-texture opacity-60" />
 
-      <div className="flex-1 flex items-center relative z-10">
-        <div className="w-full max-w-7xl mx-auto px-6 md:px-8 pt-32 md:pt-40 pb-16">
-          <div className="max-w-2xl">
+      {/* Bottom fade to seamless blend */}
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-bg pointer-events-none" />
+
+      <div className="relative z-10">
+        <div className="w-full max-w-wide mx-auto px-6 md:px-8 pt-16 md:pt-24 pb-20 md:pb-28">
+          <div className="max-w-3xl">
             <h1
-              className={`text-[2.75rem] sm:text-6xl md:text-7xl lg:text-[5.5rem] font-black text-white leading-[1.0] tracking-tight ${
-                mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+              className={`font-display text-[2.7rem] font-light leading-none md:leading-tight xl:leading-[80px] lg:text-6xl xl:text-7xl -tracking-[0.01em] max-w-2xl xl:max-w-4xl text-balance text-center md:text-left text-white ${
+                mounted
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-12'
               }`}
               style={{
-                transition: 'opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1)',
-                transitionDelay: mounted ? '100ms' : '0ms',
+                transition:
+                  'opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1)',
+                transitionDelay: mounted ? '120ms' : '0ms',
               }}
             >
-              <span className="gradient-text-shine">10x</span> your team&apos;s output
+              <span className="text-[#BBDEF2]">Accelerate</span> your{' '}
+              <span
+                style={{
+                  background: 'linear-gradient(90deg, #ffffff 0%, #b8b8ff 100%)',
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                AI
+              </span>{' '}
+              Transformation
             </h1>
 
             <p
-              className={`text-white text-lg md:text-xl leading-relaxed mt-5 mb-7 ${
+              className={`text-white/70 text-lg md:text-xl leading-relaxed mt-6 mb-8 max-w-2xl ${
                 mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
               style={{
-                transition: 'opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1)',
-                transitionDelay: mounted ? '250ms' : '0ms',
+                transition:
+                  'opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1)',
+                transitionDelay: mounted ? '260ms' : '0ms',
               }}
             >
-              with production-ready AI systems and multi-agent workflows that drive real business results.
+              with AI-Native team extensions, hands-on trainings, and enterprise-ready AI systems for startups and Fortune 500 companies.
             </p>
 
             <div
-              className={`flex flex-col gap-3 mb-7 ${
+              className={`flex flex-col gap-2.5 mb-8 ${
                 mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
               style={{
-                transition: 'opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1)',
+                transition:
+                  'opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1)',
                 transitionDelay: mounted ? '400ms' : '0ms',
               }}
             >
               {pillars.map((pillar) => (
-                <p key={pillar.label} className="text-white text-sm md:text-base">
-                  <span className="font-bold">{pillar.label}</span>
-                  {' — '}
-                  <span>{pillar.description}</span>
+                <p
+                  key={pillar.label}
+                  className="text-white/85 text-sm md:text-base"
+                >
+                  <span className="font-semibold text-white">
+                    {pillar.label}
+                  </span>
+                  <span className="text-white/55"> — </span>
+                  <span className="text-white/75">{pillar.description}</span>
                 </p>
               ))}
             </div>
 
             <p
-              className={`text-white text-sm ${
+              className={`eyebrow mb-7 text-white/70 ${
                 mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
               style={{
-                transition: 'opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1)',
+                transition:
+                  'opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1)',
                 transitionDelay: mounted ? '500ms' : '0ms',
               }}
             >
-              Everything you need to maximize AI impact across your business
+              Everything you need so you&apos;re not left alone in the AI
+              transition
             </p>
 
             <div
-              className={`mt-7 ${
+              className={`flex flex-wrap items-center gap-3 ${
                 mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
               style={{
-                transition: 'opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1)',
-                transitionDelay: mounted ? '600ms' : '0ms',
+                transition:
+                  'opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1)',
+                transitionDelay: mounted ? '580ms' : '0ms',
               }}
             >
               <Link
-                href="https://calendly.com/vahue/meeting-with-mike-from-vahue"
+                href={DISCOVERY_CALL_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-3 bg-white text-dark font-medium text-sm uppercase tracking-wider px-6 py-3.5 rounded-full"
+                className="group inline-flex items-center gap-3 bg-white text-bg font-medium text-sm uppercase tracking-wider px-6 py-3.5 rounded-full hover:bg-white/90 transition-colors"
               >
                 Book a Discovery Call
                 <svg
@@ -135,52 +145,6 @@ export default function Hero() {
                   />
                 </svg>
               </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Company Logos — glassy wrapper */}
-      <div className="relative z-10 pb-12 md:pb-16">
-        <div className="w-full max-w-7xl mx-auto px-6 md:px-8">
-          <div
-            className={`bg-[#1a1a2e] rounded-2xl md:rounded-3xl p-4 md:p-6 ${
-              mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}
-            style={{
-              transition: 'opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1)',
-              transitionDelay: mounted ? '600ms' : '0ms',
-            }}
-          >
-            <div className="grid grid-cols-3 md:grid-cols-8 gap-4 md:gap-6 items-center justify-items-center">
-              {companies.slice(0, 3).map((company) => (
-                <div
-                  key={`mobile-${company.name}`}
-                  className="flex items-center justify-center md:hidden"
-                >
-                  <Image
-                    src={company.logo}
-                    alt={company.name}
-                    width={120}
-                    height={40}
-                    className="h-8 w-auto brightness-0 invert opacity-50"
-                  />
-                </div>
-              ))}
-              {companies.map((company) => (
-                <div
-                  key={company.name}
-                  className="hidden md:flex items-center justify-center"
-                >
-                  <Image
-                    src={company.logo}
-                    alt={company.name}
-                    width={120}
-                    height={40}
-                    className="h-8 w-auto brightness-0 invert opacity-50"
-                  />
-                </div>
-              ))}
             </div>
           </div>
         </div>

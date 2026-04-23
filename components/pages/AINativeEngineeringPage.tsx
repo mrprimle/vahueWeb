@@ -122,7 +122,7 @@ function EngHero() {
               }}
             >
               <Link
-                href="https://calendly.com/mike_at_pletava/vahue-ai-discovery"
+                href="https://calendly.com/vahue/meeting-with-mike-from-vahue"
                 target="_blank"
                 rel="noopener noreferrer"
               >

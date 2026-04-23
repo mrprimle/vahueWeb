@@ -13,7 +13,7 @@ export default function FounderCTA() {
               </h2>
               
               <a
-                href="https://calendly.com/mike_at_pletava/vahue-ai-discovery"
+                href="https://calendly.com/vahue/meeting-with-mike-from-vahue"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2.5 gradient-border-animated text-white font-medium text-sm uppercase tracking-wider px-5 py-3 rounded-full"
@@ -106,7 +106,7 @@ export default function FounderCTA() {
               </h2>
               
               <a
-                href="https://calendly.com/mike_at_pletava/vahue-ai-discovery"
+                href="https://calendly.com/vahue/meeting-with-mike-from-vahue"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-3 gradient-border-animated text-white font-medium text-sm uppercase tracking-wider px-6 py-3.5 rounded-full mb-16 w-fit"

@@ -1,35 +1,52 @@
 import Hero from '@/components/Hero'
-import PainRecognition from '@/components/PainRecognition'
-import ServicesSection from '@/components/ServicesSection'
+import ClientsStrip from '@/components/main/ClientsStrip'
+import AJTBDProblems from '@/components/main/AJTBDProblems'
 import AwardsSlider from '@/components/engineering/AwardsSlider'
-import WhatSetsUsApart from '@/components/WhatSetsUsApart'
-import EngagementModels from '@/components/shared/EngagementModels'
+import SegmentsGrid from '@/components/main/SegmentsGrid'
 import Press from '@/components/engineering/Press'
-import SubpageIndustries from '@/components/shared/SubpageIndustries'
+import EngagementModels from '@/components/shared/EngagementModels'
 import CaseStudies from '@/components/CaseStudies'
-import WhoWeAre from '@/components/WhoWeAre'
-import FounderCTA from '@/components/engineering/FounderCTA'
+import FounderAndTeam from '@/components/main/FounderAndTeam'
 import Testimonials from '@/components/engineering/Testimonials'
 import BlogSection from '@/components/engineering/BlogSection'
-import ContactContainer from '@/components/engineering/ContactContainer'
+import ContactDynamic from '@/components/main/ContactDynamic'
 
 export default function Home() {
   return (
     <>
+      {/* 1. Hero + 2. Clients strip */}
       <Hero />
-      <PainRecognition />
-      <ServicesSection />
+      <ClientsStrip />
+
+      {/* 3. Problems — AJTBD triggers/emotions/pains + our answer */}
+      <AJTBDProblems />
+
+      {/* 4. Awards line */}
       <AwardsSlider />
-      <WhatSetsUsApart />
+
+      {/* 5. Engagement models — no linking */}
       <EngagementModels />
+
+      {/* 6. Magazine line */}
       <Press />
-      <SubpageIndustries />
+
+      {/* 7. Industries/segments grid with AJTBD landing links */}
+      <SegmentsGrid />
+
+      {/* 9. Case studies */}
       <CaseStudies />
-      <WhoWeAre />
-      <FounderCTA />
+
+      {/* 10. Founder + team */}
+      <FounderAndTeam />
+
+      {/* 11. Testimonials */}
       <Testimonials />
+
+      {/* 12. Blog */}
       <BlogSection />
-      <ContactContainer />
+
+      {/* 13. Contact with dynamic values + 14. Footer (from layout) */}
+      <ContactDynamic />
     </>
   )
 }

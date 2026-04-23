@@ -10,7 +10,7 @@ export default function ContactCards() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Book a Strategy Call */}
           <Link
-            href="https://calendly.com/mike_at_pletava/vahue-ai-discovery"
+            href="https://calendly.com/vahue/meeting-with-mike-from-vahue"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-[#f97316] rounded-2xl md:rounded-3xl p-8 md:p-10 flex flex-col justify-between min-h-[220px] hover:bg-[#ea580c] transition-colors"

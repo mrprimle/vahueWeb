@@ -7,7 +7,8 @@ const blogPosts = [
   {
     id: 'secure-llm-deployment-enterprise',
     title: 'Deploying LLMs Securely in Enterprise Environments',
-    excerpt: 'A practical guide to integrating large language models with sensitive business data while staying compliant and secure.',
+    excerpt:
+      'A practical guide to integrating large language models with sensitive business data while staying compliant and secure.',
     image: '/img/blog/blog1.jpg',
     date: 'January 15, 2026',
     category: 'AI & Machine Learning',
@@ -16,7 +17,8 @@ const blogPosts = [
   {
     id: 'code-data-sources-for-llm-training',
     title: 'Evaluating Code Data Sources for Training Large Language Models',
-    excerpt: 'A practical comparison of the major code dataset sources — from open-source repos to dedicated coding teams — and how to choose the right one.',
+    excerpt:
+      'A practical comparison of the major code dataset sources — from open-source repos to dedicated coding teams — and how to choose the right one.',
     image: '/img/blog/blog2.jpg',
     date: 'January 10, 2026',
     category: 'AI & Machine Learning',
@@ -25,7 +27,8 @@ const blogPosts = [
   {
     id: 'human-written-code-llm-training',
     title: 'The Case for Human-Written Code in LLM Training',
-    excerpt: 'Why human-authored code remains essential for building reliable coding assistants — and where synthetic data falls short.',
+    excerpt:
+      'Why human-authored code remains essential for building reliable coding assistants — and where synthetic data falls short.',
     image: '/img/blog/blog3.png',
     date: 'January 5, 2026',
     category: 'AI & Machine Learning',
@@ -35,80 +38,68 @@ const blogPosts = [
 
 export default function BlogSection() {
   return (
-    <section className="bg-white py-16 md:py-24">
-      <div className="w-full max-w-7xl mx-auto px-6 md:px-8">
-        {/* Header */}
-        <div className="mb-6 md:mb-8">
-          <p className="font-semibold uppercase tracking-wider text-sm mb-3 gradient-text-animated">
-            Thought Leadership
-          </p>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1d1d1f] mb-1.5">
-            Perspectives That Matter
-          </h2>
-          <div className="flex items-center justify-between">
-            <p className="text-[#86868b] text-sm md:text-base">
-              Lessons we learned the hard way. So you don&apos;t have to.
-            </p>
-            <Link
-              href="/blog"
-              className="group hidden md:inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-[#3B82F6] transition-colors"
-            >
-              View More
-              <svg className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 12h14M13 6l6 6-6 6" />
-              </svg>
-            </Link>
+    <section className="relative py-20 md:py-28">
+      <div className="w-full max-w-wide mx-auto px-6 md:px-8">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
+          <div className="max-w-2xl">
+            <p className="eyebrow mb-4">Blog</p>
+            <h2 className="text-display font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.05]">
+              Perspectives that matter.
+            </h2>
           </div>
+          <Link
+            href="/blog"
+            className="btn-outline text-xs uppercase tracking-widest font-mono self-start md:self-end"
+          >
+            View all
+            <svg
+              className="ml-2 w-3.5 h-3.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M7 17L17 7M17 7H7M17 7v10"
+              />
+            </svg>
+          </Link>
         </div>
 
-        {/* Blog Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-5">
           {blogPosts.map((post) => (
             <Link
               key={post.id}
               href={post.href}
-              className="group block"
+              className="group rounded-3xl border border-border-soft bg-surface overflow-hidden transition-colors hover:border-border-mid flex flex-col"
             >
-              {/* Image */}
-              <div className="relative overflow-hidden rounded-2xl mb-5 aspect-[4/3]">
+              <div className="relative overflow-hidden aspect-[16/10]">
                 <Image
                   src={post.image}
                   alt={post.title}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-bg/40 to-transparent" />
               </div>
-              
-              {/* Category & Date */}
-              <div className="flex items-center gap-3 mb-3">
-                <span className="text-sm font-medium text-[#3b82f6]">
-                  {post.category}
-                </span>
-                <span className="text-sm text-gray-400">•</span>
-                <span className="text-sm text-gray-500">
-                  {post.date}
-                </span>
+
+              <div className="p-6 flex-1 flex flex-col">
+                <div className="flex items-center gap-3 mb-3 font-mono text-[11px] uppercase tracking-widest text-white/50">
+                  <span>{post.category}</span>
+                  <span className="w-1 h-1 rounded-full bg-white/30" />
+                  <span>{post.date}</span>
+                </div>
+                <h3 className="text-lg md:text-xl font-semibold text-white leading-snug group-hover:text-white transition-colors">
+                  {post.title}
+                </h3>
+                <p className="mt-3 text-sm text-white/60 leading-relaxed line-clamp-2">
+                  {post.excerpt}
+                </p>
               </div>
-              
-              {/* Title */}
-              <h3 className="text-lg md:text-xl font-bold text-[#1d1d1f] leading-snug group-hover:text-[#3b82f6] transition-colors">
-                {post.title}
-              </h3>
             </Link>
           ))}
-        </div>
-
-        {/* Mobile: View More Link */}
-        <div className="md:hidden mt-8 text-center">
-          <Link
-            href="/blog"
-            className="group inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-[#3B82F6] transition-colors"
-          >
-            View More
-            <svg className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 12h14M13 6l6 6-6 6" />
-            </svg>
-          </Link>
         </div>
       </div>
     </section>

@@ -952,7 +952,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
                 {page.description}
               </p>
               <Link
-                href="https://calendly.com/mike_at_pletava/vahue-ai-discovery"
+                href="https://calendly.com/vahue/meeting-with-mike-from-vahue"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 bg-primary text-white font-medium text-sm uppercase tracking-wider px-6 py-3 rounded-full transition-all hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25"
@@ -1065,7 +1065,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
               {/* CTA mid-page */}
               <div className="mt-16 text-center">
                 <Link
-                  href="https://calendly.com/mike_at_pletava/vahue-ai-discovery"
+                  href="https://calendly.com/vahue/meeting-with-mike-from-vahue"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-3 gradient-border-animated text-white font-medium text-sm uppercase tracking-wider px-6 py-3.5 rounded-full hover:bg-[#7c3aed]/20 transition-all duration-200 shadow-[0_0_20px_rgba(124,58,237,0.3)] hover:shadow-[0_0_30px_rgba(124,58,237,0.5)]"
@@ -1187,7 +1187,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
                   Can&apos;t find what you&apos;re looking for? Book a call and we&apos;ll answer everything.
                 </p>
                 <Link
-                  href="https://calendly.com/mike_at_pletava/vahue-ai-discovery"
+                  href="https://calendly.com/vahue/meeting-with-mike-from-vahue"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-[#3B82F6] transition-colors hover:text-[#2563eb]"
@@ -1241,7 +1241,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
-                  href="https://calendly.com/mike_at_pletava/vahue-ai-discovery"
+                  href="https://calendly.com/vahue/meeting-with-mike-from-vahue"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-2 bg-primary text-white font-medium text-sm uppercase tracking-wider px-6 py-3 rounded-full transition-all hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25"
