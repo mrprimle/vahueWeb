@@ -1,11 +1,19 @@
 import type { Metadata } from 'next'
-import PlaceholderPage from '@/components/shared/PlaceholderPage'
+import SegmentLanding from '@/components/segments/SegmentLanding'
+import { insuranceContent } from '@/components/segments/content/insurance'
 
 export const metadata: Metadata = {
-  title: 'Insurance | Vahue',
-  description: 'Vahue for Insurance.',
+  title: 'AI for Insurance | Vahue',
+  description:
+    'Grounded AI agents for FNOL, claims, underwriting, servicing, fraud, and subrogation — wired into Guidewire, Duck Creek, and homegrown cores.',
+  openGraph: {
+    title: 'AI for Insurance | Vahue',
+    description:
+      'Production-grade insurance AI — cited decisions, human-in-the-loop, integrated with your core admin system.',
+    url: 'https://vahue.ai/industries/insurance',
+  },
 }
 
 export default function Page() {
-  return <PlaceholderPage eyebrow="Industries" title="Insurance" />
+  return <SegmentLanding content={insuranceContent} />
 }

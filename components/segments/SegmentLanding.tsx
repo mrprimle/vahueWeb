@@ -10,7 +10,6 @@ import CaseStudies from '@/components/CaseStudies'
 import FounderAndTeam from '@/components/main/FounderAndTeam'
 import ClientsStrip from '@/components/main/ClientsStrip'
 import ContactDynamic from '@/components/main/ContactDynamic'
-import EngagementModels from '@/components/shared/EngagementModels'
 import type { SegmentContent } from './types'
 
 export default function SegmentLanding({ content }: { content: SegmentContent }) {
@@ -28,7 +27,6 @@ export default function SegmentLanding({ content }: { content: SegmentContent })
       <SegmentPointB content={content} />
       <SegmentBarriers content={content} />
       <SegmentCompetitors content={content} />
-      <EngagementModels />
       <CaseStudies />
       <FounderAndTeam />
       <Testimonials />
@@ -47,25 +45,13 @@ function SegmentHero({ content }: { content: SegmentContent }) {
   return (
     <section className="relative min-h-[85vh] flex flex-col bg-bg overflow-hidden">
       <div className="absolute inset-0 hero-texture opacity-60" />
-      <div className="absolute inset-0 pointer-events-none hero-glow" />
       <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-bg pointer-events-none" />
 
       <div className="flex-1 flex items-center relative z-10">
         <div className="w-full max-w-wide mx-auto px-6 md:px-8 pt-32 md:pt-40 pb-16">
-          <div className="max-w-3xl">
-            <div
-              className={`mb-8 transition-all duration-700 ${
-                mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
-            >
-              <span className="badge-dark">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                {content.code} · {content.eyebrow}
-              </span>
-            </div>
-
+          <div className="max-w-3xl xl:max-w-4xl">
             <h1
-              className={`font-display text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[5rem] font-semibold text-white leading-[1.02] tracking-tight transition-all duration-700 ${
+              className={`font-display text-[2.7rem] font-light leading-none md:leading-tight xl:leading-[80px] lg:text-6xl xl:text-7xl -tracking-[0.01em] max-w-2xl xl:max-w-4xl text-balance text-white transition-all duration-700 ${
                 mounted
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-10'
@@ -143,7 +129,7 @@ function SegmentCoreJob({ content }: { content: SegmentContent }) {
       <div className="max-w-wide mx-auto px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 md:gap-16">
           <div>
-            <p className="eyebrow mb-4">Core job</p>
+            <p className="eyebrow mb-4">The mandate</p>
             <h2 className="text-display font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.05] mb-6">
               {content.coreJob.title}
             </h2>
@@ -159,7 +145,7 @@ function SegmentCoreJob({ content }: { content: SegmentContent }) {
                   key={b}
                   className="flex items-start gap-3 text-sm md:text-base text-white/85"
                 >
-                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-white/45 flex-shrink-0" />
                   <span className="leading-relaxed">{b}</span>
                 </li>
               ))}
@@ -193,16 +179,16 @@ function SegmentCoreJob({ content }: { content: SegmentContent }) {
 }
 
 /* =========================
-   3. Aha moments (2-3 cards)
+   3. Why it works (2-3 cards)
    ========================= */
 function SegmentAhas({ content }: { content: SegmentContent }) {
   return (
     <section id="aha" className="relative py-20 md:py-28 scroll-mt-20">
       <div className="max-w-wide mx-auto px-6 md:px-8">
         <div className="mb-12 md:mb-16 max-w-2xl">
-          <p className="eyebrow mb-4">Aha moments</p>
+          <p className="eyebrow mb-4">Why it works</p>
           <h2 className="text-display font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.05]">
-            The shifts that make it click.
+            Why this approach <span className="text-white/55">wins.</span>
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
@@ -212,7 +198,7 @@ function SegmentAhas({ content }: { content: SegmentContent }) {
               className="rounded-3xl border border-border-soft bg-surface p-7 md:p-8"
             >
               <p className="font-mono text-[11px] uppercase tracking-widest text-white/45 mb-4">
-                {String(i + 1).padStart(2, '0')} / Aha
+                {String(i + 1).padStart(2, '0')} · Principle
               </p>
               <h3 className="text-xl md:text-2xl font-semibold mb-3 leading-tight">
                 {a.title}
@@ -229,14 +215,14 @@ function SegmentAhas({ content }: { content: SegmentContent }) {
 }
 
 /* =========================
-   4. Values delivered
+   4. Outcomes (metric strip)
    ========================= */
 function SegmentValues({ content }: { content: SegmentContent }) {
   return (
     <section className="relative py-14 md:py-20">
       <div className="max-w-wide mx-auto px-6 md:px-8">
         <div className="mb-10 md:mb-12 max-w-2xl">
-          <p className="eyebrow mb-3">Value delivered</p>
+          <p className="eyebrow mb-3">Outcomes</p>
           <h2 className="text-display font-display text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight">
             The outcomes we commit to.
           </h2>
@@ -247,7 +233,7 @@ function SegmentValues({ content }: { content: SegmentContent }) {
               key={v.label}
               className="border-l border-border-mid pl-5"
             >
-              <p className="text-3xl md:text-4xl lg:text-5xl font-display font-semibold tracking-tight leading-none mb-2 gradient-text-scale">
+              <p className="text-3xl md:text-4xl lg:text-5xl font-display font-semibold tracking-tight leading-none mb-2 text-white">
                 {v.metric}
               </p>
               <p className="text-xs md:text-sm text-white/55 font-mono uppercase tracking-widest">
@@ -262,22 +248,22 @@ function SegmentValues({ content }: { content: SegmentContent }) {
 }
 
 /* =========================
-   5. Self-recognition (triggers/emotions/pains)
+   5. Pain points (3 columns: what's happening / how it feels / where it hurts)
    ========================= */
 function SegmentSelfRecognition({ content }: { content: SegmentContent }) {
   return (
     <section className="relative py-20 md:py-28">
       <div className="max-w-wide mx-auto px-6 md:px-8">
         <div className="mb-12 md:mb-14 max-w-2xl">
-          <p className="eyebrow mb-4">Sound familiar?</p>
+          <p className="eyebrow mb-4">Pain points</p>
           <h2 className="text-display font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.05]">
-            You&apos;re not imagining the pattern.
+            Do you recognize <span className="text-white/55">your team?</span>
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-          <RecognitionColumn label="Triggers" items={content.triggers} />
-          <RecognitionColumn label="Emotions" items={content.emotions} />
-          <RecognitionColumn label="Pains" items={content.pains} />
+          <RecognitionColumn label="What's happening" items={content.triggers} />
+          <RecognitionColumn label="How it feels" items={content.emotions} />
+          <RecognitionColumn label="Where it hurts" items={content.pains} />
         </div>
       </div>
     </section>
@@ -305,27 +291,27 @@ function RecognitionColumn({ label, items }: { label: string; items: string[] })
 }
 
 /* =========================
-   6. How we deliver — micro-jobs → value
+   6. What we ship — workstreams → value
    ========================= */
 function SegmentHowWeDeliver({ content }: { content: SegmentContent }) {
   return (
     <section id="how" className="relative py-20 md:py-28 scroll-mt-20">
       <div className="max-w-wide mx-auto px-6 md:px-8">
         <div className="mb-12 md:mb-16 max-w-2xl">
-          <p className="eyebrow mb-4">How we deliver</p>
+          <p className="eyebrow mb-4">What we ship</p>
           <h2 className="text-display font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.05]">
-            Micro-jobs, real artifacts, clear value.
+            Workstreams, real artifacts, measurable outcomes.
           </h2>
           <p className="mt-4 text-white/60 text-base md:text-lg max-w-xl">
-            Every engagement decomposes into small jobs you can ship and
-            measure. Here&apos;s the playbook for this segment.
+            Every engagement decomposes into clear workstreams you can ship
+            and measure. Here&apos;s the playbook for this segment.
           </p>
         </div>
 
         <div className="rounded-3xl border border-border-mid overflow-hidden">
           <div className="grid grid-cols-12 px-6 md:px-8 py-4 bg-white/[0.03] border-b border-border-mid font-mono text-[11px] uppercase tracking-widest text-white/50">
-            <div className="col-span-12 md:col-span-3">Micro-job</div>
-            <div className="hidden md:block md:col-span-4">One-liner</div>
+            <div className="col-span-12 md:col-span-3">Workstream</div>
+            <div className="hidden md:block md:col-span-4">What it does</div>
             <div className="hidden md:block md:col-span-3">Deliverables</div>
             <div className="hidden md:block md:col-span-2">Outcome</div>
           </div>
@@ -337,7 +323,7 @@ function SegmentHowWeDeliver({ content }: { content: SegmentContent }) {
               >
                 <div className="col-span-12 md:col-span-3">
                   <p className="font-mono text-[11px] uppercase tracking-widest text-white/40 mb-1">
-                    MJ-{String(idx + 1).padStart(2, '0')}
+                    {String(idx + 1).padStart(2, '0')}
                   </p>
                   <p className="text-white font-semibold text-base">
                     {mj.title}
@@ -359,7 +345,7 @@ function SegmentHowWeDeliver({ content }: { content: SegmentContent }) {
                     ))}
                   </ul>
                 </div>
-                <div className="col-span-12 md:col-span-2 text-sm font-semibold gradient-text-animated">
+                <div className="col-span-12 md:col-span-2 text-sm font-semibold text-white">
                   {mj.outcome}
                 </div>
               </div>
@@ -372,25 +358,18 @@ function SegmentHowWeDeliver({ content }: { content: SegmentContent }) {
 }
 
 /* =========================
-   7. Point B — emotions + snapshot + big jobs
+   7. After-state — emotions + snapshot + what becomes possible
    ========================= */
 function SegmentPointB({ content }: { content: SegmentContent }) {
   return (
     <section className="relative py-20 md:py-28">
       <div className="max-w-wide mx-auto px-6 md:px-8">
         <div className="relative rounded-3xl border border-border-mid overflow-hidden">
-          <div
-            className="absolute inset-0 pointer-events-none opacity-80"
-            style={{
-              background:
-                'radial-gradient(90% 80% at 100% 0%, rgba(3,137,244,0.16) 0%, rgba(132,52,233,0.10) 40%, transparent 75%)',
-            }}
-          />
           <div className="relative bg-surface p-8 md:p-12 grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16">
             <div>
-              <p className="eyebrow mb-4">Point B</p>
+              <p className="eyebrow mb-4">After-state</p>
               <h2 className="text-display font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.05] mb-5">
-                What life looks like on the other side.
+                What changes <span className="text-white/55">on the other side.</span>
               </h2>
               <p className="text-white/65 text-base md:text-lg leading-relaxed mb-8">
                 {content.pointB.snapshot}
@@ -408,7 +387,7 @@ function SegmentPointB({ content }: { content: SegmentContent }) {
               </div>
             </div>
             <div>
-              <p className="eyebrow mb-5">Bigger jobs unlocked</p>
+              <p className="eyebrow mb-5">What becomes possible</p>
               <ul className="flex flex-col gap-4">
                 {content.pointB.bigJobs.map((j, i) => (
                   <li
@@ -433,16 +412,16 @@ function SegmentPointB({ content }: { content: SegmentContent }) {
 }
 
 /* =========================
-   8. Barriers removed
+   8. Concerns, answered
    ========================= */
 function SegmentBarriers({ content }: { content: SegmentContent }) {
   return (
     <section className="relative py-20 md:py-28">
       <div className="max-w-wide mx-auto px-6 md:px-8">
         <div className="mb-12 md:mb-16 max-w-2xl">
-          <p className="eyebrow mb-4">Barriers, removed</p>
+          <p className="eyebrow mb-4">Concerns, answered</p>
           <h2 className="text-display font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.05]">
-            The usual objections — handled.
+            The usual <span className="text-white/55">concerns</span> — handled.
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
@@ -452,7 +431,7 @@ function SegmentBarriers({ content }: { content: SegmentContent }) {
               className="rounded-3xl border border-border-soft bg-surface p-7 md:p-8"
             >
               <p className="font-mono text-[11px] uppercase tracking-widest text-white/40 mb-3">
-                Objection {String(i + 1).padStart(2, '0')}
+                Concern {String(i + 1).padStart(2, '0')}
               </p>
               <p className="text-lg md:text-xl font-semibold text-white mb-3 leading-snug">
                 &ldquo;{b.objection}&rdquo;
@@ -469,7 +448,7 @@ function SegmentBarriers({ content }: { content: SegmentContent }) {
 }
 
 /* =========================
-   9. Competitors fired
+   9. Alternatives — why us, not...
    ========================= */
 function SegmentCompetitors({ content }: { content: SegmentContent }) {
   if (!content.competitors || content.competitors.length === 0) return null
@@ -477,9 +456,9 @@ function SegmentCompetitors({ content }: { content: SegmentContent }) {
     <section className="relative py-16 md:py-24">
       <div className="max-w-wide mx-auto px-6 md:px-8">
         <div className="mb-10 md:mb-12 max-w-2xl">
-          <p className="eyebrow mb-4">Who we replace</p>
+          <p className="eyebrow mb-4">Alternatives</p>
           <h2 className="text-display font-display text-2xl md:text-3xl lg:text-4xl font-semibold leading-tight">
-            What teams fire when they hire Vahue.
+            Why us and <span className="text-white/55">not&hellip;</span>
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
