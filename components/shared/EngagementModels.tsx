@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import type { SVGProps } from 'react'
+import type { ReactElement, SVGProps } from 'react'
 import { useState } from 'react'
 
 type IconProps = SVGProps<SVGSVGElement>
@@ -309,7 +309,7 @@ function BentoCard({
   body: string
   href: string
   accent?: string
-  Icon?: (p: IconProps) => JSX.Element
+  Icon?: (p: IconProps) => ReactElement
 }) {
   return (
     <Link
