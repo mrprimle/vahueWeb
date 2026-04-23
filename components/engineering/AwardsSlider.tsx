@@ -225,6 +225,7 @@ export default function AwardsSlider() {
                       width={120}
                       height={120}
                       className="max-w-[100px] max-h-[100px] md:max-w-[120px] md:max-h-[120px] object-contain"
+                      style={{ width: 'auto', height: 'auto' }}
                       draggable={false}
                     />
                   </div>

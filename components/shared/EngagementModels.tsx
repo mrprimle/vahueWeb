@@ -180,21 +180,21 @@ export default function EngagementModels() {
             category="Staffing"
             title="AI-Native Talent"
             body="The next evolution of engineering is here: building and scaling AI-native, agentic ways of working across the software development life cycle to enable high-performance teams."
-            href="/services/ai-native-talent"
+            href="/ai-native-talent"
             Icon={TalentIcon}
           />
           <BentoCard
             category="Training"
             title="Team Training"
             body="Talent agility is now essential — pushing organizations to continuously rebalance their human and AI workforce to unlock the full potential of every employee."
-            href="/services/team-training"
+            href="/team-training"
             Icon={GraduationCapIcon}
           />
           <BentoCard
             category="Founders Community"
             title="AI Incubator"
             body="A community-as-a-service for founders — weekly content, hands-on playbooks, and real case studies from teams shipping AI in production."
-            href="/services/vahue-incubator"
+            href="/vahue-incubator"
             accent="radial-gradient(120% 120% at 100% 0%, rgba(132,52,233,0.22) 0%, rgba(3,137,244,0.08) 45%, transparent 80%)"
             Icon={CommunityIcon}
           />
@@ -215,7 +215,7 @@ export default function EngagementModels() {
                   Systems &amp; Automations
                 </p>
                 <Link
-                  href="/services/enterprise-ai"
+                  href="/enterprise-ai"
                   aria-label="Learn more about Enterprise AI Hub"
                   className="group/link inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-white/55 group-hover:text-white transition-colors"
                 >
@@ -250,7 +250,7 @@ export default function EngagementModels() {
               <div
                 role="tablist"
                 aria-label="Agent type"
-                className="inline-flex flex-wrap gap-1.5 p-1 rounded-full border border-border-soft bg-white/[0.03] self-start mb-6"
+                className="inline-flex flex-nowrap gap-1 md:gap-1.5 p-1 rounded-full border border-border-soft bg-white/[0.03] self-start mb-6"
               >
                 {tabs.map((t) => {
                   const isActive = t.key === activeTab
@@ -260,7 +260,7 @@ export default function EngagementModels() {
                       role="tab"
                       aria-selected={isActive}
                       onClick={() => setActiveTab(t.key)}
-                      className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
+                      className={`whitespace-nowrap px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold transition-all duration-200 ${
                         isActive
                           ? 'bg-white text-[#0a0a14] shadow-[0_0_0_1px_rgba(255,255,255,0.2)]'
                           : 'text-white/70 hover:text-white hover:bg-white/[0.04]'

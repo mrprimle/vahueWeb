@@ -176,8 +176,8 @@ export default function AJTBDProblems() {
           </div>
         </div>
 
-        {/* Why us contrast panel */}
-        <div className="relative mt-12 md:mt-16 rounded-3xl border border-border-mid overflow-hidden">
+        {/* Why us contrast panel — temporarily hidden */}
+        {/* <div className="relative mt-12 md:mt-16 rounded-3xl border border-border-mid overflow-hidden">
           <div
             className="absolute inset-0 pointer-events-none opacity-80"
             style={{
@@ -217,7 +217,7 @@ export default function AJTBDProblems() {
               ))}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   )

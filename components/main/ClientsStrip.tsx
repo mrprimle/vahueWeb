@@ -22,10 +22,12 @@ export default function ClientsStrip() {
         </div>
         <div className="rounded-3xl border border-border-soft bg-surface p-6 md:p-8">
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-8 gap-6 md:gap-8 items-center justify-items-center">
-            {companies.map((company) => (
+            {companies.map((company, idx) => (
               <div
                 key={company.name}
-                className="flex items-center justify-center"
+                className={`flex items-center justify-center ${
+                  idx >= 3 ? 'hidden sm:flex' : ''
+                }`}
               >
                 <Image
                   src={company.logo}

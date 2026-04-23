@@ -284,23 +284,23 @@ const navGroups: NavGroup[] = [
     columns: [
       [
         {
-          href: '/services/vahue-incubator',
+          href: '/vahue-incubator',
           label: 'AI Incubator',
           Icon: CommunityIcon,
           badge: 'NEW',
         },
         {
-          href: '/services/ai-native-talent',
+          href: '/ai-native-talent',
           label: 'AI-Native Talent',
           Icon: UsersIcon,
         },
         {
-          href: '/services/team-training',
+          href: '/team-training',
           label: 'Team Training',
           Icon: GraduationCapIcon,
         },
         {
-          href: '/services/enterprise-ai',
+          href: '/enterprise-ai',
           label: 'Enterprise AI',
           Icon: EnterpriseIcon,
         },
@@ -341,17 +341,17 @@ const navGroups: NavGroup[] = [
     columns: [
       [
         {
-          href: '/resources/marketplace',
+          href: '/marketplace',
           label: 'Marketplace',
           Icon: MarketplaceIcon,
         },
-        { href: '/resources/guides', label: 'Guides', Icon: GuidesIcon },
+        { href: '/guides', label: 'Guides', Icon: GuidesIcon },
         { href: '/blog', label: 'Blog', Icon: BlogIcon },
       ],
       [
-        { href: '/resources/events', label: 'Events', Icon: EventsIcon },
+        { href: '/events', label: 'Events', Icon: EventsIcon },
         {
-          href: '/resources/leader-board',
+          href: '/leader-board',
           label: 'Frontier AI Leaderboards',
           Icon: LeaderboardIcon,
         },
@@ -455,11 +455,11 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Announcement bar — homepage only, in normal flow so it scrolls away */}
+      {/* Announcement bar — homepage only, desktop/tablet only (mobile shows pill in Hero) */}
       {isHomePage && (
-        <div className="relative z-40 w-full bg-black/40 backdrop-blur-xl border-b border-white/10 text-white text-xs md:text-sm">
+        <div className="relative z-40 w-full bg-black/40 backdrop-blur-xl border-b border-white/10 text-white text-xs md:text-sm hidden md:block">
           <Link
-            href="/resources/events"
+            href="/events"
             className="group/anno flex items-center justify-center px-6 py-4 text-center text-white"
           >
             <span className="font-medium">

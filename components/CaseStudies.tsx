@@ -29,7 +29,7 @@ const caseStudies = [
       { value: '95%', description: 'customer satisfaction score with AI-assisted support' },
     ],
     stack:
-      'OpenAI API, LangChain, Pinecone, Next.js, Vercel, PostgreSQL, Redis, Clawbot',
+      'Anthropic API, LangChain, Pinecone, Next.js, Vercel, PostgreSQL, Redis, NanoClaw',
   },
 ]
 

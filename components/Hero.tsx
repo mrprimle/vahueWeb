@@ -35,10 +35,47 @@ export default function Hero() {
       <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-bg pointer-events-none" />
 
       <div className="relative z-10">
-        <div className="w-full max-w-wide mx-auto px-6 md:px-8 pt-16 md:pt-24 pb-20 md:pb-28">
+        <div className="w-full max-w-wide mx-auto px-6 md:px-8 pt-10 md:pt-24 pb-20 md:pb-28">
           <div className="max-w-3xl">
+            {/* Mobile-only notification pill (replaces announcement bar) */}
+            <div
+              className={`md:hidden flex justify-center mb-6 ${
+                mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{
+                transition:
+                  'opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1)',
+                transitionDelay: mounted ? '60ms' : '0ms',
+              }}
+            >
+              <Link
+                href="/events"
+                className="group/pill inline-flex items-center gap-1.5 pl-3 pr-2.5 py-1.5 rounded-full bg-white/[0.06] border border-white/10 backdrop-blur-md text-white/85 text-xs font-medium hover:bg-white/[0.09] hover:border-white/15 transition-colors"
+              >
+                <span>
+                  Vahue Momentum
+                  <span className="text-white/40 mx-1.5">|</span>
+                  SF 2026
+                </span>
+                <svg
+                  className="w-3.5 h-3.5 text-white/70 transition-transform duration-200 group-hover/pill:translate-x-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.25}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </Link>
+            </div>
+
             <h1
-              className={`font-display text-[2.7rem] font-light leading-none md:leading-tight xl:leading-[80px] lg:text-6xl xl:text-7xl -tracking-[0.01em] max-w-2xl xl:max-w-4xl text-balance text-center md:text-left text-white ${
+              className={`font-display text-[2.7rem] font-light leading-none md:leading-tight xl:leading-[80px] lg:text-6xl xl:text-7xl -tracking-[0.01em] max-w-2xl xl:max-w-4xl text-balance text-left text-white ${
                 mounted
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-12'

@@ -1,12 +1,18 @@
 'use client'
 
-import { useState, useCallback, ChangeEvent, FormEvent, useRef } from 'react'
+import { useState, useCallback, useEffect, ChangeEvent, FormEvent, useRef } from 'react'
 import Link from 'next/link'
 import emailjs from '@emailjs/browser'
 
 const emailRegexp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-const interestOptions = ['HIRING A TEAM', 'OUTSOURCING A PROJECT', 'AI/ML', 'OTHER']
+const interestOptions = [
+  'CONSULTING',
+  'PROJECT-BASED DEVELOPMENT',
+  'TRAINING',
+  'TEAM EXTENSIONS',
+  'OTHER',
+]
 
 interface ContactContainerProps {
   extraMargin?: boolean
@@ -21,7 +27,30 @@ export default function ContactContainer({ extraMargin }: ContactContainerProps)
   const [message, setMessage] = useState('')
   const [isEmailValid, setIsEmailValid] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
   const formRef = useRef<HTMLFormElement>(null)
+
+  const closeSuccessModal = useCallback(() => setIsSubmitted(false), [])
+
+  useEffect(() => {
+    if (isSubmitted) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isSubmitted])
+
+  useEffect(() => {
+    if (!isSubmitted) return
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeSuccessModal()
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [isSubmitted, closeSuccessModal])
 
   const handleNameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value
@@ -93,9 +122,7 @@ export default function ContactContainer({ extraMargin }: ContactContainerProps)
         setHeadcount('')
         setInterests([])
         setMessage('')
-        alert(
-          'Thank you for taking the first step for our partnership! Our consultant will be in touch with you in 24 hours.'
-        )
+        setIsSubmitted(true)
       } catch (error) {
         console.error('Error submitting form:', error)
         alert('Something went wrong. Please try again.')
@@ -130,7 +157,9 @@ export default function ContactContainer({ extraMargin }: ContactContainerProps)
                 <h2 className="text-display font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.05] mb-5">
                   Let&apos;s talk
                   <br />
-                  <span className="gradient-text-scale">possibilities.</span>
+                  <span className="bg-gradient-to-r from-white to-[#b99dff] bg-clip-text text-transparent">
+                    possibilities.
+                  </span>
                 </h2>
               </div>
 
@@ -284,6 +313,64 @@ export default function ContactContainer({ extraMargin }: ContactContainerProps)
           </div>
         </div>
       </div>
+
+      {isSubmitted && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="contact-success-title"
+        >
+          <div
+            className="absolute inset-0 bg-black/70 backdrop-blur-md"
+            onClick={closeSuccessModal}
+          />
+
+          <div className="relative w-full max-w-md rounded-2xl bg-surface border border-border-mid shadow-2xl shadow-black/60 p-7 md:p-8">
+            <button
+              type="button"
+              onClick={closeSuccessModal}
+              aria-label="Close"
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            <div className="py-6">
+              <p className="eyebrow mb-2">Message received</p>
+              <h3
+                id="contact-success-title"
+                className="text-2xl font-semibold text-white mb-3"
+              >
+                Thanks for reaching out
+              </h3>
+              <p className="text-white/70 text-sm leading-relaxed">
+                Thanks for taking the first step toward our partnership. One of
+                our consultants will be in touch within 24 hours.
+              </p>
+              <button
+                type="button"
+                onClick={closeSuccessModal}
+                className="mt-6 w-full py-3 rounded-full bg-white text-bg font-medium text-sm uppercase tracking-wider hover:bg-white/90 transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
