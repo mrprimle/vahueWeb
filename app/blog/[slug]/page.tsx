@@ -1,21 +1,21 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import ContactCards from '@/components/ContactCards'
+import { DISCOVERY_CALL_URL } from '@/lib/links'
 
-// Breadcrumb component
 function Breadcrumbs({ items }: { items: { label: string; href?: string }[] }) {
   return (
-    <nav className="flex items-center gap-2 text-sm text-gray-500 mb-8">
+    <nav className="flex items-center gap-2 text-sm text-white/45 mb-10 flex-wrap">
       {items.map((item, index) => (
         <span key={index} className="flex items-center gap-2">
-          {index > 0 && <span className="text-gray-300">/</span>}
+          {index > 0 && <span className="text-white/20">/</span>}
           {item.href ? (
-            <Link href={item.href} className="hover:text-[#3b82f6] transition-colors">
+            <Link href={item.href} className="hover:text-white transition-colors">
               {item.label}
             </Link>
           ) : (
-            <span className="text-[#1d1d1f]">{item.label}</span>
+            <span className="text-white/85">{item.label}</span>
           )}
         </span>
       ))}
@@ -23,23 +23,27 @@ function Breadcrumbs({ items }: { items: { label: string; href?: string }[] }) {
   )
 }
 
-// Blog post data
-const blogPosts: Record<string, {
+type BlogPost = {
   title: string
   excerpt: string
   image: string
   date: string
   category: string
+  readTime: string
   author: string
   authorRole: string
   content: string
-}> = {
+}
+
+const blogPosts: Record<string, BlogPost> = {
   'secure-llm-deployment-enterprise': {
     title: 'Deploying LLMs Securely in Enterprise Environments',
-    excerpt: 'A practical guide to integrating large language models with sensitive business data while staying compliant and secure.',
+    excerpt:
+      'A practical guide to integrating large language models with sensitive business data while staying compliant and secure.',
     image: '/img/blog/blog1.jpg',
     date: 'January 15, 2026',
     category: 'AI & Machine Learning',
+    readTime: '12 min read',
     author: 'Vahue Team',
     authorRole: 'Engineering',
     content: `
@@ -146,10 +150,12 @@ const blogPosts: Record<string, {
   },
   'code-data-sources-for-llm-training': {
     title: 'Evaluating Code Data Sources for Training Large Language Models',
-    excerpt: 'A practical comparison of the major code dataset sources — from open-source repos to dedicated coding teams — and how to choose the right one.',
+    excerpt:
+      'A practical comparison of the major code dataset sources — from open-source repos to dedicated coding teams — and how to choose the right one.',
     image: '/img/blog/blog2.jpg',
     date: 'January 10, 2026',
     category: 'AI & Machine Learning',
+    readTime: '10 min read',
     author: 'Vahue Team',
     authorRole: 'Engineering',
     content: `
@@ -265,10 +271,12 @@ const blogPosts: Record<string, {
   },
   'human-written-code-llm-training': {
     title: 'The Case for Human-Written Code in LLM Training',
-    excerpt: 'Why human-authored code remains essential for building reliable coding assistants — and where synthetic data falls short.',
+    excerpt:
+      'Why human-authored code remains essential for building reliable coding assistants — and where synthetic data falls short.',
     image: '/img/blog/blog3.png',
     date: 'January 5, 2026',
     category: 'AI & Machine Learning',
+    readTime: '9 min read',
     author: 'Vahue Team',
     authorRole: 'Engineering',
     content: `
@@ -379,103 +387,275 @@ const blogPosts: Record<string, {
 }
 
 export function generateStaticParams() {
-  return Object.keys(blogPosts).map((slug) => ({
-    slug,
-  }))
+  return Object.keys(blogPosts).map((slug) => ({ slug }))
 }
 
-export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
   const { slug } = await params
   const post = blogPosts[slug]
-  
+  if (!post) return {}
+  return {
+    title: `${post.title} | Vahue`,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url: `https://vahue.ai/blog/${slug}`,
+      images: [{ url: post.image }],
+    },
+  }
+}
+
+export default async function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+  const post = blogPosts[slug]
+
   if (!post) {
     notFound()
   }
 
+  const relatedPosts = Object.entries(blogPosts)
+    .filter(([key]) => key !== slug)
+    .slice(0, 2)
+    .map(([key, value]) => ({ slug: key, ...value }))
+
+  const truncatedTitle =
+    post.title.length > 48 ? post.title.substring(0, 48) + '…' : post.title
+
   return (
-    <>
-      <main className="min-h-screen bg-white pt-32 pb-20">
-        <article className="w-full max-w-3xl mx-auto px-6 md:px-8">
-          {/* Breadcrumbs */}
-          <Breadcrumbs items={[
-            { label: 'Home', href: '/' },
-            { label: 'Blog', href: '/blog' },
-            { label: post.title.length > 40 ? post.title.substring(0, 40) + '...' : post.title },
-          ]} />
+    <main className="bg-bg">
+      {/* Header + hero */}
+      <section className="relative overflow-hidden bg-bg">
+        <div className="absolute inset-0 hero-texture opacity-50" />
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-bg pointer-events-none" />
 
-          {/* Category & Date */}
-          <div className="flex items-center gap-3 mb-4">
-            <span className="text-sm font-medium text-[#3b82f6]">
-              {post.category}
-            </span>
-            <span className="text-sm text-gray-400">•</span>
-            <span className="text-sm text-gray-500">
-              {post.date}
-            </span>
-          </div>
-
-          {/* Title */}
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1d1d1f] mb-6 leading-tight">
-            {post.title}
-          </h1>
-
-          {/* Excerpt */}
-          <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-            {post.excerpt}
-          </p>
-
-          {/* Author */}
-          <div className="flex items-center gap-3 mb-10 pb-10 border-b border-gray-200">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#8b5cf6] to-[#3b82f6] flex items-center justify-center text-white font-bold">
-              {post.author.charAt(0)}
-            </div>
-            <div>
-              <p className="font-semibold text-[#1d1d1f]">{post.author}</p>
-              <p className="text-sm text-gray-500">{post.authorRole}</p>
-            </div>
-          </div>
-
-          {/* Featured Image */}
-          <div className="relative overflow-hidden rounded-2xl mb-12 aspect-[16/9]">
-            <Image
-              src={post.image}
-              alt={post.title}
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-
-          {/* Content */}
-          <div 
-            className="blog-content"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+        <div className="relative z-10 w-full max-w-wide mx-auto px-6 md:px-8 pt-28 md:pt-32 pb-10 md:pb-14">
+          <Breadcrumbs
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Blog', href: '/blog' },
+              { label: truncatedTitle },
+            ]}
           />
 
-          {/* CTA */}
-          <div className="mt-16 p-8 md:p-12 bg-gradient-to-br from-[#8b5cf6]/10 to-[#3b82f6]/10 rounded-3xl text-center">
-            <h3 className="text-2xl md:text-3xl font-bold text-[#1d1d1f] mb-4">
-              Ready to build something great?
-            </h3>
-            <p className="text-gray-600 mb-6 max-w-lg mx-auto">
-              Let&apos;s discuss how Vahue can help you achieve your technology goals.
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-3 flex-wrap mb-6">
+              <span className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-white/80">
+                {post.category}
+              </span>
+              <span className="text-white/30 text-sm">·</span>
+              <span className="text-white/60 text-sm">{post.date}</span>
+              <span className="text-white/30 text-sm">·</span>
+              <span className="text-white/60 text-sm">{post.readTime}</span>
+            </div>
+
+            <h1 className="font-display text-[2.2rem] md:text-5xl lg:text-6xl font-light leading-[1.08] -tracking-[0.01em] text-balance text-white">
+              {post.title}
+            </h1>
+
+            <p className="mt-6 text-white/70 text-lg md:text-xl leading-relaxed max-w-2xl">
+              {post.excerpt}
             </p>
+
+            <div className="mt-8 flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white font-medium text-sm">
+                {post.author.charAt(0)}
+              </div>
+              <div className="text-sm">
+                <p className="text-white font-medium">{post.author}</p>
+                <p className="text-white/50">{post.authorRole}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured image */}
+      <section className="w-full max-w-wide mx-auto px-6 md:px-8 pb-10 md:pb-14">
+        <div className="relative overflow-hidden rounded-2xl md:rounded-3xl border border-border-soft aspect-[16/9]">
+          <Image
+            src={post.image}
+            alt={post.title}
+            fill
+            priority
+            sizes="(min-width: 1280px) 1280px, 100vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 ring-1 ring-inset ring-white/5 pointer-events-none" />
+        </div>
+      </section>
+
+      {/* Article body */}
+      <section className="w-full max-w-standard mx-auto px-6 md:px-8 pb-20 md:pb-28">
+        <article
+          className="blog-content"
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
+      </section>
+
+      {/* CTA */}
+      <section className="w-full max-w-wide mx-auto px-6 md:px-8 pb-20 md:pb-28">
+        <div className="relative overflow-hidden rounded-3xl border border-border-soft bg-white/[0.03] p-8 md:p-12 lg:p-14">
+          <div className="absolute inset-0 hero-texture opacity-30 pointer-events-none" />
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-8 lg:gap-12 items-center">
+            <div>
+              <p className="eyebrow mb-4">Next step</p>
+              <h3 className="font-display text-2xl md:text-3xl lg:text-4xl font-light leading-tight text-white text-balance">
+                Deploying something similar?{' '}
+                <span
+                  style={{
+                    background:
+                      'linear-gradient(90deg, #ffffff 0%, #b8b8ff 100%)',
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}
+                >
+                  Let&apos;s talk.
+                </span>
+              </h3>
+              <p className="mt-5 text-white/70 text-base md:text-lg leading-relaxed max-w-xl">
+                Vahue helps teams ship enterprise-grade AI systems — from secure
+                LLM deployments to AI-native engineering pods. 30-minute
+                discovery call, zero pressure.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3 lg:items-end">
+              <Link
+                href={DISCOVERY_CALL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-3 bg-white text-bg font-medium text-sm uppercase tracking-wider px-6 py-3.5 rounded-full hover:bg-white/90 transition-colors"
+              >
+                Book a Discovery Call
+                <svg
+                  className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M7 17L17 7M17 7H7M17 7v10"
+                  />
+                </svg>
+              </Link>
+              <Link
+                href="/blog"
+                className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors"
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M11 17l-5-5m0 0l5-5m-5 5h12"
+                  />
+                </svg>
+                Back to all articles
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Related posts */}
+      {relatedPosts.length > 0 && (
+        <section className="w-full max-w-wide mx-auto px-6 md:px-8 pb-28 md:pb-32">
+          <div className="hairline mb-12" />
+          <div className="flex items-end justify-between gap-4 mb-8">
+            <h3 className="font-display text-2xl md:text-3xl font-light text-white">
+              Keep reading
+            </h3>
             <Link
-              href="https://calendly.com/vahue/meeting-with-mike-from-vahue"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#3b82f6] text-white rounded-full font-medium hover:bg-[#2563eb] transition-colors"
+              href="/blog"
+              className="text-sm text-white/70 hover:text-white transition-colors hidden md:inline-flex items-center gap-1.5"
             >
-              Schedule a Call
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              All articles
+              <svg
+                className="w-3.5 h-3.5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
               </svg>
             </Link>
           </div>
-        </article>
-      </main>
 
-      <ContactCards />
-    </>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            {relatedPosts.map((related) => (
+              <Link
+                key={related.slug}
+                href={`/blog/${related.slug}`}
+                className="group flex flex-col rounded-2xl border border-border-soft bg-white/[0.02] overflow-hidden hover:border-border-mid hover:bg-white/[0.035] transition-colors"
+              >
+                <div className="relative aspect-[16/9] overflow-hidden">
+                  <Image
+                    src={related.image}
+                    alt={related.title}
+                    fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  />
+                </div>
+                <div className="p-6 md:p-7 flex flex-col flex-1">
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-white/60">
+                    {related.category}
+                  </span>
+                  <h4 className="mt-3 font-display text-lg md:text-xl font-light leading-snug text-white text-balance">
+                    {related.title}
+                  </h4>
+                  <div className="mt-5 pt-4 border-t border-white/5 flex items-center justify-between text-xs text-white/50">
+                    <span>{related.date}</span>
+                    <span className="inline-flex items-center gap-1.5 text-white/70 group-hover:text-white transition-colors">
+                      Read
+                      <svg
+                        className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M13 7l5 5m0 0l-5 5m5-5H6"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+    </main>
   )
 }

@@ -1,10 +1,10 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import ContactCards from '@/components/ContactCards'
+import { DISCOVERY_CALL_URL } from '@/lib/links'
 
-// Case study data
-const caseStudies: Record<string, {
+type CaseStudy = {
   company: string
   title: string
   location: string
@@ -23,18 +23,24 @@ const caseStudies: Record<string, {
   solution: string
   results: string[]
   technologies: string[]
-}> = {
-  'audi': {
+}
+
+const caseStudies: Record<string, CaseStudy> = {
+  audi: {
     company: 'AUDI',
-    title: "Revolutionizing automation testing and CI/CD for AUDI's myAudi systems",
+    title:
+      "Revolutionizing automation testing and CI/CD for AUDI's myAudi systems",
     location: 'Germany',
     tags: ['AUTOMOTIVE', 'QA AUTOMATION', 'CI/CD'],
     rating: 5.0,
     bgImage: '/img/cases/audiBg.webp',
     resultImage: '/img/cases/audiResult.webp',
-    overview: 'Vahue partnered with AUDI to transform their quality assurance processes for the myAudi digital ecosystem, implementing cutting-edge automation testing frameworks and streamlined CI/CD pipelines.',
-    challenge: 'AUDI needed to modernize their testing infrastructure to keep pace with rapid development cycles. The existing manual testing processes were time-consuming and couldn\'t scale with the growing complexity of the myAudi platform.',
-    solution: 'We implemented a comprehensive automation testing strategy using industry-leading tools and frameworks. Our team designed and built a robust CI/CD pipeline that integrated seamlessly with AUDI\'s existing development workflow, enabling faster deployments and higher code quality.',
+    overview:
+      'Vahue partnered with AUDI to transform their quality assurance processes for the myAudi digital ecosystem, implementing cutting-edge automation testing frameworks and streamlined CI/CD pipelines.',
+    challenge:
+      "AUDI needed to modernize their testing infrastructure to keep pace with rapid development cycles. The existing manual testing processes were time-consuming and couldn't scale with the growing complexity of the myAudi platform.",
+    solution:
+      "We implemented a comprehensive automation testing strategy using industry-leading tools and frameworks. Our team designed and built a robust CI/CD pipeline that integrated seamlessly with AUDI's existing development workflow, enabling faster deployments and higher code quality.",
     results: [
       '80% reduction in manual testing time',
       '50% faster release cycles',
@@ -45,21 +51,25 @@ const caseStudies: Record<string, {
   },
   'living-security': {
     company: 'Living Security',
-    title: 'Gamified cybersecurity e-Learning web platform for Fortune 500 Enterprises',
+    title:
+      'Gamified cybersecurity e-Learning web platform for Fortune 500 enterprises',
     location: 'Austin, TX, USA',
     tags: ['E-LEARNING', 'CYBERSECURITY', 'GAMIFICATION'],
     rating: 5.0,
     bgImage: '/img/cases/LivingSecurityBg.webp',
     resultImage: '/img/cases/LivingSecurityResult.webp',
     testimonial: {
-      text: "I've managed a number of outsourcing relationships in my career, and they've really stood out to me. Vahue has worked diligently to understand our goals. Based on this understanding, they've morphed their practices to fit our needs. WSY team work has directly contributed to our revenue growth. We've grown our ARR significantly since engaging with them.",
+      text: "I've managed a number of outsourcing relationships in my career, and they've really stood out to me. Vahue has worked diligently to understand our goals. Based on this understanding, they've morphed their practices to fit our needs. The team's work has directly contributed to our revenue growth. We've grown our ARR significantly since engaging with them.",
       author: 'Matt Ward',
       role: 'Director of Engineering at Living Security',
       avatar: '/img/cases/LivingSecurityAvatar.png',
     },
-    overview: 'Living Security approached Vahue to build an innovative cybersecurity training platform that would engage enterprise employees through gamification while delivering measurable security awareness improvements.',
-    challenge: 'Traditional cybersecurity training is often boring and ineffective. Living Security needed a platform that would not only educate employees about security threats but also keep them engaged and motivated to complete training modules.',
-    solution: 'We developed a comprehensive e-learning platform featuring interactive games, simulations, and quizzes. The platform includes detailed analytics dashboards for enterprise administrators to track employee progress and identify security knowledge gaps.',
+    overview:
+      'Living Security approached Vahue to build an innovative cybersecurity training platform that would engage enterprise employees through gamification while delivering measurable security-awareness improvements.',
+    challenge:
+      'Traditional cybersecurity training is often boring and ineffective. Living Security needed a platform that would not only educate employees about security threats but also keep them engaged and motivated to complete training modules.',
+    solution:
+      'We developed a comprehensive e-learning platform featuring interactive games, simulations, and quizzes. The platform includes detailed analytics dashboards for enterprise administrators to track employee progress and identify security knowledge gaps.',
     results: [
       '95% employee engagement rate',
       '40% improvement in phishing test results',
@@ -68,10 +78,11 @@ const caseStudies: Record<string, {
     ],
     technologies: ['React', 'Node.js', 'PostgreSQL', 'AWS', 'Unity', 'GraphQL'],
   },
-  'luca': {
+  luca: {
     company: 'Luca.ai',
-    title: 'AI-Powered Learning Platform Helping Children Overcome Dyslexia Challenges',
-    location: 'Pennsylvania, United States',
+    title:
+      'AI-powered learning platform helping children overcome dyslexia challenges',
+    location: 'Pennsylvania, USA',
     tags: ['EDUCATION', 'EDTECH', 'AI/ML'],
     rating: 5.0,
     bgImage: '/img/cases/lucaaiBg.webp',
@@ -82,32 +93,37 @@ const caseStudies: Record<string, {
       role: 'Founder of LUCA.ai',
       avatar: '/img/cases/lucaaiAvatar.png',
     },
-    overview: 'LUCA.ai is an innovative AI-powered platform designed to help children with dyslexia improve their reading skills through personalized, adaptive learning experiences.',
-    challenge: 'Dyslexia affects approximately 15-20% of the population, yet traditional educational tools often fail to address the unique learning needs of dyslexic students. LUCA.ai needed a platform that could adapt to each child\'s specific challenges and progress.',
-    solution: 'We built an AI-driven learning platform that uses machine learning to analyze each student\'s reading patterns and adapt content accordingly. The platform includes voice recognition, interactive exercises, and progress tracking features designed specifically for dyslexic learners.',
+    overview:
+      "LUCA.ai is an innovative AI-powered platform designed to help children with dyslexia improve their reading skills through personalized, adaptive learning experiences.",
+    challenge:
+      "Dyslexia affects approximately 15-20% of the population, yet traditional educational tools often fail to address the unique learning needs of dyslexic students. LUCA.ai needed a platform that could adapt to each child's specific challenges and progress.",
+    solution:
+      "We built an AI-driven learning platform that uses machine learning to analyze each student's reading patterns and adapt content accordingly. The platform includes voice recognition, interactive exercises, and progress tracking features designed specifically for dyslexic learners.",
     results: [
       '2x improvement in reading speed for users',
       '85% of parents reported improved confidence in their children',
       'Used by 10,000+ students across the US',
-      'Featured in major education technology publications',
+      'Featured in major education-technology publications',
     ],
     technologies: ['React Native', 'Python', 'TensorFlow', 'Firebase', 'OpenAI', 'AWS'],
   },
 }
 
-// Breadcrumb component
 function Breadcrumbs({ items }: { items: { label: string; href?: string }[] }) {
   return (
-    <nav className="flex items-center gap-2 text-sm text-gray-500 mb-8">
+    <nav className="flex items-center gap-2 text-sm text-white/45 mb-10 flex-wrap">
       {items.map((item, index) => (
         <span key={index} className="flex items-center gap-2">
-          {index > 0 && <span className="text-gray-300">/</span>}
+          {index > 0 && <span className="text-white/20">/</span>}
           {item.href ? (
-            <Link href={item.href} className="hover:text-[#3b82f6] transition-colors">
+            <Link
+              href={item.href}
+              className="hover:text-white transition-colors"
+            >
               {item.label}
             </Link>
           ) : (
-            <span className="text-[#1d1d1f]">{item.label}</span>
+            <span className="text-white/85">{item.label}</span>
           )}
         </span>
       ))}
@@ -115,16 +131,17 @@ function Breadcrumbs({ items }: { items: { label: string; href?: string }[] }) {
   )
 }
 
-// Star rating component
-function StarRating({ rating }: { rating: number }) {
+function ClutchRating({ rating }: { rating: number }) {
   return (
-    <div className="flex items-center gap-3">
-      <span className="text-2xl font-bold text-[#1d1d1f]">{rating.toFixed(1)}</span>
-      <div className="flex gap-0.5">
+    <div className="flex items-center gap-2">
+      <span className="text-base font-semibold text-white">
+        {rating.toFixed(1)}
+      </span>
+      <div className="flex gap-0.5" aria-hidden="true">
         {[...Array(5)].map((_, i) => (
           <svg
             key={i}
-            className="w-5 h-5 text-[#38BDF8]"
+            className="w-3.5 h-3.5 text-white/85"
             fill="currentColor"
             viewBox="0 0 20 20"
           >
@@ -132,198 +149,391 @@ function StarRating({ rating }: { rating: number }) {
           </svg>
         ))}
       </div>
-      <span className="text-[#1d1d1f] font-medium text-lg">Clutch</span>
+      <span className="text-white/70 text-sm font-medium">Clutch</span>
     </div>
   )
 }
 
-export function generateStaticParams() {
-  return Object.keys(caseStudies).map((slug) => ({
-    slug,
-  }))
+function LocationIcon() {
+  return (
+    <svg
+      className="w-4 h-4"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.75}
+        d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+      />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.75}
+        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+      />
+    </svg>
+  )
 }
 
-export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
-  const caseStudy = caseStudies[slug]
+export function generateStaticParams() {
+  return Object.keys(caseStudies).map((slug) => ({ slug }))
+}
 
-  if (!caseStudy) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const cs = caseStudies[slug]
+  if (!cs) return {}
+  return {
+    title: `${cs.company} — Case Study | Vahue`,
+    description: cs.overview,
+    openGraph: {
+      title: `${cs.company} — Case Study`,
+      description: cs.overview,
+      url: `https://vahue.ai/case-studies/${slug}`,
+      images: [{ url: cs.bgImage }],
+    },
+  }
+}
+
+export default async function CaseStudyPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+  const cs = caseStudies[slug]
+
+  if (!cs) {
     notFound()
   }
 
-  return (
-    <>
-      <main className="min-h-screen bg-white">
-        {/* Hero Section */}
-        <div className="relative min-h-[60vh] flex items-end">
-          <div className="absolute inset-0">
-            <Image
-              src={caseStudy.bgImage}
-              alt=""
-              fill
-              className="object-cover"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80" />
-          </div>
+  const otherCases = Object.entries(caseStudies)
+    .filter(([key]) => key !== slug)
+    .map(([key, value]) => ({ slug: key, ...value }))
 
-          <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-8 py-12 md:py-16">
-            {/* Tags */}
-            <div className="flex flex-wrap gap-2 mb-4">
-              {caseStudy.tags.map((tag) => (
+  return (
+    <main className="bg-bg">
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-bg">
+        <div className="absolute inset-0">
+          <Image
+            src={cs.bgImage}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-40"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-bg/70 via-bg/85 to-bg" />
+          <div className="absolute inset-0 hero-texture opacity-40" />
+        </div>
+
+        <div className="relative z-10 w-full max-w-wide mx-auto px-6 md:px-8 pt-28 md:pt-32 pb-14 md:pb-20">
+          <Breadcrumbs
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Case Studies', href: '/case-studies' },
+              { label: cs.company },
+            ]}
+          />
+
+          <div className="max-w-4xl">
+            <div className="flex items-center gap-3 flex-wrap mb-5">
+              <span className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-white/85">
+                {cs.company}
+              </span>
+              <span className="text-white/25 text-sm">·</span>
+              <span className="inline-flex items-center gap-1.5 text-white/65 text-sm">
+                <LocationIcon />
+                {cs.location}
+              </span>
+            </div>
+
+            <h1 className="font-display text-[2.2rem] md:text-5xl lg:text-6xl font-light leading-[1.08] -tracking-[0.01em] text-balance text-white max-w-4xl">
+              {cs.title}
+            </h1>
+
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              {cs.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 py-1 text-xs font-medium text-white/90 border border-white/30 rounded-full"
+                  className="inline-flex items-center rounded-full bg-white/5 border border-white/10 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-white/75"
                 >
                   {tag}
                 </span>
               ))}
             </div>
 
-            {/* Company */}
-            <p className="text-white/80 text-lg font-medium mb-2">
-              {caseStudy.company}
-            </p>
-
-            {/* Title */}
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 max-w-4xl leading-tight">
-              {caseStudy.title}
-            </h1>
-
-            {/* Location */}
-            <div className="flex items-center gap-2 text-white/70">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-              </svg>
-              <span className="text-base">{caseStudy.location}</span>
+            <div className="mt-8 pt-7 border-t border-white/10 max-w-xl">
+              <ClutchRating rating={cs.rating} />
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Content */}
-        <div className="w-full max-w-7xl mx-auto px-6 md:px-8 py-16 md:py-20">
-          {/* Breadcrumbs */}
-          <Breadcrumbs items={[
-            { label: 'Home', href: '/' },
-            { label: 'Case Studies', href: '/case-studies' },
-            { label: caseStudy.company },
-          ]} />
+      {/* Body */}
+      <section className="w-full max-w-wide mx-auto px-6 md:px-8 py-16 md:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-12 lg:gap-16">
+          {/* Main content */}
+          <div className="flex flex-col gap-14 md:gap-16">
+            {/* Overview */}
+            <section>
+              <p className="eyebrow mb-4">Overview</p>
+              <p className="text-white/80 text-lg md:text-xl leading-relaxed">
+                {cs.overview}
+              </p>
+            </section>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
-            {/* Main Content */}
-            <div className="lg:col-span-2 space-y-12">
-              {/* Overview */}
-              <section>
-                <h2 className="text-2xl font-bold text-[#1d1d1f] mb-4">Overview</h2>
-                <p className="text-gray-600 text-lg leading-relaxed">{caseStudy.overview}</p>
-              </section>
+            {/* Challenge */}
+            <section>
+              <p className="eyebrow mb-4">The challenge</p>
+              <h2 className="font-display text-2xl md:text-3xl font-light text-white leading-tight mb-5 text-balance">
+                What the team was up against.
+              </h2>
+              <p className="text-white/70 text-base md:text-lg leading-relaxed">
+                {cs.challenge}
+              </p>
+            </section>
 
-              {/* Challenge */}
-              <section>
-                <h2 className="text-2xl font-bold text-[#1d1d1f] mb-4">The Challenge</h2>
-                <p className="text-gray-600 text-lg leading-relaxed">{caseStudy.challenge}</p>
-              </section>
+            {/* Solution */}
+            <section>
+              <p className="eyebrow mb-4">Our solution</p>
+              <h2 className="font-display text-2xl md:text-3xl font-light text-white leading-tight mb-5 text-balance">
+                How we shipped it.
+              </h2>
+              <p className="text-white/70 text-base md:text-lg leading-relaxed">
+                {cs.solution}
+              </p>
+            </section>
 
-              {/* Solution */}
-              <section>
-                <h2 className="text-2xl font-bold text-[#1d1d1f] mb-4">Our Solution</h2>
-                <p className="text-gray-600 text-lg leading-relaxed">{caseStudy.solution}</p>
-              </section>
+            {/* Results */}
+            <section>
+              <p className="eyebrow mb-4">Results</p>
+              <h2 className="font-display text-2xl md:text-3xl font-light text-white leading-tight mb-7 text-balance">
+                What changed, measured.
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
+                {cs.results.map((result, index) => (
+                  <div
+                    key={index}
+                    className="flex items-start gap-3 rounded-2xl border border-border-soft bg-white/[0.02] p-5"
+                  >
+                    <span
+                      className="w-1.5 h-1.5 rounded-full bg-white mt-2 flex-shrink-0"
+                      aria-hidden="true"
+                    />
+                    <span className="text-white text-[15px] md:text-base font-medium leading-snug">
+                      {result}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </section>
 
-              {/* Results */}
-              <section>
-                <h2 className="text-2xl font-bold text-[#1d1d1f] mb-6">Results</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {caseStudy.results.map((result, index) => (
-                    <div key={index} className="flex items-start gap-3 p-4 bg-[#f5f5f7] rounded-xl">
-                      <svg className="w-6 h-6 text-[#38BDF8] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                      <span className="text-[#1d1d1f] font-medium">{result}</span>
-                    </div>
-                  ))}
-                </div>
-              </section>
-
-              {/* Testimonial */}
-              {caseStudy.testimonial && (
-                <section className="bg-gradient-to-br from-[#8b5cf6]/10 to-[#3b82f6]/10 rounded-3xl p-8 md:p-10">
-                  <blockquote className="text-lg md:text-xl text-[#1d1d1f] leading-relaxed mb-6 italic">
-                    &ldquo;{caseStudy.testimonial.text}&rdquo;
+            {/* Testimonial */}
+            {cs.testimonial && (
+              <section className="relative rounded-3xl border border-border-soft bg-white/[0.03] p-8 md:p-10 overflow-hidden">
+                <div className="absolute inset-0 hero-texture opacity-30 pointer-events-none" />
+                <div className="relative z-10">
+                  <svg
+                    className="w-8 h-8 text-white/20 mb-5"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z" />
+                  </svg>
+                  <blockquote className="text-lg md:text-xl text-white/90 leading-relaxed mb-7 text-balance">
+                    {cs.testimonial.text}
                   </blockquote>
                   <div className="flex items-center gap-4">
                     <Image
-                      src={caseStudy.testimonial.avatar}
-                      alt={caseStudy.testimonial.author}
-                      width={56}
-                      height={56}
-                      className="w-14 h-14 rounded-full object-cover"
+                      src={cs.testimonial.avatar}
+                      alt={cs.testimonial.author}
+                      width={48}
+                      height={48}
+                      className="w-12 h-12 rounded-full object-cover border border-white/15"
                     />
                     <div>
-                      <p className="font-semibold text-[#1d1d1f]">{caseStudy.testimonial.author}</p>
-                      <p className="text-gray-500 text-sm">{caseStudy.testimonial.role}</p>
+                      <p className="font-semibold text-white">
+                        {cs.testimonial.author}
+                      </p>
+                      <p className="text-white/55 text-sm">
+                        {cs.testimonial.role}
+                      </p>
                     </div>
                   </div>
-                </section>
-              )}
-            </div>
+                </div>
+              </section>
+            )}
+          </div>
 
-            {/* Sidebar */}
-            <div className="space-y-8">
-              {/* Result Image */}
-              <div className="bg-[#f5f5f7] rounded-2xl p-6">
+          {/* Sidebar */}
+          <aside className="flex flex-col gap-5 lg:sticky lg:top-28 lg:self-start">
+            {/* Result preview */}
+            <div className="rounded-2xl border border-border-soft bg-white/[0.02] p-4 md:p-5">
+              <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-white/[0.02]">
                 <Image
-                  src={caseStudy.resultImage}
-                  alt={`${caseStudy.company} result`}
-                  width={400}
-                  height={300}
-                  className="w-full h-auto rounded-xl"
+                  src={cs.resultImage}
+                  alt={`${cs.company} result`}
+                  fill
+                  sizes="(min-width: 1024px) 35vw, 100vw"
+                  className="object-contain"
                 />
               </div>
+            </div>
 
-              {/* Rating */}
-              <div className="bg-[#f5f5f7] rounded-2xl p-6">
-                <h3 className="text-lg font-bold text-[#1d1d1f] mb-4">Client Rating</h3>
-                <StarRating rating={caseStudy.rating} />
+            {/* Client rating */}
+            <div className="rounded-2xl border border-border-soft bg-white/[0.02] p-6">
+              <p className="eyebrow mb-3">Client rating</p>
+              <ClutchRating rating={cs.rating} />
+            </div>
+
+            {/* Technologies */}
+            <div className="rounded-2xl border border-border-soft bg-white/[0.02] p-6">
+              <p className="eyebrow mb-4">Technologies</p>
+              <div className="flex flex-wrap gap-2">
+                {cs.technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1.5 text-xs font-medium text-white/85 bg-white/5 border border-white/10 rounded-full"
+                  >
+                    {tech}
+                  </span>
+                ))}
               </div>
+            </div>
 
-              {/* Technologies */}
-              <div className="bg-[#f5f5f7] rounded-2xl p-6">
-                <h3 className="text-lg font-bold text-[#1d1d1f] mb-4">Technologies Used</h3>
-                <div className="flex flex-wrap gap-2">
-                  {caseStudy.technologies.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1.5 text-sm font-medium text-[#1d1d1f] bg-white rounded-full border border-gray-200"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* CTA */}
-              <div className="bg-[#1d1d1f] rounded-2xl p-6 text-center">
-                <h3 className="text-lg font-bold text-white mb-2">Ready to start your project?</h3>
-                <p className="text-white/70 text-sm mb-4">Let&apos;s discuss how we can help.</p>
+            {/* CTA */}
+            <div className="relative rounded-2xl border border-border-soft bg-white/[0.03] p-6 overflow-hidden">
+              <div className="absolute inset-0 hero-texture opacity-30 pointer-events-none" />
+              <div className="relative z-10">
+                <p className="eyebrow mb-3">Next step</p>
+                <h3 className="font-display text-xl font-light text-white leading-tight mb-2 text-balance">
+                  Starting something similar?
+                </h3>
+                <p className="text-white/65 text-sm mb-5 leading-relaxed">
+                  30-minute discovery call. No deck, no pressure.
+                </p>
                 <Link
-                  href="https://calendly.com/vahue/meeting-with-mike-from-vahue"
+                  href={DISCOVERY_CALL_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#3b82f6] text-white rounded-full font-medium hover:bg-[#2563eb] transition-colors text-sm"
+                  className="group inline-flex w-full items-center justify-center gap-2 bg-white text-bg font-medium text-xs uppercase tracking-wider px-5 py-3 rounded-full hover:bg-white/90 transition-colors"
                 >
-                  Schedule a Call
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  Book a Discovery Call
+                  <svg
+                    className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2.5}
+                      d="M7 17L17 7M17 7H7M17 7v10"
+                    />
                   </svg>
                 </Link>
               </div>
             </div>
-          </div>
+          </aside>
         </div>
-      </main>
+      </section>
 
-      <ContactCards />
-    </>
+      {/* Other case studies */}
+      {otherCases.length > 0 && (
+        <section className="w-full max-w-wide mx-auto px-6 md:px-8 pb-28 md:pb-32">
+          <div className="hairline mb-12" />
+          <div className="flex items-end justify-between gap-4 mb-8">
+            <h3 className="font-display text-2xl md:text-3xl font-light text-white">
+              More client engagements
+            </h3>
+            <Link
+              href="/case-studies"
+              className="text-sm text-white/70 hover:text-white transition-colors hidden md:inline-flex items-center gap-1.5"
+            >
+              All case studies
+              <svg
+                className="w-3.5 h-3.5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
+              </svg>
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            {otherCases.map((other) => (
+              <Link
+                key={other.slug}
+                href={`/case-studies/${other.slug}`}
+                className="group relative flex flex-col rounded-2xl border border-border-soft bg-white/[0.02] overflow-hidden hover:border-border-mid hover:bg-white/[0.035] transition-colors"
+              >
+                <div className="relative aspect-[16/9] overflow-hidden">
+                  <Image
+                    src={other.bgImage}
+                    alt=""
+                    fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover opacity-60 transition-all duration-700 group-hover:scale-[1.04] group-hover:opacity-75"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-bg/80 via-bg/30 to-transparent" />
+                </div>
+                <div className="p-6 md:p-7 flex flex-col flex-1">
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-white/60">
+                    {other.company}
+                  </span>
+                  <h4 className="mt-3 font-display text-lg md:text-xl font-light leading-snug text-white text-balance">
+                    {other.title}
+                  </h4>
+                  <div className="mt-5 pt-4 border-t border-white/5 flex items-center justify-between text-xs text-white/50">
+                    <span className="inline-flex items-center gap-1.5">
+                      <LocationIcon />
+                      {other.location}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 text-white/70 group-hover:text-white transition-colors">
+                      Read
+                      <svg
+                        className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M13 7l5 5m0 0l-5 5m5-5H6"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+    </main>
   )
 }
