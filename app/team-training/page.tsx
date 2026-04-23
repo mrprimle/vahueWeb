@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
-import PlaceholderPage from '@/components/shared/PlaceholderPage'
+import TeamTrainingPage from '@/components/pages/TeamTrainingPage'
 
 export const metadata: Metadata = {
-  title: 'Team Training | Vahue',
-  description: 'Team Training services by Vahue.',
+  title: 'AI Team Training | Vahue',
+  description:
+    'Hands-on AI training programs that get your entire team using AI tools within 7 days. Workshops, multi-week programs, and leadership advisory.',
 }
 
 export default function Page() {
-  return <PlaceholderPage eyebrow="Services" title="Team Training" />
+  return <TeamTrainingPage />
 }

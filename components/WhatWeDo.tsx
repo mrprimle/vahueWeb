@@ -6,7 +6,7 @@ const services = [
     description:
       'AI programs, consulting, and strategy sessions for teams ready to bring AI into their everyday work.',
     cta: 'Team Training',
-    href: '/teams',
+    href: '/team-training',
     icon: (
       <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <defs>

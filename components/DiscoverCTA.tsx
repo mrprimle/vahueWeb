@@ -25,7 +25,7 @@ export default function DiscoverCTA() {
             {/* Right: CTA links */}
             <div className="flex flex-col gap-0">
               <Link
-                href="/teams"
+                href="/team-training"
                 className="group flex items-center justify-between py-4 border-b border-white/15 transition-colors hover:border-white/30"
               >
                 <span className="text-sm font-mono uppercase tracking-widest text-white">

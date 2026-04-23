@@ -5,7 +5,7 @@ const services = [
     title: 'Team Training',
     description:
       'Talent agility is now essential — pushing organizations to continuously rebalance their human and AI workforce to unlock the full potential of every employee.',
-    href: '/teams',
+    href: '/team-training',
     icon: (
       <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <defs>
