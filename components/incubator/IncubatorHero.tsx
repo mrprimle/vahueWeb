@@ -58,7 +58,7 @@ export default function IncubatorHero() {
             </div>
 
             <p className="eyebrow mb-7 text-white/70">
-              Everything to avoid being left alone in the transition to AI
+            Everything to avoid being left alone in the AI transition
             </p>
 
             <div className="flex flex-wrap items-center gap-3">

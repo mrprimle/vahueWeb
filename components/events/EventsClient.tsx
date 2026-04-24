@@ -18,11 +18,33 @@ const events: EventItem[] = [
   {
     id: 'vahue-momentum-ai-sf-2026',
     type: 'CONFERENCE',
-    date: 'May 20, 2026',
+    date: 'May 16, 2026',
     title: 'Vahue Momentum AI San-Francisco',
     location: 'San-Francisco',
     description:
       'A Vahue-hosted AI conference in San-Francisco bringing together business and technology leaders to explore real-world AI adoption and strategy.',
+    ctaLabel: 'Reserve your spot',
+    bookable: true,
+  },
+  {
+    id: 'vahue-ai-summit-la-2026',
+    type: 'CONFERENCE',
+    date: 'May 19, 2026',
+    title: 'Vahue AI Summit Los Angeles',
+    location: 'Los Angeles',
+    description:
+      'A curated Vahue AI Summit in Los Angeles featuring a shortlist of invited speakers from AI, Banking, Finance, Insurance, and Real Estate — bringing together industry leaders for focused conversation on practical AI adoption.',
+    ctaLabel: 'Reserve your spot',
+    bookable: true,
+  },
+  {
+    id: 'vahue-ai-summit-london-2026',
+    type: 'CONFERENCE',
+    date: 'May 30, 2026',
+    title: 'Vahue AI Summit London',
+    location: 'London',
+    description:
+      'A curated Vahue AI Summit in London featuring a shortlist of invited speakers from AI, Banking, Finance, Insurance, and Real Estate — bringing together industry leaders for focused conversation on practical AI adoption.',
     ctaLabel: 'Reserve your spot',
     bookable: true,
   },

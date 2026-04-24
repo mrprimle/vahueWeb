@@ -147,8 +147,7 @@ export default function Hero() {
                 transitionDelay: mounted ? '500ms' : '0ms',
               }}
             >
-              Everything you need so you&apos;re not left alone in the AI
-              transition
+              Everything to avoid being left alone in the AI transition
             </p>
 
             <div

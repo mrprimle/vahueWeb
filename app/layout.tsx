@@ -38,22 +38,52 @@ const geistMono = Geist_Mono({
   display: 'swap',
 })
 
+const siteTitle =
+  'Accelerate your AI Transformation — Vahue | AI-Native Team Extension, Training & Enterprise AI'
+
+const siteDescription =
+  'Vahue accelerates your AI transformation with AI-Native engineering team extensions, enterprise-ready AI systems, and hands-on team training — for startups and Fortune 500 teams.'
+
+const siteDescriptionLong =
+  'Vahue accelerates your AI transformation: AI-Native engineering team extensions (staff augmentation), enterprise-ready AI systems via the Vahue AI Hub, hands-on team training, the Vahue Incubator, and a community library of skills, prompts & plugins.'
+
 export const metadata: Metadata = {
   title: {
-    default: 'Vahue | AI Consulting — Transform into AI-Native',
+    default: siteTitle,
     template: '%s | Vahue',
   },
-  description:
-    'Vahue helps people and teams use AI mindfully. AI consulting, team training, and custom AI automations to transform your company into AI-native.',
+  description: siteDescription,
   keywords: [
-    'AI consulting',
-    'AI training',
-    'AI-native',
-    'AI automations',
-    'team training',
+    // Value proposition
     'AI transformation',
-    'AI literacy',
+    'accelerate AI adoption',
+    'enterprise-ready AI',
+    // Talent / team augmentation (primary emphasis)
+    'AI-Native team augmentation',
+    'AI-Native team extension',
+    'AI staff augmentation',
+    'AI staffing',
+    'AI-Native engineering',
+    'AI engineering pods',
+    // Training
+    'AI team training',
+    'Claude Code training',
+    'Cursor training',
+    'AI literacy for teams',
+    // Enterprise systems / Hub
+    'enterprise AI systems',
+    'Vahue AI Hub',
+    'enterprise AI agents',
     'custom AI solutions',
+    // Community & knowledge library
+    'Vahue Incubator',
+    'AI skills library',
+    'AI prompts',
+    'AI plugins',
+    'MCP servers',
+    'AI guides',
+    // Broad fallback
+    'AI consulting',
   ],
   authors: [{ name: 'Vahue' }],
   creator: 'Vahue',
@@ -64,15 +94,14 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://vahue.ai',
     siteName: 'Vahue',
-    title: 'Vahue | AI Consulting — Transform into AI-Native',
-    description:
-      'Vahue helps people and teams use AI mindfully. AI consulting, team training, and custom AI automations.',
+    title: siteTitle,
+    description: siteDescriptionLong,
+    // TODO: add 1200×630 OG image at /og-image.png
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Vahue | AI Consulting — Transform into AI-Native',
-    description:
-      'Vahue helps people and teams use AI mindfully. AI consulting, team training, and custom AI automations.',
+    title: siteTitle,
+    description: siteDescriptionLong,
   },
   robots: {
     index: true,
