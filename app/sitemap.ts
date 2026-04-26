@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next'
 
+export const dynamic = 'force-static'
+
 const BASE = 'https://vahue.ai'
 
 // Static routes with their relative change frequency and priority.
