@@ -11,6 +11,12 @@ export const metadata: Metadata = {
       'AI-assisted software development with human senior oversight. 10× faster delivery, 40–60% lower cost, 80% fewer bugs.',
     url: 'https://vahue.ai/ai-native-engineering',
   },
+  alternates: {
+    canonical: 'https://vahue.ai/ai-native-engineering',
+    types: {
+      'text/markdown': '/llms/ai-native-engineering.md',
+    },
+  },
 }
 
 export default function Page() {

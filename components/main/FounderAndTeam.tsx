@@ -118,7 +118,7 @@ export default function FounderAndTeam() {
 
             <div className="relative w-full max-w-md mx-auto lg:max-w-sm">
               <Image
-                src="/img/mikecut.avif"
+                src="/img/mikeAlt.avif"
                 alt="Mike — Founder of Vahue"
                 width={500}
                 height={600}

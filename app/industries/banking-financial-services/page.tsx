@@ -12,6 +12,12 @@ export const metadata: Metadata = {
       'Production GenAI for banks and fintechs — governance-first, auditable, private by default.',
     url: 'https://vahue.ai/industries/banking-financial-services',
   },
+  alternates: {
+    canonical: 'https://vahue.ai/industries/banking-financial-services',
+    types: {
+      'text/markdown': '/llms/industries-banking-financial-services.md',
+    },
+  },
 }
 
 export default function Page() {

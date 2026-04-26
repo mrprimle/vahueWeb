@@ -17,16 +17,16 @@ interface Testimonial {
 // Testimonial data
 const testimonials: Testimonial[] = [
   // Column 1
-  {
-    id: 'eugene-walden',
-    type: 'video',
-    name: 'Eugene Walden',
-    role: 'Founder & CTO of Madefire',
-    quote: 'Vahue quickly provided top talent who became key to our team. Reliable, responsive, and a pleasure to work with!',
-    avatar: '/img/testimonials/jacob_berg.webp',
-    video: '/img/testimonials/reviewSizeShort.mp4',
-    column: 1,
-  },
+  // {
+  //   id: 'eugene-walden',
+  //   type: 'video',
+  //   name: 'Eugene Walden',
+  //   role: 'Founder & CTO of Madefire',
+  //   quote: 'Vahue quickly provided top talent who became key to our team. Reliable, responsive, and a pleasure to work with!',
+  //   avatar: '/img/testimonials/jacob_berg.webp',
+  //   video: '/img/testimonials/reviewSizeShort.mp4',
+  //   column: 1,
+  // },
   {
     id: 'chad-willard',
     type: 'text',

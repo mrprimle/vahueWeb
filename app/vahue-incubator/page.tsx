@@ -16,6 +16,12 @@ export const metadata: Metadata = {
   title: 'Vahue Incubator | Vahue',
   description:
     'A founders community to create AI products 10 times faster — AI CPO AURA, weekly events with practitioners, and a like-minded chat.',
+  alternates: {
+    canonical: 'https://vahue.ai/vahue-incubator',
+    types: {
+      'text/markdown': '/llms/vahue-incubator.md',
+    },
+  },
 }
 
 export default function Page() {

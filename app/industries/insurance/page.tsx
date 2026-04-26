@@ -12,6 +12,12 @@ export const metadata: Metadata = {
       'Production-grade insurance AI — cited decisions, human-in-the-loop, integrated with your core admin system.',
     url: 'https://vahue.ai/industries/insurance',
   },
+  alternates: {
+    canonical: 'https://vahue.ai/industries/insurance',
+    types: {
+      'text/markdown': '/llms/industries-insurance.md',
+    },
+  },
 }
 
 export default function Page() {

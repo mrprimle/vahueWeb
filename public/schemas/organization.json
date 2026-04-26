@@ -1,0 +1,69 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://vahue.ai/#organization",
+  "name": "Vahue",
+  "alternateName": ["Vahue.ai", "Vahue AI"],
+  "url": "https://vahue.ai",
+  "logo": "https://vahue.ai/img/white-circle.svg",
+  "image": "https://vahue.ai/img/white-circle.svg",
+  "description": "Vahue is a B2B AI transformation partner that helps companies ship AI features to production, train teams to be AI-fluent, and run enterprise-ready AI systems on their own infrastructure. Three pillars: AI-Native engineering team extension, hands-on team training, and the Vahue AI Hub enterprise agent platform.",
+  "slogan": "Accelerate your AI Transformation.",
+  "foundingDate": "2014",
+  "founder": {
+    "@type": "Person",
+    "@id": "https://vahue.ai/#mike-doroshenko",
+    "name": "Mike Doroshenko",
+    "jobTitle": "Founder, Product Strategist, AI Consultant",
+    "description": "Product strategist and AI consultant with 10+ years of digital product strategy and AI transformation. Forbes Tech Council member.",
+    "url": "https://calendly.com/vahue/meeting-with-mike-from-vahue"
+  },
+  "knowsAbout": [
+    "Artificial Intelligence",
+    "AI Transformation",
+    "Generative AI",
+    "AI Agents",
+    "AI-Native Engineering",
+    "AI-assisted Software Development Lifecycle",
+    "AI Strategy",
+    "AI Governance",
+    "Responsible AI",
+    "Model Risk Management",
+    "Retrieval Augmented Generation (RAG)",
+    "Model Context Protocol (MCP)",
+    "AI SEO",
+    "LLM Discoverability",
+    "Enterprise AI Platforms",
+    "AI Team Training"
+  ],
+  "areaServed": [
+    { "@type": "Place", "name": "Global" },
+    { "@type": "Country", "name": "United States" },
+    { "@type": "Place", "name": "European Union" },
+    { "@type": "Country", "name": "United Kingdom" }
+  ],
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "sales",
+      "url": "https://calendly.com/vahue/meeting-with-mike-from-vahue",
+      "areaServed": "Worldwide",
+      "availableLanguage": ["English"]
+    }
+  ],
+  "award": [
+    "Top 1% on Clutch Global",
+    "Top AI Strategy Company 2025 (Clutch)",
+    "Clutch Fall Champion 2024",
+    "Inc. 5000 Fastest Growing",
+    "Forbes Tech Council Member"
+  ],
+  "sameAs": ["https://clutch.co/profile/pletava"],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "20",
+    "bestRating": "5",
+    "worstRating": "1"
+  }
+}

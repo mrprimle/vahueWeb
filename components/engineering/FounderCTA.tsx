@@ -41,7 +41,7 @@ export default function FounderCTA() {
               
               <div className="relative">
                 <Image
-                  src="/img/mikecut.avif"
+                  src="/img/mikeAlt.avif"
                   alt="Mike - Founder of Vahue"
                   width={500}
                   height={600}
@@ -85,7 +85,7 @@ export default function FounderCTA() {
               
               <div className="relative">
                 <Image
-                  src="/img/mikecut.avif"
+                  src="/img/mikeAlt.avif"
                   alt="Mike - Founder of Vahue"
                   width={500}
                   height={600}

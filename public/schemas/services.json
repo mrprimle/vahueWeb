@@ -1,0 +1,139 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "@id": "https://vahue.ai/ai-native-engineering#service",
+      "name": "AI-Native Engineering — Team Extension",
+      "serviceType": "AI engineering team augmentation",
+      "category": "Software Engineering Services",
+      "description": "Senior AI-native engineering pods embedded in client sprint rituals to ship AI features to production with eval harnesses, guardrails, regression CI, cost/latency budgets, and observability. Includes AI-assisted SDLC rollout (Cursor / GitHub Copilot / Claude Code) and bolt-on evals & guardrails for existing AI features.",
+      "url": "https://vahue.ai/ai-native-engineering",
+      "provider": { "@id": "https://vahue.ai/#organization" },
+      "areaServed": [
+        { "@type": "Place", "name": "Global" },
+        { "@type": "Country", "name": "United States" },
+        { "@type": "Place", "name": "European Union" },
+        { "@type": "Country", "name": "United Kingdom" }
+      ],
+      "audience": {
+        "@type": "BusinessAudience",
+        "audienceType": "CTOs, VPs of Engineering, Heads of AI, and product engineering teams at Series A through Fortune 500 software companies."
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://vahue.ai/team-training#service",
+      "name": "AI Team Training",
+      "serviceType": "Corporate AI training and enablement",
+      "category": "Professional Training",
+      "description": "Founder-led, role-specific AI training that takes teams of 20–5,000 from AI-curious to AI-fluent in roughly 7 days using the Vahue AI Fluency Method (Diagnose, Design, Deliver, Deploy, Measure).",
+      "url": "https://vahue.ai/team-training",
+      "provider": { "@id": "https://vahue.ai/#organization" },
+      "areaServed": [
+        { "@type": "Place", "name": "Global" },
+        { "@type": "Country", "name": "United States" },
+        { "@type": "Place", "name": "European Union" },
+        { "@type": "Country", "name": "United Kingdom" }
+      ],
+      "audience": {
+        "@type": "BusinessAudience",
+        "audienceType": "CEOs, COOs, VPs of Engineering, VPs of Product, VPs of Sales / Marketing / Support, Heads of Operations at companies of 20–5,000 employees."
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://vahue.ai/enterprise-ai#service",
+      "name": "Enterprise AI / Vahue AI Hub",
+      "serviceType": "Enterprise AI platform implementation",
+      "category": "Enterprise Software",
+      "description": "An enterprise platform of pre-configured Technical, Horizontal, and Vertical AI agents deployed inside the client environment. Model-agnostic — Claude, GPT, Gemini, and open-weights are swappable behind a stable interface. The client owns the code.",
+      "url": "https://vahue.ai/enterprise-ai",
+      "provider": { "@id": "https://vahue.ai/#organization" },
+      "areaServed": [
+        { "@type": "Place", "name": "Global" },
+        { "@type": "Country", "name": "United States" },
+        { "@type": "Place", "name": "European Union" },
+        { "@type": "Country", "name": "United Kingdom" }
+      ],
+      "audience": {
+        "@type": "BusinessAudience",
+        "audienceType": "Heads of AI / Chief AI Officers, CIOs, CTOs, Heads of Digital Transformation at mid-market and enterprise companies (typically 500+ employees), especially in BFSI, insurance, healthcare, and retail."
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://vahue.ai/strategy#service",
+      "name": "AI Strategy & Advisory",
+      "serviceType": "AI strategy, governance, and executive advisory",
+      "category": "Management Consulting",
+      "description": "Executive AI strategy via the Vahue Strategy Sprint (Discover, Assess, Design, Align, Activate). Deliverables include AI Readiness Diagnostic, 12–24 month AI Strategy Roadmap, AI Governance & Responsible AI framework, and executive coaching.",
+      "url": "https://vahue.ai/strategy",
+      "provider": { "@id": "https://vahue.ai/#organization" },
+      "areaServed": [
+        { "@type": "Place", "name": "Global" },
+        { "@type": "Country", "name": "United States" },
+        { "@type": "Place", "name": "European Union" },
+        { "@type": "Country", "name": "United Kingdom" }
+      ],
+      "audience": {
+        "@type": "BusinessAudience",
+        "audienceType": "CEOs, COOs, CIOs, CTOs, CDOs, Chief AI Officers, boards and audit committees at mid-market and regulated enterprises."
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://vahue.ai/ai-seo#service",
+      "name": "AI SEO / LLM Discoverability",
+      "serviceType": "AI search engine optimization (LLM discoverability)",
+      "category": "Search Engine Optimization",
+      "description": "Make a B2B brand recommendable inside AI assistants. Cross-model coverage across ChatGPT, Google Gemini, Anthropic Claude, Perplexity, and Microsoft Copilot. Includes AI Search Audit & Visibility Score, AI-Optimized Content Strategy, and AI Agent Analytics & Monitoring.",
+      "url": "https://vahue.ai/ai-seo",
+      "provider": { "@id": "https://vahue.ai/#organization" },
+      "areaServed": [
+        { "@type": "Place", "name": "Global" },
+        { "@type": "Country", "name": "United States" },
+        { "@type": "Place", "name": "European Union" },
+        { "@type": "Country", "name": "United Kingdom" }
+      ],
+      "audience": {
+        "@type": "BusinessAudience",
+        "audienceType": "B2B SaaS, fintech, insurtech, healthtech, eCommerce platforms, and enterprise software vendors. CMOs, VPs of Marketing, Heads of Demand Generation, Heads of Content."
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://vahue.ai/automations#service",
+      "name": "AI Automations",
+      "serviceType": "AI automation, conversational AI, and predictive analytics",
+      "category": "Business Process Automation",
+      "description": "Custom AI assistants and conversational AI, agentic process automation / RPA, smart search and RAG knowledge systems, predictive analytics, generative AI applications, and business process integration with CRM / ERP / internal systems.",
+      "url": "https://vahue.ai/automations",
+      "provider": { "@id": "https://vahue.ai/#organization" },
+      "areaServed": [
+        { "@type": "Place", "name": "Global" }
+      ],
+      "audience": {
+        "@type": "BusinessAudience",
+        "audienceType": "Heads of Operations, CTOs, CIOs, VPs of Customer Support, VPs of Sales / Marketing at mid-market and enterprise companies."
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://vahue.ai/vahue-incubator#service",
+      "name": "Vahue Incubator",
+      "serviceType": "AI product community and product acceleration",
+      "category": "Community / Membership",
+      "description": "A paid community and product-acceleration program for founders, product designers, and corporate innovators building AI products. Includes Vahue Pilot AI CPO tool, weekly expert events, founder Q&A with Mike Doroshenko, private community chat, and an expert track.",
+      "url": "https://vahue.ai/vahue-incubator",
+      "provider": { "@id": "https://vahue.ai/#organization" },
+      "areaServed": [
+        { "@type": "Place", "name": "Global" }
+      ],
+      "audience": {
+        "@type": "PeopleAudience",
+        "audienceType": "Indie founders, product designers, product managers, business owners, consultants, corporate innovators, and digital marketers building AI products."
+      }
+    }
+  ]
+}

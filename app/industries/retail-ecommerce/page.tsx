@@ -12,6 +12,12 @@ export const metadata: Metadata = {
       'Make your commerce stack AI-agent ready and ship merchandising, CX, pricing, and store copilots that move revenue.',
     url: 'https://vahue.ai/industries/retail-ecommerce',
   },
+  alternates: {
+    canonical: 'https://vahue.ai/industries/retail-ecommerce',
+    types: {
+      'text/markdown': '/llms/industries-retail-ecommerce.md',
+    },
+  },
 }
 
 export default function Page() {

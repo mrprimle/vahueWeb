@@ -36,7 +36,7 @@ export default function Founder() {
             <div className="flex flex-col items-start">
               <div className="relative w-40 h-40 md:w-52 md:h-52 rounded-3xl overflow-hidden border border-border-mid bg-white/[0.04] mb-6">
                 <Image
-                  src="/img/mikecut.avif"
+                  src="/img/mikeAlt.avif"
                   alt="Mike Doroshenko — Founder of Vahue"
                   fill
                   sizes="(min-width: 768px) 13rem, 10rem"

@@ -521,7 +521,7 @@ export default function Agents() {
           >
             <p
               key={active.key}
-              className="font-mono text-[11px] uppercase tracking-widest text-white/55 mb-4 lg:mb-5 text-center lg:text-left lg:pl-5"
+              className="font-mono text-[11px] uppercase tracking-widest text-white font-medium mb-4 lg:mb-5 text-center lg:text-left lg:pl-5"
             >
               {active.tagline}
             </p>

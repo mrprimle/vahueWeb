@@ -23,7 +23,7 @@ const reasons: Reason[] = [
   {
     number: '04',
     title: 'Faster, smarter product development end-to-end — not just faster code generation',
-    body: 'AI Hub addresses bottlenecks and accelerates delivery across the entire PDLC, not only the IDE.',
+    body: 'AI Hub addresses bottlenecks and accelerates delivery across the entire PDLC, not only coding.',
   },
 ]
 

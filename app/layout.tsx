@@ -1,9 +1,17 @@
 import type { Metadata } from 'next'
+import { Analytics } from '@vercel/analytics/next'
 import { Inter, Space_Mono, Geist_Mono } from 'next/font/google'
 import localFont from 'next/font/local'
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import {
+  organizationWithReviewsSchema,
+  websiteSchema,
+  allServiceSchemas,
+  homeFaqSchema,
+  jsonLd,
+} from '@/lib/seo/schemas'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -96,12 +104,20 @@ export const metadata: Metadata = {
     siteName: 'Vahue',
     title: siteTitle,
     description: siteDescriptionLong,
-    // TODO: add 1200×630 OG image at /og-image.png
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Vahue — Accelerate your AI Transformation. Talent · Training · Systems.',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: siteTitle,
     description: siteDescriptionLong,
+    images: ['/og-image.png'],
   },
   robots: {
     index: true,
@@ -110,7 +126,26 @@ export const metadata: Metadata = {
   icons: {
     icon: '/favicon.ico',
   },
+  alternates: {
+    canonical: 'https://vahue.ai',
+    types: {
+      'text/markdown': '/llms/home.md',
+    },
+  },
+  other: {
+    // Surface the AI navigation file to crawlers that respect llms.txt.
+    'llm-content': 'https://vahue.ai/llms.txt',
+  },
 }
+
+// JSON-LD graph emitted on every page so AI crawlers and search engines
+// can extract Organization, Reviews, Services, and FAQ facts about Vahue.
+const jsonLdGraph = [
+  organizationWithReviewsSchema,
+  websiteSchema,
+  ...allServiceSchemas,
+  homeFaqSchema,
+]
 
 export default function RootLayout({
   children,
@@ -123,10 +158,32 @@ export default function RootLayout({
       data-theme="dark"
       className={`${inter.variable} ${aeonik.variable} ${spaceMono.variable} ${geistMono.variable} dark`}
     >
+      <head>
+        {jsonLdGraph.map((schema, i) => (
+          <script
+            key={i}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: jsonLd(schema) }}
+          />
+        ))}
+        <link
+          rel="alternate"
+          type="text/plain"
+          href="/llms.txt"
+          title="AI navigation (llms.txt)"
+        />
+        <link
+          rel="alternate"
+          type="text/markdown"
+          href="/llms/home.md"
+          title="Markdown mirror for AI retrieval"
+        />
+      </head>
       <body className="font-sans bg-bg text-white">
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   )

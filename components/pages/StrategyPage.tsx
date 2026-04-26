@@ -18,7 +18,7 @@ import ContactContainer from '@/components/engineering/ContactContainer'
 const companies = [
   { name: 'Shopify', logo: '/img/shopify.svg' },
   { name: 'Audi', logo: '/img/audi-logo.svg' },
-  { name: 'Deloitte', logo: '/img/deloitte.svg' },
+  { name: 'Qonto', logo: '/img/qontoLogo.svg' },
   { name: 'Leafworks', logo: '/img/leafworks.svg' },
   { name: 'Tracesafe', logo: '/img/tracesafe.svg' },
   { name: 'Carmen', logo: '/img/carmen.svg' },

@@ -729,7 +729,7 @@ function OurTeam() {
             <div className="relative bg-surface p-7 md:p-10 grid grid-cols-1 md:grid-cols-[220px_1fr] gap-8 items-center">
               <div className="relative w-[200px] h-[260px] md:w-[220px] md:h-[280px] rounded-2xl overflow-hidden border border-border-mid">
                 <Image
-                  src="/img/mikecut.avif"
+                  src="/img/mikeAlt.avif"
                   alt="Mike Doroshenko"
                   fill
                   className="object-cover"

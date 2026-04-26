@@ -1,0 +1,65 @@
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://vahue.ai/#faq",
+  "name": "Vahue — General FAQ",
+  "url": "https://vahue.ai/",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does Vahue actually do?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Vahue is a B2B AI transformation partner that ships AI features to production, trains teams to be AI-fluent, and runs the Vahue AI Hub enterprise agent platform inside client environments."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who is Vahue best for?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Series A through Fortune 500 software companies; CTOs, CIOs, CDOs, and founders running AI initiatives; especially regulated industries like BFSI, insurance, healthcare, and retail."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where does the AI run? Can our data leave our infrastructure?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Vahue deploys against Bedrock, Azure OpenAI, GCP, on-prem, or open-weights. Data residency and PII redaction are first-class. The client owns the code."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How fast can a feature reach production?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "2–8 weeks for a scoped AI feature; 4–12 weeks for a Vahue AI Hub agent rollout."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is Vahue different from Big-4 consulting?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Vahue sends senior engineers who write production code. No 200-page deck without working software."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which industries does Vahue serve?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Banking & Financial Services (BFSI / RegTech), Insurance, Healthcare & Life Sciences, Retail & eCommerce, plus horizontal use cases across engineering, support, operations, finance, sales, marketing, legal, product, and data teams."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Vahue cover AI search visibility (ChatGPT / Claude / Perplexity)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Vahue's AI SEO / LLM Discoverability service tracks and improves brand visibility across ChatGPT, Gemini, Claude, Perplexity, and Microsoft Copilot."
+      }
+    }
+  ]
+}

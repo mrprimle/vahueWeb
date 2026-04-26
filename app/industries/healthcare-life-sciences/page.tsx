@@ -12,6 +12,12 @@ export const metadata: Metadata = {
       'Clinician-first AI deployed in your HIPAA / GxP environment — grounded, cited, and reviewable.',
     url: 'https://vahue.ai/industries/healthcare-life-sciences',
   },
+  alternates: {
+    canonical: 'https://vahue.ai/industries/healthcare-life-sciences',
+    types: {
+      'text/markdown': '/llms/industries-healthcare-life-sciences.md',
+    },
+  },
 }
 
 export default function Page() {

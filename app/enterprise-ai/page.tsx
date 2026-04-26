@@ -13,6 +13,12 @@ export const metadata: Metadata = {
   title: 'Enterprise AI | Vahue',
   description:
     'Vahue AI Hub — our enterprise AI platform of pre-configured, secure, and fully customized agents that turn complex business challenges into production-ready AI solutions.',
+  alternates: {
+    canonical: 'https://vahue.ai/enterprise-ai',
+    types: {
+      'text/markdown': '/llms/enterprise-ai.md',
+    },
+  },
 }
 
 export default function Page() {

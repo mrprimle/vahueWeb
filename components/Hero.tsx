@@ -110,7 +110,7 @@ export default function Hero() {
                 transitionDelay: mounted ? '260ms' : '0ms',
               }}
             >
-              with AI-Native team extensions, hands-on trainings, and enterprise-ready AI systems for startups and Fortune 500 companies.
+              with AI-Native team extensions, trainings, and enterprise-ready AI systems for startups and scaling product teams.
             </p>
 
             <div
@@ -147,7 +147,7 @@ export default function Hero() {
                 transitionDelay: mounted ? '500ms' : '0ms',
               }}
             >
-              Everything to avoid being left alone in the AI transition
+              Everything to not get lost in the AI transition
             </p>
 
             <div
