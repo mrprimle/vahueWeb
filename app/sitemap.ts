@@ -25,6 +25,7 @@ const staticRoutes: { path: string; priority: number; changeFrequency: MetadataR
   { path: '/customer-support',                       priority: 0.7,  changeFrequency: 'monthly' },
   // Content & community
   { path: '/blog',                                   priority: 0.7,  changeFrequency: 'daily'   },
+  { path: '/blog/trumps-ai-order-decoded',           priority: 0.7,  changeFrequency: 'monthly' },
   { path: '/case-studies',                           priority: 0.7,  changeFrequency: 'monthly' },
   { path: '/guides',                                 priority: 0.65, changeFrequency: 'weekly'  },
   { path: '/marketplace',                            priority: 0.65, changeFrequency: 'weekly'  },

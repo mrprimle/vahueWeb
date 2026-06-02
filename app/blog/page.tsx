@@ -46,6 +46,17 @@ type BlogPost = {
 
 const blogPosts: BlogPost[] = [
   {
+    id: 'trumps-ai-order-decoded',
+    title: "Trump's AI order, decoded",
+    excerpt:
+      'A plain-English read of the June 2026 Executive Order on advanced AI innovation and security: the 30-day cyber sprint, voluntary frontier-model framework, and explicit bar on AI model licensing.',
+    image: '/img/blog/blog4.avif',
+    date: 'June 2, 2026',
+    category: 'AI Policy',
+    readTime: '8 min read',
+    href: '/blog/trumps-ai-order-decoded',
+  },
+  {
     id: 'secure-llm-deployment-enterprise',
     title: 'Deploying LLMs Securely in Enterprise Environments',
     excerpt:

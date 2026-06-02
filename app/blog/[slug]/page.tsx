@@ -36,6 +36,109 @@ type BlogPost = {
 }
 
 const blogPosts: Record<string, BlogPost> = {
+  'trumps-ai-order-decoded': {
+    title: "Trump's AI order, decoded",
+    excerpt:
+      'A plain-English read of the June 2026 Executive Order on advanced AI innovation and security: the 30-day cyber sprint, voluntary frontier-model framework, and explicit bar on AI model licensing.',
+    image: '/img/blog/blog4.avif',
+    date: 'June 2, 2026',
+    category: 'AI Policy',
+    readTime: '8 min read',
+    author: 'Mike Doroshenko',
+    authorRole: 'Founder, Vahue',
+    content: `
+<p><strong>Current as of June 2, 2026.</strong> This explainer summarizes the Executive Order "Promoting Advanced Artificial Intelligence Innovation and Security" and what it means for AI developers, enterprises, and security teams.</p>
+
+<h2>The order, by the numbers</h2>
+<table>
+<thead>
+<tr><th>Signal</th><th>What it means</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>5 sections</strong></td><td>Four operative sections and one general-provisions section.</td></tr>
+<tr><td><strong>July 2, 2026</strong></td><td>Deadline for the 30-day federal cybersecurity sprint across six federal bodies.</td></tr>
+<tr><td><strong>August 1, 2026</strong></td><td>Deadline to stand up the classified frontier-model benchmarking process and voluntary framework.</td></tr>
+<tr><td><strong>0 new AI licenses</strong></td><td>The order expressly bars mandatory government licensing, preclearance, or permitting for AI model development or release.</td></tr>
+<tr><td><strong>Up to 30 days</strong></td><td>Voluntary pre-release access period that developers may offer the federal government for covered frontier models.</td></tr>
+<tr><td><strong>3 named statutes</strong></td><td>18 U.S.C. &sect;&sect; 1028, 1030, and 1343 are prioritized for AI-enabled criminal misuse.</td></tr>
+<tr><td><strong>Covered frontier model</strong></td><td>A new designation based on classified cyber-capability benchmarking.</td></tr>
+<tr><td><strong>Voluntary</strong></td><td>The defining word for developer participation: collaboration, not a licensing regime.</td></tr>
+</tbody>
+</table>
+
+<h2>What the order actually does</h2>
+<p>On June 2, 2026, President Trump signed the Executive Order "Promoting Advanced Artificial Intelligence Innovation and Security." In substance, it is a cybersecurity and procurement order that does three things. First, it orders a government-wide upgrade of federal cyber defenses using AI, with six federal bodies mostly working on a 30-day clock. Second, it establishes a voluntary channel for frontier-model developers to engage the government on the security of their most capable models, anchored by a classified benchmarking process and a new "covered frontier model" designation. Third, it directs the Attorney General to prioritize enforcement against AI-enabled crime under statutes that already exist.</p>
+<blockquote><p>The order's most consequential provision is a limit on the government itself: nothing in it authorizes any mandatory governmental licensing, preclearance, or permitting requirement for developing or releasing an AI model.</p></blockquote>
+
+<h2>The 30-day cyber sprint</h2>
+<p>The bulk of the order is operational. Section 2 gives federal bodies discrete cybersecurity assignments, nearly all due within 30 days. The aim is to turn AI into a defensive tool across federal systems, critical infrastructure, and state and local government. Section 2 also directs OPM, on a 60-day clock, to widen hiring pathways for cybersecurity talent.</p>
+<table>
+<thead>
+<tr><th>Federal body</th><th>What it must do</th><th>Due</th></tr>
+</thead>
+<tbody>
+<tr><td>Committee on National Security Systems</td><td>Prioritize the cyber defense of National Security Systems against AI-enabled threats.</td><td>July 2, 2026</td></tr>
+<tr><td>Secretary of War</td><td>Prioritize the cyber defense of Department of War systems and bear the order's publication costs.</td><td>July 2, 2026</td></tr>
+<tr><td>DHS / CISA</td><td>Issue directives and guidance to accelerate civilian federal cybersecurity, expand AI-enabled defensive programs, and help agencies, state and local authorities, and critical infrastructure operators access cyber tools.</td><td>July 2, 2026</td></tr>
+<tr><td>Secretary of the Treasury</td><td>Form an AI cybersecurity clearinghouse to coordinate vulnerability scanning, validation, remediation, and patch distribution.</td><td>July 2, 2026</td></tr>
+<tr><td>OMB Director</td><td>Identify federal grant funding that can support advanced AI vulnerability-detection capabilities.</td><td>July 2, 2026</td></tr>
+<tr><td>Office of Personnel Management</td><td>Expand hiring and placement pathways for cybersecurity specialists across the federal workforce.</td><td>August 1, 2026</td></tr>
+</tbody>
+</table>
+
+<h2>Securing frontier models</h2>
+<p>Section 3 is the part most relevant to AI labs. Within 60 days, Treasury, War, and Homeland Security must build a classified process to identify the most capable models and a voluntary framework through which developers can engage it. Participation is optional at every step, and the section expressly disclaims any licensing requirement.</p>
+<ol>
+<li><strong>Classified benchmarking is built.</strong> Treasury, War, and Homeland Security develop a classified process to benchmark the offensive and defensive cyber capabilities of advanced AI models and determine which models qualify as covered frontier models.</li>
+<li><strong>A voluntary framework opens.</strong> AI developers may engage the federal government to determine whether models under development meet the covered-frontier-model designation.</li>
+<li><strong>Developers may offer advance access.</strong> Participating developers may provide the federal government with access to covered frontier models for up to 30 days before release to other trusted partners, subject to confidentiality, cybersecurity, insider-risk, IP, use, and nondisclosure protections.</li>
+<li><strong>Trusted partners are selected collaboratively.</strong> Developers and the federal government may work together on which trusted partners receive early access to strengthen critical-infrastructure cybersecurity.</li>
+<li><strong>No license is required.</strong> Nothing in Section 3 authorizes mandatory governmental licensing, preclearance, or permitting for developing, publishing, releasing, or distributing new AI models, including frontier models.</li>
+</ol>
+
+<h2>Going after criminal actors</h2>
+<p>Section 4 creates no new crime. Instead, it directs the Attorney General to prioritize enforcement of existing federal criminal statutes against people who misuse AI for unauthorized computer access, data breaches, and related offenses. Three statutes are named:</p>
+<ul>
+<li><strong>18 U.S.C. &sect; 1028 - identity and document fraud.</strong> This covers producing, transferring, or possessing false identification documents and authentication features, making it relevant to AI-generated synthetic identities and forged credentials.</li>
+<li><strong>18 U.S.C. &sect; 1030 - Computer Fraud and Abuse Act.</strong> This is the core anti-hacking statute for unauthorized access to, and damage of, protected computers, now expressly prioritized for AI-assisted intrusions and breaches.</li>
+<li><strong>18 U.S.C. &sect; 1343 - wire fraud.</strong> This covers schemes to defraud carried out by wire communications, broad enough to reach AI-driven scams, phishing, and impersonation.</li>
+</ul>
+
+<h2>What it does not do</h2>
+<p>For founders, enterprise teams, and AI counsel, what the order declines to do matters as much as what it directs. This order:</p>
+<ul>
+<li>Imposes no licensing, preclearance, or permitting on AI development or release. It forbids the government from creating one under this order.</li>
+<li>Mandates nothing of private developers. Frontier-model engagement, advance access, and trusted-partner selection are all voluntary.</li>
+<li>Creates no new cause of action. Section 5 confirms it grants no enforceable rights and does not expand agency authority beyond existing law.</li>
+<li>Defines "covered frontier model" in classified channels, so the practical contours of who is covered will emerge from agency practice rather than public rule text.</li>
+</ul>
+<blockquote><p>In brief: the order's center of gravity is defensive cybersecurity and voluntary cooperation with industry. Its most consequential line bars the government from licensing, pre-clearing, or permitting AI models.</p></blockquote>
+
+<h2>The deadline clock</h2>
+<p>Almost everything operative is keyed to the signing date. Two deadlines dominate: the 30-day cyber sprint and the 60-day frontier framework.</p>
+<table>
+<thead>
+<tr><th>Date</th><th>Milestone</th><th>What happens</th></tr>
+</thead>
+<tbody>
+<tr><td>June 2, 2026</td><td>Order signed</td><td>"Promoting Advanced Artificial Intelligence Innovation and Security" takes effect, and the clocks start.</td></tr>
+<tr><td>July 2, 2026</td><td>Cyber sprint due</td><td>CNSS, War, DHS/CISA, Treasury, and OMB must have delivered their cyber-defense directives, clearinghouse, and grant-funding plans.</td></tr>
+<tr><td>August 1, 2026</td><td>Frontier framework and hiring due</td><td>Treasury, War, and DHS stand up the classified benchmarking and voluntary frontier-model framework; OPM expands cybersecurity hiring pathways.</td></tr>
+<tr><td>After August 1, 2026</td><td>Voluntary engagement begins</td><td>Developers may opt in by offering pre-release access and collaborating on trusted-partner selection. DOJ enforcement priority continues.</td></tr>
+</tbody>
+</table>
+
+<h2>Primary sources</h2>
+<ul>
+<li><a href="https://www.whitehouse.gov/presidential-actions/2026/06/promoting-advanced-artificial-intelligence-innovation-and-security/" target="_blank" rel="noopener noreferrer">The White House: Executive Order - Promoting Advanced Artificial Intelligence Innovation and Security</a></li>
+<li><a href="https://www.whitehouse.gov/fact-sheets/2026/06/fact-sheet-president-donald-j-trump-promotes-advanced-artificial-intelligence-innovation-and-security/" target="_blank" rel="noopener noreferrer">The White House fact sheet on the order</a></li>
+<li>U.S. Code, Title 18: &sect;&sect; 1028, 1030, and 1343.</li>
+</ul>
+
+<h2>Disclaimer</h2>
+<p>This longread is for informational purposes only and does not constitute legal advice. Executive orders are implemented through subsequent agency directives that may change the practical picture. For help translating this order into an AI product, cybersecurity, or deployment roadmap, contact Vahue directly.</p>
+    `,
+  },
   'secure-llm-deployment-enterprise': {
     title: 'Deploying LLMs Securely in Enterprise Environments',
     excerpt:

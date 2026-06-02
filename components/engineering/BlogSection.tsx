@@ -5,6 +5,16 @@ import Link from 'next/link'
 
 const blogPosts = [
   {
+    id: 'trumps-ai-order-decoded',
+    title: "Trump's AI order, decoded",
+    excerpt:
+      'A plain-English read of the June 2026 Executive Order on advanced AI innovation and security.',
+    image: '/img/blog/blog4.avif',
+    date: 'June 2, 2026',
+    category: 'AI Policy',
+    href: '/blog/trumps-ai-order-decoded',
+  },
+  {
     id: 'secure-llm-deployment-enterprise',
     title: 'Deploying LLMs Securely in Enterprise Environments',
     excerpt:
@@ -37,6 +47,8 @@ const blogPosts = [
 ]
 
 export default function BlogSection() {
+  const latestPosts = blogPosts.slice(0, 3)
+
   return (
     <section className="relative py-20 md:py-28">
       <div className="w-full max-w-wide mx-auto px-6 md:px-8">
@@ -69,7 +81,7 @@ export default function BlogSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-5">
-          {blogPosts.map((post) => (
+          {latestPosts.map((post) => (
             <Link
               key={post.id}
               href={post.href}
