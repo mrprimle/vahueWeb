@@ -5,6 +5,16 @@ import Link from 'next/link'
 
 const blogPosts = [
   {
+    id: 'claude-fable-5-agentic-ai',
+    title: 'What it feels like to work with Fable',
+    excerpt:
+      'Claude Fable 5 feels less like prompting and more like commissioning a team, with a few real quirks.',
+    image: '/img/blog/agentic-flexibility-assets.webp',
+    date: 'June 9, 2026',
+    category: 'Agentic AI',
+    href: '/blog/claude-fable-5-agentic-ai',
+  },
+  {
     id: 'trumps-ai-order-decoded',
     title: "Trump's AI order, decoded",
     excerpt:

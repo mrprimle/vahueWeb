@@ -511,6 +511,21 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+.blog-content figure {
+  margin: 2rem 0;
+}
+
+.blog-content figure img {
+  margin-bottom: 0.75rem;
+}
+
+.blog-content figcaption {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+}
+
 .blog-content > h2:first-child,
 .blog-content > h3:first-child,
 .blog-content > p:first-child {

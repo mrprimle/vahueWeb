@@ -46,6 +46,17 @@ type BlogPost = {
 
 const blogPosts: BlogPost[] = [
   {
+    id: 'claude-fable-5-agentic-ai',
+    title: 'What it feels like to work with Fable',
+    excerpt:
+      'Claude Fable 5 is a new Mythos-class model for long-horizon agentic work. I tested the shift on the recent Nvidia\'s "Hack for Impact" hackathon in London — PowerRanger, an EV fleet flexibility agent. While getting a win in the Economics category, got a few quirks.',
+    image: '/img/blog/agentic-flexibility-assets.webp',
+    date: 'June 9, 2026',
+    category: 'Agentic AI',
+    readTime: '9 min read',
+    href: '/blog/claude-fable-5-agentic-ai',
+  },
+  {
     id: 'trumps-ai-order-decoded',
     title: "Trump's AI order, decoded",
     excerpt:

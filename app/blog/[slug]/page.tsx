@@ -27,15 +27,178 @@ type BlogPost = {
   title: string
   excerpt: string
   image: string
+  imageAlt?: string
   date: string
+  updated?: string
   category: string
   readTime: string
   author: string
   authorRole: string
   content: string
+  faqs?: { question: string; answer: string }[]
 }
 
 const blogPosts: Record<string, BlogPost> = {
+  'claude-fable-5-agentic-ai': {
+    title: 'What it feels like to work with Fable',
+    excerpt:
+      'Claude Fable 5 is a new Mythos-class model for long-horizon agentic work. I tested the shift on the recent Nvidia\'s "Hack for Impact" hackathon in London — PowerRanger, an EV fleet flexibility agent. While getting a win in the Economics category, got a few quirks.',
+    image: '/img/blog/agentic-flexibility-assets.webp',
+    imageAlt:
+      'Commercial EV depot in London with Claude Fable 5 coordinating chargers, batteries, and grid flexibility signals',
+    date: 'June 9, 2026',
+    updated: 'June 9, 2026',
+    category: 'Agentic AI',
+    readTime: '9 min read',
+    author: 'Mike Doroshenko',
+    authorRole: 'Founder, Vahue',
+    faqs: [
+      {
+        question: 'What is Claude Fable 5?',
+        answer:
+          'Claude Fable 5 is Anthropic’s generally available Mythos-class model for demanding reasoning and long-horizon agentic work.',
+      },
+      {
+        question: 'Why does Claude Fable 5 matter for businesses?',
+        answer:
+          'Claude Fable 5 matters because it moves AI from isolated answers toward complete workflows with planning, tools, verification, and revision.',
+      },
+      {
+        question: 'What is the best first use case for Claude Fable 5?',
+        answer:
+          'The best first use case is a bounded operational workflow with clear data, measurable value, human override, and evidence requirements.',
+      },
+      {
+        question: 'What makes agentic AI different from automation?',
+        answer:
+          'Traditional automation follows predefined rules; an agentic system evaluates changing signals, constraints, rewards, and risks before taking a bounded action.',
+      },
+      {
+        question: 'Where should companies start with agentic AI?',
+        answer:
+          'Companies should start with a workflow that has clear inputs, reversible or bounded actions, human override, and measurable economic value.',
+      },
+      {
+        question: 'How should teams control Claude Fable 5 cost and verbosity?',
+        answer:
+          'Teams should lower effort for ordinary tasks, set decision rights clearly, define a concise reporting format, and reserve high-effort runs for hard long-horizon work.',
+      },
+    ],
+    content: `
+<p><strong>Last updated June 9, 2026.</strong> Claude Fable 5 is the first generally available model in Anthropic's Mythos class. The important thing is not just that it is stronger. It changes the work pattern: less prompt-by-prompt steering, more commissioning a complete outcome and judging what comes back.</p>
+<p><strong>Short answer:</strong> Claude Fable 5 matters because it is built for long-horizon agentic work: planning, tool use, code execution, revision, and verification across large tasks. I tested that shift on PowerRanger, a real EV fleet flexibility agent, where the model had to connect public grid signals, private fleet constraints, safe control actions, and settlement evidence.</p>
+
+<h2>What is Claude Fable 5?</h2>
+<p>Claude Fable 5 is Anthropic's most capable widely released Claude model, designed for demanding reasoning and long-horizon agentic work. It is generally available on June 9, 2026 through the Claude API and major cloud platforms. In business terms, it turns a goal into a workflow. You do not only prompt the model; you brief it, set constraints, and judge the result.</p>
+<ul>
+<li>Claude Fable 5 supports long-horizon agentic work.</li>
+<li>Claude Fable 5 supports a 1M token context window and up to 128k output tokens per request.</li>
+<li>Claude Fable 5 uses adaptive thinking, with raw thinking hidden and summarized thinking available for integrations.</li>
+<li>Claude Fable 5 includes safety classifiers and can refuse or route risky requests.</li>
+</ul>
+<p>For Vahue, this is the moment AI starts moving from chat to command center. Related Vahue work includes <a href="/enterprise-ai">enterprise AI systems</a>, <a href="/ai-native-engineering">AI-native engineering</a>, and <a href="/strategy">AI strategy</a>.</p>
+
+<h2>What it feels like to work with it</h2>
+<p>The most striking part is not a single answer. It is the way the work moves. With previous models, I felt like an operator: ask, inspect, correct, repeat. With Claude Fable 5, the role feels closer to a commissioner. I describe the outcome, constraints, quality bar, and risk boundaries. The model works through the project, makes many local decisions, and returns something closer to a finished artifact.</p>
+<blockquote><p>The viral point: the human role changes from operator to commissioner. You brief the system, it spins up the work, and your job becomes judgment, risk, and taste.</p></blockquote>
+<p>This is powerful, but it is also strange. The better the model gets, the less you personally touch each intermediate step. You still control the goal, constraints, and acceptance criteria. But you do not see every micro-decision. That is the tradeoff: more leverage, less process visibility.</p>
+
+<h2>Claude Fable 5 pros and quirks</h2>
+<p><strong>Quick verdict:</strong> Claude Fable 5 is strongest when the task is large, ambiguous, and worth deep autonomous work. It is weaker when you need a fast, terse answer or when the model spends too much time clarifying what it could decide itself.</p>
+<table>
+<thead>
+<tr><th>What stands out</th><th>What it means in practice</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Workflow mode</strong></td><td>It can break a large assignment into many parallel checks: files, edge cases, documentation gaps, UX issues, and implementation risks.</td></tr>
+<tr><td><strong>Autonomy</strong></td><td>It is more willing to work for a long time toward a goal instead of stopping after a shallow first pass.</td></tr>
+<tr><td><strong>Long-horizon confidence</strong></td><td>It feels built for massive tasks: code reviews, multi-agent planning, product architecture, research-heavy builds, and complex systems work.</td></tr>
+<tr><td><strong>High token appetite</strong></td><td>The same thoroughness can burn budget quickly. Use effort settings intentionally and lower them more than feels natural for ordinary tasks.</td></tr>
+<tr><td><strong>Verbose explanations</strong></td><td>It can over-explain and produce dense reasoning. Give it a style rule: concise first, details only when requested.</td></tr>
+<tr><td><strong>Clarifying-question loops</strong></td><td>It may ask, summarize, confirm, spec, and confirm again. For operational work, tell it which decisions it may make without asking.</td></tr>
+<tr><td><strong>Slower feel</strong></td><td>It may feel slower than lighter models because it is optimizing for thoroughness, not quick token flow.</td></tr>
+</tbody>
+</table>
+<p>The practical advice: use Claude Fable 5 for hard work, not every work. Give it high-context briefs, explicit decision rights, a budget, and a concise reporting format. For small tasks, use lower effort or a faster model.</p>
+
+<h2>Here is how I used it in a flexibility project</h2>
+<p>My serious test was PowerRanger: a sovereign edge agent for commercial EV depots in London. Electricity is not normal inventory. The grid needs constant balancing, and commercial EV fleets can either stress the grid or become flexible assets that earn money. The goal was to build an agent that monitors flexibility opportunities, reasons over private fleet constraints locally, controls chargers and batteries, verifies delivered flexibility, and generates settlement evidence.</p>
+<p>This is the kind of project where Claude Fable 5 becomes interesting. It is not just writing a component or summarizing a document. It has to hold the product concept, energy-market logic, operational constraints, API workflows, charger-control assumptions, risk checks, and evidence generation in one coherent build. <a href="/blog/secure-llm-deployment-enterprise">Secure LLM deployment</a> becomes part of the product architecture, not a compliance afterthought. External proof for the market is already visible: UK Power Networks says flexibility can reduce load-related expenditure by up to <a href="https://dso.ukpowernetworks.co.uk/flexibility" target="_blank" rel="noopener noreferrer">£410 million</a> in the current regulatory period.</p>
+<ul>
+<li>PowerRanger reads public flexibility dispatch data.</li>
+<li>PowerRanger keeps fleet constraints on sovereign edge infrastructure.</li>
+<li>PowerRanger converts flexible load into settlement-ready evidence.</li>
+</ul>
+
+<h2>How the model helped structure the build</h2>
+<p>PowerRanger starts with public grid and flexibility signals, including UKPN's <a href="https://ukpowernetworks.opendatasoft.com/explore/assets/ukpn-flexibility-dispatches/view/?page=1" target="_blank" rel="noopener noreferrer">Flexibility Dispatches dataset</a>. It combines those signals with private fleet, charger, and battery data. Sensitive constraints stay local, while specialist agent skills evaluate day-ahead prediction, intraday decisioning, battery degradation, delivery SLA risk, and settlement proof.</p>
+<p>The useful part of Claude Fable 5 was holding all of those layers together. A normal chatbot can describe the architecture. A long-horizon agentic model can help turn it into a product shape: data polling, private reasoning, control boundaries, human interruption, telemetry, and settlement reporting. The opportunity is not only large batteries. The underserved market is distributed demand: EV fleets, depots, small commercial batteries, cold-chain sites, HVAC, refrigeration, and small businesses with flexible load.</p>
+
+<h2>Example dispatch</h2>
+<table>
+<thead>
+<tr><th>Signal</th><th>PowerRanger decision</th></tr>
+</thead>
+<tbody>
+<tr><td>Zone</td><td>South London Flex Zone</td></tr>
+<tr><td>Window</td><td>Tomorrow 18:00-19:30</td></tr>
+<tr><td>Requested reduction</td><td>80 kW</td></tr>
+<tr><td>Indicative value</td><td>£180/MWh</td></tr>
+<tr><td>Operational constraints</td><td>7 priority vans cannot be throttled; 9 standard vans can delay charging by 90 minutes; battery can discharge 30 kW safely.</td></tr>
+<tr><td>Safe flexibility</td><td>84 kW</td></tr>
+<tr><td>Economics</td><td>£22.68 expected revenue, £0 delivery SLA risk, £2.10 battery degradation, £20.58 net expected value.</td></tr>
+<tr><td>Action</td><td>Accept 80 kW dispatch, control batteries and chargers, generate settlement report, keep Telegram and web UI observability open for interruption.</td></tr>
+</tbody>
+</table>
+
+<h2>Why this is different from normal AI work</h2>
+<p>A chatbot explains flexibility. An agentic system participates in it. That distinction is the whole point of the Claude Fable 5 release. Value stacking requires assets to move between revenue streams, markets, and constraints; energy-flexibility operators describe value stacking as using one asset to generate multiple revenue streams across market opportunities. A normal software workflow waits for people to reconcile data. An agentic workflow watches, decides, acts, and proves.</p>
+<p>The same pattern already shows up in fleet electrification. A London smart-charging case study showed that intelligent charger control can increase the number of 7.5-tonne electric trucks at one site from 65 to <a href="https://www.ukpowernetworksservices.co.uk/case-studies/ups-facilitating-large-fleet-operators-to-go-electric/" target="_blank" rel="noopener noreferrer">170 without upgrading the power supply connection</a>. Grid data and agentic workflows are becoming an economic infrastructure category.</p>
+<figure>
+<img src="/img/blog/claude-fable-5-model-ranking.webp" alt="Illustration positioning Claude Fable 5 above other current AI models in a throne-room style comparison" loading="lazy" />
+<figcaption>How the release feels in practice: less like another model picker option, more like a new tier of delegated work.</figcaption>
+</figure>
+
+<h2>What to watch before adopting it</h2>
+<p>Claude Fable 5 is not a free lunch. It is designed for harder work, and that means cost, governance, and safety behavior matter. Official docs list pricing at $10 per million input tokens and $50 per million output tokens. The model also carries data retention requirements for safety classifiers, and high-risk requests can be refused or handled through fallback patterns. For enterprise buyers, those details are not footnotes. They determine where the model belongs in your stack.</p>
+
+<h2>How to apply Claude Fable 5 in your company</h2>
+<ul>
+<li><strong>Pick a bounded economic workflow.</strong> Start where the decision has a measurable value, deadline, and audit trail.</li>
+<li><strong>Separate public signals from private constraints.</strong> Let agents read market signals, but keep sensitive fleet, customer, or operational data in controlled infrastructure.</li>
+<li><strong>Use specialist agents, not one giant prompt.</strong> Assign separate skills for prediction, risk, control, evidence, and human escalation.</li>
+<li><strong>Design for interruption.</strong> Give humans observability and override through web UI, chat, or ops tooling.</li>
+<li><strong>Measure settlement, not vibes.</strong> The output should be proof: telemetry, decision logs, risk notes, and financial result.</li>
+</ul>
+
+<h2>Mini-FAQ</h2>
+<h3>What is Claude Fable 5?</h3>
+<p>Claude Fable 5 is Anthropic's generally available Mythos-class model for demanding reasoning and long-horizon agentic work.</p>
+<h3>What is an agentic economic system?</h3>
+<p>An agentic economic system uses AI agents to monitor signals, reason over constraints, take bounded actions, and produce evidence for business or market outcomes.</p>
+<h3>Why use EV fleet flexibility as the example?</h3>
+<p>EV fleet flexibility is concrete, valuable, and constrained: the agent must balance grid signals, private fleet needs, charger control, risk, and settlement proof.</p>
+<h3>What makes this different from automation?</h3>
+<p>Traditional automation follows predefined rules; an agentic system evaluates changing signals, constraints, rewards, and risks before taking a bounded action.</p>
+<h3>Where should companies start?</h3>
+<p>Companies should start with a workflow that has clear inputs, reversible or bounded actions, human override, and measurable economic value.</p>
+<h3>How should teams control Claude Fable 5 cost and verbosity?</h3>
+<p>Teams should lower effort for ordinary tasks, set decision rights clearly, define a concise reporting format, and reserve high-effort runs for hard long-horizon work.</p>
+
+<h2>Sources</h2>
+<ul>
+<li><a href="https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5" target="_blank" rel="noopener noreferrer">Claude API Docs: Introducing Claude Fable 5</a></li>
+<li><a href="https://github.blog/changelog/2026-06-09-claude-fable-5-is-generally-available-for-github-copilot/" target="_blank" rel="noopener noreferrer">GitHub Changelog: Claude Fable 5 in GitHub Copilot</a></li>
+<li><a href="https://dso.ukpowernetworks.co.uk/flexibility" target="_blank" rel="noopener noreferrer">UK Power Networks DSO: Flexibility</a></li>
+<li><a href="https://ukpowernetworks.opendatasoft.com/explore/assets/ukpn-flexibility-dispatches/view/?page=1" target="_blank" rel="noopener noreferrer">UK Power Networks: Flexibility Dispatches dataset</a></li>
+<li><a href="https://flex-power.energy/school-of-flex/value-stacking/" target="_blank" rel="noopener noreferrer">FlexPower: Value stacking in battery energy storage</a></li>
+<li><a href="https://www.ukpowernetworksservices.co.uk/case-studies/ups-facilitating-large-fleet-operators-to-go-electric/" target="_blank" rel="noopener noreferrer">UK Power Networks Services: UPS smart charging case study</a></li>
+</ul>
+
+<h2>Key takeaway</h2>
+<p>Claude Fable 5 is not interesting because it can make more impressive demos. It is interesting because it can help operate real workflows. The next AI advantage is not asking better questions. It is designing better commissions.</p>
+    `,
+  },
   'trumps-ai-order-decoded': {
     title: "Trump's AI order, decoded",
     excerpt:
@@ -501,14 +664,43 @@ export async function generateMetadata({
   const { slug } = await params
   const post = blogPosts[slug]
   if (!post) return {}
+  const canonicalUrl = `https://vahue.ai/blog/${slug}`
   return {
     title: `${post.title} | Vahue`,
     description: post.excerpt,
+    keywords: [
+      post.category,
+      'agentic AI',
+      'AI agents',
+      'EV fleet flexibility',
+      'grid flexibility',
+      'sovereign edge AI',
+      'AI-native engineering',
+      'enterprise AI',
+    ],
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt,
-      url: `https://vahue.ai/blog/${slug}`,
-      images: [{ url: post.image }],
+      url: canonicalUrl,
+      type: 'article',
+      publishedTime: post.date,
+      modifiedTime: post.updated ?? post.date,
+      authors: [post.author],
+      images: [
+        {
+          url: post.image,
+          alt: post.imageAlt ?? post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: [post.image],
     },
   }
 }
@@ -532,9 +724,55 @@ export default async function BlogPostPage({
 
   const truncatedTitle =
     post.title.length > 48 ? post.title.substring(0, 48) + '…' : post.title
+  const canonicalUrl = `https://vahue.ai/blog/${slug}`
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    image: `https://vahue.ai${post.image}`,
+    thumbnailUrl: `https://vahue.ai${post.image}`,
+    datePublished: post.date,
+    dateModified: post.updated ?? post.date,
+    author: {
+      '@type': 'Person',
+      name: post.author,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Vahue',
+      url: 'https://vahue.ai',
+    },
+    mainEntityOfPage: canonicalUrl,
+    articleSection: post.category,
+  }
+  const faqJsonLd = post.faqs
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: post.faqs.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      }
+    : null
 
   return (
     <main className="bg-bg">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
       {/* Header + hero */}
       <section className="relative overflow-hidden bg-bg">
         <div className="absolute inset-0 hero-texture opacity-50" />
@@ -586,7 +824,7 @@ export default async function BlogPostPage({
         <div className="relative overflow-hidden rounded-2xl md:rounded-3xl border border-border-soft aspect-[16/9]">
           <Image
             src={post.image}
-            alt={post.title}
+            alt={post.imageAlt ?? post.title}
             fill
             priority
             sizes="(min-width: 1280px) 1280px, 100vw"
