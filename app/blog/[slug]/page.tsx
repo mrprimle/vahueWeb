@@ -34,11 +34,242 @@ type BlogPost = {
   readTime: string
   author: string
   authorRole: string
+  keywords?: string[]
   content: string
   faqs?: { question: string; answer: string }[]
 }
 
 const blogPosts: Record<string, BlogPost> = {
+  'aeo-content-system': {
+    title: 'Your Content Is Invisible to AI. Here Is the System That Fixes It.',
+    excerpt:
+      'A practical AEO playbook for making articles, guides, case studies, and product pages easier for ChatGPT, Gemini, Google AI Overviews, Perplexity, Claude, and other AI engines to understand, cite, and remember your business.',
+    image: '/img/blog/aeo-system-cover.png',
+    imageAlt:
+      'Structured article pages flowing into multiple AI answer cards through citation paths and entity connections',
+    date: 'June 16, 2026',
+    updated: 'June 16, 2026',
+    category: 'AI Search',
+    readTime: '13 min read',
+    author: 'Mike Doroshenko',
+    authorRole: 'Founder, Vahue',
+    keywords: [
+      'AEO',
+      'AI Engine Optimization',
+      'AI search visibility',
+      'AI citations',
+      'LLM discoverability',
+      'semantic triples',
+      'ChatGPT search',
+      'Google AI Overviews',
+      'Perplexity citations',
+    ],
+    faqs: [
+      {
+        question: 'What is AEO?',
+        answer:
+          'AEO, or AI Engine Optimization, is the practice of structuring useful content so AI systems can understand, retrieve, summarize, and cite it accurately.',
+      },
+      {
+        question: 'How is AEO different from SEO?',
+        answer:
+          'AEO builds on SEO but optimizes for answers, citations, mentions, and accurate representation in AI systems, not only blue-link rankings and clicks.',
+      },
+      {
+        question: 'What makes content easier for AI engines to cite?',
+        answer:
+          'AI-citable content has direct answers, clear entity relationships, source-backed claims, visible text, helpful structure, internal links, external proof, and technical crawl eligibility.',
+      },
+      {
+        question: 'Do websites need llms.txt to appear in AI answers?',
+        answer:
+          'No. llms.txt is optional and experimental; it can help agents navigate docs-heavy sites, but it does not replace crawlable HTML, technical SEO, or useful source-backed content.',
+      },
+      {
+        question: 'Where can I get the AEO skill?',
+        answer:
+          'The public AEO Content Skill is available in the Vahue Marketplace as a reusable template for creating and auditing AI-search-ready content.',
+      },
+    ],
+    content: `
+<p><strong>Last updated June 16, 2026.</strong> AEO, or AI Engine Optimization, is the practice of making useful pages easier for AI systems to retrieve, understand, summarize, and cite. It does not replace SEO. It adds a new operating system on top of SEO: answer-first structure, explicit entity relationships, source-backed proof, off-domain corroboration, and technical eligibility for AI search crawlers.</p>
+<p><strong>Short answer:</strong> if your content is not written as a quotable answer, connected to recognizable entities, supported by proof, and reachable by the crawlers that power AI search, it can be excellent and still disappear from ChatGPT, Gemini, Google AI Overviews, Perplexity, Grok, Claude, and other AI engines.</p>
+
+<h2>The uncomfortable part: useful content can still be invisible</h2>
+<p>You can write the better guide. You can publish the stronger case study. You can have the product that deserves to be mentioned. And then someone asks an AI assistant for recommendations, explanations, vendors, alternatives, or implementation advice, and your page is nowhere in the answer.</p>
+<p>That gap is the reason AEO exists. Search used to reward the page that earned the click. AI search often rewards the page that can be safely extracted into an answer. The difference sounds small until you inspect your own content and realize the strongest idea is hidden in paragraph seven, the brand is called "we" for half the page, the proof is trapped in an image, and the crawler that could have fetched the page is blocked by a security rule nobody remembers adding.</p>
+<blockquote><p>The tension is not "SEO is dead." The tension is that SEO alone no longer describes the whole job.</p></blockquote>
+
+<h2>What AEO actually means</h2>
+<p><strong>AI Engine Optimization helps content become a reliable source for AI systems.</strong> AEO focuses on direct answers, clear headings, concise definitions, useful FAQs, structured evidence, entity relationships, snippet-ready paragraphs, and technical eligibility for AI search crawlers.</p>
+<ul>
+<li><strong>At the content layer,</strong> the page gives direct, quotable answers instead of burying the point.</li>
+<li><strong>At the entity layer,</strong> the brand, category, audience, use case, alternatives, and proof are connected in plain language.</li>
+<li><strong>At the technical layer,</strong> SEO foundations still matter: crawlability, indexability, schema, internal links, and snippet eligibility.</li>
+</ul>
+<p>The practical move is to treat AEO as a content system, not a writing trick. One article rarely changes the model's mental map of a market. A cluster can.</p>
+
+<h2>The five-part system</h2>
+<p>The most useful AEO system has five layers: answer structure, entity clarity, proof, distribution, and technical eligibility. Miss one layer and the page can leak visibility.</p>
+<table>
+<thead>
+<tr><th>Layer</th><th>What it answers</th><th>What to create</th></tr>
+</thead>
+<tbody>
+<tr><td>Answer structure</td><td>Can an AI extract a clean answer?</td><td>Definitions, direct section openings, FAQs, summaries, tables.</td></tr>
+<tr><td>Entity clarity</td><td>Does the system know who, what, and how things relate?</td><td>Semantic triples, consistent category names, brand-product-use-case links.</td></tr>
+<tr><td>Proof</td><td>Can the claim be trusted?</td><td>Original data, customer proof, examples, methodology, citations, screenshots with text equivalents.</td></tr>
+<tr><td>Distribution</td><td>Is the claim corroborated beyond your own site?</td><td>LinkedIn posts, partner pages, review sites, earned mentions, communities, credible publications.</td></tr>
+<tr><td>Technical eligibility</td><td>Can crawlers retrieve and quote the page?</td><td>Indexable HTML, schema, internal links, sitemap, snippet eligibility, AI crawler access.</td></tr>
+</tbody>
+</table>
+
+<h2>Step 1: Write the answer before the essay</h2>
+<p>AI engines prefer pages that make the answer obvious. That does not mean every article should sound robotic. It means every important section should open with the thing a reader came to learn.</p>
+<p>If the heading says "What is AEO?", the first sentence should say "AEO is..." If the heading says "How do AI engines choose citations?", the first sentence should answer that question before adding context.</p>
+<p>Use this rewrite pattern:</p>
+<ol>
+<li>Extract the one-sentence answer.</li>
+<li>Put the answer first.</li>
+<li>Add context second.</li>
+<li>Add proof third.</li>
+<li>Add a next step or internal link last.</li>
+</ol>
+<p><strong>Weak:</strong> "There are many new AI platforms, so companies need to think differently about content."</p>
+<p><strong>Better:</strong> "AEO helps companies make content easier for AI engines to retrieve, summarize, and cite. The work starts with direct answers, explicit entities, source-backed claims, and crawlable pages."</p>
+
+<h2>Step 2: Use semantic triples without turning the page into soup</h2>
+<p>A semantic triple is a simple subject-verb-object statement that makes an entity relationship explicit. For example: "AEO helps marketers earn citations in AI-generated answers." The power is not the phrase "semantic triple." The power is that the sentence leaves very little ambiguity.</p>
+<ul>
+<li>"AEO organizes content for AI retrieval" links the practice to the technical outcome.</li>
+<li>"Vahue publishes an AEO Content Skill" links the brand to the reusable resource.</li>
+<li>"Semantic triples clarify entity relationships" links the tactic to the reason it works.</li>
+</ul>
+<p>The rule is restraint. Do not stuff every paragraph with mechanical triples. Put one clear relationship near the top of each major concept. The reader should feel clarity, not scaffolding.</p>
+
+<h2>Step 3: Build the page type that matches the prompt</h2>
+<p>AI-search visibility improves when the page format matches the user's intent. A definition prompt needs a category explainer. A buying prompt needs product, alternatives, and comparison content. A trust prompt needs proof.</p>
+<table>
+<thead>
+<tr><th>Prompt type</th><th>Best content asset</th><th>What it must include</th></tr>
+</thead>
+<tbody>
+<tr><td>"What is [category]?"</td><td>Category explainer</td><td>Plain definition, adjacent entities, use cases, FAQ, schema.</td></tr>
+<tr><td>"Best [category] tools for [audience]"</td><td>Product page plus comparison support</td><td>Audience fit, outcomes, limits, proof, alternatives.</td></tr>
+<tr><td>"[Brand] vs [competitor]"</td><td>Comparison page</td><td>Fair criteria, source-backed table, fit by condition.</td></tr>
+<tr><td>"How to solve [problem]"</td><td>Guide or supporting blog post</td><td>Steps, examples, internal links, implementation detail.</td></tr>
+<tr><td>"Does this work?"</td><td>Case study</td><td>Problem, solution, result, timeframe, named proof where possible.</td></tr>
+</tbody>
+</table>
+<p>The trap is publishing only thought leadership. Thought leadership can create demand, but AI recommendations often form around more concrete pages: product pages, alternatives pages, use-case pages, guides, reviews, and case studies.</p>
+
+<h2>Step 4: Add information gain or accept invisibility</h2>
+<p>Information gain is the part of the page that could not have been produced by averaging ten similar posts. It can be original data, a field example, an implementation detail, a real workflow, a customer result, a before/after, or a sharp expert distinction.</p>
+<p>Generic summaries are easy to generate and easy to ignore. If an AI system already has a thousand pages saying "write helpful content," your version needs a reason to exist.</p>
+<p>Ask this before publishing:</p>
+<ul>
+<li>What does this page know that the average page does not?</li>
+<li>What example can a reader copy into their own workflow?</li>
+<li>Which claim is backed by a source, benchmark, customer story, or method?</li>
+<li>What sentence would we be proud to see quoted in an AI answer?</li>
+</ul>
+
+<h2>Step 5: Make proof visible, not decorative</h2>
+<p>AI engines cannot cite a claim they cannot inspect. If your proof is trapped inside a designed graphic, a webinar with no transcript, a PDF with no summary, or a screenshot with no text equivalent, the page is weaker than it looks.</p>
+<p>Put the important proof in crawlable text. Keep the beautiful visual, but add a visible summary, transcript, caption, methodology note, or table. This is not only accessibility hygiene. It is retrieval hygiene.</p>
+
+<h2>Step 6: Build off-domain corroboration</h2>
+<p>Your website is not the whole evidence graph. AI engines can pull from third-party pages, social platforms, review sites, community threads, knowledge bases, and publisher domains. That means visibility is partly created away from your own CMS.</p>
+<p>LinkedIn is especially useful for B2B AEO because it connects people, companies, categories, and claims in a public professional graph. The highest-leverage posts are not vague announcements. They are compact educational posts that define a concept, name the category, state the main point early, and link back to deeper resources.</p>
+<p>Turn each major article into:</p>
+<ul>
+<li>one company post with the core framework,</li>
+<li>one founder or expert post with the point of view,</li>
+<li>one carousel or checklist version,</li>
+<li>one partner/community contribution,</li>
+<li>one short update when the article is refreshed.</li>
+</ul>
+
+<h2>Step 7: Check the crawler layer before blaming the copy</h2>
+<p>Technical eligibility is the unglamorous layer that decides whether the beautiful article can participate in AI search at all. Google says AI features use normal Search eligibility and snippet controls. OpenAI, Perplexity, Anthropic, and others expose crawler controls that may separate search visibility from model training. Cloudflare and other WAF/CDN systems can also block bots before your content gets read.</p>
+<p>Before rewriting everything, check:</p>
+<ul>
+<li>Is the page indexable?</li>
+<li>Is the page eligible for snippets?</li>
+<li>Is the canonical URL correct?</li>
+<li>Is the important content visible in HTML?</li>
+<li>Do robots.txt and WAF rules allow the search/indexing bots you care about?</li>
+<li>Does Organization, Article, FAQ, Product, or SoftwareApplication schema match the visible content?</li>
+<li>Is the URL in the sitemap and internally linked from relevant hubs?</li>
+</ul>
+
+<h2>Step 8: Use query fan-out to plan the cluster</h2>
+<p>AI search often decomposes a broad question into related subquestions. Plan for that. For every priority prompt, build supporting sections or pages for definitions, requirements, comparisons, implementation, risks, proof, and follow-up questions.</p>
+<table>
+<thead>
+<tr><th>Layer</th><th>Example prompt</th><th>Content needed</th></tr>
+</thead>
+<tbody>
+<tr><td>Core</td><td>How do we improve AI search visibility?</td><td>Main guide or category page.</td></tr>
+<tr><td>Definition</td><td>What is AEO?</td><td>Concise definition and FAQ.</td></tr>
+<tr><td>Requirements</td><td>What makes content citable by AI?</td><td>Checklist and scoring model.</td></tr>
+<tr><td>Comparison</td><td>AEO vs SEO</td><td>Decision table and examples.</td></tr>
+<tr><td>Implementation</td><td>How to audit a blog post for AEO?</td><td>Step-by-step workflow.</td></tr>
+<tr><td>Risk</td><td>Can robots.txt block AI search visibility?</td><td>Technical note and crawler matrix.</td></tr>
+<tr><td>Proof</td><td>Do semantic triples improve AI citations?</td><td>Source-backed evidence and caveats.</td></tr>
+</tbody>
+</table>
+
+<h2>The savable AEO checklist</h2>
+<p>Use this checklist before publishing any article, guide, case study, product page, or comparison page.</p>
+<ul>
+<li><strong>Answer:</strong> The first paragraph gives a direct, extractable answer.</li>
+<li><strong>Entity:</strong> The page names the brand, category, audience, use case, outcome, and related entities.</li>
+<li><strong>Triples:</strong> Each major concept has one clear subject-verb-object sentence.</li>
+<li><strong>Proof:</strong> Important claims have citations, examples, customer proof, data, or methodology.</li>
+<li><strong>Format:</strong> Tables, bullets, FAQs, and summaries are used where they improve extraction.</li>
+<li><strong>Cluster:</strong> The page links to the relevant category, product, guide, case study, comparison, or marketplace page.</li>
+<li><strong>Off-domain:</strong> The idea has a plan for LinkedIn, partners, communities, reviews, or external mentions.</li>
+<li><strong>Schema:</strong> Article, FAQ, Organization, Product, SoftwareApplication, or Breadcrumb schema matches visible content.</li>
+<li><strong>Technical:</strong> The page is indexable, snippet-eligible, canonicalized, internally linked, and visible in HTML text.</li>
+<li><strong>Measurement:</strong> The team tracks target prompts, citations, share of voice, sentiment, and crawler access.</li>
+</ul>
+
+<h2>Use the public AEO Content Skill</h2>
+<p>We turned this checklist into a reusable, AI-agnostic skill-building prompt for creating and auditing AI-search-ready content. The <a href="/marketplace/aeo-content-skill">AEO Content Skill</a> helps teams draft category explainers, product pages, comparison pages, use-case pages, case studies, guides, and audits without starting from a blank page.</p>
+<p>The skill does not depend on Vahue or any single vendor's methodology. It is a practical operating guide for anyone who wants clearer, more citable content.</p>
+
+<h2>What to measure after publishing</h2>
+<p>AEO measurement should track representation, not only traffic. The question is not just "did people click?" It is "did the AI engine understand us correctly?"</p>
+<ul>
+<li><strong>Visibility:</strong> Does the brand or page appear for target prompts?</li>
+<li><strong>Citation rate:</strong> Is the URL cited or linked?</li>
+<li><strong>Share of voice:</strong> How often does the brand appear versus competitors?</li>
+<li><strong>Accuracy:</strong> Does the AI describe the product, category, fit, limits, and proof correctly?</li>
+<li><strong>Sentiment:</strong> Is the mention positive, neutral, outdated, or wrong?</li>
+<li><strong>Grounding queries:</strong> Which queries and pages are associated with citations where tools expose them?</li>
+<li><strong>Crawler access:</strong> Are search/indexing bots reaching the important pages?</li>
+</ul>
+
+<h2>Sources and further reading</h2>
+<ul>
+<li><a href="https://blog.hubspot.com/marketing/how-simple-semantics-increased-our-ai-citations-by-642-new-results" target="_blank" rel="noopener noreferrer">HubSpot: How simple semantics increased AI citations</a></li>
+<li><a href="https://developers.google.com/search/docs/fundamentals/ai-optimization-guide" target="_blank" rel="noopener noreferrer">Google Search Central: AI optimization guide</a></li>
+<li><a href="https://developers.google.com/search/docs/appearance/ai-features" target="_blank" rel="noopener noreferrer">Google Search Central: AI features and website owners</a></li>
+<li><a href="https://www.semrush.com/blog/how-we-are-using-semrush-to-drive-llm-visibility/" target="_blank" rel="noopener noreferrer">Semrush: Driving LLM visibility</a></li>
+<li><a href="https://www.semrush.com/blog/most-cited-domains-ai/" target="_blank" rel="noopener noreferrer">Semrush: Most-cited domains in AI search</a></li>
+<li><a href="https://www.semrush.com/blog/linkedin-ai-visibility-study/" target="_blank" rel="noopener noreferrer">Semrush: LinkedIn AI visibility study</a></li>
+<li><a href="https://developers.openai.com/api/docs/bots" target="_blank" rel="noopener noreferrer">OpenAI: crawler documentation</a></li>
+<li><a href="https://docs.perplexity.ai/docs/resources/perplexity-crawlers" target="_blank" rel="noopener noreferrer">Perplexity: crawler documentation</a></li>
+<li><a href="https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler" target="_blank" rel="noopener noreferrer">Anthropic: crawler controls</a></li>
+<li><a href="https://developers.cloudflare.com/ai-crawl-control/" target="_blank" rel="noopener noreferrer">Cloudflare: AI Crawl Control</a></li>
+<li><a href="https://llmstxt.org/" target="_blank" rel="noopener noreferrer">llms.txt proposal</a></li>
+</ul>
+
+<h2>Key takeaway</h2>
+<p>The last move is the one most teams skip: make the page useful enough for humans, explicit enough for machines, supported enough to trust, and reachable enough to cite. AEO is not magic. It is disciplined publishing for a world where the reader may arrive as an AI engine first and a human second.</p>
+    `,
+  },
   'claude-fable-5-agentic-ai': {
     title: 'What it feels like to work with Fable',
     excerpt:
@@ -668,16 +899,17 @@ export async function generateMetadata({
   return {
     title: `${post.title} | Vahue`,
     description: post.excerpt,
-    keywords: [
-      post.category,
-      'agentic AI',
-      'AI agents',
-      'EV fleet flexibility',
-      'grid flexibility',
-      'sovereign edge AI',
-      'AI-native engineering',
-      'enterprise AI',
-    ],
+    keywords:
+      post.keywords ?? [
+        post.category,
+        'agentic AI',
+        'AI agents',
+        'EV fleet flexibility',
+        'grid flexibility',
+        'sovereign edge AI',
+        'AI-native engineering',
+        'enterprise AI',
+      ],
     alternates: {
       canonical: canonicalUrl,
     },

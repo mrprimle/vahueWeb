@@ -72,7 +72,7 @@ A: Yes. Vahue integrates with major commerce stacks, OMS, WMS, CDPs, and custome
 A: 6–12 weeks to a first production agent.
 
 **Q: Can Vahue help us appear in AI search (ChatGPT / Perplexity)?**
-A: Yes — see Vahue's AI SEO / LLM Discoverability service.
+A: Yes — see Vahue's AEO / LLM Discoverability service.
 
 **Q: What about cross-channel personalization?**
 A: The Vahue AI Hub Customer Experience and Merchandising agents integrate with the CDP and personalization engines to power cross-channel agentic experiences.

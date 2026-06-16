@@ -315,7 +315,7 @@ export default function MarketplaceIndex({ items }: MarketplaceIndexProps) {
                           className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/10 text-white/50 group-hover:border-white/30 group-hover:text-white transition-colors"
                         >
                           <svg
-                            className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+                            className="w-3.5 h-3.5"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"

@@ -46,6 +46,17 @@ type BlogPost = {
 
 const blogPosts: BlogPost[] = [
   {
+    id: 'aeo-content-system',
+    title: 'Your Content Is Invisible to AI. Here Is the System That Fixes It.',
+    excerpt:
+      'A practical AEO playbook for making articles, guides, case studies, and product pages easier for ChatGPT, Gemini, Google AI Overviews, Perplexity, Claude, and other AI engines to understand, cite, and remember your business.',
+    image: '/img/blog/aeo-system-cover.png',
+    date: 'June 16, 2026',
+    category: 'AI Search',
+    readTime: '13 min read',
+    href: '/blog/aeo-content-system',
+  },
+  {
     id: 'claude-fable-5-agentic-ai',
     title: 'What it feels like to work with Fable',
     excerpt:

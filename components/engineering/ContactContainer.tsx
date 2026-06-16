@@ -110,11 +110,13 @@ export default function ContactContainer({ extraMargin }: ContactContainerProps)
         const EMAIL_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAIL_TEMPLATE_ID
         const EMAIL_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY
 
-        if (EMAIL_SERVICE_ID && EMAIL_TEMPLATE_ID && EMAIL_PUBLIC_KEY && formRef.current) {
-          await emailjs.sendForm(EMAIL_SERVICE_ID, EMAIL_TEMPLATE_ID, formRef.current, {
-            publicKey: EMAIL_PUBLIC_KEY,
-          })
+        if (!EMAIL_SERVICE_ID || !EMAIL_TEMPLATE_ID || !EMAIL_PUBLIC_KEY || !formRef.current) {
+          throw new Error('EmailJS configuration missing')
         }
+
+        await emailjs.sendForm(EMAIL_SERVICE_ID, EMAIL_TEMPLATE_ID, formRef.current, {
+          publicKey: EMAIL_PUBLIC_KEY,
+        })
 
         setName('')
         setEmail('')

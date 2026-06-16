@@ -79,8 +79,8 @@ const technical: Agent[] = [
   },
   {
     key: 'ai-seo',
-    name: 'AI SEO',
-    title: 'AI SEO',
+    name: 'AEO',
+    title: 'AEO',
     description:
       'Reach millions of buyers who now use AI assistants to discover products and brands. Engineered for how LLM-powered search ranks, cites and converts.',
     benefits: [

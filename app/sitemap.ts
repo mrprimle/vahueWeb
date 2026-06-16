@@ -25,11 +25,13 @@ const staticRoutes: { path: string; priority: number; changeFrequency: MetadataR
   { path: '/customer-support',                       priority: 0.7,  changeFrequency: 'monthly' },
   // Content & community
   { path: '/blog',                                   priority: 0.7,  changeFrequency: 'daily'   },
+  { path: '/blog/aeo-content-system',                priority: 0.75, changeFrequency: 'monthly' },
   { path: '/blog/claude-fable-5-agentic-ai',         priority: 0.7,  changeFrequency: 'monthly' },
   { path: '/blog/trumps-ai-order-decoded',           priority: 0.7,  changeFrequency: 'monthly' },
   { path: '/case-studies',                           priority: 0.7,  changeFrequency: 'monthly' },
   { path: '/guides',                                 priority: 0.65, changeFrequency: 'weekly'  },
   { path: '/marketplace',                            priority: 0.65, changeFrequency: 'weekly'  },
+  { path: '/marketplace/aeo-content-skill',          priority: 0.65, changeFrequency: 'monthly' },
   { path: '/events',                                 priority: 0.6,  changeFrequency: 'weekly'  },
   { path: '/contact',                                priority: 0.6,  changeFrequency: 'monthly' },
   // AI-readable mirrors (important for AI crawler discoverability)

@@ -70,7 +70,7 @@ const services = [
     ),
   },
   {
-    title: 'AI SEO',
+    title: 'AEO',
     description:
       'Reach millions of clients who are using AI to discover new products and brands.',
     href: '/ai-seo',

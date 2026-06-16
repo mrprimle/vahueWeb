@@ -545,6 +545,20 @@
   overflow: hidden;
 }
 
+@media (max-width: 767px) {
+  .blog-content table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .blog-content th,
+  .blog-content td {
+    min-width: 9rem;
+  }
+}
+
 .blog-content thead {
   background: rgba(255, 255, 255, 0.03);
 }

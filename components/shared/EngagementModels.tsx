@@ -86,7 +86,7 @@ type Agent = {
 
 const technicalAgents: Agent[] = [
   {
-    title: 'AI SEO',
+    title: 'AEO',
     body: 'Reach millions of buyers who now use AI assistants to discover products and brands. Engineered for how LLM-powered search ranks, cites, and converts.',
   },
   {

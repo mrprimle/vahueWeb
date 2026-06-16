@@ -598,7 +598,153 @@ At the beginning of a session, send the user:
 >
 > Let's start. In 2–3 sentences: **what do you do or what are you planning to build?**`
 
+const aeoContentSkillContent = `---
+name: aeo-content
+description: Create, optimize, rewrite, and audit text content for AEO and AI-search visibility across AI engines. Use when drafting or reviewing blog posts, case studies, product pages, comparison pages, reviews, homepages, guides, landing pages, FAQs, or website content for stronger entity association, citations, mentions, share of voice, retrieval clarity, and answer-first usefulness.
+---
+
+# AEO Content
+
+Use this skill to create and audit content that is useful for humans and easy for AI engines to understand, retrieve, summarize, and cite.
+
+## Core Workflow
+
+1. Identify the task type: create new content, rewrite existing content, audit a URL/file, produce a brief, or design a content cluster.
+2. Identify the page type: category explainer, product/feature page, comparison page, use-case page, case study, supporting blog post, homepage, guide, review, FAQ, or off-domain post.
+3. Ground recommendations in the audience, product/category, funnel stage, target geography, target prompts, and proof sources.
+4. Optimize for humans first while making the content easy for AI systems to parse and quote.
+5. Never invent proof, customer results, competitor facts, integrations, awards, rankings, or metrics.
+
+## Non-Negotiable Rules
+
+- Write answer-first. Put the direct answer before context, caveats, story, or setup.
+- Use semantic triples for entity clarity: subject + verb + object.
+- Make chunks self-contained. Use named nouns instead of vague pronouns when context could be lost.
+- Add information gain: original data, expert detail, examples, implementation steps, customer proof, screenshots, methodology, or benchmarks.
+- Keep humans and bots on the same page. Do not create bot-only copy, hidden text, stuffing, or near-duplicate prompt pages.
+- Back factual claims with proof or mark them as proof needed.
+- Structure for retrieval with clear H2/H3s, bullets, tables, FAQs, summaries, and definitions.
+- Build entity neighborhoods: category, brand, product, role, use case, workflow, integrations, alternatives, competitors, standards, and proof.
+- Use internal and external links intentionally.
+- Preserve technical discoverability: indexability, crawlability, canonical URLs, snippet eligibility, schema, visible text, and AI/search crawler access.
+
+## Page Templates
+
+### Category Explainer
+- H1: What is [Category]? [1-line value promise]
+- Opening answer, 40-90 words.
+- Semantic triples for category, audience, outcome, and product/category fit.
+- Why it matters now.
+- How to apply it.
+- Mini FAQ.
+- Internal links to product, use case, case study, comparison, or guide.
+- External proof targets.
+- Schema: Article, FAQPage, BreadcrumbList.
+
+### Product or Feature Page
+- H1: [Product/Feature] for [Outcome]
+- Opening claim: [Product/Feature] enables [Outcome] for [Audience/Role].
+- Core sections: Feature -> How it works -> Outcome -> Fit/limits.
+- Proof block.
+- FAQ.
+- Schema: Product or SoftwareApplication where appropriate, Article, FAQPage, BreadcrumbList.
+
+### Comparison or Alternatives Page
+- H1: [Product] vs [Alternative]: Which fits [Use case]?
+- Direct answer by condition.
+- Criteria table with source/proof column.
+- Fit triples for each option.
+- Honest limitations and tradeoffs.
+- Schema: Article and BreadcrumbList.
+
+### Use Case or Industry Page
+- H1: [Industry/Use case] [Outcome/KPI]
+- Concrete or quantified lead only when proven.
+- Mini case or workflow example.
+- Feature -> How it works -> Outcome sections.
+- Adjacent roles, workflows, integrations, and risks.
+- Schema: Article, FAQPage, BreadcrumbList, Organization/Product where relevant.
+
+### Supporting Blog Post or Guide
+- H1: [Topic]: [Specific promise]
+- Opening that states the problem, aligns terminology, and previews the outcome.
+- Sections that each open with a direct answer.
+- Examples, checklist, mini-framework, and FAQ where useful.
+- Schema: Article and FAQPage when FAQs are present.
+
+### Case Study
+- H1: How [Customer/Segment] achieved [Outcome] with [Product]
+- Snapshot table: customer, problem, capability, outcome, timeframe, proof source.
+- Challenge, solution, implementation, result, why it worked.
+- Reusable proof triples.
+- Schema: Article. Add Review only when visible content supports it.
+
+## Audit Output
+
+Return:
+- Executive diagnosis.
+- Scorecard from 0-3 for entity clarity, answer-first structure, triples, chunk independence, proof, links, schema/search hygiene, crawler/snippet eligibility, visible text, freshness, comparison/use-case coverage, and measurement readiness.
+- Highest-impact fixes.
+- Rewrite suggestions for title, opening, weak sections, FAQs, and unsupported claims.
+- Missing entities and proof.
+- Technical discoverability risks.
+- Target prompt set.
+- Prioritized action plan.
+
+## Measurement
+
+Track:
+- Visibility.
+- Share of voice.
+- Citation rate.
+- Accuracy.
+- Sentiment.
+- Grounding queries where available.
+- Cited pages.
+- Crawler access.
+- Prompt class: category, buying, comparison, alternative, use case, problem, implementation, review.
+
+## Final Quality Gate
+
+Before delivering, check:
+- Can an AI engine quote the first paragraph without losing context?
+- Does the page connect entity -> category -> audience -> use case -> outcome?
+- Are claims backed by proof or marked as proof needed?
+- Are important answers and proof visible in crawlable text?
+- Are snippets, schema, canonical tags, robots.txt, and crawler access compatible with the visibility goal?
+- Would a human reader save, trust, and use the page?`
+
 export const marketplaceItems: MarketplaceItem[] = [
+  {
+    slug: 'aeo-content-skill',
+    title:
+      'AEO Content Skill — create and audit AI-search-ready content',
+    description:
+      'An AI-agnostic skill-building prompt for creating and auditing articles, guides, product pages, comparison pages, case studies, FAQs, and landing pages for AI engine visibility, citations, entity clarity, and share of voice.',
+    category: 'skills',
+    tools: ['Codex', 'ChatGPT', 'Claude', 'Gemini'],
+    author: 'Vahue',
+    date: 'June 16, 2026',
+    dateISO: '2026-06-16',
+    views: 124,
+    likes: 0,
+    tags: [
+      'AEO',
+      'AI-search',
+      'content-strategy',
+      'SEO',
+      'AI-engines',
+    ],
+    scenarios: [
+      'Auditing a blog post, guide, or product page for AI-search visibility and citation readiness.',
+      'Drafting an answer-first article with semantic triples, proof, internal links, FAQs, and schema recommendations.',
+      'Building a content cluster for category, comparison, alternative, use-case, and case-study prompts.',
+    ],
+    howToUse:
+      'Copy the prompt and use it to create an AEO content skill in any AI workspace that supports reusable skills, agents, projects, or custom instructions, including Codex, Claude, ChatGPT, Gemini, Anthropic tools, and similar systems.',
+    content: aeoContentSkillContent,
+    contentLanguage: 'en',
+  },
   {
     slug: 'strategic-trend-navigator',
     title:

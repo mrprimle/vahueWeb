@@ -10,6 +10,7 @@ type EventItem = {
   title: string
   location: string
   description: string
+  status: 'past'
   ctaLabel?: string
   bookable?: boolean
 }
@@ -23,8 +24,9 @@ const events: EventItem[] = [
     location: 'San-Francisco',
     description:
       'A Vahue-hosted AI conference in San-Francisco bringing together business and technology leaders to explore real-world AI adoption and strategy.',
-    ctaLabel: 'Reserve your spot',
-    bookable: true,
+    status: 'past',
+    ctaLabel: 'Past event',
+    bookable: false,
   },
   {
     id: 'vahue-ai-summit-la-2026',
@@ -34,8 +36,9 @@ const events: EventItem[] = [
     location: 'Los Angeles',
     description:
       'A curated Vahue AI Summit in Los Angeles featuring a shortlist of invited speakers from AI, Banking, Finance, Insurance, and Real Estate — bringing together industry leaders for focused conversation on practical AI adoption.',
-    ctaLabel: 'Reserve your spot',
-    bookable: true,
+    status: 'past',
+    ctaLabel: 'Past event',
+    bookable: false,
   },
   {
     id: 'vahue-ai-summit-london-2026',
@@ -45,8 +48,9 @@ const events: EventItem[] = [
     location: 'London',
     description:
       'A curated Vahue AI Summit in London featuring a shortlist of invited speakers from AI, Banking, Finance, Insurance, and Real Estate — bringing together industry leaders for focused conversation on practical AI adoption.',
-    ctaLabel: 'Reserve your spot',
-    bookable: true,
+    status: 'past',
+    ctaLabel: 'Past event',
+    bookable: false,
   },
 ]
 
@@ -71,10 +75,10 @@ export default function EventsClient() {
         <div className="rounded-2xl border border-white/10 bg-black overflow-hidden">
           <div className="p-6 md:p-8 border-b border-white/10">
             <h2 className="text-xl md:text-2xl font-semibold text-white">
-              Upcoming Events
+              Past Events
             </h2>
             <p className="mt-1 text-sm text-white/55">
-              Join us at these upcoming events to connect with the AI community.
+              We do not have active event registration open right now.
             </p>
           </div>
 
@@ -87,6 +91,9 @@ export default function EventsClient() {
                 <div className="flex items-center gap-3 flex-wrap">
                   <span className="inline-flex items-center rounded-full bg-white/5 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-white/80">
                     {event.type}
+                  </span>
+                  <span className="inline-flex items-center rounded-full bg-white/[0.03] px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-white/45 border border-white/10">
+                    {event.status}
                   </span>
                   <span className="text-white/40 text-sm">&middot;</span>
                   <span className="text-white/60 text-sm">{event.date}</span>
@@ -120,21 +127,8 @@ export default function EventsClient() {
                       </svg>
                     </button>
                   ) : (
-                    <span className="group inline-flex items-center gap-2 text-sm text-white/85">
+                    <span className="inline-flex items-center gap-2 text-sm text-white/45 cursor-not-allowed">
                       {event.ctaLabel ?? 'Learn more'}
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M13 7l5 5m0 0l-5 5m5-5H6"
-                        />
-                      </svg>
                     </span>
                   )}
                 </div>

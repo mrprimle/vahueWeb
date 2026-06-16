@@ -5,6 +5,16 @@ import Link from 'next/link'
 
 const blogPosts = [
   {
+    id: 'aeo-content-system',
+    title: 'Your Content Is Invisible to AI. Here Is the System That Fixes It',
+    excerpt:
+      'A practical AEO system for making articles, pages, and guides easier for AI engines to retrieve, understand, and cite.',
+    image: '/img/blog/aeo-system-cover.png',
+    date: 'June 16, 2026',
+    category: 'AEO',
+    href: '/blog/aeo-content-system',
+  },
+  {
     id: 'claude-fable-5-agentic-ai',
     title: 'What it feels like to work with Fable',
     excerpt:

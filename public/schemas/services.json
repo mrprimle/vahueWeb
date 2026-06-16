@@ -84,10 +84,10 @@
     {
       "@type": "Service",
       "@id": "https://vahue.ai/ai-seo#service",
-      "name": "AI SEO / LLM Discoverability",
-      "serviceType": "AI search engine optimization (LLM discoverability)",
+      "name": "AEO / LLM Discoverability",
+      "serviceType": "AI engine optimization (LLM discoverability)",
       "category": "Search Engine Optimization",
-      "description": "Make a B2B brand recommendable inside AI assistants. Cross-model coverage across ChatGPT, Google Gemini, Anthropic Claude, Perplexity, and Microsoft Copilot. Includes AI Search Audit & Visibility Score, AI-Optimized Content Strategy, and AI Agent Analytics & Monitoring.",
+      "description": "Make a B2B brand recommendable inside AI assistants. Cross-model coverage across ChatGPT, Google Gemini, Anthropic Claude, Perplexity, and Microsoft Copilot. Includes AI Search Audit & Visibility Score, AEO Content Strategy, and AI Agent Analytics & Monitoring.",
       "url": "https://vahue.ai/ai-seo",
       "provider": { "@id": "https://vahue.ai/#organization" },
       "areaServed": [

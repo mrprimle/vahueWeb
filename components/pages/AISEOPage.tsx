@@ -111,7 +111,7 @@ const services = [
     ),
   },
   {
-    title: 'AI-Optimized Content Strategy',
+    title: 'AEO Content Strategy',
     description:
       'Content creation and restructuring designed to increase your brand\u2019s citation rate in AI-generated responses.',
     deliverables: [
@@ -265,7 +265,7 @@ function CaseStudiesPlaceholder() {
             </svg>
           </div>
           <p className="text-dark/60 text-base md:text-lg leading-relaxed mb-8 max-w-md mx-auto">
-            Our first AI SEO case studies are in progress. Book a call to learn
+            Our first AEO case studies are in progress. Book a call to learn
             about early results.
           </p>
           <Link
@@ -306,7 +306,7 @@ export default function AISEOPage() {
               'Know exactly how AI models perceive your brand \u2014 visibility scores, sentiment, and competitive benchmarks.',
           },
           {
-            title: 'From traditional SEO to AI-first',
+            title: 'From search traffic to AI recommendations',
             description:
               'AI search is a fundamentally different channel. We optimize for how LLMs select and cite sources.',
           },
@@ -355,7 +355,7 @@ export default function AISEOPage() {
 
       {/* 5. Why Us */}
       <SubpageWhyUs
-        title="Why companies choose Vahue for AI SEO"
+        title="Why companies choose Vahue for AEO"
         items={[
           {
             title: 'First movers',
@@ -402,12 +402,12 @@ export default function AISEOPage() {
       <SubpageFAQ
         items={[
           {
-            q: 'What is AI SEO?',
-            a: 'AI SEO is the practice of optimizing your brand\u2019s visibility in AI-generated answers. When someone asks ChatGPT \u201CWhat\u2019s the best tool for X?\u201D, AI SEO determines whether your brand appears in that answer.',
+            q: 'What is AEO?',
+            a: 'AEO is the practice of optimizing your brand\u2019s visibility in AI-generated answers. When someone asks ChatGPT \u201CWhat\u2019s the best tool for X?\u201D, AEO determines whether your brand appears in that answer.',
           },
           {
             q: 'How is this different from traditional SEO?',
-            a: 'Traditional SEO optimizes for search engine result pages. AI SEO optimizes for how large language models select, summarize, and cite sources. Different algorithms, different strategies.',
+            a: 'Traditional SEO optimizes for search engine result pages. AEO optimizes for how large language models select, summarize, and cite sources. Different algorithms, different strategies.',
           },
           {
             q: 'Which AI platforms do you cover?',

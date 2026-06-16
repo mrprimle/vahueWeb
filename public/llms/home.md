@@ -31,7 +31,7 @@ Founder: **Mike Doroshenko**, product strategist and AI consultant with 10+ year
 - **Training programs** with measurable AI literacy, prompts, guardrails, and adoption metrics.
 - **Vahue AI Hub** deployed in the client's environment with Technical, Horizontal, and Vertical agents. The client owns the code.
 - **AI strategy artefacts**: Readiness Diagnostic, AI Strategy Roadmap, Governance & Responsible AI framework, executive coaching.
-- **AI SEO / LLM visibility** audits, content strategy, and continuous monitoring across major AI platforms.
+- **AEO / LLM visibility** audits, content strategy, and continuous monitoring across major AI platforms.
 
 ## Three pillars (one-line summary each)
 - **AI-Native Engineering**: Senior pods that ship AI features to production with evals, guardrails, and CI/CD.

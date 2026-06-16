@@ -1,0 +1,156 @@
+<svg width="1672" height="941" viewBox="0 0 1672 941" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1030 380) rotate(36) scale(850 520)">
+      <stop stop-color="#18251F"/>
+      <stop offset="0.48" stop-color="#0D1113"/>
+      <stop offset="1" stop-color="#050607"/>
+    </radialGradient>
+    <linearGradient id="paperLeft" x1="227" y1="445" x2="733" y2="741" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7B7467"/>
+      <stop offset="1" stop-color="#3D3932"/>
+    </linearGradient>
+    <linearGradient id="paperRight" x1="933" y1="373" x2="1425" y2="789" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF5DE"/>
+      <stop offset="1" stop-color="#D6C4A2"/>
+    </linearGradient>
+    <linearGradient id="slash" x1="687" y1="54" x2="1004" y2="896" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="0.52" stop-color="#FFFFFF" stop-opacity="0.72"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.25"/>
+    </linearGradient>
+    <linearGradient id="lens" x1="1119" y1="179" x2="1327" y2="270" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="0.38" stop-color="#BEE8FF" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.72"/>
+    </linearGradient>
+    <filter id="softBlur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <filter id="glow" x="-70%" y="-70%" width="240%" height="240%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shadow" x="-20%" y="-30%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="28" stdDeviation="22" flood-color="#000000" flood-opacity="0.55"/>
+    </filter>
+    <clipPath id="leftPageClip">
+      <path d="M175 354C303 316 514 324 725 382C750 389 769 414 769 440V785C543 732 335 721 151 760V401C151 381 161 360 175 354Z"/>
+    </clipPath>
+    <clipPath id="rightPageClip">
+      <path d="M903 382C1114 324 1325 316 1453 354C1467 360 1477 381 1477 401V760C1293 721 1085 732 859 785V440C859 414 878 389 903 382Z"/>
+    </clipPath>
+  </defs>
+
+  <rect width="1672" height="941" fill="url(#bgGlow)"/>
+  <rect width="1672" height="941" fill="#000000" opacity="0.2"/>
+
+  <g opacity="0.22">
+    <path d="M0 710C260 646 416 636 646 697C892 762 1068 730 1308 658C1455 614 1577 598 1672 605" stroke="#3AD8D0" stroke-opacity="0.22"/>
+    <path d="M0 281C288 248 502 268 700 344C884 414 1035 427 1268 352C1418 304 1548 291 1672 313" stroke="#7AA2FF" stroke-opacity="0.18"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <path d="M121 771C311 719 528 728 769 786V441C769 415 750 390 725 383C514 325 303 317 175 355C161 361 151 382 151 402V758C141 762 131 767 121 771Z" fill="#15110D"/>
+    <path d="M859 786C1100 728 1317 719 1507 771C1497 767 1487 762 1477 758V402C1477 382 1467 361 1453 355C1325 317 1114 325 903 383C878 390 859 415 859 441V786Z" fill="#15110D"/>
+    <path d="M175 354C303 316 514 324 725 382C750 389 769 414 769 440V785C543 732 335 721 151 760V401C151 381 161 360 175 354Z" fill="url(#paperLeft)"/>
+    <path d="M903 382C1114 324 1325 316 1453 354C1467 360 1477 381 1477 401V760C1293 721 1085 732 859 785V440C859 414 878 389 903 382Z" fill="url(#paperRight)"/>
+    <path d="M769 440C785 431 803 428 814 428C825 428 843 431 859 440V790C842 780 827 777 814 777C801 777 786 780 769 790V440Z" fill="#1E1710"/>
+    <path d="M151 760C333 722 543 733 769 785" stroke="#6E5842" stroke-width="4" opacity="0.45"/>
+    <path d="M859 785C1085 733 1295 722 1477 760" stroke="#8D7454" stroke-width="4" opacity="0.45"/>
+  </g>
+
+  <g clip-path="url(#leftPageClip)" filter="url(#softBlur)" opacity="0.82">
+    <rect x="247" y="418" width="270" height="116" rx="8" fill="#2C2F32" opacity="0.68"/>
+    <rect x="555" y="421" width="134" height="16" rx="8" fill="#1C1F21" opacity="0.9"/>
+    <rect x="555" y="456" width="163" height="12" rx="6" fill="#1C1F21" opacity="0.85"/>
+    <rect x="555" y="487" width="152" height="12" rx="6" fill="#1C1F21" opacity="0.75"/>
+    <rect x="224" y="581" width="398" height="16" rx="8" fill="#1C1F21" opacity="0.82"/>
+    <rect x="224" y="618" width="445" height="16" rx="8" fill="#1C1F21" opacity="0.75"/>
+    <rect x="224" y="656" width="374" height="16" rx="8" fill="#1C1F21" opacity="0.66"/>
+    <rect x="565" y="562" width="150" height="106" rx="10" fill="#212529" opacity="0.84"/>
+  </g>
+
+  <g clip-path="url(#rightPageClip)">
+    <rect x="954" y="421" width="397" height="120" rx="9" fill="#273238"/>
+    <path d="M954 521L1035 462L1109 512L1178 455L1351 541H954V521Z" fill="#9EB6BC" opacity="0.72"/>
+    <path d="M954 541L1051 486L1143 536L1225 484L1351 541H954Z" fill="#5B777D" opacity="0.82"/>
+    <rect x="954" y="578" width="292" height="12" rx="6" fill="#393A35" opacity="0.72"/>
+    <rect x="954" y="611" width="254" height="12" rx="6" fill="#393A35" opacity="0.58"/>
+    <rect x="1265" y="578" width="144" height="12" rx="6" fill="#393A35" opacity="0.64"/>
+    <rect x="1265" y="611" width="112" height="12" rx="6" fill="#393A35" opacity="0.52"/>
+    <rect x="954" y="655" width="116" height="68" rx="7" fill="#C8D98E"/>
+    <path d="M975 688H1047" stroke="#617647" stroke-width="6" stroke-linecap="round"/>
+    <path d="M975 704H1029" stroke="#617647" stroke-width="6" stroke-linecap="round" opacity="0.72"/>
+    <circle cx="1139" cy="690" r="38" fill="#DCE5D4"/>
+    <path d="M1139 652A38 38 0 1 1 1104 706" stroke="#2E95A3" stroke-width="17"/>
+    <path d="M1139 652A38 38 0 0 1 1174 706" stroke="#C96F61" stroke-width="17"/>
+    <rect x="1205" y="655" width="118" height="68" rx="7" fill="#E9A06E"/>
+    <path d="M1225 686H1282" stroke="#8C5036" stroke-width="6" stroke-linecap="round" opacity="0.7"/>
+    <path d="M1225 704H1296" stroke="#8C5036" stroke-width="6" stroke-linecap="round" opacity="0.5"/>
+    <rect x="954" y="757" width="335" height="12" rx="6" fill="#393A35" opacity="0.72"/>
+    <rect x="954" y="790" width="288" height="12" rx="6" fill="#393A35" opacity="0.58"/>
+    <rect x="1230" y="735" width="190" height="90" rx="8" fill="#51676A"/>
+  </g>
+
+  <path d="M722 49L950 898" stroke="#0A0A0A" stroke-width="18" opacity="0.45"/>
+  <path d="M729 44L957 897" stroke="url(#slash)" stroke-width="5"/>
+  <path d="M729 44L957 897" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="18"/>
+
+  <g filter="url(#glow)">
+    <path d="M1212 287C1211 287 1210 287 1209 288C1184 297 1164 319 1153 347C1148 361 1171 369 1178 356C1186 341 1198 330 1214 324C1230 318 1248 318 1264 325C1280 332 1293 345 1300 361C1306 375 1329 367 1324 352C1314 323 1293 301 1267 290C1250 283 1230 282 1212 287Z" fill="url(#lens)" opacity="0.78"/>
+    <ellipse cx="1238" cy="304" rx="129" ry="47" transform="rotate(13 1238 304)" stroke="#F7F2E6" stroke-opacity="0.82" stroke-width="8"/>
+    <ellipse cx="1238" cy="304" rx="116" ry="36" transform="rotate(13 1238 304)" stroke="#AEE8FF" stroke-opacity="0.26" stroke-width="4"/>
+  </g>
+
+  <g opacity="0.78" filter="url(#glow)">
+    <path d="M1195 335L1045 639" stroke="#C8F8FF" stroke-width="6" stroke-linecap="round" opacity="0.26"/>
+    <path d="M1233 343L1121 640" stroke="#C8F8FF" stroke-width="6" stroke-linecap="round" opacity="0.28"/>
+    <path d="M1270 343L1210 650" stroke="#C8F8FF" stroke-width="6" stroke-linecap="round" opacity="0.24"/>
+    <path d="M1163 331L985 586" stroke="#C8F8FF" stroke-width="5" stroke-linecap="round" opacity="0.18"/>
+  </g>
+
+  <g filter="url(#glow)">
+    <path d="M1304 219L1437 102" stroke="#78E4FF" stroke-width="5" stroke-linecap="round" opacity="0.72"/>
+    <path d="M1300 244L1502 191" stroke="#44E7D5" stroke-width="5" stroke-linecap="round" opacity="0.7"/>
+    <path d="M1301 271L1470 322" stroke="#75A7FF" stroke-width="5" stroke-linecap="round" opacity="0.72"/>
+    <path d="M1284 294L1394 458" stroke="#FF9A7D" stroke-width="5" stroke-linecap="round" opacity="0.72"/>
+    <path d="M1256 304L1267 524" stroke="#BFE8FF" stroke-width="5" stroke-linecap="round" opacity="0.62"/>
+  </g>
+
+  <g>
+    <g transform="translate(1402 70)">
+      <rect width="172" height="64" rx="32" fill="#0D1518" stroke="#C5F8FF" stroke-opacity="0.55"/>
+      <circle cx="32" cy="32" r="17" fill="#111B1E" stroke="#C5F8FF" stroke-width="4"/>
+      <circle cx="32" cy="32" r="7" fill="#C5F8FF"/>
+      <text x="62" y="39" fill="#F7FEFF" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">OpenAI</text>
+    </g>
+    <g transform="translate(1466 157)">
+      <rect width="188" height="64" rx="32" fill="#0D1518" stroke="#7EF5E4" stroke-opacity="0.55"/>
+      <path d="M33 15L39 28L53 34L39 40L33 53L27 40L13 34L27 28L33 15Z" fill="#A6FFF3"/>
+      <text x="62" y="39" fill="#F7FEFF" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">Gemini</text>
+    </g>
+    <g transform="translate(1427 292)">
+      <rect width="184" height="64" rx="32" fill="#0D1518" stroke="#9DB8FF" stroke-opacity="0.55"/>
+      <circle cx="32" cy="32" r="18" fill="#1B2130" stroke="#9DB8FF" stroke-width="3"/>
+      <path d="M24 39L32 19L40 39" stroke="#DDE6FF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="62" y="39" fill="#F7FEFF" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">Claude</text>
+    </g>
+    <g transform="translate(1326 428)">
+      <rect width="244" height="64" rx="32" fill="#0D1518" stroke="#FFAB91" stroke-opacity="0.55"/>
+      <circle cx="32" cy="32" r="18" fill="#251613" stroke="#FFAB91" stroke-width="3"/>
+      <path d="M22 32H42M32 22V42M25 25L39 39M39 25L25 39" stroke="#FFD7CA" stroke-width="3" stroke-linecap="round"/>
+      <text x="62" y="39" fill="#F7FEFF" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">Perplexity</text>
+    </g>
+    <g transform="translate(1206 493)">
+      <rect width="150" height="58" rx="29" fill="#0D1518" stroke="#C9D0FF" stroke-opacity="0.45"/>
+      <circle cx="29" cy="29" r="15" fill="#171B26" stroke="#C9D0FF" stroke-width="3"/>
+      <path d="M23 35L35 23M35 23H26M35 23V32" stroke="#EEF0FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="54" y="36" fill="#F7FEFF" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Grok</text>
+    </g>
+  </g>
+
+  <rect x="0.5" y="0.5" width="1671" height="940" stroke="#FFFFFF" stroke-opacity="0.04"/>
+</svg>

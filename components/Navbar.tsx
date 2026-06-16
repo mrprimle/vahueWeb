@@ -455,7 +455,7 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Announcement bar — homepage only, desktop/tablet only (mobile shows pill in Hero) */}
+      {/* Announcement bar — homepage only, desktop/tablet only (mobile shows pill in Hero)
       {isHomePage && (
         <div className="relative z-40 w-full bg-black/40 backdrop-blur-xl border-b border-white/10 text-white text-xs md:text-sm hidden md:block">
           <Link
@@ -485,6 +485,7 @@ export default function Navbar() {
           </Link>
         </div>
       )}
+      */}
 
       <nav
         className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${

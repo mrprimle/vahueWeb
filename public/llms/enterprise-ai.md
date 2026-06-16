@@ -29,7 +29,7 @@ The Hub is structured around four pillars:
 ### Technical Agents (technology accelerators)
 - **Knowledge Engine** — RAG over enterprise documentation, policies, and tribal knowledge.
 - **MCP Accelerator** — Model Context Protocol servers for secure integrations with enterprise systems.
-- **AI SEO** — LLM discoverability infrastructure across ChatGPT, Claude, Gemini, Perplexity.
+- **AEO** — LLM discoverability infrastructure across ChatGPT, Claude, Gemini, Perplexity.
 - **Predictive Analytics Suite** — custom ML models for forecasting and decision intelligence.
 
 ### Horizontal Agents (cross-function)

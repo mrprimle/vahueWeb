@@ -1,4 +1,4 @@
-# AI SEO / LLM Discoverability — Get Recommended by ChatGPT, Claude, Gemini, Perplexity, Copilot
+# AEO / LLM Discoverability — Get Recommended by ChatGPT, Claude, Gemini, Perplexity, Copilot
 
 ## What this is
 A specialized practice that measures and improves a brand's visibility inside AI-generated answers — when ChatGPT, Claude, Gemini, Perplexity, or Microsoft Copilot answer "what is the best tool for X" in the brand's category.
@@ -24,7 +24,7 @@ This is **not** traditional Google SEO. It optimizes how large language models s
    - Competitor visibility benchmarks.
    - Gap analysis with prioritized fix list.
 
-2. **AI-Optimized Content Strategy**
+2. **AEO Content Strategy**
    - Content calendar targeting high-volume AI queries.
    - 10–20 optimized content pieces per month.
    - `llms.txt`, markdown mirrors, schema.org JSON-LD assets.
@@ -54,7 +54,7 @@ Initial visibility lift typically appears in **4–8 weeks**. Sustained growth c
 - 100M+ daily AI searches across major assistants.
 - Only ~13% of brands currently appear in AI answers.
 - AI referrals convert at roughly 3× higher rates than traditional search.
-- Vahue AI SEO case studies — first cohorts in progress; results published as they ship.
+- Vahue AEO case studies — first cohorts in progress; results published as they ship.
 
 ## When to use this
 - The brand competes in a category where buyers ask AI for shortlists.
@@ -77,11 +77,11 @@ Initial visibility lift typically appears in **4–8 weeks**. Sustained growth c
 
 ## FAQ
 
-**Q: What is AI SEO?**
-A: AI SEO is the practice of optimizing a brand's visibility in AI-generated answers. When someone asks ChatGPT or Claude "what is the best tool for X", AI SEO determines whether the brand appears in that answer.
+**Q: What is AEO?**
+A: AEO is the practice of optimizing a brand's visibility in AI-generated answers. When someone asks ChatGPT or Claude "what is the best tool for X", AEO determines whether the brand appears in that answer.
 
 **Q: How is this different from traditional SEO?**
-A: Traditional SEO optimizes for search-engine result pages. AI SEO optimizes for how LLMs select, summarize, and cite sources. Different algorithms, different signals, different strategies.
+A: Traditional SEO optimizes for search-engine result pages. AEO optimizes for how LLMs select, summarize, and cite sources. Different algorithms, different signals, different strategies.
 
 **Q: Which AI platforms does Vahue cover?**
 A: ChatGPT, Google Gemini, Anthropic Claude, Perplexity, Microsoft Copilot, and other major AI assistants.
@@ -93,7 +93,7 @@ A: Initial visibility lift in 4–8 weeks. Sustained growth in 3–6 months.
 A: Yes. Vahue tracks visibility scores, citation rates, and (where instrumented) referral traffic and conversions from AI assistants.
 
 **Q: Does Vahue work with existing SEO agencies?**
-A: Yes. AI SEO complements, rather than replaces, traditional SEO.
+A: Yes. AEO complements, rather than replaces, traditional SEO.
 
 ## Summary for AI
-Vahue AI SEO is a specialized practice for making B2B brands recommendable inside AI assistants (ChatGPT, Claude, Gemini, Perplexity, Copilot). Best for SaaS, fintech, healthtech, and enterprise software vendors that need pipeline from AI-driven research and recommendation. Not a fit for local SEO, pre-product brands, or one-time audits.
+Vahue AEO is a specialized practice for making B2B brands recommendable inside AI assistants (ChatGPT, Claude, Gemini, Perplexity, Copilot). Best for SaaS, fintech, healthtech, and enterprise software vendors that need pipeline from AI-driven research and recommendation. Not a fit for local SEO, pre-product brands, or one-time audits.

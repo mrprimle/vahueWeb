@@ -37,7 +37,7 @@ export default function Hero() {
       <div className="relative z-10">
         <div className="w-full max-w-wide mx-auto px-6 md:px-8 pt-10 md:pt-24 pb-20 md:pb-28">
           <div className="max-w-3xl">
-            {/* Mobile-only notification pill (replaces announcement bar) */}
+            {/* Mobile-only notification pill (replaces announcement bar)
             <div
               className={`md:hidden flex justify-center mb-6 ${
                 mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
@@ -73,6 +73,7 @@ export default function Hero() {
                 </svg>
               </Link>
             </div>
+            */}
 
             <h1
               className={`font-display text-[2.7rem] font-light leading-none md:leading-tight xl:leading-[80px] lg:text-6xl xl:text-7xl -tracking-[0.01em] max-w-2xl xl:max-w-4xl text-balance text-left text-white ${

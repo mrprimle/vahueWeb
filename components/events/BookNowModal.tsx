@@ -91,18 +91,20 @@ export default function BookNowModal({
       const EMAIL_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY
 
       if (
-        EMAIL_SERVICE_ID &&
-        EMAIL_TEMPLATE_ID &&
-        EMAIL_PUBLIC_KEY &&
-        formRef.current
+        !EMAIL_SERVICE_ID ||
+        !EMAIL_TEMPLATE_ID ||
+        !EMAIL_PUBLIC_KEY ||
+        !formRef.current
       ) {
-        await emailjs.sendForm(
-          EMAIL_SERVICE_ID,
-          EMAIL_TEMPLATE_ID,
-          formRef.current,
-          { publicKey: EMAIL_PUBLIC_KEY }
-        )
+        throw new Error('EmailJS configuration missing')
       }
+
+      await emailjs.sendForm(
+        EMAIL_SERVICE_ID,
+        EMAIL_TEMPLATE_ID,
+        formRef.current,
+        { publicKey: EMAIL_PUBLIC_KEY }
+      )
 
       setIsSubmitted(true)
     } catch (error) {

@@ -57,7 +57,7 @@ export const organizationSchema = {
     'Model Risk Management',
     'Retrieval Augmented Generation (RAG)',
     'Model Context Protocol (MCP)',
-    'AI SEO',
+    'AEO',
     'LLM Discoverability',
     'Enterprise AI Platforms',
     'AI Team Training',
@@ -338,11 +338,11 @@ export const aiSeoServiceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
   '@id': `${SITE_URL}/ai-seo#service`,
-  name: 'AI SEO / LLM Discoverability',
-  serviceType: 'AI search engine optimization (LLM discoverability)',
+  name: 'AEO / LLM Discoverability',
+  serviceType: 'AI engine optimization (LLM discoverability)',
   category: 'Search Engine Optimization',
   description:
-    'Make a B2B brand recommendable inside AI assistants. Cross-model coverage across ChatGPT, Google Gemini, Anthropic Claude, Perplexity, and Microsoft Copilot. Includes AI Search Audit & Visibility Score, AI-Optimized Content Strategy (with llms.txt, markdown mirrors, JSON-LD), and AI Agent Analytics & Monitoring.',
+    'Make a B2B brand recommendable inside AI assistants. Cross-model coverage across ChatGPT, Google Gemini, Anthropic Claude, Perplexity, and Microsoft Copilot. Includes AI Search Audit & Visibility Score, AEO Content Strategy (with llms.txt, markdown mirrors, JSON-LD), and AI Agent Analytics & Monitoring.',
   url: `${SITE_URL}/ai-seo`,
   provider,
   areaServed,
@@ -560,12 +560,12 @@ export const aiSeoFaqSchema = faq(
   `${SITE_URL}/ai-seo`,
   [
     {
-      q: 'What is AI SEO?',
-      a: 'AI SEO is the practice of optimizing a brand\u2019s visibility in AI-generated answers. When users ask ChatGPT or Claude "what is the best tool for X", AI SEO determines whether the brand appears.',
+      q: 'What is AEO?',
+      a: 'AEO is the practice of optimizing a brand\u2019s visibility in AI-generated answers. When users ask ChatGPT or Claude "what is the best tool for X", AEO determines whether the brand appears.',
     },
     {
       q: 'How is this different from traditional SEO?',
-      a: 'Traditional SEO optimizes for search-engine result pages. AI SEO optimizes for how LLMs select, summarize, and cite sources.',
+      a: 'Traditional SEO optimizes for search-engine result pages. AEO optimizes for how LLMs select, summarize, and cite sources.',
     },
     {
       q: 'Which AI platforms does Vahue cover?',
@@ -576,7 +576,7 @@ export const aiSeoFaqSchema = faq(
       a: 'Initial visibility lift in 4–8 weeks. Sustained growth in 3–6 months.',
     },
   ],
-  'AI SEO / LLM Discoverability — FAQ'
+  'AEO / LLM Discoverability — FAQ'
 )
 
 /* ============================================================
