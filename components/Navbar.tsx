@@ -7,6 +7,8 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import type { SVGProps, ReactElement } from 'react'
 import { DISCOVERY_CALL_URL } from '@/lib/links'
+import { AttioCalendarIcon } from '@/components/icons/AttioCalendarIcon'
+import { AttioCaseStudiesIcon } from '@/components/icons/AttioCaseStudiesIcon'
 
 /* =========================================================
    Inline icons — sourced from /public/img/nav/*.svg
@@ -349,16 +351,16 @@ const navGroups: NavGroup[] = [
         { href: '/blog', label: 'Blog', Icon: BlogIcon },
       ],
       [
-        { href: '/events', label: 'Events', Icon: EventsIcon },
-        {
-          href: '/leader-board',
-          label: 'Frontier AI Leaderboards',
-          Icon: LeaderboardIcon,
-        },
+        { href: '/events', label: 'Events', Icon: AttioCalendarIcon },
         {
           href: '/case-studies',
           label: 'Case Studies',
-          Icon: CaseStudiesIcon,
+          Icon: AttioCaseStudiesIcon,
+        },
+        {
+          href: '/careers',
+          label: 'Careers',
+          Icon: UsersIcon,
         },
       ],
     ],
@@ -378,6 +380,7 @@ export default function Navbar() {
   const pathname = usePathname()
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const isHomePage = pathname === '/' || pathname === ''
+  const isCareersPage = pathname.startsWith('/careers')
   const liRefs = useRef<Record<string, HTMLLIElement | null>>({})
   const [portalReady, setPortalReady] = useState(false)
   const [menuRect, setMenuRect] = useState<{
@@ -488,8 +491,10 @@ export default function Navbar() {
       */}
 
       <nav
-        className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled || isMenuOpen
+        className={`sticky top-0 left-0 right-0 z-50 transition-[background-color,border-color,box-shadow] duration-200 ${
+          isCareersPage
+            ? 'bg-white/80 backdrop-blur-xl border-b border-black/10 shadow-[0_10px_35px_rgba(17,18,20,0.04)]'
+            : isScrolled || isMenuOpen
             ? 'bg-bg/80 backdrop-blur-xl border-b border-border-soft'
             : openGroup
             ? 'bg-bg/80 border-b border-border-soft'
@@ -502,13 +507,16 @@ export default function Navbar() {
             <Link
               href="/"
               onClick={closeMenu}
-              className="flex items-center gap-2 z-50 text-white"
+              className={`flex items-center gap-2 z-50 ${
+                isCareersPage ? 'text-[#111214]' : 'text-white'
+              }`}
             >
               <Image
                 src="/img/white-circle.svg"
                 alt="Vahue logo"
                 width={14}
                 height={14}
+                className={isCareersPage ? 'invert' : undefined}
               />
               <span className="text-xl font-bold tracking-tight">vahue.ai</span>
             </Link>
@@ -530,7 +538,11 @@ export default function Navbar() {
                     >
                       <button
                         type="button"
-                        className="text-sm font-medium text-white/85 hover:text-white transition-colors cursor-pointer"
+                        className={`text-sm font-medium transition-colors cursor-pointer ${
+                          isCareersPage
+                            ? 'text-black/70 hover:text-black'
+                            : 'text-white/85 hover:text-white'
+                        }`}
                         aria-expanded={isOpen}
                         aria-haspopup="menu"
                       >
@@ -548,7 +560,11 @@ export default function Navbar() {
                 href={DISCOVERY_CALL_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-mono text-[11px] uppercase tracking-widest px-4 py-2 rounded-full bg-white text-bg hover:bg-white/90 transition-colors"
+                className={`font-mono text-[11px] uppercase tracking-widest px-4 py-2 rounded-full transition-colors ${
+                  isCareersPage
+                    ? 'bg-[#111214] text-white hover:bg-black/80'
+                    : 'bg-white text-bg hover:bg-white/90'
+                }`}
               >
                 Book a call
               </Link>
@@ -561,12 +577,16 @@ export default function Navbar() {
               aria-label="Toggle menu"
             >
               <span
-                className={`block w-6 h-0.5 bg-white rounded transition-all duration-300 ${
+                className={`block w-6 h-0.5 rounded transition-all duration-300 ${
+                  isCareersPage ? 'bg-[#111214]' : 'bg-white'
+                } ${
                   isMenuOpen ? 'rotate-45 translate-y-[3px]' : ''
                 }`}
               />
               <span
-                className={`block w-6 h-0.5 bg-white rounded mt-1.5 transition-all duration-300 ${
+                className={`block w-6 h-0.5 rounded mt-1.5 transition-all duration-300 ${
+                  isCareersPage ? 'bg-[#111214]' : 'bg-white'
+                } ${
                   isMenuOpen ? '-rotate-45 -translate-y-[5px]' : ''
                 }`}
               />

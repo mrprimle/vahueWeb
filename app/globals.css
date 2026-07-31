@@ -59,6 +59,11 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  html:has([data-page-theme='careers']),
+  body:has([data-page-theme='careers']) {
+    background: #f6f7f7;
+  }
+
   h1,
   h2,
   h3,

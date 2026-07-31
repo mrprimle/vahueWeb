@@ -1,10 +1,11 @@
+const { withBotId } = require('botid/next/config')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   images: {
     unoptimized: true,
   },
   trailingSlash: true,
 }
 
-module.exports = nextConfig
+module.exports = withBotId(nextConfig)

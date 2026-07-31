@@ -10,6 +10,7 @@ const segmentLinks = [
 
 const companyLinks = [
   { label: 'Case Studies', href: '/case-studies' },
+  { label: 'Careers', href: '/careers' },
   { label: 'Blog', href: '/blog' },
   { label: 'Contact', href: '/#contact' },
 ]

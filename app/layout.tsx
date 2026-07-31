@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
+import { BotIdClient } from 'botid/client'
 import { Inter, Space_Mono, Geist_Mono } from 'next/font/google'
 import localFont from 'next/font/local'
 import './globals.css'
@@ -159,6 +160,15 @@ export default function RootLayout({
       className={`${inter.variable} ${aeonik.variable} ${spaceMono.variable} ${geistMono.variable} dark`}
     >
       <head>
+        <BotIdClient
+          protect={[
+            {
+              path: '/api/careers/cv/*',
+              method: 'POST',
+              advancedOptions: { checkLevel: 'basic' },
+            },
+          ]}
+        />
         {jsonLdGraph.map((schema, i) => (
           <script
             key={i}
