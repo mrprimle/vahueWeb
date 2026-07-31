@@ -229,14 +229,14 @@ export default function SeniorSMMApplication() {
   return (
     <section
       id="apply"
-      className="scroll-mt-28 overflow-hidden rounded-[32px] bg-[#111214] text-white"
+      className="scroll-mt-28 w-full max-w-full overflow-hidden rounded-[28px] bg-[#111214] text-white sm:rounded-[32px]"
     >
-      <div className="grid lg:grid-cols-[0.8fr_1.2fr]">
-        <div className="border-b border-white/10 p-7 md:p-12 lg:border-b-0 lg:border-r">
+      <div className="grid min-w-0 lg:grid-cols-[0.8fr_1.2fr]">
+        <div className="min-w-0 border-b border-white/10 p-5 sm:p-7 md:p-12 lg:border-b-0 lg:border-r">
           <p className="text-sm font-semibold uppercase tracking-[0.12em] text-white/40">
             Apply
           </p>
-          <h2 className="mt-5 max-w-md text-4xl font-semibold leading-[0.98] text-white md:text-6xl">
+          <h2 className="mt-5 max-w-md text-3xl font-semibold leading-[0.98] text-white sm:text-4xl md:text-6xl">
             Join us as Senior SMM
           </h2>
           <p className="mt-6 max-w-md text-base leading-relaxed text-white/60">
@@ -248,9 +248,9 @@ export default function SeniorSMMApplication() {
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className="grid gap-x-6 gap-y-7 p-7 md:grid-cols-2 md:p-12"
+          className="grid min-w-0 gap-x-5 gap-y-6 p-5 sm:p-7 md:grid-cols-2 md:gap-x-6 md:gap-y-7 md:p-12"
         >
-          <label className="grid gap-2">
+          <label className="grid min-w-0 gap-2">
             <span className="text-xs font-semibold uppercase tracking-[0.1em] text-white/50">
               Full name
             </span>
@@ -261,11 +261,11 @@ export default function SeniorSMMApplication() {
               autoComplete="name"
               required
               placeholder="Your name"
-              className="min-h-12 border-b border-white/20 bg-transparent py-3 text-lg text-white outline-none transition-colors placeholder:text-white/30 focus:border-white"
+              className="min-h-12 w-full min-w-0 border-b border-white/20 bg-transparent py-3 text-base text-white outline-none transition-colors placeholder:text-white/30 focus:border-white sm:text-lg"
             />
           </label>
 
-          <label className="grid gap-2">
+          <label className="grid min-w-0 gap-2">
             <span className="text-xs font-semibold uppercase tracking-[0.1em] text-white/50">
               Email
             </span>
@@ -278,7 +278,7 @@ export default function SeniorSMMApplication() {
               required
               aria-invalid={!isEmailValid}
               placeholder="you@example.com"
-              className={`min-h-12 border-b bg-transparent py-3 text-lg text-white outline-none transition-colors placeholder:text-white/30 ${
+              className={`min-h-12 w-full min-w-0 border-b bg-transparent py-3 text-base text-white outline-none transition-colors placeholder:text-white/30 sm:text-lg ${
                 isEmailValid
                   ? 'border-white/20 focus:border-white'
                   : 'border-red-400 focus:border-red-400'
@@ -286,7 +286,7 @@ export default function SeniorSMMApplication() {
             />
           </label>
 
-          <label className="grid gap-2">
+          <label className="grid min-w-0 gap-2">
             <span className="text-xs font-semibold uppercase tracking-[0.1em] text-white/50">
               Phone
             </span>
@@ -297,11 +297,11 @@ export default function SeniorSMMApplication() {
               onChange={(event) => setPhone(event.target.value.slice(0, 40))}
               autoComplete="tel"
               placeholder="+44..."
-              className="min-h-12 border-b border-white/20 bg-transparent py-3 text-lg text-white outline-none transition-colors placeholder:text-white/30 focus:border-white"
+              className="min-h-12 w-full min-w-0 border-b border-white/20 bg-transparent py-3 text-base text-white outline-none transition-colors placeholder:text-white/30 focus:border-white sm:text-lg"
             />
           </label>
 
-          <label className="grid gap-2">
+          <label className="grid min-w-0 gap-2">
             <span className="text-xs font-semibold uppercase tracking-[0.1em] text-white/50">
               Portfolio or LinkedIn
             </span>
@@ -311,12 +311,12 @@ export default function SeniorSMMApplication() {
               value={portfolio}
               onChange={(event) => setPortfolio(event.target.value.slice(0, 500))}
               placeholder="https://... (optional)"
-              className="min-h-12 border-b border-white/20 bg-transparent py-3 text-lg text-white outline-none transition-colors placeholder:text-white/30 focus:border-white"
+              className="min-h-12 w-full min-w-0 border-b border-white/20 bg-transparent py-3 text-base text-white outline-none transition-colors placeholder:text-white/30 focus:border-white sm:text-lg"
             />
           </label>
 
-          <div className="grid gap-3 md:col-span-2">
-            <div className="flex items-end justify-between gap-4">
+          <div className="grid min-w-0 gap-3 md:col-span-2">
+            <div className="flex min-w-0 flex-wrap items-end justify-between gap-2">
               <span className="text-xs font-semibold uppercase tracking-[0.1em] text-white/50">
                 CV
               </span>
@@ -324,7 +324,7 @@ export default function SeniorSMMApplication() {
             </div>
 
             {cvFile ? (
-              <div className="flex min-h-20 items-center gap-4 rounded-2xl border border-white/15 bg-white/[0.06] px-4 py-3">
+              <div className="flex min-h-20 min-w-0 items-center gap-3 rounded-2xl border border-white/15 bg-white/[0.06] px-3 py-3 sm:gap-4 sm:px-4">
                 <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-white text-[#111214]">
                   <FileText size={22} weight="duotone" aria-hidden="true" />
                 </span>
@@ -351,11 +351,11 @@ export default function SeniorSMMApplication() {
                 </button>
               </div>
             ) : (
-              <label className="group flex min-h-24 cursor-pointer items-center justify-center gap-4 rounded-2xl border border-dashed border-white/20 bg-white/[0.025] px-5 py-5 text-center transition-colors hover:border-white/45 hover:bg-white/[0.06]">
+              <label className="group flex min-h-24 min-w-0 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-white/20 bg-white/[0.025] px-4 py-5 text-center transition-colors hover:border-white/45 hover:bg-white/[0.06] sm:flex-row sm:gap-4 sm:px-5 sm:text-left">
                 <span className="grid size-11 shrink-0 place-items-center rounded-full border border-white/15 text-white/65 transition-colors group-hover:bg-white group-hover:text-[#111214]">
                   <FileArrowUp size={21} weight="duotone" aria-hidden="true" />
                 </span>
-                <span className="text-left">
+                <span className="min-w-0">
                   <span className="block text-sm font-semibold text-white">
                     Attach your CV
                   </span>
@@ -375,7 +375,7 @@ export default function SeniorSMMApplication() {
             )}
           </div>
 
-          <label className="grid gap-2 md:col-span-2">
+          <label className="grid min-w-0 gap-2 md:col-span-2">
             <span className="text-xs font-semibold uppercase tracking-[0.1em] text-white/50">
               A few words about you
             </span>
@@ -385,7 +385,7 @@ export default function SeniorSMMApplication() {
               onChange={(event) => setMessage(event.target.value.slice(0, 1600))}
               rows={4}
               placeholder="Relevant experience, availability, and anything else we should know"
-              className="resize-none border-b border-white/20 bg-transparent py-3 text-lg leading-relaxed text-white outline-none transition-colors placeholder:text-white/30 focus:border-white"
+              className="w-full min-w-0 resize-none border-b border-white/20 bg-transparent py-3 text-base leading-relaxed text-white outline-none transition-colors placeholder:text-white/30 focus:border-white sm:text-lg"
             />
           </label>
 
@@ -401,13 +401,13 @@ export default function SeniorSMMApplication() {
           {submitError && (
             <p
               role="alert"
-              className="rounded-xl border border-red-300/25 bg-red-300/10 px-4 py-3 text-sm text-red-100 md:col-span-2"
+              className="min-w-0 break-words rounded-xl border border-red-300/25 bg-red-300/10 px-4 py-3 text-sm text-red-100 md:col-span-2"
             >
               {submitError}
             </p>
           )}
 
-          <div className="flex flex-col gap-4 md:col-span-2 md:flex-row md:items-center md:justify-between">
+          <div className="flex min-w-0 flex-col gap-4 md:col-span-2 md:flex-row md:items-center md:justify-between">
             <p className="max-w-md text-xs leading-relaxed text-white/40">
               By submitting, you agree that Vahue may use your information to
               review and respond to your application.
@@ -415,7 +415,7 @@ export default function SeniorSMMApplication() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="group inline-flex min-w-[210px] shrink-0 items-center justify-between gap-5 whitespace-nowrap rounded-full bg-white px-5 py-3.5 text-sm font-semibold text-[#111214] transition-transform hover:scale-[1.02] active:scale-[0.98] disabled:cursor-wait disabled:opacity-55"
+              className="group inline-flex w-full min-w-0 shrink-0 items-center justify-between gap-5 whitespace-nowrap rounded-full bg-white px-5 py-3.5 text-sm font-semibold text-[#111214] transition-transform hover:scale-[1.02] active:scale-[0.98] disabled:cursor-wait disabled:opacity-55 sm:w-auto sm:min-w-[210px]"
             >
               <span>
                 {submissionStage === 'uploading'

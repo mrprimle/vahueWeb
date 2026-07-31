@@ -1002,8 +1002,15 @@
   }
 
   .teamImage {
-    min-height: 440px;
+    width: 100%;
+    min-height: 0;
+    aspect-ratio: 1852 / 849;
     clip-path: none;
+  }
+
+  .teamImage img {
+    object-fit: contain;
+    object-position: center;
   }
 
   .experience {
