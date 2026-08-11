@@ -285,12 +285,15 @@ const navGroups: NavGroup[] = [
     label: 'Services',
     columns: [
       [
+        /* AI Incubator is intentionally hidden from the navbar.
+        Direct access to /vahue-incubator remains available.
         {
           href: '/vahue-incubator',
           label: 'AI Incubator',
           Icon: CommunityIcon,
           badge: 'NEW',
         },
+        */
         {
           href: '/ai-native-engineering',
           label: 'AI-Native Engineering',
