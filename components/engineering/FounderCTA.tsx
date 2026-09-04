@@ -68,7 +68,7 @@ export default function FounderCTA() {
               </p>
               <div className="border-t border-white/20 pt-4">
                 <p className="text-white text-sm font-semibold">
-                  Supported by 30+ experts
+                  Supported by 15+ experts
                 </p>
                 <p className="text-white text-xs">
                   from McKinsey, Google, and top tech companies.
@@ -142,7 +142,7 @@ export default function FounderCTA() {
                   </p>
                   <div className="bg-[#1e2530] rounded-2xl p-5 w-fit">
                     <p className="text-white text-sm font-semibold mb-1">
-                      Supported by 30+ experts
+                      Supported by 15+ experts
                     </p>
                     <p className="text-white text-xs">
                       from McKinsey, Google, and top tech companies.

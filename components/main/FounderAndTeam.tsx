@@ -86,7 +86,7 @@ export default function FounderAndTeam() {
 
               <div className="rounded-2xl border border-border-soft bg-white/[0.03] p-5 mb-8 max-w-md">
                 <p className="text-sm font-semibold text-white mb-1">
-                  Supported by 30+ experts
+                  Supported by 15+ experts
                 </p>
                 <p className="text-xs text-white/55">
                   from McKinsey, Google, and top tech companies.

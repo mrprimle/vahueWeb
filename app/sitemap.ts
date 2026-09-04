@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { caseStudies } from '@/lib/case-studies'
 
 export const dynamic = 'force-static'
 
@@ -37,6 +38,9 @@ const staticRoutes: { path: string; priority: number; changeFrequency: MetadataR
   { path: '/careers/vacancies',                      priority: 0.6,  changeFrequency: 'weekly'  },
   { path: '/careers/senior-smm',                     priority: 0.6,  changeFrequency: 'monthly' },
   { path: '/contact',                                priority: 0.6,  changeFrequency: 'monthly' },
+  { path: '/privacy-policy',                         priority: 0.3,  changeFrequency: 'yearly'  },
+  { path: '/terms',                                  priority: 0.3,  changeFrequency: 'yearly'  },
+  { path: '/cookie-policy',                          priority: 0.3,  changeFrequency: 'yearly'  },
   // AI-readable mirrors (important for AI crawler discoverability)
   { path: '/llms.txt',                               priority: 0.9,  changeFrequency: 'weekly'  },
   { path: '/llms/home.md',                           priority: 0.85, changeFrequency: 'weekly'  },
@@ -54,13 +58,18 @@ const staticRoutes: { path: string; priority: number; changeFrequency: MetadataR
   { path: '/schemas/organization.json',              priority: 0.6,  changeFrequency: 'monthly' },
   { path: '/schemas/services.json',                  priority: 0.6,  changeFrequency: 'monthly' },
   { path: '/schemas/faq.json',                       priority: 0.5,  changeFrequency: 'monthly' },
-  { path: '/schemas/reviews.json',                   priority: 0.5,  changeFrequency: 'monthly' },
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
 
-  return staticRoutes.map(({ path, priority, changeFrequency }) => ({
+  const caseStudyRoutes = caseStudies.map(({ slug }) => ({
+    path: `/case-studies/${slug}`,
+    priority: 0.65,
+    changeFrequency: 'monthly' as const,
+  }))
+
+  return [...staticRoutes, ...caseStudyRoutes].map(({ path, priority, changeFrequency }) => ({
     url: `${BASE}${path}`,
     lastModified: now,
     changeFrequency,

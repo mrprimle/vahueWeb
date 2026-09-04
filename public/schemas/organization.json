@@ -9,7 +9,7 @@
   "image": "https://vahue.ai/img/white-circle.svg",
   "description": "Vahue is a B2B AI transformation partner that helps companies ship AI features to production, train teams to be AI-fluent, and run enterprise-ready AI systems on their own infrastructure. Three pillars: AI-Native engineering team extension, hands-on team training, and the Vahue AI Hub enterprise agent platform.",
   "slogan": "Accelerate your AI Transformation.",
-  "foundingDate": "2014",
+  "foundingDate": "2019",
   "founder": {
     "@type": "Person",
     "@id": "https://vahue.ai/#mike-doroshenko",
@@ -58,12 +58,8 @@
     "Inc. 5000 Fastest Growing",
     "Forbes Tech Council Member"
   ],
-  "sameAs": ["https://clutch.co/profile/pletava"],
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "20",
-    "bestRating": "5",
-    "worstRating": "1"
-  }
+  "sameAs": [
+    "https://clutch.co/profile/vahue",
+    "https://www.linkedin.com/company/vahue/"
+  ]
 }

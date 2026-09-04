@@ -9,7 +9,7 @@ import SubpageWhyUs from '@/components/shared/SubpageWhyUs'
 import SubpageIndustries from '@/components/shared/SubpageIndustries'
 import SubpageFAQ from '@/components/shared/SubpageFAQ'
 import FounderCTA from '@/components/engineering/FounderCTA'
-import CaseStudies from '@/components/engineering/CaseStudies'
+import DeliveryOutcomes from '@/components/engineering/Testimonials'
 import BlogSection from '@/components/engineering/BlogSection'
 import ContactContainer from '@/components/engineering/ContactContainer'
 
@@ -17,7 +17,6 @@ import ContactContainer from '@/components/engineering/ContactContainer'
 
 const companies = [
   { name: 'Shopify', logo: '/img/shopify.svg' },
-  { name: 'Audi', logo: '/img/audi-logo.svg' },
   { name: 'Qonto', logo: '/img/qontoLogo.svg' },
   { name: 'Leafworks', logo: '/img/leafworks.svg' },
   { name: 'Tracesafe', logo: '/img/tracesafe.svg' },
@@ -399,8 +398,8 @@ export default function StrategyPage() {
       {/* 8. Founder + CTA */}
       <FounderCTA />
 
-      {/* 9. Case Studies */}
-      <CaseStudies />
+      {/* 9. Delivery outcomes */}
+      <DeliveryOutcomes />
 
       {/* 10. Blog */}
       <BlogSection />

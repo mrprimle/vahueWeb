@@ -115,13 +115,13 @@ export default function Footer() {
             © {new Date().getFullYear()} Vahue. All rights reserved.
           </p>
           <div className="flex items-center gap-8">
-            <Link href="#" className="text-xs text-white/40 hover:text-white/80 transition-colors font-mono tracking-wide">
+            <Link href="/terms" className="text-xs text-white/40 hover:text-white/80 transition-colors font-mono tracking-wide">
               Terms
             </Link>
-            <Link href="#" className="text-xs text-white/40 hover:text-white/80 transition-colors font-mono tracking-wide">
+            <Link href="/privacy-policy" className="text-xs text-white/40 hover:text-white/80 transition-colors font-mono tracking-wide">
               Privacy
             </Link>
-            <Link href="#" className="text-xs text-white/40 hover:text-white/80 transition-colors font-mono tracking-wide">
+            <Link href="/cookie-policy" className="text-xs text-white/40 hover:text-white/80 transition-colors font-mono tracking-wide">
               Cookies
             </Link>
           </div>

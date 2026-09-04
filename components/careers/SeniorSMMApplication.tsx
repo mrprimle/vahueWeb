@@ -10,6 +10,7 @@ import {
   X,
 } from '@phosphor-icons/react'
 import emailjs from '@emailjs/browser'
+import Link from 'next/link'
 
 const emailRegexp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const maxCvSize = 5 * 1024 * 1024
@@ -410,7 +411,10 @@ export default function SeniorSMMApplication() {
           <div className="flex min-w-0 flex-col gap-4 md:col-span-2 md:flex-row md:items-center md:justify-between">
             <p className="max-w-md text-xs leading-relaxed text-white/40">
               By submitting, you agree that Vahue may use your information to
-              review and respond to your application.
+              review and respond to your application as described in our{' '}
+              <Link href="/privacy-policy" className="text-white underline underline-offset-2">
+                Privacy Policy
+              </Link>.
             </p>
             <button
               type="submit"

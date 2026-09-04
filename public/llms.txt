@@ -8,7 +8,7 @@
 Name: Vahue
 Website: https://vahue.ai
 Founder: Mike Doroshenko (Founder, Product Strategist, AI Consultant; 10+ years in digital product strategy and AI transformation; Forbes Tech Council member)
-Team: 30+ specialists with experience at McKinsey, Google, and other top technology companies.
+Team: 17 people, supported by a network of 15+ specialists with experience at McKinsey, Google, and other top technology companies.
 
 ## Description
 Vahue is a B2B AI transformation partner that helps companies ship AI features to production, train their people, and run enterprise-ready AI systems on their own infrastructure. Vahue operates across three pillars: AI-Native engineering team extension (Talent), hands-on team training (Training), and the Vahue AI Hub enterprise agent platform (Systems).

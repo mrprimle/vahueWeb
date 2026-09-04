@@ -31,7 +31,7 @@ export const organizationSchema = {
   description:
     'Vahue is a B2B AI transformation partner that helps companies ship AI features to production, train teams to be AI-fluent, and run enterprise-ready AI systems on their own infrastructure. Three pillars: AI-Native engineering team extension, hands-on team training, and the Vahue AI Hub enterprise agent platform.',
   slogan: 'Accelerate your AI Transformation.',
-  foundingDate: '2014',
+  foundingDate: '2019',
   founder: {
     '@type': 'Person',
     '@id': FOUNDER_ID,
@@ -87,8 +87,9 @@ export const organizationSchema = {
     'Top Blockchain Company in Education 2024 (Clutch)',
   ],
   sameAs: [
-    'https://clutch.co/profile/pletava',
-    // Add additional verified profiles (LinkedIn, X, Crunchbase) when available.
+    'https://clutch.co/profile/vahue',
+    'https://www.linkedin.com/company/vahue/',
+    // Add additional verified profiles (X, Crunchbase) when available.
   ],
 }
 
@@ -579,141 +580,9 @@ export const aiSeoFaqSchema = faq(
   'AEO / LLM Discoverability — FAQ'
 )
 
-/* ============================================================
- * Reviews — only Clutch-verifiable testimonials with named clients.
- * ============================================================ */
-
-// TODO: Replace static aggregateRating values with data fetched from the Clutch API
-// once a server-side integration exists. Endpoint: https://api.clutch.co/api/v1/providers/{id}/ratings
-// Fields to keep dynamic: ratingValue, reviewCount.
-// Do NOT fabricate numbers — only use values directly returned by Clutch.
-export const organizationWithReviewsSchema = {
-  ...organizationSchema,
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.9',
-    reviewCount: '20',
-    bestRating: '5',
-    worstRating: '1',
-  },
-  review: [
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: {
-        '@type': 'Person',
-        name: 'Eugene Walden',
-        jobTitle: 'Founder & CTO',
-        worksFor: { '@type': 'Organization', name: 'Madefire' },
-      },
-      reviewBody:
-        'Vahue quickly provided top talent who became key to our team. Reliable, responsive, and a pleasure to work with.',
-      publisher: { '@type': 'Organization', name: 'Clutch' },
-    },
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: {
-        '@type': 'Person',
-        name: 'Chad Willard',
-        jobTitle: 'CEO',
-        worksFor: { '@type': 'Organization', name: 'Straddle' },
-      },
-      reviewBody: 'Their speed and professionalism are really impressive.',
-      publisher: { '@type': 'Organization', name: 'Clutch' },
-    },
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: {
-        '@type': 'Person',
-        name: 'Jacob Berg',
-        jobTitle: 'CTO',
-        worksFor: { '@type': 'Organization', name: 'Social Curator' },
-      },
-      reviewBody:
-        'I appreciated the level of comfort Vahue made us feel. It was like being part of a family.',
-      publisher: { '@type': 'Organization', name: 'Clutch' },
-    },
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: {
-        '@type': 'Person',
-        name: 'Bartek Czerwinski',
-        jobTitle: 'CTO',
-        worksFor: { '@type': 'Organization', name: 'Quik' },
-      },
-      reviewBody:
-        'Vahue has the ability to dive in and get the work done creatively with a lot of personal input.',
-      publisher: { '@type': 'Organization', name: 'Clutch' },
-    },
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: {
-        '@type': 'Person',
-        name: 'Steinar Aas',
-        jobTitle: 'CEO & Co-Founder',
-        worksFor: { '@type': 'Organization', name: 'Asio AS' },
-      },
-      reviewBody:
-        'Their flexibility and genuine interest in finding the best solution for the product was impressive.',
-      publisher: { '@type': 'Organization', name: 'Clutch' },
-    },
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: {
-        '@type': 'Person',
-        name: 'Georg Winkler',
-        jobTitle: 'CEO',
-        worksFor: { '@type': 'Organization', name: 'Xpertify' },
-      },
-      reviewBody:
-        'The different and very profound skillset of the Vahue team was very impressive.',
-      publisher: { '@type': 'Organization', name: 'Clutch' },
-    },
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: {
-        '@type': 'Person',
-        name: 'Patrik Dvořák',
-        jobTitle: 'CEO',
-        worksFor: { '@type': 'Organization', name: 'SECTOR 31 s.r.o.' },
-      },
-      reviewBody:
-        "Vahue's responsiveness and accuracy were impressive. We highly recommend them.",
-      publisher: { '@type': 'Organization', name: 'Clutch' },
-    },
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: {
-        '@type': 'Person',
-        name: 'Philipp Lenz',
-        jobTitle: 'Co-Founder',
-        worksFor: { '@type': 'Organization', name: 'parloo.de' },
-      },
-      reviewBody:
-        "There are a lot of companies that offer similar services but we've had an end-to-end good experience with them.",
-      publisher: { '@type': 'Organization', name: 'Clutch' },
-    },
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      author: {
-        '@type': 'Person',
-        name: 'Prasanna Elvis Eswara',
-        jobTitle: 'Principal Consultant',
-        worksFor: { '@type': 'Organization', name: 'Roost Digital' },
-      },
-      reviewBody: 'They were proactive and seemed eager to build a relationship.',
-      publisher: { '@type': 'Organization', name: 'Clutch' },
-    },
-  ],
-}
+/* No aggregate rating or review markup is published until it can be sourced
+ * directly from the canonical Vahue Clutch profile. */
+export const organizationWithReviewsSchema = organizationSchema
 
 /* ============================================================
  * Helper: render a JSON-LD <script> string for inlining

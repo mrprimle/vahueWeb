@@ -21,10 +21,9 @@ public/
     industries-healthcare-life-sciences.md       # Industry mirror
     industries-retail-ecommerce.md               # Industry mirror
   schemas/
-    organization.json                            # JSON-LD Organization + AggregateRating
+    organization.json                            # JSON-LD Organization
     services.json                                # JSON-LD @graph of all Services
     faq.json                                     # JSON-LD FAQPage
-    reviews.json                                 # JSON-LD Reviews (Clutch-verifiable only)
   robots.txt                                     # Updated: AI crawlers explicitly welcomed
 
 lib/
@@ -40,7 +39,7 @@ app/
 ### 1. `llms.txt` — single high-signal answer source
 - Plain text, no markup overhead, designed for chunked retrieval.
 - Mandatory sections: Company → Description → Services → ICP → Use Cases → **Best Fit / Not a Fit** → Differentiators → Proof → Service Area → Contact → Links → Decision Hooks.
-- Every claim is traceable to code (services from `/components/pages/*` and `/components/segments/content/*`; proof from `FounderAndTeam.tsx`, `AwardsSlider.tsx`, `CaseStudies.tsx`, `Testimonials.tsx`, `Press.tsx`).
+- Every claim is traceable to code (services from `/components/pages/*` and `/components/segments/content/*`; proof from `FounderAndTeam.tsx`, `AwardsSlider.tsx`, `lib/case-studies.ts`, and `Press.tsx`).
 
 ### 2. Markdown mirrors — chunkable, single-intent pages
 - Each markdown file follows the same skeleton: What this is → Who it's for → Problem it solves → What is delivered → Process → Technologies → Example outcomes → **When to use / When NOT to use** → Alternatives → FAQ → **Summary for AI**.
@@ -48,10 +47,10 @@ app/
 - The trailing **Summary for AI** (2–4 lines) is the densest signal an LLM needs for a quick recommendation answer.
 
 ### 3. JSON-LD schema — fact layer for both Google and LLMs
-- One **Organization** schema with named founder, awards, knowsAbout, areaServed, contactPoint, and aggregateRating.
+- One **Organization** schema with named founder, awards, knowsAbout, areaServed, contactPoint, and the canonical Vahue profiles.
 - One **Service** schema **per offering** (AI-Native Engineering, AI Team Training, Enterprise AI / Vahue AI Hub, AI Strategy & Advisory, AI SEO, AI Automations, Vahue Incubator) — each with explicit `serviceType`, `category`, `audience`, and `areaServed`.
 - One **FAQPage** schema with the highest-intent decision questions.
-- **Reviews** are restricted to verifiable Clutch testimonials only — no fabricated metrics.
+- **Reviews are not currently emitted in structured data.** Add them only when they can be sourced from the canonical Vahue profile without identity ambiguity.
 - Schemas live in `lib/seo/schemas.ts` (typed, import-safe) and are injected on every page through `app/layout.tsx` so they ship with every URL.
 
 ### 4. Crawlability — `robots.txt`
@@ -63,12 +62,12 @@ app/
 | Dimension | llms.txt | /public/llms/*.md | lib/seo/schemas.ts + /public/schemas/*.json |
 |---|---|---|---|
 | Company name & domain | Vahue / vahue.ai | Vahue / vahue.ai | Vahue / vahue.ai |
-| Founder | Mike Doroshenko, 10+ yrs, Forbes Tech Council, 30+ experts | Same | Same |
+| Founder | Mike Doroshenko, 10+ yrs, Forbes Tech Council, supported by 15+ experts | Same | Same |
 | Three pillars (Talent / Training / Systems) | ✅ | ✅ | ✅ (mapped to 3 service schemas + adjuncts) |
 | Services list (7 offerings) | ✅ | ✅ (one .md per service) | ✅ (one Service schema per offering) |
 | ICP (Series A → Fortune 500; CTO/CIO/CDO/founder; BFSI/insurance/healthcare/retail) | ✅ | ✅ | ✅ (`audience.audienceType` per Service) |
 | "Best Fit / Not a Fit" disclosed | ✅ | ✅ (per page) | Implicit via `audienceType` |
-| Proof points (100+ trained, 20+ companies, 9.4/10, 96% in 7 days, awards, case studies, named clients) | ✅ | ✅ | ✅ (`award`, `aggregateRating`, `review`) |
+| Proof points (100+ trained, 20+ companies, 9.4/10, 96% in 7 days, awards, case studies, named clients) | ✅ | ✅ | ✅ for organisation facts; case evidence stays on case pages |
 | Tech stack (Claude, GPT, Gemini, Bedrock, Azure OpenAI, open-weights, Cursor, Copilot, MCP, RAG) | ✅ | ✅ | ✅ (`knowsAbout`) |
 | Service area (Global, US, EU, UK) | ✅ | ✅ | ✅ (`areaServed`) |
 | Contact (Calendly URL) | ✅ | ✅ | ✅ (`contactPoint.url`) |
@@ -90,7 +89,7 @@ No contradictions remain. If any service positioning is updated, **change `llms.
 
 - **Source of truth**: `llms.txt` and `/public/llms/*.md`. Schemas in `lib/seo/schemas.ts` are derived from those files.
 - **Adding a new service**: write the `.md` mirror first → update `llms.txt` → add a Service schema in `lib/seo/schemas.ts` → mirror the JSON to `/public/schemas/services.json`.
-- **Updating a metric** (e.g., "100+ people trained" → "150+"): update in `llms.txt` and the matching `.md` first, then `schemas.ts` if it appears in JSON-LD (`aggregateRating`, `award`, etc.).
+- **Updating a metric** (e.g., "100+ people trained" → "150+"): update in `llms.txt` and the matching `.md` first, then `schemas.ts` if it appears in JSON-LD.
 - **Adding a new industry**: create `/public/llms/industries-<slug>.md`, add link to `llms.txt`, add to `Service.areaServed` if relevant.
 - **Reviews**: only add entries that exist and are verifiable on Clutch or another reputable third-party platform.
 
@@ -100,7 +99,7 @@ No contradictions remain. If any service positioning is updated, **change `llms.
 2. Add `/og-image.png` (1200×630) so social and LLM previews render correctly.
 3. Set up monitoring of the major AI assistants for the queries Vahue should appear on (this is exactly the AI SEO service Vahue itself sells — eat your own dog food).
 4. Add a `<link rel="alternate" type="text/markdown">` per page (currently only the home alternate is wired in `app/layout.tsx`) by templating it per route.
-5. Replace `aggregateRating.reviewCount` and `ratingValue` with values pulled from the live Clutch API once a backend service exists.
+5. Add aggregate review data only after a live Clutch integration can guarantee that ratings and reviews belong to the canonical Vahue identity.
 
 ## Files modified
 

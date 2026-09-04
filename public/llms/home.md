@@ -7,7 +7,7 @@ Vahue is a B2B AI transformation services company. It helps companies ship AI fe
 - **Training** — domain-specific workshops that take a team from AI-curious to AI-fluent in days.
 - **Systems** — the **Vahue AI Hub**, a platform of pre-configured, customizable agents deployed inside the client's environment.
 
-Founder: **Mike Doroshenko**, product strategist and AI consultant with 10+ years of digital product strategy and AI transformation experience. Forbes Tech Council member. Supported by 30+ specialists with experience at McKinsey, Google, and other top technology companies.
+Founder: **Mike Doroshenko**, product strategist and AI consultant with 10+ years of digital product strategy and AI transformation experience. Forbes Tech Council member. Supported by 15+ specialists with experience at McKinsey, Google, and other top technology companies.
 
 ## Who it's for
 - Startups (Series A and later) and Fortune 500 enterprises that already ship software.

@@ -5,9 +5,8 @@ import AwardsSlider from '@/components/engineering/AwardsSlider'
 import SegmentsGrid from '@/components/main/SegmentsGrid'
 import Press from '@/components/engineering/Press'
 import EngagementModels from '@/components/shared/EngagementModels'
-import CaseStudies from '@/components/CaseStudies'
 import FounderAndTeam from '@/components/main/FounderAndTeam'
-import Testimonials from '@/components/engineering/Testimonials'
+import DeliveryOutcomes from '@/components/engineering/Testimonials'
 import BlogSection from '@/components/engineering/BlogSection'
 import ContactDynamic from '@/components/main/ContactDynamic'
 
@@ -33,19 +32,16 @@ export default function Home() {
       {/* 7. Industries/segments grid with AJTBD landing links */}
       <SegmentsGrid />
 
-      {/* 9. Case studies */}
-      <CaseStudies />
-
-      {/* 10. Founder + team */}
+      {/* 9. Founder + team */}
       <FounderAndTeam />
 
-      {/* 11. Testimonials */}
-      <Testimonials />
+      {/* 10. Verified delivery outcomes */}
+      <DeliveryOutcomes />
 
-      {/* 12. Blog */}
+      {/* 11. Blog */}
       <BlogSection />
 
-      {/* 13. Contact with dynamic values + 14. Footer (from layout) */}
+      {/* 12. Contact with dynamic values + footer (from layout) */}
       <ContactDynamic />
     </>
   )

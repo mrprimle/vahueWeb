@@ -4,9 +4,8 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import AwardsSlider from '@/components/engineering/AwardsSlider'
 import Press from '@/components/engineering/Press'
-import Testimonials from '@/components/engineering/Testimonials'
+import DeliveryOutcomes from '@/components/engineering/Testimonials'
 import BlogSection from '@/components/engineering/BlogSection'
-import CaseStudies from '@/components/CaseStudies'
 import FounderAndTeam from '@/components/main/FounderAndTeam'
 import ClientsStrip from '@/components/main/ClientsStrip'
 import ContactDynamic from '@/components/main/ContactDynamic'
@@ -27,9 +26,8 @@ export default function SegmentLanding({ content }: { content: SegmentContent })
       <SegmentPointB content={content} />
       <SegmentBarriers content={content} />
       <SegmentCompetitors content={content} />
-      <CaseStudies />
       <FounderAndTeam />
-      <Testimonials />
+      <DeliveryOutcomes />
       <BlogSection />
       <ContactDynamic />
     </>

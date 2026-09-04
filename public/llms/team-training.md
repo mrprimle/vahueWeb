@@ -90,7 +90,7 @@ A: Yes. Programs are role- and tool-specific. The diagnostic in Week 0 maps the 
 A: All prompts and workflows are reviewed for security compliance (100% rate on the wealth management engagement). The program includes guardrails and policy templates.
 
 **Q: Is the founder Mike Doroshenko personally involved?**
-A: Yes for Executive AI Consulting and the AI Advisor retainer. Workshops are led by Mike or by senior trainers from Vahue's 30+ expert team.
+A: Yes for Executive AI Consulting and the AI Advisor retainer. Workshops are led by Mike or by senior trainers from Vahue's 15+ expert network.
 
 **Q: How is success measured?**
 A: Adoption rate, prompt usage frequency, time-saved per workflow, employee satisfaction (workshop rating), and pre / post-program productivity metrics.

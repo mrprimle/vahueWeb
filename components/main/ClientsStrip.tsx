@@ -4,7 +4,6 @@ import Image from 'next/image'
 
 const companies = [
   { name: 'Shopify', logo: '/img/shopify.svg' },
-  { name: 'Audi', logo: '/img/audi-logo.svg' },
   { name: 'Qonto', logo: '/img/qontoLogo.svg' },
   { name: 'Leafworks', logo: '/img/leafworks.svg' },
   { name: 'Tracesafe', logo: '/img/tracesafe.svg' },

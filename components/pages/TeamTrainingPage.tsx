@@ -764,7 +764,7 @@ function OurTeam() {
                 <CommunityIcon size={36} />
               </span>
               <p className="font-display text-2xl md:text-3xl font-semibold text-white leading-tight mb-3">
-                Backed by 30+ experts
+                Backed by 15+ experts
               </p>
               <p className="text-white/65 text-sm md:text-base leading-relaxed">
                 From McKinsey, Google, and top tech companies — brought in for
