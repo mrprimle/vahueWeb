@@ -15,7 +15,7 @@ export function ClientStory() {
   const words = QUOTE.split(' ')
   const lit = Math.round(Math.min(1, progress * 1.6) * words.length)
   return (
-    <section className="home-light bg-[#f5f6f7] text-[#17191c]">
+    <section data-nav-theme="light" className="home-light bg-[#f5f6f7] text-[#17191c]">
       <div ref={ref} className="relative h-[160vh]">
         <div className="sticky top-0 flex h-screen items-center">
           <div className="mx-auto max-w-5xl px-6 md:px-8">
@@ -44,9 +44,16 @@ const stages = [
   { n: '04', name: 'Managed operations', time: 'Monthly', get: 'Accuracy checks, updates, cost control and a monthly report', decide: 'Renew on results, not hours' },
 ]
 
+const otherWays = [
+  { name: 'AI-Native Engineers', line: 'Extend your team with engineers who ship with AI every day.', href: '/ai-native-engineering/' },
+  { name: 'Team training', line: 'Workshops that teach your team to use AI well in its own domain.', href: '/team-training/' },
+  { name: 'Enterprise AI', line: 'Agents on your data, tools and permissions, run as one platform.', href: '/enterprise-ai/' },
+  { name: 'AI Incubator', line: 'Take an AI product idea from first test to a working product.', href: '/vahue-incubator/' },
+]
+
 export function Engage() {
   return (
-    <section id="engage" className="scroll-mt-24 bg-[#08090b] py-24 text-white md:py-32">
+    <section id="engage" className="scroll-mt-24 bg-[#101112] py-24 text-white md:py-32">
       <div className="mx-auto max-w-wide px-6 md:px-8">
         <Reveal>
           <Eyebrow dark>How we engage</Eyebrow>
@@ -56,7 +63,7 @@ export function Engage() {
         </Reveal>
         <ol className="mt-16 grid gap-px overflow-hidden rounded-2xl bg-white/10 md:grid-cols-4">
           {stages.map((s, i) => (
-            <Reveal as="li" key={s.n} delay={i * 110} className="flex flex-col bg-[#08090b] p-7">
+            <Reveal as="li" key={s.n} delay={i * 110} className="flex flex-col bg-[#101112] p-7">
               <span className="font-display text-6xl font-light text-white/20">{s.n}</span>
               <span className="mt-8 font-display text-2xl">{s.name}</span>
               <span className="mt-1 font-mono text-[11px] uppercase tracking-[0.12em] text-[#BBDEF2]/80">{s.time}</span>
@@ -67,6 +74,22 @@ export function Engage() {
             </Reveal>
           ))}
         </ol>
+        <Reveal className="mt-14 border-t border-white/10 pt-8">
+          <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.14em] text-white/50">Other ways to work with us</p>
+          <ul className="grid gap-px overflow-hidden rounded-[10px] bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+            {otherWays.map((w) => (
+              <li key={w.href} className="bg-[#101112]">
+                <Link href={w.href} className="group flex h-full flex-col gap-2 p-6 transition-colors hover:bg-white/[0.04]">
+                  <span className="flex items-center justify-between font-display text-xl">
+                    {w.name}
+                    <span aria-hidden className="text-white/40 transition-transform group-hover:translate-x-1 group-hover:text-white">&rarr;</span>
+                  </span>
+                  <span className="text-[14px] leading-relaxed text-white/60">{w.line}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
     </section>
   )
@@ -85,7 +108,7 @@ const concerns = [
 
 export function Concerns() {
   return (
-    <section className="home-light bg-white py-24 text-[#17191c] md:py-32">
+    <section data-nav-theme="light" className="home-light bg-white py-24 text-[#17191c] md:py-32">
       <div className="mx-auto grid max-w-wide gap-12 px-6 md:grid-cols-[0.8fr_1.2fr] md:px-8">
         <Reveal>
           <Eyebrow>Your concerns, answered</Eyebrow>
@@ -116,7 +139,7 @@ const termLines = [
 
 export function ProductTeams() {
   return (
-    <section className="border-t border-white/10 bg-[#0b0c0f] py-24 text-white md:py-32">
+    <section className="border-t border-white/10 bg-[#101112] py-24 text-white md:py-32">
       <div className="mx-auto grid max-w-wide grid-cols-1 items-center gap-14 px-6 md:grid-cols-2 md:px-8 [&>*]:min-w-0">
         <Reveal>
           <Eyebrow dark>For product teams</Eyebrow>
@@ -128,7 +151,7 @@ export function ProductTeams() {
             <li>An evaluation set and monitoring built in from day one</li>
             <li>A handover pack your own team can maintain</li>
           </ul>
-          <Link href="/ai-native-engineering/" className="mt-10 inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-[14px] transition-colors hover:border-white/50">
+          <Link href="/ai-native-engineering/" className="mt-10 inline-flex items-center gap-2 rounded-[10px] border border-white/20 px-5 py-3 text-[14px] transition-colors hover:border-white/50">
             Embedded AI Engineers <span aria-hidden="true">→</span>
           </Link>
         </Reveal>
@@ -158,7 +181,7 @@ export function ProductTeams() {
 
 export function Founder() {
   return (
-    <section className="home-light bg-[#f5f6f7] py-24 text-[#17191c] md:py-32">
+    <section data-nav-theme="light" className="home-light bg-[#f5f6f7] py-24 text-[#17191c] md:py-32">
       <div className="mx-auto grid max-w-wide items-center gap-12 px-6 md:grid-cols-[0.8fr_1.2fr] md:px-8">
         <Reveal>
           <div className="relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl bg-[#e3e6ea]">
@@ -173,10 +196,10 @@ export function Founder() {
             products. A small senior team designs, ships and runs every system. No hand-off to juniors after the sale.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/case-studies/" className="rounded-full bg-[#17191c] px-5 py-3 text-[14px] text-white transition-colors hover:bg-black">
+            <Link href="/case-studies/" className="rounded-[10px] bg-[#17191c] px-5 py-3 text-[14px] text-white transition-colors hover:bg-black">
               See our work
             </Link>
-            <a href="https://clutch.co/profile/vahue" target="_blank" rel="noopener noreferrer" className="rounded-full border border-[#c3c8cf] px-5 py-3 text-[14px] transition-colors hover:border-[#17191c]">
+            <a href="https://clutch.co/profile/vahue" target="_blank" rel="noopener noreferrer" className="rounded-[10px] border border-[#c3c8cf] px-5 py-3 text-[14px] transition-colors hover:border-[#17191c]">
               Reviews on Clutch
             </a>
           </div>
@@ -190,7 +213,7 @@ export function Founder() {
 
 export function FinalCta() {
   return (
-    <section className="bg-[#08090b] py-28 text-white md:py-40">
+    <section className="bg-[#101112] py-28 text-white md:py-40">
       <div className="mx-auto max-w-wide px-6 md:px-8">
         <Reveal>
           <h2 className="max-w-4xl font-display text-[2.75rem] font-light leading-[1.02] tracking-[-0.02em] md:text-7xl">
@@ -204,7 +227,7 @@ export function FinalCta() {
             href={DISCOVERY_CALL_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-10 inline-flex items-center gap-2 rounded-full bg-white px-7 py-4 text-[15px] font-medium text-[#08090b] transition-colors hover:bg-white/90"
+            className="mt-10 inline-flex items-center gap-2 rounded-[10px] bg-white px-7 py-4 text-[15px] font-medium text-[#101112] transition-colors hover:bg-white/90"
           >
             Book a 20-minute workflow review <span aria-hidden="true">→</span>
           </a>

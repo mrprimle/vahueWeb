@@ -13,68 +13,85 @@ import {
   Envelope,
   Database,
   FileText,
-  ChatCircle,
   Code,
-  Calendar,
   Globe,
-  Lightning,
-  ShieldCheck,
   GitBranch,
   MagnifyingGlass,
   Check,
+  WhatsappLogo,
+  InstagramLogo,
+  Phone,
+  CalendarBlank,
+  CreditCard,
+  AddressBook,
+  ChatsCircle,
+  Headset,
+  ChartBar,
+  BookOpen,
 } from "@phosphor-icons/react";
 import Crystal from "./Crystal";
 import s from "./restored.module.css";
 
 // Restored from the original Scale/Attio motion study (our own code, shader and copy).
-const services = [
+const scenes = [
   {
-    tag: "For clinics & appointment businesses",
-    name: "Practice Front Office System",
-    line: "Every enquiry answered in minutes, day and night, and booked straight into your calendar.",
+    tag: "What we build",
+    title: "Reliable AI has to run the real work.",
+    body: "We design, ship and run AI systems for appointment-led practices, and put senior AI engineers inside product teams. People stay in the loop.",
+    record: "One standard, two services",
+    rows: [
+      ["Workflow", "Defined with you"],
+      ["Quality bar", "Agreed up front"],
+      ["Owner", "Your team"],
+      ["Next action", "Human review"],
+    ],
+  },
+  {
+    tag: "For clinics & practices",
+    title: "Practice Front Office System.",
+    body: "Every enquiry answered in minutes, day and night, and booked straight into your calendar. Instagram, WhatsApp, web chat and phone in one system.",
+    cta: "For clinics",
     href: "#how-it-works",
+    record: "Front office · today",
+    rows: [
+      ["Instagram DM", "Answered · 2 min"],
+      ["WhatsApp", "Rescheduled"],
+      ["Web chat", "Handed to a person"],
+      ["Calendar", "Booked"],
+    ],
   },
   {
     tag: "For product teams",
-    name: "Embedded AI Engineers",
-    line: "Senior AI engineers inside your team within two weeks, shipping to a quality bar you set.",
+    title: "Embedded AI Engineers.",
+    body: "Senior AI engineers inside your team within two weeks, shipping to a quality bar you set and measure.",
+    cta: "For product teams",
     href: "/ai-native-engineering/",
-  },
-];
-const scenes = [
-  {
-    tag: "The complete workflow",
-    title: "From raw information to a useful decision.",
-    body: "Connect the information, the system and the person who owns the next step. Keep the evidence in view.",
-  },
-  {
-    tag: "Applications",
-    title: "AI that fits into the work.",
-    body: "Start with an operating task. Prepare the record, surface the exceptions and make the next handoff useful.",
-  },
-  {
-    tag: "Data",
-    title: "Better inputs. Clearer outcomes.",
-    body: "Define the information the workflow needs. Validate the details and make missing evidence visible.",
+    record: "Embedded team · sprint 06",
+    rows: [
+      ["Engineers", "Senior, embedded"],
+      ["Start", "Within 2 weeks"],
+      ["Evals", "Your quality bar"],
+      ["Releases", "Every week"],
+    ],
   },
 ];
 const signals = [
   {
     title: "Context",
     description:
-      "Documents, requests and business records. Connected around the task.",
+      "Every message, booking and record about a client, in one place the system and your team both read.",
     icon: Database,
   },
   {
     title: "Actions & approvals",
     description:
-      "Prepare the next action, with the decision boundary and owner in view.",
+      "Replies, bookings and follow-ups run on their own. Anything clinical or unusual goes to a person.",
     icon: GitBranch,
   },
   {
     title: "Connected systems",
     description:
-      "Bring the result into the tools where your team already works.",
+      "Results land in the practice system, calendar and CRM your team already uses.",
     icon: Globe,
   },
 ];
@@ -118,47 +135,31 @@ function LayerWorld({ scene }: { scene: number }) {
       </div>
       <div className={`${s.layer} ${s.dataPlane}`} data-plane="middle">
         <div className={s.recordTop}>
-          <span>WORKSPACE / CASE 024</span>
-          <span>● EVIDENCE LINKED</span>
+          <span>VAHUE / SYSTEM 0{scene + 1}</span>
+          <span>● LIVE</span>
         </div>
         <div className={s.recordContent}>
           <span className={s.bigGlyph}>
             <FileText size={64} weight="thin" />
           </span>
           <div>
-            <small>OPERATIONS</small>
-            <h3>
-              {["A connected view", "Prepared case", "Validated record"][scene]}
-            </h3>
-            <p>Northstar Services · Illustrative record</p>
+            <small>{scenes[scene].tag}</small>
+            <h3>{scenes[scene].record}</h3>
+            <p>Illustrative record</p>
           </div>
         </div>
         <div className={s.dataRows}>
-          {[
-            "Source documents",
-            "Required information",
-            "Review owner",
-            "Next action",
-          ].map((x, i) => (
-            <div key={x}>
-              <span>{x}</span>
-              <span>
-                {
-                  [
-                    "3 linked sources",
-                    "Ready to inspect",
-                    "Operations team",
-                    "Human review",
-                  ][i]
-                }
-              </span>
+          {scenes[scene].rows.map(([label, value]) => (
+            <div key={label}>
+              <span>{label}</span>
+              <span>{value}</span>
               <Check size={13} />
             </div>
           ))}
         </div>
         <div className={s.recordBottom}>
           <span>Input → context → decision</span>
-          <span>01 / 03</span>
+          <span>0{scene + 1} / 03</span>
         </div>
       </div>
       <div className={s.layer} data-plane="front">
@@ -228,16 +229,18 @@ function Funnel({ active }: { active: number }) {
   );
 }
 const integrations = [
-  ["Email", Envelope],
+  ["WhatsApp", WhatsappLogo],
+  ["Instagram", InstagramLogo],
+  ["Website chat", ChatsCircle],
+  ["Phone line", Phone],
+  ["Gmail", Envelope],
+  ["Calendar", CalendarBlank],
+  ["Practice system", AddressBook],
+  ["Payments", CreditCard],
+  ["CRM", Database],
   ["Documents", FileText],
-  ["Data", Database],
-  ["Messages", ChatCircle],
   ["Code", Code],
-  ["Calendar", Calendar],
-  ["Web", Globe],
   ["Workflows", GitBranch],
-  ["Search", MagnifyingGlass],
-  ["Approvals", ShieldCheck],
 ] as const;
 export default function Showcase() {
   const root = useRef<HTMLDivElement>(null),
@@ -250,7 +253,11 @@ export default function Showcase() {
     const ctx = gsap.context(() => {
       media.add("(prefers-reduced-motion: no-preference)", () => {
         if (paused) return;
-        const lenis = new Lenis({ duration: 1.05, anchors: { offset: -85 } });
+        const lenis = new Lenis({
+          lerp: 0.14,
+          wheelMultiplier: 0.8,
+          anchors: { offset: -88 },
+        });
         lenis.on("scroll", ScrollTrigger.update);
         const tick = (t: number) => lenis.raf(t * 1000);
         gsap.ticker.add(tick);
@@ -258,18 +265,6 @@ export default function Showcase() {
           "[data-hero-title]",
           { y: 28 },
           { y: 0, duration: 1.4, ease: "power3.out", clearProps: "transform" },
-        );
-        gsap.fromTo(
-          "[data-hero-card]",
-          { y: 36 },
-          {
-            y: 0,
-            duration: 1.3,
-            delay: 0.15,
-            stagger: 0.1,
-            ease: "power3.out",
-            clearProps: "transform",
-          },
         );
         gsap.to("[data-hero-canvas]", {
           scale: 1.1,
@@ -324,6 +319,21 @@ export default function Showcase() {
           },
         );
         gsap.fromTo(
+          "[data-stat-word]",
+          { opacity: 0.22 },
+          {
+            opacity: 1,
+            stagger: 0.06,
+            ease: "none",
+            scrollTrigger: {
+              trigger: "[data-stat]",
+              start: "top 75%",
+              end: "center 45%",
+              scrub: 1,
+            },
+          },
+        );
+        gsap.fromTo(
           "[data-stat-text]",
           { y: 65 },
           {
@@ -369,45 +379,24 @@ export default function Showcase() {
       data-motion={paused ? "paused" : "running"}
       data-page-theme="home-showcase"
     >
-      <div className={s.heroFrame}>
+      <div className={s.heroFrame} data-nav-theme="light">
         <section className={s.hero} data-hero>
           <div className={s.heroCanvas} data-hero-canvas>
             <Crystal paused={paused} />
           </div>
           <div className={s.heroShade} />
-          <div className={s.heroContent} data-hero-title>
-            <h1>We build the AI systems your business runs on.</h1>
-            <p>
-              From a clinic&rsquo;s front desk to a product team&rsquo;s
-              roadmap, designed, shipped and run by senior engineers.
-            </p>
+          <div className={s.heroTitle}>
+            <h1 data-hero-title>
+              We build the AI systems
+              <br /> your business runs on.
+            </h1>
           </div>
-          <div className={s.heroCards}>
-            {services.map((x) => (
-              <Link
-                key={x.name}
-                href={x.href}
-                className={s.heroCard}
-                data-hero-card
-              >
-                <small>{x.tag}</small>
-                <strong>
-                  {x.name} <ArrowUpRight size={18} />
-                </strong>
-                <span>{x.line}</span>
-              </Link>
-            ))}
-            <div className={`${s.heroCard} ${s.heroStat}`} data-hero-card>
-              <small>Latest result</small>
-              <strong>
-                5 <i>&rarr;</i> 1
-              </strong>
-              <span>
-                A London clinic replaced five separate vendors with one Vahue
-                system.
-              </span>
-            </div>
-          </div>
+          <a className={s.scrollHint} href="#stack">
+            Scroll to explore{" "}
+            <span>
+              <ArrowDown size={18} />
+            </span>
+          </a>
         </section>
       </div>
         <div className={s.black} data-black-start>
@@ -421,11 +410,9 @@ export default function Showcase() {
                 <small>{scenes[scene].tag}</small>
                 <h2>{scenes[scene].title}</h2>
                 <p>{scenes[scene].body}</p>
-                {scene > 0 && (
-                  <Link
-                    href={scene === 2 ? "/enterprise-ai/" : "#how-it-works"}
-                  >
-                    Explore the approach <ArrowRight size={15} />
+                {scenes[scene].href && (
+                  <Link href={scenes[scene].href!}>
+                    {scenes[scene].cta} <ArrowRight size={15} />
                   </Link>
                 )}
               </div>
@@ -451,16 +438,20 @@ export default function Showcase() {
             </div>
             <div className={s.statPanel}>
               <h2 data-stat-text>
-                <span>1</span> well-defined workflow. <br />A useful place to
-                begin <br />
-                building your AI capability.
+                {"5 → 1. A London clinic replaced five separate vendors with one Vahue system."
+                  .split(" ")
+                  .map((word, i) => (
+                    <span key={i} data-stat-word>
+                      {word}{" "}
+                    </span>
+                  ))}
               </h2>
               <p>
-                Start with an agreed output, a measurable baseline and a clear
-                owner for the next decision.
+                Enquiries, booking, reminders and follow-up now run in one
+                place, with one team accountable for it.
               </p>
-              <Link href="#engage">
-                Start with the work <ArrowUpRight size={19} />
+              <Link href="/case-studies/">
+                See delivery outcomes <ArrowUpRight size={19} />
               </Link>
             </div>
           </section>
@@ -468,8 +459,8 @@ export default function Showcase() {
         <div className={s.contextZone} id="context">
           <section className={s.contextHero} data-context>
             <div className={s.contextTitle}>
-              <p>A shared foundation for useful work</p>
-              <h2>Connected intelligence.</h2>
+              <p>One Vahue system with</p>
+              <h2>Unified Context</h2>
             </div>
             <div className={s.arcField} data-arc>
               <svg
@@ -506,10 +497,27 @@ export default function Showcase() {
                     stroke="url(#rays-fade)"
                   />
                 ))}
+                <filter
+                  id="arc-blur"
+                  x="-20%"
+                  y="-20%"
+                  width="140%"
+                  height="140%"
+                >
+                  <feGaussianBlur stdDeviation="22" />
+                </filter>
                 <path
                   d="M-80 825 Q700 -15 1480 825"
                   stroke="url(#arc-spectrum)"
-                  strokeWidth="1.3"
+                  strokeWidth="46"
+                  opacity=".32"
+                  fill="none"
+                  filter="url(#arc-blur)"
+                />
+                <path
+                  d="M-80 825 Q700 -15 1480 825"
+                  stroke="url(#arc-spectrum)"
+                  strokeWidth="2"
                   fill="#101112"
                 />
               </svg>
@@ -521,29 +529,29 @@ export default function Showcase() {
           >
             {[
               [
-                "Capture the context.",
-                "Bring permitted inputs into the workflow.",
-                Envelope,
+                "Every enquiry captured.",
+                "Instagram, WhatsApp, web chat and phone in one inbox.",
+                ChartBar,
               ],
               [
-                "Connect the handoff.",
-                "Keep systems and decision owners aligned.",
-                GitBranch,
+                "Your tools, connected.",
+                "Practice system, calendar, CRM and payments stay in sync.",
+                Globe,
               ],
               [
-                "Keep learning.",
-                "Use feedback to improve the next case.",
-                Lightning,
+                "Learns your practice.",
+                "Prices, policies, treatments and your tone of voice.",
+                BookOpen,
               ],
               [
-                "Inspect the evidence.",
-                "Follow a result back to its source.",
+                "Every answer traceable.",
+                "Open any reply and see the record it came from.",
                 MagnifyingGlass,
               ],
               [
-                "Work from shared facts.",
-                "Give people and agents the same context.",
-                Database,
+                "No one left waiting.",
+                "A person takes over the moment it matters.",
+                Headset,
               ],
             ].map(([title, text, Icon]) => {
               const I = Icon as typeof Database;
@@ -560,12 +568,12 @@ export default function Showcase() {
             <div className={s.signalCopy}>
               <span className={s.tag}>Signals</span>
               <h2>
-                Bring the relevant pieces together.
+                Every signal, none of the chasing.
                 <br />
-                <span>Make the next move clearer.</span>
+                <span>Ready for the next step.</span>
               </h2>
               <Link className={s.outlineLink} href="/enterprise-ai/">
-                Explore context <ArrowRight size={14} />
+                See how it works <ArrowRight size={14} />
               </Link>
               <div
                 className={s.signalTabs}
@@ -616,14 +624,14 @@ export default function Showcase() {
                 <i key={i} />
               ))}
             </div>
-            <span className={s.tag}>Connectivity</span>
+            <span className={s.tag}>Connections</span>
             <h2>
-              The tools you use.
-              <br className={s.mobileOnly} /> A more connected workflow.
+              The tools you already use.
+              <br className={s.mobileOnly} /> Working as one system.
             </h2>
             <p>
-              Connect the inbox, documents and operating systems
-              <br /> around the output your team needs.
+              We connect your channels, practice system and calendar
+              <br /> around the result your team needs.
             </p>
             <Link className={s.outlineLink} href="/automations/">
               Explore the building blocks <ArrowRight size={14} />
@@ -712,7 +720,12 @@ export default function Showcase() {
           </section>
           <div className={s.darkTail} />
         </div>
-        <section className={s.quoteSection} id="principle" data-quote>
+        <section
+          className={s.quoteSection}
+          id="principle"
+          data-quote
+          data-nav-theme="light"
+        >
           <div className={s.quoteInner}>
             <p className={s.quote}>
               {"The best place to begin is a real piece of work, a useful outcome, and a shared way to know it is ready."

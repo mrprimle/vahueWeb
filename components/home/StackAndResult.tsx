@@ -8,7 +8,7 @@ const tools = ['Pabau', 'WhatsApp', 'Instagram', 'Google Calendar', 'Stripe', 'H
 export function StackStrip() {
   const row = [...tools, ...tools]
   return (
-    <section className="home-light border-t border-[#e3e6ea] bg-white pb-24 pt-20 text-[#17191c] md:pb-28">
+    <section data-nav-theme="light" className="home-light border-t border-[#e3e6ea] bg-white pb-24 pt-20 text-[#17191c] md:pb-28">
       <div className="mx-auto max-w-wide px-6 md:px-8">
         <Reveal className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
@@ -43,7 +43,7 @@ const replaced = ['Website agency', 'Chatbot tool', 'Call recording', 'CRM & boo
 export function ResultStat() {
   const { ref, inView } = useInView<HTMLDivElement>('0px 0px -25% 0px')
   return (
-    <section className="bg-[#08090b] py-28 text-white md:py-40">
+    <section className="bg-[#101112] py-28 text-white md:py-40">
       <div ref={ref} className="mx-auto grid max-w-wide gap-14 px-6 md:grid-cols-[1.2fr_1fr] md:items-end md:px-8">
         <div>
           <Eyebrow dark>The result</Eyebrow>

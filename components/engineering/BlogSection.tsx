@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-const blogPosts = [
+export const blogPosts = [
   {
     id: 'aeo-content-system',
     title: 'Your Content Is Invisible to AI. Here Is the System That Fixes It',

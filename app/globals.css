@@ -687,7 +687,11 @@
 @media (prefers-reduced-motion: reduce) {
   .home-marquee-track { animation: none; }
 }
-.home-light :is(h1, h2, h3, h4, h5, h6, dt) {
+/* Light homepage bands: same display face as the dark bands, dark ink. */
+.home-light :is(h1, h2, h3, h4, h5, h6) {
+  color: #17191c;
+}
+.home-light dt {
   color: #17191c;
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }

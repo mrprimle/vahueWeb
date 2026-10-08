@@ -11,7 +11,7 @@
   box-sizing: border-box;
 }
 .site :is(h1, h2, h3, h4) {
-  font-family: inherit;
+  font-family: var(--font-aeonik), Arial, sans-serif;
   color: inherit;
 }
 .site h1,
@@ -160,21 +160,16 @@
   height: 44px;
 }
 .heroFrame {
-  background: #020202;
-  padding: 0 24px;
+  background: #fff;
+  padding: 0 18px;
 }
 .hero {
   height: calc(100svh - 88px);
-  min-height: 680px;
+  min-height: 600px;
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  border-radius: 12px 12px 0 0;
   background: #11151c;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: clamp(64px, 13vh, 150px) 40px 40px;
 }
 .heroCanvas {
   position: absolute;
@@ -189,99 +184,23 @@
 .heroShade {
   position: absolute;
   inset: 0;
-  background: #0003;
+  background: radial-gradient(ellipse at 50% 55%, #0000005c 0%, #0000008c 100%);
   z-index: -1;
 }
-.heroContent {
-  max-width: 1040px;
-  margin: 0 auto;
-  text-align: center;
-  color: #fff;
-}
-.hero h1 {
-  color: #fff;
-  font-size: clamp(40px, 5vw, 76px);
-  line-height: 1.05;
-}
-.heroContent p {
-  max-width: 640px;
-  margin: 24px auto 0;
-  font-size: clamp(16px, 1.35vw, 20px);
-  line-height: 1.5;
-  color: #ffffffbd;
-}
-.heroCards {
-  width: 100%;
-  max-width: 1280px;
-  margin: 48px auto 0;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-.heroCard {
-  min-height: 172px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 22px 24px;
-  border: 1px solid #ffffff21;
-  border-radius: 10px;
-  background: #0b0e14b8;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  color: #fff;
-  transition:
-    background 0.25s,
-    border-color 0.25s;
-}
-.site .heroCard {
-  color: #fff;
-}
-a.heroCard:hover {
-  background: #141924d9;
-  border-color: #ffffff45;
-}
-.heroCard small {
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #bbdef2cc;
-}
-.heroCard strong {
+.heroTitle {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  font-size: 22px;
-  font-weight: 400;
+  justify-content: center;
+  padding: 0 5%;
+}
+.hero h1 {
+  text-align: center;
+  color: #fff;
+  font-size: clamp(36px, 4.45vw, 64px);
+  line-height: 1.05;
   letter-spacing: -0.01em;
-}
-.heroCard strong svg {
-  opacity: 0.65;
-  transition:
-    transform 0.2s,
-    opacity 0.2s;
-}
-a.heroCard:hover strong svg {
-  opacity: 1;
-  transform: translate(2px, -2px);
-}
-.heroCard span {
-  margin-top: auto;
-  font-size: 14.5px;
-  line-height: 1.5;
-  color: #ffffffa8;
-}
-.heroStat strong {
-  justify-content: flex-start;
-  font-size: 44px;
-  line-height: 1;
-  letter-spacing: -0.03em;
-}
-.heroStat strong i {
-  font-style: normal;
-  color: #ffffff5c;
 }
 .scrollHint {
   position: absolute;
@@ -653,13 +572,12 @@ a.heroCard:hover strong svg {
 }
 .tag {
   display: inline-block;
-  color: #cdd4e6;
-  background: #1d2331;
-  font-size: 12px;
-  border-radius: 6px;
-  line-height: 1.6;
-  padding: 1px 7px;
-  margin-bottom: 28px;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffffff80;
+  margin-bottom: 24px;
 }
 .signalCopy h2,
 .connections h2,
@@ -1021,17 +939,6 @@ a.heroCard:hover strong svg {
   }
 }
 @media (max-width: 1100px) {
-  .hero {
-    height: auto;
-    min-height: calc(100svh - 88px);
-  }
-  .heroCards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .heroStat {
-    grid-column: span 2;
-    min-height: 0;
-  }
   .nav {
     gap: 30px;
   }
@@ -1180,25 +1087,11 @@ a.heroCard:hover strong svg {
     padding: 0 10px;
   }
   .hero {
-    min-height: 0;
-    padding: 56px 16px 16px;
-    border-radius: 9px 9px 0 0;
+    min-height: 520px;
   }
   .hero h1 {
-    font-size: clamp(34px, 9vw, 46px);
+    font-size: clamp(32px, 8.5vw, 44px);
     line-height: 1.1;
-  }
-  .heroCards {
-    grid-template-columns: minmax(0, 1fr);
-    margin-top: 36px;
-    gap: 10px;
-  }
-  .heroStat {
-    grid-column: auto;
-  }
-  .heroCard {
-    min-height: 0;
-    padding: 18px;
   }
   .hero h1 br {
     display: none;

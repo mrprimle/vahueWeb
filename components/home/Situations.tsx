@@ -145,7 +145,7 @@ export default function Situations() {
   const Art = art[tab.id]
 
   return (
-    <section className="home-light bg-white py-24 text-[#17191c] md:py-32">
+    <section data-nav-theme="light" className="home-light bg-white py-24 text-[#17191c] md:py-32">
       <div className="mx-auto max-w-wide px-6 md:px-8">
         <Reveal>
           <Eyebrow>Where are you today?</Eyebrow>

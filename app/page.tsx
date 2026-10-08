@@ -3,23 +3,25 @@ import Situations from '@/components/home/Situations'
 import ContextArc from '@/components/home/ContextArc'
 import HowItWorks from '@/components/home/HowItWorks'
 import TryIt from '@/components/home/TryIt'
-import { ResultStat } from '@/components/home/StackAndResult'
 import { Engage, Concerns, ProductTeams, Founder, FinalCta } from '@/components/home/Closing'
+import { Outcomes, Journal } from '@/components/home/Proof'
 
 export default function Home() {
   return (
     <>
-      {/* Scale-style hero + Scale/Attio sections, restored from the motion study */}
+      {/* Scale-style hero, services and result, then the Attio-style Unified Context block */}
       <Showcase />
-      {/* Practice-led sections */}
+      {/* AJTBD sections */}
       <Situations />
       <ContextArc />
       <HowItWorks />
       <TryIt />
-      <ResultStat />
       <Engage />
       <Concerns />
       <ProductTeams />
+      {/* Links kept from the live homepage: case studies and blog */}
+      <Outcomes />
+      <Journal />
       <Founder />
       <FinalCta />
     </>

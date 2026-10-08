@@ -422,6 +422,33 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Sections can mark the band under the nav as light (data-nav-theme="light"),
+  // so the bar switches to its light style over white bands, as on the homepage hero.
+  const [overLight, setOverLight] = useState(false)
+  useEffect(() => {
+    let frame = 0
+    const check = () => {
+      frame = 0
+      const probe = document
+        .elementsFromPoint(window.innerWidth / 2, 92)
+        .find((el) => !el.closest('nav'))
+      const band = probe?.closest<HTMLElement>('[data-nav-theme]')
+      setOverLight(band?.dataset.navTheme === 'light')
+    }
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(check)
+    }
+    check()
+    window.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', schedule)
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', schedule)
+      window.removeEventListener('resize', schedule)
+    }
+  }, [pathname])
+  const lightNav = isCareersPage || (overLight && !isMenuOpen && !openGroup)
+
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden'
@@ -495,8 +522,8 @@ export default function Navbar() {
 
       <nav
         className={`sticky top-0 left-0 right-0 z-50 transition-[background-color,border-color,box-shadow] duration-200 ${
-          isCareersPage
-            ? 'bg-white/80 backdrop-blur-xl border-b border-black/10 shadow-[0_10px_35px_rgba(17,18,20,0.04)]'
+          lightNav
+            ? 'bg-white border-b border-black/[0.06]'
             : isScrolled || isMenuOpen
             ? 'bg-bg/80 backdrop-blur-xl border-b border-border-soft'
             : openGroup
@@ -511,7 +538,7 @@ export default function Navbar() {
               href="/"
               onClick={closeMenu}
               className={`flex items-center gap-2 z-50 ${
-                isCareersPage ? 'text-[#111214]' : 'text-white'
+                lightNav ? 'text-[#111214]' : 'text-white'
               }`}
             >
               <Image
@@ -519,7 +546,7 @@ export default function Navbar() {
                 alt="Vahue logo"
                 width={14}
                 height={14}
-                className={isCareersPage ? 'invert' : undefined}
+                className={lightNav ? 'invert' : undefined}
               />
               <span className="text-xl font-bold tracking-tight">vahue.ai</span>
             </Link>
@@ -542,7 +569,7 @@ export default function Navbar() {
                       <button
                         type="button"
                         className={`text-sm font-medium transition-colors cursor-pointer ${
-                          isCareersPage
+                          lightNav
                             ? 'text-black/70 hover:text-black'
                             : 'text-white/85 hover:text-white'
                         }`}
@@ -564,7 +591,7 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`font-mono text-[11px] uppercase tracking-widest px-4 py-2 rounded-full transition-colors ${
-                  isCareersPage
+                  lightNav
                     ? 'bg-[#111214] text-white hover:bg-black/80'
                     : 'bg-white text-bg hover:bg-white/90'
                 }`}
@@ -581,14 +608,14 @@ export default function Navbar() {
             >
               <span
                 className={`block w-6 h-0.5 rounded transition-all duration-300 ${
-                  isCareersPage ? 'bg-[#111214]' : 'bg-white'
+                  lightNav ? 'bg-[#111214]' : 'bg-white'
                 } ${
                   isMenuOpen ? 'rotate-45 translate-y-[3px]' : ''
                 }`}
               />
               <span
                 className={`block w-6 h-0.5 rounded mt-1.5 transition-all duration-300 ${
-                  isCareersPage ? 'bg-[#111214]' : 'bg-white'
+                  lightNav ? 'bg-[#111214]' : 'bg-white'
                 } ${
                   isMenuOpen ? '-rotate-45 -translate-y-[5px]' : ''
                 }`}

@@ -44,7 +44,7 @@ export default function HowItWorks() {
   const active = Math.min(steps.length - 1, Math.floor(progress * steps.length))
 
   return (
-    <section id="how-it-works" className="scroll-mt-16 bg-[#08090b] text-white">
+    <section id="how-it-works" className="scroll-mt-16 bg-[#101112] text-white">
       {/* Desktop: pinned stack driven by scroll */}
       <div ref={ref} className="relative hidden md:block" style={{ height: `${steps.length * 70 + 40}vh` }}>
         <div className="sticky top-0 flex h-screen items-center overflow-hidden">
