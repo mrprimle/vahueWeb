@@ -672,3 +672,22 @@
 .animate-awards-scroll {
   animation: awards-scroll 30s linear infinite;
 }
+
+/* ---------- Homepage (components/home) ---------- */
+@keyframes homeFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes homeMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.home-marquee-track { animation: homeMarquee 48s linear infinite; }
+.home-marquee:hover .home-marquee-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .home-marquee-track { animation: none; }
+}
+.home-light :is(h1, h2, h3, h4, h5, h6, dt) {
+  color: #17191c;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}

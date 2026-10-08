@@ -1,48 +1,32 @@
-import Hero from '@/components/Hero'
-import ClientsStrip from '@/components/main/ClientsStrip'
-import AJTBDProblems from '@/components/main/AJTBDProblems'
-import AwardsSlider from '@/components/engineering/AwardsSlider'
-import SegmentsGrid from '@/components/main/SegmentsGrid'
-import Press from '@/components/engineering/Press'
-import EngagementModels from '@/components/shared/EngagementModels'
-import FounderAndTeam from '@/components/main/FounderAndTeam'
-import DeliveryOutcomes from '@/components/engineering/Testimonials'
-import BlogSection from '@/components/engineering/BlogSection'
-import ContactDynamic from '@/components/main/ContactDynamic'
+import HomeHero from '@/components/home/HomeHero'
+import Situations from '@/components/home/Situations'
+import ContextArc from '@/components/home/ContextArc'
+import HowItWorks from '@/components/home/HowItWorks'
+import TryIt from '@/components/home/TryIt'
+import { StackStrip, ResultStat } from '@/components/home/StackAndResult'
+import { ClientStory, Engage, Concerns, ProductTeams, Founder, FinalCta } from '@/components/home/Closing'
 
+/**
+ * Homepage — practice-first lineup (October 2026).
+ * Section order and dark/light rhythm follow "Vahue homepage: sections and design".
+ * Dark: hero, how it works, result, engage, product teams, final CTA. Light: everything that is read or tried.
+ */
 export default function Home() {
   return (
     <>
-      {/* 1. Hero + 2. Clients strip */}
-      <Hero />
-      <ClientsStrip />
-
-      {/* 3. Problems — AJTBD triggers/emotions/pains + our answer */}
-      <AJTBDProblems />
-
-      {/* 4. Awards line */}
-      <AwardsSlider />
-
-      {/* 5. Engagement models — no linking */}
-      <EngagementModels />
-
-      {/* 6. Magazine line */}
-      <Press />
-
-      {/* 7. Industries/segments grid with AJTBD landing links */}
-      <SegmentsGrid />
-
-      {/* 9. Founder + team */}
-      <FounderAndTeam />
-
-      {/* 10. Verified delivery outcomes */}
-      <DeliveryOutcomes />
-
-      {/* 11. Blog */}
-      <BlogSection />
-
-      {/* 12. Contact with dynamic values + footer (from layout) */}
-      <ContactDynamic />
+      <HomeHero />
+      <Situations />
+      <ContextArc />
+      <HowItWorks />
+      <TryIt />
+      <StackStrip />
+      <ResultStat />
+      <ClientStory />
+      <Engage />
+      <Concerns />
+      <ProductTeams />
+      <Founder />
+      <FinalCta />
     </>
   )
 }
