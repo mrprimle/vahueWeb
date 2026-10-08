@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { DISCOVERY_CALL_URL } from '@/lib/links'
+import WaveField from '@/components/visuals/WaveField'
 
 export default function EnterpriseHero() {
   const [mounted, setMounted] = useState(false)
@@ -10,7 +11,7 @@ export default function EnterpriseHero() {
 
   return (
     <section className="relative bg-bg overflow-hidden">
-      <div className="absolute inset-0 hero-texture opacity-50" />
+      <WaveField />
 
       <div className="relative z-10 w-full max-w-wide mx-auto px-6 md:px-8 pt-24 md:pt-36 pb-24 md:pb-36">
         <div className="max-w-4xl mx-auto text-center">

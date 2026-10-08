@@ -46,7 +46,7 @@ const stages = [
 
 export function Engage() {
   return (
-    <section className="bg-[#08090b] py-24 text-white md:py-32">
+    <section id="engage" className="scroll-mt-24 bg-[#08090b] py-24 text-white md:py-32">
       <div className="mx-auto max-w-wide px-6 md:px-8">
         <Reveal>
           <Eyebrow dark>How we engage</Eyebrow>
