@@ -1410,3 +1410,15 @@
     display: none;
   }
 }
+
+/* Quote pinned under the nav while its words light up, then released. */
+.quotePin {
+  height: 240vh;
+  position: relative;
+}
+.quotePin .quoteInner {
+  position: sticky;
+  top: 88px;
+  height: calc(100svh - 88px);
+  min-height: 0;
+}

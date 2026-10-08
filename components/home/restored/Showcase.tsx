@@ -242,10 +242,32 @@ const integrations = [
   ["Code", Code],
   ["Workflows", GitBranch],
 ] as const;
+/** Page-wide smooth scroll (one Lenis instance driving GSAP ScrollTrigger). */
+export function SmoothScroll() {
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const lenis = new Lenis({
+      lerp: 0.14,
+      wheelMultiplier: 0.8,
+      anchors: { offset: -88 },
+    });
+    lenis.on("scroll", ScrollTrigger.update);
+    const tick = (t: number) => lenis.raf(t * 1000);
+    gsap.ticker.add(tick);
+    gsap.ticker.lagSmoothing(0);
+    return () => {
+      gsap.ticker.remove(tick);
+      lenis.destroy();
+    };
+  }, []);
+  return null;
+}
+
+/** Scale-style opening: framed hero, the layer sequence with both services, and the 5 → 1 result. */
 export default function Showcase() {
   const root = useRef<HTMLDivElement>(null),
     [scene, setScene] = useState(0),
-    [active, setActive] = useState(0),
     [paused, setPaused] = useState(false);
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -253,14 +275,6 @@ export default function Showcase() {
     const ctx = gsap.context(() => {
       media.add("(prefers-reduced-motion: no-preference)", () => {
         if (paused) return;
-        const lenis = new Lenis({
-          lerp: 0.14,
-          wheelMultiplier: 0.8,
-          anchors: { offset: -88 },
-        });
-        lenis.on("scroll", ScrollTrigger.update);
-        const tick = (t: number) => lenis.raf(t * 1000);
-        gsap.ticker.add(tick);
         gsap.fromTo(
           "[data-hero-title]",
           { y: 28 },
@@ -304,21 +318,6 @@ export default function Showcase() {
           .to("[data-world]", { rotateY: 25, rotateX: -4, duration: 1 })
           .to("[data-world]", { rotateY: -20, rotateX: 8, duration: 1 });
         gsap.fromTo(
-          "[data-arc]",
-          { scale: 0.82, y: 80 },
-          {
-            scale: 1,
-            y: 0,
-            ease: "none",
-            scrollTrigger: {
-              trigger: "[data-context]",
-              start: "top bottom",
-              end: "center center",
-              scrub: 1,
-            },
-          },
-        );
-        gsap.fromTo(
           "[data-stat-word]",
           { opacity: 0.22 },
           {
@@ -347,24 +346,6 @@ export default function Showcase() {
             },
           },
         );
-        gsap.fromTo(
-          "[data-quote-word]",
-          { color: "#91949c" },
-          {
-            color: "#26272a",
-            stagger: 0.08,
-            scrollTrigger: {
-              trigger: "[data-quote]",
-              start: "top 70%",
-              end: "center 55%",
-              scrub: 1,
-            },
-          },
-        );
-        return () => {
-          gsap.ticker.remove(tick);
-          lenis.destroy();
-        };
       });
     }, root);
     return () => {
@@ -456,6 +437,67 @@ export default function Showcase() {
             </div>
           </section>
         </div>
+      <button
+        className={s.motionControl}
+        onClick={() => setPaused(!paused)}
+        aria-label={paused ? "Resume motion" : "Pause motion"}
+      >
+        {paused ? <Play size={15} /> : <Pause size={15} />}
+        <span>{paused ? "Resume motion" : "Pause motion"}</span>
+      </button>
+    </div>
+  );
+}
+
+/** Attio-style dark block: Unified Context arc, capabilities, signals, connections, API, then the pinned quote. */
+export function UnifiedContext() {
+  const root = useRef<HTMLDivElement>(null),
+    [active, setActive] = useState(0);
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const media = gsap.matchMedia();
+    const ctx = gsap.context(() => {
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.fromTo(
+          "[data-arc]",
+          { scale: 0.82, y: 80 },
+          {
+            scale: 1,
+            y: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: "[data-context]",
+              start: "top bottom",
+              end: "center center",
+              scrub: 1,
+            },
+          },
+        );
+      });
+      // Words light up one by one while the quote is pinned (also without motion: it only changes colour).
+      gsap.fromTo(
+        "[data-quote-word]",
+        { color: "#c2c5cb" },
+        {
+          color: "#1b1c1e",
+          stagger: 0.08,
+          ease: "none",
+          scrollTrigger: {
+            trigger: "[data-quote]",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 0.5,
+          },
+        },
+      );
+    }, root);
+    return () => {
+      media.revert();
+      ctx.revert();
+    };
+  }, []);
+  return (
+    <div className={s.site} ref={root} data-page-theme="home-context">
         <div className={s.contextZone} id="context">
           <section className={s.contextHero} data-context>
             <div className={s.contextTitle}>
@@ -721,7 +763,7 @@ export default function Showcase() {
           <div className={s.darkTail} />
         </div>
         <section
-          className={s.quoteSection}
+          className={`${s.quoteSection} ${s.quotePin}`}
           id="principle"
           data-quote
           data-nav-theme="light"
@@ -742,14 +784,6 @@ export default function Showcase() {
             </div>
           </div>
         </section>
-      <button
-        className={s.motionControl}
-        onClick={() => setPaused(!paused)}
-        aria-label={paused ? "Resume motion" : "Pause motion"}
-      >
-        {paused ? <Play size={15} /> : <Pause size={15} />}
-        <span>{paused ? "Resume motion" : "Pause motion"}</span>
-      </button>
     </div>
   );
 }
