@@ -229,16 +229,55 @@
   color: #f5f5f5;
 }
 .stackStory {
-  height: 440vh;
+  /* Hero fold + hand-over + three scenes. Pulled under the sticky nav so the stage starts at the top. */
+  height: 600vh;
   position: relative;
-  scroll-margin-top: 80px;
+  margin-top: -88px;
+}
+.layersAnchor {
+  position: absolute;
+  top: 26%;
+  left: 0;
+  scroll-margin-top: 0;
+}
+.worldWrap,
+.sceneUi {
+  position: absolute;
+  inset: 0;
+}
+.worldWrap {
+  perspective: 1600px;
+}
+.heroLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: #fff;
+  perspective: 1600px;
+}
+.heroLayer .hero {
+  position: absolute;
+  left: 18px;
+  top: 88px;
+  width: calc(100% - 36px);
+  height: calc(100% - 88px);
+  min-height: 0;
+  transform-origin: 50% 50%;
+  will-change: transform, left, top, width, height;
+}
+/* The shader keeps the full stage size; the shrinking frame crops it instead of squashing it. */
+.heroLayer .heroCanvas {
+  inset: auto;
+  left: calc(50% - 50vw);
+  top: calc(50% - 50svh);
+  width: 100vw;
+  height: 100svh;
 }
 .stackSticky {
   height: 100svh;
   min-height: 670px;
   position: sticky;
   top: 0;
-  perspective: 1600px;
   overflow: hidden;
 }
 .world {
@@ -643,12 +682,30 @@
   bottom: -1px;
   left: 0;
   height: 1px;
-  width: 0;
-  background: #d4d7e1;
-  transition: width 0.45s;
-}
-.signalTabs button[aria-selected="true"] > i {
   width: 100%;
+  background: #d4d7e1;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+/* Signals visual: three GSAP-driven states, cross-faded. */
+.signalStage {
+  width: 100%;
+  position: relative;
+}
+.signalStage svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.signalStage .funnelCore {
+  top: 51.6%;
+}
+.svMode {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.svMode[data-on="true"] {
+  opacity: 1;
 }
 .signalVisual {
   border-left: 1px solid var(--line);
@@ -1390,8 +1447,7 @@
     scroll-behavior: auto !important;
   }
   .stackStory {
-    height: 100svh;
-    min-height: 700px;
+    height: 320vh;
   }
   .world {
     transform: rotateY(-12deg) !important;
