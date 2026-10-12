@@ -19,34 +19,37 @@ export default function Home() {
       <SmoothScroll />
       <ScrollHero />
       <ScrollQuote />
-      <ClientsStrip />
+      {/* Everything after the hero scrolls over the pinned stat card */}
+      <div className="relative z-[2] bg-bg">
+        <ClientsStrip />
 
-      {/* 3. Problems — AJTBD triggers/emotions/pains + our answer */}
-      <AJTBDProblems />
+        {/* 3. Problems — AJTBD triggers/emotions/pains + our answer */}
+        <AJTBDProblems />
 
-      {/* 4. Awards line */}
-      <AwardsSlider />
+        {/* 4. Awards line */}
+        <AwardsSlider />
 
-      {/* 5. Engagement models — no linking */}
-      <EngagementModels />
+        {/* 5. Engagement models — no linking */}
+        <EngagementModels />
 
-      {/* 6. Magazine line */}
-      <Press />
+        {/* 6. Magazine line */}
+        <Press />
 
-      {/* 7. Industries/segments grid with AJTBD landing links */}
-      <SegmentsGrid />
+        {/* 7. Industries/segments grid with AJTBD landing links */}
+        <SegmentsGrid />
 
-      {/* 9. Founder + team */}
-      <FounderAndTeam />
+        {/* 9. Founder + team */}
+        <FounderAndTeam />
 
-      {/* 10. Verified delivery outcomes */}
-      <DeliveryOutcomes />
+        {/* 10. Verified delivery outcomes */}
+        <DeliveryOutcomes />
 
-      {/* 11. Blog */}
-      <BlogSection />
+        {/* 11. Blog */}
+        <BlogSection />
 
-      {/* 12. Contact with dynamic values + footer (from layout) */}
-      <ContactDynamic />
+        {/* 12. Contact with dynamic values + footer (from layout) */}
+        <ContactDynamic />
+      </div>
     </>
   )
 }

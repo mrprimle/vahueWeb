@@ -1,57 +1,54 @@
 import { DISCOVERY_CALL_URL } from '@/lib/links'
 
-// All copy and media for the scroll hero lives here so assets can be swapped
-// without touching motion code. Paths ending in .mp4/.webm render as video.
+// Copy and media for the homepage scroll hero. Swap assets here; motion code
+// lives in ScrollHero / PullApart / heroScene.
 
 export type HeroStage = {
   category?: string
   title: string
   body: string
-  media: string
   cta?: { label: string; href: string; external?: boolean }
+  logos?: { name: string; src: string }[]
 }
 
-// Rendered as: <lead> <middle> <emphasis> <tail>, matching the current H1 styling.
-export const heroStatement = {
-  lead: 'Accelerate',
-  middle: 'your',
-  emphasis: 'AI',
-  tail: 'Transformation',
-}
+export const heroHeading = 'Accelerate your AI Transformation'
 
-export const heroMedia = '/img/placeholders/hero-media.svg'
+/**
+ * Packed hero video (1920x1080 MP4). See public/videos/README.md:
+ * colour shot in the bottom-left 80%, black/white mask of the same shot in the
+ * top-left 20% tile, red marker pixel top-right.
+ */
+export const heroVideo = '/videos/hero-packed-placeholder.mp4'
 
-export const heroStages: HeroStage[] = [
+// Exactly three stages: they map to the scene's three scroll states.
+export const heroStages: [HeroStage, HeroStage, HeroStage] = [
   {
     title: 'Everything to not get lost in the AI transition.',
-    body: 'Vahue works across the whole adoption curve, from the engineers who build with AI to the teams who learn to use it and the systems that run on your data.',
-    media: '/img/placeholders/stage-1.svg',
+    body: 'Vahue works across the whole adoption curve: AI-Native engineers who build with you, training that teaches your team to use AI mindfully, and systems that run on your own data.',
   },
   {
     category: 'Talent',
     title: 'AI-Native engineers inside your team.',
     body: "Extend your team with Vahue's AI-Native engineers to ship 10x faster, without changing how you plan or review work.",
-    media: '/img/placeholders/stage-2.svg',
     cta: { label: 'Book a discovery call', href: DISCOVERY_CALL_URL, external: true },
-  },
-  {
-    category: 'Training',
-    title: 'Teams that use AI mindfully.',
-    body: 'Supercharge your team with domain-specific workshops on the tools they already open every day.',
-    media: '/img/placeholders/stage-3.svg',
-    cta: { label: 'See team training', href: '/team-training' },
+    logos: [
+      { name: 'Shopify', src: '/img/shopify.svg' },
+      { name: 'Qonto', src: '/img/qontoLogo.svg' },
+      { name: 'Leafworks', src: '/img/leafworks.svg' },
+      { name: 'Tracesafe', src: '/img/tracesafe.svg' },
+      { name: 'Carmen', src: '/img/carmen.svg' },
+      { name: 'BringLiesel', src: '/img/bringliesel.svg' },
+    ],
   },
   {
     category: 'Systems',
     title: 'Agents that learn your enterprise.',
     body: 'Deploy reliable agents that learn your unique enterprise data, tools, and skills, with humans kept in the loop.',
-    media: '/img/placeholders/stage-4.svg',
     cta: { label: 'Explore enterprise AI', href: '/enterprise-ai' },
   },
 ]
 
 export const quote = {
-  // First token is the headline number; the rest animates word by word.
   text: "10x faster shipping for product teams that extend with Vahue's AI-Native engineers.",
-  media: '/img/placeholders/quote-video.svg',
+  video: '/videos/quote-placeholder.mp4',
 }
