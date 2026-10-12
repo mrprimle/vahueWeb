@@ -672,3 +672,15 @@
 .animate-awards-scroll {
   animation: awards-scroll 30s linear infinite;
 }
+
+/* ----- Lenis smooth scroll (homepage scroll hero) ----- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}

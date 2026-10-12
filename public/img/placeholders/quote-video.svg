@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1080" viewBox="0 0 720 1080">
+  <defs><pattern id="d" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#ffffff" fill-opacity="0.08"/></pattern></defs>
+  <rect width="720" height="1080" fill="#0c0c10"/>
+  <rect width="720" height="1080" fill="url(#d)"/>
+  <rect x="1" y="1" width="718" height="1078" fill="none" stroke="#ffffff" stroke-opacity="0.18" stroke-dasharray="8 8"/>
+  <line x1="0" y1="0" x2="720" y2="1080" stroke="#ffffff" stroke-opacity="0.06"/>
+  <line x1="720" y1="0" x2="0" y2="1080" stroke="#ffffff" stroke-opacity="0.06"/>
+  <text x="50%" y="47%" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="26" fill="#ffffff" fill-opacity="0.55" letter-spacing="2">PLACEHOLDER · QUOTE LOOP (MP4)</text>
+  <text x="50%" y="53%" text-anchor="middle" font-family="ui-monospace, Menlo, monospace" font-size="18" fill="#ffffff" fill-opacity="0.35">720 × 1080 · swap for your own asset</text>
+</svg>

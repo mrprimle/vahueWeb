@@ -1,4 +1,6 @@
-import Hero from '@/components/Hero'
+import SmoothScroll from '@/components/home/scroll-hero/SmoothScroll'
+import ScrollHero from '@/components/home/scroll-hero/ScrollHero'
+import ScrollQuote from '@/components/home/scroll-hero/ScrollQuote'
 import ClientsStrip from '@/components/main/ClientsStrip'
 import AJTBDProblems from '@/components/main/AJTBDProblems'
 import AwardsSlider from '@/components/engineering/AwardsSlider'
@@ -13,8 +15,10 @@ import ContactDynamic from '@/components/main/ContactDynamic'
 export default function Home() {
   return (
     <>
-      {/* 1. Hero + 2. Clients strip */}
-      <Hero />
+      {/* 1. Scroll hero (pinned stages) + stat card + 2. Clients strip */}
+      <SmoothScroll />
+      <ScrollHero />
+      <ScrollQuote />
       <ClientsStrip />
 
       {/* 3. Problems — AJTBD triggers/emotions/pains + our answer */}
