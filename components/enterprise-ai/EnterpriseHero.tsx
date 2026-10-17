@@ -61,7 +61,7 @@ export default function EnterpriseHero() {
         {/* Drag to spin; follows the cursor slightly */}
         <div className="relative col-span-12 h-[min(640px,70vh)] lg:col-span-5 max-lg:h-[420px]">
           <div ref={hubHost} className="absolute inset-0" aria-hidden="true" />
-          <p className="pointer-events-none absolute bottom-0 right-0 font-mono text-[11px] uppercase tracking-[0.05em] text-white/45">
+          <p className="pointer-events-none absolute bottom-0 right-0 font-mono text-[11px] uppercase tracking-[0.05em] text-white/55">
             Drag to explore
           </p>
         </div>

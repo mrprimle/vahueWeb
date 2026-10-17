@@ -168,7 +168,8 @@ void main() { gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 
 `
 const SPHERE_FRAG = /* glsl */ `
 uniform float uColorMix;
-void main() { gl_FragColor = vec4(mix(vec3(1.0), vec3(0.0), uColorMix), 1.0); }
+// Page background (bg-bg, #020202) from the first frame, so the white nav stays readable over it.
+void main() { gl_FragColor = vec4(vec3(0.0078), 1.0); }
 `
 
 // Rounded-rect outline frames (front and back of the object).
@@ -608,7 +609,7 @@ export function createHeroScene(container: HTMLElement, opts: HeroSceneOptions) 
 
   const glyphTex = makeGlyphTexture()
 
-  // Background sphere: white -> black as the scene opens up.
+  // Background sphere: fixed at the page background colour.
   const sphere = new THREE.Mesh(
     new THREE.SphereGeometry(),
     new THREE.ShaderMaterial({

@@ -673,8 +673,10 @@ export default function Navbar() {
           document.body
         )}
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay. inert while closed: it only fades out, so without this its
+          links stay focusable and in the accessibility tree. */}
       <div
+        inert={!isMenuOpen}
         className={`md:hidden fixed inset-0 z-40 ${
           isMenuOpen ? '' : 'pointer-events-none'
         }`}

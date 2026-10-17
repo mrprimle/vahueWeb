@@ -89,7 +89,7 @@ export default function ScrollHero() {
   const anyVisible = (i: number) => visible.some((v, k) => v && k !== i)
 
   return (
-    <div className="HomeHero relative left-0 top-0 -mt-[var(--header-height)] h-[450dvh] min-h-dvh w-full bg-white max-md:h-[232dvh]">
+    <div className="HomeHero relative left-0 top-0 -mt-[var(--header-height)] h-[450dvh] min-h-dvh w-full bg-bg max-md:h-[232dvh]">
       <div ref={pinned} className="h-dvh w-full">
         <div ref={parallax} className="absolute left-0 top-0 h-dvh w-full">
           {/* WebGL scene, faded in once the video has its first frames */}

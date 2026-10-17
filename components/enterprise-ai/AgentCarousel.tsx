@@ -13,7 +13,8 @@ const agents: { group: string; agent: Agent }[] = [
 ]
 
 // Slides tilt away from the centre as they scroll past (rotateY up to 18deg in a
-// 900px perspective) and fade slightly, so the track reads as a shallow arc.
+// 900px perspective) and fade to no less than 70%, so the track reads as a shallow
+// arc while text on the edge slides stays above WCAG AA.
 const MAX_TILT = 18
 
 export default function AgentCarousel() {
@@ -36,7 +37,7 @@ export default function AgentCarousel() {
       if (!el) return
       const d = Math.max(-1, Math.min(1, diff * snaps.length * 0.5))
       el.style.transform = `rotateY(${(-d * MAX_TILT).toFixed(2)}deg) translateZ(${(-Math.abs(d) * 60).toFixed(1)}px)`
-      el.style.opacity = String(1 - Math.abs(d) * 0.45)
+      el.style.opacity = String(1 - Math.abs(d) * 0.3)
     })
   }, [])
 
@@ -74,15 +75,15 @@ export default function AgentCarousel() {
                 className="flex h-[440px] flex-col justify-between rounded-3xl border border-border-soft bg-surface p-8 will-change-transform max-md:h-[400px] max-md:p-6"
               >
                 <div>
-                  <p className="font-mono text-[11px] uppercase tracking-[0.05em] text-white/45">{group}</p>
+                  <p className="font-mono text-[11px] uppercase tracking-[0.05em] text-white/70">{group}</p>
                   <h3 className="mt-6 text-card font-medium text-white">{agent.name}</h3>
-                  <p className="mt-3 line-clamp-4 text-sm leading-normal text-white/70">{agent.description}</p>
+                  <p className="mt-3 line-clamp-4 text-sm leading-normal text-white/80">{agent.description}</p>
                 </div>
                 <dl className="grid grid-cols-2 gap-2 border-t border-border-soft pt-6">
                   {agent.benefits.slice(0, 2).map((b) => (
                     <div key={b.label}>
                       <dt className="font-display text-[1.75rem] font-light leading-none text-white">{b.metric}</dt>
-                      <dd className="mt-2 text-xs leading-snug text-white/55">{b.label}</dd>
+                      <dd className="mt-2 text-xs leading-snug text-white/70">{b.label}</dd>
                     </div>
                   ))}
                 </dl>

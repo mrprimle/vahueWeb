@@ -274,7 +274,7 @@ export default function ContactContainer({ extraMargin }: ContactContainerProps)
                   disabled={isDisabled || isSubmitting}
                   className={`group w-full flex items-center justify-center gap-3 py-3.5 rounded-full font-medium text-sm uppercase tracking-wider transition-all ${
                     isDisabled || isSubmitting
-                      ? 'bg-white/30 text-bg/60 cursor-not-allowed'
+                      ? 'bg-white/20 text-white/70 cursor-not-allowed'
                       : 'bg-white text-bg hover:bg-white/90'
                   }`}
                 >

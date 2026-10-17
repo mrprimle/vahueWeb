@@ -63,7 +63,8 @@ export default function ContactDynamic() {
       <div className="max-w-shell mx-auto px-6 pt-12 md:pt-24 pb-8 md:pb-12">
         <div className="max-w-3xl">
           <p className="eyebrow mb-4">Contact</p>
-          <h2 className="font-display text-section font-light">
+          {/* data-no-reveal: the typewriter rewrites this heading, so it can't be line-split */}
+          <h2 data-no-reveal className="font-display text-section font-light">
             We&apos;re here to deliver
             <br />
             <span className="typewriter-caret bg-gradient-to-r from-white to-[#b99dff] bg-clip-text text-transparent">
