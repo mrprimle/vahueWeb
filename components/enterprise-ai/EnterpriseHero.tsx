@@ -1,44 +1,27 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { DISCOVERY_CALL_URL } from '@/lib/links'
+import Reveal from '@/components/motion/Reveal'
+import { createHubScene } from './hubScene'
 
 export default function EnterpriseHero() {
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
+  const hubHost = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!hubHost.current) return
+    const hub = createHubScene(hubHost.current)
+    return () => hub.destroy()
+  }, [])
 
   return (
-    <section className="relative bg-bg overflow-hidden">
-      <div className="absolute inset-0 hero-texture opacity-50" />
+    <section className="relative overflow-hidden bg-bg">
+      <div className="absolute inset-0 hero-texture opacity-40" />
 
-      <div className="relative z-10 w-full max-w-wide mx-auto px-6 md:px-8 pt-24 md:pt-36 pb-24 md:pb-36">
-        <div className="max-w-4xl mx-auto text-center">
-          <div
-            className={`flex justify-center mb-8 ${
-              mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
-            }`}
-            style={{
-              transition: 'opacity 700ms ease, transform 700ms ease',
-            }}
-          >
-            <span className="inline-flex items-center px-4 py-1.5 rounded-full border border-border-mid bg-white/[0.04] backdrop-blur-md">
-              <span className="font-mono text-[11px] uppercase tracking-widest text-white/80">
-                Vahue&rsquo;s AI Platform &amp; Methodology
-              </span>
-            </span>
-          </div>
-
-          <h1
-            className={`font-display text-[2.7rem] font-light leading-none md:leading-tight xl:leading-[80px] lg:text-6xl xl:text-7xl -tracking-[0.01em] text-balance text-white ${
-              mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-            style={{
-              transition:
-                'opacity 800ms cubic-bezier(0.22, 1, 0.36, 1), transform 800ms cubic-bezier(0.22, 1, 0.36, 1)',
-              transitionDelay: mounted ? '120ms' : '0ms',
-            }}
-          >
+      <div className="relative z-10 mx-auto grid min-h-[calc(100dvh-var(--header-height,72px))] max-w-shell grid-cols-12 items-center gap-2 px-6 py-24 max-md:py-12">
+        <div className="col-span-12 lg:col-span-7">
+          <Reveal as="h1" variant="rise" className="font-display text-hero font-light text-balance text-white">
             The AI core of{' '}
             <span
               style={{
@@ -50,57 +33,41 @@ export default function EnterpriseHero() {
             >
               Vahue&rsquo;s digital DNA
             </span>
-          </h1>
+          </Reveal>
 
-          <p
-            className={`mt-6 md:mt-8 text-base md:text-lg text-white/70 leading-relaxed max-w-2xl mx-auto ${
-              mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}
-            style={{
-              transition: 'opacity 800ms ease, transform 800ms ease',
-              transitionDelay: mounted ? '240ms' : '0ms',
-            }}
-          >
-            Vahue AI Hub is our enterprise platform — pre-configured, secure,
-            and fully customized agents that turn complex business challenges
-            into production-ready AI solutions.
-          </p>
+          <Reveal as="p" variant="words" delay={0.2} className="mt-8 max-w-xl text-base leading-normal text-white/70 md:text-lg">
+            Vahue AI Hub is our enterprise platform — pre-configured, secure, and fully customized agents that turn
+            complex business challenges into production-ready AI solutions.
+          </Reveal>
 
-          <div
-            className={`mt-10 flex flex-wrap items-center justify-center gap-3 ${
-              mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-            }`}
-            style={{
-              transition: 'opacity 800ms ease, transform 800ms ease',
-              transitionDelay: mounted ? '360ms' : '0ms',
-            }}
-          >
+          <Reveal variant="block" delay={0.4} className="mt-10 flex flex-wrap items-center gap-3">
             <Link
               href={DISCOVERY_CALL_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 md:gap-3 bg-white text-bg font-medium text-[11px] md:text-sm uppercase tracking-wider px-4 py-2.5 md:px-6 md:py-3.5 rounded-full hover:bg-white/90 transition-colors"
+              className="group inline-flex items-center gap-3 rounded-full bg-white px-6 py-3.5 text-sm font-medium text-bg transition-[background-color,transform] duration-300 ease-out hover:bg-white/90 active:scale-[0.97]"
             >
-              Discover Your Next AI Breakthrough
-              <svg
-                className="w-3.5 h-3.5 md:w-4 md:h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2.5}
-                  d="M7 17L17 7M17 7H7M17 7v10"
-                />
+              Discover your next AI breakthrough
+              <svg className="size-4 transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M7 17L17 7M17 7H7M17 7v10" />
               </svg>
             </Link>
-          </div>
+            <Link href="/platform" className="btn-outline inline-flex items-center rounded-full px-6 py-3.5 text-sm font-medium text-white">
+              How the hub works
+            </Link>
+          </Reveal>
+        </div>
+
+        {/* Drag to spin; follows the cursor slightly */}
+        <div className="relative col-span-12 h-[min(640px,70vh)] lg:col-span-5 max-lg:h-[420px]">
+          <div ref={hubHost} className="absolute inset-0" aria-hidden="true" />
+          <p className="pointer-events-none absolute bottom-0 right-0 font-mono text-[11px] uppercase tracking-[0.05em] text-white/45">
+            Drag to explore
+          </p>
         </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-bg pointer-events-none" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-bg" />
     </section>
   )
 }

@@ -25,6 +25,7 @@ export const heroStages: [HeroStage, HeroStage, HeroStage] = [
   {
     title: 'Everything to not get lost in the AI transition.',
     body: 'Vahue works across the whole adoption curve: AI-Native engineers who build with you, training that teaches your team to use AI mindfully, and systems that run on your own data.',
+    cta: { label: 'See how we work', href: '/platform' },
   },
   {
     category: 'Talent',

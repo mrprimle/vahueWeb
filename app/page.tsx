@@ -11,6 +11,8 @@ import FounderAndTeam from '@/components/main/FounderAndTeam'
 import DeliveryOutcomes from '@/components/engineering/Testimonials'
 import BlogSection from '@/components/engineering/BlogSection'
 import ContactDynamic from '@/components/main/ContactDynamic'
+import CaseStrip from '@/components/main/CaseStrip'
+import RevealScope from '@/components/motion/RevealScope'
 
 export default function Home() {
   return (
@@ -20,7 +22,7 @@ export default function Home() {
       <ScrollHero />
       <ScrollQuote />
       {/* Everything after the hero scrolls over the pinned stat card */}
-      <div className="relative z-[2] bg-bg">
+      <RevealScope className="relative z-[2] bg-bg">
         <ClientsStrip />
 
         {/* 3. Problems — AJTBD triggers/emotions/pains + our answer */}
@@ -38,6 +40,9 @@ export default function Home() {
         {/* 7. Industries/segments grid with AJTBD landing links */}
         <SegmentsGrid />
 
+        {/* 8. Draggable case-study strip */}
+        <CaseStrip />
+
         {/* 9. Founder + team */}
         <FounderAndTeam />
 
@@ -49,7 +54,7 @@ export default function Home() {
 
         {/* 12. Contact with dynamic values + footer (from layout) */}
         <ContactDynamic />
-      </div>
+      </RevealScope>
     </>
   )
 }

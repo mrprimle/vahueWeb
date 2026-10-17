@@ -112,7 +112,7 @@ export default function ScrollHero() {
           {/* Opening heading */}
           <section className="absolute left-0 top-0 z-10 flex min-h-dvh w-full flex-col items-center px-8 py-16 max-md:justify-start max-md:pt-[45dvh] md:justify-center md:max-[1449px]:justify-start md:max-[1449px]:pt-[50dvh] lg:px-16 min-[1450px]:justify-center">
             <div ref={heading} className="flex w-full max-w-6xl flex-col items-center justify-center">
-              <h1 className="w-full text-center font-display text-[2rem] font-normal leading-[1.05] text-white md:text-[4rem]">
+              <h1 className="w-full text-center font-display text-hero font-light text-balance text-white">
                 {heroHeading}
               </h1>
             </div>

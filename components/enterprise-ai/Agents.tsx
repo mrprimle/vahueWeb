@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from 'react'
 
-type Benefit = {
+export type Benefit = {
   metric: string
   label: string
   body: string
 }
 
-type Agent = {
+export type Agent = {
   key: string
   name: string
   title: string
@@ -18,7 +18,7 @@ type Agent = {
 
 type TabKey = 'technical' | 'horizontal' | 'vertical'
 
-const technical: Agent[] = [
+export const technical: Agent[] = [
   {
     key: 'knowledge-engine',
     name: 'Knowledge Engine',
@@ -137,7 +137,7 @@ const technical: Agent[] = [
   },
 ]
 
-const horizontal: Agent[] = [
+export const horizontal: Agent[] = [
   {
     key: 'customer-experience',
     name: 'Customer Experience',
@@ -285,7 +285,7 @@ const horizontal: Agent[] = [
   },
 ]
 
-const vertical: Agent[] = [
+export const vertical: Agent[] = [
   {
     key: 'banking',
     name: 'Banking & Financial Services',

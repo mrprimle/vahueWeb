@@ -10,7 +10,25 @@ This file captures hard visual rules for the Vahue marketing site. Follow it any
    - Do not use `gradient-text-animated`, `gradient-text-animated-teal`, `gradient-text-shine`, or `gradient-text-scale` inside hero.
    - If emphasis is needed in hero, use a light white→lavender text gradient like the incubator hero (`linear-gradient(90deg, #ffffff 0%, #b8b8ff 100%)`) or plain white. Never end on a strong blue or purple in hero.
    - **No badge/pill "plate"** above the H1 (the `badge-dark` eyebrow pill with code/category). Heroes go straight to the H1 — same as the main site hero and the incubator hero.
-   - **Hero H1 typography must match the main page hero** (`components/Hero.tsx`): `font-display text-[2.7rem] font-light leading-none md:leading-tight xl:leading-[80px] lg:text-6xl xl:text-7xl -tracking-[0.01em] max-w-2xl xl:max-w-4xl text-balance text-white`. Light weight, not semibold. Do not invent new size scales per landing.
+   - **Hero H1 typography uses the display scale:** `font-display text-hero font-light text-balance text-white`. `text-hero` is fluid: 40px on phones up to **116px at about 1440px and wider**, line-height 1.0, tracking −0.01em (defined in `tailwind.config.ts`). Light weight, not semibold. Do not invent new size scales per landing; use the type ladder below.
+
+## Type and spacing system
+
+Hierarchy comes from size, not weight. Everything is light (300) or regular (400); 500 only for small card titles. Tracking is −0.01em at every size except uppercase mono labels (+0.05em).
+
+| Token | Desktop → mobile | Line-height | Use |
+| --- | --- | --- | --- |
+| `text-hero` | 116 → 40px | 1.0 | One H1 per page |
+| `text-section` | 64 → 28px | 1.05 | Section H2 |
+| `text-lead` | 40 → 24px | 1.15 | H3, large lead paragraphs |
+| `text-card` | 24 → 20px | 1.5 | Card titles |
+| `text-base` | 16px | 1.5 | Body |
+| mono 11–13px uppercase | — | 1.2 | Eyebrows (outside the hero) |
+
+- **Spacing:** 8px base. Section padding `py-16` (64) for standard sections and `py-24` (96) for featured ones; `py-12` (48) on phones.
+- **Layout:** `max-w-shell` (1472px) container with `px-6`, a 12-column grid with an 8px gutter (`gap-2`). Whitespace comes from column spans and section padding, not wide gutters.
+- **Radii:** 4 / 8 / 16 for UI and cards, 24 for large media panels. 1px hairline borders (`border-border-soft/mid`), almost no shadows.
+- **Motion:** headings reveal by masked line (`components/motion`). Use 0.3s `ease-out` for hovers, 0.5s for standard moves, 0.85–1s for reveals.
 
 2. **No strong blue-purple gradients anywhere prominent.**
    - Avoid the paired `#0389f4` (blue) + `#8434e9` (purple) combination in backgrounds, cards, section accents, CTAs, or decorative glows.
