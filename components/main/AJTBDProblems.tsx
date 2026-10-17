@@ -95,11 +95,11 @@ export default function AJTBDProblems() {
   const active = painItems[activeIndex]
 
   return (
-    <section id="problems" className="relative py-20 md:py-28 scroll-mt-20">
-      <div className="max-w-wide mx-auto px-6 md:px-8">
+    <section id="problems" className="relative py-12 md:py-24 scroll-mt-20">
+      <div className="max-w-shell mx-auto px-6">
         {/* Heading */}
         <div className="max-w-3xl mb-12 md:mb-16">
-          <h2 className="text-display font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.05]">
+          <h2 className="font-display text-section font-light">
             Struggling to extract real ROI
             <br />
             <span className="text-white/55">from the AI race?</span>
@@ -189,7 +189,7 @@ export default function AJTBDProblems() {
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
               <div>
                 <p className="eyebrow mb-3">Why us?</p>
-                <h3 className="text-display font-display text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight text-white">
+                <h3 className="font-display text-lead font-light text-white">
                   Assessment. Delivery. Security.
                   <br />
                   <span className="text-white/55">

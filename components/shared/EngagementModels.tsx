@@ -146,13 +146,13 @@ export default function EngagementModels() {
   const active = tabs.find((t) => t.key === activeTab) ?? tabs[0]
 
   return (
-    <section id="engagement" className="relative py-20 md:py-28">
-      <div className="w-full max-w-wide mx-auto px-6 md:px-8">
+    <section id="engagement" className="relative py-12 md:py-24">
+      <div className="w-full max-w-shell mx-auto px-6">
         {/* Heading */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
           <div className="max-w-3xl">
             <p className="eyebrow mb-4">Services</p>
-            <h2 className="text-display font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.05] text-white">
+            <h2 className="font-display text-section font-light text-white">
               Your AI journey isn&apos;t one-size-fits-all.{' '}
               <span className="text-white/55">
                 We meet you where you are and
@@ -232,7 +232,7 @@ export default function EngagementModels() {
                 </Link>
               </div>
 
-              <h3 className="text-2xl md:text-3xl lg:text-4xl font-display font-semibold text-white mb-3 leading-tight">
+              <h3 className="font-display text-lead font-light text-white mb-3">
                 Enterprise AI Hub
               </h3>
               <p className="text-sm md:text-[15px] text-white/65 leading-relaxed max-w-2xl mb-8">
@@ -341,7 +341,7 @@ function BentoCard({
           </span>
         </div>
         <div className="mt-auto">
-          <h3 className="font-display text-xl md:text-2xl font-semibold text-white mb-3 leading-tight tracking-tight">
+          <h3 className="font-display text-card font-normal text-white mb-3">
             {title}
           </h3>
           <p className="text-sm text-white/65 leading-relaxed">{body}</p>

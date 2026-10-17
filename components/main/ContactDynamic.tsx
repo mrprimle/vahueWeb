@@ -60,10 +60,10 @@ export default function ContactDynamic() {
   return (
     <section id="contact" className="relative scroll-mt-20">
       {/* Intro with typewriter */}
-      <div className="max-w-wide mx-auto px-6 md:px-8 pt-20 md:pt-28 pb-10 md:pb-14">
+      <div className="max-w-shell mx-auto px-6 pt-12 md:pt-24 pb-8 md:pb-12">
         <div className="max-w-3xl">
           <p className="eyebrow mb-4">Contact</p>
-          <h2 className="text-display font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.05]">
+          <h2 className="font-display text-section font-light">
             We&apos;re here to deliver
             <br />
             <span className="typewriter-caret bg-gradient-to-r from-white to-[#b99dff] bg-clip-text text-transparent">

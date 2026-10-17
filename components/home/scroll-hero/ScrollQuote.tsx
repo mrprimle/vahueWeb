@@ -70,7 +70,7 @@ export default function ScrollQuote() {
 
   return (
     <div ref={root} className="relative z-[1] h-[200dvh] overflow-x-clip bg-black px-3 md:px-6">
-      <section ref={section} className="relative isolate mx-auto w-full max-w-[2048px]">
+      <section ref={section} className="relative isolate mx-auto w-full max-w-[2048px] overflow-x-clip">
         <div ref={wrapper} className="relative z-[1] flex min-h-0 w-full overflow-visible pb-3 md:min-h-[70vh]">
           <div className="relative z-[1] flex min-h-0 w-full flex-col gap-2 max-md:h-[calc(92svh-1.25rem+1.5rem)] max-md:max-h-[calc(92svh-1.25rem+1.5rem)] max-md:overflow-hidden md:max-h-none md:min-h-[70vh] md:flex-1 md:flex-row md:overflow-visible md:pt-0">
             <div

@@ -460,16 +460,16 @@ export default function Agents() {
     active.agents.find((a) => a.key === activeKey) ?? active.agents[0]
 
   return (
-    <section id="agents" className="relative bg-bg py-20 md:py-28 scroll-mt-20">
+    <section id="agents" className="relative bg-bg py-12 md:py-24 scroll-mt-20">
       {/* Hash anchors — enable deep-linking into a specific tab */}
       <span id="agents-technical" aria-hidden className="absolute top-0 scroll-mt-20" />
       <span id="agents-horizontal" aria-hidden className="absolute top-0 scroll-mt-20" />
       <span id="agents-vertical" aria-hidden className="absolute top-0 scroll-mt-20" />
 
-      <div className="w-full max-w-wide mx-auto px-6 md:px-8">
+      <div className="w-full max-w-shell mx-auto px-6">
         <div className="max-w-3xl mx-auto text-center mb-10 md:mb-14">
           <p className="eyebrow mb-4">Agents</p>
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.05] text-white">
+          <h2 className="font-display text-section font-light text-white">
             AI-driven agents for{' '}
             <span className="text-white/55">every workflow</span>
           </h2>
@@ -618,7 +618,7 @@ function BenefitCard({ benefit }: { benefit: Benefit }) {
       />
       <div className="relative p-5 md:p-6">
         <p
-          className="font-display text-3xl md:text-4xl font-semibold leading-none tracking-tight"
+          className="font-display text-lead font-light leading-none"
           style={{
             background:
               'linear-gradient(90deg, #c8b8ff 0%, #7edfd2 100%)',

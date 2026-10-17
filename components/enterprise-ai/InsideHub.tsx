@@ -109,7 +109,7 @@ export default function InsideHub() {
         {/* Title */}
         <div className="pt-16 md:pt-24 pb-12 md:pb-20 text-center px-6">
           <p className="eyebrow mb-4">Inside Vahue AI Hub</p>
-          <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-semibold leading-[1.05] text-white max-w-4xl mx-auto">
+          <h2 className="font-display text-section font-light text-white max-w-4xl mx-auto">
             The engine behind{' '}
             <span className="text-white/55">enterprise AI</span>
           </h2>
@@ -167,7 +167,7 @@ function BrandBlock() {
           <p className="font-mono text-[11px] uppercase tracking-widest text-white/55 mb-3">
             Platform
           </p>
-          <p className="font-display text-3xl md:text-4xl font-semibold text-white leading-tight">
+          <p className="font-display text-lead font-light text-white">
             Vahue AI Hub
           </p>
           <p className="text-white/65 text-sm mt-3 leading-relaxed">
@@ -257,7 +257,7 @@ function PlatformWord() {
           aria-hidden="true"
         />
         <div className="relative">
-          <p className="font-display text-5xl md:text-6xl lg:text-7xl font-semibold leading-none tracking-tight">
+          <p className="font-display text-section font-light leading-none">
             <span
               style={{
                 background:
@@ -411,7 +411,7 @@ function KnowledgeEngine() {
         />
         <div className="relative">
           <p className="eyebrow mb-4">Foundation</p>
-          <h3 className="font-display text-2xl md:text-3xl font-semibold text-white leading-tight mb-7">
+          <h3 className="font-display text-lead font-light text-white mb-7">
             Built on Vahue&rsquo;s proprietary{' '}
             <span className="text-white/55">knowledge engine</span>
           </h3>
