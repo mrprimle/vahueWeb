@@ -142,7 +142,7 @@ export default function ContactContainer({ extraMargin }: ContactContainerProps)
 
   return (
     <section className={`bg-bg ${extraMargin ? 'pt-20' : ''}`}>
-      <div className="max-w-wide mx-auto px-6 md:px-8 pb-20 md:pb-28">
+      <div className="max-w-shell mx-auto px-6 pb-20 md:pb-28">
         <div className="relative rounded-3xl border border-border-mid overflow-hidden">
           <div
             className="absolute inset-0 pointer-events-none opacity-80"
@@ -156,7 +156,7 @@ export default function ContactContainer({ extraMargin }: ContactContainerProps)
               {/* Left: Title */}
               <div className="flex flex-col justify-start">
                 <p className="eyebrow mb-4">Get more ROI from AI. Get Vahue.</p>
-                <h2 className="text-display font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.05] mb-5">
+                <h2 className="font-display text-lead font-light mb-5">
                   Let&apos;s talk
                   <br />
                   <span className="bg-gradient-to-r from-white to-[#b99dff] bg-clip-text text-transparent">
@@ -274,7 +274,7 @@ export default function ContactContainer({ extraMargin }: ContactContainerProps)
                   disabled={isDisabled || isSubmitting}
                   className={`group w-full flex items-center justify-center gap-3 py-3.5 rounded-full font-medium text-sm uppercase tracking-wider transition-all ${
                     isDisabled || isSubmitting
-                      ? 'bg-white/30 text-bg/60 cursor-not-allowed'
+                      ? 'bg-white/20 text-white/70 cursor-not-allowed'
                       : 'bg-white text-bg hover:bg-white/90'
                   }`}
                 >
@@ -354,7 +354,7 @@ export default function ContactContainer({ extraMargin }: ContactContainerProps)
               <p className="eyebrow mb-2">Message received</p>
               <h3
                 id="contact-success-title"
-                className="text-2xl font-semibold text-white mb-3"
+                className="font-display text-card font-normal text-white mb-3"
               >
                 Thanks for reaching out
               </h3>

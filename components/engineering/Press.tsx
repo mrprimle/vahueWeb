@@ -10,8 +10,8 @@ const pressLogos = [
 
 export default function Press() {
   return (
-    <section className="relative py-14 md:py-16 border-y border-border-soft">
-      <div className="w-full max-w-wide mx-auto px-6 md:px-8">
+    <section className="relative overflow-x-clip py-12 md:py-16 border-y border-border-soft">
+      <div className="w-full max-w-shell mx-auto px-6">
         <div className="flex items-center justify-center mb-8">
           <p className="eyebrow">As seen in</p>
         </div>

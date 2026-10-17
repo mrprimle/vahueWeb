@@ -61,11 +61,11 @@ const pillars = [
 
 export default function WhatPowers() {
   return (
-    <section className="relative bg-bg py-20 md:py-28">
-      <div className="w-full max-w-wide mx-auto px-6 md:px-8">
+    <section className="relative bg-bg py-12 md:py-24">
+      <div className="w-full max-w-shell mx-auto px-6">
         <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
           <p className="eyebrow mb-4">Capabilities</p>
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.05] text-white">
+          <h2 className="font-display text-section font-light text-white">
             What powers <span className="text-white/55">Vahue AI Hub?</span>
           </h2>
           <p className="text-white/65 text-base md:text-lg leading-relaxed mt-6">
@@ -112,7 +112,7 @@ function PillarCard({
         <span className="inline-flex w-11 h-11 rounded-full border border-border-mid bg-white/[0.04] text-white items-center justify-center mb-6">
           <Icon className="w-5 h-5" />
         </span>
-        <h3 className="text-white text-lg md:text-xl font-semibold leading-snug mb-3">
+        <h3 className="text-white text-card font-medium mb-3">
           {title}
         </h3>
         <p className="text-white/65 text-sm leading-relaxed">{body}</p>

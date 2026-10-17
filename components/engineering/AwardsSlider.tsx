@@ -143,14 +143,14 @@ export default function AwardsSlider() {
 
 
   return (
-    <section className="bg-bg border-y border-border-soft">
+    <section className="overflow-x-clip bg-bg border-y border-border-soft">
       <div className="py-16 md:py-20">
-        <div className="w-full max-w-wide mx-auto px-6 md:px-8">
+        <div className="w-full max-w-shell mx-auto px-6">
           {/* Header */}
           <div className="flex items-center justify-between mb-10 md:mb-12">
             <div>
               <p className="eyebrow mb-2">Awards</p>
-              <h2 className="text-display font-display text-2xl md:text-3xl font-semibold tracking-tight text-white">
+              <h2 className="font-display text-lead font-light text-white">
                 Proud moments.
               </h2>
             </div>
@@ -184,7 +184,7 @@ export default function AwardsSlider() {
         </div>
 
         {/* Slider Container with fade edges */}
-        <div className="w-full max-w-wide mx-auto px-6 md:px-8">
+        <div className="w-full max-w-shell mx-auto px-6">
           <div className="relative">
             <div
               className={`absolute left-0 top-0 bottom-0 w-12 md:w-16 bg-gradient-to-r from-bg to-transparent z-10 pointer-events-none transition-opacity ${

@@ -96,7 +96,7 @@ function Card({
       />
       <div className="relative bg-surface p-7 md:p-10">
         <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-8 lg:gap-12 items-start">
-          <h3 className="font-display text-2xl md:text-3xl font-semibold text-white leading-tight">
+          <h3 className="font-display text-lead font-light text-white">
             {label}
           </h3>
           <div>{children}</div>
@@ -109,10 +109,10 @@ function Card({
 export default function Results() {
   return (
     <section className="bg-bg">
-      <div className="w-full max-w-wide mx-auto px-6 md:px-8 py-20 md:py-28">
+      <div className="w-full max-w-shell mx-auto px-6 py-12 md:py-24">
         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
           <p className="eyebrow mb-4">Proof</p>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.1] text-white">
+          <h2 className="font-display text-section font-light text-white">
             Results that speak volumes.
             <br />
             <span className="bg-gradient-to-r from-white to-[#b99dff] bg-clip-text text-transparent">
@@ -135,7 +135,7 @@ export default function Results() {
                   <p className="font-mono text-[11px] uppercase tracking-widest text-white/55 mb-2">
                     {s.stage}
                   </p>
-                  <p className="font-display text-3xl md:text-4xl font-semibold text-white leading-none mb-4 tracking-tight">
+                  <p className="font-display text-lead font-light text-white leading-none mb-4">
                     {s.percent}%
                   </p>
                   <div className="h-1.5 rounded-full bg-white/[0.08] overflow-hidden">
@@ -170,7 +170,7 @@ export default function Results() {
                         className="rounded-2xl border border-border-soft bg-white/[0.02] px-5 py-4 flex items-start justify-between gap-4"
                       >
                         <div>
-                          <p className="font-display text-2xl md:text-3xl font-semibold text-white leading-none tracking-tight">
+                          <p className="font-display text-lead font-light text-white leading-none">
                             {item.value}
                           </p>
                           <p className="mt-2 text-white/60 text-[13px] leading-snug">

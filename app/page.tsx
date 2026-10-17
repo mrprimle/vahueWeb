@@ -1,4 +1,6 @@
-import Hero from '@/components/Hero'
+import SmoothScroll from '@/components/home/scroll-hero/SmoothScroll'
+import ScrollHero from '@/components/home/scroll-hero/ScrollHero'
+import ScrollQuote from '@/components/home/scroll-hero/ScrollQuote'
 import ClientsStrip from '@/components/main/ClientsStrip'
 import AJTBDProblems from '@/components/main/AJTBDProblems'
 import AwardsSlider from '@/components/engineering/AwardsSlider'
@@ -9,40 +11,50 @@ import FounderAndTeam from '@/components/main/FounderAndTeam'
 import DeliveryOutcomes from '@/components/engineering/Testimonials'
 import BlogSection from '@/components/engineering/BlogSection'
 import ContactDynamic from '@/components/main/ContactDynamic'
+import CaseStrip from '@/components/main/CaseStrip'
+import RevealScope from '@/components/motion/RevealScope'
 
 export default function Home() {
   return (
     <>
-      {/* 1. Hero + 2. Clients strip */}
-      <Hero />
-      <ClientsStrip />
+      {/* 1. Scroll hero (pinned stages) + stat card + 2. Clients strip */}
+      <SmoothScroll />
+      <ScrollHero />
+      <ScrollQuote />
+      {/* Everything after the hero scrolls over the pinned stat card */}
+      <RevealScope className="relative z-[2] bg-bg">
+        <ClientsStrip />
 
-      {/* 3. Problems — AJTBD triggers/emotions/pains + our answer */}
-      <AJTBDProblems />
+        {/* 3. Problems — AJTBD triggers/emotions/pains + our answer */}
+        <AJTBDProblems />
 
-      {/* 4. Awards line */}
-      <AwardsSlider />
+        {/* 4. Awards line */}
+        <AwardsSlider />
 
-      {/* 5. Engagement models — no linking */}
-      <EngagementModels />
+        {/* 5. Engagement models — no linking */}
+        <EngagementModels />
 
-      {/* 6. Magazine line */}
-      <Press />
+        {/* 6. Magazine line */}
+        <Press />
 
-      {/* 7. Industries/segments grid with AJTBD landing links */}
-      <SegmentsGrid />
+        {/* 7. Industries/segments grid with AJTBD landing links */}
+        <SegmentsGrid />
 
-      {/* 9. Founder + team */}
-      <FounderAndTeam />
+        {/* 8. Draggable case-study strip */}
+        <CaseStrip />
 
-      {/* 10. Verified delivery outcomes */}
-      <DeliveryOutcomes />
+        {/* 9. Founder + team */}
+        <FounderAndTeam />
 
-      {/* 11. Blog */}
-      <BlogSection />
+        {/* 10. Verified delivery outcomes */}
+        <DeliveryOutcomes />
 
-      {/* 12. Contact with dynamic values + footer (from layout) */}
-      <ContactDynamic />
+        {/* 11. Blog */}
+        <BlogSection />
+
+        {/* 12. Contact with dynamic values + footer (from layout) */}
+        <ContactDynamic />
+      </RevealScope>
     </>
   )
 }

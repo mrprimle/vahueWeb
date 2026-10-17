@@ -70,12 +70,12 @@ export default function BlogSection() {
   const latestPosts = blogPosts.slice(0, 3)
 
   return (
-    <section className="relative py-20 md:py-28">
-      <div className="w-full max-w-wide mx-auto px-6 md:px-8">
+    <section className="relative py-12 md:py-24">
+      <div className="w-full max-w-shell mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
           <div className="max-w-2xl">
             <p className="eyebrow mb-4">Blog</p>
-            <h2 className="text-display font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.05]">
+            <h2 className="font-display text-section font-light">
               Perspectives that matter.
             </h2>
           </div>
@@ -123,7 +123,7 @@ export default function BlogSection() {
                   <span className="w-1 h-1 rounded-full bg-white/30" />
                   <span>{post.date}</span>
                 </div>
-                <h3 className="text-lg md:text-xl font-semibold text-white leading-snug group-hover:text-white transition-colors">
+                <h3 className="text-card font-medium text-white group-hover:text-white transition-colors">
                   {post.title}
                 </h3>
                 <p className="mt-3 text-sm text-white/60 leading-relaxed line-clamp-2">

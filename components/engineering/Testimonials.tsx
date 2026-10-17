@@ -25,7 +25,7 @@ function OutcomeCardView({ outcome }: { outcome: CaseStudy }) {
           </span>
         </div>
 
-        <p className="mb-5 font-display text-3xl font-light leading-none text-white md:text-[2rem]">
+        <p className="mb-5 font-display text-lead font-light leading-none text-white">
           {outcome.metric}
         </p>
 
@@ -114,12 +114,12 @@ export default function DeliveryOutcomes() {
   return (
     <section
       id="delivery-outcomes"
-      className="relative scroll-mt-20 border-b border-border-soft py-20 md:py-28"
+      className="relative scroll-mt-20 border-b border-border-soft py-12 md:py-24"
     >
       <div>
-        <div className="mx-auto w-full max-w-wide px-6 md:px-8">
+        <div className="mx-auto w-full max-w-shell px-6">
           <div className="mb-12 max-w-2xl md:mb-16">
-            <h2 className="text-display font-display text-4xl font-semibold leading-[1.05] md:text-5xl lg:text-6xl">
+            <h2 className="font-display text-section font-light">
               Delivery outcomes.
             </h2>
             <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/55 md:text-base">
@@ -132,7 +132,7 @@ export default function DeliveryOutcomes() {
           <div className="pointer-events-none absolute top-0 right-0 left-0 z-10 h-24 bg-gradient-to-b from-bg to-transparent" />
           <div className="pointer-events-none absolute right-0 bottom-0 left-0 z-10 h-24 bg-gradient-to-t from-bg to-transparent" />
 
-          <div className="mx-auto w-full max-w-wide px-6 md:px-8">
+          <div className="mx-auto w-full max-w-shell px-6">
             <div className="grid h-[700px] grid-cols-3 gap-6 overflow-hidden">
               <AnimatedColumn outcomes={column1} speed={48} />
               <AnimatedColumn outcomes={column2} speed={56} />
