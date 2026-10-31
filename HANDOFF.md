@@ -123,6 +123,14 @@ Workflow pages load through `app/automations/[slug]/page.tsx` and `components/au
 - Homepage copy pass with the positioning, the six workflows and Audit → Pilot → Operate
 - Final side-by-side QA of the real pages, `npm run build`, then open a PR to `main` (don't deploy)
 
+## Mac memory budget (Mike's rules, mandatory)
+
+The Mac has 16 GB, shared with other Claude sessions and a Chrome on port 9223 that you must never touch.
+- One browser only: reuse a single Chrome tab via REA (CDP 9230), and close each page or tab as soon as you're done with it. No parallel browser agents; at most 2 agents running at once in total.
+- Before starting any browser or build, check free memory (`memory_pressure` / `vm_stat`). If it's below 25% free, wait and don't start anything new.
+- Don't run tsc, builds or dev servers in parallel. Run one heavy command at a time, and stop dev servers you're not using.
+- Kill only processes you started yourself.
+
 ## Rules to follow
 
 - `DESIGN.md` and `PRODUCT.md` in the repo, and the project memory rules:
