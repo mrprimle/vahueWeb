@@ -8,4 +8,5 @@ export const WORKFLOW_PAGES: Record<string, () => Promise<{ default: ComponentTy
   'document-intake': () => import('./physical-ai/WorkflowPage'),
   'engineering-enablement': () => import('./rlenvironments/WorkflowPage'),
   'scoring-decisions': () => import('./automotive/WorkflowPage'),
+  'support-agents': () => import('./donovan/WorkflowPage'),
 }
