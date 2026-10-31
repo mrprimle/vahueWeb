@@ -7,24 +7,40 @@ import { gsap, ScrollTrigger, playCascade, prepareCascade, reducedMotion } from 
 import styles from './styles.module.css'
 
 type Props = {
-  headline: string
-  /** Hero renders the page H1; the prefooter an H2. */
-  as?: 'h1' | 'h2'
+  /** poster / still image (also the reduced-motion fallback when a video is given) */
+  image: string
+  video?: string
+  title: string
   body?: string
-  cta: { href: string; label: string }
+  cta: string
+  href: string
+  /** Hero renders the page H1. */
+  as?: 'h1' | 'h2'
   /** ClipScrollSection startPercentage: 0 on the hero (no inset), 10 on the prefooter (inset 5% → 0) */
   startPercentage: number
   wrapperClassName: string
+  priority?: boolean
 }
 
-// scale.com FullBleedMediaSection inside a ClipScrollSection (rlenvironments clone), on Vahue dark:
+// scale.com FullBleedMediaSection inside a ClipScrollSection (chunk 37xz28pjbnlx4.js, modules 478135 / 540431):
 //   clip:  inset((1 - p) * 0.5 * startPercentage % round 1.5rem), root `top bottom` -> `center center`
 //   media: scale 1.25 -> 1 over the same range (onUpdate, linear map of progress)
 //   text:  section `top center` (retroactive, once): heading + body AnimatedText cascade (body +0.2s),
 //          CTA filledWhiteArrow intro (0.85s, delay 0.5s)
-// The template's looping video / photo is Scale's, so the media layer is the flat dark surface with the
-// dot texture and a vignette fade to the page background (DESIGN.md hero rules: no coloured glow).
-export default function FullBleedMedia({ headline, as = 'h2', body, cta, startPercentage, wrapperClassName }: Props) {
+//   overlay: flat bg-black/45 over the media
+export default function FullBleedMedia({
+  image,
+  video,
+  title,
+  body,
+  cta,
+  startPercentage,
+  wrapperClassName,
+  priority,
+  href,
+  as = 'h2',
+}: Props) {
+  const Heading = as
   useRefreshOnPageGrow()
   const root = useRef<HTMLDivElement>(null)
   const clip = useRef<HTMLDivElement>(null)
@@ -33,10 +49,11 @@ export default function FullBleedMedia({ headline, as = 'h2', body, cta, startPe
   const heading = useRef<HTMLHeadingElement>(null)
   const para = useRef<HTMLParagraphElement>(null)
   const ctaRef = useRef<ArrowCtaHandle>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useLayoutEffect(() => {
     if (reducedMotion()) {
-      if (clip.current) clip.current.style.clipPath = 'inset(0% round 1.5rem)'
+      videoRef.current?.pause()
       return
     }
     let cancelled = false
@@ -84,40 +101,56 @@ export default function FullBleedMedia({ headline, as = 'h2', body, cta, startPe
     }
   }, [startPercentage])
 
-  const Heading = as
   return (
     <div className={wrapperClassName}>
-      <div ref={root} className={`relative isolate w-full bg-transparent ${styles.gridLayout} !px-4`}>
-        <div
-          ref={clip}
-          className="col-span-full h-full w-full overflow-hidden"
-          style={{ clipPath: `inset(${0.5 * startPercentage}% round 1.5rem)` }}
-        >
+      <div ref={root} className={`relative isolate w-full bg-white ${styles.gridLayout} !px-4`}>
+        <div ref={clip} className="col-span-full h-full w-full overflow-hidden">
           <div className="h-full w-full">
-            <section ref={section} className={`overflow-hidden rounded-3xl bg-bg text-white ${styles.roundClip}`}>
+            <section ref={section} className={`overflow-hidden rounded-3xl bg-white text-black ${styles.roundClip}`}>
               <div
                 className={`relative flex min-h-[480px] items-end overflow-hidden rounded-3xl p-8 md:min-h-[720px] md:p-16 ${styles.roundClip}`}
               >
                 <div className="relative z-20 flex w-full max-w-[72rem] flex-col gap-6 text-white">
                   <Heading
                     ref={heading}
-                    className={`${styles.header2} text-balance !text-[clamp(2rem,0.5rem+5vw,4rem)] !font-normal tracking-[-0.01em] text-white`}
+                    className={`${styles.header2} text-balance !text-[clamp(2rem,0.5rem+5vw,4rem)] !font-normal tracking-[-0.01em] !text-white`}
                   >
-                    {headline}
+                    {title}
                   </Heading>
                   {body ? (
-                    <p ref={para} className={`${styles.body1} w-full max-w-[48rem] text-balance tracking-[-0.01em] text-white/85`}>
+                    <p ref={para} className={`${styles.body1} w-full text-balance tracking-[-0.01em] text-white`}>
                       {body}
                     </p>
                   ) : null}
                   <div className="flex flex-col gap-4 md:flex-row">
-                    <ArrowCta ref={ctaRef} href={cta.href} label={cta.label} />
+                    <ArrowCta ref={ctaRef} href={href} label={cta} />
                   </div>
                 </div>
                 <div className={`absolute left-0 top-0 h-full w-full origin-center overflow-hidden rounded-3xl ${styles.roundClip}`}>
-                  <div className="pointer-events-none absolute inset-0 z-10 rounded-3xl bg-[linear-gradient(rgba(2,2,2,0)_0%,#020202_100%)]" />
-                  <div ref={media} className="absolute inset-0 h-full w-full overflow-hidden rounded-3xl">
-                    <div className="hero-texture absolute inset-0 h-full w-full rounded-3xl border border-border-soft bg-surface" />
+                  <div className="pointer-events-none absolute inset-0 z-10 rounded-3xl bg-black/45" />
+                  <div ref={media} className="absolute inset-0 h-full w-full overflow-hidden rounded-3xl bg-[#193a29]">
+                    {video ? (
+                      <video
+                        ref={videoRef}
+                        src={video}
+                        poster={image}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="auto"
+                        className="pointer-events-none absolute inset-0 block h-full w-full rounded-3xl object-cover"
+                      />
+                    ) : (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={image}
+                        alt=""
+                        loading={priority ? 'eager' : 'lazy'}
+                        fetchPriority={priority ? 'high' : 'auto'}
+                        className="absolute inset-0 h-full w-full rounded-3xl object-cover"
+                      />
+                    )}
                   </div>
                 </div>
               </div>

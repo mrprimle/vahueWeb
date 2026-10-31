@@ -8,7 +8,7 @@ export type ArrowCtaHandle = { prepare: () => void; play: (delay?: number) => gs
 
 type Phase = 'rest' | 'in' | 'out' | 'reset'
 
-// scale.com FlatCta, variant "arrow", theme "white" with the "filledWhiteArrow" intro (copied from the rlenvironments clone).
+// scale.com FlatCta, variant "arrow", theme "white" with the "filledWhiteArrow" intro.
 // Hover: a current-colour sheet (35% opacity) sweeps in from the left and leaves to the
 // right, 600ms ease-out; the chevron track slides one slot.
 const ArrowCta = forwardRef<ArrowCtaHandle, { href: string; label: string }>(function ArrowCta(
@@ -71,7 +71,7 @@ const ArrowCta = forwardRef<ArrowCtaHandle, { href: string; label: string }>(fun
       />
       <div ref={counter} className="relative z-[1] inline-flex items-center justify-center py-1 pl-4 pr-1">
         <div className="relative z-[1] flex flex-1 flex-wrap items-center justify-center gap-4">
-          <span ref={text} className="block self-center text-nowrap text-[14px] font-medium leading-[1.5]">
+          <span ref={text} className="block self-center text-nowrap text-[14px] font-medium capitalize leading-[1.5]">
             {label}
           </span>
           <div
