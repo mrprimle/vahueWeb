@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import ContactContainer from '@/components/engineering/ContactContainer'
 
-const rotatingValues = [
+const defaultValues = [
   'agentic back-office',
   'AI-assisted SDLC',
   'customer ops automation',
@@ -18,7 +18,12 @@ const TYPE_DELAY = 60
 const DELETE_DELAY = 32
 const HOLD_DELAY = 1400
 
-export default function ContactDynamic() {
+export default function ContactDynamic({
+  values: rotatingValues = defaultValues,
+}: {
+  /** Phrases typed after "We're here to deliver" */
+  values?: string[]
+} = {}) {
   const [valueIndex, setValueIndex] = useState(0)
   const [subIndex, setSubIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)

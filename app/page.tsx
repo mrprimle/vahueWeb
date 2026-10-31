@@ -13,6 +13,13 @@ import BlogSection from '@/components/engineering/BlogSection'
 import ContactDynamic from '@/components/main/ContactDynamic'
 import CaseStrip from '@/components/main/CaseStrip'
 import RevealScope from '@/components/motion/RevealScope'
+import type { Metadata } from 'next'
+import { POSITIONING, WORKFLOWS } from '@/lib/automation-content'
+
+export const metadata: Metadata = {
+  title: { absolute: `${POSITIONING.line} | Vahue` },
+  description: POSITIONING.promise,
+}
 
 export default function Home() {
   return (
@@ -25,19 +32,19 @@ export default function Home() {
       <RevealScope className="relative z-[2] bg-bg">
         <ClientsStrip />
 
-        {/* 3. Problems — AJTBD triggers/emotions/pains + our answer */}
+        {/* 3. The six workflows, each linking to /automations/<slug> */}
         <AJTBDProblems />
 
         {/* 4. Awards line */}
         <AwardsSlider />
 
-        {/* 5. Engagement models — no linking */}
+        {/* 5. Audit → Pilot → Operate + controls */}
         <EngagementModels />
 
         {/* 6. Magazine line */}
         <Press />
 
-        {/* 7. Industries/segments grid with AJTBD landing links */}
+        {/* 7. Industries grid with each industry's workflows */}
         <SegmentsGrid />
 
         {/* 8. Draggable case-study strip */}
@@ -53,7 +60,7 @@ export default function Home() {
         <BlogSection />
 
         {/* 12. Contact with dynamic values + footer (from layout) */}
-        <ContactDynamic />
+        <ContactDynamic values={WORKFLOWS.map((w) => w.label.toLowerCase())} />
       </RevealScope>
     </>
   )

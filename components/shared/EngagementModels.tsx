@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import type { ReactElement, SVGProps } from 'react'
 import { useState } from 'react'
+import { CONTROL_FEATURES, PHASES, POSITIONING } from '@/lib/automation-content'
 
 type IconProps = SVGProps<SVGSVGElement>
 
@@ -84,65 +85,32 @@ type Agent = {
   body: string
 }
 
-const technicalAgents: Agent[] = [
-  {
-    title: 'AEO',
-    body: 'Reach millions of buyers who now use AI assistants to discover products and brands. Engineered for how LLM-powered search ranks, cites, and converts.',
-  },
-  {
-    title: 'Knowledge Engine',
-    body: 'Connects tickets, docs, wikis, code, and transcripts into a single governed system that produces verifiable requirements, stories, and tests — and brings the “why” into the IDE.',
-  },
-  {
-    title: 'Predictive Analytics Suite',
-    body: 'AI-driven insights, reporting automation, and decision intelligence — turning raw data into actionable enterprise knowledge at speed.',
-  },
-  {
-    title: 'MCP Accelerator',
-    body: 'A Model Context Protocol server — a secure integration layer that connects AI models to your enterprise systems, data, and tools, making products and operations AI-ready by design.',
-  },
-]
+type TabKey = 'guardrails' | 'deployment'
 
-const horizontalAgents: Agent[] = [
-  {
-    title: 'Intelligent Document Processing',
-    body: 'AI-powered extraction, classification, and summarization across enterprise documents — from contracts and invoices to regulatory filings and technical specs.',
-  },
-  {
-    title: 'Customer Experience',
-    body: 'Omnichannel support agents, hyper-personalization, and intelligent journey orchestration — delivering seamless customer experiences at enterprise scale.',
-  },
-  {
-    title: 'Process Automation Suite',
-    body: 'End-to-end workflow automation combining agentic AI with RPA, low-code orchestration, and enterprise integration — eliminating manual handoffs across operations.',
-  },
-  {
-    title: 'Finance',
-    body: 'Prep journal entries, reconcile accounts, generate financial statements, analyze variances, manage close, and support audits.',
-  },
-  {
-    title: 'Sales & Marketing',
-    body: 'Research prospects, prep for calls, review your pipeline, build competitive battlecards, draft content, plan campaigns, enforce brand voice, and report across channels — wired into your CRM, ERP, and internal systems.',
-  },
-]
-
-type TabKey = 'technical' | 'horizontal'
+const GUARDRAILS = ['Review queues', 'Approvals and dry runs', 'Role-based access']
 
 const tabs: { key: TabKey; label: string; agents: Agent[] }[] = [
   {
-    key: 'technical',
-    label: 'Technical Agents',
-    agents: technicalAgents,
+    key: 'guardrails',
+    label: 'Guardrails',
+    agents: CONTROL_FEATURES.filter((f) => GUARDRAILS.includes(f.title)),
   },
   {
-    key: 'horizontal',
-    label: 'Horizontal Agents',
-    agents: horizontalAgents,
+    key: 'deployment',
+    label: 'Deployment and reporting',
+    agents: CONTROL_FEATURES.filter((f) => !GUARDRAILS.includes(f.title)),
   },
 ]
 
+// Audit -> Pilot -> Operate, each with the page that covers it.
+const PHASE_CARDS = [
+  { href: '/strategy', Icon: GraduationCapIcon },
+  { href: '/automations', Icon: TalentIcon },
+  { href: '/operations', Icon: CommunityIcon },
+]
+
 export default function EngagementModels() {
-  const [activeTab, setActiveTab] = useState<TabKey>('technical')
+  const [activeTab, setActiveTab] = useState<TabKey>('guardrails')
   const active = tabs.find((t) => t.key === activeTab) ?? tabs[0]
 
   return (
@@ -151,51 +119,34 @@ export default function EngagementModels() {
         {/* Heading */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
           <div className="max-w-3xl">
-            <p className="eyebrow mb-4">Services</p>
+            <p className="eyebrow mb-4">How we work</p>
             <h2 className="font-display text-section font-light text-white">
-              Your AI journey isn&apos;t one-size-fits-all.{' '}
+              Audit → Pilot → Operate.{' '}
               <span className="text-white/55">
-                We meet you where you are and
-              </span>{' '}
-              take you{' '}
-              <span className="bg-gradient-to-r from-white to-[#b99dff] bg-clip-text text-transparent">
-                further.
+                One workflow at a time, measured from day one.
               </span>
             </h2>
           </div>
           <p className="text-sm md:text-base text-white/55 max-w-md">
-            Redefine your company: innovate, operate, and outpace your
-            competitors in the era of AI.
+            {POSITIONING.promise}
           </p>
         </div>
 
         {/* Bento grid: 3 services on top, Enterprise AI full-width below */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-          {/* Top row — 3 equal service cards */}
-          <BentoCard
-            category="Engineering"
-            title="AI-Native Engineering"
-            body="The next evolution of engineering is here: building and scaling AI-native, agentic ways of working across the software development life cycle to enable high-performance teams."
-            href="/ai-native-engineering"
-            Icon={TalentIcon}
-          />
-          <BentoCard
-            category="Training"
-            title="Team Training"
-            body="Talent agility is now essential — pushing organizations to continuously rebalance their human and AI workforce to unlock the full potential of every employee."
-            href="/team-training"
-            Icon={GraduationCapIcon}
-          />
-          <BentoCard
-            category="Founders Community"
-            title="AI Incubator"
-            body="A community-as-a-service for founders — weekly content, hands-on playbooks, and real case studies from teams shipping AI in production."
-            href="/vahue-incubator"
-            accent="radial-gradient(120% 120% at 100% 0%, rgba(132,52,233,0.22) 0%, rgba(3,137,244,0.08) 45%, transparent 80%)"
-            Icon={CommunityIcon}
-          />
+          {/* Top row — the three phases */}
+          {PHASES.map((phase, i) => (
+            <BentoCard
+              key={phase.name}
+              category={phase.length}
+              title={phase.name}
+              body={phase.body}
+              href={PHASE_CARDS[i].href}
+              Icon={PHASE_CARDS[i].Icon}
+            />
+          ))}
 
-          {/* Bottom row — Enterprise AI full width */}
+          {/* Bottom row — controls, full width */}
           <div className="group md:col-span-3 relative rounded-3xl border border-border-mid overflow-hidden">
             <div
               className="absolute inset-0 pointer-events-none opacity-80"
@@ -208,11 +159,11 @@ export default function EngagementModels() {
               <div className="flex items-center justify-between mb-6">
                 <p className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-white/45">
                   <EnterpriseIcon className="w-4 h-4" />
-                  Systems &amp; Automations
+                  Control
                 </p>
                 <Link
-                  href="/enterprise-ai"
-                  aria-label="Learn more about Enterprise AI Hub"
+                  href="/security"
+                  aria-label="Learn more about security and control"
                   className="group/link inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-white/55 group-hover:text-white transition-colors"
                 >
                   <span>Learn more</span>
@@ -233,19 +184,17 @@ export default function EngagementModels() {
               </div>
 
               <h3 className="font-display text-lead font-light text-white mb-3">
-                Enterprise AI Hub
+                Your team stays in control
               </h3>
               <p className="text-sm md:text-[15px] text-white/65 leading-relaxed max-w-2xl mb-8">
-                Turn automation into measurable ROI with adaptive, conversational
-                AI chatbots and agentic AI systems that understand context, act
-                autonomously within guardrails, and evolve with your business
-                needs.
+                Agents propose, your team approves, and every input, decision
+                and action is logged.
               </p>
 
               {/* Tab switcher */}
               <div
                 role="tablist"
-                aria-label="Agent type"
+                aria-label="Control features"
                 className="inline-flex flex-nowrap gap-1 md:gap-1.5 p-1 rounded-full border border-border-soft bg-white/[0.03] self-start mb-6"
               >
                 {tabs.map((t) => {

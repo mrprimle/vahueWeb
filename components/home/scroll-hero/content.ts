@@ -1,4 +1,5 @@
 import { DISCOVERY_CALL_URL } from '@/lib/links'
+import { CONTROL_FEATURES, POSITIONING } from '@/lib/automation-content'
 
 // Copy and media for the homepage scroll hero. Swap assets here; motion code
 // lives in ScrollHero / PullApart / heroScene.
@@ -11,7 +12,7 @@ export type HeroStage = {
   logos?: { name: string; src: string }[]
 }
 
-export const heroHeading = 'Accelerate your AI Transformation'
+export const heroHeading = POSITIONING.line
 
 /**
  * Packed hero video (1920x1080 MP4). See public/videos/README.md:
@@ -23,14 +24,14 @@ export const heroVideo = '/videos/hero-packed-placeholder.mp4'
 // Exactly three stages: they map to the scene's three scroll states.
 export const heroStages: [HeroStage, HeroStage, HeroStage] = [
   {
-    title: 'Everything to not get lost in the AI transition.',
-    body: 'Vahue works across the whole adoption curve: AI-Native engineers who build with you, training that teaches your team to use AI mindfully, and systems that run on your own data.',
-    cta: { label: 'See how we work', href: '/platform' },
+    title: 'A high-volume workflow, run inside the tools you already use.',
+    body: POSITIONING.promise,
+    cta: { label: 'See the six workflows', href: '/automations' },
   },
   {
-    category: 'Talent',
-    title: 'AI-Native engineers inside your team.',
-    body: "Extend your team with Vahue's AI-Native engineers to ship 10x faster, without changing how you plan or review work.",
+    category: 'Audit → Pilot → Operate',
+    title: 'Two weeks to a baseline. Four to six weeks to a live pilot.',
+    body: 'We map one workflow and record the baseline, pilot it on your own data at real volume, then run the agents day to day.',
     cta: { label: 'Book a discovery call', href: DISCOVERY_CALL_URL, external: true },
     logos: [
       { name: 'Shopify', src: '/img/shopify.svg' },
@@ -42,14 +43,14 @@ export const heroStages: [HeroStage, HeroStage, HeroStage] = [
     ],
   },
   {
-    category: 'Systems',
-    title: 'Agents that learn your enterprise.',
-    body: 'Deploy reliable agents that learn your unique enterprise data, tools, and skills, with humans kept in the loop.',
-    cta: { label: 'Explore enterprise AI', href: '/enterprise-ai' },
+    category: 'Measured',
+    title: 'Results against the baseline, every month.',
+    body: CONTROL_FEATURES.find((f) => f.title === 'Results dashboard')?.body ?? '',
+    cta: { label: 'How we operate', href: '/operations' },
   },
 ]
 
 export const quote = {
-  text: "10x faster shipping for product teams that extend with Vahue's AI-Native engineers.",
+  text: 'Operations that keep up with growth, without new hires.',
   video: '/videos/quote-placeholder.mp4',
 }
