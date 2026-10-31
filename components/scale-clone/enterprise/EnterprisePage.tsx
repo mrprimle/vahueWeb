@@ -28,7 +28,7 @@ export type EnterpriseMedia = {
  * industry pages) pass their own content and visuals.
  *
  * Theme: colours are CSS custom properties with Scale's values as fallbacks, so a page re-skins the layout by
- * setting them on an ancestor (see components/operations/OperationsPage.tsx for the Vahue dark set):
+ * setting them on an ancestor (see components/enterprise-vahue/theme.ts for the Vahue dark set):
  *   --ent-bg #fff, --ent-fg #000, --ent-fg-2 #212121, --ent-band #EAEAEA, --ent-band-2 #C7C7C7, --ent-card #fff,
  *   --ent-card-2 #F2F2F2, --ent-accent #193A29, --ent-line #EAEAEA, --ent-edge #B5B5B5, --ent-icon #1C1B1F,
  *   --ent-cta-gray #EAEAEA, --ent-mark #839CB2 (hero label triangle), --ent-dot-on #525252, --ent-dot-off #C7C7C7, and for the logo-cloud scene
