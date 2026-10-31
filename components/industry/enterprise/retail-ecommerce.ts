@@ -11,13 +11,13 @@ const support = WORKFLOWS.find((w) => w.slug === 'support-agents')?.summary ?? '
 export const retailConfig: IndustryConfig = {
   key: 'retail-ecommerce',
   hero: {
-    headline: 'Orders and support, run by agents.', // page copy
-    body: 'Order-status emails, product data and routine support handled inside the tools you already use. Anything unusual goes to your team.', // page copy
+    headline: 'Orders, product data and support, run by agents.', // page copy
+    body: 'Order emails, product data and routine support handled in your tools, with anything unusual sent to your team.', // page copy
     systems: ['Zendesk', 'Salesforce', 'HubSpot', 'Gmail', 'Twilio', 'Slack', 'Snowflake'],
   },
   problem: [
     { headline: 'Orders and SKUs grow faster than the team.', subheading: cxQueues }, // headline: page copy
-    { headline: 'Agents answer the routine. Your team takes the rest.', subheading: support }, // headline: page copy
+    { headline: 'Agents take the routine. Your team, the rest.', subheading: support }, // headline: page copy
   ],
   workflowLinks: {
     'Order-status inbox': 'support-agents',
