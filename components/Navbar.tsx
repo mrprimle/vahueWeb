@@ -251,6 +251,19 @@ const LeaderboardIcon = (p: IconProps) => (
   </Svg24>
 )
 
+// Security — shield outline
+const ShieldIcon = (p: IconProps) => (
+  <Svg24 {...p}>
+    <path
+      d="M12 3 4.5 6v5.5c0 4.5 3.2 8.2 7.5 9.5 4.3-1.3 7.5-5 7.5-9.5V6L12 3Z"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinejoin="round"
+    />
+    <path d="m9 12 2.2 2.2L15.5 10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+  </Svg24>
+)
+
 // caseStudies.svg
 const CaseStudiesIcon = (p: IconProps) => (
   <Svg24 {...p}>
@@ -384,6 +397,7 @@ const navGroups: NavGroup[] = [
           label: 'Careers',
           Icon: UsersIcon,
         },
+        { href: '/security', label: 'Security', Icon: ShieldIcon },
       ],
     ],
   },
