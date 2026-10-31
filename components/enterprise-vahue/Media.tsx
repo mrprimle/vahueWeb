@@ -187,3 +187,48 @@ export function Rings() {
     </Panel>
   )
 }
+
+/**
+ * Bridge (square, on the inset panel): incoming items flow into the agent, clean ones go on to the system of
+ * record and uncertain ones drop to a review queue. Three short input labels and one target label.
+ */
+export function Pipeline({ inputs, target }: { inputs: [string, string, string]; target: string }) {
+  const ys = [112, 200, 288]
+  const ax = 222
+  const ay = 200
+  return (
+    <div aria-hidden className="relative h-full w-full">
+      <svg viewBox="0 0 400 400" className={styles.svg}>
+        {ys.map((y, i) => {
+          const d = `M150 ${y} C 186 ${y}, 172 ${ay}, ${ax - 32} ${ay}`
+          return (
+            <g key={inputs[i]}>
+              <path d={d} fill="none" stroke={W(0.16)} />
+              <path d={d} fill="none" stroke={W(0.75)} strokeDasharray="3 9" className={styles.flow} />
+              <rect x={20} y={y - 16} width={130} height={32} rx={6} fill="#121212" stroke={W(0.22)} />
+              <text x={85} y={y + 4} textAnchor="middle" fontSize={10.5} fill={W(0.8)} letterSpacing="0.05em">
+                {inputs[i].toUpperCase()}
+              </text>
+            </g>
+          )
+        })}
+        <path d={`M${ax + 32} ${ay} H 268`} fill="none" stroke={W(0.16)} />
+        <path d={`M${ax + 32} ${ay} H 268`} fill="none" stroke={W(0.75)} strokeDasharray="3 9" className={styles.flow} />
+        <path d={`M${ax} ${ay + 32} V 300`} fill="none" stroke={W(0.16)} strokeDasharray="2 4" />
+        <circle cx={ax} cy={ay} r={32} fill="#161616" stroke={W(0.3)} />
+        <circle cx={ax} cy={ay} r={32} fill="none" stroke={W(0.85)} strokeWidth={1.5} strokeDasharray="40 161" strokeLinecap="round" className={styles.orbit} />
+        <text x={ax} y={ay + 4} textAnchor="middle" fontSize={11} fill={W(0.85)} letterSpacing="0.05em">
+          AGENT
+        </text>
+        <rect x={268} y={ay - 16} width={116} height={32} rx={6} fill="white" />
+        <text x={326} y={ay + 4} textAnchor="middle" fontSize={10.5} fill="#020202" letterSpacing="0.05em">
+          {target.toUpperCase()}
+        </text>
+        <rect x={ax - 52} y={300} width={104} height={30} rx={15} fill="none" stroke={W(0.28)} />
+        <text x={ax} y={319} textAnchor="middle" fontSize={10.5} fill={W(0.7)} letterSpacing="0.05em">
+          REVIEW
+        </text>
+      </svg>
+    </div>
+  )
+}

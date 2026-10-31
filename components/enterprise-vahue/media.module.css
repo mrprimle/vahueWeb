@@ -38,6 +38,11 @@
     opacity: 1;
   }
 }
+@keyframes flow {
+  to {
+    stroke-dashoffset: -48;
+  }
+}
 @keyframes scroll {
   to {
     transform: translateY(-50%);
@@ -58,5 +63,13 @@
   }
   .scroll {
     animation: scroll 60s linear infinite;
+  }
+  .flow {
+    animation: flow 2.4s linear infinite;
+  }
+  .orbit {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    animation: spin 14s linear infinite;
   }
 }

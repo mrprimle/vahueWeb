@@ -1,15 +1,14 @@
 import type { Metadata } from 'next'
-import SegmentLanding from '@/components/segments/SegmentLanding'
-import { bankingFinancialServicesContent } from '@/components/segments/content/banking-financial-services'
+import EnterpriseIndustryPage from '@/components/industry/enterprise/EnterpriseIndustryPage'
+import { bankingConfig } from '@/components/industry/enterprise/banking-financial-services'
 
 export const metadata: Metadata = {
-  title: 'AI for Banking & Financial Services | Vahue',
+  title: 'AI for Banking & Financial Services',
   description:
-    'Fraud, AML, KYC, lending, and advisor copilots shipped inside your tenant — MRM-ready, explainable, and tuned for regulated banking.',
+    'AI agents for mortgage and loan documents, KYC intake and reconciliations across core and finance systems, with review queues, approvals and a full audit log.',
   openGraph: {
     title: 'AI for Banking & Financial Services | Vahue',
-    description:
-      'Production GenAI for banks and fintechs — governance-first, auditable, private by default.',
+    description: 'Banking back-office workflows run by agents inside your systems, reviewed by your team and logged.',
     url: 'https://vahue.ai/industries/banking-financial-services',
   },
   alternates: {
@@ -21,5 +20,5 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  return <SegmentLanding content={bankingFinancialServicesContent} />
+  return <EnterpriseIndustryPage config={bankingConfig} />
 }
