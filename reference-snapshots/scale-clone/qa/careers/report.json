@@ -1,0 +1,938 @@
+{
+ "scale-1440": {
+  "status": 200,
+  "m": {
+   "Scale is growing. Grow with Us.": [
+    80,
+    606,
+    1152,
+    67
+   ],
+   "Scale In The News": [
+    528,
+    1019,
+    385,
+    60
+   ],
+   "Our Mission": [
+    596,
+    1994,
+    248,
+    60
+   ],
+   "Our Internal Core Values": [
+    336,
+    2714,
+    768,
+    60
+   ],
+   "Earn Customer Love": [
+    64,
+    3070,
+    604,
+    30
+   ],
+   "Three Moves Ahead": [
+    772,
+    3746,
+    604,
+    30
+   ],
+   "Supporting You To Do Your Best Work": [
+    336,
+    4208,
+    768,
+    120
+   ],
+   "Health & Wellbeing": [
+    24,
+    4816,
+    664,
+    36
+   ],
+   "Parental Support": [
+    752,
+    5408,
+    664,
+    36
+   ],
+   "Help us bring human intelligence to software": [
+    336,
+    5840,
+    768,
+    120
+   ],
+   "Data Science and Analytics": [
+    78,
+    6143,
+    238,
+    30
+   ],
+   "University": [
+    78,
+    7384,
+    85,
+    30
+   ],
+   "Join University Student Careers": [
+    80,
+    8136,
+    1152,
+    67
+   ],
+   "search": [
+    24,
+    6008,
+    256,
+    43
+   ],
+   "openRoles": [
+    0,
+    5652,
+    1440,
+    1896
+   ],
+   "footer": [
+    0,
+    8363,
+    1440,
+    899
+   ],
+   "docH": 9262,
+   "fbm": [
+    [
+     135,
+     720
+    ],
+    [
+     7611,
+     720
+    ]
+   ]
+  },
+  "samples": [
+   {
+    "y": 0,
+    "clips": [
+     "inset(0.277778% round 1.5rem)",
+     "inset(5% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1.0139, 0, 0, 1.0139, 0, 0)",
+     "none",
+     "none"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 268.75) o=0"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "matrix(0, 0, 0, 1, 0, 0) v=hidden r=0px"
+    ]
+   },
+   {
+    "y": 6711,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(5% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "none",
+     "matrix(1.25, 0, 0, 1.25, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "matrix(1, 0, 0, 1, 0, 0) v=visible r=8px"
+    ]
+   },
+   {
+    "y": 6891,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(3.88889% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "none",
+     "matrix(1.1944, 0, 0, 1.1944, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "matrix(1, 0, 0, 1, 0, 0) v=visible r=8px"
+    ]
+   },
+   {
+    "y": 7071,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(2.77778% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "none",
+     "matrix(1.1389, 0, 0, 1.1389, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "matrix(1, 0, 0, 1, 0, 0) v=visible r=8px"
+    ]
+   },
+   {
+    "y": 7251,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(1.66667% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "none",
+     "matrix(1.0833, 0, 0, 1.0833, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "matrix(1, 0, 0, 1, 0, 0) v=visible r=8px"
+    ]
+   },
+   {
+    "y": 7431,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(0.555556% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "none",
+     "matrix(1.0278, 0, 0, 1.0278, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "matrix(1, 0, 0, 1, 0, 0) v=visible r=8px"
+    ]
+   }
+  ],
+  "errors": [
+   "Failed to load resource: the server responded with a status of 404 ()",
+   "Failed to load resource: the server responded with a status of 401 ()",
+   "[OptinMonster] This account is not currently active. It is either expired, paused, archived, cancelled or temporarily suspended."
+  ]
+ },
+ "clone-1440": {
+  "status": 200,
+  "m": {
+   "Scale is growing. Grow with Us.": [
+    80,
+    606,
+    1152,
+    67
+   ],
+   "Scale In The News": [
+    527,
+    1019,
+    386,
+    60
+   ],
+   "Our Mission": [
+    596,
+    1994,
+    247,
+    60
+   ],
+   "Our Internal Core Values": [
+    336,
+    2714,
+    768,
+    60
+   ],
+   "Earn Customer Love": [
+    64,
+    3070,
+    604,
+    30
+   ],
+   "Three Moves Ahead": [
+    772,
+    3746,
+    604,
+    30
+   ],
+   "Supporting You To Do Your Best Work": [
+    336,
+    4208,
+    768,
+    120
+   ],
+   "Health & Wellbeing": [
+    24,
+    4816,
+    664,
+    36
+   ],
+   "Parental Support": [
+    752,
+    5408,
+    664,
+    36
+   ],
+   "Help us bring human intelligence to software": [
+    336,
+    5840,
+    768,
+    120
+   ],
+   "Data Science and Analytics": [
+    78,
+    6143,
+    238,
+    30
+   ],
+   "University": [
+    78,
+    7383,
+    84,
+    30
+   ],
+   "Join University Student Careers": [
+    80,
+    8136,
+    1152,
+    67
+   ],
+   "search": [
+    24,
+    6008,
+    256,
+    43
+   ],
+   "openRoles": [
+    0,
+    5652,
+    1440,
+    1896
+   ],
+   "footer": [
+    0,
+    8363,
+    1440,
+    899
+   ],
+   "docH": 9262,
+   "fbm": [
+    [
+     135,
+     720
+    ],
+    [
+     7611,
+     720
+    ]
+   ]
+  },
+  "samples": [
+   {
+    "y": 0,
+    "clips": [
+     "inset(0.277778% round 1.5rem)",
+     "inset(5% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1.0139, 0, 0, 1.0139, 0, 0)",
+     "matrix(1.25, 0, 0, 1.25, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 268.75) o=0"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "matrix(0, 0, 0, 1, 0, 0) v=hidden r=0px"
+    ]
+   },
+   {
+    "y": 6711,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(5% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "matrix(1.25, 0, 0, 1.25, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "none v=visible r=8px"
+    ]
+   },
+   {
+    "y": 6891,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(3.88889% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "matrix(1.1944, 0, 0, 1.1944, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "none v=visible r=8px"
+    ]
+   },
+   {
+    "y": 7071,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(2.77778% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "matrix(1.1389, 0, 0, 1.1389, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "none v=visible r=8px"
+    ]
+   },
+   {
+    "y": 7251,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(1.66667% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "matrix(1.0833, 0, 0, 1.0833, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "none v=visible r=8px"
+    ]
+   },
+   {
+    "y": 7431,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(0.555556% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "matrix(1.0278, 0, 0, 1.0278, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "none v=visible r=8px"
+    ]
+   }
+  ],
+  "errors": []
+ },
+ "scale-390": {
+  "status": 200,
+  "m": {
+   "Scale is growing. Grow with Us.": [
+    48,
+    438,
+    294,
+    71
+   ],
+   "Scale In The News": [
+    75,
+    794,
+    240,
+    41
+   ],
+   "Our Mission": [
+    117,
+    1827,
+    155,
+    41
+   ],
+   "Our Internal Core Values": [
+    24,
+    2674,
+    342,
+    41
+   ],
+   "Earn Customer Love": [
+    56,
+    3049,
+    278,
+    19
+   ],
+   "Three Moves Ahead": [
+    56,
+    4716,
+    278,
+    19
+   ],
+   "Supporting You To Do Your Best Work": [
+    24,
+    5023,
+    342,
+    83
+   ],
+   "Health & Wellbeing": [
+    24,
+    5615,
+    342,
+    36
+   ],
+   "Parental Support": [
+    24,
+    7470,
+    342,
+    36
+   ],
+   "Help us bring human intelligence to software": [
+    24,
+    7799,
+    342,
+    83
+   ],
+   "Data Science and Analytics": [
+    78,
+    8189,
+    215,
+    19
+   ],
+   "University": [
+    78,
+    9243,
+    76,
+    19
+   ],
+   "Join University Student Careers": [
+    48,
+    9737,
+    294,
+    71
+   ],
+   "search": [
+    24,
+    7930,
+    342,
+    41
+   ],
+   "openRoles": [
+    0,
+    7691,
+    390,
+    1668
+   ],
+   "footer": [
+    0,
+    9936,
+    390,
+    1360
+   ],
+   "docH": 11296,
+   "fbm": [
+    [
+     198,
+     480
+    ],
+    [
+     9424,
+     480
+    ]
+   ]
+  },
+  "samples": [
+   {
+    "y": 0,
+    "clips": [
+     "inset(0.120846% round 1.5rem)",
+     "inset(5% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1.006, 0, 0, 1.006, 0, 0)",
+     "none",
+     "none"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 134.375) o=0"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "matrix(0, 0, 0, 1, 0, 0) v=hidden r=0px"
+    ]
+   },
+   {
+    "y": 8580,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(5% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "none",
+     "matrix(1.25, 0, 0, 1.25, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "matrix(1, 0, 0, 1, 0, 0) v=visible r=8px"
+    ]
+   },
+   {
+    "y": 8749,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(3.72356% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "none",
+     "matrix(1.1862, 0, 0, 1.1862, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "matrix(1, 0, 0, 1, 0, 0) v=visible r=8px"
+    ]
+   },
+   {
+    "y": 8918,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(2.44713% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "none",
+     "matrix(1.1224, 0, 0, 1.1224, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "matrix(1, 0, 0, 1, 0, 0) v=visible r=8px"
+    ]
+   },
+   {
+    "y": 9086,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(1.17825% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "none",
+     "matrix(1.0589, 0, 0, 1.0589, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "matrix(1, 0, 0, 1, 0, 0) v=visible r=8px"
+    ]
+   },
+   {
+    "y": 9255,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(0% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "none",
+     "matrix(1, 0, 0, 1, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "matrix(1, 0, 0, 1, 0, 0) v=visible r=8px"
+    ]
+   }
+  ],
+  "errors": [
+   "Failed to load resource: the server responded with a status of 404 ()",
+   "Failed to load resource: the server responded with a status of 401 ()",
+   "[OptinMonster] This account is not currently active. It is either expired, paused, archived, cancelled or temporarily suspended."
+  ]
+ },
+ "clone-390": {
+  "status": 200,
+  "m": {
+   "Scale is growing. Grow with Us.": [
+    48,
+    438,
+    294,
+    71
+   ],
+   "Scale In The News": [
+    74,
+    794,
+    241,
+    41
+   ],
+   "Our Mission": [
+    118,
+    1827,
+    155,
+    41
+   ],
+   "Our Internal Core Values": [
+    24,
+    2674,
+    342,
+    41
+   ],
+   "Earn Customer Love": [
+    56,
+    3049,
+    278,
+    19
+   ],
+   "Three Moves Ahead": [
+    56,
+    4716,
+    278,
+    19
+   ],
+   "Supporting You To Do Your Best Work": [
+    24,
+    5023,
+    342,
+    83
+   ],
+   "Health & Wellbeing": [
+    24,
+    5615,
+    342,
+    36
+   ],
+   "Parental Support": [
+    24,
+    7470,
+    342,
+    36
+   ],
+   "Help us bring human intelligence to software": [
+    24,
+    7799,
+    342,
+    83
+   ],
+   "Data Science and Analytics": [
+    78,
+    8189,
+    214,
+    19
+   ],
+   "University": [
+    78,
+    9243,
+    75,
+    19
+   ],
+   "Join University Student Careers": [
+    48,
+    9737,
+    294,
+    71
+   ],
+   "search": [
+    24,
+    7930,
+    342,
+    41
+   ],
+   "openRoles": [
+    0,
+    7691,
+    390,
+    1668
+   ],
+   "footer": [
+    0,
+    9936,
+    390,
+    1320
+   ],
+   "docH": 11256,
+   "fbm": [
+    [
+     198,
+     480
+    ],
+    [
+     9424,
+     480
+    ]
+   ]
+  },
+  "samples": [
+   {
+    "y": 0,
+    "clips": [
+     "inset(0.120846% round 1.5rem)",
+     "inset(5% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1.006, 0, 0, 1.006, 0, 0)",
+     "matrix(1.25, 0, 0, 1.25, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 134.375) o=0"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "matrix(0, 0, 0, 1, 0, 0) v=hidden r=0px"
+    ]
+   },
+   {
+    "y": 8580,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(5% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "matrix(1.25, 0, 0, 1.25, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "none v=visible r=8px"
+    ]
+   },
+   {
+    "y": 8749,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(3.72356% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "matrix(1.1862, 0, 0, 1.1862, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "none v=visible r=8px"
+    ]
+   },
+   {
+    "y": 8918,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(2.44713% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "matrix(1.1224, 0, 0, 1.1224, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "none v=visible r=8px"
+    ]
+   },
+   {
+    "y": 9086,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(1.17825% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "matrix(1.0589, 0, 0, 1.0589, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "none v=visible r=8px"
+    ]
+   },
+   {
+    "y": 9255,
+    "clips": [
+     "inset(0% round 1.5rem)",
+     "inset(0% round 1.5rem)"
+    ],
+    "media": [
+     "matrix(1, 0, 0, 1, 0, 0)",
+     "matrix(1, 0, 0, 1, 0, 0)"
+    ],
+    "h2": [
+     "matrix(1, 0, 0, 1, 0, 0) o=1",
+     "matrix(1, 0, 0, 1, 0, 0) o=1"
+    ],
+    "cta": [
+     "none v=visible r=6px",
+     "none v=visible r=8px"
+    ]
+   }
+  ],
+  "errors": []
+ }
+}
