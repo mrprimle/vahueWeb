@@ -134,7 +134,7 @@ export default function Stats({ content: stats }: { content: StatsContent }) {
                             ref={(el) => {
                               icons.current[i] = el
                             }}
-                            className="flex h-8 w-8 items-center justify-center rounded-md bg-[#193A29]"
+                            className="flex h-8 w-8 items-center justify-center rounded-md bg-[var(--ent-accent,#193A29)]"
                             style={{ clipPath: 'inset(0% round 10px)' }}
                           >
                             <span

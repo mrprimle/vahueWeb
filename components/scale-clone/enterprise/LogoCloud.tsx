@@ -22,7 +22,7 @@ export default function LogoCloud({ content: logoCloud }: { content: LogoCloudCo
   const head = useRef<AnimatedTextHandle>(null)
 
   useEffect(() => {
-    const scene = canvasBox.current ? createLogoCloudScene(canvasBox.current, logoCloud.tiles ?? 10) : null
+    const scene = canvasBox.current ? createLogoCloudScene(canvasBox.current, logoCloud.tiles ?? 10, logoCloud.labels) : null
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: root.current,
@@ -37,10 +37,10 @@ export default function LogoCloud({ content: logoCloud }: { content: LogoCloudCo
       ctx.revert()
       scene?.destroy()
     }
-  }, [logoCloud.tiles])
+  }, [logoCloud.tiles, logoCloud.labels])
 
   return (
-    <div ref={root} className="LogoCloud grid h-[90vh] grid-cols-8 gap-2 bg-[#EAEAEA] px-6 text-black sm:grid-cols-12">
+    <div ref={root} className="LogoCloud grid h-[90vh] grid-cols-8 gap-2 bg-[var(--ent-band,#EAEAEA)] px-6 text-[color:var(--ent-fg,#000)] sm:grid-cols-12">
       <div className="relative col-span-8 col-start-1 flex items-center justify-center sm:col-span-12 md:col-span-6 md:col-start-2 md:row-start-1">
         <div className="flex h-[92%] w-full flex-col items-center justify-center gap-4 md:h-full">
           <div ref={canvasBox} className="relative h-full w-screen md:w-full" style={{ touchAction: 'none' }} />
@@ -53,7 +53,7 @@ export default function LogoCloud({ content: logoCloud }: { content: LogoCloudCo
               ref={head}
               as="h3"
               maskCompensation
-              className="w-full text-balance text-center text-[1.5rem] font-normal leading-none tracking-[-0.01em] text-black md:text-[40px] md:leading-[1.25]"
+              className="w-full text-balance text-center text-[1.5rem] font-normal leading-none tracking-[-0.01em] text-[color:var(--ent-fg,#000)] md:text-[40px] md:leading-[1.25]"
             >
               {logoCloud.headline}
             </AnimatedText>

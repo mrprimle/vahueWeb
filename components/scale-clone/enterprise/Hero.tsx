@@ -65,7 +65,7 @@ const pinVars = (p: Pin, k: string) => ({
 
 const Triangle = forwardRef<SVGSVGElement>(function Triangle(_, ref) {
   return (
-    <svg ref={ref} xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" className="shrink-0 scale-0 text-[#839CB2]" aria-hidden>
+    <svg ref={ref} xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" className="shrink-0 scale-0 text-[color:var(--ent-mark,#839CB2)]" aria-hidden>
       <path
         d="M6.79229 0H0.500785C0.0554314 0 -0.167603 0.538452 0.14731 0.853365L6.43881 7.14487C6.75373 7.45978 7.29218 7.23675 7.29218 6.79139V0.499889C7.29218 0.223808 7.06837 0 6.79229 0Z"
         fill="currentColor"
@@ -183,7 +183,7 @@ const GraphNode = forwardRef<NodeHandle, { node: NodeDef; info: HeroNode }>(func
         </div>
         <div className="flex w-full items-center justify-start gap-2">
           <Triangle ref={tri} />
-          <AnimatedText ref={label} as="div" className="mt-1 w-full text-left font-mono text-[0.5rem] uppercase leading-[1.5] text-black md:text-[0.625rem]">
+          <AnimatedText ref={label} as="div" className="mt-1 w-full text-left font-mono text-[0.5rem] uppercase leading-[1.5] text-[color:var(--ent-fg,#000)] md:text-[0.625rem]">
             {info.label}
           </AnimatedText>
         </div>
@@ -341,25 +341,25 @@ export default function Hero({ content: hero }: { content: HeroContent }) {
   }, [])
 
   return (
-    <div ref={root} className="EnterpriseHero h-full w-full bg-white text-black">
+    <div ref={root} className="EnterpriseHero h-full w-full bg-[var(--ent-bg,#fff)] text-[color:var(--ent-fg,#000)]">
       <div className="relative isolate mx-auto h-dvh w-full overflow-hidden px-6 py-[60px]">
         <div className="absolute inset-0 left-1/2 top-[34%] z-10 grid h-full w-full -translate-x-1/2 grid-cols-12 items-start justify-center gap-2 px-6 max-sm:top-[33%] max-sm:max-w-full">
           <div className="col-span-10 col-start-2 flex flex-col items-center gap-6 py-6 md:col-span-4 md:col-start-5">
             <AnimatedText
               ref={headRef}
               as="h1"
-              className="w-auto text-balance text-center text-[1.75rem] font-normal leading-[1.25] tracking-[-0.01em] text-black sm:text-[36px] md:leading-none lg:text-[48px] xl:text-[64px] xl:leading-none"
+              className="w-auto text-balance text-center text-[1.75rem] font-normal leading-[1.25] tracking-[-0.01em] text-[color:var(--ent-fg,#000)] sm:text-[36px] md:leading-none lg:text-[48px] xl:text-[64px] xl:leading-none"
             >
               {hero.headline}
             </AnimatedText>
             <AnimatedText
               ref={bodyRef}
               as="p"
-              className={`mb-4 w-full max-w-[88%] text-center text-[14px] leading-[1.5] tracking-[-0.01em] text-black max-sm:max-w-full md:text-[16px] ${styles.heroBody}`}
+              className={`mb-4 w-full max-w-[88%] text-center text-[14px] leading-[1.5] tracking-[-0.01em] text-[color:var(--ent-fg,#000)] max-sm:max-w-full md:text-[16px] ${styles.heroBody}`}
             >
               {hero.body}
             </AnimatedText>
-            <FlatCta ref={ctaRef} variant="arrow" theme="evergreen" href={hero.cta.href} text={hero.cta.text} />
+            <FlatCta ref={ctaRef} variant="arrow" theme={hero.ctaTheme ?? 'evergreen'} href={hero.cta.href} text={hero.cta.text} />
           </div>
         </div>
         <div className="graph absolute left-0 top-0 h-full w-full">
@@ -370,14 +370,14 @@ export default function Hero({ content: hero }: { content: HeroContent }) {
                   ref={(el) => {
                     basePaths.current[i] = el
                   }}
-                  stroke="#B5B5B5"
+                  style={{ stroke: 'var(--ent-edge,#B5B5B5)' }}
                   fill="none"
                 />
                 <path
                   ref={(el) => {
                     dashPaths.current[i] = el
                   }}
-                  stroke="#000000"
+                  style={{ stroke: 'var(--ent-fg,#000000)' }}
                   strokeWidth={1}
                   strokeDasharray="1000"
                   strokeDashoffset="1000"
@@ -397,14 +397,14 @@ export default function Hero({ content: hero }: { content: HeroContent }) {
             />
           ))}
         </div>
-        <div className="absolute bottom-[5vh] right-8 z-10 flex items-center gap-4 text-center text-black md:right-12" aria-label="Scroll to explore">
+        <div className="absolute bottom-[5vh] right-8 z-10 flex items-center gap-4 text-center text-[color:var(--ent-fg,#000)] md:right-12" aria-label="Scroll to explore">
           <AnimatedText ref={scrollP} as="p" className="hidden text-[14px] font-medium leading-[1.5] tracking-[0.025em] md:block">
             {hero.scroll}
           </AnimatedText>
-          <div ref={scrollBox} className="flex aspect-square items-center justify-center rounded-sm border border-black p-2">
+          <div ref={scrollBox} className="flex aspect-square items-center justify-center rounded-sm border border-[color:var(--ent-fg,#000)] p-2">
             <div className="h-4 w-4 overflow-clip">
               {[arrowA, arrowB].map((r, i) => (
-                <svg key={i} ref={r} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="size-4 shrink-0 text-black" aria-hidden>
+                <svg key={i} ref={r} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="size-4 shrink-0 text-[color:var(--ent-fg,#000)]" aria-hidden>
                   <path d="M12 5v14" />
                   <path d="m19 12-7 7-7-7" />
                 </svg>

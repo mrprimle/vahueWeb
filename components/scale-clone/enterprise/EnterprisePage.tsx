@@ -26,11 +26,19 @@ export type EnterpriseMedia = {
  * Reusable: pass `content` (any slice left out drops that section) and `media` slots. The clone renders
  * Scale's copy (`enterpriseContent`). Vahue pages on this layout (/operations, banking/retail/distribution
  * industry pages) pass their own content and visuals.
+ *
+ * Theme: colours are CSS custom properties with Scale's values as fallbacks, so a page re-skins the layout by
+ * setting them on an ancestor (see components/operations/OperationsPage.tsx for the Vahue dark set):
+ *   --ent-bg #fff, --ent-fg #000, --ent-fg-2 #212121, --ent-band #EAEAEA, --ent-band-2 #C7C7C7, --ent-card #fff,
+ *   --ent-card-2 #F2F2F2, --ent-accent #193A29, --ent-line #EAEAEA, --ent-edge #B5B5B5, --ent-icon #1C1B1F,
+ *   --ent-cta-gray #EAEAEA, --ent-mark #839CB2 (hero label triangle), --ent-dot-on #525252, --ent-dot-off #C7C7C7, and for the logo-cloud scene
+ *   --ent-cloud-tile #fff, --ent-cloud-ink #000, --ent-cloud-line #c4c4c4, --ent-cloud-band #000 (hex only).
+ * The root is a <div>: the site layout already provides <main>.
  */
 export default function EnterprisePage({ content = enterpriseContent, media = {} }: { content?: EnterpriseContent; media?: EnterpriseMedia }) {
   const c = content
   return (
-    <main className="bg-white font-display tracking-[-0.01em] text-black">
+    <div className="EnterprisePage bg-[var(--ent-bg,#fff)] font-display tracking-[-0.01em] text-[color:var(--ent-fg,#000)]">
       <div className="relative overflow-x-hidden">
         {/* 1. Hero: DOM node graph, pointer parallax, pinned under the next section */}
         {c.hero ? <Hero content={c.hero} /> : null}
@@ -57,10 +65,10 @@ export default function EnterprisePage({ content = enterpriseContent, media = {}
         {/* 12. Prefooter (FullBleedMediaSection, default startPercentage 10) */}
         {c.prefooter ? (
           <>
-            <div className="h-16 w-full bg-white" />
+            <div className="h-16 w-full bg-[var(--ent-bg,#fff)]" />
             <FullBleedMedia
               wrapperClassName=""
-              backdropClassName="bg-white"
+              backdropClassName="bg-[var(--ent-bg,#fff)]"
               startPercentage={10}
               image={c.prefooter.image}
               media={media.prefooter}
@@ -69,10 +77,10 @@ export default function EnterprisePage({ content = enterpriseContent, media = {}
               primary={c.prefooter.cta}
               secondary={c.prefooter.secondary}
             />
-            <div className="h-8 w-full bg-white" />
+            <div className="h-8 w-full bg-[var(--ent-bg,#fff)]" />
           </>
         ) : null}
       </div>
-    </main>
+    </div>
   )
 }

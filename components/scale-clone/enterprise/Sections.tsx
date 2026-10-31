@@ -68,17 +68,17 @@ export function Race({ content: race, media }: { content: RaceContent; media?: R
     link.current?.animateIn({ delay: 0.55 })
   })
   return (
-    <section ref={root} className="TwoColumnTextWithVideo relative bg-white text-black">
+    <section ref={root} className="TwoColumnTextWithVideo relative bg-[var(--ent-bg,#fff)] text-[color:var(--ent-fg,#000)]">
       <div className="grid grid-cols-8 gap-2 px-6 md:grid-cols-12">
         <div className="col-span-full py-8">
-          <AnimatedText ref={head} as="h2" maskCompensation className="w-full text-[32px] font-normal leading-[1.05] tracking-[-0.01em] text-black md:text-[64px]">
+          <AnimatedText ref={head} as="h2" maskCompensation className="w-full text-[32px] font-normal leading-[1.05] tracking-[-0.01em] text-[color:var(--ent-fg,#000)] md:text-[64px]">
             {race.heading}
           </AnimatedText>
         </div>
       </div>
-      <div className="grid w-full grid-cols-8 gap-2 bg-[#C7C7C7] px-6 py-24 text-black md:grid-cols-12">
+      <div className="grid w-full grid-cols-8 gap-2 bg-[var(--ent-band-2,#C7C7C7)] px-6 py-24 text-[color:var(--ent-fg,#000)] md:grid-cols-12">
         <div className="order-2 col-span-full row-start-1 pb-6 md:col-span-4 md:col-start-3">
-          <AnimatedText ref={lead} as="h4" maskCompensation className="w-full text-[24px] font-normal leading-9 tracking-[-0.03em] text-black md:text-[32px]">
+          <AnimatedText ref={lead} as="h4" maskCompensation className="w-full text-[24px] font-normal leading-9 tracking-[-0.03em] text-[color:var(--ent-fg,#000)] md:text-[32px]">
             {race.lead}
           </AnimatedText>
           <AnimatedText ref={link} className="mt-6">
@@ -87,14 +87,14 @@ export function Race({ content: race, media }: { content: RaceContent; media?: R
               <svg className="inline-block" width="9" height="8" viewBox="0 0 9 8" fill="none" aria-hidden>
                 <path
                   d="M8.64645 3.43929C8.84171 3.63456 8.84171 3.95114 8.64645 4.1464L5.35355 7.43929C5.15829 7.63456 4.84171 7.63456 4.64645 7.43929L4.29105 7.0839C4.09579 6.88864 4.09579 6.57206 4.29105 6.37679L5.27145 5.3964C5.58643 5.08142 5.36335 4.54285 4.91789 4.54285L0.5 4.54285C0.223858 4.54285 0 4.31899 0 4.04285V3.54285C0 3.2667 0.223857 3.04285 0.5 3.04285L4.91789 3.04285C5.36335 3.04285 5.58643 2.50428 5.27145 2.18929L4.29105 1.2089C4.09579 1.01364 4.09579 0.697055 4.29105 0.501793L4.64645 0.1464C4.84171 -0.0488622 5.15829 -0.0488622 5.35355 0.1464L8.64645 3.43929Z"
-                  fill="#1C1B1F"
+                  style={{ fill: 'var(--ent-icon,#1C1B1F)' }}
                 />
               </svg>
             </a>
           </AnimatedText>
         </div>
         <div className="order-1 col-span-full pb-6 md:col-span-4 md:col-start-8">
-          <AnimatedText ref={body} as="p" className="w-full text-[16px] leading-[1.5] tracking-[-0.01em] text-black">
+          <AnimatedText ref={body} as="p" className="w-full text-[16px] leading-[1.5] tracking-[-0.01em] text-[color:var(--ent-fg,#000)]">
             {race.body}
           </AnimatedText>
         </div>
@@ -150,10 +150,10 @@ export function Pillars({ content: pillars, media }: { content: PillarsContent; 
     })
   })
   return (
-    <section ref={root} className="EnterprisePillars bg-white py-24 text-black">
+    <section ref={root} className="EnterprisePillars bg-[var(--ent-bg,#fff)] py-24 text-[color:var(--ent-fg,#000)]">
       <div className="grid grid-cols-8 gap-2 px-6 md:grid-cols-12">
         <div className="col-span-full flex flex-col items-start gap-6 md:col-span-5 md:col-start-2 md:justify-center">
-          <AnimatedText ref={head} as="h3" maskCompensation className="w-full text-[24px] font-normal leading-[1.05] tracking-[-0.01em] text-black md:text-[40px] md:leading-[1.25]">
+          <AnimatedText ref={head} as="h3" maskCompensation className="w-full text-[24px] font-normal leading-[1.05] tracking-[-0.01em] text-[color:var(--ent-fg,#000)] md:text-[40px] md:leading-[1.25]">
             {pillars.heading[0]}
             <br />
             {pillars.heading[1]}
@@ -187,7 +187,7 @@ export function Pillars({ content: pillars, media }: { content: PillarsContent; 
                       titles.current[i] = h
                     }}
                     as="h5"
-                    className="w-full text-left text-[22px] font-normal leading-[1.05] tracking-[-0.01em] text-black md:text-[24px] md:leading-[1.5]"
+                    className="w-full text-left text-[22px] font-normal leading-[1.05] tracking-[-0.01em] text-[color:var(--ent-fg,#000)] md:text-[24px] md:leading-[1.5]"
                   >
                     {it.title}
                   </AnimatedText>
@@ -196,7 +196,7 @@ export function Pillars({ content: pillars, media }: { content: PillarsContent; 
                       bodies.current[i] = h
                     }}
                     as="p"
-                    className="w-full text-left text-[14px] leading-[1.5] tracking-[-0.01em] text-black md:text-[16px]"
+                    className="w-full text-left text-[14px] leading-[1.5] tracking-[-0.01em] text-[color:var(--ent-fg,#000)] md:text-[16px]"
                   >
                     {it.body}
                   </AnimatedText>
@@ -207,7 +207,7 @@ export function Pillars({ content: pillars, media }: { content: PillarsContent; 
                   ref={(el) => {
                     rules.current[i] = el
                   }}
-                  className="mt-5 h-px w-full origin-left scale-x-0 bg-[#EAEAEA] md:mt-10"
+                  className="mt-5 h-px w-full origin-left scale-x-0 bg-[var(--ent-line,#EAEAEA)] md:mt-10"
                 />
               ) : null}
             </div>
@@ -276,14 +276,14 @@ export function PoweredBy({ content: poweredBy, media }: { content: PoweredByCon
   }, [])
 
   return (
-    <section ref={root} className="EnterprisePoweredBy bg-[#EAEAEA] py-16 text-black md:py-24">
+    <section ref={root} className="EnterprisePoweredBy bg-[var(--ent-band,#EAEAEA)] py-16 text-[color:var(--ent-fg,#000)] md:py-24">
       <div className="grid grid-cols-8 gap-2 px-6 md:grid-cols-12">
         <div className="col-span-full pb-8 md:col-span-6 md:col-start-4">
           <div className="flex flex-col items-center gap-6 py-6">
-            <AnimatedText ref={head} as="h3" maskCompensation className="w-full text-center text-[32px] font-normal leading-[1.05] tracking-[-0.01em] text-black md:text-[64px]">
+            <AnimatedText ref={head} as="h3" maskCompensation className="w-full text-center text-[32px] font-normal leading-[1.05] tracking-[-0.01em] text-[color:var(--ent-fg,#000)] md:text-[64px]">
               {poweredBy.headline}
             </AnimatedText>
-            <AnimatedText ref={sub} as="p" className="w-full text-center text-[14px] leading-[1.5] tracking-[-0.01em] text-black md:w-[576px] md:text-[16px]">
+            <AnimatedText ref={sub} as="p" className="w-full text-center text-[14px] leading-[1.5] tracking-[-0.01em] text-[color:var(--ent-fg,#000)] md:w-[576px] md:text-[16px]">
               {poweredBy.body}
             </AnimatedText>
             <FlatCta ref={cta} variant="arrow" href={poweredBy.cta.href} text={poweredBy.cta.text} />
@@ -314,7 +314,7 @@ export function PoweredBy({ content: poweredBy, media }: { content: PoweredByCon
                 }}
                 className="h-full"
               >
-                <div className="z-[2] flex h-full flex-col gap-6 rounded-lg bg-white p-6 md:gap-8 md:rounded-2xl md:p-8">
+                <div className="z-[2] flex h-full flex-col gap-6 rounded-lg bg-[var(--ent-card,#fff)] p-6 md:gap-8 md:rounded-2xl md:p-8">
                   <div
                     ref={(el) => {
                       icons.current[i] = el
@@ -325,7 +325,7 @@ export function PoweredBy({ content: poweredBy, media }: { content: PoweredByCon
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={poweredBy.cardIcon} alt="" className="h-10 w-10 object-contain" />
                     ) : (
-                      <div className="h-10 w-10 rounded-lg bg-[#193A29]" />
+                      <div className="h-10 w-10 rounded-lg bg-[var(--ent-accent,#193A29)]" />
                     )}
                   </div>
                   <div className="flex flex-col items-start gap-6">
@@ -334,7 +334,7 @@ export function PoweredBy({ content: poweredBy, media }: { content: PoweredByCon
                         titles.current[i] = h
                       }}
                       as="h3"
-                      className="w-full text-left text-[16px] font-medium leading-[1.45] tracking-[-0.01em] text-black"
+                      className="w-full text-left text-[16px] font-medium leading-[1.45] tracking-[-0.01em] text-[color:var(--ent-fg,#000)]"
                     >
                       {c.title}
                     </AnimatedText>
@@ -343,7 +343,7 @@ export function PoweredBy({ content: poweredBy, media }: { content: PoweredByCon
                         bodies.current[i] = h
                       }}
                       as="p"
-                      className="w-full text-left text-[14px] leading-[1.35] tracking-[-0.01em] text-black md:text-[16px] md:leading-[1.5]"
+                      className="w-full text-left text-[14px] leading-[1.35] tracking-[-0.01em] text-[color:var(--ent-fg,#000)] md:text-[16px] md:leading-[1.5]"
                     >
                       {c.body}
                     </AnimatedText>
@@ -425,9 +425,9 @@ export function BuiltToBeTrusted({ content: trusted, media }: { content: Trusted
   }, [])
 
   return (
-    <section ref={root} className="EnterpriseBuiltToBeTrusted bg-white pt-[120px] text-black">
+    <section ref={root} className="EnterpriseBuiltToBeTrusted bg-[var(--ent-bg,#fff)] pt-[120px] text-[color:var(--ent-fg,#000)]">
       <div className="grid grid-cols-8 gap-2 px-6 md:grid-cols-12">
-        <AnimatedText ref={head} as="h2" maskCompensation className="col-span-full pb-8 text-left text-[32px] font-normal leading-[1.05] tracking-[-0.01em] text-black md:text-[64px]">
+        <AnimatedText ref={head} as="h2" maskCompensation className="col-span-full pb-8 text-left text-[32px] font-normal leading-[1.05] tracking-[-0.01em] text-[color:var(--ent-fg,#000)] md:text-[64px]">
           {trusted.heading}
         </AnimatedText>
       </div>
@@ -458,25 +458,27 @@ export function BuiltToBeTrusted({ content: trusted, media }: { content: Trusted
                   {trusted.overlay}
                 </AnimatedText>
               </div>
-              <div className="flex w-full shrink-0 flex-col gap-4 md:w-[min(100%,20rem)]">
-                <div className="flex items-center gap-2">
-                  <div className="h-2 w-2 bg-white" style={{ clipPath: 'polygon(0 0, 100% 100%, 100% 0)' }} />
-                  <p className="text-[12px] font-medium uppercase leading-[1.5] tracking-wider text-white/80">{trusted.trustedBy}</p>
+              {trusted.logos.length ? (
+                <div className="flex w-full shrink-0 flex-col gap-4 md:w-[min(100%,20rem)]">
+                  <div className="flex items-center gap-2">
+                    <div className="h-2 w-2 bg-white" style={{ clipPath: 'polygon(0 0, 100% 100%, 100% 0)' }} />
+                    <p className="text-[12px] font-medium uppercase leading-[1.5] tracking-wider text-white/80">{trusted.trustedBy}</p>
+                  </div>
+                  {/* Agency logos: items without `src` are neutral same-size placeholder tiles. */}
+                  <ul className="flex gap-2">
+                    {trusted.logos.map((l, k) => (
+                      <li key={k} className="flex aspect-square h-14 w-14 items-center justify-center rounded-md bg-[rgba(234,234,234,0.2)] text-white md:h-16 md:w-16">
+                        {l.src ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={l.src} alt={l.name} className="h-[60%] w-[60%] object-contain" />
+                        ) : (
+                          <div className="h-[30%] w-[55%] rounded-[3px] bg-white/80" aria-hidden />
+                        )}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                {/* Agency logos: items without `src` are neutral same-size placeholder tiles. */}
-                <ul className="flex gap-2">
-                  {trusted.logos.map((l, k) => (
-                    <li key={k} className="flex aspect-square h-14 w-14 items-center justify-center rounded-md bg-[rgba(234,234,234,0.2)] text-white md:h-16 md:w-16">
-                      {l.src ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src={l.src} alt={l.name} className="h-[60%] w-[60%] object-contain" />
-                      ) : (
-                        <div className="h-[30%] w-[55%] rounded-[3px] bg-white/80" aria-hidden />
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              ) : null}
             </div>
           </div>
         </div>
@@ -490,7 +492,7 @@ export function BuiltToBeTrusted({ content: trusted, media }: { content: Trusted
               }}
               className="h-full"
             >
-              <div className="group/card relative h-full overflow-clip rounded-[8px] bg-[#F2F2F2] text-black xl:rounded-2xl">
+              <div className="group/card relative h-full overflow-clip rounded-[8px] bg-[var(--ent-card-2,#F2F2F2)] text-[color:var(--ent-fg,#000)] xl:rounded-2xl">
                 <div className="relative block h-full">
                   <div className="absolute bottom-0 left-0 h-full w-full origin-bottom scale-y-0 transition-transform duration-500 ease-out [@media(hover:hover)]:group-hover/card:scale-y-100" style={{ background: c.fill }} />
                   <div className="relative z-10 flex h-full flex-col justify-between gap-2 p-[24px] md:gap-4 xl:gap-8 xl:p-10">
@@ -507,7 +509,7 @@ export function BuiltToBeTrusted({ content: trusted, media }: { content: Trusted
                         titles.current[i] = h
                       }}
                       as="h5"
-                      className="text-[18px] font-normal leading-[1.35] tracking-[-0.01em] text-black xl:text-[24px] xl:leading-[1.5]"
+                      className="text-[18px] font-normal leading-[1.35] tracking-[-0.01em] text-[color:var(--ent-fg,#000)] xl:text-[24px] xl:leading-[1.5]"
                     >
                       {c.title}
                     </AnimatedText>
@@ -517,7 +519,7 @@ export function BuiltToBeTrusted({ content: trusted, media }: { content: Trusted
                           bodies.current[i] = h
                         }}
                         as="p"
-                        className="text-[14px] leading-[1.45] tracking-[-0.01em] text-[#212121] xl:text-[16px] xl:leading-[1.5]"
+                        className="text-[14px] leading-[1.45] tracking-[-0.01em] text-[color:var(--ent-fg-2,#212121)] xl:text-[16px] xl:leading-[1.5]"
                       >
                         {c.body}
                       </AnimatedText>

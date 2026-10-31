@@ -32,6 +32,8 @@ export type PullApartSceneOptions = {
    * falls back to the procedural vignette + grain.
    */
   cardVideoUrl?: string
+  /** Optional mark image drawn on the card instead of the neutral chevron (its alpha channel is used). */
+  cardMarkUrl?: string
   onSectionVisible: (index: 0 | 1, visible: boolean) => void
 }
 
@@ -105,12 +107,27 @@ function stripToSegments(strip: number[]): number[] {
   return seg
 }
 
-function markTexture(): THREE.CanvasTexture {
+function markTexture(url?: string): THREE.CanvasTexture {
   const c = document.createElement('canvas')
   c.width = c.height = 256
   const g = c.getContext('2d')!
   g.clearRect(0, 0, 256, 256)
-  // Neutral chevron mark (placeholder for Scale's logo texture). TODO: Vahue mark.
+  const t = new THREE.CanvasTexture(c)
+  if (url) {
+    // Page-supplied mark, fitted into the same 100px box the chevron uses.
+    const img = new Image()
+    img.onload = () => {
+      const k = Math.min(100 / (img.naturalWidth || 1), 100 / (img.naturalHeight || 1))
+      const w = (img.naturalWidth || 1) * k
+      const h = (img.naturalHeight || 1) * k
+      g.clearRect(0, 0, 256, 256)
+      g.drawImage(img, 128 - w / 2, 134 - h / 2, w, h)
+      t.needsUpdate = true
+    }
+    img.src = url
+    return t
+  }
+  // Neutral chevron mark (placeholder for Scale's logo texture).
   g.fillStyle = '#ffffff'
   g.beginPath()
   g.moveTo(78, 92)
@@ -122,7 +139,6 @@ function markTexture(): THREE.CanvasTexture {
   g.lineTo(116, 176)
   g.closePath()
   g.fill()
-  const t = new THREE.CanvasTexture(c)
   t.needsUpdate = true
   return t
 }
@@ -160,7 +176,7 @@ export function createPullApartScene(container: HTMLElement, opts: PullApartScen
   const track = <T extends { dispose: () => void }>(o: T) => (disposables.push(o), o)
 
   // 1. Card ("video" plane) + mark --------------------------------------------------------------
-  const mark = track(markTexture())
+  const mark = track(markTexture(opts.cardMarkUrl))
   let cardVideo: HTMLVideoElement | null = null
   let cardTex: THREE.VideoTexture | null = null
   if (opts.cardVideoUrl) {

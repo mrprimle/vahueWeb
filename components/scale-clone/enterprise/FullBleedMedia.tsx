@@ -142,7 +142,7 @@ export default function FullBleedMedia({
       <div ref={clipRoot} className={`relative isolate grid w-full grid-cols-1 px-4 ${backdropClassName}`}>
         <div ref={clip} className="col-span-full h-full w-full overflow-hidden" style={{ clipPath: `inset(${0.5 * startPercentage}% round 1.5rem)` }}>
           <div className="h-full w-full">
-            <section ref={section} className="relative overflow-hidden rounded-3xl bg-white text-black [clip-path:inset(0_round_1.5rem)]">
+            <section ref={section} className="relative overflow-hidden rounded-3xl bg-[var(--ent-bg,#fff)] text-[color:var(--ent-fg,#000)] [clip-path:inset(0_round_1.5rem)]">
               <div className="relative flex min-h-[480px] items-end overflow-hidden rounded-3xl p-8 [clip-path:inset(0_round_1.5rem)] md:min-h-[720px] md:p-16">
                 <div className="relative z-20 flex w-full max-w-[72rem] flex-col gap-6 text-white">
                   <AnimatedText

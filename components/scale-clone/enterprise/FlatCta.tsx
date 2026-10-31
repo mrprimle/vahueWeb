@@ -141,7 +141,7 @@ const FlatCta = forwardRef<FlatCtaHandle, Props>(function FlatCta({ href, text, 
         isArrow
           ? `origin-center transform-gpu will-change-transform ${green ? 'bg-[#193A29] text-white' : 'bg-white text-black'}`
           : theme === 'gray'
-            ? 'bg-[#EAEAEA] text-black transition-all duration-500 ease-out [@media(hover:hover)]:group-hover/card:bg-black [@media(hover:hover)]:group-hover/card:text-white'
+            ? 'bg-[var(--ent-cta-gray,#EAEAEA)] text-[color:var(--ent-fg,#000)] transition-all duration-500 ease-out [@media(hover:hover)]:group-hover/card:bg-[color:var(--ent-fg,#000)] [@media(hover:hover)]:group-hover/card:text-[color:var(--ent-bg,#fff)]'
             : 'border border-white text-white'
       }`}
       style={isArrow ? { borderRadius: 8 } : undefined}

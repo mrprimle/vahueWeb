@@ -39,12 +39,12 @@ function Chevron({ dir }: { dir: 'left' | 'right' }) {
       {dir === 'left' ? (
         <path
           d="M5.55088 11.3838C5.70709 11.54 5.96036 11.54 6.11657 11.3838L6.5863 10.9141C6.74251 10.7579 6.74251 10.5046 6.5863 10.3484L2.68994 6.45205C2.34823 6.11034 2.34823 5.55632 2.68994 5.21461L6.5863 1.31826C6.74251 1.16205 6.74251 0.908784 6.5863 0.752574L6.11657 0.282842C5.96036 0.126633 5.70709 0.126633 5.55088 0.282843L0.619108 5.21461C0.2774 5.55632 0.277399 6.11034 0.619108 6.45205L5.55088 11.3838Z"
-          fill="black"
+          fill="currentColor"
         />
       ) : (
         <path
           d="M2.31826 11.3838C2.16205 11.54 1.90878 11.54 1.75257 11.3838L1.28284 10.9141C1.12663 10.7579 1.12663 10.5046 1.28284 10.3484L5.1792 6.45205C5.52091 6.11034 5.52091 5.55632 5.1792 5.21461L1.28284 1.31826C1.12663 1.16205 1.12663 0.908784 1.28284 0.752574L1.75257 0.282842C1.90878 0.126633 2.16205 0.126633 2.31826 0.282843L7.25003 5.21461C7.59174 5.55632 7.59174 6.11034 7.25003 6.45205L2.31826 11.3838Z"
-          fill="black"
+          fill="currentColor"
         />
       )}
     </svg>
@@ -315,10 +315,10 @@ export default function BlogCarousel({ content: blog }: { content: BlogContent }
   }
 
   return (
-    <section ref={section} className="BlogPreview3D h-full w-full bg-white px-4 pb-4 pt-0 md:pb-40 md:pt-16">
+    <section ref={section} className="BlogPreview3D h-full w-full bg-[var(--ent-bg,#fff)] px-4 pb-4 pt-0 md:pb-40 md:pt-16">
       <div className="grid w-full grid-cols-8 gap-2 px-6 md:grid-cols-12">
-        <div className="col-span-full mb-6 text-center text-black md:col-span-8 md:col-start-3 md:mb-12">
-          <AnimatedText ref={heading} as="h3" maskCompensation className="text-[24px] font-normal leading-[1.05] tracking-[-0.01em] text-black md:text-[40px] md:leading-[1.25]">
+        <div className="col-span-full mb-6 text-center text-[color:var(--ent-fg,#000)] md:col-span-8 md:col-start-3 md:mb-12">
+          <AnimatedText ref={heading} as="h3" maskCompensation className="text-[24px] font-normal leading-[1.05] tracking-[-0.01em] text-[color:var(--ent-fg,#000)] md:text-[40px] md:leading-[1.25]">
             {blog.heading}
           </AnimatedText>
         </div>
@@ -345,7 +345,7 @@ export default function BlogCarousel({ content: blog }: { content: BlogContent }
                 type="button"
                 onClick={() => click(d)}
                 aria-label={d === 'prev' ? 'Previous slide' : 'Next slide'}
-                className="pointer-events-auto z-[1] m-0 inline-flex h-8 w-8 cursor-pointer appearance-none items-center justify-center rounded-md border-0 bg-[#EAEAEA] p-0 hover:brightness-75"
+                className="pointer-events-auto z-[1] m-0 inline-flex h-8 w-8 cursor-pointer appearance-none items-center justify-center rounded-md border-0 bg-[var(--ent-band,#EAEAEA)] p-0 text-[color:var(--ent-fg,#000)] hover:brightness-75"
               >
                 <Chevron dir={d === 'prev' ? 'left' : 'right'} />
               </button>
@@ -363,7 +363,7 @@ export default function BlogCarousel({ content: blog }: { content: BlogContent }
               }}
               aria-label={`Go to slide ${i + 1} of ${snaps.length}`}
               aria-current={i === selected ? 'true' : undefined}
-              className={`relative mx-0.5 inline-flex size-[6px] cursor-pointer rounded-[2px] ${i === selected ? 'bg-[#525252]' : 'bg-[#C7C7C7]'}`}
+              className={`relative mx-0.5 inline-flex size-[6px] cursor-pointer rounded-[2px] ${i === selected ? 'bg-[var(--ent-dot-on,#525252)]' : 'bg-[var(--ent-dot-off,#C7C7C7)]'}`}
             />
           ))}
         </div>

@@ -51,12 +51,12 @@ export default function PullApart({ content: copy }: { content: PullApartContent
         subs.current[i]?.animateOut()
       }
     }
-    const destroy = canvasBox.current ? createPullApartScene(canvasBox.current, { curvesUrl: copy.curvesUrl, cardVideoUrl: copy.cardVideo, onSectionVisible: onVisible }) : () => {}
+    const destroy = canvasBox.current ? createPullApartScene(canvasBox.current, { curvesUrl: copy.curvesUrl, cardVideoUrl: copy.cardVideo, cardMarkUrl: copy.cardMark, onSectionVisible: onVisible }) : () => {}
     return () => {
       destroy()
       ctx.revert()
     }
-  }, [copy.curvesUrl, copy.cardVideo])
+  }, [copy.curvesUrl, copy.cardVideo, copy.cardMark])
 
   return (
     <div ref={section} data-nav-theme="dark" className="EnterprisePullApart relative isolate h-[450vh] w-full overflow-hidden bg-black">

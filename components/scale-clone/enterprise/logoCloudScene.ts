@@ -20,7 +20,9 @@ import gsap from 'gsap'
  * Scroll: section progress ("top bottom" -> "top center", clamped >= .5) eases into x.position.y = -.5 + .5p and
  *   h.scale = map(p, 0..1, .8..1); page scroll sets h.rotation.y target = .82 * (scrollY / (docH - innerH) - .5).
  *
- * Customer logos are not reproduced: tiles render as neutral blank tiles (TODO: client logos).
+ * Customer logos are not reproduced: tiles render as neutral blank tiles, or with page-supplied text labels.
+ * Theme hooks (CSS custom properties read from the container, Scale's values as defaults):
+ *   --ent-cloud-tile (#fff), --ent-cloud-ink (#000, label text), --ent-cloud-line (#c4c4c4), --ent-cloud-band (#000).
  */
 
 export type LogoCloudHandle = { setScrollProgress: (p: number) => void; destroy: () => void }
@@ -37,6 +39,10 @@ void main() {
 const TILE_FRAG = /* glsl */ `
 uniform vec2 uMeshSize;
 uniform float uSeed;
+uniform vec3 uTile;
+uniform vec3 uInk;
+uniform sampler2D tLabel;
+uniform float uHasLabel;
 varying vec2 vUv;
 varying vec3 vPosition;
 float roundedInside(float radius, vec2 uv, vec2 res) {
@@ -56,8 +62,9 @@ void main() {
   // Placeholder mark: a faint centred bar where Scale draws the client logo. TODO: client logos.
   vec2 c = abs(vUv - 0.5);
   float bar = step(c.x, 0.22) * step(c.y, 0.045);
-  vec3 col = vec3(1.0) * ramp;
-  col = mix(col, col * 0.86, bar * smoothstep(0.2, 0.5, ramp));
+  vec3 col = uTile * ramp;
+  if (uHasLabel > 0.5) col = mix(col, uInk, texture2D(tLabel, vUv).a);
+  else col = mix(col, col * 0.86, bar * smoothstep(0.2, 0.5, ramp));
   float inside = roundedInside(6.0, vUv, uMeshSize * 100.0);
   gl_FragColor = vec4(col, inside);
 }`
@@ -88,7 +95,29 @@ void main() {
   gl_FragColor = vec4(rgb, mix(0.55, 1.0, band));
 }`
 
-export function createLogoCloudScene(container: HTMLElement, tileCount = 10): LogoCloudHandle | null {
+function labelTexture(text: string, font: string): THREE.CanvasTexture {
+  const c = document.createElement('canvas')
+  c.width = c.height = 256
+  const g = c.getContext('2d')!
+  g.fillStyle = '#fff'
+  g.textAlign = 'center'
+  g.textBaseline = 'middle'
+  const words = text.split(' ')
+  const lines = words.length > 1 && text.length > 10 ? [words.slice(0, Math.ceil(words.length / 2)).join(' '), words.slice(Math.ceil(words.length / 2)).join(' ')] : [text]
+  let size = 44
+  g.font = `400 ${size}px ${font}`
+  const widest = () => Math.max(...lines.map((l) => g.measureText(l).width))
+  while (size > 18 && widest() > 196) {
+    size -= 2
+    g.font = `400 ${size}px ${font}`
+  }
+  lines.forEach((l, i) => g.fillText(l, 128, 128 + (i - (lines.length - 1) / 2) * size * 1.1))
+  const t = new THREE.CanvasTexture(c)
+  t.needsUpdate = true
+  return t
+}
+
+export function createLogoCloudScene(container: HTMLElement, tileCount = 10, labels?: string[]): LogoCloudHandle | null {
   let renderer: THREE.WebGLRenderer
   try {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' })
@@ -103,6 +132,13 @@ export function createLogoCloudScene(container: HTMLElement, tileCount = 10): Lo
   canvas.style.height = '100%'
   canvas.style.touchAction = 'none'
   container.appendChild(canvas)
+
+  const css = getComputedStyle(container)
+  const token = (name: string, fallback: string) => new THREE.Color(css.getPropertyValue(name).trim() || fallback)
+  const tileColor = token('--ent-cloud-tile', '#ffffff')
+  const inkColor = token('--ent-cloud-ink', '#000000')
+  if (labels?.length) tileCount = labels.length
+  const font = css.fontFamily || 'sans-serif'
 
   const scene = new THREE.Scene()
   const camera = new THREE.PerspectiveCamera(23, 1, 0.01, 200)
@@ -139,11 +175,20 @@ export function createLogoCloudScene(container: HTMLElement, tileCount = 10): Lo
   const tileGeo = new THREE.PlaneGeometry(0.48, 0.48)
   disposables.push(tileGeo)
   const tiles = pts.map((p, i) => {
+    const label = labels?.[i] ? labelTexture(labels[i], font) : null
+    if (label) disposables.push(label)
     const mat = new THREE.ShaderMaterial({
       vertexShader: TILE_VERT,
       fragmentShader: TILE_FRAG,
       transparent: true,
-      uniforms: { uMeshSize: { value: new THREE.Vector2(1, 1) }, uSeed: { value: i } },
+      uniforms: {
+        uMeshSize: { value: new THREE.Vector2(1, 1) },
+        uSeed: { value: i },
+        uTile: { value: tileColor },
+        uInk: { value: inkColor },
+        tLabel: { value: label },
+        uHasLabel: { value: label ? 1 : 0 },
+      },
     })
     disposables.push(mat)
     const mesh = new THREE.Mesh(tileGeo, mat)
@@ -185,7 +230,7 @@ export function createLogoCloudScene(container: HTMLElement, tileCount = 10): Lo
     vertexShader: LINE_VERT,
     fragmentShader: LINE_FRAG,
     transparent: true,
-    uniforms: { uColor: { value: new THREE.Color(0xc4c4c4) }, uBand: { value: new THREE.Color(0x000000) }, uTime: { value: 0 } },
+    uniforms: { uColor: { value: token('--ent-cloud-line', '#c4c4c4') }, uBand: { value: token('--ent-cloud-band', '#000000') }, uTime: { value: 0 } },
   })
   disposables.push(lineGeo, lineMat)
   const lines = new THREE.LineSegments(lineGeo, lineMat)

@@ -72,7 +72,7 @@ export default function ClipScroll({
 
   const r = typeof borderRadius === 'number' ? borderRadius : borderRadius.desktop
   return (
-    <div ref={root} className={`ClipScrollSection relative isolate w-full ${noClip ? '' : 'bg-white'} ${className}`}>
+    <div ref={root} className={`ClipScrollSection relative isolate w-full ${noClip ? '' : 'bg-[var(--ent-bg,#fff)]'} ${className}`}>
       <div ref={clip} className={`h-full w-full overflow-hidden ${clipClassName}`} style={{ clipPath: `inset(0 round ${r}rem)` }}>
         <div ref={inner} className="h-full w-full">
           {children}

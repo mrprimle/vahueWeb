@@ -16,6 +16,8 @@ export type HeroContent = {
   scroll: string
   /** Exactly 7 nodes, in Scale's graph order (positions/edges are fixed by the layout). */
   nodes: HeroNode[]
+  /** CTA style: Scale's evergreen pill (default) or the white pill with the black arrow box (dark pages). */
+  ctaTheme?: 'evergreen' | 'white'
 }
 
 export type PullApartItem = { headline: string; subheading: string }
@@ -26,6 +28,8 @@ export type PullApartContent = {
   curvesUrl: string
   /** Optional footage inside the scene's card (Scale's is a licensed iStock clip, not shipped). */
   cardVideo?: string
+  /** Optional mark image drawn on the card (its alpha is used). Default: a neutral chevron. */
+  cardMark?: string
 }
 
 export type LogoItem = { name: string; src?: string; width?: number }
@@ -37,12 +41,19 @@ export type BridgeContent = {
   video?: string
   /** Logo marquee. Items without `src` render as neutral placeholder tiles of `width` px. */
   logos: LogoItem[]
+  /** Render the marquee items' names as text instead of placeholder tiles (for items without `src`). */
+  textLogos?: boolean
 }
 
 export type BlogPost = { category: string; swatch: string; title: string; href: string; image?: string; background?: string }
 export type BlogContent = { heading: string; posts: BlogPost[] }
 
-export type LogoCloudContent = { headline: string; tiles?: number }
+export type LogoCloudContent = {
+  headline: string
+  tiles?: number
+  /** Optional text drawn on the sphere tiles (one tile per label; overrides `tiles`). */
+  labels?: string[]
+}
 
 export type StatIcon = 'clock' | 'trend' | 'bank' | 'swap' | 'rocket'
 export type StatCard = { label: string; value: string; body: string; icon: StatIcon }
@@ -75,7 +86,7 @@ export type TrustedContent = {
   image?: string
   overlay: string
   trustedBy: string
-  /** Agency logos in the glass card; items without `src` render as placeholder tiles. */
+  /** Agency logos in the glass card; items without `src` render as placeholder tiles. Empty: no logo column. */
   logos: LogoItem[]
   cards: TrustedCard[]
 }

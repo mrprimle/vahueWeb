@@ -1,19 +1,20 @@
 import type { Metadata } from 'next'
-import SegmentLanding from '@/components/segments/SegmentLanding'
-import { operationsContent } from '@/components/segments/content/operations'
+import OperationsPage from '@/components/operations/OperationsPage'
+
+const description =
+  'How Vahue works: a two-week audit records the baseline, a pilot proves one workflow on your data, then we run the agents monthly with review queues, approvals, an audit log and a report against the baseline.'
 
 export const metadata: Metadata = {
-  title: 'AI for Operations',
-  description:
-    'An agentic back-office: AP/AR, procurement, HR ops, ERP/ITSM overlays — automated with full audit trail.',
+  title: 'How we operate',
+  description,
   openGraph: {
-    title: 'AI for Operations | Vahue',
-    description:
-      'Agentic back-office workflows for AP/AR, procurement, and HR ops — with audit trail.',
-    url: 'https://vahue.ai/operations',
+    title: 'How we operate | Vahue',
+    description: 'Audit, pilot, then operate: AI agents on your busiest workflows, run and measured by Vahue every month.',
+    url: 'https://vahue.ai/operations/',
   },
+  alternates: { canonical: 'https://vahue.ai/operations/' },
 }
 
 export default function Page() {
-  return <SegmentLanding content={operationsContent} />
+  return <OperationsPage />
 }
