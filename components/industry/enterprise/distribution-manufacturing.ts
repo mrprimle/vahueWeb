@@ -11,8 +11,8 @@ const sync = WORKFLOWS.find((w) => w.slug === 'back-office-sync')?.summary ?? ''
 export const distributionConfig: IndustryConfig = {
   key: 'distribution-manufacturing',
   hero: {
-    headline: 'Supplier paperwork, run by agents.', // page copy
-    body: 'Supplier onboarding, quotes, invoices and bills of materials handled inside your ERP. Exceptions go to your team, and every action is logged.', // page copy
+    headline: 'Supplier forms, invoices and quotes, run by agents.', // page copy
+    body: 'Supplier onboarding, quotes, invoices and bills of materials handled in your ERP, with exceptions sent to your team.', // page copy
     systems: ['SAP', 'NetSuite', 'Salesforce', 'Outlook', 'SharePoint', 'QuickBooks', 'Power BI'],
   },
   problem: [
