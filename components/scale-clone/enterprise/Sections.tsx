@@ -1,12 +1,12 @@
 'use client'
 
-import { useEffect, useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef, type ReactNode } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import AnimatedText, { type AnimatedTextHandle } from './AnimatedText'
 import FlatCta, { type FlatCtaHandle } from './FlatCta'
 import ClipScroll from './ClipScroll'
-import { pillars, poweredBy, race, trusted } from './content'
+import type { PillarIcon, PillarsContent, PoweredByContent, RaceContent, TrustedContent } from './content'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -53,7 +53,7 @@ function useInViewVideo(ref: React.RefObject<HTMLVideoElement | null>) {
  * TwoColumnTextWithVideo, variant enterpriseRace (module 857484): onEnter -> heading animateIn(.35),
  * left column (.45), right column (.45), link (.55). Grey #C7C7C7 band, py-24, video aspect-video rounded-2xl.
  */
-export function Race() {
+export function Race({ content: race, media }: { content: RaceContent; media?: ReactNode }) {
   const root = useRef<HTMLElement>(null)
   const head = useRef<AnimatedTextHandle>(null)
   const lead = useRef<AnimatedTextHandle>(null)
@@ -71,7 +71,6 @@ export function Race() {
     <section ref={root} className="TwoColumnTextWithVideo relative bg-white text-black">
       <div className="grid grid-cols-8 gap-2 px-6 md:grid-cols-12">
         <div className="col-span-full py-8">
-          {/* TODO: Vahue copy */}
           <AnimatedText ref={head} as="h2" maskCompensation className="w-full text-[32px] font-normal leading-[1.05] tracking-[-0.01em] text-black md:text-[64px]">
             {race.heading}
           </AnimatedText>
@@ -79,7 +78,6 @@ export function Race() {
       </div>
       <div className="grid w-full grid-cols-8 gap-2 bg-[#C7C7C7] px-6 py-24 text-black md:grid-cols-12">
         <div className="order-2 col-span-full row-start-1 pb-6 md:col-span-4 md:col-start-3">
-          {/* TODO: Vahue copy */}
           <AnimatedText ref={lead} as="h4" maskCompensation className="w-full text-[24px] font-normal leading-9 tracking-[-0.03em] text-black md:text-[32px]">
             {race.lead}
           </AnimatedText>
@@ -96,14 +94,17 @@ export function Race() {
           </AnimatedText>
         </div>
         <div className="order-1 col-span-full pb-6 md:col-span-4 md:col-start-8">
-          {/* TODO: Vahue copy */}
           <AnimatedText ref={body} as="p" className="w-full text-[16px] leading-[1.5] tracking-[-0.01em] text-black">
             {race.body}
           </AnimatedText>
         </div>
         <div className="order-3 col-span-full w-full overflow-clip rounded-2xl md:col-span-9 md:col-start-3">
           <div className="relative aspect-video w-full overflow-clip">
-            <video ref={video} className="block h-full min-h-full w-full object-cover" src={race.video} muted loop playsInline preload="metadata" aria-hidden />
+            {race.video ? (
+              <video ref={video} className="block h-full min-h-full w-full object-cover" src={race.video} muted loop playsInline preload="metadata" aria-hidden />
+            ) : (
+              media
+            )}
           </div>
         </div>
       </div>
@@ -111,7 +112,7 @@ export function Race() {
   )
 }
 
-const PILLAR_ICONS: Record<string, string> = {
+const PILLAR_ICONS: Record<PillarIcon, string> = {
   people:
     'M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z',
   hub: 'M8.4 18.2c.38.5.6 1.12.6 1.8 0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3c.44 0 .85.09 1.23.26l1.41-1.77a4.504 4.504 0 0 1-1.09-3.69l-2.03-.68A2.997 2.997 0 0 1 0 9.5c0-1.66 1.34-3 3-3s3 1.34 3 3c0 .07 0 .14-.01.21l2.03.68a4.468 4.468 0 0 1 3.22-2.32V5.91A3.018 3.018 0 0 1 9 3c0-1.66 1.34-3 3-3s3 1.34 3 3c0 1.4-.96 2.57-2.25 2.91v2.16c1.4.23 2.58 1.11 3.22 2.32L18 9.71V9.5c0-1.66 1.34-3 3-3s3 1.34 3 3-1.34 3-3 3c-1.06 0-1.98-.55-2.52-1.37l-2.03.68a4.49 4.49 0 0 1-1.09 3.69l1.41 1.77c.38-.18.79-.27 1.23-.27 1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3c0-.68.22-1.3.6-1.8l-1.41-1.77c-1.35.75-3.01.76-4.37 0L8.4 18.2z',
@@ -124,7 +125,7 @@ const PILLAR_ICONS: Record<string, string> = {
  * (opacity 0 -> 1, .5s) and its HeadlineWithCta animates after i * 200ms (headline +.2s, subtitle +.4s); the
  * divider under item i scales X 0 -> 1 (.5s, delay .2i + .2).
  */
-export function Pillars() {
+export function Pillars({ content: pillars, media }: { content: PillarsContent; media?: ReactNode }) {
   const root = useRef<HTMLElement>(null)
   const head = useRef<AnimatedTextHandle>(null)
   const icons = useRef<(HTMLDivElement | null)[]>([])
@@ -152,14 +153,17 @@ export function Pillars() {
     <section ref={root} className="EnterprisePillars bg-white py-24 text-black">
       <div className="grid grid-cols-8 gap-2 px-6 md:grid-cols-12">
         <div className="col-span-full flex flex-col items-start gap-6 md:col-span-5 md:col-start-2 md:justify-center">
-          {/* TODO: Vahue copy */}
           <AnimatedText ref={head} as="h3" maskCompensation className="w-full text-[24px] font-normal leading-[1.05] tracking-[-0.01em] text-black md:text-[40px] md:leading-[1.25]">
             {pillars.heading[0]}
             <br />
             {pillars.heading[1]}
           </AnimatedText>
           <div className="relative aspect-square w-full overflow-hidden rounded-2xl">
-            <video ref={video} className="absolute inset-0 block h-full w-full object-cover" src={pillars.video} muted loop playsInline preload="metadata" aria-hidden />
+            {pillars.video ? (
+              <video ref={video} className="absolute inset-0 block h-full w-full object-cover" src={pillars.video} muted loop playsInline preload="metadata" aria-hidden />
+            ) : (
+              media
+            )}
           </div>
         </div>
         <div className="col-span-full flex flex-col gap-5 md:col-span-4 md:col-start-8 md:gap-10">
@@ -178,17 +182,15 @@ export function Pillars() {
                   </svg>
                 </div>
                 <div className="flex flex-col items-start gap-6 pb-0 pt-6">
-                  {/* TODO: Vahue copy */}
                   <AnimatedText
                     ref={(h) => {
                       titles.current[i] = h
                     }}
                     as="h5"
-                    className="w-full text-left text-[20px] font-normal leading-[1.5] tracking-[-0.01em] text-black md:text-[24px]"
+                    className="w-full text-left text-[22px] font-normal leading-[1.05] tracking-[-0.01em] text-black md:text-[24px] md:leading-[1.5]"
                   >
                     {it.title}
                   </AnimatedText>
-                  {/* TODO: Vahue copy */}
                   <AnimatedText
                     ref={(h) => {
                       bodies.current[i] = h
@@ -223,7 +225,7 @@ export function Pillars() {
  * (desktop), no opacity; on first progress the icon pops (opacity 0 / scale .3 -> 1, .85s power2.out) and the
  * card copy animates in (headline 0, subtitle .2).
  */
-export function PoweredBy() {
+export function PoweredBy({ content: poweredBy, media }: { content: PoweredByContent; media?: ReactNode }) {
   const root = useRef<HTMLElement>(null)
   const head = useRef<AnimatedTextHandle>(null)
   const sub = useRef<AnimatedTextHandle>(null)
@@ -278,11 +280,9 @@ export function PoweredBy() {
       <div className="grid grid-cols-8 gap-2 px-6 md:grid-cols-12">
         <div className="col-span-full pb-8 md:col-span-6 md:col-start-4">
           <div className="flex flex-col items-center gap-6 py-6">
-            {/* TODO: Vahue copy */}
             <AnimatedText ref={head} as="h3" maskCompensation className="w-full text-center text-[32px] font-normal leading-[1.05] tracking-[-0.01em] text-black md:text-[64px]">
               {poweredBy.headline}
             </AnimatedText>
-            {/* TODO: Vahue copy */}
             <AnimatedText ref={sub} as="p" className="w-full text-center text-[14px] leading-[1.5] tracking-[-0.01em] text-black md:w-[576px] md:text-[16px]">
               {poweredBy.body}
             </AnimatedText>
@@ -297,8 +297,12 @@ export function PoweredBy() {
           className="col-span-full mb-6 w-full overflow-clip rounded-lg md:col-span-10 md:col-start-2 md:mb-0 md:rounded-2xl xl:col-span-8 xl:col-start-3"
         >
           <div className="relative aspect-video w-full bg-[rgb(94,94,95)]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={poweredBy.image} alt="" className="absolute inset-0 h-full w-full object-cover" />
+            {poweredBy.image ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={poweredBy.image} alt="" className="absolute inset-0 h-full w-full object-cover" />
+            ) : (
+              media
+            )}
           </div>
         </ClipScroll>
         <div className="col-span-full flex flex-col gap-2 md:col-span-8 md:col-start-3 md:flex-row xl:col-span-6 xl:col-start-4">
@@ -317,11 +321,14 @@ export function PoweredBy() {
                     }}
                     className="relative h-10 w-10 shrink-0"
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="/scale-clone/enterprise/icon-powered-card.svg" alt="" className="h-10 w-10 object-contain" />
+                    {poweredBy.cardIcon ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={poweredBy.cardIcon} alt="" className="h-10 w-10 object-contain" />
+                    ) : (
+                      <div className="h-10 w-10 rounded-lg bg-[#193A29]" />
+                    )}
                   </div>
                   <div className="flex flex-col items-start gap-6">
-                    {/* TODO: Vahue copy */}
                     <AnimatedText
                       ref={(h) => {
                         titles.current[i] = h
@@ -331,7 +338,6 @@ export function PoweredBy() {
                     >
                       {c.title}
                     </AnimatedText>
-                    {/* TODO: Vahue copy */}
                     <AnimatedText
                       ref={(h) => {
                         bodies.current[i] = h
@@ -354,12 +360,12 @@ export function PoweredBy() {
 
 /*
  * EnterpriseBuiltToBeTrusted (module 270115). Heading header2. ClipScroll: startPercentage 10, startScale 1,
- * radius 1rem (.75 touch), end "center center" (touch: "center bottom"); 800px (600 mobile) photo with a glass
+ * radius 1rem (.75 touch), end "center bottom" (as sampled live, see below); 800px (600 mobile) photo with a glass
  * card (bg black/45, 1px white/10 border, backdrop-blur-xl, shadow-2xl). Link cards below: BaseCardScroll
  * ("top bottom" -> "top 50%", scale .96 -> 1, opacity 0 -> 1), hover fill rises from the bottom (scale-y 0 -> 1,
  * 500ms ease-out).
  */
-export function BuiltToBeTrusted() {
+export function BuiltToBeTrusted({ content: trusted, media }: { content: TrustedContent; media?: ReactNode }) {
   const root = useRef<HTMLElement>(null)
   const head = useRef<AnimatedTextHandle>(null)
   const overlay = useRef<AnimatedTextHandle>(null)
@@ -421,7 +427,6 @@ export function BuiltToBeTrusted() {
   return (
     <section ref={root} className="EnterpriseBuiltToBeTrusted bg-white pt-[120px] text-black">
       <div className="grid grid-cols-8 gap-2 px-6 md:grid-cols-12">
-        {/* TODO: Vahue copy */}
         <AnimatedText ref={head} as="h2" maskCompensation className="col-span-full pb-8 text-left text-[32px] font-normal leading-[1.05] tracking-[-0.01em] text-black md:text-[64px]">
           {trusted.heading}
         </AnimatedText>
@@ -430,19 +435,25 @@ export function BuiltToBeTrusted() {
         startPercentage={10}
         startScale={1}
         borderRadius={1}
-        scrollEnd="center center"
+        // Source: scrollEnd isDesktop ? "center center" : "center bottom", but isDesktop (react-device-detect) is {}
+        // on the first render and ClipScrollSection builds its trigger once, so live samples at 1440 run to
+        // "center bottom" (inset 3.75% with the top at 800px, 0 by 500px). Matched to the live behaviour.
+        scrollEnd="center bottom"
         className="mb-2 grid h-[600px] grid-cols-8 gap-2 px-6 pb-2 md:h-[800px] md:grid-cols-12"
         clipClassName="col-span-full"
       >
         <div className="relative flex h-full items-end justify-start p-8">
           <div ref={photo} className="absolute inset-0 bg-[rgb(151,137,103)]" role="img" aria-hidden>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={trusted.image} alt="" className="h-full w-full object-cover" />
+            {trusted.image ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={trusted.image} alt="" className="h-full w-full object-cover" />
+            ) : (
+              media
+            )}
           </div>
           <div className="relative w-full rounded-2xl border border-white/10 bg-black/45 px-8 py-8 shadow-2xl backdrop-blur-xl md:max-w-[748px] md:px-16 md:py-16">
             <div className="flex flex-col gap-8 md:flex-row md:items-start md:gap-10">
               <div className="min-w-0 flex-1 text-white">
-                {/* TODO: Vahue copy */}
                 <AnimatedText ref={overlay} as="h6" className="text-[18px] font-normal leading-[1.05] tracking-[-0.01em] text-white md:text-[20px] md:leading-[1.5]">
                   {trusted.overlay}
                 </AnimatedText>
@@ -450,14 +461,18 @@ export function BuiltToBeTrusted() {
               <div className="flex w-full shrink-0 flex-col gap-4 md:w-[min(100%,20rem)]">
                 <div className="flex items-center gap-2">
                   <div className="h-2 w-2 bg-white" style={{ clipPath: 'polygon(0 0, 100% 100%, 100% 0)' }} />
-                  {/* TODO: Vahue copy */}
                   <p className="text-[12px] font-medium uppercase leading-[1.5] tracking-wider text-white/80">{trusted.trustedBy}</p>
                 </div>
-                {/* TODO: agency logos. Neutral same-size placeholder tiles. */}
-                <ul className="flex gap-2" aria-hidden>
-                  {[0, 1, 2].map((k) => (
+                {/* Agency logos: items without `src` are neutral same-size placeholder tiles. */}
+                <ul className="flex gap-2">
+                  {trusted.logos.map((l, k) => (
                     <li key={k} className="flex aspect-square h-14 w-14 items-center justify-center rounded-md bg-[rgba(234,234,234,0.2)] text-white md:h-16 md:w-16">
-                      <div className="h-[30%] w-[55%] rounded-[3px] bg-white/80" />
+                      {l.src ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={l.src} alt={l.name} className="h-[60%] w-[60%] object-contain" />
+                      ) : (
+                        <div className="h-[30%] w-[55%] rounded-[3px] bg-white/80" aria-hidden />
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -477,15 +492,16 @@ export function BuiltToBeTrusted() {
             >
               <div className="group/card relative h-full overflow-clip rounded-[8px] bg-[#F2F2F2] text-black xl:rounded-2xl">
                 <div className="relative block h-full">
-                  <div className="absolute bottom-0 left-0 h-full w-full origin-bottom scale-y-0 transition-transform duration-500 ease-out group-hover/card:scale-y-100" style={{ background: c.fill }} />
+                  <div className="absolute bottom-0 left-0 h-full w-full origin-bottom scale-y-0 transition-transform duration-500 ease-out [@media(hover:hover)]:group-hover/card:scale-y-100" style={{ background: c.fill }} />
                   <div className="relative z-10 flex h-full flex-col justify-between gap-2 p-[24px] md:gap-4 xl:gap-8 xl:p-10">
                     <div className="flex items-center gap-2">
                       <div className="relative h-10 w-10 overflow-hidden md:h-16 md:w-16">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={c.icon} alt="" className="h-full w-full object-contain" />
+                        {c.icon ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={c.icon} alt="" className="h-full w-full object-contain" />
+                        ) : null}
                       </div>
                     </div>
-                    {/* TODO: Vahue copy */}
                     <AnimatedText
                       ref={(h) => {
                         titles.current[i] = h
@@ -496,7 +512,6 @@ export function BuiltToBeTrusted() {
                       {c.title}
                     </AnimatedText>
                     <div className="flex flex-1 flex-col justify-end gap-4">
-                      {/* TODO: Vahue copy */}
                       <AnimatedText
                         ref={(h) => {
                           bodies.current[i] = h
@@ -514,9 +529,15 @@ export function BuiltToBeTrusted() {
                             }}
                             variant="border"
                             theme="gray"
-                            href="#"
-                            text={c.cta}
+                            href={c.cta.href}
+                            text={c.cta.text}
                           />
+                        </div>
+                      ) : trusted.cards.some((k) => k.cta) ? (
+                        // Scale equalises the description area across the row (md:min-h(--cg-desc-min-h)), so a card
+                        // without a CTA keeps its description top-aligned with its siblings': reserve the CTA row.
+                        <div aria-hidden className="hidden pt-4 md:block">
+                          <div className="h-[37px]" />
                         </div>
                       ) : null}
                     </div>

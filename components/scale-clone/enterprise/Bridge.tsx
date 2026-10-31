@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import AnimatedText, { type AnimatedTextHandle } from './AnimatedText'
 import styles from './enterprise.module.css'
-import { bridge } from './content'
+import type { BridgeContent } from './content'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -18,10 +18,7 @@ gsap.registerPlugin(ScrollTrigger)
  *   subtitle animateIn(1s). Logo marquee: 40s linear loop.
  */
 
-// Scale's logo marquee widths at 28px height (placeholders for customer logos). TODO: partner logos.
-const LOGO_W = [57, 26, 26, 70, 26, 70]
-
-export default function Bridge() {
+export default function Bridge({ content: bridge, media }: { content: BridgeContent; media?: ReactNode }) {
   const panel = useRef<HTMLDivElement>(null)
   const bg = useRef<HTMLDivElement>(null)
   const head = useRef<AnimatedTextHandle>(null)
@@ -56,7 +53,7 @@ export default function Bridge() {
     if (textBox.current) io.observe(textBox.current)
     const v = video.current
     // The media may finish loading before hydration attaches onLoadedData.
-    if (v && v.readyState >= 2) setLoaded(true)
+    if (!v || v.readyState >= 2) setLoaded(true)
     const vio = new IntersectionObserver((es) => {
       for (const e of es) {
         if (e.isIntersecting) v?.play().catch(() => {})
@@ -79,23 +76,26 @@ export default function Bridge() {
           <div className="grid min-h-[60vh] w-full grid-cols-8 gap-2 py-6 md:grid-cols-10">
             <div className="col-span-8 col-start-1 flex flex-col justify-center gap-6 text-center md:col-span-4 md:col-start-2 md:row-start-1">
               <div className={`aspect-square w-full self-center transition-opacity duration-700 ease-out md:w-full ${loaded ? 'opacity-100' : 'opacity-0'}`}>
-                <video
-                  ref={video}
-                  className="block h-full w-full object-contain"
-                  src={bridge.video}
-                  playsInline
-                  muted
-                  loop
-                  preload="metadata"
-                  aria-hidden
-                  onLoadedData={() => setLoaded(true)}
-                  onCanPlay={() => setLoaded(true)}
-                />
+                {bridge.video ? (
+                  <video
+                    ref={video}
+                    className="block h-full w-full object-contain"
+                    src={bridge.video}
+                    playsInline
+                    muted
+                    loop
+                    preload="metadata"
+                    aria-hidden
+                    onLoadedData={() => setLoaded(true)}
+                    onCanPlay={() => setLoaded(true)}
+                  />
+                ) : (
+                  media
+                )}
               </div>
             </div>
             <div className="col-span-6 col-start-2 flex flex-col justify-center gap-6 text-center md:col-span-3 md:col-start-7 md:row-start-1 md:text-left">
               <div ref={textBox} className="flex w-full flex-col items-center gap-6 pb-6">
-                {/* TODO: Vahue copy */}
                 <AnimatedText
                   ref={head}
                   as="h3"
@@ -104,22 +104,25 @@ export default function Bridge() {
                 >
                   {bridge.headline}
                 </AnimatedText>
-                {/* TODO: Vahue copy */}
                 <AnimatedText ref={sub} as="p" className="w-full text-center text-[14px] leading-normal tracking-[-0.01em] text-[#C7C7C7] md:text-left md:text-[16px]">
                   {bridge.body}
                 </AnimatedText>
               </div>
               <div className="flex items-center justify-center gap-2 md:justify-start">
                 <div className="h-[6px] w-[6px] bg-white" style={{ clipPath: 'polygon(0 0, 100% 100%, 100% 0)' }} />
-                {/* TODO: Vahue copy */}
                 <p className="text-[0.625rem] uppercase leading-[1.5] tracking-wider text-white/80 md:text-xs">{bridge.trustedBy}</p>
               </div>
-              {/* TODO: partner logos. Neutral same-size placeholder tiles. */}
+              {/* Customer logos: items without `src` are neutral same-size placeholder tiles. */}
               <div className="w-full min-w-0 overflow-hidden" aria-hidden>
                 <div className={`flex w-max gap-8 overflow-hidden will-change-transform ${styles.marquee}`}>
-                  {[...LOGO_W, ...LOGO_W].map((w, i) => (
-                    <div key={i} className="relative flex h-[35px] shrink-0 items-center overflow-hidden" style={{ width: w }}>
-                      <div className="h-[22px] w-full rounded-[3px] bg-white/85" />
+                  {[...bridge.logos, ...bridge.logos].map((l, i) => (
+                    <div key={i} className="relative flex h-[35px] shrink-0 items-center overflow-hidden" style={{ width: l.width ?? 70 }}>
+                      {l.src ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={l.src} alt={l.name} className="h-[28px] w-full object-contain" />
+                      ) : (
+                        <div className="h-[22px] w-full rounded-[3px] bg-white/85" />
+                      )}
                     </div>
                   ))}
                 </div>

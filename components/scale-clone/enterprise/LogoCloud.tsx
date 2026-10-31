@@ -5,7 +5,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import AnimatedText, { type AnimatedTextHandle } from './AnimatedText'
 import { createLogoCloudScene } from './logoCloudScene'
-import { logoCloud } from './content'
+import type { LogoCloudContent } from './content'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -16,13 +16,13 @@ gsap.registerPlugin(ScrollTrigger)
  * Scale's category filter buttons are empty on this page (no categories in the CMS data), so none are rendered.
  */
 
-export default function LogoCloud() {
+export default function LogoCloud({ content: logoCloud }: { content: LogoCloudContent }) {
   const root = useRef<HTMLDivElement>(null)
   const canvasBox = useRef<HTMLDivElement>(null)
   const head = useRef<AnimatedTextHandle>(null)
 
   useEffect(() => {
-    const scene = canvasBox.current ? createLogoCloudScene(canvasBox.current, 10) : null
+    const scene = canvasBox.current ? createLogoCloudScene(canvasBox.current, logoCloud.tiles ?? 10) : null
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: root.current,
@@ -37,7 +37,7 @@ export default function LogoCloud() {
       ctx.revert()
       scene?.destroy()
     }
-  }, [])
+  }, [logoCloud.tiles])
 
   return (
     <div ref={root} className="LogoCloud grid h-[90vh] grid-cols-8 gap-2 bg-[#EAEAEA] px-6 text-black sm:grid-cols-12">
@@ -49,7 +49,6 @@ export default function LogoCloud() {
       <div className="relative col-span-8 col-start-1 sm:col-span-12 md:col-span-4 md:col-start-8 md:row-start-1">
         <div className="flex h-auto w-full flex-col items-center justify-center gap-4 md:h-full">
           <div className="flex w-full flex-col items-center gap-6 py-6">
-            {/* TODO: Vahue copy */}
             <AnimatedText
               ref={head}
               as="h3"

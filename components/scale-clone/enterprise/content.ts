@@ -1,138 +1,268 @@
-// Placeholder copy for the /scale-clone/enterprise body. Every string here is a TODO: Vahue copy.
-// Lengths are matched to scale.com/enterprise so each block wraps to the same number of lines.
+// Content model for the scale.com/enterprise layout, plus the clone's own data (Scale's copy, so QA lines up).
+//
+// Every section component takes its slice of `EnterpriseContent` as props, so Vahue pages built on this layout
+// (/operations, /industries/banking|retail|distribution-manufacturing) pass their own content and media.
+// Media fields are optional: leave `image`/`video` out and pass a `media` ReactNode (own SVG / three.js visual /
+// dot-texture panel) to the section instead. Leave a whole slice out of `EnterpriseContent` to drop that section.
+
+export type Link = { text: string; href: string }
+
+export type HeroNode = { label: string; color: string; image?: string; href?: string }
+export type HeroContent = {
+  headline: string
+  body: string
+  cta: Link
+  /** "Scroll to explore" label next to the arrow box (desktop only). */
+  scroll: string
+  /** Exactly 7 nodes, in Scale's graph order (positions/edges are fixed by the layout). */
+  nodes: HeroNode[]
+}
+
+export type PullApartItem = { headline: string; subheading: string }
+export type PullApartContent = {
+  /** Two blocks: [0] sits top (shown while the object is whole), [1] bottom (shown once it pulls apart). */
+  items: [PullApartItem, PullApartItem]
+  /** JSON of curve paths for the pulled-apart object (see pullApartScene.ts). */
+  curvesUrl: string
+  /** Optional footage inside the scene's card (Scale's is a licensed iStock clip, not shipped). */
+  cardVideo?: string
+}
+
+export type LogoItem = { name: string; src?: string; width?: number }
+export type BridgeContent = {
+  headline: string
+  body: string
+  trustedBy: string
+  /** Transparent (alpha) webm shown left of the copy. Omit and pass `media` to <Bridge> instead. */
+  video?: string
+  /** Logo marquee. Items without `src` render as neutral placeholder tiles of `width` px. */
+  logos: LogoItem[]
+}
+
+export type BlogPost = { category: string; swatch: string; title: string; href: string; image?: string; background?: string }
+export type BlogContent = { heading: string; posts: BlogPost[] }
+
+export type LogoCloudContent = { headline: string; tiles?: number }
+
+export type StatIcon = 'clock' | 'trend' | 'bank' | 'swap' | 'rocket'
+export type StatCard = { label: string; value: string; body: string; icon: StatIcon }
+export type StatsContent = { heading: string; cards: StatCard[] }
+
+export type Testimonial = { name: string; title: string; quote: string }
+export type TestimonialsContent = { heading: string; items: Testimonial[] }
+
+export type RaceContent = { heading: string; lead: string; link: Link; body: string; video?: string }
+
+export type PillarIcon = 'people' | 'hub' | 'search'
+export type PillarsContent = {
+  heading: [string, string]
+  video?: string
+  items: { title: string; body: string; color: string; icon: PillarIcon }[]
+}
+
+export type PoweredByContent = {
+  headline: string
+  body: string
+  cta: Link
+  image?: string
+  cardIcon?: string
+  cards: { title: string; body: string }[]
+}
+
+export type TrustedCard = { title: string; body: string; icon?: string; fill: string; cta?: Link }
+export type TrustedContent = {
+  heading: string
+  image?: string
+  overlay: string
+  trustedBy: string
+  /** Agency logos in the glass card; items without `src` render as placeholder tiles. */
+  logos: LogoItem[]
+  cards: TrustedCard[]
+}
+
+export type PrefooterContent = { headline: string; body?: string; cta: Link; secondary?: Link; image?: string }
+
+export type EnterpriseContent = {
+  hero?: HeroContent
+  pullApart?: PullApartContent
+  bridge?: BridgeContent
+  blog?: BlogContent
+  logoCloud?: LogoCloudContent
+  stats?: StatsContent
+  testimonials?: TestimonialsContent
+  race?: RaceContent
+  pillars?: PillarsContent
+  poweredBy?: PoweredByContent
+  trusted?: TrustedContent
+  prefooter?: PrefooterContent
+}
+
+/* ------------------------------------------------------------------------------------------------------------ */
+/* Clone data: scale.com/enterprise copy (captured 2026-10-31). Links point nowhere inside the clone.           */
+/* ------------------------------------------------------------------------------------------------------------ */
+
 const A = '/scale-clone/enterprise'
 
-/* TODO: Vahue copy */
-export const hero = {
-  headline: 'Dependable AI for the calls your company is built on.',
-  body: 'Teams rely on Vahue to design, ship and run AI systems that hold up under real-world production.',
-  cta: { text: 'Book a working session', href: '#' },
-  scroll: 'Scroll to explore',
-  // Node order matches Scale's graph (Energy, Infrastructure, Insurance, Health, Consumer, Retail, Life Science).
-  nodes: [
-    { label: 'Energy', image: `${A}/hero-energy.jpg`, color: 'rgb(167, 137, 85)' },
-    { label: 'Infrastructure', image: `${A}/hero-infrastructure.jpg`, color: 'rgb(163, 119, 87)' },
-    { label: 'Insurance', image: `${A}/hero-insurance.jpg`, color: 'rgb(84, 140, 164)' },
-    { label: 'Health', image: `${A}/hero-health.jpg`, color: 'rgb(84, 132, 153)' },
-    { label: 'Consumer', image: `${A}/hero-consumer.jpg`, color: 'rgb(159, 111, 85)' },
-    { label: 'Retail', image: `${A}/hero-retail.jpg`, color: 'rgb(158, 107, 95)' },
-    { label: 'Life Science', image: `${A}/hero-life-science.jpg`, color: 'rgb(145, 127, 111)' },
-  ],
-}
+// Logo widths at 28px height from Scale's marquee (customer logos are not shipped: placeholder tiles).
+const BRIDGE_LOGOS: LogoItem[] = [57, 26, 26, 70, 26, 70].map((width, i) => ({ name: `Customer ${i + 1}`, width }))
 
-/* TODO: Vahue copy */
-export const pullApart = [
-  { headline: 'Most AI projects stall before they reach the field.', subheading: 'Models are capable, yet making them dependable systems is the hard part.' },
-  { headline: 'We turn models into dependable systems', subheading: 'From reworking infrastructure to reshaping workflows, we connect your operation to solutions that change how it runs.' },
-]
-
-/* TODO: Vahue copy */
-export const bridge = {
-  headline: 'Vahue closes the gap between AI models & business results',
-  body: 'By linking your data and models with grounded human feedback, we turn workflows into systems that keep improving over time.',
-  trustedBy: 'Trusted by',
-  video: `${A}/bridge-stack.webm`,
-}
-
-/* TODO: Vahue copy */
-export const blog = {
-  heading: 'Your experts, multiplied. Your ceilings, removed.',
-  posts: [
-    { category: 'Research', swatch: 'rgb(39, 50, 82)', title: 'Past "Off-the-Shelf": Why Companies Need Specialized RL Agents', image: `${A}/blog-1.jpg` },
-    { category: 'Company', swatch: 'rgb(82, 82, 82)', title: 'How a global bank ships AI that actually works (hint: it is evals) | In the Loop: Episode 13', image: `${A}/blog-2.jpg` },
-    { category: 'Enterprise', swatch: 'rgb(82, 82, 82)', title: 'Turn Policy Documents Into Usable Signal', image: `${A}/blog-3.jpg` },
-    { category: 'Healthcare', swatch: 'rgb(82, 82, 82)', title: 'Dependable AI for the Future of Care', image: `${A}/blog-4.jpg` },
-  ],
-}
-
-/* TODO: Vahue copy */
-export const logoCloud = { headline: "Chosen by the world's most driven companies." }
-
-/* TODO: Vahue copy */
-export const stats = {
-  heading: 'Real clients, real outcomes.',
-  cards: [
-    { label: 'Time Saved', value: '91%', body: 'quicker contract reviews for legal teams (14 hours > 1 hour)', icon: 'clock' },
-    { label: 'Revenue', value: '$58M+', body: 'revenue lift after rolling out Gen AI recommendations.', icon: 'trend' },
-    { label: 'Accuracy', value: '100%', body: 'source-linked, regulator-ready audit trail.', icon: 'bank' },
-    { label: 'Adoption', value: '34,000+', body: 'customers retained within 3 months of launch.', icon: 'swap' },
-    { label: 'Delivery Speed', value: '6 weeks', body: 'production timeline to bring Vahue into your stack.', icon: 'rocket' },
-  ],
-}
-
-/* TODO: Vahue copy */
-export const testimonials = {
-  heading: "Don't just\ntake our word\nfor it",
-  items: [
-    {
-      name: 'Jordan Ellis',
-      title: 'CEO, Client A',
-      quote:
-        'We have a lot more ahead of us. There is a strong roadmap we will be sharing soon, and we will keep partnering with Vahue on it, which I am genuinely excited about.',
-    },
-    {
-      name: 'Priya Moreno',
-      title: 'CIO, Client B',
-      quote:
-        'We did not want another demo or proof of concept, we wanted production use cases and the infrastructure behind them. With the Vahue platform we shipped our first use case quickly: an assistant that makes it easy for people across the company to pull answers out of our central data hub. It is enabling data-driven decisions and cutting the time to insight from days or weeks down to seconds.',
-    },
-    {
-      name: 'Sam Okafor',
-      title: 'CFO, Client C',
-      quote:
-        'Vahue is truly the backbone of our AI progress. It is essential, and I am excited to keep building that relationship and delivering more for the business." - Sam Okafor, CFO.',
-    },
-  ],
-}
-
-/* TODO: Vahue copy */
-export const race = {
-  heading: 'The clock is running.',
-  lead: 'Everyone has AI now. Only Vahue makes it truly yours.',
-  link: { text: 'Learn More', href: '#' },
-  body: 'Most AI improves for everyone at once. Ours learns from your experts every single day, turning their judgment into an advantage that compounds and becomes more and more yours over time.',
-  video: `${A}/race.mp4`,
-}
-
-/* TODO: Vahue copy */
-export const pillars = {
-  heading: ['Three Pillars.', 'One Real Advantage.'],
-  video: `${A}/pillars.mp4`,
-  items: [
-    { title: 'Embedded experts', body: 'We work inside your organization to find the right use cases and build them properly from your office, not ours.', color: 'rgb(168, 146, 124)', icon: 'people' },
-    { title: 'Technology', body: 'Our platform and internal tools are built for speed, ready to run in your environment a day after a demo.', color: 'rgb(131, 156, 178)', icon: 'hub' },
-    { title: 'Applied AI Research', body: 'Our research team does not just track the field, they build and evaluate models next to the labs that make them.', color: 'rgb(25, 58, 41)', icon: 'search' },
-  ],
-}
-
-/* TODO: Vahue copy */
-export const poweredBy = {
-  headline: 'Powered by the Vahue Generative AI Platform',
-  body: 'Agentic solutions are built and run on the Vahue platform, covering the full life of AI systems, from first build to real-world use.',
-  cta: { text: 'Learn More', href: '#' },
-  image: `${A}/powered-by-platform.png`,
-  cards: [
-    { title: 'Build & Improve AI Systems', body: 'Create, evaluate and refine AI systems with the data, feedback and workflows needed to make them dependable.' },
-    { title: 'Deploy & run in production', body: 'Bring AI into your business workflows and run it dependably, with the controls needed to grow safely.' },
-  ],
-}
-
-/* TODO: Vahue copy */
-export const trusted = {
-  heading: 'Built to Be Relied On.',
-  image: `${A}/trusted-panel.jpg`,
-  overlay: 'Relied on by public agencies and defense teams, Vahue delivers AI systems that meet the strictest bars for security, oversight and day-to-day reliability.',
-  trustedBy: 'Trusted by',
-  cards: [
-    { title: 'Security & Compliance', body: 'Enterprise-grade security with tight data controls, privacy safeguards and alignment with industry standards.', icon: `${A}/icon-security.svg`, fill: 'rgb(131, 156, 178)', cta: 'Learn more' },
-    { title: 'Reliable Agentic Execution', body: 'Vahue gives autonomous agents a framework to run complex, multi-step work across your company.', icon: `${A}/icon-agentic.svg`, fill: 'rgb(168, 146, 124)', cta: null },
-    { title: 'Model Agnostic Flexibility', body: 'The right model for every job. Our stack plugs into any frontier model or custom open-source option.', icon: `${A}/icon-model.svg`, fill: 'rgb(121, 100, 140)', cta: 'Learn more' },
-  ],
-}
-
-/* TODO: Vahue copy */
-export const prefooter = {
-  headline: 'When it has to work, it starts with Vahue.',
-  cta: { text: 'Talk With An Expert', href: '#' },
-  image: `${A}/prefooter.jpg`,
+export const enterpriseContent: EnterpriseContent = {
+  hero: {
+    headline: 'Reliable AI for the decisions your business runs on.',
+    body: 'Enterprises trust Scale to build, deploy and operate AI systems that perform in production.',
+    cta: { text: 'Schedule a consult', href: '#' },
+    scroll: 'Scroll to explore',
+    nodes: [
+      { label: 'Energy', image: `${A}/hero-energy.jpg`, color: 'rgb(167, 137, 85)' },
+      { label: 'Infrastructure', image: `${A}/hero-infrastructure.jpg`, color: 'rgb(163, 119, 87)' },
+      { label: 'Insurance', image: `${A}/hero-insurance.jpg`, color: 'rgb(84, 140, 164)' },
+      { label: 'Health', image: `${A}/hero-health.jpg`, color: 'rgb(84, 132, 153)' },
+      { label: 'Consumer', image: `${A}/hero-consumer.jpg`, color: 'rgb(159, 111, 85)' },
+      { label: 'Retail', image: `${A}/hero-retail.jpg`, color: 'rgb(158, 107, 95)' },
+      { label: 'Life Science', image: `${A}/hero-life-science.jpg`, color: 'rgb(145, 127, 111)' },
+    ],
+  },
+  pullApart: {
+    curvesUrl: `${A}/pull-apart-curves.json`,
+    items: [
+      { headline: 'Most AI initiatives never make it past pilot.', subheading: 'Models are powerful, but turning them into reliable systems is the challenge.' },
+      {
+        headline: 'We turn models into reliable systems',
+        subheading: 'From rebuilding infrastructure to redesigning workflows, we connect your operation with solutions that transform.',
+      },
+    ],
+  },
+  bridge: {
+    headline: 'Scale bridges the gap between AI models & business outcomes',
+    body: 'By connecting your data and models with tangible human feedback, we create workflows into systems that continuously improve over time.',
+    trustedBy: 'Trusted by',
+    video: `${A}/bridge-stack.webm`,
+    logos: BRIDGE_LOGOS,
+  },
+  blog: {
+    heading: 'Your experts, amplified. Your limits, redefined.',
+    posts: [
+      { category: 'Research', swatch: 'rgb(39, 50, 82)', title: 'Beyond "Out-of-the-Box": Why Enterprises Need Specialized RL Agents', image: `${A}/blog-1.jpg`, href: '#' },
+      {
+        category: 'Company',
+        swatch: 'rgb(82, 82, 82)',
+        title: "How Morgan Stanley deploys AI that actually works (hint: it's evals) | Human in the Loop: Episode 13",
+        image: `${A}/blog-2.jpg`,
+        href: '#',
+      },
+      { category: 'Enterprise', swatch: 'rgb(82, 82, 82)', title: 'Turn Insurance Documents Into Intelligence', image: `${A}/blog-3.jpg`, href: '#' },
+      { category: 'Healthcare', swatch: 'rgb(82, 82, 82)', title: 'Reliable AI for the Future of Healthcare', image: `${A}/blog-4.jpg`, href: '#' },
+    ],
+  },
+  logoCloud: { headline: "Trusted by the world's most ambitious enterprises.", tiles: 10 },
+  stats: {
+    heading: 'Real customers, real results.',
+    cards: [
+      { label: 'Time Saved', value: '93%', body: 'faster contract reviews for legal clients (15 hours > 1 hour)', icon: 'clock' },
+      { label: 'Revenue', value: '$64M+', body: 'revenue growth after implementing Gen AI recommendations.', icon: 'trend' },
+      { label: 'Accuracy', value: '100%', body: 'source-cited, regulator-defensive audit-trail.', icon: 'bank' },
+      { label: 'Adoption', value: '36,000+', body: 'customer retention within 3 months of rollout.', icon: 'swap' },
+      { label: 'Delivery Speed', value: '6 weeks', body: 'production timeline to implement Scale AI in your system.', icon: 'rocket' },
+    ],
+  },
+  testimonials: {
+    heading: "Don't just\ntake our word\nfor it",
+    items: [
+      {
+        name: 'Jessica Sibley',
+        title: 'CEO, Time',
+        quote:
+          "We have a lot more to do. We have an exciting roadmap ahead that we will be announcing shortly, and we're going to continue to be partnering with Scale AI, and I'm really excited about that.",
+      },
+      {
+        name: 'Padma Elmgart',
+        title: 'CTO, Global Atlantic Financial Group',
+        quote:
+          'We wanted to not just stand up a demo or POC, but deploy production-ready use cases and infrastructure. With Scale GenAI Platform, we were able to quickly launch our first use case: a GenAI solution that makes it easy for users across Global Atlantic to get information out of our Enterprise Data Hub. This is enabling data-driven decision making and shortening the time to insights from days or weeks down to seconds.',
+      },
+      {
+        name: 'Carlos Olea',
+        title: 'CFO, Howard Hughes',
+        quote:
+          'Scale AI is really the backbone of our AI success. It\'s critical and I\'m excited to keep building forward that relationship and delivering more for Howard Hughes." - Carlos Olea, CFO, Howard Hughes.',
+      },
+    ],
+  },
+  race: {
+    heading: 'The race is on.',
+    lead: 'Everyone is using AI. But only Scale makes it uniquely yours.',
+    link: { text: 'Learn More', href: '#' },
+    body: 'Most AI gets smarter for everyone. Dialect learns from your experts every day, turning their judgment into a compounding advantage that grows more powerful, and more uniquely yours, over time.',
+    video: `${A}/race.mp4`,
+  },
+  pillars: {
+    heading: ['Three Pillars.', 'One Unfair Advantage.'],
+    video: `${A}/pillars.mp4`,
+    items: [
+      {
+        title: 'Integrated experts',
+        body: 'We embed directly in your organization to help you identify the right use cases and build them correctly from your office, not ours.',
+        color: 'rgb(168, 146, 124)',
+        icon: 'people',
+      },
+      {
+        title: 'Technology',
+        body: 'Our platform and internal tooling are built to move fast, ready to stand up in your environment within a day of a demo.',
+        color: 'rgb(131, 156, 178)',
+        icon: 'hub',
+      },
+      {
+        title: 'Applied AI Research',
+        body: "Our frontier research team isn't just following the technology, they're building and evaluating it alongside the labs that make it.",
+        color: 'rgb(25, 58, 41)',
+        icon: 'search',
+      },
+    ],
+  },
+  poweredBy: {
+    headline: 'Powered by the Scale Generative AI Platform',
+    body: 'Agentic solutions are built and deployed on Scale’s platform, enabling the full lifecycle of AI systems – from development to real-world operation.',
+    cta: { text: 'Learn More', href: '#' },
+    image: `${A}/powered-by-platform.png`,
+    cardIcon: `${A}/icon-powered-card.svg`,
+    cards: [
+      { title: 'Build & Improve AI Systems', body: 'Create, evaluate, and refine AI systems with the data, feedback, and workflows needed to make them reliable.' },
+      { title: 'Deploy & run in production', body: 'Integrate AI into your business workflows and operate it reliably—with the controls needed to scale safely.' },
+    ],
+  },
+  trusted: {
+    heading: 'Built to Be Trusted.',
+    image: `${A}/trusted-panel.jpg`,
+    overlay:
+      'Trusted by government and defense operations, Scale delivers AI systems that meet the highest standards for security, oversight, and operational reliability.',
+    trustedBy: 'Trusted by',
+    logos: [{ name: 'Agency 1' }, { name: 'Agency 2' }, { name: 'Agency 3' }],
+    cards: [
+      {
+        title: 'Security & Compliance',
+        body: 'Enterprise-grade security with strict data controls, privacy safeguards, and compliance with industry standards.',
+        icon: `${A}/icon-security.svg`,
+        fill: 'rgb(131, 156, 178)',
+        cta: { text: 'Learn more', href: '#' },
+      },
+      {
+        title: 'Reliable Agentic Execution',
+        body: 'Scale gives autonomous agents a framework to execute complex, multi-step operations across your enterprise.',
+        icon: `${A}/icon-agentic.svg`,
+        fill: 'rgb(168, 146, 124)',
+      },
+      {
+        title: 'Model Agnostic Flexibility',
+        body: 'The right model for every use case. Our stack integrates seamlessly with any frontier model or custom open-source.',
+        icon: `${A}/icon-model.svg`,
+        fill: 'rgb(121, 100, 140)',
+        cta: { text: 'Learn more', href: '#' },
+      },
+    ],
+  },
+  prefooter: {
+    headline: 'When it has to work, it starts with Scale.',
+    cta: { text: 'Speak with An Expert', href: '#' },
+    image: `${A}/prefooter.jpg`,
+  },
 }

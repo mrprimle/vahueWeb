@@ -7,7 +7,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import AnimatedText, { type AnimatedTextHandle } from './AnimatedText'
 import styles from './enterprise.module.css'
-import { blog } from './content'
+import type { BlogContent, BlogPost } from './content'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -51,7 +51,7 @@ function Chevron({ dir }: { dir: 'left' | 'right' }) {
   )
 }
 
-function Card({ post, index }: { post: (typeof blog.posts)[number]; index: number }) {
+function Card({ post, index }: { post: BlogPost; index: number }) {
   return (
     <div
       role="group"
@@ -61,10 +61,12 @@ function Card({ post, index }: { post: (typeof blog.posts)[number]; index: numbe
     >
       <div className="h-full rounded-xl md:rounded-3xl">
         <div data-embla-layer className="relative flex h-full w-full origin-center justify-center will-change-transform [transform-style:preserve-3d]">
-          <a href="#" className="group/card relative inset-0 block h-full w-full overflow-clip rounded-xl outline-none md:rounded-3xl" draggable={false}>
-            <div className="img-container absolute h-full w-full">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={post.image} alt="" draggable={false} className="absolute inset-0 block h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-125" />
+          <a href={post.href} className="group/card relative inset-0 block h-full w-full overflow-clip rounded-xl outline-none md:rounded-3xl" draggable={false}>
+            <div className="img-container absolute h-full w-full" style={post.background ? { background: post.background } : undefined}>
+              {post.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={post.image} alt="" draggable={false} className="absolute inset-0 block h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-125" />
+              ) : null}
             </div>
             <div className="absolute left-5 top-5 z-10 inline-flex min-w-0 max-w-full items-center justify-center gap-2 rounded-sm p-1 md:left-9 md:top-9">
               <span className="inline-flex size-[26px] shrink-0 items-center justify-center rounded-[5px] shadow-sm" style={{ background: post.swatch }}>
@@ -72,7 +74,6 @@ function Card({ post, index }: { post: (typeof blog.posts)[number]; index: numbe
                   <path d="M6.79 0H.5C.06 0-.17.54.15.85l6.29 6.3c.31.3.85.08.85-.36V.5c0-.28-.22-.5-.5-.5Z" fill="white" />
                 </svg>
               </span>
-              {/* TODO: Vahue copy */}
               <span className="flex min-h-[26px] min-w-0 flex-1 items-center truncate font-mono text-[11px] uppercase leading-none tracking-[0.05em] text-white">{post.category}</span>
             </div>
             <div className="absolute right-6 top-6 z-10 overflow-clip md:right-10 md:top-10">
@@ -83,7 +84,6 @@ function Card({ post, index }: { post: (typeof blog.posts)[number]; index: numbe
             </div>
             <div aria-hidden className={`absolute inset-0 overflow-hidden rounded-xl md:rounded-3xl ${styles.imageGradient}`} />
             <div className="absolute bottom-0 z-10 m-6 md:m-10">
-              {/* TODO: Vahue copy */}
               <h3 className="text-balance text-[18.4px] font-normal leading-[1.375] tracking-[-0.01em] text-white drop-shadow-md">{post.title}</h3>
             </div>
           </a>
@@ -93,7 +93,7 @@ function Card({ post, index }: { post: (typeof blog.posts)[number]; index: numbe
   )
 }
 
-export default function BlogCarousel() {
+export default function BlogCarousel({ content: blog }: { content: BlogContent }) {
   const section = useRef<HTMLElement>(null)
   const wrap = useRef<HTMLDivElement>(null)
   const heading = useRef<AnimatedTextHandle>(null)
@@ -121,7 +121,7 @@ export default function BlogCarousel() {
     const out = [...base]
     while (out.length <= 5) out.push(...base)
     return out
-  }, [desktop])
+  }, [desktop, blog.posts])
 
   const reset = useCallback((api: EmblaCarouselType) => {
     const nodes = api.slideNodes()
@@ -318,7 +318,6 @@ export default function BlogCarousel() {
     <section ref={section} className="BlogPreview3D h-full w-full bg-white px-4 pb-4 pt-0 md:pb-40 md:pt-16">
       <div className="grid w-full grid-cols-8 gap-2 px-6 md:grid-cols-12">
         <div className="col-span-full mb-6 text-center text-black md:col-span-8 md:col-start-3 md:mb-12">
-          {/* TODO: Vahue copy */}
           <AnimatedText ref={heading} as="h3" maskCompensation className="text-[24px] font-normal leading-[1.05] tracking-[-0.01em] text-black md:text-[40px] md:leading-[1.25]">
             {blog.heading}
           </AnimatedText>

@@ -26,6 +26,12 @@ import gsap from 'gsap'
 
 export type PullApartSceneOptions = {
   curvesUrl: string
+  /**
+   * Optional footage inside the card (Scale plays a licensed iStock clip here, not shipped). Sampled like Scale's
+   * shader: uv x scaled by imageAspect * 0.5, contrast 0.8 around mid-grey, + film grain. Without it the card
+   * falls back to the procedural vignette + grain.
+   */
+  cardVideoUrl?: string
   onSectionVisible: (index: 0 | 1, visible: boolean) => void
 }
 
@@ -155,11 +161,21 @@ export function createPullApartScene(container: HTMLElement, opts: PullApartScen
 
   // 1. Card ("video" plane) + mark --------------------------------------------------------------
   const mark = track(markTexture())
+  let cardVideo: HTMLVideoElement | null = null
+  let cardTex: THREE.VideoTexture | null = null
+  if (opts.cardVideoUrl) {
+    cardVideo = document.createElement('video')
+    Object.assign(cardVideo, { src: opts.cardVideoUrl, muted: true, defaultMuted: true, loop: true, playsInline: true, autoplay: true, preload: 'auto' })
+    cardVideo.setAttribute('playsinline', '')
+    cardVideo.setAttribute('muted', '')
+    cardVideo.play().catch(() => {})
+    cardTex = track(new THREE.VideoTexture(cardVideo))
+  }
   const card = new THREE.Mesh(
     track(new THREE.PlaneGeometry(1, 1)),
     track(
       new THREE.ShaderMaterial({
-        uniforms: { ...common, tMark: { value: mark } },
+        uniforms: { ...common, tMark: { value: mark }, tMap: { value: cardTex }, uHasMap: { value: cardTex ? 1 : 0 }, uMapAspect: { value: 16 / 9 } },
         transparent: true,
         depthTest: false,
         vertexShader: /* glsl */ `
@@ -176,6 +192,9 @@ export function createPullApartScene(container: HTMLElement, opts: PullApartScen
         fragmentShader: /* glsl */ `
           ${COMMON}
           uniform sampler2D tMark;
+          uniform sampler2D tMap;
+          uniform float uHasMap;
+          uniform float uMapAspect;
           varying vec2 vUv;
           float sdRoundBox(vec2 p, vec2 b, float r) { vec2 q = abs(p) - b + r; return min(max(q.x, q.y), 0.0) + length(max(q, 0.0)) - r; }
           float aastep(float th, float v) { float w = length(vec2(dFdx(v), dFdy(v))) * 0.7071; return smoothstep(th - w, th + w, v); }
@@ -188,6 +207,12 @@ export function createPullApartScene(container: HTMLElement, opts: PullApartScen
             float shade = 0.2 - 0.05 * length(p);
             float noise = rand(vUv + fract(uTime)) * 2.0 - 1.0;
             vec3 color = vec3(shade) + noise * 0.04;
+            if (uHasMap > 0.5) {
+              vec2 uv = (vUv - 0.5) * vec2(uMapAspect * 0.5, 1.0) + 0.5;
+              vec3 v = texture2D(tMap, uv).rgb;
+              v = (v * 2.0 - 1.0) * 0.8 * 0.5 + 0.5;
+              color = v + noise * 0.04;
+            }
             float s = clamp(uProgress * 2.5, 0.0, 1.0);
             float scaleIn = 1.0 - pow(1.0 - s, 3.0);
             vec2 luv = vUv - 0.5;
@@ -206,6 +231,12 @@ export function createPullApartScene(container: HTMLElement, opts: PullApartScen
       }),
     ),
   )
+  if (cardVideo) {
+    const v = cardVideo
+    v.addEventListener('loadedmetadata', () => {
+      if (v.videoWidth && v.videoHeight) (card.material as THREE.ShaderMaterial).uniforms.uMapAspect.value = v.videoWidth / v.videoHeight
+    })
+  }
   card.renderOrder = -1
   group.add(card)
 
@@ -562,5 +593,10 @@ export function createPullApartScene(container: HTMLElement, opts: PullApartScen
     clock.dispose()
     renderer.dispose()
     renderer.domElement.remove()
+    if (cardVideo) {
+      cardVideo.pause()
+      cardVideo.removeAttribute('src')
+      cardVideo.load()
+    }
   }
 }

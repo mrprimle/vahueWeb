@@ -5,7 +5,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import AnimatedText, { type AnimatedTextHandle } from './AnimatedText'
 import { createPullApartScene } from './pullApartScene'
-import { pullApart } from './content'
+import type { PullApartContent } from './content'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -18,7 +18,7 @@ gsap.registerPlugin(ScrollTrigger)
  * subheading custom "lift" animation (delay .5).
  */
 
-export default function PullApart() {
+export default function PullApart({ content: copy }: { content: PullApartContent }) {
   const section = useRef<HTMLDivElement>(null)
   const content = useRef<HTMLDivElement>(null)
   const parallax = useRef<HTMLDivElement>(null)
@@ -51,25 +51,24 @@ export default function PullApart() {
         subs.current[i]?.animateOut()
       }
     }
-    const destroy = canvasBox.current ? createPullApartScene(canvasBox.current, { curvesUrl: '/scale-clone/enterprise/pull-apart-curves.json', onSectionVisible: onVisible }) : () => {}
+    const destroy = canvasBox.current ? createPullApartScene(canvasBox.current, { curvesUrl: copy.curvesUrl, cardVideoUrl: copy.cardVideo, onSectionVisible: onVisible }) : () => {}
     return () => {
       destroy()
       ctx.revert()
     }
-  }, [])
+  }, [copy.curvesUrl, copy.cardVideo])
 
   return (
     <div ref={section} data-nav-theme="dark" className="EnterprisePullApart relative isolate h-[450vh] w-full overflow-hidden bg-black">
       <div ref={content} className="content relative h-screen w-full">
         <div ref={parallax} className="parallaxOut relative h-screen w-full">
           <div ref={canvasBox} className="relative inset-0 h-full w-full" style={{ touchAction: 'none' }} />
-          {pullApart.map((item, i) => (
+          {copy.items.map((item, i) => (
             <div
               key={i}
               className={`absolute m-auto grid w-full grid-cols-8 gap-2 px-6 text-white md:grid-cols-12 ${i === 0 ? 'top-[15vh]' : 'bottom-[15vh] md:bottom-[6vh]'}`}
             >
               <div className="col-span-full text-center">
-                {/* TODO: Vahue copy */}
                 <AnimatedText
                   ref={(h) => {
                     heads.current[i] = h
@@ -80,7 +79,6 @@ export default function PullApart() {
                 >
                   {item.headline}
                 </AnimatedText>
-                {/* TODO: Vahue copy */}
                 <AnimatedText
                   ref={(h) => {
                     subs.current[i] = h

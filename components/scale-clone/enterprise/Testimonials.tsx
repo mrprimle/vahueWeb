@@ -4,6 +4,7 @@ import { forwardRef, useCallback, useEffect, useImperativeHandle, useLayoutEffec
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import AnimatedText, { type AnimatedTextHandle } from './AnimatedText'
+import type { Testimonial as Item, TestimonialsContent } from './content'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -24,7 +25,6 @@ const THEME = '#839CB2'
 const INK = '#010101'
 const INK_0 = 'rgba(1, 1, 1, 0)'
 
-type Item = { name: string; title: string; quote: string }
 
 type ChipHandle = { animateToText: (o: { text: string; delay?: number }) => Promise<void> }
 
@@ -144,13 +144,14 @@ function Tile({
       style={{ color: isActive ? THEME : INK, borderColor: INK }}
     >
       <div ref={fill} className="absolute -z-10 h-full w-full" style={{ background: INK }} />
-      {/* TODO: client logo. Neutral placeholder bar in the logo bounds. */}
+      {/* Client logo slot: neutral placeholder bar in the logo bounds (Scale's client logos are not shipped). */}
       <div className="relative z-10 h-[18%] w-[70%] rounded-[3px] bg-current opacity-80" aria-hidden />
     </button>
   )
 }
 
-export default function Testimonials({ heading, items }: { heading: string; items: Item[] }) {
+export default function Testimonials({ content }: { content: TestimonialsContent }) {
+  const { heading, items } = content
   const [active, setActive] = useState(-1)
   const quoteRefs = useRef<(AnimatedTextHandle | null)[]>([])
   const nameRefs = useRef<(AnimatedTextHandle | null)[]>([])
@@ -246,7 +247,6 @@ export default function Testimonials({ heading, items }: { heading: string; item
               role="tablist"
               aria-label="Client testimonials"
             >
-              {/* TODO: Vahue copy */}
               <p className="col-span-full w-1/2 whitespace-normal font-mono lg:whitespace-pre-line text-[12px] font-medium uppercase leading-[1.375] tracking-[-0.01em] text-black lg:w-full">{heading}</p>
               <div className="mb-2 hidden flex-col gap-2 lg:flex">{tiles()}</div>
               <div className="flex justify-between gap-2">
@@ -265,8 +265,7 @@ export default function Testimonials({ heading, items }: { heading: string; item
                         aria-hidden={!on}
                         className={`[grid-area:1/1] ${on ? 'relative z-10' : 'pointer-events-none relative z-0 overflow-hidden lg:absolute lg:inset-0'}`}
                       >
-                        {/* TODO: Vahue copy */}
-                        <AnimatedText
+                                  <AnimatedText
                           ref={(h) => {
                             quoteRefs.current[i] = h
                           }}

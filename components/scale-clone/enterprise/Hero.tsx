@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import AnimatedText, { type AnimatedTextHandle } from './AnimatedText'
 import FlatCta, { type FlatCtaHandle } from './FlatCta'
 import styles from './enterprise.module.css'
-import { hero } from './content'
+import type { HeroContent, HeroNode } from './content'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -82,7 +82,7 @@ type NodeHandle = {
   idle: (t: number, i: number, amp: number, s: { x: number; y: number }) => void
 }
 
-const GraphNode = forwardRef<NodeHandle, { node: NodeDef; index: number }>(function GraphNode({ node, index }, ref) {
+const GraphNode = forwardRef<NodeHandle, { node: NodeDef; info: HeroNode }>(function GraphNode({ node, info }, ref) {
   const outer = useRef<HTMLDivElement>(null)
   const inner = useRef<HTMLDivElement>(null)
   const clip = useRef<HTMLDivElement>(null)
@@ -90,7 +90,6 @@ const GraphNode = forwardRef<NodeHandle, { node: NodeDef; index: number }>(funct
   const tri = useRef<SVGSVGElement>(null)
   const label = useRef<AnimatedTextHandle>(null)
   const smoothOut = useRef(0)
-  const info = hero.nodes[index]
 
   const vars = useMemo(() => {
     const d = node.desktop
@@ -175,14 +174,15 @@ const GraphNode = forwardRef<NodeHandle, { node: NodeDef; index: number }>(funct
         <div ref={clip} className="relative h-full w-full shrink-0" onMouseEnter={hoverIn} onMouseLeave={hoverOut}>
           <div className="pointer-events-none relative h-full w-full select-none overflow-hidden" style={{ background: info.color }}>
             <div ref={img} className="absolute inset-0">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={info.image} alt="" className="h-full w-full object-cover" draggable={false} />
+              {info.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={info.image} alt="" className="h-full w-full object-cover" draggable={false} />
+              ) : null}
             </div>
           </div>
         </div>
         <div className="flex w-full items-center justify-start gap-2">
           <Triangle ref={tri} />
-          {/* TODO: Vahue copy */}
           <AnimatedText ref={label} as="div" className="mt-1 w-full text-left font-mono text-[0.5rem] uppercase leading-[1.5] text-black md:text-[0.625rem]">
             {info.label}
           </AnimatedText>
@@ -195,7 +195,7 @@ const GraphNode = forwardRef<NodeHandle, { node: NodeDef; index: number }>(funct
 type Edge = { key: string; a: number; b: number }
 const EDGES: Edge[] = NODES.flatMap((n, i) => (n.connections ?? []).map((b) => ({ key: `${i}-${b}`, a: i, b })))
 
-export default function Hero() {
+export default function Hero({ content: hero }: { content: HeroContent }) {
   const root = useRef<HTMLDivElement>(null)
   const svg = useRef<SVGSVGElement>(null)
   const nodes = useRef<(NodeHandle | null)[]>([])
@@ -345,7 +345,6 @@ export default function Hero() {
       <div className="relative isolate mx-auto h-dvh w-full overflow-hidden px-6 py-[60px]">
         <div className="absolute inset-0 left-1/2 top-[34%] z-10 grid h-full w-full -translate-x-1/2 grid-cols-12 items-start justify-center gap-2 px-6 max-sm:top-[33%] max-sm:max-w-full">
           <div className="col-span-10 col-start-2 flex flex-col items-center gap-6 py-6 md:col-span-4 md:col-start-5">
-            {/* TODO: Vahue copy */}
             <AnimatedText
               ref={headRef}
               as="h1"
@@ -353,7 +352,6 @@ export default function Hero() {
             >
               {hero.headline}
             </AnimatedText>
-            {/* TODO: Vahue copy */}
             <AnimatedText
               ref={bodyRef}
               as="p"
@@ -392,7 +390,7 @@ export default function Hero() {
             <GraphNode
               key={n.id}
               node={n}
-              index={i}
+              info={hero.nodes[i] ?? { label: '', color: '#EAEAEA' }}
               ref={(h) => {
                 nodes.current[i] = h
               }}
@@ -400,7 +398,6 @@ export default function Hero() {
           ))}
         </div>
         <div className="absolute bottom-[5vh] right-8 z-10 flex items-center gap-4 text-center text-black md:right-12" aria-label="Scroll to explore">
-          {/* TODO: Vahue copy */}
           <AnimatedText ref={scrollP} as="p" className="hidden text-[14px] font-medium leading-[1.5] tracking-[0.025em] md:block">
             {hero.scroll}
           </AnimatedText>

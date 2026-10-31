@@ -4,7 +4,7 @@ import { useEffect, useRef, type ReactNode } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import AnimatedText, { type AnimatedTextHandle } from './AnimatedText'
-import { stats } from './content'
+import type { StatIcon, StatsContent } from './content'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -20,7 +20,7 @@ gsap.registerPlugin(ScrollTrigger)
  *   copy animateIn(delay .1i + .125).
  */
 
-const ICONS: Record<string, ReactNode> = {
+const ICONS: Record<StatIcon, ReactNode> = {
   clock: <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm3.3 14.71L11 12.41V7h2v4.59l3.71 3.71-1.42 1.41z" />,
   trend: <path d="m3.5 18.49 6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z" />,
   bank: <path d="M4 10h3v7H4zm6.5 0h3v7h-3zM2 19h20v3H2zm15-9h3v7h-3zm-5-9L2 6v2h20V6z" />,
@@ -52,7 +52,7 @@ function entrance(i: number, n: number) {
   return { origin: 'center center', x: 0 }
 }
 
-export default function Stats() {
+export default function Stats({ content: stats }: { content: StatsContent }) {
   const section = useRef<HTMLElement>(null)
   const heading = useRef<AnimatedTextHandle>(null)
   const cards = useRef<(HTMLDivElement | null)[]>([])
@@ -100,14 +100,13 @@ export default function Stats() {
       })
     })
     return () => ctx.revert()
-  }, [])
+  }, [stats.cards])
 
   return (
     <div data-nav-theme="dark" className="Section relative isolate grid grid-cols-8 gap-2 overflow-hidden bg-black px-6 text-white md:grid-cols-12">
       <div className="relative isolate col-span-full rounded-3xl md:col-span-10 md:col-start-2 xl:col-span-8 xl:col-start-3">
         <section ref={section} className="CardGrid w-full py-12 xl:py-24">
           <div className="mx-auto w-full">
-            {/* TODO: Vahue copy */}
             <AnimatedText
               ref={heading}
               as="h2"
@@ -118,15 +117,18 @@ export default function Stats() {
             </AnimatedText>
             <div className="CardGridContainer flex grid-cols-6 flex-col gap-2 md:p-0 lg:grid">
               {stats.cards.map((c, i) => (
-                <div key={c.label} className={`flex min-h-0 min-w-0 flex-col lg:h-full ${i < 3 ? 'col-span-full lg:col-span-2' : 'col-span-full lg:col-span-3'}`}>
+                <div
+                  key={c.label}
+                  className={`flex min-h-0 min-w-0 flex-col lg:h-full ${i < 3 ? 'col-span-full lg:col-span-2' : 'col-span-full lg:col-span-3'}`}
+                >
                   <div
                     ref={(el) => {
                       cards.current[i] = el
                     }}
-                    className="flex min-h-0 flex-1 flex-col"
+                    className="flex min-h-0 w-full flex-1 flex-col"
                   >
-                    <div className="Card flex min-h-0 flex-1 flex-col rounded-[8px] bg-white/[0.13] text-white xl:rounded-2xl">
-                      <div className="flex min-h-0 flex-1 flex-col justify-between gap-5 p-6 md:gap-16 xl:p-8">
+                    <div className="Card flex min-h-0 flex-1 flex-col rounded-2xl bg-white/[0.13] text-white">
+                      <div className="flex min-h-0 flex-1 flex-col justify-between gap-5 p-6 md:gap-16 md:p-8">
                         <div className="flex items-center gap-2">
                           <div
                             ref={(el) => {
@@ -146,16 +148,15 @@ export default function Stats() {
                               </svg>
                             </span>
                           </div>
-                          {/* TODO: Vahue copy */}
-                          <p className="font-mono text-[14px] uppercase leading-[1.5] tracking-[-0.01em] text-[#929292]">{c.label}</p>
+                                        <p className="font-mono text-[14px] uppercase leading-[1.5] tracking-[-0.01em] text-[#929292]">{c.label}</p>
                         </div>
-                        <div className="flex flex-col gap-4 lg:pt-6">
-                          {/* TODO: Vahue copy */}
-                          <AnimatedText
+                        <div className="flex flex-col gap-4">
+                                        <AnimatedText
                             ref={(h) => {
                               copies.current[i] = h
                             }}
                             className="min-h-16"
+                            maskCompensation={false}
                           >
                             <h2 className="mb-2 text-[2rem] font-normal leading-[1.05] tracking-[-0.01em] text-white md:text-[40px] md:leading-[44px]">{c.value}</h2>
                             <p className="text-[16px] leading-[1.5] tracking-[-0.01em] text-[#929292]">{c.body}</p>

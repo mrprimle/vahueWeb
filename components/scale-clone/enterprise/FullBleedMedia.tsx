@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef, type ReactNode } from 'react'
 import Image from 'next/image'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -19,16 +19,24 @@ gsap.registerPlugin(ScrollTrigger)
  *   media wrapper scale 1.25 -> 1
  * Intro (ScrollTrigger "top center", fires retroactively): CTAs animateIn {duration 0.85, delay 0.5};
  *   headline then body animateIn with delay 0.2 * index.
+ * Late-trigger fix (same as the data-engine family): the pinned hero / pull-apart, lazy media, the WebGL scenes
+ *   and SplitText all change the document height after these triggers are measured, which left the clip/scale
+ *   running late. A ResizeObserver on <body> re-runs ScrollTrigger.refresh() (debounced 150ms) whenever
+ *   scrollHeight changes.
  */
 
 type Cta = { text: string; href: string }
 type Props = {
-  image: string
+  /** Background photo. Omit and pass `media` (own visual) instead. */
+  image?: string
+  media?: ReactNode
   headline: string
   body?: string
   primary: Cta
   secondary?: Cta
+  /** Optional logo marquee under the CTAs (label + `count` placeholder tiles). */
   logos?: { label: string; count: number }
+  as?: 'h1' | 'h2'
   startPercentage: number
   backdropClassName: string
   wrapperClassName: string
@@ -42,6 +50,8 @@ const map = (v: number, a: number, b: number, c: number, d: number) => {
 
 export default function FullBleedMedia({
   image,
+  media: mediaSlot,
+  as = 'h2',
   headline,
   body,
   primary,
@@ -109,7 +119,22 @@ export default function FullBleedMedia({
         },
       })
     })
-    return () => ctx.revert()
+
+    let lastH = document.documentElement.scrollHeight
+    let refreshTimer: ReturnType<typeof setTimeout> | undefined
+    const heightWatch = new ResizeObserver(() => {
+      const h = document.documentElement.scrollHeight
+      if (h === lastH) return
+      lastH = h
+      clearTimeout(refreshTimer)
+      refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 150)
+    })
+    heightWatch.observe(document.body)
+    return () => {
+      heightWatch.disconnect()
+      clearTimeout(refreshTimer)
+      ctx.revert()
+    }
   }, [startPercentage])
 
   return (
@@ -120,17 +145,15 @@ export default function FullBleedMedia({
             <section ref={section} className="relative overflow-hidden rounded-3xl bg-white text-black [clip-path:inset(0_round_1.5rem)]">
               <div className="relative flex min-h-[480px] items-end overflow-hidden rounded-3xl p-8 [clip-path:inset(0_round_1.5rem)] md:min-h-[720px] md:p-16">
                 <div className="relative z-20 flex w-full max-w-[72rem] flex-col gap-6 text-white">
-                  {/* TODO: Vahue copy */}
                   <AnimatedText
                     ref={headRef}
-                    as="h2"
+                    as={as}
                     maskCompensation
                     className="text-balance text-[clamp(2rem,0.5rem+5vw,4rem)] font-normal leading-[1.05] tracking-[-0.01em] text-white"
                   >
                     {headline}
                   </AnimatedText>
                   {body ? (
-                    // TODO: Vahue copy
                     <AnimatedText
                       ref={bodyRef}
                       as="p"
@@ -148,10 +171,9 @@ export default function FullBleedMedia({
                     <div className="mt-4 flex w-full min-w-0 max-w-md flex-col gap-2">
                       <div className="flex items-center gap-2">
                         <span aria-hidden className="h-[6px] w-[6px] shrink-0 bg-[#929292]" style={{ clipPath: 'polygon(0 0, 100% 100%, 100% 0)' }} />
-                        {/* TODO: Vahue copy */}
                         <p className="text-[10px] uppercase leading-[1.5] tracking-[0.05em] text-[#929292]">{logos.label}</p>
                       </div>
-                      {/* TODO: partner logos. Neutral same-size placeholder tiles in Scale's 70x28 logo bounds. */}
+                      {/* Partner logos: neutral same-size placeholder tiles in Scale's 70x28 logo bounds. */}
                       <div className="w-full min-w-0 overflow-hidden opacity-40" role="presentation" aria-hidden>
                         <div className={`flex w-max gap-8 overflow-hidden will-change-transform ${styles.marquee}`}>
                           {Array.from({ length: logos.count * 2 }).map((_, i) => (
@@ -168,7 +190,7 @@ export default function FullBleedMedia({
                   <div className="pointer-events-none absolute inset-0 z-10 h-full w-full overflow-hidden rounded-3xl [background:linear-gradient(#0000_0%,#000_100%)] [clip-path:inset(0_round_1.5rem)]" />
                   <div ref={media} className="absolute inset-0 h-full w-full overflow-hidden rounded-3xl [clip-path:inset(0_round_1.5rem)]">
                     <div className="relative h-full w-full overflow-hidden rounded-3xl bg-[#536482]">
-                      <Image src={image} alt="" fill priority={priority} sizes="100vw" className="object-cover" />
+                      {image ? <Image src={image} alt="" fill priority={priority} sizes="100vw" className="object-cover" /> : mediaSlot}
                     </div>
                   </div>
                 </div>
