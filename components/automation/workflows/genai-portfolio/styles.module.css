@@ -1,0 +1,251 @@
+/*
+ * Workflow page on the scale.com/genai-portfolio layout (Vahue dark): grid + type ladder measured on the live page (1440 / 390).
+ * Scale's breakpoint for the type ladder and grid swap is 768px (max-width: 767px = mobile).
+ */
+
+.page {
+  letter-spacing: -0.01em;
+}
+/* neutralise the site-wide h1-h6 base (white, semibold, tracking-tight) inside the clone */
+.page :is(h1, h2, h3, h4, h5, h6) {
+  color: inherit;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+}
+.page .header4 {
+  letter-spacing: -0.03em;
+}
+
+/* grid-layout-mobile / grid-layout-desktop: 8 x 1fr below md, 12 x minmax(0,150px) centred from md, gap 8, px 24 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 0.5rem;
+  padding: 0 1.5rem;
+}
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(12, minmax(0, 150px));
+    justify-content: center;
+  }
+}
+/* lg:grid-layout-desktop-double (SgpStack): 24 x minmax(0,150px) */
+@media (min-width: 1024px) {
+  .gridDouble {
+    display: grid;
+    grid-template-columns: repeat(24, minmax(0, 150px));
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0 1.5rem;
+  }
+}
+
+/* ---------- type ladder ---------- */
+.header2 {
+  font-size: 4rem;
+  line-height: 1.05;
+  font-weight: 400;
+}
+.header2b {
+  font-size: 1.313rem;
+  line-height: 1.25;
+  font-weight: 400;
+}
+.header3 {
+  font-size: 2.5rem;
+  line-height: 1.25;
+  font-weight: 400;
+}
+.header4 {
+  font-size: 2rem;
+  line-height: 1.5;
+  letter-spacing: -0.03em;
+  font-weight: 400;
+}
+.header5 {
+  font-size: 1.5rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+.body1 {
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+.body3 {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.mono {
+  text-transform: uppercase;
+  font-size: 0.813rem;
+  line-height: 1.2;
+  font-weight: 400;
+}
+@media (max-width: 767px) {
+  .header2 {
+    font-size: 2rem;
+    line-height: 1.05;
+  }
+  .header2b {
+    font-size: 1.25rem;
+    line-height: 1.05;
+  }
+  .header3 {
+    font-size: 1.5rem;
+    line-height: 1.05;
+  }
+  .header4 {
+    font-size: 1.5rem;
+    line-height: 1.05;
+  }
+  .header5 {
+    font-size: 1.375rem;
+    line-height: 1.05;
+  }
+  .body1 {
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+  .body3 {
+    line-height: 1.35;
+  }
+  .mono {
+    font-size: 0.625rem;
+  }
+}
+
+/* AnimatedText roots start hidden until split (avoids a flash of unsplit text) */
+.pending {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pending {
+    opacity: 1;
+  }
+}
+
+/* ---------- hero logo marquee (40s linear, translate -50%) ---------- */
+.marquee {
+  animation: marquee 40s linear infinite;
+}
+@keyframes marquee {
+  from {
+    transform: translate(0);
+  }
+  to {
+    transform: translate(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    animation: none;
+  }
+}
+
+/* ---------- SgpDemo ortho stack (PtX9LG module) ---------- */
+.ortho {
+  margin-top: 8vh;
+}
+@media (max-width: 767px) {
+  .ortho {
+    margin-top: 4vh;
+  }
+}
+.ortho:nth-child(n + 2)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #000;
+  pointer-events: none;
+}
+.ortho:nth-child(2)::after {
+  opacity: 0.8;
+}
+.ortho:nth-child(3)::after {
+  opacity: 0.9;
+}
+
+/* ---------- FlatCta (hover fill + arrow track) ---------- */
+.cta {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: normal;
+}
+.ctaArrow {
+  border-radius: 8px;
+}
+.ctaFill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: currentColor;
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+.ctaLabel {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  font-weight: 500;
+  transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1);
+}
+.cta:not(.ctaArrow):hover .ctaLabel {
+  transform: scale(0.9);
+}
+.ctaIcon {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  height: 32px;
+  width: 32px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 6px;
+}
+.ctaTrack {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  width: 200%;
+  transform: translateX(-50%);
+  transition: transform 0.6s cubic-bezier(0, 0, 0.2, 1);
+}
+.cta:hover .ctaTrack {
+  transform: translateX(0);
+}
+.ctaTrack > span {
+  display: flex;
+  height: 100%;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ctaFill,
+  .ctaLabel,
+  .ctaTrack {
+    transition: none !important;
+  }
+  .cta:hover .ctaTrack {
+    transform: translateX(-50%);
+  }
+  .cta:hover .ctaLabel {
+    transform: none;
+  }
+}
+
+/* SgpIntro scrubbed video layers: tris are screen-blended over the line pass (Scale mixes them in a shader) */
+.screen {
+  mix-blend-mode: screen;
+}

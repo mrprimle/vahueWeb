@@ -288,6 +288,7 @@ const navGroups: NavGroup[] = [
         { href: '/automations', label: 'Automation hub', Icon: EnterpriseIcon },
         { href: '/automations/back-office-sync', label: 'Back-office sync', Icon: CaseStudiesIcon },
         { href: '/automations/document-intake', label: 'Document intake', Icon: GuidesIcon },
+        { href: '/automations/knowledge-agents', label: 'Knowledge agents', Icon: BlogIcon },
       ],
       [
         { href: '/automations/support-agents', label: 'Support and voice agents', Icon: UsersIcon },
