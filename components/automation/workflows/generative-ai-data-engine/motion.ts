@@ -84,3 +84,25 @@ export function prepareText(el: HTMLElement, variant: 'default' | 'flip' = 'defa
 
 /** Waits for webfonts so SplitText measures the final line breaks. */
 export const fontsReady = () => (document.fonts?.ready ?? Promise.resolve()).then(() => undefined)
+
+/*
+ * ClientTestimonials role tag (scale.com chunk 3hpmz3b0is2de.js, ClientName.animateToText):
+ * the tag shrinks to 20px (0.5s power3.out, after `delay`), the text is swapped in and measured, then after
+ * 10ms the text fades to opacity 1 (0.5s linear) while the tag grows to text width + 26px (0.5s power3.out).
+ * 26px = px-2 padding (16) + 6px triangle + 4px gap.
+ */
+export async function animateToText(wrap: HTMLElement, textEl: HTMLElement, text: string, delay = 0) {
+  await gsap.to(wrap, { width: 20, duration: 0.5, ease: 'power3.out', delay })
+  textEl.textContent = text.trim()
+  const w = textEl.getBoundingClientRect().width
+  await new Promise((r) => setTimeout(r, 10))
+  gsap.to(textEl, { opacity: 1, duration: 0.5, ease: 'none' })
+  await gsap.to(wrap, { width: w + 26, duration: 0.5, ease: 'power3.out' })
+}
+
+/*
+ * ClientTestimonials logo tab (same chunk, component `u`): its white fill sits off the button while inactive
+ * (y 100% on desktop, x 100% when `(max-width: 768px)` matches) and slides to 0 in 0.3s (GSAP default ease)
+ * when the tab becomes active; the button colour switches from the contrast colour to the theme colour.
+ */
+export const tabAxis = () => (matchMedia('(max-width: 768px)').matches ? 'x' : 'y')

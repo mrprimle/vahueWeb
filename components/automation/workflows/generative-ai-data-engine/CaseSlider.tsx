@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useKeenSlider } from 'keen-slider/react'
 import { WheelControls } from './keenWheel'
@@ -8,9 +8,13 @@ import 'keen-slider/keen-slider.min.css'
 import type { CaseStudy } from '@/lib/case-studies'
 import styles from './styles.module.css'
 
-// Template Resources carousel (Keen Slider options copied from scale.com). Cards are Vahue's
-// verified cases; the black image area carries the case metric instead of a cover image.
+// Template Resources carousel (scale.com chunk 30w17vppvfdah.js, module 382790; Keen Slider options copied).
+// Cards are Vahue's verified cases; the black image area carries the case metric instead of a cover image.
+//  - track at opacity 0.5 until Keen is created (or a 1s fallback), then 1 (opacity 0.3s ease-in-out)
+//  - keydown Tab on the wrapper: next slide (Shift+Tab: previous); focusin on the first/last card moves the
+//    track to its min/max index
 export default function CaseSlider({ cases }: { cases: CaseStudy[] }) {
+  const wrapRef = useRef<HTMLDivElement>(null)
   const [ready, setReady] = useState(false)
   const [ref, slider] = useKeenSlider<HTMLDivElement>({
     initial: 0,
@@ -32,11 +36,43 @@ export default function CaseSlider({ cases }: { cases: CaseStudy[] }) {
     destroyed: () => setReady(false),
   }, [WheelControls])
 
+  useEffect(() => {
+    if (!cases.length || ready) return
+    const t = setTimeout(() => setReady(true), 1000)
+    return () => clearTimeout(t)
+  }, [cases.length, ready])
+
+  useEffect(() => {
+    const el = wrapRef.current
+    if (!el || !slider.current) return
+    const onKey = (e: KeyboardEvent) => {
+      if (!slider.current || e.key !== 'Tab') return
+      if (e.shiftKey) slider.current.prev()
+      else slider.current.next()
+    }
+    const onFocus = (e: FocusEvent) => {
+      const s = slider.current
+      if (!s?.slides?.length || !s.track?.details) return
+      if (e.target === s.slides[0]) s.moveToIdx(s.track.details.minIdx)
+      if (e.target === s.slides[s.slides.length - 1]) s.moveToIdx(s.track.details.maxIdx)
+    }
+    el.addEventListener('keydown', onKey)
+    el.addEventListener('focusin', onFocus)
+    return () => {
+      el.removeEventListener('keydown', onKey)
+      el.removeEventListener('focusin', onFocus)
+    }
+  }, [cases.length, slider])
+
   return (
     <div className="relative z-0">
       <div aria-hidden className={`${styles.glow} pointer-events-none absolute inset-0 -bottom-[20%] -top-[80%] select-none opacity-30`} />
-      <div className="overflow-x-hidden">
-        <div ref={ref} className={`keen-slider !overflow-visible h-full cursor-grab transition-opacity duration-300 ease-in-out ${ready ? 'opacity-100' : 'opacity-0'}`}>
+      <div ref={wrapRef} className="overflow-x-hidden">
+        <div
+          ref={ref}
+          className={`keen-slider !overflow-visible h-full cursor-grab ${ready ? 'opacity-100' : 'opacity-50'}`}
+          style={{ visibility: 'visible', transition: 'opacity 0.3s ease-in-out' }}
+        >
           {cases.map((c) => (
             <Link key={c.slug} href={`/case-studies/${c.slug}/`} draggable={false} className="keen-slider__slide group block">
               <div className="relative z-10 flex aspect-[389/243] flex-col justify-between overflow-hidden rounded-lg bg-black p-6">

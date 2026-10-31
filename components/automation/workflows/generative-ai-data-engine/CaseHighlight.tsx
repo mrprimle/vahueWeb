@@ -1,11 +1,11 @@
 'use client'
 
-import { useLayoutEffect, useRef } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import type { CaseStudy } from '@/lib/case-studies'
-import { fontsReady, prepareText, reduced, type Reveal } from './motion'
+import { animateToText, fontsReady, prepareText, reduced, tabAxis, type Reveal } from './motion'
 
 const Triangle = () => (
   <svg width="6" height="6" viewBox="0 0 6 6" fill="none" className="mr-1 inline-block" aria-hidden>
@@ -13,22 +13,29 @@ const Triangle = () => (
   </svg>
 )
 
-const ClientTile = ({ c, mobile = false }: { c: CaseStudy; mobile?: boolean }) => (
+const THEME = '#193A29'
+
+// Template logo tab: white outline + white label while inactive, its white fill parked off the tile; on
+// activation the fill slides in (0.3s) and the label turns evergreen (transition-all 150ms), as on Scale.
+// It links to the case study (Scale's single tab does nothing on click).
+const ClientTile = ({ c, mobile = false, active }: { c: CaseStudy; mobile?: boolean; active: boolean }) => (
   <Link
     href={`/case-studies/${c.slug}/`}
     aria-label={`Read the ${c.client} case study`}
-    className={`relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-lg border border-solid border-white transition-all duration-150 hover:opacity-80 ${
+    className={`relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-lg border border-solid transition-all duration-150 ${
       mobile ? 'max-w-[80px] p-3' : 'max-w-[152px] p-4'
     }`}
+    style={{ color: active ? THEME : '#fff', borderColor: '#fff' }}
   >
-    <div className="absolute -z-10 h-full w-full bg-white" />
-    <div className={`relative z-10 max-w-28 text-center ${mobile ? "line-clamp-4 text-[10px]" : "line-clamp-3 text-[12px]"} font-medium leading-[1.5] text-[#193A29]`}>{c.client}</div>
+    <div data-tab-fill className="absolute -z-10 h-full w-full" style={{ background: '#fff' }} />
+    <div className={`relative z-10 max-w-28 text-center ${mobile ? "line-clamp-4 text-[10px]" : "line-clamp-3 text-[12px]"} font-medium leading-[1.5]`}>{c.client}</div>
   </Link>
 )
 
 // Template ClientTestimonials, carrying a verified Vahue case instead of a quote:
 //  - panel width 90% -> 100%, scrub, "top bottom" -> "bottom 75%"
-//  - section "top 80%": statement lines flip up (delay 0.35), client (delay 0.5), metric tag types in
+//  - section "top 80%": the client tile activates (fill slides in), statement lines flip up (delay 0.35),
+//    client (delay 0.5), metric tag runs animateToText (delay 0.05)
 export default function CaseHighlight({ caseStudy: c }: { caseStudy: CaseStudy }) {
   const rootRef = useRef<HTMLDivElement>(null)
   const panelWrapRef = useRef<HTMLDivElement>(null)
@@ -36,15 +43,20 @@ export default function CaseHighlight({ caseStudy: c }: { caseStudy: CaseStudy }
   const quoteRef = useRef<HTMLDivElement>(null)
   const nameRef = useRef<HTMLParagraphElement>(null)
   const roleRef = useRef<HTMLSpanElement>(null)
+  const tagRef = useRef<HTMLDivElement>(null)
+  const [active, setActive] = useState(false)
   const tag = c.metric
 
   useLayoutEffect(() => {
     const root = rootRef.current
     if (!root) return
+    const fills = root.querySelectorAll<HTMLElement>('[data-tab-fill]')
     if (reduced()) {
       gsap.set(panelRef.current, { width: '100%' })
+      setActive(true)
       return
     }
+    const axis = tabAxis()
     const reveals: Reveal[] = []
     let alive = true
     const roleEl = roleRef.current
@@ -54,6 +66,7 @@ export default function CaseHighlight({ caseStudy: c }: { caseStudy: CaseStudy }
         { width: '90%' },
         { width: '100%', duration: 1.15, ease: 'power3.out', scrollTrigger: { trigger: panelWrapRef.current, start: 'top bottom', end: 'bottom 75%', scrub: true } },
       )
+      gsap.set(fills, { [axis]: '100%' })
       if (roleEl) roleEl.textContent = ''
       gsap.set([quoteRef.current, nameRef.current], { opacity: 0 })
       fontsReady().then(() => {
@@ -69,20 +82,11 @@ export default function CaseHighlight({ caseStudy: c }: { caseStudy: CaseStudy }
             start: 'top 80%',
             once: true,
             onEnter: () => {
+              setActive(true)
+              gsap.fromTo(fills, { [axis]: '100%' }, { [axis]: '0%', duration: 0.3 })
               quote?.play(0.35)
               name?.play(0.5)
-              if (roleEl) {
-                const state = { n: 0 }
-                gsap.to(state, {
-                  n: tag.length,
-                  duration: tag.length * 0.03,
-                  delay: 0.05,
-                  ease: 'none',
-                  onUpdate: () => {
-                    roleEl.textContent = tag.slice(0, Math.round(state.n))
-                  },
-                })
-              }
+              if (tagRef.current && roleEl) animateToText(tagRef.current, roleEl, tag, 0.05)
             },
           })
           ScrollTrigger.refresh()
@@ -99,7 +103,7 @@ export default function CaseHighlight({ caseStudy: c }: { caseStudy: CaseStudy }
 
   return (
     <div>
-      <div ref={rootRef} className="relative scroll-mt-28 bg-white pb-16 pt-20 text-black md:pb-20">
+      <div ref={rootRef} data-qa="testimonial" className="relative scroll-mt-28 bg-white pb-16 pt-20 text-black md:pb-20">
         <div className="grid grid-cols-8 gap-2 px-3 text-white lg:grid-cols-12 lg:px-6">
           <div ref={panelWrapRef} className="relative isolate col-span-full min-w-0">
             <div ref={panelRef} aria-hidden className="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-full -translate-x-1/2 rounded-2xl bg-[#193A29]" />
@@ -109,7 +113,7 @@ export default function CaseHighlight({ caseStudy: c }: { caseStudy: CaseStudy }
                   Results from the teams we work with
                 </p>
                 <div className="mb-2 hidden flex-col gap-2 lg:flex">
-                  <ClientTile c={c} />
+                  <ClientTile c={c} active={active} />
                 </div>
               </div>
 
@@ -132,10 +136,10 @@ export default function CaseHighlight({ caseStudy: c }: { caseStudy: CaseStudy }
                         {c.client}
                       </p>
                     </div>
-                    <div className="inline-block overflow-hidden rounded-[4px] bg-white px-2 py-1 font-mono text-[10px] uppercase leading-[1.375] text-[#193A29]">
+                    <div ref={tagRef} data-qa="role-tag" className="inline-block overflow-hidden rounded-[4px] bg-white px-2 py-1 font-mono text-[10px] uppercase leading-[1.375] text-[#193A29]">
                       <div className="text-nowrap">
                         <Triangle />
-                        <span ref={roleRef} className="inline-block text-nowrap">
+                        <span ref={roleRef} data-qa="role-text" className="inline-block text-nowrap">
                           {tag}
                         </span>
                       </div>
@@ -145,7 +149,7 @@ export default function CaseHighlight({ caseStudy: c }: { caseStudy: CaseStudy }
               </div>
 
               <div className="flex w-full gap-2 lg:hidden">
-                <ClientTile c={c} mobile />
+                <ClientTile c={c} mobile active={active} />
               </div>
             </div>
           </div>

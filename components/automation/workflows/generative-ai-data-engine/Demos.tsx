@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, type ReactNode } from 'react'
+import { useCallback, useRef, useState, type ReactNode } from 'react'
 import { useKeenSlider } from 'keen-slider/react'
 import { WheelControls } from './keenWheel'
 import 'keen-slider/keen-slider.min.css'
@@ -107,12 +107,19 @@ function ExceptionQueue() {
 
 const MOCKS = [OrderSync, Reconciliation, ExceptionQueue]
 
-// Keen Slider options copied from scale.com's demo carousel.
+// Scale's VideoGallery (chunk 30w17vppvfdah.js, module 482270), Keen Slider options copied verbatim:
+//  - slide click: becomes active; on >= 640px the gallery smooth-scrolls to 16px below the viewport top
+//    (Scale also autoplays its Wistia video there; these panels are static mocks)
+//  - slideChanged: active = track abs; cursor starts 'default' (<= 3 slides), 'grabbing' while dragging, 'grab'
+//  - dots render once the slider is created
 export default function Demos({ titles }: { titles: string[] }) {
+  const rootRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState(0)
-  const [cursor, setCursor] = useState<'grab' | 'grabbing'>('grab')
+  const [created, setCreated] = useState(false)
+  const [cursor, setCursor] = useState<'default' | 'grab' | 'grabbing'>(() => (titles.length > 3 ? 'grab' : 'default'))
   const [ref, slider] = useKeenSlider<HTMLDivElement>({
     rubberband: false,
+    created: () => setCreated(true),
     dragStarted: () => setCursor('grabbing'),
     dragEnded: () => setCursor('grab'),
     slideChanged: (s) => setActive(s.track.details.abs),
@@ -123,10 +130,18 @@ export default function Demos({ titles }: { titles: string[] }) {
       '(min-width: 1041px)': { slides: { perView: 3, spacing: 32 }, mode: 'snap' },
     },
   }, [WheelControls])
+  const scrollToGallery = useCallback(() => {
+    const el = rootRef.current
+    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 16, behavior: 'smooth' })
+  }, [])
+  const onSlideClick = (i: number) => {
+    setActive(i)
+    if (!matchMedia('(max-width: 639px)').matches) scrollToGallery()
+  }
   const Active = MOCKS[active % MOCKS.length]
 
   return (
-    <div className="relative scroll-mt-[-15px]">
+    <div ref={rootRef} className="relative scroll-mt-[-15px]">
       <div className="relative mb-12 flex flex-col gap-y-10 sm:mb-0">
         <div key={active} role="img" aria-label={titles[active]} className={`${styles.fadeIn} relative hidden aspect-video w-full overflow-hidden rounded-2xl bg-[#f2f2f2] sm:block`}>
           <Active />
@@ -138,9 +153,9 @@ export default function Demos({ titles }: { titles: string[] }) {
             return (
               <div
                 key={t}
-                onClick={() => setActive(i)}
+                onClick={() => onSlideClick(i)}
                 className={`keen-slider__slide !overflow-visible grid h-fit cursor-pointer transition-opacity duration-300 ${
-                  i === active ? 'opacity-100' : 'hover:opacity-70 sm:opacity-50'
+                  i === active ? 'opacity-100' : 'opacity-100 hover:opacity-70 sm:opacity-50 sm:hover:opacity-70'
                 }`}
               >
                 <button type="button" aria-label={`Show ${t}`} className="relative block aspect-video w-full cursor-pointer overflow-hidden rounded-2xl bg-[#f2f2f2] sm:hidden">
@@ -159,13 +174,15 @@ export default function Demos({ titles }: { titles: string[] }) {
           })}
         </div>
 
-        <div className="relative z-50 mx-auto flex justify-center gap-x-1 sm:hidden">
-          {titles.map((t, i) => (
-            <button key={t} type="button" aria-label={`Go to ${t}`} className="cursor-pointer px-0.5 py-2" onClick={() => slider.current?.moveToIdx(i)}>
-              <span className={`block min-h-[10px] min-w-[10px] rounded-full transition-colors ${i === active ? 'bg-white' : 'bg-[#37383B]'}`} />
-            </button>
-          ))}
-        </div>
+        {created && slider.current ? (
+          <div className="relative z-50 mx-auto flex justify-center gap-x-1 sm:hidden">
+            {titles.map((t, i) => (
+              <button key={t} type="button" aria-label={`Go to ${t}`} className="cursor-pointer px-0.5 py-2" onClick={() => slider.current?.moveToIdx(i)}>
+                <span className={`block min-h-[10px] min-w-[10px] rounded-full transition-colors ${i === active ? 'bg-white' : 'bg-[#37383B]'}`} />
+              </button>
+            ))}
+          </div>
+        ) : null}
       </div>
     </div>
   )

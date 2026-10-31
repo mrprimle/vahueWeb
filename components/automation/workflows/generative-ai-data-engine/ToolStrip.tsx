@@ -15,7 +15,7 @@ export default function ToolStrip({ tools: all }: { tools: string[] }) {
         <p className="mx-auto mb-12 w-full max-w-[698px] text-balance px-4 text-center text-[16px] leading-[1.65] tracking-[-0.01em] text-[#374151]">
           <span className="mr-2">Runs inside the systems your team already uses.</span>
           <span className="inline">
-            <Link href="/case-studies/" className="group inline-flex items-center gap-1 text-[#008EFF] transition-colors duration-300 hover:text-blue-700">
+            <Link href="/case-studies/" className="group inline-flex items-center gap-1 text-[#008EFF] transition-colors duration-300">
               <span className="font-medium">See verified results</span>
               <span aria-hidden className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1">→</span>
             </Link>
