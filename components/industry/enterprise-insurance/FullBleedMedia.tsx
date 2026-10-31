@@ -11,11 +11,12 @@ import s from './styles.module.css'
 gsap.registerPlugin(ScrollTrigger)
 
 /*
+ * Vahue industry pages on the enterprise-insurance layout: the clone's FullBleedMedia 1:1 (Scale's colours and
+ * gradient overlay), plus a heading level and an optional image (own dot-texture fill when there is none).
+ *
  * Copied from the security clone; props verified for /enterprise/insurance (chunk 37xz28pjbnlx4): hero startPercentage 0,
  * pre-footer default startPercentage 10 (clip inset 5% -> 0), ClipScrollSection startScale 1, media scale 1.25 -> 1.
  * scale.com FullBleedMediaSection inside a ClipScrollSection (used for the hero and the pre-footer CTA).
- * Vahue: no Scale imagery; the media layer is the flat dark surface with the dot texture (hero-texture),
- * the overlay fades to the page background. Motion params unchanged.
  *
  * Scrubbed (ClipScrollSection), trigger = wrapper, start "top bottom" -> end "center center":
  *   clip container  clip-path inset(0.5*startPercentage % -> 0% round 1.5rem)
@@ -33,17 +34,22 @@ gsap.registerPlugin(ScrollTrigger)
 type Cta = { label: string; href: string }
 
 type Props = {
-  headline: string
+  /** Photo; without one the media layer shows `imageBg` (a colour or a CSS background such as the dot texture). */
+  image?: string
+  imageBg?: string
   /** Hero renders the page H1; the pre-footer an H2. */
   as?: 'h1' | 'h2'
+  headline: string
   body?: string
   primary?: Cta
   secondary?: Cta
+  backdrop: string
+  priority?: boolean
   /** ClipScrollSection startPercentage (0 = no clip, as on the hero). */
   startPercentage?: number
 }
 
-export default function FullBleedMedia({ headline, as: Heading = 'h2', body, primary, secondary, startPercentage = 10 }: Props) {
+export default function FullBleedMedia({ image, imageBg, headline, as: Heading = 'h2', body, primary, secondary, backdrop, priority, startPercentage = 10 }: Props) {
   useRefreshOnPageGrow()
   const section = useRef<HTMLElement>(null)
   const clip = useRef<HTMLDivElement>(null)
@@ -158,16 +164,16 @@ export default function FullBleedMedia({ headline, as: Heading = 'h2', body, pri
   }, [startPercentage])
 
   return (
-    <div className="isolate relative w-full px-4">
+    <div className={`isolate relative w-full px-4`} style={{ background: backdrop }}>
       <div ref={clip} className="h-full w-full overflow-hidden" style={{ clipPath: 'inset(0 round 1.5rem)' }}>
-        <section ref={section} className="relative overflow-hidden rounded-3xl bg-bg text-white">
+        <section ref={section} className="relative overflow-hidden rounded-3xl bg-white text-black">
           <div className="relative flex min-h-[480px] items-end overflow-hidden rounded-3xl p-8 md:min-h-[720px] md:p-16">
             <div className="relative z-20 flex w-full max-w-[72rem] flex-col gap-6 text-white">
               <Heading ref={h2} className={`${s.header2} ${s.pending} font-display font-normal text-white`}>
                 {headline}
               </Heading>
               {body ? (
-                <p ref={p} className={`${s.body1} ${s.pending} w-full max-w-[56rem] font-display text-white/85`}>
+                <p ref={p} className={`${s.body1} ${s.pending} w-full font-display text-white`}>
                   {body}
                 </p>
               ) : null}
@@ -186,13 +192,21 @@ export default function FullBleedMedia({ headline, as: Heading = 'h2', body, pri
               </div>
             </div>
             <div className="absolute left-0 top-0 h-full w-full origin-center overflow-hidden rounded-3xl">
-              {/* .media-overlay: vignette fade to the page background (no coloured glow, DESIGN.md hero rules) */}
+              {/* .media-overlay: gradient to black (its `background` shorthand cancels bg-black/45) */}
               <div
                 className="pointer-events-none absolute inset-0 z-10 rounded-3xl"
-                style={{ backgroundImage: 'linear-gradient(rgba(2,2,2,0) 0%, #020202 100%)' }}
+                style={{ backgroundImage: 'linear-gradient(#0000 0%, #000 100%)' }}
               />
-              <div ref={media} className="absolute inset-0 overflow-hidden rounded-3xl">
-                <div className="hero-texture h-full w-full rounded-3xl border border-border-soft bg-surface" />
+              <div ref={media} className="absolute inset-0 overflow-hidden rounded-3xl" style={{ background: imageBg }}>
+                {image ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={image}
+                    alt=""
+                    loading={priority ? 'eager' : 'lazy'}
+                    className="absolute inset-0 h-full w-full rounded-[inherit] object-cover"
+                  />
+                ) : null}
               </div>
             </div>
           </div>

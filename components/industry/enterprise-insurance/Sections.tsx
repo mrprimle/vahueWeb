@@ -4,7 +4,8 @@ import s from './styles.module.css'
 /*
  * Static CMS slices on scale.com/enterprise/insurance (chunk 01xb85jkvr5_y "FeaturesWithIcons",
  * chunk 17ea4hx823ss4 "Features", Button color="glass"). None of them carry GSAP: no ScrollTrigger,
- * no SplitText, only CSS hover transitions. Inverted to Vahue dark; cards can carry a link to a workflow page.
+ * no SplitText, only CSS hover transitions. Copied 1:1 from the enterprise-insurance clone (Scale's colours, empty
+ * overtitle); only the icon-card titles are h3 instead of h4.
  */
 
 /* Material Design outline icons (react-icons md/*) exactly as rendered on scale.com, 22px in a 24px box. */
@@ -61,28 +62,18 @@ export function Slice({ children, className = 'py-[72px] lg:py-20' }: { children
  * this page (0px tall, but its 20px margin-bottom still applies).
  * Title 30/1.375 -> md 42 -> lg 48/1.25; sub 16/1.6 mt-16 -> lg 20 mt-8, text-black/70.
  */
-export function SectionHeader({
-  eyebrow,
-  title,
-  sub,
-  children,
-}: {
-  eyebrow?: string
-  title: string
-  sub?: string
-  children?: ReactNode
-}) {
+export function SectionHeader({ title, sub, children }: { title: string; sub?: string; children?: ReactNode }) {
   return (
     <div className="mx-auto mb-10 flex max-w-3xl flex-col items-center justify-center text-center md:mt-12">
       <div className="flex flex-col">
         <div className="flex flex-col">
-          <div className={`${s.overtitle} font-mono text-white/55`}>
-            <span>{eyebrow}</span>
+          <div className={`${s.overtitle} font-mono text-[#525252]`}>
+            <span />
           </div>
-          <h2 className={`${s.sectionTitle} font-display font-normal text-white`}>{title}</h2>
+          <h2 className={`${s.sectionTitle} font-display font-normal text-black`}>{title}</h2>
         </div>
         {sub ? (
-          <p className={`${s.centerSub} block w-full font-display font-normal text-white/70`}>{sub}</p>
+          <p className={`${s.centerSub} block w-full font-display font-normal text-black/70`}>{sub}</p>
         ) : null}
       </div>
       {children}
@@ -91,29 +82,20 @@ export function SectionHeader({
 }
 
 /* FeaturesWithIcons, default columns: flex-wrap, gap 64 (mobile) / md gap-y-80 gap-x-24 / xl gap-x-56, cards basis-1/4 max 368. */
-export type IconFeature = { icon: ReactNode; title: string; body: string; link?: { label: string; href: string } }
+export type IconFeature = { icon: ReactNode; title: string; body: string }
 export function IconFeatures({ items }: { items: IconFeature[] }) {
   return (
     <div className="flex flex-wrap gap-16 md:gap-x-6 md:gap-y-20 xl:gap-x-14">
       {items.map((f, i) => (
-        <div key={i} className="shrink-0 grow basis-full text-white md:max-w-[368px] lg:basis-1/4">
+        <div key={i} className="shrink-0 grow basis-full text-black md:max-w-[368px] lg:basis-1/4">
           <div>
-            <figure className="relative flex h-11 w-11 select-none items-center justify-center rounded-lg border border-border-mid bg-surface-2 text-white">
+            <figure className="relative flex h-11 w-11 select-none items-center justify-center rounded-lg border border-black/10 bg-black/[0.09] text-black">
               <span className="flex h-6 w-6 items-center justify-center">{f.icon}</span>
             </figure>
           </div>
           <div>
-            <h3 className={`${s.iconTitle} relative mt-6 font-display font-normal text-white`}>{f.title}</h3>
-            <p className={`${s.iconBody} relative mt-4 font-display text-white/70`}>{f.body}</p>
-            {f.link ? (
-              <a
-                href={f.link.href}
-                className={`${s.iconBody} group relative mt-4 inline-flex items-center gap-1 font-display font-medium text-white`}
-              >
-                <span className="underline-offset-4 group-hover:underline">{f.link.label}</span>
-                <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-              </a>
-            ) : null}
+            <h3 className={`${s.iconTitle} relative mt-6 font-display font-normal text-black`}>{f.title}</h3>
+            <p className={`${s.iconBody} relative mt-4 font-display text-[#525252]`}>{f.body}</p>
           </div>
         </div>
       ))}
