@@ -1,9 +1,9 @@
 'use client'
 
-import { useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import { useRefreshOnPageGrow } from '@/lib/useRefreshOnPageGrow'
 import ArrowCta, { type ArrowCtaHandle } from './ArrowCta'
-import { gsap, ScrollTrigger, playCascade, prepareCascade, reducedMotion } from './motion'
+import { gsap, ScrollTrigger, observeInViewPlayback, playCascade, prepareCascade, reducedMotion, retroactiveEnter } from './motion'
 import styles from './styles.module.css'
 
 type Props = {
@@ -16,6 +16,9 @@ type Props = {
   href: string
   /** Hero renders the page H1. */
   as?: 'h1' | 'h2'
+  /** Keep the media at scale 1 while scrolling. Scale's hero media is a ResponsiveVideo, which never takes the
+   *  1.25 -> 1 scale ref, so the clone's hero never scales; pass this on the hero to keep that with an image. */
+  staticMedia?: boolean
   /** ClipScrollSection startPercentage: 0 on the hero (no inset), 10 on the prefooter (inset 5% → 0) */
   startPercentage: number
   wrapperClassName: string
@@ -39,6 +42,7 @@ export default function FullBleedMedia({
   priority,
   href,
   as = 'h2',
+  staticMedia = false,
 }: Props) {
   const Heading = as
   useRefreshOnPageGrow()
@@ -51,18 +55,27 @@ export default function FullBleedMedia({
   const ctaRef = useRef<ArrowCtaHandle>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  useLayoutEffect(() => {
+  // ResponsiveVideo (module 310080): a video plays only while in the viewport; paused under reduced motion here
+  useEffect(() => {
     if (reducedMotion()) {
       videoRef.current?.pause()
       return
     }
+    return observeInViewPlayback(videoRef.current)
+  }, [video])
+
+  useLayoutEffect(() => {
+    if (reducedMotion()) return
     let cancelled = false
+    let offRetro = () => {}
     const splits: { revert: () => void }[] = []
     const ctx = gsap.context(() => {})
+    // Media scale 1.25 -> 1 only on Scale's image branch (a video never attaches the scale ref)
+    const scaleMedia = !video && !staticMedia
     const apply = (p: number) => {
       const inset = (1 - p) * 0.5 * startPercentage
       if (clip.current) clip.current.style.clipPath = `inset(${inset}% round 1.5rem)`
-      if (media.current) gsap.set(media.current, { scale: 1.25 + (1 - 1.25) * p })
+      if (scaleMedia && media.current) gsap.set(media.current, { scale: 1.25 + (1 - 1.25) * p })
     }
     ctx.add(() => {
       ScrollTrigger.create({
@@ -82,24 +95,26 @@ export default function FullBleedMedia({
         const p = para.current && prepareCascade(para.current)
         if (h) splits.push(h.split)
         if (p) splits.push(p.split)
-        ScrollTrigger.create({
-          trigger: section.current,
-          start: 'top center',
-          once: true,
-          onEnter: () => {
-            ctaRef.current?.play(0.5)
-            if (h) playCascade(h, 0)
-            if (p) playCascade(p, 0.2)
-          },
-        })
+        let played = false
+        const enter = () => {
+          if (played) return
+          played = true
+          ctaRef.current?.play(0.5)
+          if (h) playCascade(h, 0)
+          if (p) playCascade(p, 0.2)
+        }
+        // useScrollTrigger (module 210104): start `top center`, default end `bottom 20%`, retroactiveOnEnter
+        const st = ScrollTrigger.create({ trigger: section.current, start: 'top center', end: 'bottom 20%', onEnter: enter })
+        offRetro = retroactiveEnter(st, enter)
       })
     })
     return () => {
       cancelled = true
+      offRetro()
       ctx.revert()
       splits.forEach((sp) => sp.revert())
     }
-  }, [startPercentage])
+  }, [startPercentage, video, staticMedia])
 
   return (
     <div className={wrapperClassName}>
@@ -128,7 +143,7 @@ export default function FullBleedMedia({
                 </div>
                 <div className={`absolute left-0 top-0 h-full w-full origin-center overflow-hidden rounded-3xl ${styles.roundClip}`}>
                   <div className="pointer-events-none absolute inset-0 z-10 rounded-3xl bg-black/45" />
-                  <div ref={media} className="absolute inset-0 h-full w-full overflow-hidden rounded-3xl bg-[#193a29]">
+                  <div ref={media} data-qa="media" className="absolute inset-0 h-full w-full overflow-hidden rounded-3xl bg-[#193a29]">
                     {video ? (
                       <video
                         ref={videoRef}

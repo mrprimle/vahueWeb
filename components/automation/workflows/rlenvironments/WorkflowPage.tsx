@@ -70,6 +70,7 @@ export default function WorkflowPage({ workflow: _workflow }: { workflow: Workfl
         cta={CONTENT.hero.cta}
         href={CONTENT.hero.href}
         startPercentage={0}
+        staticMedia
         wrapperClassName="pb-10 pt-12 md:pt-24"
         priority
       />
