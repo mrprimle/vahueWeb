@@ -281,7 +281,8 @@
 }
 .sticky {
   position: sticky;
-  top: 0;
+  /* a page with an in-flow sticky site header (Vahue /careers) offsets the bar below it */
+  top: var(--car-sticky-top, 0);
   z-index: 10;
   background: var(--car-sticky-bg);
   backdrop-filter: blur(8px);

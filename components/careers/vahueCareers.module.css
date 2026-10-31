@@ -1,0 +1,16 @@
+/* Vahue /careers overrides on top of the scale.com/careers clone (colours come from the --car-* theme in
+ * VahueCareersPage.tsx). The clone paints a white surface behind each full-bleed photo; on the dark page that can
+ * fringe at the rounded corners while the media scales, so it takes the panel tone instead. */
+.vahue :global(.FullBleedMediaSection) {
+  background-color: #111111;
+}
+
+/* The clone's root is overflow-x: hidden, which makes it the scroll container for position: sticky, so the filter bar
+ * never sticks. clip keeps the horizontal clipping without that, and the bar sticks below the site navbar
+ * (--car-sticky-top). The hero CTA's scrollIntoView also stops below the navbar. */
+.vahue :global(.CareersPage) {
+  overflow-x: clip;
+}
+.vahue :global(#open-roles) {
+  scroll-margin-top: 88px;
+}

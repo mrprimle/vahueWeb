@@ -42,6 +42,7 @@ export const DEPARTMENT_ICON_KEY: Record<string, string> = {
   "IT": "IT",
   "Marketing & Communications": "Marketing",
   "Marketing and Communications": "Marketing",
+  "Marketing": "Marketing",
   "Operations": "Operations",
   "People": "People",
   "Public Sector": "Federal",
