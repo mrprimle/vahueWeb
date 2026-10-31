@@ -274,12 +274,29 @@ type NavLink = {
 }
 
 type NavGroup = {
-  id: 'services' | 'industries' | 'resources'
+  id: 'automation' | 'services' | 'industries' | 'resources'
   label: string
   columns: NavLink[][]
 }
 
 const navGroups: NavGroup[] = [
+  {
+    id: 'automation',
+    label: 'Automation',
+    columns: [
+      [
+        { href: '/automations', label: 'Automation hub', Icon: EnterpriseIcon },
+        { href: '/automations/back-office-sync', label: 'Back-office sync', Icon: CaseStudiesIcon },
+        { href: '/automations/document-intake', label: 'Document intake', Icon: GuidesIcon },
+      ],
+      [
+        { href: '/automations/support-agents', label: 'Support and voice agents', Icon: UsersIcon },
+        { href: '/automations/scoring-decisions', label: 'Scoring and decisions', Icon: FinanceIcon },
+        { href: '/automations/engineering-enablement', label: 'Engineering enablement', Icon: GraduationCapIcon },
+        { href: '/operations', label: 'How we operate', Icon: MarketplaceIcon },
+      ],
+    ],
+  },
   {
     id: 'services',
     label: 'Services',
@@ -337,6 +354,7 @@ const navGroups: NavGroup[] = [
           label: 'Retail & eCommerce',
           Icon: ShoppingBagIcon,
         },
+
       ],
     ],
   },

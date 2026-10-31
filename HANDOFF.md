@@ -42,17 +42,39 @@ Last updated: 2026-10-31 by the cloud session. If there are newer commits on the
 
 ## Scale clone status (32 menu pages)
 
-Cloned with a spec and QA notes (side-by-side at 1440×900 and 390×844):
-data-engine, generative-ai-data-engine, physical-ai, public-sector-data-engine, automotive, rlenvironments, donovan, genai-portfolio, security, evaluation-enterprise, enterprise-insurance, guides, and the shared header/footer (`shared-chrome.md`).
-Known small gaps are listed in each spec. Example: Keen Slider's wheel/keyboard plugins aren't ported. Text-wrap deltas come from placeholder copy.
+Page list: `reference-snapshots/scale-pages.md`. Registry: `components/scale-clone/shared/pages.ts`. Every clone lives at `/scale-clone/<slug>/`, with an index at `/scale-clone/`.
 
-In progress or not started (QA folder for `enterprise` exists, so it was in progress):
-enterprise, enterprise-healthcare, experts, evaluation-model-developers, evaluation-public-sector, public-sector, global-public-sector, public-sector-national-security, labs-papers, labs-leaderboard, labs, labs-blog, labs-jobs, about, careers, demo, blog, events, docs, partnership.
-Priority order: enterprise, enterprise-healthcare, then blog, events, careers, demo, about, experts. The public-sector and research pages have no Vahue page to fill and come last.
+**Done (spec, motion table and side-by-side QA at 1440×900 and 390×844):**
+- data-engine, generative-ai-data-engine, physical-ai, public-sector-data-engine, donovan
+  - first built without REA; then an REA verification pass (commit 1c2b96b) fixed the hero clip, overlay, late pre-footer trigger and slider wheel plugin
+  - each spec now ends with an "REA verification" section
+- automotive, rlenvironments, security, evaluation-enterprise, enterprise-insurance, guides, genai-portfolio
+  - built with REA from the start
+- shared header, announcement bar and footer (`shared-chrome.md`)
+  - pages switch the dark nav with `data-nav-theme="dark"` or `setScaleNavTheme()`
+
+Each spec lists its own small gaps: placeholder logos and imagery, Wistia/HLS video not embedded, Scale imagery with Scale text baked in, and text-wrap deltas from placeholder copy.
+
+**Known follow-up (not done):**
+- The automotive clone has no media scale. The REA pass showed Scale scales full-bleed media 1.25→1 on every page it checked, so automotive (and `/automations/scoring-decisions`, built from it) probably needs that scale added.
+- Re-check the late pre-footer trigger (fixed in the five early clones with a ResizeObserver re-measure) on rlenvironments, security, evaluation-enterprise, enterprise-insurance and guides, and on the Vahue pages copied from clones.
+- A fix-propagation agent was stopped before it changed any files.
+
+**WIP, committed but unfinished:** enterprise, enterprise-healthcare, blog, events
+- the agents were stopped mid-build
+- the code compiles and `npm run build` passes
+- each has a stub spec marked WIP
+- enterprise has the most done (three.js hero, drag-to-rotate object, Embla 3D carousel and the pull-apart text variant in progress); see the existing QA images in `qa/enterprise/`
+
+**Not started:** experts, evaluation-model-developers, evaluation-public-sector, public-sector, global-public-sector, public-sector-national-security, labs-papers, labs-leaderboard, labs, labs-blog, labs-jobs, about, careers, demo, docs, partnership.
+- Priority: finish enterprise and enterprise-healthcare first (Vahue pages depend on them), then careers, demo, about and experts.
+- The public-sector and research (labs.scale.com) pages have no Vahue page to fill, so they come last.
 
 ## Vahue pages built from clones (copy from lib/automation-content.ts)
 
-Done:
+Workflow pages load through `app/automations/[slug]/page.tsx` and `components/automation/workflows/registry.ts`, which maps each workflow slug to `components/automation/workflows/<template>/WorkflowPage.tsx`.
+
+**Done and checked on the dev server** (200, no console errors, compared with the template clone):
 - `/automations` hub (data-engine layout)
 - `/automations/back-office-sync` (generative-ai-data-engine)
 - `/automations/document-intake` (physical-ai)
@@ -60,13 +82,43 @@ Done:
 - `/automations/scoring-decisions` (automotive)
 - `/automations/engineering-enablement` (rlenvironments)
 - `/security` (security)
+  - ISO 27001 and GDPR are claimed because the site already claims them elsewhere
+  - confirm the ISO certificate is current before shipping
 
-Still to do:
-- `/automations/knowledge-agents` on genai-portfolio (the clone is ready)
-- `/operations` → "How we operate" on enterprise
-- `/strategy` → "Workflow audit" on evaluation-enterprise
-- Industry landings with `INDUSTRY_WORKFLOWS`, plus a new `/industries/distribution-manufacturing`
-- Navbar: add an Automation menu first (hub, 6 workflows, How we operate); add Distribution & Manufacturing under Industries; add Security under Resources
+**Built but not fully checked** (the agents were stopped during their final screenshot pass; `npm run build` passes):
+- `/strategy` → "Workflow audit" (evaluation-enterprise; components in `components/strategy-audit/`)
+- `/industries/insurance` (enterprise-insurance; generic `components/industry/enterprise-insurance/IndustryPage.tsx` taking `{ content, workflows }`)
+- `/guides` and `/case-studies` indexes (guides book-card layout; `components/book-index/`)
+
+**WIP, not committed:** `/automations/knowledge-agents` on genai-portfolio
+- the agent was stopped mid-build and the files don't compile yet (`Lower.tsx` syntax error)
+- parked locally, gitignored, in `.wip/knowledge-agents-genai-portfolio/`
+- to finish:
+  - move it back to `components/automation/workflows/genai-portfolio/`
+  - fix it
+  - add `'knowledge-agents': () => import('./genai-portfolio/WorkflowPage'),` to the registry
+- the plan: replace Scale's scene videos with our own SVG/three.js visuals on the same pin/scrub params
+
+**Navbar:** an Automation menu was added first, with the hub, five workflows and How we operate.
+- Knowledge agents and the Distribution & Manufacturing industry link are left out until those pages exist.
+- How we operate links to the existing `/operations`, which isn't rebuilt yet.
+
+**Rules applied to the Vahue pages:**
+- no imagery from `public/scale-clone/` on Vahue pages
+- dark dot-texture panels where Scale had media
+- only verified cases from `lib/case-studies.ts`
+- some headings, CTA labels and mock UI text were written by agents (not in `lib/automation-content.ts`), so give them a copy review
+
+**Still to do:**
+- `/automations/knowledge-agents` (above)
+- `/operations` → "How we operate" on enterprise, once that clone is finished
+- the other industry landings with `INDUSTRY_WORKFLOWS`:
+  - banking and retail on enterprise
+  - healthcare on enterprise-healthcare
+  - a new `/industries/distribution-manufacturing` on enterprise
+  - then add Distribution & Manufacturing and Knowledge agents to the Navbar
+- `/blog`, `/events`, `/careers` and `/contact` on their clones
+- Security under Resources in the Navbar
 - Case-study template fields: point A, time to first agent live, point B, payback
 - Homepage copy pass with the positioning, the six workflows and Audit → Pilot → Operate
 - Final side-by-side QA of the real pages, `npm run build`, then open a PR to `main` (don't deploy)
@@ -82,6 +134,22 @@ Still to do:
 
 ## Tools and setup
 
-- **REA MCP** (local reverse-engineering MCP) runs only on Mike's Mac. It was used for `analyze_web_bundle`, JS runtime interception and event-listener maps, in an isolated Chrome on CDP port 9230. A cloud session can't reach it, so run clone work in Claude Code on the Mac in `~/Desktop/Vahue`.
-- **Visual QA:** `npm run dev`, then Scale and the clone side by side at 1440×900 and 390×844, screenshots every 50% viewport and at several cursor positions.
+- **REA MCP** is the local reverse-engineering MCP; it runs only on Mike's Mac. A cloud session can't reach it, so run clone work in Claude Code on the Mac in `~/Desktop/Vahue`.
+  - It's configured in `~/.claude.json` under `mcpServers.rea` as `npx -y rea-agents@6.4.0 mcp`, with env `HOPPER_LAUNCHER_PATH=/Applications/Hopper Disassembler.app/Contents/MacOS/hopper`. Claude Code starts it automatically, and its tools appear as `mcp__rea__*` (load them with ToolSearch).
+  - REA doesn't launch the browser for web work. Start an isolated Chrome with remote debugging yourself:
+    ```bash
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --remote-debugging-port=9230 --user-data-dir=<scratch dir>/chrome-profile --no-first-run --no-default-browser-check --window-size=1440,900 https://scale.com/ &
+    ```
+    Use a throwaway profile dir, never the real Chrome profile.
+  - Open one tab per page with `curl -s -X PUT 'http://127.0.0.1:9230/json/new?<url>'`, which returns the target id, and close it with `curl -s http://127.0.0.1:9230/json/close/<id>`.
+  - Then call `mcp__rea__analyze_web_bundle` (`cdp_endpoint: "http://127.0.0.1:9230"`, `target_id`, `include_script_sources: true`) and `mcp__rea__inspect_web_event_listeners` (with a CSS selector).
+  - REA never evaluates JS. For live mid-scroll samples and screenshots use Playwright (below).
+- **Playwright:** the repo doesn't have it. Use `require('/Users/mykhailodoroshenko/Desktop/hvn-main-fresh/node_modules/playwright-core')` and `chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true })`.
+  - `connectOverCDP` to port 9230 hangs, so launch a separate browser.
+  - scale.com is slow to reach domcontentloaded: use `page.goto(url, { waitUntil: 'commit', timeout: 90000 })` and then wait for a selector.
+- **Gotchas found while cloning:**
+  - The site's global `h1–h6` styles (white, semibold) override headings, so set colour and weight explicitly.
+  - This repo's `leading-snug` is 1.25, while Scale's is 1.375.
+  - Scale configures shared components per page (FullBleedMediaSection `startPercentage`/`startScale`, gradient-only `.media-overlay`), so read each page's own props from its bundle.
+- **Visual QA:** `npm run dev -- -p 3100`, then Scale and the clone side by side at 1440×900 and 390×844, with screenshots every 50% viewport and at several cursor positions. Save JPEGs of 300 KB or less to `reference-snapshots/scale-clone/qa/<slug>/`.
 - **Research:** NMT skill `/anthropic-skills:nmt-market-research` (AJTBD), Deep mode, with web research subagents.
