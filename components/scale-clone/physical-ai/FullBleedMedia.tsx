@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useRef } from 'react'
 import Image from 'next/image'
 import gsap from 'gsap'
+import { useRefreshOnPageGrow } from '@/lib/useRefreshOnPageGrow'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import AnimatedText, { type AnimatedTextHandle } from './AnimatedText'
 import FlatCta, { type FlatCtaHandle } from './FlatCta'
@@ -51,6 +52,7 @@ export default function FullBleedMedia({
   wrapperClassName,
   priority,
 }: Props) {
+  useRefreshOnPageGrow()
   const clipRoot = useRef<HTMLDivElement>(null)
   const clip = useRef<HTMLDivElement>(null)
   const section = useRef<HTMLElement>(null)
