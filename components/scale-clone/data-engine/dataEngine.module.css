@@ -162,9 +162,6 @@
   transform: translateX(-50%);
   transition: transform 0.6s cubic-bezier(0, 0, 0.2, 1);
 }
-.cta:hover .ctaTrack {
-  transform: translateX(0);
-}
 .ctaTrack > span {
   display: flex;
   height: 100%;
@@ -177,9 +174,6 @@
   .ctaLabel,
   .ctaTrack {
     transition: none !important;
-  }
-  .cta:hover .ctaTrack {
-    transform: translateX(-50%);
   }
   .cta:hover .ctaLabel {
     transform: none;

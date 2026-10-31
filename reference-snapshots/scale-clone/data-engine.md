@@ -99,3 +99,80 @@ Overlay computed `background-color: rgba(0,0,0,0)` with the gradient as `backgro
 - Clone re-sampled after the fix (1440): hero `inset(0%)`, scale 1.0139 → 1. Pre-footer with its top at 450: clip `inset(2.22222%)`, scale 1.1111, identical to Scale at the same position. Overlay bg-color is transparent. No console errors, 200.
 - QA re-shot: `qa/data-engine/1440-{scale,clone}-rea-hero.jpg` and `1440-{scale,clone}-rea-prefooter.jpg`.
 - **Still unknown:** the pre-footer image covering only the upper part on Scale (listed under Remaining gaps) wasn't re-investigated.
+
+## Interaction audit (2026-10-31)
+
+**Method.** REA on a fresh CDP 9230 tab of scale.com/data-engine: `analyze_web_bundle` (ev_90613ecf7f84…, 40/40 scripts parsed), `inspect_web_event_listeners` on `html` (ev_aefa97a8…), `body` (ev_73599bba…), `.FullBleedMediaSection` (ev_dc97fe3a…), `#build-ai` (ev_0399da55…), `[role=tab]` (ev_5beeb813…), `.keen-slider` (ev_8a4075bd…). React handlers (onPointerEnter, onClick) are delegated to the root, so REA can't see them on the element; I traced them in the chunk sources instead (fetched by URL from the same chunk graph). Then Playwright (1440×900 and 390×844), with identical inputs on scale.com, `/scale-clone/data-engine/` and `/automations/`: hover enter/leave/re-enter on every in-page CTA, sampled at 0/60/120/200/320/700/900 ms; testimonial reveal sampled at 0–2200 ms; tab click; pre-footer scrub at 10 points; a 6×4 cursor grid sweep at 4 scroll depths (compared against the same wait without a sweep); Keen drag (−250 px over 300 ms), horizontal wheel (6 × deltaX 40) and Tab key. Scripts: `scratchpad/de-audit/qa-interactions.js`, `qa-tabclick.js`. Images: `qa/data-engine/interactions/`.
+
+**Window / document level.** `html`: a passive `scroll` listener from ScrollTrigger's scroller cache (`1h0nvyhf5gbrf.js`) plus OneTrust `keydown`/`click`. `body`: one passive `touchstart` (ScrollTrigger). Keen adds a `window` `wheel` listener that preventDefaults while a drag is active. Lenis 1.3.21 runs through lenis/react (`useLenis`, module 255667). No `pointermove`/`mousemove` anywhere outside Keen, and no canvas/WebGL on this page (the three.js chunk `3kd41k7ews14b.js` is loaded but not mounted here). Cursor grid sweep: the number of elements whose transform changed with the sweep matched the no-mouse control on all three pages (29–41; those are the chat-demo timers), so there are **no cursor-driven effects**.
+
+### 1. Hero FullBleedMediaSection
+| Element | Input | Listener (REA) | Source module | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| section / media | scroll | ScrollTrigger (html scroll, ev_aefa97a8) | `37xz28pjbnlx4.js` FullBleedMediaSection + ClipScrollSection | hero startPercentage 0 (no clip), media scale 1.25→1 `top bottom → center center` | yes (verified in the earlier pass) | `1440-*-rea-hero.jpg` |
+| headline / body / CTA | enter `top center` | ScrollTrigger | `1h0nvyhf5gbrf.js` AnimatedText + FlatCta reveal | as in the Motion table | yes | n/a |
+| "Book a Demo" CTA (arrow variant) | pointerenter / pointerleave | React delegated (none on the element, ev_dc97fe3a) | `1h0nvyhf5gbrf.js` module 892855 FlatCta | fill `translate-x` −100% → 0 → +100%, 600ms ease-out; reset on fill `transitionend` or after 680ms (snap with no transition, released after 2 rAF); re-entry while leaving snaps back first; chevron track −50% → 0 (600ms) on enter, **snaps back on leave** (transition none); fill opacity .35 (.30 on black fill / white border) | **fixed** (track used to slide back over 600ms; re-entry used to start from the exit side) | `1440-{scale,clone,vahue}-cta0-hover.jpg` |
+
+Hover samples (fill % of its own size): Scale enter −100 / −89 / −51 / −35 / −18 / 0 at 0/60/120/200/320/700 ms; clone −100 / −81 / −56 / −35 / −16 / 0. Leave: Scale 0 → 19 → 44 → 65 → 84 → reset −100 by 700; clone 0 → 19 → 44 → 65 → 84 → −100. Re-enter 80 ms after leave: both start at −100, then −74 / −42 / −11 at 100/200/400 ms. Track after leave: −50% at once on both.
+
+### 2. Logo strip, 3. Best in the business, 6. One-stop shop, 7. Annotation types
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| all children | hover / click / scroll | none (static CMS markup, no hover classes in SSR) | n/a | n/a | n/a (nothing to reproduce) | n/a |
+
+### 4. Case study
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| "Read customer story" (fill, black) | pointerenter / leave | React delegated | FlatCta 892855 | fill `translate-y` 100% → 0 → −100%, 300ms ease-out, opacity .30; label `scale .9` (300ms ease-out, CSS group-hover); same reset / re-entry rules | yes (re-entry fixed) | n/a |
+
+Samples: enter 100 / 67 / 31.5 / 9.2 / 0 % at 0/60/120/200/320 ms on Scale, and 100 / 67 / 31.5 / 9.2 / 0 on the clone. Label 1 → .956 → .926 → .907 → .9 on both. Leave 0 / −33 / −68.5 / −91 / −100, then reset to 100 (both). Re-enter: 100 / 100 / 55.8 / 16.1 / 0 at 0/40/100/200/400 ms (both).
+
+### 5. Build AI
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| "Book a Demo" fill + "Build AI" border CTAs | pointerenter / leave | React delegated | FlatCta 892855 | as in the case study (border: opacity .35) | yes | `1440-*-cta2-hover.jpg` |
+| chat window `.OpfpwG_box__chat` | none (timers only; no listeners, ev from the earlier pass) | n/a | `1a9k8nwrsxal6.js` headless-ui Transition + react-type-animation | speed 60 (40ms/key), steps as in the Motion table; the container's `transition-transform duration-1000` never receives a transform | yes | n/a |
+
+### 8. Resources (Keen Slider, below 1024px)
+| Element | Input | Listener (REA ev_8a4075bd) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| `.keen-slider` | mousedown/move/up/leave, touch*, dragstart, click (capture) | Keen core `31xvc_-2ufv3i.js` | module 577476 | snap perView 1.05 / spacing 24 / rubberband off; free 1.4 / 2 / 2.8 at 640 / 768 / 1280; snap release 500ms `1+(t-1)^5` | yes | `390-*-keen-after-drag.jpg` |
+| `.keen-slider` | wheel (non-passive) | `31xvc_-2ufv3i.js:665` | module 29713 WheelControls | deltaX → ksDragStart/ksDrag/ksDragEnd, ends 50ms after the last event | yes | n/a |
+| container cursor | dragStarted / dragEnded | Keen options | `0pxfxpo1hc-6g.js` module 382790 | `grabbing` / `grab` | yes | n/a |
+| overflow wrapper | keydown Tab / Shift+Tab | addEventListener in a React effect | module 382790 | `slider.next()` / `prev()`, no preventDefault | **fixed** (was missing) | n/a |
+| overflow wrapper | focusin on first / last slide | same | module 382790 | `moveToIdx(minIdx / maxIdx)` | **fixed** (was missing) | n/a |
+| slider opacity | created / destroyed / 1s timer | React state | module 382790 | opacity .5 → 1, 0.3s ease-in-out; forced after 1s if `created` never fires; false on destroyed | **fixed** (timer and destroyed were missing) | n/a |
+
+390 samples (slide 0 translateX): drag −279 at release, then −331 / −348 / −348.6 at 100/250/500 ms on Scale; the clone gives −279 / −331 / −348 / −348.6. Wheel −548.6 → −648.5 → −697.1 (identical). Tab key → −1028.3 on both.
+
+### 9. Testimonial (ClientTestimonials, `1a9k8nwrsxal6.js` module 685963)
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| panel | scroll | ScrollTrigger | 685963 | width 90% → 100%, power3.out, scrub, `top bottom → bottom 75%` | yes | n/a |
+| section | enter `top 80%` (hook module 210104) | ScrollTrigger | 685963 | state −1 → 0: nothing is selected before entry | **fixed** (clone rendered the selected state from the start) | `1440-*-testimonial-mid.jpg`, `-end.jpg` |
+| quote, name | same | same | AnimatedText 668761 with customAnimation (`replaceBuiltIn: true`) | lines: transformPerspective 900, origin 50% 100%, rotationX −90, yPercent 108, opacity 1 → rotationX 0 / yPercent 0, 0.48s power2.out, stagger 0.05; delay .35 (quote) / .5 (name); no colour tint; descender compensation on both | **fixed** (clone used the default yPercent-400 + tint intro) | same |
+| role chip (ClientName) | same | same | 685963 `animateToText` | renders empty (26px: padding + glyph); delay .05: width → 20 (0.5s power3.out), set text, opacity → 1 (0.5s none), width → textWidth + 26 (0.5s power3.out) | **fixed** (was static) | same |
+| tab button `[role=tab]` | activation | ScrollTrigger → React state | 685963 | fill div y 100% → 0, 0.3s, GSAP default ease (x instead of y at ≤768px); label colour #000 → #839CB2 (`transition-all`) | **fixed** (was static black) | same |
+| tab button | click | React delegated `onClick` (REA shows HubSpot mousedown + React root click, ev_5beeb813) | 685963 | Lenis `scrollTo(root, { offset: -24 })`; root keeps `scroll-mt-28`, which Lenis subtracts, so it lands at 136px | **fixed** (was a no-op) | `1440-*-tab-click.jpg` |
+
+Reveal samples (section top placed at 500 from 1000; t from that scroll): Scale fill 106.7 → 57 → 17.6 → 0 px at 0/100/200/350 ms; line 0 rotationX −90 until ≈350 ms, then cos .82 at 500 and .999 at 700; chip 26 → 20 px, text from ≈700 ms, 131 px at 1000. The clone runs the same sequence about 300 ms earlier: fill done by 0–100 ms, line cos .39 / .86 / .996 at 100/200/350 ms, chip text by 350 and full width (128 px) by 700. The durations and curves match; the offset is Scale's own main-thread latency between the scroll and the React re-render (there's no debounce in module 210104). Tab click: Scale section top 46 → 102 → 130 → 135 → 136 at 0/100/300/600/1000 ms; the clone gives 66 → 106 → 130 → 135 → 136.
+
+### 10. Pre-footer FullBleedMediaSection
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| clip wrapper / media | scroll | ScrollTrigger | 37xz28pjbnlx4.js | clip inset 5% → 0, media scale 1.25 → 1, `top bottom → center center` | yes | `1440-*-rea-prefooter.jpg` |
+| arrow + border CTAs | pointerenter / leave | React delegated | FlatCta 892855 | as in the hero (arrow) and Build AI (border) | yes (fixed with the shared FlatCta) | n/a |
+
+10-point scrub (wrapper top 900 → 0 in 100px steps), identical on Scale, the clone and /automations: clip 5 / 4.383 / 3.765 / 3.148 / 2.531 / 1.914 / 1.296 / 0.679 / 0.062 / 0 %; media scale 1.25 / 1.2191 / 1.1883 / 1.1574 / 1.1265 / 1.0957 / 1.0648 / 1.034 / 1.0031 / 1.
+
+### Fixes in this pass
+- `FlatCta.tsx`: ported Scale's state machine (transitionend or 680ms reset, re-entry snap, arrow track snaps back on leave); the CSS `:hover` track rule is removed.
+- `Testimonial.tsx` + `animatedText.ts` (`'flip'` variant): unselected → selected on `top 80%`, tab fill slide + colour, flip line reveal, ClientName chip scramble, tab click → Lenis scroll (`scroll-mt-28`).
+- `Resources.tsx`: Tab / Shift+Tab → next / prev, focusin edge snapping, 1s ready fallback, destroyed → not ready.
+- `components/home/scroll-hero/SmoothScroll.tsx` exposes the Lenis instance as `window.__lenis`, standing in for Scale's `useLenis()` context.
+- Same changes on `/automations` (`components/automation/hub/`: FlatCta, Testimonial, animatedText, Results, hub.module.css).
+
+### Not reproducible / not applicable
+- The ~300 ms reveal latency on scale.com is runtime jank, not a parameter.
+- Prev/next testimonial arrows and their GSAP colour hover (module 685963 `a`) render only when there are more than 1 testimonial; this page has one, so they don't exist here.
+- CMSLink `buttonHover` colour cascade (module 737900) is off for these CTAs (`buttonHover` false), so there's nothing to port.

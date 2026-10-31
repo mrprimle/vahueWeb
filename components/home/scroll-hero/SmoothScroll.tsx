@@ -18,8 +18,12 @@ export default function SmoothScroll() {
     lenis.on('scroll', ScrollTrigger.update)
     gsap.ticker.add(tick)
     gsap.ticker.lagSmoothing(0)
+    // Exposed for components that scroll through Lenis, as Scale's useLenis() does (e.g. testimonial tab click).
+    const w = window as unknown as { __lenis?: Lenis }
+    w.__lenis = lenis
     return () => {
       gsap.ticker.remove(tick)
+      if (w.__lenis === lenis) delete w.__lenis
       lenis.destroy()
     }
   }, [])
