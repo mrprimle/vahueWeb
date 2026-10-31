@@ -11,8 +11,8 @@ import s from './security.module.css'
 gsap.registerPlugin(ScrollTrigger)
 
 /*
- * Vahue /security hero and pre-footer. Copied from components/scale-clone/security/FullBleedMedia.tsx;
- * motion unchanged, surfaces dark, heading level configurable (h1 for the hero).
+ * Vahue /security hero and pre-footer: the security clone's FullBleedMedia 1:1 (Scale's colours and overlay),
+ * plus a heading level (h1 on the hero) and image alt text.
  *
  * Copied from the automotive clone (same Scale component on /security: hero has no CTA, pre-footer has one).
  * scale.com FullBleedMediaSection inside a ClipScrollSection (used for the hero and the pre-footer CTA).
@@ -42,14 +42,15 @@ type Props = {
   backdrop: string
   priority?: boolean
   /** ClipScrollSection startPercentage (0 = no clip, as on the hero). */
+  startPercentage?: number
+  /** Heading level: h1 on the hero. */
   level?: 'h1' | 'h2'
   imageAlt?: string
-  startPercentage?: number
 }
 
 export default function FullBleedMedia({ image, imageBg, headline, body, primary, secondary, backdrop, priority, startPercentage = 10, level = 'h2', imageAlt = '' }: Props) {
-  useRefreshOnPageGrow()
   const Heading = level
+  useRefreshOnPageGrow()
   const section = useRef<HTMLElement>(null)
   const clip = useRef<HTMLDivElement>(null)
   const media = useRef<HTMLDivElement>(null)
@@ -165,7 +166,7 @@ export default function FullBleedMedia({ image, imageBg, headline, body, primary
   return (
     <div className={`isolate relative w-full px-4`} style={{ background: backdrop }}>
       <div ref={clip} className="h-full w-full overflow-hidden" style={{ clipPath: 'inset(0 round 1.5rem)' }}>
-        <section ref={section} className="relative overflow-hidden rounded-3xl bg-bg text-white">
+        <section ref={section} className="relative overflow-hidden rounded-3xl bg-white text-black">
           <div className="relative flex min-h-[480px] items-end overflow-hidden rounded-3xl p-8 md:min-h-[720px] md:p-16">
             <div className="relative z-20 flex w-full max-w-[72rem] flex-col gap-6 text-white">
               <Heading ref={h2} className={`${s.header2} ${s.pending} font-display font-normal text-white`}>
@@ -191,10 +192,10 @@ export default function FullBleedMedia({ image, imageBg, headline, body, primary
               </div>
             </div>
             <div className="absolute left-0 top-0 h-full w-full origin-center overflow-hidden rounded-3xl">
-              {/* .media-overlay gradient plus a flat 45% black so white type holds on bright Vahue photography */}
+              {/* .media-overlay: gradient to black (its `background` shorthand cancels bg-black/45) */}
               <div
                 className="pointer-events-none absolute inset-0 z-10 rounded-3xl"
-                style={{ backgroundColor: 'rgb(0 0 0 / 0.45)', backgroundImage: 'linear-gradient(#0000 0%, #000 100%)' }}
+                style={{ backgroundImage: 'linear-gradient(#0000 0%, #000 100%)' }}
               />
               <div ref={media} className="absolute inset-0 overflow-hidden rounded-3xl" style={{ background: imageBg }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}

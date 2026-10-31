@@ -9,8 +9,8 @@ import s from './security.module.css'
 gsap.registerPlugin(ScrollTrigger)
 
 /*
- * Vahue /security control cards. Layout and motion copied 1:1 from the security clone
- * (components/scale-clone/security/CardGrid.tsx), surfaces inverted to Vahue dark.
+ * Vahue /security control cards: the security clone's CardGrid (components/scale-clone/security/CardGrid.tsx)
+ * 1:1, Scale's colours; only the card title is an h3 instead of h5.
  *
  * scale.com CardGrid (chunk 2k1qlgdxlbmz1, "BaseCardScroll" + LinkCard), 3 cards, directionalEntrance off.
  *
@@ -112,12 +112,12 @@ export default function CardGrid({ cards }: { cards: Card[] }) {
       <div className={s.cardGrid}>
         {cards.map((c, i) => (
           <div key={i} data-card className="origin-center">
-            <div className="relative h-full overflow-clip rounded-[8px] border border-border-soft bg-surface text-white xl:rounded-2xl">
+            <div className="relative h-full overflow-clip rounded-[8px] bg-[#f2f2f2] text-black xl:rounded-2xl">
               <div className="relative z-10 flex h-full flex-col justify-between gap-5 p-6 md:gap-6 xl:gap-16 xl:p-10">
                 <div className="flex items-center gap-2">
                   <div
                     data-icon-box
-                    className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.06] md:h-16 md:w-16"
+                    className="flex h-10 w-10 items-center justify-center rounded-xl bg-black/[0.06] md:h-16 md:w-16"
                     style={{ clipPath: 'inset(0% round 10px)' }}
                   >
                     <span data-icon className="flex items-center justify-center">
@@ -125,11 +125,11 @@ export default function CardGrid({ cards }: { cards: Card[] }) {
                     </span>
                   </div>
                 </div>
-                <h3 data-title className={`${s.cardTitle} ${s.pending} font-display font-normal text-white`}>
+                <h3 data-title className={`${s.cardTitle} ${s.pending} font-display font-normal text-black`}>
                   {c.title}
                 </h3>
                 <div className="flex flex-1 flex-col justify-start gap-4">
-                    <div data-body className={`${s.cardBody} ${s.pending} font-display text-white/70`}>
+                  <div data-body className={`${s.cardBody} ${s.pending} font-display text-[#212121]`}>
                     {c.body}
                   </div>
                 </div>

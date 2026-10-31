@@ -1,17 +1,9 @@
 import type { Metadata } from 'next'
-import { CONTROL_FEATURES } from '@/lib/automation-content'
 import SmoothScroll from '@/components/home/scroll-hero/SmoothScroll'
 import FullBleedMedia from '@/components/security-page/FullBleedMedia'
 import CardGrid from '@/components/security-page/CardGrid'
 import ScrollReveal from '@/components/security-page/ScrollReveal'
-import {
-  CONTROL_ICONS,
-  DataHandling,
-  Disclosure,
-  Promos,
-  SectionHeader,
-  WorkflowGuardrails,
-} from '@/components/security-page/Sections'
+import { COMMITMENT, Compliance, Disclosure, Promos, SectionHeader } from '@/components/security-page/Sections'
 
 const PAGE_URL = 'https://vahue.ai/security/'
 const DESCRIPTION =
@@ -24,47 +16,50 @@ export const metadata: Metadata = {
   alternates: { canonical: PAGE_URL },
 }
 
-const cards = CONTROL_FEATURES.map((f) => ({ icon: CONTROL_ICONS[f.title], title: f.title, body: f.body }))
-
-// Security page on the layout of the security clone (app/scale-clone/security, spec in
-// reference-snapshots/scale-clone/security.md). Clone's light surfaces inverted to Vahue dark.
+/*
+ * /security in strict parity with the security clone (app/scale-clone/security, spec
+ * reference-snapshots/scale-clone/security.md): the same six sections in Scale's order and Scale's own colours
+ * (white page, #f2f2f2 band, black ScrollReveal panel, slate promo cards); Vahue fonts, logo, photography and copy.
+ * Section mapping: hero -> security at Vahue; commitment (3 cards) -> controls; compliance (4 cards) -> ISO 27001,
+ * GDPR, deployment, code ownership; promos -> how we operate + the Exaware case; disclosure; pre-footer -> careers.
+ */
 export default function SecurityPage() {
   return (
-    <div className="overflow-x-hidden bg-bg font-display text-white">
+    <div className="overflow-x-hidden bg-white font-display text-black">
       <SmoothScroll />
-      {/* Vahue's navbar sits in the flow, so the clone's pt-24 hero gap is reduced */}
+      {/* Vahue's navbar sits in the flow (light on this route, see Navbar.tsx), so the clone's pt-24 hero gap is reduced */}
       <div className="pb-10 pt-6 md:pt-10">
         <FullBleedMedia
           level="h1"
-          backdrop="#020202"
+          backdrop="#fff"
           image="/img/careers/office-5.jpg"
           imageAlt=""
-          imageBg="#111"
+          imageBg="#193A29"
           priority
           startPercentage={0}
-          headline="Automation your risk team can sign off on"
-          body="Agents propose, people approve. Every workflow we run has review queues, role-based access and a full audit log, and can run inside your own cloud."
+          headline="Security at Vahue" // page copy
+          // page copy
+          body="Our clients trust us to run agents inside the workflows their business depends on. That trust sets our rules: every agent ships with review queues, access limits and a full audit log."
         />
       </div>
-      <section className="bg-bg py-[72px] md:py-[120px]">
+      <section className="bg-white py-[72px] md:py-[120px]">
         <div className="mx-auto w-full max-w-[1472px] px-6">
-          <SectionHeader over="Controls" title="Built into every workflow we run" className="!mb-10 !mt-0" />
-          <CardGrid cards={cards} />
+          <SectionHeader over={COMMITMENT.over} title={COMMITMENT.title} className="!mb-10 !mt-0" />
+          <CardGrid cards={COMMITMENT.cards} />
         </div>
       </section>
-      <ScrollReveal backdrop="#020202" panel="#0e0e10">
-        <DataHandling />
+      <ScrollReveal backdrop="#f2f2f2" panel="#000">
+        <Compliance />
       </ScrollReveal>
-      <WorkflowGuardrails />
       <Promos />
       <Disclosure />
       <div className="pb-8">
         <FullBleedMedia
-          backdrop="#020202"
+          backdrop="#fff"
           image="/img/careers/office-1.jpg"
-          imageBg="#111"
-          headline="Start with one workflow and the guardrails agreed up front"
-          primary={{ label: 'Book a workflow audit', href: '/contact/' }}
+          imageBg="#193A29"
+          headline="Interested in joining Vahue’s engineering team?" // page copy
+          primary={{ label: 'Go to Careers', href: '/careers/' }}
         />
       </div>
     </div>

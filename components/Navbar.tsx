@@ -429,6 +429,10 @@ const navGroups: NavGroup[] = [
 const isLightEnterprisePage = (p: string) =>
   /^\/(operations|industries\/(banking-financial-services|retail-ecommerce|distribution-manufacturing))\/?$/.test(p)
 
+// Pages rebuilt in strict parity with light Scale clones (security, evaluation-enterprise, enterprise-insurance,
+// enterprise-healthcare), in Scale's own colours: light bar.
+const isLightCloneParityPage = (p: string) => /^\/(security)\/?$/.test(p)
+
 // /automations hub and workflow pages on light Scale clones (knowledge-agents is on a black clone): light bar.
 const isLightAutomationPage = (p: string) =>
   /^\/automations(\/(back-office-sync|document-intake|support-agents|scoring-decisions|engineering-enablement))?\/?$/.test(p)
@@ -444,7 +448,7 @@ export default function Navbar() {
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const isHomePage = pathname === '/' || pathname === ''
   // light bar on the vacancy pages and /contact (light scale.com/demo layout); /careers itself is dark
-  const isCareersPage = /^\/careers\/.+/.test(pathname) || /^\/contact\/?$/.test(pathname) || isLightEnterprisePage(pathname) || isLightAutomationPage(pathname)
+  const isCareersPage = /^\/careers\/.+/.test(pathname) || /^\/contact\/?$/.test(pathname) || isLightEnterprisePage(pathname) || isLightCloneParityPage(pathname) || isLightAutomationPage(pathname)
   const liRefs = useRef<Record<string, HTMLLIElement | null>>({})
   const [portalReady, setPortalReady] = useState(false)
   const [menuRect, setMenuRect] = useState<{
