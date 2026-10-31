@@ -131,7 +131,7 @@
   pointer-events: none;
   border-radius: inherit;
   background: currentColor;
-  transition-property: transform;
+  transition-property: translate;
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
 .ctaLabel {
