@@ -185,6 +185,20 @@ const ShoppingBagIcon = (p: IconProps) => (
   </svg>
 )
 
+// Factory — Distribution & Manufacturing
+const FactoryIcon = (p: IconProps) => (
+  <Svg24
+    {...p}
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M3 20V10l5 3v-3l5 3V4h4l1 16z" />
+    <path d="M7 16h1M11 16h1" />
+  </Svg24>
+)
+
 // Marketplace.svg
 const MarketplaceIcon = (p: IconProps) => (
   <svg
@@ -367,6 +381,11 @@ const navGroups: NavGroup[] = [
           href: '/industries/retail-ecommerce',
           label: 'Retail & eCommerce',
           Icon: ShoppingBagIcon,
+        },
+        {
+          href: '/industries/distribution-manufacturing',
+          label: 'Distribution & Manufacturing',
+          Icon: FactoryIcon,
         },
 
       ],
