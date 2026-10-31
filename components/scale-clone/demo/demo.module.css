@@ -1,0 +1,592 @@
+/*
+ * scale.com/demo clone. Sizes measured at 1440x900 and 390x844; form rules ported from Scale's StaticForm CSS module
+ * (_1N8NtW_*, chunk 0wrf93oshhpjv.css, light theme = .form__wrapper__light) applied to HubSpot's v2 embed markup.
+ *
+ * Theme tokens (override on any ancestor to re-skin, e.g. Vahue's dark /contact):
+ *   --demo-bg            page background                     #fff
+ *   --demo-heading       h1                                  #212121 (scale-gray-10)
+ *   --demo-intro         intro paragraph                     #575757 (scale-gray-30)
+ *   --demo-text          form text, legal copy, choices      #575757
+ *   --demo-strong        input text, links, focus, checked   #171717
+ *   --demo-label         group labels (checkbox/radio)       #373737
+ *   --demo-placeholder   placeholders                        #929292
+ *   --demo-field-bg      input/select/checkbox background    #fff
+ *   --demo-border        input/select border                 #d1d5db
+ *   --demo-choice-border checkbox/radio border               #c7c7c7
+ *   --demo-ring          focus ring (3px) / checked ring     #17171714
+ *   --demo-error         error text                          #dc2626
+ *   --demo-divider       consent divider centre              #17171729
+ *   --demo-cta-bg / --demo-cta-fg / --demo-cta-icon-bg / --demo-cta-icon-fg   #000 / #fff / #fff / #000
+ *   --demo-card          sidebar card (bg-cloud-slate)       #839cb2
+ *   --demo-card-fg       quote + name                        #212121
+ *   --demo-card-muted    position, "Trusted by" label        rgb(0 0 0 / .5)
+ *   --demo-card-mark     quote marks                         rgb(0 0 0 / .3)
+ *   --demo-card-line     divider                             rgb(0 0 0 / .15)
+ *   --demo-logo          logo fill                           #212121
+ */
+.root {
+  --demo-bg: #fff;
+  --demo-heading: #212121;
+  --demo-intro: #575757;
+  --demo-text: #575757;
+  --demo-strong: #171717;
+  --demo-label: #373737;
+  --demo-placeholder: #929292;
+  --demo-field-bg: #fff;
+  --demo-border: #d1d5db;
+  --demo-choice-border: #c7c7c7;
+  --demo-ring: #17171714;
+  --demo-error: #dc2626;
+  --demo-divider: #17171729;
+  --demo-cta-bg: #000;
+  --demo-cta-fg: #fff;
+  --demo-cta-icon-bg: #fff;
+  --demo-cta-icon-fg: #000;
+  --demo-card: #839cb2;
+  --demo-card-fg: #212121;
+  --demo-card-muted: rgb(0 0 0 / 0.5);
+  --demo-card-mark: rgb(0 0 0 / 0.3);
+  --demo-card-line: rgb(0 0 0 / 0.15);
+  --demo-logo: #212121;
+  background: var(--demo-bg);
+}
+
+/* AnimatedText "isnt-visible": hidden until SplitText has set the start state. */
+@media (prefers-reduced-motion: no-preference) {
+  .pending {
+    opacity: 0;
+  }
+}
+
+/* ---------- type (Scale sizes, Vahue faces) ---------- */
+/* header3-regular: 24/1.05 -> md 40/1.25, -0.01em */
+.heading {
+  font-size: 24px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: var(--demo-heading);
+}
+/* body2-regular: 14/1.35 -> md 16/1.5 */
+.intro {
+  font-size: 14px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--demo-intro);
+}
+/* header5-regular + leading-snug (1.375): 22 -> md 24 */
+.quote {
+  font-size: 22px;
+  line-height: 1.375;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: var(--demo-card-fg);
+}
+/* body3: 14/1.35 -> md 14/1.5 */
+.body3 {
+  font-size: 14px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+/* detail-mono: 10/1.2 -> md 13/1.2 uppercase */
+.detailMono {
+  font-size: 10px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+@media (min-width: 768px) {
+  .heading {
+    font-size: 40px;
+    line-height: 1.25;
+  }
+  .intro {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .quote {
+    font-size: 24px;
+  }
+  .body3 {
+    line-height: 1.5;
+  }
+  .detailMono {
+    font-size: 13px;
+  }
+}
+
+/* ---------- layout ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+}
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+  }
+}
+
+/* ---------- form (StaticForm wrapper + HubSpot markup) ---------- */
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  column-gap: 1rem;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--demo-text);
+  text-align: left;
+}
+@media (min-width: 1024px) {
+  .form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* fieldset.form-columns-1 / form-columns-2 */
+.form fieldset {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  align-items: start;
+  gap: 0 1rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+@media (min-width: 1024px) {
+  .form fieldset:global(.form-columns-2) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.form fieldset:global(.form-columns-1) > *,
+.form :global(.hs-dependent-field) {
+  grid-column: 1 / -1;
+}
+.form :global(.hs-dependent-field) {
+  width: 100%;
+}
+
+/* div.field */
+.form :global(.hs-form-field) {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 1.5rem;
+}
+
+/* Group labels (checkbox / radio). Scale hides labels whose span is empty, so text inputs have none. */
+/* The label box keeps the form's 16/24 strut; its spans are 14px (Scale: `label > span { font-size: .875rem }`). */
+.form :global(.hs-form-field) > label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.form label > span {
+  font-size: 0.875rem;
+  color: var(--demo-label);
+}
+.form :global(.hs-form-field) > label > span:first-child {
+  font-weight: 500;
+}
+.form :global(.hs-field-desc) {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--demo-text);
+}
+
+.form :global(.input) {
+  display: block;
+  width: 100%;
+}
+/* Scale's textarea is inline (all: unset) and sits on the 16/24 line box, which adds 7px under it */
+.form :global(.input):has(> textarea) {
+  padding-bottom: 7px;
+}
+
+/* text / email / textarea / select */
+.form :global(.hs-input):is(input[type='text'], input[type='email'], textarea, select) {
+  all: unset;
+  box-sizing: border-box;
+  display: block;
+  width: 100% !important;
+  min-height: 46px;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--demo-border);
+  border-radius: 0.5rem;
+  background: var(--demo-field-bg);
+  color: var(--demo-strong);
+  font-size: 0.875rem;
+  line-height: 1.375;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter;
+  transition-duration: 0.15s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.form :global(.hs-input):is(input[type='text'], input[type='email'], textarea)::placeholder {
+  color: var(--demo-placeholder);
+  opacity: 1;
+}
+.form :global(.hs-input):is(input[type='text'], input[type='email'], textarea, select):focus {
+  background: var(--demo-field-bg);
+  border-color: var(--demo-strong);
+  box-shadow: 0 0 0 3px var(--demo-ring);
+  outline-color: transparent !important;
+}
+.form :global(.input) textarea:global(.hs-input) {
+    min-height: 128px !important;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  resize: none;
+}
+@media (min-width: 768px) {
+  .form :global(.input) textarea:global(.hs-input) {
+    min-height: 152px !important;
+  }
+}
+.form :global(.input) select:global(.hs-input) {
+  appearance: none;
+  cursor: default;
+  background-image: linear-gradient(45deg, #0000 50%, var(--demo-strong) 50%), linear-gradient(135deg, var(--demo-strong) 50%, #0000 50%);
+  background-position: calc(100% - 22px), calc(100% - 15px);
+  background-repeat: no-repeat;
+  background-size: 7px 7px, 7px 7px;
+  padding-right: 2.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.form select:global(.hs-input) option {
+  color: #171717;
+  background: #fff;
+}
+
+/* checkbox / radio groups */
+.form :global(.hs-fieldtype-checkbox) {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 2rem !important;
+}
+.form :global(.hs-fieldtype-checkbox) > label {
+  margin-bottom: 0.75rem;
+}
+.form :global(.hs-fieldtype-radio) {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.75rem !important;
+}
+.form :global(.inputs-list) {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.form :global(.hs-fieldtype-checkbox) :global(.inputs-list) {
+  display: grid;
+  gap: 0.75rem;
+  width: 100%;
+}
+.form :global(.hs-fieldtype-radio) :global(.inputs-list) {
+  display: grid;
+  gap: 0.375rem;
+  width: 100%;
+  max-width: 240px;
+}
+.form :global(.hs-form-checkbox-display),
+.form :global(.hs-form-booleancheckbox-display) {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.35;
+  cursor: pointer;
+}
+.form :global(.hs-form-radio-display) {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 22px;
+  margin: 0;
+  padding: 0;
+  font-size: 0.9375rem;
+  line-height: 1.35;
+  cursor: pointer;
+}
+.form :global(.hs-input):is(input[type='checkbox'], input[type='radio']) {
+  appearance: none;
+  box-sizing: border-box;
+  display: inline-grid;
+  place-content: center;
+  width: 16px;
+  min-width: 16px;
+  height: 16px;
+  min-height: 16px;
+  margin: 0;
+  flex-shrink: 0;
+  cursor: pointer;
+  border: 1px solid var(--demo-choice-border);
+  background: var(--demo-field-bg) 50% / 16px 16px no-repeat;
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-duration: 0.15s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.form input[type='checkbox']:global(.hs-input) {
+  border-radius: 0.25rem;
+}
+.form input[type='radio']:global(.hs-input) {
+  border-radius: 9999px;
+}
+.form :global(.hs-input):is(input[type='checkbox'], input[type='radio']):focus-visible,
+.form :global(.hs-input):is(input[type='checkbox'], input[type='radio']):focus {
+  outline: none;
+  border-color: var(--demo-strong);
+  box-shadow: 0 0 0 3px var(--demo-ring);
+}
+.form :global(.hs-input):is(input[type='checkbox'], input[type='radio']):checked {
+  background-color: var(--demo-strong);
+  border-color: var(--demo-strong);
+  box-shadow: 0 0 0 2px var(--demo-ring);
+}
+.form input[type='checkbox']:global(.hs-input):checked {
+  /* Scale's checkbox.svg (media/checkbox.2v0-nijr92x4e.svg) at 120% */
+  background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='.5' y='.5' width='15' height='15' rx='3.5' fill='white' fill-opacity='.09'/%3E%3Crect x='.5' y='.5' width='15' height='15' rx='3.5' stroke='white' style='mix-blend-mode:overlay'/%3E%3Cpath d='M5 7.80769L7.25 10.5L11 5.5' stroke='white' stroke-opacity='.7' stroke-width='1.6875' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: 120% 120%;
+}
+.form input[type='radio']:global(.hs-input):checked {
+  background-image: radial-gradient(circle, #fff 0 3px, #0000 3.5px);
+}
+
+/* booleancheckbox (EU consent) with the gradient divider above it */
+.form :global(.hs-fieldtype-booleancheckbox) {
+  padding-top: 1.25rem;
+}
+.form :global(.hs-fieldtype-booleancheckbox)::before {
+  content: '';
+  position: relative;
+  bottom: 1rem;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(270deg, transparent 0%, var(--demo-divider) 52.07%, transparent 100%);
+}
+@media (min-width: 640px) {
+  .form :global(.hs-fieldtype-booleancheckbox) {
+    margin-bottom: 2rem;
+    padding-top: 2rem;
+  }
+  .form :global(.hs-fieldtype-booleancheckbox)::before {
+    bottom: 2rem;
+  }
+}
+.form :global(.hs-form-booleancheckbox-display) a,
+.form :global(.hs-richtext) a {
+  color: var(--demo-strong);
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+/* legal rich text */
+.form :global(.legal-consent-container) {
+  grid-column: 1 / -1;
+}
+.form :global(.hs-richtext) {
+  margin-bottom: 2rem;
+  color: var(--demo-text);
+}
+.form :global(.hs-richtext) p {
+  margin: 0;
+  text-wrap: pretty;
+}
+.form :global(.hs-richtext) strong {
+  font-weight: 500;
+}
+@media (min-width: 768px) {
+  .form :global(.hs-richtext),
+  .form :global(.hs-richtext) p {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+}
+
+/* inline errors: absolutely placed under the field, inside its 24px bottom margin */
+.form :global(.hs-error-msgs) {
+  position: absolute;
+  bottom: -0.15rem;
+  transform: translateY(100%);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--demo-error);
+  font-size: 13px;
+  line-height: 1.25;
+}
+.form :global(.hs-email) :global(.hs-error-msgs) {
+  bottom: 0;
+}
+.form :global(.hs-error-msg) {
+  display: block;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.25;
+}
+@media (min-width: 768px) {
+  .form :global(.hs-error-msgs),
+  .form :global(.hs-error-msg) {
+    font-size: 12px;
+  }
+}
+
+/* thank-you state */
+.submitted {
+  color: var(--demo-strong);
+  font-size: 1rem;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+.submitted p {
+  margin: 0;
+}
+.submitted p + p {
+  margin-top: 1rem;
+}
+.submitted a {
+  color: inherit;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+/* ---------- Submit (FlatCta variant "arrow", theme black, as a <button>) ---------- */
+.cta {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  background: var(--demo-cta-bg);
+  color: var(--demo-cta-fg);
+}
+.ctaFill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: currentColor;
+  opacity: 0.3;
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+.ctaInner {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.25rem 0.25rem 0.25rem 1rem;
+}
+.ctaLabel {
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+.ctaIcon {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--demo-cta-icon-bg);
+  color: var(--demo-cta-icon-fg);
+}
+.ctaTrack {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  width: 200%;
+  transform: translateX(-50%);
+  transition: transform 0.6s cubic-bezier(0, 0, 0.2, 1);
+}
+.cta:hover .ctaTrack {
+  transform: translateX(0);
+}
+.ctaTrack > span {
+  display: flex;
+  width: 50%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.cta:focus-visible {
+  outline: 2px solid var(--demo-strong);
+  outline-offset: 2px;
+}
+
+/* ---------- sidebar ---------- */
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 2rem;
+  border-radius: 1rem;
+  padding: 2rem;
+  background: var(--demo-card);
+}
+@media (min-width: 768px) {
+  .card {
+    padding: 2.5rem;
+  }
+}
+.mark {
+  font-family: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  color: var(--demo-card-mark);
+}
+.rule {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: var(--demo-card-line);
+}
+.logoTile {
+  display: block;
+  border-radius: 3px;
+  background: var(--demo-logo);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ctaFill,
+  .ctaTrack {
+    transition: none !important;
+  }
+  .cta:hover .ctaTrack {
+    transform: translateX(-50%);
+  }
+}
