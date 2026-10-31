@@ -85,6 +85,19 @@ export default async function CaseStudyPage({
               <dt className="font-mono text-[10px] uppercase tracking-widest text-white/40">Disclosure</dt>
               <dd className="mt-2 text-white/80">{caseStudy.disclosure}</dd>
             </div>
+            {[
+              { label: 'Point A', value: caseStudy.pointA },
+              { label: 'Time to first agent live', value: caseStudy.timeToLive },
+              { label: 'Point B', value: caseStudy.pointB },
+              { label: 'Payback', value: caseStudy.payback },
+            ]
+              .filter((field) => field.value)
+              .map((field) => (
+                <div key={field.label}>
+                  <dt className="font-mono text-[10px] uppercase tracking-widest text-white/40">{field.label}</dt>
+                  <dd className="mt-2 text-white/80">{field.value}</dd>
+                </div>
+              ))}
           </dl>
         </div>
 
