@@ -11,46 +11,51 @@ import s from './styles.module.css'
 gsap.registerPlugin(ScrollTrigger)
 
 /*
- * scale.com FullBleedMediaSection inside a ClipScrollSection (automotive clone), on Vahue dark.
+ * The automotive clone's FullBleedMedia (scale.com FullBleedMediaSection in a ClipScrollSection), same colours and
+ * motion; Vahue photos in the media layer, `as` for the page H1.
  *
- * Clip-scrubbed (ClipScrollSection), trigger = wrapper, start "top bottom" -> end "center center":
+ * Scrubbed (ClipScrollSection), trigger = wrapper, start "top bottom" -> end "center center":
  *   clip container  clip-path inset(0.5*startPercentage % -> 0% round 1.5rem)
- *   the hero passes startPercentage 0 (no clip).
- * Media-scrubbed (FullBleedMediaSection, module 540431), trigger = section, same range:
- *   media layer     scale 1.25 -> 1 (hero and prefooter; REA-verified on scale.com/automotive)
+ *   FullBleedMediaSection passes startPercentage 10 (pre-footer) and startScale 1 to the ClipScrollSection;
+ *   the page-header variant (hero, module 478135) passes startPercentage 0: no clip at all.
+ * Media-scrubbed (FullBleedMediaSection's own trigger, module 540431), trigger = section, same range:
+ *   media           scale 1.25 -> 1 on the hero and the pre-footer (REA-verified on scale.com/automotive)
+ * .media-overlay is `background: linear-gradient(#0000, #000)` and overrides the bg-black/45 class,
+ * so the overlay is the gradient only.
  * One-shot, start "top center" (retroactive onEnter):
  *   headline        AnimatedText intro, delay 0
  *   body            AnimatedText intro, delay 0.2
  *   primary CTA     "filledWhiteArrow" intro, 0.85s, delay 0.5
  *   secondary CTA   "fadeIn" intro, 0.85s, delay 0.5
- * Media layer: flat dark surface with the dot texture (no Scale imagery on Vahue pages) under the template's
- * gradient-to-black overlay, here a fade to the page background.
  */
 
 type Cta = { label: string; href: string }
 
 type Props = {
+  image: string
+  imageBg?: string
   headline: string
-  /** Hero renders the page H1; the prefooter an H2. */
-  as?: 'h1' | 'h2'
   body?: string
   primary: Cta
   secondary?: Cta
+  backdrop: string
+  priority?: boolean
   /** ClipScrollSection startPercentage (0 = no clip, as on the hero). */
   startPercentage?: number
-  wrapperClassName?: string
+  /** Hero renders the page H1. */
+  as?: 'h1' | 'h2'
 }
 
-export default function FullBleedMedia({ headline, as = 'h2', body, primary, secondary, startPercentage = 10, wrapperClassName = '' }: Props) {
+export default function FullBleedMedia({ image, imageBg, headline, body, primary, secondary, backdrop, priority, startPercentage = 10, as = 'h2' }: Props) {
+  const Heading = as
   useRefreshOnPageGrow()
   const section = useRef<HTMLElement>(null)
   const clip = useRef<HTMLDivElement>(null)
   const media = useRef<HTMLDivElement>(null)
-  const h = useRef<HTMLHeadingElement>(null)
+  const h2 = useRef<HTMLHeadingElement>(null)
   const p = useRef<HTMLParagraphElement>(null)
   const cta1 = useRef<HTMLAnchorElement>(null)
   const cta2 = useRef<HTMLAnchorElement>(null)
-  const Heading = as
 
   useEffect(() => {
     const root = section.current
@@ -92,7 +97,7 @@ export default function FullBleedMedia({ headline, as = 'h2', body, primary, sec
         })
       }
 
-      if (h.current) texts.push(createAnimatedText(h.current, 'lines,words'))
+      if (h2.current) texts.push(createAnimatedText(h2.current, 'lines,words'))
       if (p.current) texts.push(createAnimatedText(p.current, 'lines,words'))
       if (reduced) return
 
@@ -159,42 +164,48 @@ export default function FullBleedMedia({ headline, as = 'h2', body, primary, sec
   }, [startPercentage])
 
   return (
-    <div className={wrapperClassName}>
-      <div className="relative isolate w-full px-4">
-        <div ref={clip} className="h-full w-full overflow-hidden" style={{ clipPath: `inset(${0.5 * startPercentage}% round 1.5rem)` }}>
-          <section ref={section} className="relative overflow-hidden rounded-3xl bg-bg text-white">
-            <div className="relative flex min-h-[480px] items-end overflow-hidden rounded-3xl p-8 md:min-h-[720px] md:p-16">
-              <div className="relative z-20 flex w-full max-w-[72rem] flex-col gap-6 text-white">
-                <Heading ref={h} className={`${s.header2} ${s.pending} font-display font-normal text-white`}>
-                  {headline}
-                </Heading>
-                {body ? (
-                  <p ref={p} className={`${s.body1} ${s.pending} w-full max-w-[48rem] font-display text-white/85`}>
-                    {body}
-                  </p>
-                ) : null}
-                <div className="flex flex-col gap-4 font-display md:flex-row">
-                  <FlatCta ref={cta1} href={primary.href} variant="arrow" theme="white">
-                    {primary.label}
+    <div className={`isolate relative w-full px-4`} style={{ background: backdrop }}>
+      <div ref={clip} className="h-full w-full overflow-hidden" style={{ clipPath: 'inset(0 round 1.5rem)' }}>
+        <section ref={section} className="relative overflow-hidden rounded-3xl bg-white text-black">
+          <div className="relative flex min-h-[480px] items-end overflow-hidden rounded-3xl p-8 md:min-h-[720px] md:p-16">
+            <div className="relative z-20 flex w-full max-w-[72rem] flex-col gap-6 text-white">
+              <Heading ref={h2} className={`${s.header2} ${s.pending} font-display font-normal text-white`}>
+                {headline}
+              </Heading>
+              {body ? (
+                <p ref={p} className={`${s.body1} ${s.pending} w-full font-display text-white`}>
+                  {body}
+                </p>
+              ) : null}
+              <div className="flex flex-col gap-4 font-display md:flex-row">
+                <FlatCta ref={cta1} href={primary.href} variant="arrow" theme="white">
+                  {primary.label}
+                </FlatCta>
+                {secondary ? (
+                  <FlatCta ref={cta2} href={secondary.href} variant="border" theme="white">
+                    {secondary.label}
                   </FlatCta>
-                  {secondary ? (
-                    <FlatCta ref={cta2} href={secondary.href} variant="border" theme="white">
-                      {secondary.label}
-                    </FlatCta>
-                  ) : null}
-                </div>
-              </div>
-              <div className="absolute left-0 top-0 h-full w-full origin-center overflow-hidden rounded-3xl">
-                {/* .media-overlay: fade to the page background (no coloured glow, per DESIGN.md hero rules) */}
-                <div
-                  className="pointer-events-none absolute inset-0 z-10 rounded-3xl"
-                  style={{ backgroundImage: 'linear-gradient(rgba(2,2,2,0) 0%, #020202 100%)' }}
-                />
-                <div ref={media} className="hero-texture absolute inset-0 overflow-hidden rounded-3xl border border-border-soft bg-surface" />
+                ) : null}
               </div>
             </div>
-          </section>
-        </div>
+            <div className="absolute left-0 top-0 h-full w-full origin-center overflow-hidden rounded-3xl">
+              {/* .media-overlay: gradient to black (its `background` shorthand cancels bg-black/45) */}
+              <div
+                className="pointer-events-none absolute inset-0 z-10 rounded-3xl"
+                style={{ backgroundImage: 'linear-gradient(#0000 0%, #000 100%)' }}
+              />
+              <div ref={media} className="absolute inset-0 overflow-hidden rounded-3xl" style={{ background: imageBg }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={image}
+                  alt=""
+                  loading={priority ? 'eager' : 'lazy'}
+                  className="absolute inset-0 h-full w-full rounded-[inherit] object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   )

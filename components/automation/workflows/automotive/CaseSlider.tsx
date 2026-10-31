@@ -15,7 +15,7 @@ import s from './styles.module.css'
  * The track sits at opacity .5 until Keen's `created` (or a 1s fallback), then .3s ease-in-out to 1.
  * Cards are Vahue's verified cases; the image area carries the case metric instead of a cover image.
  */
-export default function CaseSlider({ cases }: { cases: CaseStudy[] }) {
+export default function CaseSlider({ over, title, cases }: { over: string; title: string; cases: CaseStudy[] }) {
   const [ready, setReady] = useState(false)
   const [ref] = useKeenSlider<HTMLDivElement>({
     initial: 0,
@@ -46,11 +46,7 @@ export default function CaseSlider({ cases }: { cases: CaseStudy[] }) {
   return (
     <section className="relative py-16">
       <div className={CONTAINER}>
-        <SectionHeader
-          over="Results"
-          title="Measured in production"
-          sub="Outcomes from Vahue deployments, each with its disclosure and full write-up."
-        />
+        <SectionHeader over={over} title={title} />
       </div>
       <div className="mt-10">
         <div className="relative z-0 pl-6 lg:pl-[max(2rem,calc((100vw-80rem)/2+2rem))]">
@@ -63,13 +59,13 @@ export default function CaseSlider({ cases }: { cases: CaseStudy[] }) {
             >
               {cases.map((c) => (
                 <Link key={c.slug} href={`/case-studies/${c.slug}/`} draggable={false} className="keen-slider__slide group block">
-                  <div className="hero-texture relative z-10 flex aspect-[389/243] flex-col justify-between overflow-hidden rounded-lg border border-border-soft bg-surface p-6 transition-colors duration-300 ease-out group-hover:border-border-strong">
-                    <p className="font-mono text-[11px] uppercase tracking-[0.05em] text-white/45">{c.service}</p>
-                    <p className="font-display text-[clamp(1.5rem,1rem+1.5vw,2.5rem)] font-light leading-[1.15] tracking-[-0.01em] text-white">{c.metric}</p>
+                  <div className="relative z-10 flex aspect-[389/243] flex-col justify-between overflow-hidden rounded-lg bg-black p-6">
+                    <p className="font-mono text-[11px] uppercase tracking-[0.05em] text-white/60">{c.client}</p>
+                    <p className="font-display text-[clamp(1.5rem,1rem+1.5vw,2.5rem)] font-normal leading-[1.15] tracking-[-0.01em] text-white">{c.metric}</p>
                   </div>
                   <div className="relative z-20 pt-6">
-                    <p className="text-[14px] font-medium leading-[1.71] tracking-[-0.01em] text-[#D1AAD7]">{c.client}</p>
-                    <h3 className="mt-1 line-clamp-2 font-display text-[24px] font-normal leading-[1.33] tracking-[-0.01em] text-white">{c.title}</h3>
+                    <p className="text-[14px] font-medium leading-[1.71] tracking-[-0.01em] text-[#D1AAD7]">Case Study</p>
+                    <h3 className="mt-1 line-clamp-2 font-display text-[24px] font-normal leading-[1.33] tracking-[-0.01em] text-black">{c.title}</h3>
                   </div>
                 </Link>
               ))}
