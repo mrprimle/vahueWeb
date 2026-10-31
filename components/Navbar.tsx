@@ -431,7 +431,7 @@ const isLightEnterprisePage = (p: string) =>
 
 // Pages rebuilt in strict parity with light Scale clones (security, evaluation-enterprise, enterprise-insurance,
 // enterprise-healthcare), in Scale's own colours: light bar.
-const isLightCloneParityPage = (p: string) => /^\/(security)\/?$/.test(p)
+const isLightCloneParityPage = (p: string) => /^\/(security|strategy)\/?$/.test(p)
 
 // /automations hub and workflow pages on light Scale clones (knowledge-agents is on a black clone): light bar.
 const isLightAutomationPage = (p: string) =>

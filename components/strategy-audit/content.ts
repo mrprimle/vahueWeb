@@ -1,64 +1,68 @@
-// Copy for /strategy (Workflow audit). Phase and positioning copy comes from
-// lib/automation-content.ts (PHASES, POSITIONING); the rest is written for this page in the same voice.
-// No metrics: the audit records the client's own numbers, so the page names the measures, not values.
-import { PHASES, POSITIONING } from '@/lib/automation-content'
+// Copy for /strategy (Workflow audit), in strict parity with the evaluation-enterprise clone
+// (components/scale-clone/evaluation-enterprise/content.ts, Scale's own text in reference-snapshots): the same
+// slots and counts (2 hero CTAs, 3 challenge items, 3 checklist items, 5 how-it-works rows, 2 pre-footer CTAs) and
+// each line about the length and Title Case of Scale's line in that slot. Phase and positioning copy comes from
+// lib/automation-content.ts (PHASES, POSITIONING); lines marked "page copy" were written for this page.
+// Scale's challenge body carries two market figures; the matching slots hold placeholders, marked
+// `// PLACEHOLDER METRIC` (Mike will replace them).
+import { PHASES } from '@/lib/automation-content'
 import type { GlyphName } from './icons'
 
-const [AUDIT, PILOT, OPERATE] = PHASES
+const [, PILOT, OPERATE] = PHASES
 
 export const CONTACT = '/contact/'
 
+const BASELINE_SHARE = '1 in 10' // PLACEHOLDER METRIC (challenge body: projects that record a baseline)
+const STALLED_SHARE = '30%' // PLACEHOLDER METRIC (challenge body: pilots dropped after the proof of concept)
+
 export const hero = {
-  title: 'Measure the workflow before anything is automated',
-  body: 'The workflow audit takes two weeks. We map one high-volume workflow end to end, record its baseline and agree the target and the point at which we stop.',
+  title: 'Workflow Audit for Operations Teams', // page copy
+  body: 'Measure one high-volume workflow before anything is automated.', // page copy (from PHASES Audit)
   primary: { label: 'Book a workflow audit', href: CONTACT },
-  secondary: { label: 'How it works', href: '#how-it-works' },
+  secondary: { label: 'Learn more', href: '#how-it-works' },
 }
 
 export const challenge = {
   eyebrow: 'The challenge',
-  title: 'Automation without a baseline is hard to judge',
-  body: `${POSITIONING.forWho.replace(/\.$/, '')} rarely lack ideas for what to automate. They lack the starting numbers, and projects stall on:`,
+  title: 'Lack of a Baseline Stalls Automation Projects', // page copy
+  // page copy (research: agencies rarely publish a baseline; stalled PoCs are a top trigger)
+  body: `Only ${BASELINE_SHARE} automation projects records a baseline before it starts, and more than ${STALLED_SHARE} of pilots stop after the proof of concept. The most common reason projects stall is a missing baseline, showing up as:`,
   items: [
     {
       icon: 'help' as GlyphName,
-      title: 'No baseline',
-      body: 'Nobody has recorded today’s volume, minutes per item or error rate, so a pilot has nothing to be compared against.',
+      title: 'No Baseline', // page copy
+      body: 'Nobody recorded today’s volume, minutes per item or error rate.', // page copy
     },
     {
       icon: 'flag' as GlyphName,
-      title: 'No agreed stop point',
-      body: 'Pilots run on without a target, and no one has said in advance when to stop or when to scale.',
+      title: 'No Stop Point', // page copy
+      body: 'Pilots run on with no agreed target and no point to stop.', // page copy
     },
     {
       icon: 'receipt' as GlyphName,
-      title: 'Cost spread across teams',
-      body: 'Hours and spend sit across several people and tools, so the real cost of the workflow is a guess.',
+      title: 'Hidden Costs', // page copy
+      body: 'Hours and spend sit across several teams, so the cost is a guess.', // page copy
     },
   ],
 }
 
 export const solution = {
   eyebrow: 'The solution',
-  title: 'Two weeks on one workflow, before the pilot starts',
-  body: POSITIONING.promise,
-  /** What the client has at the end of the audit */
+  title: 'Record the Baseline Before the Pilot Starts', // page copy
+  body: 'The path to automation you can trust is to map one workflow end to end, measure it on your own data and agree the target before any agent runs.', // page copy (from PHASES Audit)
+  /** What the client has at the end of the audit (Scale: 3 checklist items) */
   items: [
     {
-      title: 'A map of the workflow',
-      body: 'Every step, system, handoff and exception, end to end, as it runs today.',
+      title: 'Get a Recorded Baseline', // page copy
+      body: 'Volume, minutes per item, error rate and cost, measured on your own data.', // from PHASES Audit
     },
     {
-      title: 'The recorded baseline',
-      body: 'Volume, minutes per item, error rate and cost, measured on your own data.',
+      title: 'Agree a Target and Stop Point', // page copy
+      body: 'What the pilot has to reach, and the point at which we stop if it does not.', // from PHASES Audit
     },
     {
-      title: 'An agreed target and stop point',
-      body: 'What the pilot has to reach, and the point at which we stop if it does not.',
-    },
-    {
-      title: 'A pilot plan',
-      body: 'Scope, data access, reviewers and guardrails for a pilot of four to six weeks.',
+      title: 'Plan a Pilot That Holds', // page copy
+      body: 'Scope, data access, reviewers and guardrails for a four-to-six-week pilot.', // page copy (PHASES Pilot length)
     },
   ],
 }
@@ -68,45 +72,41 @@ export type MockupKind = 'map' | 'baseline' | 'target' | 'review' | 'results'
 export const howItWorks = {
   id: 'how-it-works',
   eyebrow: 'How it works',
-  title: 'From the audit to a workflow we run',
-  body: 'The audit sets the numbers. The pilot tests them at real volume, and once it holds we operate the workflow and report against the baseline every month.',
+  title: 'How the Vahue Workflow Audit Measures Your Operations', // page copy
+  // page copy (from PHASES)
+  body: 'Trust in automation is earned with numbers. The audit maps the workflow and records its baseline, the pilot tests agents against it at real volume, and once accuracy holds we operate the workflow and report against it.',
   items: [
     {
-      phase: `${AUDIT.name} · ${AUDIT.length}`,
-      title: 'Map the workflow',
-      body: 'We follow one workflow end to end: where items arrive, who touches them, which systems they pass through and where the exceptions go.',
+      title: 'Map your workflow', // page copy
+      body: 'We follow one workflow end to end: where items arrive, who touches them, which systems they pass through, where the exceptions go and how long each step takes.', // page copy
       mockup: 'map' as MockupKind,
       bar: 'Workflow map',
       textSide: 'left' as const,
     },
     {
-      phase: `${AUDIT.name} · ${AUDIT.length}`,
-      title: 'Record the baseline',
-      body: 'We measure volume, minutes per item, error rate and cost on your own data, so every later result has a real number to be compared with.',
+      title: 'Record your baseline', // page copy
+      body: 'Volume, minutes per item, error rate and cost, measured on your own data, so every later result is compared with a real number, not an estimate.', // from PHASES Audit
       mockup: 'baseline' as MockupKind,
       bar: 'Baseline',
       textSide: 'right' as const,
     },
     {
-      phase: `${AUDIT.name} · ${AUDIT.length}`,
-      title: 'Agree the target and the stop point',
-      body: 'Before any agent runs, we agree in writing what the pilot has to reach and the point at which we stop.',
+      title: 'Set the target and stop point', // page copy
+      body: 'Before any agent runs, we agree in writing what the pilot has to reach, the point at which we stop, and who signs off.', // page copy
       mockup: 'target' as MockupKind,
       bar: 'Target and stop point',
       textSide: 'left' as const,
     },
     {
-      phase: `${PILOT.name} · ${PILOT.length}`,
-      title: 'Pilot on your own data',
-      body: PILOT.body,
+      title: PILOT.name,
+      body: `${PILOT.body} Only then does the scope grow.`, // second sentence: page copy
       mockup: 'review' as MockupKind,
       bar: 'Review queue',
       textSide: 'right' as const,
     },
     {
-      phase: `${OPERATE.name} · ${OPERATE.length}`,
-      title: 'Operate and report against the baseline',
-      body: OPERATE.body,
+      title: OPERATE.name,
+      body: `${OPERATE.body} You see what the agents did, every month.`, // second sentence: page copy
       mockup: 'results' as MockupKind,
       bar: 'Results',
       textSide: 'left' as const,
@@ -115,7 +115,7 @@ export const howItWorks = {
 }
 
 export const prefooter = {
-  title: POSITIONING.line,
+  title: 'Your busiest workflow, measured from day one', // page copy (from POSITIONING.line)
   primary: { label: 'Book a workflow audit', href: CONTACT },
-  secondary: { label: 'See case studies', href: '/case-studies/' },
+  secondary: { label: 'See results', href: '/case-studies/' },
 }

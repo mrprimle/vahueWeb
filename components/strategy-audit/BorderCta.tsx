@@ -54,7 +54,7 @@ const BorderCta = forwardRef<BorderCtaHandle, { href: string; label: string }>(f
         style={{ transitionDuration: phase === 'reset' ? '0ms' : '300ms' }}
       />
       <div className="relative z-[1] inline-flex items-center justify-center px-4 py-2">
-        <span className="relative z-[1] block origin-center transform-gpu self-center text-nowrap text-[14px] font-medium leading-[1.5] transition-transform duration-300 ease-out group-hover/cta:scale-90 motion-reduce:transition-none motion-reduce:group-hover/cta:scale-100">
+        <span className="relative z-[1] block origin-center transform-gpu self-center text-nowrap text-[14px] font-medium capitalize leading-[1.5] transition-transform duration-300 ease-out group-hover/cta:scale-90 motion-reduce:transition-none motion-reduce:group-hover/cta:scale-100">
           {label}
         </span>
       </div>

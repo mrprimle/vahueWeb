@@ -71,7 +71,7 @@ const ArrowCta = forwardRef<ArrowCtaHandle, { href: string; label: string }>(fun
       />
       <div ref={counter} className="relative z-[1] inline-flex items-center justify-center py-1 pl-4 pr-1">
         <div className="relative z-[1] flex flex-1 flex-wrap items-center justify-center gap-4">
-          <span ref={text} className="block self-center text-nowrap text-[14px] font-medium leading-[1.5]">
+          <span ref={text} className="block self-center text-nowrap text-[14px] font-medium capitalize leading-[1.5]">
             {label}
           </span>
           <div

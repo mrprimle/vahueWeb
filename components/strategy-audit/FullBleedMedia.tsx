@@ -10,7 +10,7 @@ import styles from './styles.module.css'
 type Cta = { label: string; href: string }
 
 type Props = {
-  /** Photo; without one the card is the dark dot-texture panel */
+  /** Photo; without one the card shows Scale's #193a29 media fill */
   image?: string
   title: string
   body?: string
@@ -19,15 +19,14 @@ type Props = {
   level?: 'h1' | 'h2'
   /** ClipScrollSection startPercentage: 0 on the hero (no inset), 10 on the prefooter (inset 5% -> 0) */
   startPercentage: number
-  /** ClipScrollSection backdrop (bg-bg on this page; the clone used bg-white / bg-gray-50) */
+  /** ClipScrollSection backdrop: bg-white on the hero, bg-[#f9fafb] on the prefooter (as the clone) */
   backdropClassName: string
   wrapperClassName: string
   priority?: boolean
 }
 
-// Copied from components/scale-clone/evaluation-enterprise/FullBleedMedia.tsx: motion unchanged,
-// surfaces Vahue dark, real links, heading level configurable (h1 on the hero), and a flat 45% black
-// under the gradient overlay so white type holds on Vahue photography.
+// Copied from components/scale-clone/evaluation-enterprise/FullBleedMedia.tsx: motion and Scale's colours
+// unchanged (gradient-only overlay, #193a29 media fill); real links and a heading level (h1 on the hero).
 //
 // scale.com FullBleedMediaSection inside a ClipScrollSection (chunk 37xz28pjbnlx4.js):
 //   clip:  inset((1 - p) * 0.5 * startPercentage % round 1.5rem), root `top bottom` -> `center center`
@@ -112,11 +111,11 @@ export default function FullBleedMedia({
       <div ref={root} className={`relative isolate w-full ${backdropClassName} ${styles.gridLayout} !px-4`}>
         <div ref={clip} className="col-span-full h-full w-full overflow-hidden">
           <div className="h-full w-full">
-            <section ref={section} className={`overflow-hidden rounded-3xl bg-bg text-white ${styles.roundClip}`}>
+            <section ref={section} className={`overflow-hidden rounded-3xl bg-white text-black ${styles.roundClip}`}>
               <div
                 className={`relative flex min-h-[480px] items-end overflow-hidden rounded-3xl p-8 md:min-h-[720px] md:p-16 ${styles.roundClip}`}
               >
-                <div className="relative z-20 flex w-full max-w-[72rem] flex-col gap-6 text-white">
+                <div className="relative z-20 flex w-full max-w-[72rem] flex-col gap-6 text-black">
                   <Heading
                     ref={heading}
                     className={`${styles.header2} text-balance !text-[clamp(2rem,0.5rem+5vw,4rem)] !font-normal tracking-[-0.01em] !text-white`}
@@ -135,11 +134,11 @@ export default function FullBleedMedia({
                 </div>
                 <div className={`absolute left-0 top-0 h-full w-full origin-center overflow-hidden rounded-3xl ${styles.roundClip}`}>
                   <div
-                    className={`pointer-events-none absolute inset-0 z-10 h-full w-full rounded-3xl ${styles.roundClip} ${styles.mediaOverlay} ${image ? 'bg-black/45' : ''}`}
+                    className={`pointer-events-none absolute inset-0 z-10 h-full w-full rounded-3xl ${styles.roundClip} ${styles.mediaOverlay}`}
                   />
                   <div ref={media} className={`absolute inset-0 h-full w-full overflow-hidden rounded-3xl ${styles.roundClip}`}>
                     <div
-                      className={`relative h-full w-full rounded-3xl ${image ? 'bg-[#111]' : 'hero-texture border border-border-soft bg-[#0b0b0d]'} ${styles.roundClip}`}
+                      className={`relative h-full w-full rounded-3xl bg-[#193a29] ${styles.roundClip}`}
                     >
                       {image ? (
                         // eslint-disable-next-line @next/next/no-img-element
