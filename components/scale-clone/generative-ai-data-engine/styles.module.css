@@ -1,6 +1,7 @@
 /* Page-specific styles for the generative-ai-data-engine clone (values measured on scale.com). */
 
-/* FlatCta hover: wash slides in from the left, chevron strip slides one chip (0.6s Tailwind ease-out). */
+/* FlatCta "arrow" hover (state machine in FlatCta.tsx): wash -100% -> 0 on enter, -> +100% on leave, then snaps
+   back; chevron strip -50% -> 0 on enter, snaps back on leave. 600ms Tailwind ease-out. */
 .ctaWash,
 .ctaStrip {
   transition: transform 0.6s cubic-bezier(0, 0, 0.2, 1);
@@ -9,14 +10,20 @@
 .ctaWash {
   transform: translateX(-100%);
 }
+.ctaWash[data-state='in'] {
+  transform: translateX(0);
+}
+.ctaWash[data-state='out'] {
+  transform: translateX(100%);
+}
 .ctaStrip {
   transform: translateX(-50%);
 }
-.cta:hover .ctaWash,
-.cta:focus-visible .ctaWash,
-.cta:hover .ctaStrip,
-.cta:focus-visible .ctaStrip {
+.ctaStrip[data-state='in'] {
   transform: translateX(0);
+}
+.snap {
+  transition: none !important;
 }
 
 /* Soft lilac glow behind the overview split and the resources slider (_5fl2pa_background). */
@@ -83,5 +90,8 @@
   .ctaWash,
   .ctaStrip {
     transition: none;
+  }
+  .ctaStrip {
+    transform: translateX(0) !important;
   }
 }

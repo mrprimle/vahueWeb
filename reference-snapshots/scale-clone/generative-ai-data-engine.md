@@ -33,7 +33,7 @@ Container: `max-w-[1472px] px-6` (24px). A standard slice is `pt-8 pb-10 md:pt-1
 | 10 | **Resources** | header + Keen carousel (`overflow-x-hidden` wrapper), glow behind at 30% opacity (`-top-[80%] -bottom-[20%]`) | card image `aspect-[389/243] rounded-lg bg-black`; kicker 14/23.94 500 `#D1AAD7`, `pt-6`; title 24/31.92 `mt-1 line-clamp-2` |
 | 11 | **Pre-footer** (FullBleedMediaSection, `startPercentage 10`) | wrapper `pt-16 pb-8`; same card as the hero, no body line | H2 as hero; image `prefooter.jpg` |
 
-**CTA (FlatCta "arrow")**: white `rounded-lg`, height 40, `pl-4 py-1 pr-1 gap-4`; label 14/21 500 capitalized; 32×32 black `rounded-md` chip with a 200%-wide chevron strip. Hover: a `bg-current` wash at opacity 0.35 slides from `translateX(-100%)` to `0`, and the strip goes from `-50%` to `0` (both 0.6s `cubic-bezier(0,0,0.2,1)`).
+**CTA (FlatCta "arrow")**: white `rounded-lg`, height 40, `pl-4 py-1 pr-1 gap-4`; label 14/21 500 capitalized; 32×32 black `rounded-md` chip with a 200%-wide chevron strip. Hover is a JS state machine (chunk `1h0nvyhf5gbrf.js`, module 892855), not CSS `:hover`: on `pointerenter` a `bg-current` wash at opacity 0.35 slides `translateX(-100%)` → `0` and the strip `-50%` → `0` (both 600ms `cubic-bezier(0,0,0.2,1)`); on `pointerleave` the wash keeps going to `+100%` (exits right), then snaps back to `-100%` with the transition off on `transitionend` (or after 680ms) and is released after two rAFs; the strip snaps straight back to `-50%` (transition none). Re-entering while the wash is leaving snaps it to the start first. The label does not scale (the `group-hover/cta:scale-90` rule is only on the fill/border variants).
 
 ## Motion table
 | Element | Trigger | Start → end | From → to | Ease / duration / stagger | Scrub / pin |
@@ -45,15 +45,17 @@ Container: `max-w-[1472px] px-6` (24px). A standard slice is `pt-8 pb-10 md:pt-1
 | Testimonial panel width | panel wrapper | `top bottom` → `bottom 75%` | `width 90%` → `100%` | `power3.out` | `scrub: true` |
 | Testimonial quote | section | `top 80%`, once | lines `transformPerspective 900, origin 50% 100%, rotationX −90, yPercent 108` → 0 | 0.48s `power2.out`, stagger 0.05, delay 0.35 | — |
 | Testimonial name | same | — | same flip | delay 0.5 | — |
-| Role tag | same | — | text types in (`animateToText`) | about 0.03s per character (estimated), delay 0.05 | — |
+| Role tag (`ClientName.animateToText`) | same | — | tag width → 20px; text swapped in and measured; text opacity → 1; width → text + 26px | 0.5s `power3.out` (delay 0.05), then 10ms pause, opacity 0.5s linear alongside width 0.5s `power3.out` | — |
+| Logo tab fill | same | — | white fill `y 100%` (`x 100%` when `max-width: 768px`) → 0; tab colour white → `#193A29` | fill 0.3s GSAP default `power1.out`; colour `transition-all` 150ms | — |
 | Demo poster swap | slide click / slide change | — | CSS `fadeIn` opacity 0 → 1 | 0.6s ease-out | — |
+| Demo slide click (≥ 640px) | click | — | big player autoplays (Wistia iframe), page smooth-scrolls the gallery to 16px from the top | `window.scrollTo({behavior:'smooth'})`, about 250–300ms | — |
 | Logo marquee (mobile) | — | — | translateX 0 → −50% | linear, 8.6s loop (50px/s) | — |
 
 Keen Slider options (copied verbatim):
 - Demos: `rubberband:false`; `≤639: perView 1, spacing 32, snap, centered`; `640–767: perView 2, free`; `768–1040: perView 3.1, snap`; `≥1041: perView 3, spacing 32, snap`. On scale.com `centered:true` sits in the v5-style key; the clone uses `origin:'center'`.
 - Resources: `initial 0, snap, rubberband:false, perView 1.05, spacing 24`; `≥640: free, 1.4`; `≥768: free, 2`; `≥1280: free, 2.8`. Cursor is `grab` normally and `grabbing` while dragging. The track fades in (0.3s) once created.
 
-Reduced motion: no splitting, no clip/scale, panel at 100%, marquee and transitions off.
+Reduced motion: no splitting, no clip/scale, panel at 100%, logo tab shown active, marquee and transitions off, CTA strip parked at 0.
 Cleanup: every effect uses `gsap.context` and reverts its SplitText instances on unmount.
 
 ## Assets (`public/scale-clone/generative-ai-data-engine/`)
@@ -63,9 +65,6 @@ Cleanup: every effect uses `gsap.context` and reverts its SplitText instances on
 Screenshots are in `reference-snapshots/scale-clone/qa/generative-ai-data-engine/` (`{1440|390}-{scale|clone}-NN.jpg`, one viewport per step). At 1440, section tops match within ±3px through the features block. After that, the clone sits about 27px higher because the shorter placeholder copy in the features grid wraps to fewer lines. At 390 the clone runs about 40–100px taller for the same reason: the placeholder copy wraps differently. No console errors on the clone.
 
 ## Remaining gaps
-- The demo player is a poster plus play button only. The Wistia player isn't embedded (TODO).
-- Keen plugins passed on scale.com (`[o.f]`, `[a.f]`, probably wheel/keyboard helpers) aren't reproduced. Only the Tab-key slide navigation in the resources carousel is missing.
-- The role-tag typewriter timing is estimated; the `animateToText` source wasn't recovered.
 - The `expertise.png` and `lifecycle.png` illustrations carry Scale's baked-in English labels ("Scale Smart workspace…"). They need Vahue versions.
 - The first resources card is a neutral tile, since the original is a customer-brand image.
 - scale.com sometimes renders the resources carousel at `perView 2` at 1440 (breakpoint measured with the scrollbar). The clone follows the `2.8` state seen in most captures.
@@ -106,3 +105,73 @@ Overlay computed `background-color: rgba(0,0,0,0)`.
 - **Changed:** Demos mobile breakpoint, dropped `origin: 'center'`. Scale passes `centered: true`, which the bundled Keen v6 never reads (its track only reads `slides.origin`, default `auto`). With `perView 1` both give origin 0, so there's no visual change. It now matches the bundle literally.
 - QA re-shot: `qa/generative-ai-data-engine/1440-{scale,clone}-rea-{hero,prefooter}.jpg` (the hero is unchanged, so it's kept for reference).
 - **Still unknown:** none.
+
+## Interaction inventory (audit 2026-10-31)
+
+Method: REA on a fresh CDP 9230 tab (`analyze_web_bundle` ev_3d8413d5f05c…, 56/56 scripts parsed; `inspect_web_event_listeners` per section root and interactive child, ids below), handlers traced into the downloaded chunks. Then Playwright with identical inputs on scale.com, the clone and `/automations/back-office-sync` (script `scratchpad/gai-audit/qa.js`): CTA hover/leave sampled every 100ms, link hover, testimonial reveal sampled every 100ms for 2.5s at 1440 and 390, tab click, demo hover/drag/click/scroll, demo dots at 390, resources drag/wheel/Tab at 1440 and 390, pre-footer scrub at 10 points, and a 3×3 mouse grid over every section (computed `transform`/`translate`/`opacity` of every visible element before and after each move). QA images: `qa/generative-ai-data-engine/interactions/<name>-{scale,clone,vahue}.jpg`.
+
+Page-wide listeners: `html` has a passive `scroll` and `body` a passive `touchstart` from GSAP Observer/ScrollTrigger (`1h0nvyhf5gbrf.js`, ev_58c5a746f36 / ev_857602b5ccf) plus OneTrust `keydown`/`click`. Lenis runs as a ReactLenis root (`2d7ykwtxp_8ed.js`: lerp 0.14, wheelMultiplier 0.8, allowNestedScroll, syncTouch on coarse pointers, ScrollTrigger scrollerProxy), which the clone layout's SmoothScroll mirrors. The 3×3 mouse grid found **no pointer-tracking effects** on any section on any of the three pages; the only pointer responses are the hovers below. The three.js chunks that load (`3kd41k7ews14b.js` etc.) belong to shared components that aren't on this page: no canvas renders.
+
+### 1 · Hero (FullBleedMediaSection, startPercentage 0)
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| section | scroll | none on the node (ev_42051aee65fb); ScrollTrigger via `html` scroll | `37xz28pjbnlx4.js` | clip `inset(0%)`, media scale 1.25 → 1 over `top bottom → center center` | yes | — |
+| headline / body / CTA | scroll (`top center`, once) | ScrollTrigger | `1h0nvyhf5gbrf.js` | AnimatedText cascade, CTA "filledWhiteArrow" 0.85s after 0.5s | yes | — |
+| FlatCta | pointerenter / pointerleave | React `onPointerEnter/Leave` | `1h0nvyhf5gbrf.js` mod 892855 | wash −100% → 0 → +100%, snap back on transitionend / 680ms; strip −50% → 0, snaps back; 600ms ease-out | yes (was CSS `:hover`, reversed on leave: **fixed**) | `cta-hover-300ms-*`, `cta-leave-200ms-*` |
+
+Samples, wash x as a fraction of its width, enter at 0/100/200/300/400ms: Scale −1, −0.61, −0.32, −0.16, −0.05; clone −1, −0.56, −0.29, −0.14, −0.04. Leave at 100/300/600ms: Scale 0.39, 0.86, 1 → −1 by 700ms; clone 0.39, 0.86, −1 at 600ms. The strip snaps to −0.5 on the first leave frame on both.
+
+### 2 · Logo strip
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| "Meet our customers" link | hover | CSS | `890803` link component | arrow `translate-x-1` (4px) 300ms ease-out; colour stays `#008EFF` (`text-link` beats `hover:text-blue-700`) | yes (the clone turned blue-700 on hover: **fixed**) | — |
+| mobile marquee | — | — | react-fast-marquee | 50px/s | yes (CSS) | — |
+
+### 3–4 · Product overview header, expertise panel
+No listeners and no pointer or scroll effects. Matched (none).
+
+### 5 · Testimonial (ClientTestimonials, 1 item)
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| panel | scroll scrub | ScrollTrigger | `3hpmz3b0is2de.js` | width 90% → 100%, `top bottom → bottom 75%` | yes | — |
+| root | scroll `top 80%` (sets active index −1 → 0) | ScrollTrigger hook | same | quote flip delay 0.35, name 0.5, role tag `animateToText` delay 0.05 | yes | `testimonial-{1440,390}-*` |
+| logo tab (`role=tab`) | activation | React effect | same, component `u` | inactive: white outline + white label, fill off at y 100% (x 100% ≤ 768px); active: fill → 0 in 0.3s, label `#193A29` | yes (the clone showed it filled from the start: **fixed**) | same |
+| role tag | activation | imperative `animateToText` | same, `ClientName` | width 26 → 20px (0.5s power3.out), text in, → text + 26px (0.5s) | yes (the clone used a typewriter: **fixed**) | same |
+| logo tab | click | React `onClick` (ev_11bae90a57d: React click + HubSpot capture mousedown) | same | `lenis.scrollTo(root, {offset:-24})`, then select. Live: no scroll happens (the `useLenis()` instance is undefined there) and the index doesn't change | yes (no-op on both) | — |
+
+Samples at 1440, fill y at 0/100/200/300ms after the trigger: Scale 1, 0.55, 0.16, 0; clone 0.88, 0.38, 0.08, 0. Tag width: Scale 26 → 20 (300ms) → 54/128/156/162 (500–800ms); clone 26 → 20 (300ms) → 74/109/123/126 (600–900ms). The end width differs only by copy and mono font. At 390 the fill slides on x: 1 → 0 on both.
+
+### 6–8 · Overview split, lifecycle, key features
+No listeners and no pointer or scroll effects (the lilac glow is static). Matched (none).
+
+### 9 · Demos (VideoGallery)
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| `.keen-slider` | drag / touch / wheel | Keen core + WheelControls `wheel` (ev_b2d7dc5810c: `30w17vppvfdah.js` @1432, `3d2zty6gdk3do.js` @665) | `30w17vppvfdah.js` mod 482270 | breakpoints as above. At 1440, 3 slides at perView 3 give zero track length, so a drag doesn't start | yes (tx [0,32,64] before and after a 400px drag on both) | — |
+| track cursor | — | state | same | starts `default` (≤ 3 videos), `grabbing` while dragging, `grab` after | yes (the clone started at `grab`: **fixed**) | — |
+| slide | hover | CSS | same | inactive `sm:opacity-50 → hover:opacity-70`, 300ms | yes (needs `sm:hover:` under Tailwind 3) | `demos-hover-slide2-*` |
+| slide | click (ev_0ff4b02b90b, React) | `onClick` | same | active = i; ≥ 640px: autoplay in the big player and `window.scrollTo` smooth to gallery top − 16px | yes (the clone only switched the poster: **fixed**; sectionTop 16 on both, smooth about 250–300ms) | `demos-after-click-*` |
+| big player | click | `onClick` | mod 832862 | poster button → `fast.wistia.net/embed/iframe/<id>?autoPlay=1` | yes (media ids 4n8xcpuanb, 10r609ojj4, wtp2wcktbl) | same |
+| slideChanged | drag / dot | Keen event | mod 482270 | active = abs, autoplay off | yes | — |
+| dots (< 640px) | click | `onClick` | same | `moveToIdx(i)`, rendered once created | yes (dot 2 gives tx −374 on both) | `demos-390-*` |
+
+### 10 · Resources
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| `.keen-slider` | drag / wheel | Keen core + WheelControls | `30w17vppvfdah.js` mod 382790 | at 390, a 300px drag gives −270 mid-drag and snaps to −331 (index 1); wheel −360 returns to 0 | yes (identical numbers) | `resources-after-keys-390-*` |
+| `.overflow-x-hidden` wrapper | `keydown` Tab / Shift+Tab | ev_1c8309c1692f (`30w17…` @20673) | same | `next()` / `prev()` | yes (**added**; 390: Tab gives −331, Shift+Tab gives 0 on both) | same |
+| wrapper | `focusin` on the first/last card | ev_1c8309c1692f (@20753) | same | `moveToIdx(minIdx/maxIdx)` | yes (**added**) | same |
+| track | created | Keen `created` + 1s fallback | same | opacity 0.5 → 1, inline `transition: opacity 0.3s ease-in-out` | yes (the clone started at 0 with no fallback: **fixed**) | `resources-after-keys-1440-*` |
+
+### 11 · Pre-footer (startPercentage 10)
+| Element | Input | Listener | Source | Params | Reproduced |
+|---|---|---|---|---|---|
+| section | scroll scrub | ScrollTrigger | `37xz28pjbnlx4.js` | clip 5% → 0, media scale 1.25 → 1 | yes |
+
+10-point scrub, each page sampled through its own range. The clone values are linearly interpolated to Scale's sample tops. At top 821: Scale 4.5124% / scale 1.2256, clone 4.5124% / 1.2257. At top 497: Scale 2.5124% / 1.1256, clone 2.5124% / 1.1257. At top 335: Scale 1.5124% / 1.0756, clone 1.5124% / 1.0757. The Vahue page samples sit on the same line within 0.001%.
+
+### Vahue page (`/automations/back-office-sync`, `components/automation/workflows/generative-ai-data-engine/`)
+The same fixes, with the same params: the FlatCta state machine (hero and pre-footer), the ToolStrip link colour, the CaseHighlight logo tile reveal and `animateToText` metric tag, the Demos cursor, slide-click scroll and dots-after-create, the CaseSlider opacity 0.5 + fallback and Tab/focusin. Re-measured: identical numbers to the clone, except that the Vahue demo panels are static mocks, so there's no autoplay; the logo tile is a case-study link, so its click navigates where Scale's single tab does nothing; and the metric tag ends at 108px, which differs only by copy. No console errors on either local page.
+
+### Can't be reproduced
+- None blocking. The HubSpot/OneTrust/analytics listeners (capture `mousedown`, banner `keydown`) are third-party tracking and are deliberately left out.

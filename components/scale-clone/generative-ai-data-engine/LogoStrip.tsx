@@ -20,7 +20,7 @@ export default function LogoStrip() {
         <p className="mx-auto mb-12 w-full max-w-[698px] text-balance px-4 text-center text-[16px] leading-[1.65] tracking-[-0.01em] text-[#374151]">
           <span className="mr-2">Teams building serious AI products rely on us.</span>
           <span className="inline">
-            <Link href="/scale-clone/" className="group inline-flex items-center gap-1 text-[#008EFF] transition-colors duration-300 hover:text-blue-700">
+            <Link href="/scale-clone/" className="group inline-flex items-center gap-1 text-[#008EFF] transition-colors duration-300">
               <span className="font-medium">See who we work with</span>
               <span className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1">→</span>
             </Link>
