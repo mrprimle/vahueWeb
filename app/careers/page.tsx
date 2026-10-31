@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     'Join Vahue and do meaningful work with an AI-native team built around ownership, growth, and respect.',
 }
 
-// Built on the scale.com/careers clone layout (components/scale-clone/careers), dark Vahue theme.
+// Built on the scale.com/careers clone (components/scale-clone/careers) in Scale's own colours.
 export default function CareersPage() {
   return <VahueCareersPage />
 }

@@ -1,11 +1,12 @@
 /*
  * Own visuals for Vahue /careers on the scale.com/careers layout (no Scale imagery): 88px monochrome line art for the
  * values cards (the clone's credo slot) and a small globe used in place of country flags in the open-roles list.
- * Decorative only (aria-hidden), white strokes on the dark page.
+ * Decorative only (aria-hidden). Dark strokes on the clone's #F2F2F2 credo cards (Scale's own art is white, inverted
+ * by --car-credo-filter, so it reads the same).
  */
 
-const stroke = 'rgba(255,255,255,0.85)'
-const faint = 'rgba(255,255,255,0.35)'
+const stroke = 'rgba(0,0,0,0.85)'
+const faint = 'rgba(0,0,0,0.35)'
 
 function Art({ children }: { children: React.ReactNode }) {
   return (
@@ -21,7 +22,7 @@ export function RespectArt() {
     <Art>
       <circle cx={34} cy={44} r={22} stroke={stroke} strokeWidth={1.25} />
       <circle cx={54} cy={44} r={22} stroke={stroke} strokeWidth={1.25} />
-      <path d="M44 24.4a22 22 0 0 1 0 39.2a22 22 0 0 1 0-39.2Z" fill="rgba(255,255,255,0.1)" />
+      <path d="M44 24.4a22 22 0 0 1 0 39.2a22 22 0 0 1 0-39.2Z" fill="rgba(0,0,0,0.06)" />
     </Art>
   )
 }
@@ -54,10 +55,10 @@ export function ShareArt() {
   return (
     <Art>
       <path d="M22 44 64 18M22 44h42M22 44l42 26" stroke={faint} strokeWidth={1.25} />
-      <circle cx={22} cy={44} r={7} fill="#020202" stroke={stroke} strokeWidth={1.25} />
+      <circle cx={22} cy={44} r={7} fill="#f2f2f2" stroke={stroke} strokeWidth={1.25} />
       <circle cx={22} cy={44} r={2.5} fill={stroke} />
       {[18, 44, 70].map((y) => (
-        <circle key={y} cx={66} cy={y} r={5} fill="#020202" stroke={stroke} strokeWidth={1.25} />
+        <circle key={y} cx={66} cy={y} r={5} fill="#f2f2f2" stroke={stroke} strokeWidth={1.25} />
       ))}
     </Art>
   )
@@ -91,6 +92,6 @@ export function MeasureArt() {
 
 /** 20x14 globe for location rows ("Fully remote"); passed to the list as an image URL. */
 export const GLOBE_ICON = `data:image/svg+xml,${encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 14" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1">' +
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 14" fill="none" stroke="#929292" stroke-width="1">' +
     '<circle cx="10" cy="7" r="6"/><ellipse cx="10" cy="7" rx="2.6" ry="6"/><path d="M4 7h12"/></svg>',
 )}`
