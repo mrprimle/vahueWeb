@@ -18,8 +18,7 @@ function casesFor(slug: string): CaseStudy[] {
   return picked.length ? picked : caseStudies.filter((c) => c.service === 'Enterprise AI')
 }
 
-// Prefooter photo reused from the template clone (generic motion-blur stock, no third-party branding).
-// The hero's robotics photo doesn't fit; the hero uses the flat dark surface with the dot texture instead.
+// Hero and prefooter use the flat dark surface with the dot texture (no Scale imagery on Vahue pages).
 const CTA = { href: '/contact/', text: 'Book a workflow audit' }
 const PROOF = { href: '/case-studies/', text: 'See verified results' }
 
