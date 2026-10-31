@@ -18,7 +18,7 @@ export default function FlatCta({ href, children }: { href: string; children: Re
       <span aria-hidden className={`${styles.ctaWash} pointer-events-none absolute inset-0 z-0 rounded-[inherit] bg-black opacity-35`} />
       <span className="relative z-[1] inline-flex items-center justify-center py-1 pl-4 pr-1">
         <span data-cta-counter className="relative z-[1] flex items-center justify-center gap-4">
-          <span data-cta-text className="block self-center text-nowrap text-[14px] font-medium leading-[1.5] tracking-normal text-black">
+          <span data-cta-text className="block self-center text-nowrap text-[14px] font-medium capitalize leading-[1.5] tracking-normal text-black">
             {children}
           </span>
           <span data-cta-arrow className="relative z-[1] flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-md bg-black p-2 text-white">

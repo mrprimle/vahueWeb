@@ -22,7 +22,7 @@ const ClientTile = ({ c, mobile = false }: { c: CaseStudy; mobile?: boolean }) =
     }`}
   >
     <div className="absolute -z-10 h-full w-full bg-white" />
-    <div className={`relative z-10 max-w-28 text-center ${mobile ? "line-clamp-4 text-[10px]" : "line-clamp-3 text-[12px]"} font-medium leading-[1.5] text-bg`}>{c.client}</div>
+    <div className={`relative z-10 max-w-28 text-center ${mobile ? "line-clamp-4 text-[10px]" : "line-clamp-3 text-[12px]"} font-medium leading-[1.5] text-[#193A29]`}>{c.client}</div>
   </Link>
 )
 
@@ -99,14 +99,14 @@ export default function CaseHighlight({ caseStudy: c }: { caseStudy: CaseStudy }
 
   return (
     <div>
-      <div ref={rootRef} className="relative scroll-mt-28 pb-16 pt-20 text-white md:pb-20">
+      <div ref={rootRef} className="relative scroll-mt-28 bg-white pb-16 pt-20 text-black md:pb-20">
         <div className="grid grid-cols-8 gap-2 px-3 text-white lg:grid-cols-12 lg:px-6">
           <div ref={panelWrapRef} className="relative isolate col-span-full min-w-0">
-            <div ref={panelRef} aria-hidden className="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-full -translate-x-1/2 rounded-2xl border border-border-soft bg-surface-2" />
+            <div ref={panelRef} aria-hidden className="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-full -translate-x-1/2 rounded-2xl bg-[#193A29]" />
             <div className="relative z-10 col-span-full flex flex-col gap-8 p-8 lg:grid lg:grid-cols-12 lg:gap-2 lg:px-0 lg:py-20">
               <div className="col-span-full flex w-full flex-row items-start justify-between gap-8 text-left md:items-center md:justify-start lg:col-span-1 lg:col-start-2 lg:flex-col lg:items-stretch lg:justify-end">
                 <p className="col-span-full w-1/2 whitespace-pre-line font-mono text-[12px] font-medium uppercase leading-[1.375] tracking-[-0.01em] text-white lg:w-full">
-                  Results from a Vahue deployment
+                  Results from the teams we work with
                 </p>
                 <div className="mb-2 hidden flex-col gap-2 lg:flex">
                   <ClientTile c={c} />
@@ -130,10 +130,9 @@ export default function CaseHighlight({ caseStudy: c }: { caseStudy: CaseStudy }
                     <div className="relative z-10">
                       <p ref={nameRef} className="text-[16px] font-medium leading-tight tracking-[-0.01em] text-white lg:text-[18px]">
                         {c.client}
-                        <span className="text-white/55"> · {c.disclosure.toLowerCase()}</span>
                       </p>
                     </div>
-                    <div className="inline-block overflow-hidden rounded-[4px] bg-white px-2 py-1 font-mono text-[10px] uppercase leading-[1.375] text-bg">
+                    <div className="inline-block overflow-hidden rounded-[4px] bg-white px-2 py-1 font-mono text-[10px] uppercase leading-[1.375] text-[#193A29]">
                       <div className="text-nowrap">
                         <Triangle />
                         <span ref={roleRef} className="inline-block text-nowrap">

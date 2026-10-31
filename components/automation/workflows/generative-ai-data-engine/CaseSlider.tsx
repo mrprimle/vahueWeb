@@ -3,12 +3,13 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useKeenSlider } from 'keen-slider/react'
+import { WheelControls } from './keenWheel'
 import 'keen-slider/keen-slider.min.css'
 import type { CaseStudy } from '@/lib/case-studies'
 import styles from './styles.module.css'
 
 // Template Resources carousel (Keen Slider options copied from scale.com). Cards are Vahue's
-// verified cases; the image area carries the case metric instead of a cover image.
+// verified cases; the black image area carries the case metric instead of a cover image.
 export default function CaseSlider({ cases }: { cases: CaseStudy[] }) {
   const [ready, setReady] = useState(false)
   const [ref, slider] = useKeenSlider<HTMLDivElement>({
@@ -29,7 +30,7 @@ export default function CaseSlider({ cases }: { cases: CaseStudy[] }) {
     },
     created: () => setReady(true),
     destroyed: () => setReady(false),
-  })
+  }, [WheelControls])
 
   return (
     <div className="relative z-0">
@@ -38,13 +39,13 @@ export default function CaseSlider({ cases }: { cases: CaseStudy[] }) {
         <div ref={ref} className={`keen-slider !overflow-visible h-full cursor-grab transition-opacity duration-300 ease-in-out ${ready ? 'opacity-100' : 'opacity-0'}`}>
           {cases.map((c) => (
             <Link key={c.slug} href={`/case-studies/${c.slug}/`} draggable={false} className="keen-slider__slide group block">
-              <div className="relative z-10 flex aspect-[389/243] flex-col justify-between overflow-hidden rounded-lg border border-border-soft bg-surface p-6 transition-colors duration-300 ease-out group-hover:border-border-strong">
-                <p className="font-mono text-[11px] uppercase tracking-[0.05em] text-white/45">{c.service}</p>
-                <p className="font-display text-[clamp(1.5rem,1rem+1.5vw,2.5rem)] font-light leading-[1.15] tracking-[-0.01em] text-white">{c.metric}</p>
+              <div className="relative z-10 flex aspect-[389/243] flex-col justify-between overflow-hidden rounded-lg bg-black p-6">
+                <p className="font-mono text-[11px] uppercase tracking-[0.05em] text-white/60">{c.client}</p>
+                <p className="font-display text-[clamp(1.5rem,1rem+1.5vw,2.5rem)] font-normal leading-[1.15] tracking-[-0.01em] text-white">{c.metric}</p>
               </div>
               <div className="relative z-20 pt-6">
-                <p className="text-[14px] font-medium leading-[1.71] tracking-[-0.01em] text-[#D1AAD7]">{c.client}</p>
-                <h3 className="mt-1 line-clamp-2 font-display text-[24px] font-normal leading-[1.33] tracking-[-0.01em] text-white">{c.title}</h3>
+                <p className="text-[14px] font-medium leading-[1.71] tracking-[-0.01em] text-[#D1AAD7]">Case Study</p>
+                <h3 className="mt-1 line-clamp-2 font-display text-[24px] font-normal leading-[1.33] tracking-[-0.01em] text-black">Client Story: {c.client}</h3>
               </div>
             </Link>
           ))}

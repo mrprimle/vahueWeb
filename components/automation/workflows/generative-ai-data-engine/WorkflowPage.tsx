@@ -1,71 +1,59 @@
 import SmoothScroll from '@/components/home/scroll-hero/SmoothScroll'
-import { CONTROL_FEATURES, PHASES, POSITIONING, type Workflow } from '@/lib/automation-content'
+import type { Workflow } from '@/lib/automation-content'
 import { caseStudies, type CaseStudy } from '@/lib/case-studies'
 import FullBleedMedia from './FullBleedMedia'
 import ToolStrip from './ToolStrip'
 import CaseHighlight from './CaseHighlight'
 import CaseSlider from './CaseSlider'
-import { BeforeAfter, Guardrails, OverviewSplit, SectionHeader, Slice, Steps } from './Sections'
+import Demos from './Demos'
+import { ExpertisePanel, Features, Lifecycle, Lines, OverviewSplit, SectionHeader, Slice } from './Sections'
+import { BACK_OFFICE as C } from './content'
 
-// Verified Vahue cases closest to each workflow (first one is featured). Workflows without an entry
-// fall back to the Enterprise AI cases.
-const RELATED_CASES: Record<string, string[]> = {
-  'back-office-sync': ['rfi-response-automation', 'amerit-repair-order-ai', 'piogroup-employee-assistant', 'exaware-governed-noc-agents'],
-}
-
-function casesFor(slug: string): CaseStudy[] {
-  const picked = (RELATED_CASES[slug] ?? [])
-    .map((s) => caseStudies.find((c) => c.slug === s))
-    .filter((c): c is CaseStudy => Boolean(c))
-  return picked.length ? picked : caseStudies.filter((c) => c.service === 'Enterprise AI')
-}
-
-const CTA = { href: '/contact/', label: 'Book a workflow audit' }
+const pick = (slugs: string[]) => slugs.map((s) => caseStudies.find((c) => c.slug === s)).filter((c): c is CaseStudy => Boolean(c))
 
 /**
- * Workflow page on the scale.com/generative-ai-data-engine layout:
- * hero -> integrations strip -> before/after -> featured result -> how we start -> how it works
- * -> guardrails -> results slider -> prefooter. The template's demo carousel is dropped (no demos).
+ * /automations/back-office-sync on the scale.com/generative-ai-data-engine layout, strict parity with the clone
+ * (app/scale-clone/generative-ai-data-engine/page.tsx): the same 11 sections in the same order, in the clone's own
+ * colours. hero -> logo strip -> product overview -> expertise panel -> testimonial -> overview split -> lifecycle
+ * -> key features -> demos -> resources -> pre-footer. Copy and slot mapping: ./content.ts.
  */
 export default function WorkflowPage({ workflow }: { workflow: Workflow }) {
-  const cases = casesFor(workflow.slug)
-  const [featured] = cases
-  const audit = PHASES[0]
+  const [featured] = pick([C.featured])
+  const resources = pick(C.resources.cases)
 
   return (
-    <div className="overflow-x-hidden font-display tracking-[-0.01em]">
+    <div className="overflow-x-hidden bg-white font-display tracking-[-0.01em] text-black">
       <SmoothScroll />
       <FullBleedMedia
         as="h1"
-        headline={workflow.headline}
-        body={workflow.summary}
-        cta={CTA}
+        image={C.hero.image}
+        headline={C.hero.headline}
+        body={C.hero.body}
+        cta={C.cta}
         startPercentage={0}
-        wrapperClassName="pb-10 pt-4"
+        wrapperClassName="pb-10 pt-24"
       />
       <ToolStrip tools={workflow.tools} />
       <Slice>
-        <SectionHeader eyebrow="Before and after" title={workflow.label} lead={workflow.forWho} />
+        <SectionHeader eyebrow={C.overview.eyebrow} title={C.overview.title} lead={C.overview.lead} />
       </Slice>
-      <BeforeAfter before={workflow.before} after={workflow.after} />
+      <ExpertisePanel data={C.expertise} />
       {featured ? <CaseHighlight caseStudy={featured} /> : null}
-      <OverviewSplit statement={POSITIONING.promise} phases={PHASES} />
-      <Steps steps={workflow.steps} lead="Each step runs inside the systems you already use, and every action is logged." />
-      <Guardrails guardrails={workflow.guardrails} features={CONTROL_FEATURES} />
-      {cases.length > 1 ? (
-        <Slice>
-          <SectionHeader
-            eyebrow="Results"
-            title="Measured in production"
-            lead="Outcomes from Vahue deployments, each with its disclosure and full write-up."
-          />
-          <CaseSlider cases={cases} />
-        </Slice>
-      ) : null}
+      <OverviewSplit statement={C.overviewSplit.statement} phases={C.overviewSplit.phases} />
+      <Lifecycle data={C.lifecycle} />
+      <Features eyebrow={C.features.eyebrow} title={C.features.title} lead={C.features.lead} items={C.features.items} />
+      <Slice>
+        <SectionHeader eyebrow={C.demos.eyebrow} title={C.demos.title} />
+        <Demos titles={C.demos.items} />
+      </Slice>
+      <Slice>
+        <SectionHeader eyebrow={C.resources.eyebrow} title={C.resources.title} lead={<Lines lines={C.resources.lead} />} />
+        <CaseSlider cases={resources} />
+      </Slice>
       <FullBleedMedia
-        headline="Start with one workflow."
-        body={audit?.body}
-        cta={CTA}
+        image={C.prefooter.image}
+        headline={C.prefooter.headline}
+        cta={C.cta}
         startPercentage={10}
         wrapperClassName="pb-8 pt-16"
       />

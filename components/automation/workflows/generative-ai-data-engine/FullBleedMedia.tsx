@@ -8,7 +8,7 @@ import FlatCta from './FlatCta'
 import { fontsReady, prepareText, reduced, type Reveal } from './motion'
 
 type Props = {
-  /** Photo for the media layer. Without one the layer is a flat dark surface with the dot texture. */
+  /** Own photo for the media layer (no Scale imagery); the layer is #193A29 underneath, as on the clone. */
   image?: string
   headline: string
   /** Hero renders the page H1; the prefooter an H2. */
@@ -21,7 +21,7 @@ type Props = {
   wrapperClassName: string
 }
 
-// FullBleedMediaSection inside a ClipScrollSection (scale.com), on Vahue dark.
+// FullBleedMediaSection inside a ClipScrollSection (scale.com), in the clone's own colours.
 // Scroll: trigger section "top bottom" -> "center center": clip inset(0.5*start% -> 0% round 1.5rem),
 //         media layer scale 1.25 -> 1.
 // Intro:  section "top center" (retroactive): headline lines in, body +0.2s; CTA "filledWhiteArrow"
@@ -104,10 +104,10 @@ export default function FullBleedMedia({ image, headline, as = 'h2', body, cta, 
 
   return (
     <div className={wrapperClassName}>
-      <div className="relative isolate grid w-full grid-cols-12 gap-2 px-4">
+      <div className="relative isolate grid w-full grid-cols-12 gap-2 bg-white px-4">
         <div ref={clipRef} className="col-span-full h-full w-full overflow-hidden" style={{ clipPath: 'inset(0 round 1.5rem)' }}>
           <div className="h-full w-full">
-            <section ref={sectionRef} className="overflow-hidden rounded-3xl bg-bg text-white [clip-path:inset(0_round_1.5rem)]">
+            <section ref={sectionRef} className="overflow-hidden rounded-3xl bg-white text-black [clip-path:inset(0_round_1.5rem)]">
               <div className="relative flex min-h-[480px] items-end overflow-hidden rounded-3xl p-8 [clip-path:inset(0_round_1.5rem)] md:min-h-[720px] md:p-16">
                 <div className="relative z-20 flex w-full max-w-[72rem] flex-col gap-6">
                   {createElement(
@@ -120,7 +120,7 @@ export default function FullBleedMedia({ image, headline, as = 'h2', body, cta, 
                     headline,
                   )}
                   {body ? (
-                    <p ref={bodyRef} className="w-full max-w-[48rem] text-balance text-[16px] leading-[1.45] tracking-[-0.01em] text-white/85 md:text-[20px] md:leading-[1.5]">
+                    <p ref={bodyRef} className="w-full text-balance text-[16px] leading-[1.45] tracking-[-0.01em] text-white md:text-[20px] md:leading-[1.5]">
                       {body}
                     </p>
                   ) : null}
@@ -129,10 +129,9 @@ export default function FullBleedMedia({ image, headline, as = 'h2', body, cta, 
                   </div>
                 </div>
                 <div className="absolute left-0 top-0 h-full w-full origin-center overflow-hidden rounded-3xl [clip-path:inset(0_round_1.5rem)]">
-                  {/* Vignette fade to the page background (no coloured glow, per DESIGN.md hero rules). */}
-                  <div className="pointer-events-none absolute inset-0 z-10 h-full w-full rounded-3xl bg-[linear-gradient(rgba(2,2,2,0)_0%,#020202_100%)]" />
+                  <div className="pointer-events-none absolute inset-0 z-10 h-full w-full rounded-3xl bg-[linear-gradient(rgba(0,0,0,0)_0%,#000_100%)]" />
                   <div ref={mediaRef} className="absolute inset-0 h-full w-full overflow-hidden rounded-3xl">
-                    <div className="hero-texture relative h-full w-full overflow-hidden rounded-3xl border border-border-soft bg-surface">
+                    <div className="relative h-full w-full overflow-hidden rounded-3xl bg-[#193A29]">
                       {image ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={image} alt="" className="absolute inset-0 h-full w-full rounded-3xl object-cover" />
