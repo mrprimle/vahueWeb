@@ -11,7 +11,7 @@ import styles from './styles.module.css'
 gsap.registerPlugin(ScrollTrigger)
 
 /*
- * scale.com FullBleedMediaSection inside a ClipScrollSection (physical-ai clone), on Vahue dark.
+ * scale.com FullBleedMediaSection inside a ClipScrollSection (physical-ai clone), in the clone's own colours.
  *
  * Scrub (scrub: true, trigger = wrapper / section, start "top bottom" -> end "center center"):
  *   clip-path inset(mapRange(p, 0..1, startPercentage/2 .. 0)% round 1.5rem)   hero: 0, prefooter: 10 -> 5% -> 0
@@ -23,7 +23,7 @@ gsap.registerPlugin(ScrollTrigger)
 
 type Cta = { text: string; href: string }
 type Props = {
-  /** Photo for the media layer. Without one the layer is a flat dark surface with the dot texture. */
+  /** Own photo for the media layer (no Scale imagery); #193A29 underneath, as on the clone. */
   image?: string
   headline: string
   /** Hero renders the page H1; the prefooter an H2. */
@@ -32,6 +32,7 @@ type Props = {
   primary: Cta
   secondary?: Cta
   strip?: { label: string; items: string[] }
+  backdropClassName?: string
   startPercentage: number
   wrapperClassName: string
 }
@@ -41,7 +42,18 @@ const map = (v: number, a: number, b: number, c: number, d: number) => {
   return Math.min(Math.max(r, Math.min(c, d)), Math.max(c, d))
 }
 
-export default function FullBleedMedia({ image, headline, as = 'h2', body, primary, secondary, strip, startPercentage, wrapperClassName }: Props) {
+export default function FullBleedMedia({
+  image,
+  headline,
+  as = 'h2',
+  body,
+  primary,
+  secondary,
+  strip,
+  startPercentage,
+  wrapperClassName,
+  backdropClassName = 'bg-white',
+}: Props) {
   useRefreshOnPageGrow()
   const clipRoot = useRef<HTMLDivElement>(null)
   const clip = useRef<HTMLDivElement>(null)
@@ -105,10 +117,10 @@ export default function FullBleedMedia({ image, headline, as = 'h2', body, prima
 
   return (
     <div className={wrapperClassName}>
-      <div ref={clipRoot} className="relative isolate grid w-full grid-cols-1 px-4">
+      <div ref={clipRoot} className={`relative isolate grid w-full grid-cols-1 px-4 ${backdropClassName}`}>
         <div ref={clip} className="col-span-full h-full w-full overflow-hidden" style={{ clipPath: `inset(${0.5 * startPercentage}% round 1.5rem)` }}>
           <div className="h-full w-full">
-            <section ref={section} className="relative overflow-hidden rounded-3xl bg-bg text-white [clip-path:inset(0_round_1.5rem)]">
+            <section ref={section} className="relative overflow-hidden rounded-3xl bg-white text-black [clip-path:inset(0_round_1.5rem)]">
               <div className="relative flex min-h-[480px] items-end overflow-hidden rounded-3xl p-8 [clip-path:inset(0_round_1.5rem)] md:min-h-[720px] md:p-16">
                 <div className="relative z-20 flex w-full max-w-[72rem] flex-col gap-6 text-white">
                   <AnimatedText
@@ -124,7 +136,7 @@ export default function FullBleedMedia({ image, headline, as = 'h2', body, prima
                       ref={bodyRef}
                       as="p"
                       maskCompensation
-                      className="w-full max-w-[48rem] text-balance text-[16px] leading-[1.45] tracking-[-0.01em] text-white/85 md:text-[20px] md:leading-[1.5]"
+                      className="w-full text-balance text-[16px] leading-[1.45] tracking-[-0.01em] text-white md:text-[20px] md:leading-[1.5]"
                     >
                       {body}
                     </AnimatedText>
@@ -159,12 +171,9 @@ export default function FullBleedMedia({ image, headline, as = 'h2', body, prima
                   ) : null}
                 </div>
                 <div className="absolute left-0 top-0 h-full w-full origin-center overflow-hidden rounded-3xl [clip-path:inset(0_round_1.5rem)]">
-                  {/* Vignette fade to the page background (no coloured glow, per DESIGN.md hero rules). */}
-                  <div
-                    className={`pointer-events-none absolute inset-0 z-10 h-full w-full overflow-hidden rounded-3xl bg-[linear-gradient(rgba(2,2,2,0)_0%,#020202_100%)] [clip-path:inset(0_round_1.5rem)] ${image ? 'bg-black/45' : ''}`}
-                  />
+                  <div className="pointer-events-none absolute inset-0 z-10 h-full w-full overflow-hidden rounded-3xl [background:linear-gradient(#0000_0%,#000_100%)] [clip-path:inset(0_round_1.5rem)]" />
                   <div ref={media} className="absolute inset-0 h-full w-full overflow-hidden rounded-3xl [clip-path:inset(0_round_1.5rem)]">
-                    <div className="hero-texture relative h-full w-full overflow-hidden rounded-3xl border border-border-soft bg-surface">
+                    <div className="relative h-full w-full overflow-hidden rounded-3xl bg-[#193A29]">
                       {image ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={image} alt="" className="absolute inset-0 h-full w-full rounded-3xl object-cover" />

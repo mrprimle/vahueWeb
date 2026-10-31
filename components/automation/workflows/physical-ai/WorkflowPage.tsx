@@ -1,108 +1,129 @@
+import type { ReactNode } from 'react'
 import SmoothScroll from '@/components/home/scroll-hero/SmoothScroll'
-import { CONTROL_FEATURES, type Workflow } from '@/lib/automation-content'
-import { caseStudies, type CaseStudy } from '@/lib/case-studies'
+import type { Workflow } from '@/lib/automation-content'
+import ModelChart from '@/components/scale-clone/physical-ai/ModelChart'
+import { FeaturesTwoCol, FeaturesWrap, Section, SectionHeader, SplitRow } from '@/components/scale-clone/physical-ai/Sections'
+import cloneStyles from '@/components/scale-clone/physical-ai/physical-ai.module.css'
 import FullBleedMedia from './FullBleedMedia'
 import CaseResults from './CaseResults'
-import { BeforeAfter, ControlFeatures, Section, SectionHeader, Steps } from './Sections'
+import { CardScene, IntakeIsometric, SourceTrace } from './Visuals'
+import { DOC_INTAKE as C } from './content'
 
-// Verified Vahue cases closest to each workflow (first one shows first). Workflows without an entry
-// fall back to the Enterprise AI cases.
-const RELATED_CASES: Record<string, string[]> = {
-  'document-intake': ['amerit-repair-order-ai', 'rfi-response-automation', 'consumer-email-classifier'],
+/* The clone's ImageCards (4:3 card, hairline, title, body) with our own media in place of Scale's photos. */
+function MediaCards({ cards }: { cards: readonly { kind: Parameters<typeof CardScene>[0]['kind']; title: string; body: string }[] }) {
+  return (
+    <div className="relative grid grid-cols-1 items-start gap-14 md:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:gap-x-10 xl:gap-y-14">
+      {cards.map((c) => (
+        <div key={c.title}>
+          <div className={`${cloneStyles.feature} relative aspect-[4/3]`}>
+            <CardScene kind={c.kind} />
+          </div>
+          <p className="relative mt-8 text-[24px] leading-[1.5] tracking-[-0.01em] text-black lg:mt-12">{c.title}</p>
+          <p className="relative mt-3 text-[16px] leading-[1.65] tracking-[-0.01em] text-black/70">{c.body}</p>
+        </div>
+      ))}
+    </div>
+  )
 }
 
-function casesFor(slug: string): CaseStudy[] {
-  const picked = (RELATED_CASES[slug] ?? [])
-    .map((s) => caseStudies.find((c) => c.slug === s))
-    .filter((c): c is CaseStudy => Boolean(c))
-  return picked.length ? picked : caseStudies.filter((c) => c.service === 'Enterprise AI')
-}
-
-// Hero and prefooter use the flat dark surface with the dot texture (no Scale imagery on Vahue pages).
-const CTA = { href: '/contact/', text: 'Book a workflow audit' }
-const PROOF = { href: '/case-studies/', text: 'See verified results' }
-
-const lowerFirst = (s: string) => s.charAt(0).toLowerCase() + s.slice(1)
+const Media = ({ children }: { children: ReactNode }) => <div className="w-full">{children}</div>
 
 /**
- * Workflow page on the scale.com/physical-ai layout:
- * hero (+ integrations strip) -> how it works -> results -> before and after -> guardrails -> prefooter.
- * Dropped from the template: the two image-card rows (robot hardware / capture sites) and the annotations +
- * model-chart rows (no matching imagery, and the chart would need numbers we can't verify).
+ * /automations/document-intake on the scale.com/physical-ai layout, strict parity with the clone
+ * (components/scale-clone/physical-ai/PhysicalAiPage.tsx): the same 9 sections in the same order, in the clone's
+ * own colours, reusing the clone's section components. Copy and slot mapping: ./content.ts.
  */
-export default function WorkflowPage({ workflow }: { workflow: Workflow }) {
-  const cases = casesFor(workflow.slug)
-  const stepsTitle = `${workflow.steps.map((s, i) => (i === 0 ? s.title : lowerFirst(s.title))).join(', ')}.`
-
+export default function WorkflowPage({ workflow: _workflow }: { workflow: Workflow }) {
   return (
-    <div className="overflow-x-hidden font-display tracking-[-0.01em] text-white">
+    <div className="bg-white font-display tracking-[-0.01em] text-black">
       <SmoothScroll />
-
-      {/* 1. Full-bleed hero (ClipScrollSection, startPercentage 0); logo strip -> integrations */}
-      <FullBleedMedia
-        as="h1"
-        headline={workflow.headline}
-        body={workflow.summary}
-        primary={CTA}
-        strip={{ label: 'Integrations', items: workflow.tools }}
-        startPercentage={0}
-        wrapperClassName="pb-10 pt-4"
-      />
-
-      {/* 2. Product overview -> how it works */}
-      <Section>
-        <SectionHeader eyebrow="How it works" title={stepsTitle} subtitle="Each step runs inside the systems you already use, and every action is logged." />
-        <Steps steps={workflow.steps} />
-      </Section>
-
-      {/* 3. Client testimonials -> verified results */}
-      {cases.length ? (
-        <CaseResults
-          heading="Results from Vahue deployments"
-          items={cases.map((c) => ({
-            name: c.client,
-            note: c.disclosure.toLowerCase(),
-            title: c.metric,
-            quote: c.summary,
-            href: `/case-studies/${c.slug}/`,
-          }))}
+      <div className="overflow-x-hidden">
+        {/* 1. Full-bleed hero (ClipScrollSection, startPercentage 0); logo strip -> integrations */}
+        <FullBleedMedia
+          as="h1"
+          wrapperClassName="pb-10 pt-24"
+          backdropClassName="bg-white"
+          startPercentage={0}
+          image={C.hero.image}
+          headline={C.hero.headline}
+          body={C.hero.body}
+          primary={C.hero.primary}
+          strip={C.hero.strip}
         />
-      ) : null}
 
-      {/* 4. Use case -> before and after */}
-      <Section>
-        <SectionHeader eyebrow="Before and after" title={workflow.label} subtitle={workflow.forWho} />
-        <BeforeAfter before={workflow.before} after={workflow.after} />
-      </Section>
+        {/* 2. Product overview: 2-col icon features */}
+        <Section>
+          <SectionHeader eyebrow={C.overview.eyebrow} title={C.overview.title} muted={false} />
+          <FeaturesTwoCol items={C.overview.items} />
+        </Section>
 
-      {/* 5. The difference -> guardrails */}
-      <Section>
-        <SectionHeader
-          eyebrow="Guardrails"
-          title={
-            <>
-              Agents propose.
-              <br />
-              Your team stays in control.
-            </>
-          }
-          subtitle={
-            workflow.guardrails.length
-              ? `On this workflow: ${workflow.guardrails.map((g, i) => (i === 0 ? g : lowerFirst(g))).join('; ')}.`
-              : undefined
-          }
+        {/* 3. Client testimonials (evergreen panel) -> verified case results */}
+        <CaseResults heading={C.testimonials.heading} items={C.testimonials.items} />
+
+        {/* 4. Use case: text + isometric illustration */}
+        <Section>
+          <SectionHeader eyebrow={C.useCase.eyebrow} title={C.useCase.title} />
+          <SplitRow
+            title={C.useCase.heading}
+            body={C.useCase.body}
+            gapClassName="gap-8 lg:gap-12"
+            media={
+              <Media>
+                <IntakeIsometric />
+              </Media>
+            }
+          />
+        </Section>
+
+        {/* 5. Key features: document types */}
+        <Section>
+          <SectionHeader eyebrow={C.embodiments.eyebrow} title={C.embodiments.title} subtitle={C.embodiments.subtitle} />
+          <MediaCards cards={C.embodiments.cards} />
+        </Section>
+
+        {/* 6. Environments -> channels (empty eyebrow keeps its 24px row) */}
+        <Section>
+          <SectionHeader eyebrow="" title={C.environments.title} subtitle={C.environments.subtitle} />
+          <MediaCards cards={C.environments.cards} />
+        </Section>
+
+        {/* 7. Annotations + improvement chart */}
+        <Section>
+          <SplitRow
+            title={C.annotations.first.title}
+            body={C.annotations.first.body}
+            mediaFirst
+            media={
+              <Media>
+                <SourceTrace fields={C.annotations.first.fields} />
+              </Media>
+            }
+          />
+          <SplitRow
+            className="mt-16"
+            title={C.annotations.second.title}
+            body={C.annotations.second.body}
+            media={<ModelChart yAxis={C.annotations.chart.yAxis} xAxis={C.annotations.chart.xAxis} labels={C.annotations.chart.series} />}
+          />
+        </Section>
+
+        {/* 8. The difference -> controls */}
+        <Section>
+          <SectionHeader eyebrow="" title={C.difference.title} muted={false} />
+          <FeaturesWrap items={C.difference.items} />
+        </Section>
+
+        {/* 9. Prefooter full-bleed CTA (ClipScrollSection, startPercentage 10, gray-50 backdrop) */}
+        <FullBleedMedia
+          wrapperClassName="pb-8 pt-16"
+          backdropClassName="bg-[#f9fafb]"
+          startPercentage={10}
+          image={C.prefooter.image}
+          headline={C.prefooter.headline}
+          primary={C.prefooter.primary}
+          secondary={C.prefooter.secondary}
         />
-        <ControlFeatures features={CONTROL_FEATURES} />
-      </Section>
-
-      {/* 6. Prefooter full-bleed CTA (ClipScrollSection, startPercentage 10) */}
-      <FullBleedMedia
-        headline="Start with one workflow."
-        primary={CTA}
-        secondary={PROOF}
-        startPercentage={10}
-        wrapperClassName="pb-8 pt-16"
-      />
+      </div>
     </div>
   )
 }

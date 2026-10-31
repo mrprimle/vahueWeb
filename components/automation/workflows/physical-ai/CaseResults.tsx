@@ -9,7 +9,8 @@ gsap.registerPlugin(ScrollTrigger)
 
 /*
  * scale.com ClientTestimonials, default variant (chunk 197mu5y2fw9hi, module 685963), copied from the physical-ai
- * clone and inverted to Vahue dark. Each slide is a verified Vahue case: summary as the quote, client as the name,
+ * clone in its own colours (evergreen panel). Each slide is a verified Vahue case: summary as the quote (no quotation
+ * marks, it is the case's own text), client as the name,
  * headline metric in the role chip. Motion is unchanged:
  *
  * - Panel background width 90% -> 100% (power3.out, scrub: true, trigger panel, "top bottom" -> "bottom 75%").
@@ -17,10 +18,10 @@ gsap.registerPlugin(ScrollTrigger)
  *   after 0.35s; old name out at 0.5s, new name in at 0.5s; role chip shrinks to 20px (0.5s power3.out), swaps text,
  *   fades it in (0.5s) and grows to text width + 26px.
  * - Logo tiles: the white fill slides in along y (desktop) / x (mobile) over 0.3s from the side of the previous tile.
- * - Arrow buttons: hover fills white with a dark icon over 0.3s.
+ * - Arrow buttons: hover fills white with evergreen icon over 0.3s.
  */
 
-const INK = '#020202' // Vahue bg: text on the white chip, active tile and hovered arrow
+const INK = '#193A29' // evergreen, as on the clone: text on the white chip, active tile and hovered arrow
 const WHITE = '#ffffff'
 const WHITE_0 = 'rgba(255, 255, 255, 0)'
 
@@ -145,7 +146,7 @@ function Tile({
       style={{ color: isActive ? INK : WHITE, borderColor: WHITE }}
     >
       <div ref={fill} className="absolute -z-10 h-full w-full" style={{ background: WHITE }} />
-      <div className="relative z-10 line-clamp-4 max-w-28 text-center text-[10px] font-medium lg:line-clamp-3 lg:text-[12px] leading-[1.5]">{item.name}</div>
+      <div className="relative z-10 line-clamp-3 max-w-28 text-center text-[12px] font-medium leading-[1.5]">{item.name}</div>
     </button>
   )
 }
@@ -236,10 +237,10 @@ export default function CaseResults({ heading, items }: { heading: string; items
     ))
 
   return (
-    <div ref={sectionRef} className="relative scroll-mt-28 pb-16 pt-20 text-white md:pb-20 md:pt-20">
+    <div ref={sectionRef} className="relative scroll-mt-28 bg-white pb-16 pt-20 text-black md:pb-20 md:pt-20">
       <div className="grid grid-cols-8 gap-2 px-3 text-white lg:grid-cols-12 lg:px-6">
         <div ref={panel} className="relative isolate col-span-full min-w-0">
-          <div ref={bg} aria-hidden className="pointer-events-none absolute inset-y-0 left-1/2 z-0 -translate-x-1/2 rounded-2xl border border-border-soft bg-surface-2" style={{ width: '90%' }} />
+          <div ref={bg} aria-hidden className="pointer-events-none absolute inset-y-0 left-1/2 z-0 -translate-x-1/2 rounded-2xl" style={{ width: '90%', background: INK }} />
           <div className="relative z-10 col-span-full flex flex-col gap-8 p-8 lg:grid lg:grid-cols-12 lg:gap-2 lg:px-0 lg:py-20">
             <div
               className="col-span-full flex w-full flex-row items-start justify-between gap-8 text-left md:items-center md:justify-start lg:col-span-1 lg:col-start-2 lg:flex-col lg:items-stretch lg:justify-between"
@@ -294,21 +295,11 @@ export default function CaseResults({ heading, items }: { heading: string; items
                           className="text-[16px] font-medium leading-[1.25] tracking-[-0.01em] text-white lg:text-[18px]"
                         >
                           {it.name}
-                          {it.note ? <span className="text-white/55"> · {it.note}</span> : null}
                         </AnimatedText>
                       </div>
                     )
                   })}
                   <RoleChip ref={chip} />
-                  <div className="mt-4">
-                    <a
-                      href={items[safe]?.href}
-                      className="group inline-flex items-center gap-1 text-[14px] font-medium leading-[1.5] text-white transition-colors duration-300 hover:text-white/70"
-                    >
-                      Read the case study
-                      <span aria-hidden className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1">→</span>
-                    </a>
-                  </div>
                 </div>
               </div>
             </div>
