@@ -14,10 +14,10 @@ import type { HealthcareContent } from './content'
  *   -> FullBleedMediaSection pre-footer (startPercentage 10, headlineWidth narrow) -> SpacerSlice h-8.
  * Spec: reference-snapshots/scale-clone/enterprise-healthcare.md
  */
-export default function HealthcarePage({ content }: { content: HealthcareContent }) {
+export default function HealthcarePage({ content, as: Root = 'main' }: { content: HealthcareContent; as?: 'main' | 'div' }) {
   const { hero, tabs, testimonial, stack, blog, trust, prefooter } = content
   return (
-    <main className="overflow-x-hidden bg-white font-display text-black">
+    <Root className="overflow-x-hidden bg-white font-display text-black">
       <div className="pb-10 pt-24">
         <FullBleedMedia
           image={hero.image}
@@ -30,6 +30,7 @@ export default function HealthcarePage({ content }: { content: HealthcareContent
           body={hero.body}
           primary={hero.primary}
           logos={hero.logos}
+          as={hero.as}
         />
       </div>
       <TabbedPanel heading={tabs.heading} items={tabs.items} />
@@ -49,6 +50,6 @@ export default function HealthcarePage({ content }: { content: HealthcareContent
         primary={prefooter.primary}
       />
       <div className="h-8 w-full bg-white" />
-    </main>
+    </Root>
   )
 }

@@ -11,7 +11,7 @@ import s from './healthcare.module.css'
  * Headline + subtitle = HeadlineWithCta (AnimatedText, IntersectionObserver -15%, delays 0.5 / 1).
  */
 
-export default function TrustSplit({ headline, body, badges }: { headline: string; body: string; badges: { alt: string; src?: string }[] }) {
+export default function TrustSplit({ headline, body, badges }: { headline: string; body: string; badges: { alt: string; src?: string; label?: string }[] }) {
   const h = useRef<HTMLHeadingElement>(null)
   const p = useRef<HTMLDivElement>(null)
   useRevealText(h)
@@ -36,6 +36,15 @@ export default function TrustSplit({ headline, body, badges }: { headline: strin
                   {b.src ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={b.src} alt={b.alt} className="relative h-full w-full object-contain opacity-35 grayscale" />
+                  ) : b.label ? (
+                    // text tile in the badge cell (Vahue pages: no third-party marks as images)
+                    <div
+                      role="img"
+                      aria-label={b.alt}
+                      className="relative flex h-full w-full items-center justify-center rounded-full border-[3px] border-[#929292] text-center font-mono text-[9px] font-medium uppercase leading-[1.15] tracking-[0.02em] text-[#5c5c5c] md:text-[11px]"
+                    >
+                      {b.label}
+                    </div>
                   ) : (
                     // third-party certification mark not shipped: neutral tile in the same cell
                     <div role="img" aria-label={b.alt} className="relative h-full w-full rounded-full border-[3px] border-[#929292] bg-[#929292]/40 opacity-35" />

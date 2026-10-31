@@ -8,6 +8,7 @@ import { prefersReducedMotion } from '@/components/scale-clone/enterprise-health
 gsap.registerPlugin(ScrollTrigger)
 
 /*
+ * Light windows in the clone's palette (white, #212121 / #575757 text, #193A29 accent).
  * Vahue stand-in for the clone's HealthcareIllustration (three floating screenshot layers): the same 736x691
  * stage scaled to the container width, with three mock windows from the control layer (review queue, audit
  * log, approval) instead of Scale's images. Motion is the clone's: each layer floats y 0 -> -6, yoyo,
@@ -15,13 +16,13 @@ gsap.registerPlugin(ScrollTrigger)
  * and pause on leave/leaveBack ("top 80%" -> "bottom 20%"). Reduced motion: static.
  */
 
-const MONO = 'font-mono text-[11px] uppercase tracking-[0.06em] text-white/45'
+const MONO = 'font-mono text-[11px] uppercase tracking-[0.06em] text-[#575757]'
 
 function Window({ title, meta, children }: { title: string; meta: string; children: ReactNode }) {
   return (
-    <div className="flex h-full w-full flex-col overflow-hidden rounded-xl border border-white/15 bg-[#0b0b0b]">
-      <div className="flex items-center justify-between border-b border-white/10 px-5 py-3">
-        <span className="font-display text-[15px] text-white">{title}</span>
+    <div className="flex h-full w-full flex-col overflow-hidden rounded-xl border border-[#eaeaea] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
+      <div className="flex items-center justify-between border-b border-[#f2f2f2] px-5 py-3">
+        <span className="font-display text-[15px] text-[#212121]">{title}</span>
         <span className={MONO}>{meta}</span>
       </div>
       <div className="flex flex-1 flex-col">{children}</div>
@@ -54,12 +55,12 @@ const layers: { key: string; left: number; top: number; width: number; height: n
     node: (
       <Window title="Review queue" meta="Below threshold">
         {queue.map((q) => (
-          <div key={q.item} className="flex items-center justify-between border-b border-white/10 px-5 py-3.5 last:border-b-0">
+          <div key={q.item} className="flex items-center justify-between border-b border-[#f2f2f2] px-5 py-3.5 last:border-b-0">
             <div>
-              <p className="font-display text-[14px] text-white">{q.item}</p>
-              <p className="font-display text-[12px] text-white/50">{q.field}</p>
+              <p className="font-display text-[14px] text-[#212121]">{q.item}</p>
+              <p className="font-display text-[12px] text-[#575757]">{q.field}</p>
             </div>
-            <span className="rounded border border-white/20 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.04em] text-white/70">Review</span>
+            <span className="rounded bg-[#f2f2f2] px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.04em] text-[#575757]">Review</span>
           </div>
         ))}
       </Window>
@@ -77,10 +78,10 @@ const layers: { key: string; left: number; top: number; width: number; height: n
     node: (
       <Window title="Audit log" meta="Every action">
         {log.map((l, i) => (
-          <div key={i} className="grid grid-cols-[52px_84px_1fr] items-center border-b border-white/10 px-5 py-3 last:border-b-0">
-            <span className="font-mono text-[11px] text-white/45">{l.t}</span>
-            <span className="font-display text-[12px] text-white/60">{l.who}</span>
-            <span className="truncate font-display text-[13px] text-white">{l.what}</span>
+          <div key={i} className="grid grid-cols-[52px_84px_1fr] items-center border-b border-[#f2f2f2] px-5 py-3 last:border-b-0">
+            <span className="font-mono text-[11px] text-[#575757]">{l.t}</span>
+            <span className="font-display text-[12px] text-[#575757]">{l.who}</span>
+            <span className="truncate font-display text-[13px] text-[#212121]">{l.what}</span>
           </div>
         ))}
       </Window>
@@ -98,10 +99,10 @@ const layers: { key: string; left: number; top: number; width: number; height: n
     node: (
       <Window title="Approval" meta="Role: clinical ops">
         <div className="flex flex-1 flex-col justify-between px-5 py-4">
-          <p className="font-display text-[14px] text-white/80">Post today’s checked records to the EHR?</p>
+          <p className="font-display text-[14px] text-[#212121]">Post today’s checked records to the EHR?</p>
           <div className="flex items-center gap-2">
-            <span className="rounded-md bg-white px-3 py-1.5 font-display text-[13px] font-medium text-black">Approve</span>
-            <span className="rounded-md border border-white/20 px-3 py-1.5 font-display text-[13px] text-white/80">Dry run first</span>
+            <span className="rounded-md bg-[#193A29] px-3 py-1.5 font-display text-[13px] font-medium text-white">Approve</span>
+            <span className="rounded-md border border-[#eaeaea] px-3 py-1.5 font-display text-[13px] text-[#575757]">Dry run first</span>
           </div>
         </div>
       </Window>

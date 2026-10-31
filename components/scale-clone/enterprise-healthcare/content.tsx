@@ -24,7 +24,10 @@ export type HealthcareContent = {
     imageBg?: string
     media?: ReactNode
     primary?: Cta
-    logos?: { label: string; slots: LogoSlot[] } | null
+    /** `names`: text in each marquee slot instead of the neutral logo tile. */
+    logos?: { label: string; slots: LogoSlot[]; names?: string[] } | null
+    /** Heading level of the hero headline (default h2, as on Scale). */
+    as?: 'h1' | 'h2'
   }
   tabs: {
     heading: string
@@ -72,7 +75,8 @@ export type HealthcareContent = {
   trust: {
     headline: string
     body: string
-    badges: { alt: string; src?: string }[]
+    /** `label`: a text tile in the cell instead of the neutral placeholder. */
+    badges: { alt: string; src?: string; label?: string }[]
   }
   prefooter: {
     headline: string

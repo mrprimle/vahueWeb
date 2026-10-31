@@ -43,10 +43,13 @@ type Props = {
   priority?: boolean
   startPercentage?: number
   narrow?: boolean
-  logos?: { label: string; slots: { w: number; h: number }[] } | null
+  /** `names` writes a name in each marquee slot (text tiles) instead of the neutral logo tile. */
+  logos?: { label: string; slots: { w: number; h: number }[]; names?: string[] } | null
+  /** Heading level (Vahue pages render the hero as the page h1). */
+  as?: 'h1' | 'h2'
 }
 
-export default function FullBleedMedia({ image, imageAlt = '', media: mediaNode, imageBg, headline, body, primary, priority, startPercentage = 10, narrow, logos }: Props) {
+export default function FullBleedMedia({ image, imageAlt = '', media: mediaNode, imageBg, headline, body, primary, priority, startPercentage = 10, narrow, logos, as: Heading = 'h2' }: Props) {
   const section = useRef<HTMLElement>(null)
   const clip = useRef<HTMLDivElement>(null)
   const media = useRef<HTMLDivElement>(null)
@@ -149,12 +152,12 @@ export default function FullBleedMedia({ image, imageAlt = '', media: mediaNode,
         <section ref={section} className="FullBleedMediaSection relative overflow-hidden rounded-3xl bg-white text-black">
           <div className="relative flex min-h-[480px] items-end overflow-hidden rounded-3xl p-8 md:min-h-[720px] md:p-16">
             <div className="relative z-20 flex w-full max-w-[72rem] flex-col gap-6 text-white">
-              <h2
+              <Heading
                 ref={h2}
                 className={`${s.header2} ${s.pending} font-display font-normal text-white ${narrow ? 'max-w-[620px]' : ''}`}
               >
                 {headline}
-              </h2>
+              </Heading>
               {body ? (
                 <p ref={p} className={`${s.body1} ${s.pending} w-full font-display text-white`} style={{ textWrap: 'balance' }}>
                   {body}
@@ -178,8 +181,14 @@ export default function FullBleedMedia({ image, imageAlt = '', media: mediaNode,
                     <div className={`flex w-max gap-8 overflow-hidden will-change-transform ${s.marquee}`}>
                       {[...logos.slots, ...logos.slots].map((l, i) => (
                         // customer logos are not shipped: neutral tile in Scale's rendered logo box
-                        <div key={i} className="relative flex h-[35px] shrink-0 items-start overflow-hidden" style={{ width: l.w }}>
-                          <div className="rounded-[3px] bg-white" style={{ width: l.w, height: l.h }} />
+                        <div key={i} className="relative flex h-[35px] shrink-0 items-start overflow-hidden" style={logos.names ? { minWidth: l.w } : { width: l.w }}>
+                          {logos.names ? (
+                            <span className="whitespace-nowrap font-display text-[14px] font-medium leading-[28px] text-white">
+                              {logos.names[i % logos.names.length]}
+                            </span>
+                          ) : (
+                            <div className="rounded-[3px] bg-white" style={{ width: l.w, height: l.h }} />
+                          )}
                         </div>
                       ))}
                     </div>

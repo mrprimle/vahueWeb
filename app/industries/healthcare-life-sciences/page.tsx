@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
 import IndustryPage from '@/components/industry/enterprise-healthcare/IndustryPage'
-import { healthcareLifeSciencesContent } from '@/components/segments/content/healthcare-life-sciences'
-import { INDUSTRY_WORKFLOWS } from '@/lib/automation-content'
 
 export const metadata: Metadata = {
   title: 'AI for Healthcare & Life Sciences | Vahue',
@@ -22,10 +20,5 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  return (
-    <IndustryPage
-      content={healthcareLifeSciencesContent}
-      workflows={INDUSTRY_WORKFLOWS['healthcare-life-sciences'].workflows}
-    />
-  )
+  return <IndustryPage />
 }

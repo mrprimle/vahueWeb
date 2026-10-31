@@ -5,17 +5,17 @@ Route: `/scale-clone/enterprise-healthcare/` · Page: `app/scale-clone/enterpris
 Captured 2026-10-31 at 1440×900 and 390×844: Playwright + system Chrome (50%-viewport sweep at 1440, 100% at 390, then computed-style probes and scroll-position motion samples), and REA against an isolated Chrome tab (CDP 9230). Copy is Scale's own text (from the page's RSC payload and the mockup modules), so the line breaks line up in QA.
 
 ## Reusable page component
-`HealthcarePage({ content })` (`HealthcarePage.tsx`) renders the whole slice stack from a `HealthcareContent` object (`content.tsx`):
+`HealthcarePage({ content, as? })` (`HealthcarePage.tsx`; `as="div"` when the site layout already has a `<main>`) renders the whole slice stack from a `HealthcareContent` object (`content.tsx`):
 
-- `hero`: headline, body, image/imageBg/media, optional CTA, "Trusted by" logo slots
+- `hero`: headline, body, image/imageBg/media, optional CTA, "Trusted by" logo slots (`logos.names` writes text in the slots), `as: 'h1'` for a page heading
 - `tabs`: heading plus items `{ label, color, title, body, cta, mockup: ReactNode }`. The mockup is remounted on each tab switch, so its intro replays.
 - `testimonial`: color/contrast theme, quote, metric value/label, name, title, optional logo node
 - `stack`: heading, `media` node, cards
 - `blog`: heading, category label, three tiles `{ title, image | fill, video, href }`
-- `trust`: headline, body, badges `{ alt, src? }`
+- `trust`: headline, body, badges `{ alt, src?, label? }` (`label` renders a text tile in the cell)
 - `prefooter`: headline, image/imageBg/media, CTA
 
-`scaleHealthcareContent` is Scale's copy. A Vahue industry page can pass its own content, with its own mockup nodes and a dot-texture or three.js `media` node in place of the photos, and keep every layout and motion parameter. This follows the `components/industry/enterprise-insurance/IndustryPage.tsx` pattern. Every section component also takes plain props, so a Vahue copy can restyle them one at a time.
+`scaleHealthcareContent` is Scale's copy. A Vahue industry page can pass its own content, with its own mockup nodes and a dot-texture or three.js `media` node in place of the photos, and keep every layout and motion parameter. First user: `/industries/healthcare-life-sciences` (`components/industry/enterprise-healthcare/`, Scale's colours, strict parity, QA in `qa/vahue-healthcare/`). Every section component also takes plain props, so a Vahue copy can restyle them one at a time.
 
 ## REA evidence
 - `analyze_web_bundle` (include_script_sources, evidence `ev_cf7d369b5e60fa7968b981c6441975bf9cc3b962ab852c8ce54484656084f6d4`): 47 scripts parsed, 0 failures, 692,476 AST nodes.
