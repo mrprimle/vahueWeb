@@ -1,15 +1,14 @@
 import type { Metadata } from 'next'
-import SegmentLanding from '@/components/segments/SegmentLanding'
-import { retailEcommerceContent } from '@/components/segments/content/retail-ecommerce'
+import EnterpriseIndustryPage from '@/components/industry/enterprise/EnterpriseIndustryPage'
+import { retailConfig } from '@/components/industry/enterprise/retail-ecommerce'
 
 export const metadata: Metadata = {
-  title: 'AI for Retail & eCommerce | Vahue',
+  title: 'AI for Retail & eCommerce',
   description:
-    'Agent-ready catalog, inventory, and stores — plus merchandising, search, CX, and edge intelligence copilots that scale commerce without rebuilding the stack.',
+    'AI agents for the order-status inbox, product data and SKU matching, and customer support, inside the tools your team already uses, with review queues and a full audit log.',
   openGraph: {
     title: 'AI for Retail & eCommerce | Vahue',
-    description:
-      'Make your commerce stack AI-agent ready and ship merchandising, CX, pricing, and store copilots that move revenue.',
+    description: 'Orders, product data and support run by agents in your own tools, reviewed by your team and logged.',
     url: 'https://vahue.ai/industries/retail-ecommerce',
   },
   alternates: {
@@ -21,5 +20,5 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  return <SegmentLanding content={retailEcommerceContent} />
+  return <EnterpriseIndustryPage config={retailConfig} />
 }
