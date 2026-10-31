@@ -119,11 +119,40 @@ function Tabs({ tabs: TABS, body, cta }: { tabs: DecisionTab[]; body: string; ct
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // headless-ui Tab keyboard model (horizontal, automatic activation), measured on scale.com: moves from the
+  // focused tab; ArrowRight / ArrowLeft wrap, Home / PageUp -> first, End / PageDown -> last, Enter / Space
+  // select; focus and selection move together.
   const onKey = (e: React.KeyboardEvent) => {
-    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return
-    const n = (active + (e.key === 'ArrowRight' ? 1 : TABS.length - 1)) % TABS.length
+    const list = tabs.current.slice(0, TABS.length)
+    const cur = list.indexOf(e.target as HTMLButtonElement)
+    if (cur < 0) return
+    let n: number
+    switch (e.key) {
+      case 'Enter':
+      case ' ':
+        e.preventDefault()
+        setActive(cur)
+        return
+      case 'Home':
+      case 'PageUp':
+        n = 0
+        break
+      case 'End':
+      case 'PageDown':
+        n = list.length - 1
+        break
+      case 'ArrowRight':
+        n = (cur + 1) % list.length
+        break
+      case 'ArrowLeft':
+        n = (cur - 1 + list.length) % list.length
+        break
+      default:
+        return
+    }
+    e.preventDefault()
+    list[n]?.focus()
     setActive(n)
-    tabs.current[n]?.focus()
   }
 
   return (
@@ -152,7 +181,7 @@ function Tabs({ tabs: TABS, body, cta }: { tabs: DecisionTab[]; body: string; ct
         </div>
         <p className="mb-8 text-[16px] leading-6 tracking-[-0.01em] text-gray-500">{body}</p>
         <div className="flex flex-wrap items-center gap-x-3 font-display xs:gap-x-6">
-          <div className={s.glass}>
+          <div data-qa="glass" className={s.glass}>
             <a href={cta.href} className={s.glassInner}>
               <span className="relative z-[1] flex items-center whitespace-nowrap px-[17px] py-2 text-[14px] font-medium leading-5 text-white">
                 {cta.label}

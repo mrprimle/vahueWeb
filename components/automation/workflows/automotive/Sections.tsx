@@ -235,7 +235,7 @@ export function Foundation({ title, label, link, caseStudy: c }: { title: string
           <p className="font-mono text-[12px] uppercase leading-6 tracking-[1px] text-black">{label}</p>
           <h2 className="font-display text-[30px] font-normal leading-[1.5] tracking-[-0.01em] text-black lg:text-[36px] lg:leading-[1.25]">{c.title}</h2>
           <p className="text-[16px] leading-6 tracking-[-0.01em] text-[#a1a1aa]">{c.summary}</p>
-          <Link href={`/case-studies/${c.slug}/`} className="mt-2 text-[16px] leading-6 text-black transition-colors duration-150 hover:text-gray-600">
+          <Link href={`/case-studies/${c.slug}/`} data-qa="foundation-link" className="mt-2 text-[16px] leading-6 text-black transition-colors duration-150 hover:text-gray-600">
             {link}
           </Link>
         </div>
