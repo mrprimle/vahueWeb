@@ -24,13 +24,11 @@ export const bankingConfig: IndustryConfig = {
     'Reconciliation across core and finance systems': 'back-office-sync',
     'KYC document intake': 'document-intake',
   },
-  // Closest verified cases: document responses with audit history kept, decisions behind human thresholds,
-  // agents with explicit execution controls. None is a bank; each card names its client and disclosure.
-  cases: [
-    { slug: 'rfi-response-automation', icon: 'swap' },
-    { slug: 'amerit-repair-order-ai', icon: 'rocket' },
-    { slug: 'exaware-governed-noc-agents', icon: 'clock' },
-  ],
+  // Closest verified cases (testimonial slots): document responses with audit history kept, decisions behind human
+  // thresholds, agents with explicit execution controls. None is a bank; each names its client as the case does.
+  cases: ['rfi-response-automation', 'amerit-repair-order-ai', 'exaware-governed-noc-agents'],
+  // Fourth carousel card (3 banking workflows; Scale shows 4): the document case with audit history kept.
+  extraCase: 'rfi-response-automation',
   // Mock UI labels (page copy).
   pipeline: { inputs: ['Loan application', 'KYC pack', 'Bank statement'], target: 'Core system' },
   queue: [

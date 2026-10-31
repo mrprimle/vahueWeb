@@ -1,6 +1,6 @@
 'use client'
 
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from 'react'
+import { forwardRef, type CSSProperties, useCallback, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import AnimatedText, { type AnimatedTextHandle } from './AnimatedText'
@@ -102,6 +102,7 @@ function Tile({
   activeIndex,
   total,
   isMobile,
+  textLogo,
   onSelect,
 }: {
   item: Item
@@ -111,6 +112,7 @@ function Tile({
   activeIndex: number
   total: number
   isMobile: boolean
+  textLogo?: boolean
   onSelect: () => void
 }) {
   const fill = useRef<HTMLDivElement>(null)
@@ -145,7 +147,13 @@ function Tile({
     >
       <div ref={fill} className="absolute -z-10 h-full w-full" style={{ background: INK }} />
       {/* Client logo slot: neutral placeholder bar in the logo bounds (Scale's client logos are not shipped). */}
-      <div className="relative z-10 h-[18%] w-[70%] rounded-[3px] bg-current opacity-80" aria-hidden />
+      {textLogo ? (
+        <span className="relative z-10 text-center font-mono text-[9px] uppercase leading-[1.2] tracking-[-0.01em] lg:text-[12px]" aria-hidden>
+          {item.name}
+        </span>
+      ) : (
+        <div className="relative z-10 h-[18%] w-[70%] rounded-[3px] bg-current opacity-80" aria-hidden />
+      )}
     </button>
   )
 }
@@ -232,6 +240,7 @@ export default function Testimonials({ content }: { content: TestimonialsContent
         activeIndex={active}
         total={items.length}
         isMobile={isMobile}
+        textLogo={content.textLogos}
         onSelect={() => setActive(i)}
       />
     ))
@@ -256,7 +265,10 @@ export default function Testimonials({ content }: { content: TestimonialsContent
             </div>
             <div className="relative col-span-4 row-start-2 lg:col-span-7 lg:col-start-5 lg:row-start-1" role="tabpanel" aria-live="polite" aria-atomic="true">
               <div className="flex h-full min-h-0 flex-col justify-between gap-16">
-                <div className="relative grid w-full leading-7 lg:block lg:max-h-[8lh] lg:min-h-0 lg:overflow-y-clip lg:leading-[56px]">
+                <div
+                  className="relative grid min-h-[var(--q-min,0px)] w-full leading-7 lg:block lg:max-h-[8lh] lg:min-h-0 lg:overflow-y-clip lg:leading-[56px]"
+                  style={content.mobileQuoteLines ? ({ '--q-min': `${content.mobileQuoteLines * 28}px` } as CSSProperties) : undefined}
+                >
                   {items.map((it, i) => {
                     const on = i === safe
                     return (
@@ -274,7 +286,7 @@ export default function Testimonials({ content }: { content: TestimonialsContent
                           className="max-w-none pr-2.5 text-[24px] font-normal leading-7 tracking-[-0.05em] text-black lg:text-[40px] lg:leading-[44px]"
                         >
                           <span className="inline-block w-[100px] lg:w-40"> </span>
-                          {`“${it.quote}”`}
+                          {content.plain ? it.quote : `“${it.quote}”`}
                         </AnimatedText>
                       </div>
                     )

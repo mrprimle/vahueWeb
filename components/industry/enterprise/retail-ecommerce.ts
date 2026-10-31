@@ -24,12 +24,11 @@ export const retailConfig: IndustryConfig = {
     'Product data and SKU matching': 'scoring-decisions',
     'Customer support agents': 'support-agents',
   },
-  // Closest verified cases: a retail NLP delivery, a customer-facing voice agent, an email classifier.
-  cases: [
-    { slug: 'retail-nlp-delivery', icon: 'rocket' },
-    { slug: 'docplanner-voicebot-recovery', icon: 'trend' },
-    { slug: 'consumer-email-classifier', icon: 'swap' },
-  ],
+  // Closest verified cases (testimonial slots): a customer-facing voice agent, a retail NLP delivery, an email
+  // classifier.
+  cases: ['docplanner-voicebot-recovery', 'retail-nlp-delivery', 'consumer-email-classifier'],
+  // Fourth carousel card (3 retail workflows; Scale shows 4): the customer-facing voice agent case.
+  extraCase: 'docplanner-voicebot-recovery',
   // Mock UI labels (page copy).
   pipeline: { inputs: ['Order email', 'Supplier feed', 'Return request'], target: 'Order system' },
   queue: [

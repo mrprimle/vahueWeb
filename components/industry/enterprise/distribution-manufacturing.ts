@@ -25,12 +25,9 @@ export const distributionConfig: IndustryConfig = {
     'Invoices from packing slips': 'document-intake',
     'Drawings to bills of materials': 'document-intake',
   },
-  // Closest verified cases: fleet repair-order scoring, automated RFI responses, an assistant across CRM and ERP data.
-  cases: [
-    { slug: 'amerit-repair-order-ai', icon: 'rocket' },
-    { slug: 'rfi-response-automation', icon: 'swap' },
-    { slug: 'piogroup-employee-assistant', icon: 'trend' },
-  ],
+  // Closest verified cases (testimonial slots): fleet repair-order scoring, automated RFI responses, an assistant
+  // across CRM and ERP data.
+  cases: ['amerit-repair-order-ai', 'rfi-response-automation', 'piogroup-employee-assistant'],
   // Mock UI labels (page copy).
   pipeline: { inputs: ['Packing slip', 'Supplier form', 'Drawing'], target: 'ERP' },
   queue: [

@@ -60,7 +60,19 @@ export type StatCard = { label: string; value: string; body: string; icon: StatI
 export type StatsContent = { heading: string; cards: StatCard[] }
 
 export type Testimonial = { name: string; title: string; quote: string }
-export type TestimonialsContent = { heading: string; items: Testimonial[] }
+export type TestimonialsContent = {
+  heading: string
+  items: Testimonial[]
+  /** Show the text without quotation marks (a stated case result, not a quote). */
+  plain?: boolean
+  /** Write each item's `name` in its tab tile instead of the neutral logo placeholder bar. */
+  textLogos?: boolean
+  /**
+   * Below lg the quotes stack in one grid cell, so the longest quote sets the panel height. Reserve this many
+   * 28px lines there so shorter content keeps the clone's panel height (Scale's longest quote is 13 lines at 390).
+   */
+  mobileQuoteLines?: number
+}
 
 export type RaceContent = { heading: string; lead: string; link: Link; body: string; video?: string }
 
@@ -88,6 +100,8 @@ export type TrustedContent = {
   trustedBy: string
   /** Agency logos in the glass card; items without `src` render as placeholder tiles. Empty: no logo column. */
   logos: LogoItem[]
+  /** Write the names of logos without `src` in their tiles instead of placeholder bars. */
+  textLogos?: boolean
   cards: TrustedCard[]
 }
 

@@ -472,7 +472,11 @@ export function BuiltToBeTrusted({ content: trusted, media }: { content: Trusted
                           // eslint-disable-next-line @next/next/no-img-element
                           <img src={l.src} alt={l.name} className="h-[60%] w-[60%] object-contain" />
                         ) : (
-                          <div className="h-[30%] w-[55%] rounded-[3px] bg-white/80" aria-hidden />
+                          trusted.textLogos ? (
+                            <span className="text-center font-mono text-[10px] uppercase leading-[1.2] tracking-[-0.01em] text-white/90">{l.name}</span>
+                          ) : (
+                            <div className="h-[30%] w-[55%] rounded-[3px] bg-white/80" aria-hidden />
+                          )
                         )}
                       </li>
                     ))}

@@ -1,5 +1,5 @@
 // Own decorative art for the Vahue pages on the enterprise layout: the dot texture, workflow line art for the
-// carousel cards and small line icons for the control cards. White on dark, no Scale imagery.
+// carousel cards and Scale-style card icons (own glyphs). No Scale imagery.
 
 // Dot texture (the site's hero-texture pattern) over a flat tone: used for node and card fills.
 export const dots = (tone: string, alpha = 0.14, size = 6) =>
@@ -29,14 +29,21 @@ export const WORKFLOW_ART: Record<string, string> = {
   'engineering-enablement': svg("<path d='m72 70-30 30 30 30M128 70l30 30-30 30M110 56 90 144'/>"),
 }
 
-// Small line icons for the control cards (own SVG as data URIs; the clone renders them with <img>).
-const icon = (body: string) =>
+// Scale-style card icons (light pages): a white 64px rounded tile with an own line glyph in the card's colour,
+// the same shape as Scale's Built-to-be-trusted icons (own glyphs, not Scale's files).
+const tileIcon = (body: string, color: string) =>
   `data:image/svg+xml,${encodeURIComponent(
-    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='0.5' y='0.5' width='63' height='63' rx='12' fill='white' fill-opacity='0.06' stroke='white' stroke-opacity='0.14' stroke-width='1'/>${body}</svg>`,
+    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' fill='none'><rect width='64' height='64' rx='8' fill='white'/><g stroke='${color}' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'>${body}</g></svg>`,
   )}`
-export const CONTROL_ICONS = {
-  review: icon("<path d='M20 24h24M20 32h24M20 40h14'/><path d='m38 42 4 4 8-9'/>"),
-  lock: icon("<rect x='21' y='29' width='22' height='16' rx='3'/><path d='M26 29v-4a6 6 0 0 1 12 0v4'/>"),
-  log: icon("<path d='M22 22h20v20H22z'/><path d='M27 28h10M27 32h10M27 36h6'/>"),
-  cloud: icon("<path d='M24 42h18a7 7 0 0 0 0-14 10 10 0 0 0-19 3 6 6 0 0 0 1 11z'/>"),
+export const TILE_GLYPHS = {
+  lock: "<rect x='22' y='30' width='20' height='13' rx='2.5'/><path d='M26.5 30v-3.5a5.5 5.5 0 0 1 11 0V30'/>",
+  log: "<path d='M23 21h18v22H23z'/><path d='M27.5 27.5h9M27.5 32h9M27.5 36.5h5'/>",
+  cloud: "<path d='M25 41h15a6.5 6.5 0 0 0 0-13 9 9 0 0 0-17 2.5A5.5 5.5 0 0 0 25 41z'/>",
 }
+export const tileIconFor = (glyph: keyof typeof TILE_GLYPHS, color: string) => tileIcon(TILE_GLYPHS[glyph], color)
+
+// PoweredBy card mark: a 26px coloured tile with a white glyph (Scale's card icon shape; own glyph: a check).
+export const cardMark = (color: string) =>
+  `data:image/svg+xml,${encodeURIComponent(
+    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26' fill='none'><rect width='26' height='26' rx='5' fill='${color}'/><path d='m8.5 13.2 3 3 6-6.4' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/></svg>`,
+  )}`
