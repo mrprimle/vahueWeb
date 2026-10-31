@@ -163,9 +163,6 @@
   transform: translateX(-50%);
   transition: transform 0.6s cubic-bezier(0, 0, 0.2, 1);
 }
-.cta:hover .ctaTrack {
-  transform: translateX(0);
-}
 .ctaTrack > span {
   display: flex;
   height: 100%;
@@ -179,8 +176,9 @@
   .ctaTrack {
     transition: none !important;
   }
-  .cta:hover .ctaTrack {
-    transform: translateX(-50%);
+  /* Scale: motion-reduce:!translate-x-0 on the chevron strip */
+  .ctaTrack {
+    transform: translateX(0) !important;
   }
   .cta:hover .ctaLabel {
     transform: none;
@@ -316,7 +314,9 @@
   border-radius: 9999px;
   background-image: linear-gradient(to bottom right, rgb(255 255 255 / 0.3), transparent, transparent);
   opacity: 0;
-  transition: all 0.5s;
+  /* Tailwind 4 before:transition-all: --tw-ease is registered inherits:false, so the sheen ignores the link's
+     ease-out and runs on the default cubic-bezier(.4,0,.2,1) */
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .glass:hover .glassInner {
   box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.25);
@@ -390,5 +390,53 @@
 @media (prefers-reduced-motion: reduce) {
   .marqueeGroup {
     animation: none;
+  }
+}
+
+/* ---------- Features video modal (Scale's Modal CSS module: it_l1W_modalOverlay / _modal / _form__wrapper__modal) ---------- */
+.modalOverlay {
+  opacity: 0;
+  animation: 0.35s ease-out forwards modal-fade-in;
+}
+.modal {
+  color: #000;
+  text-align: left;
+  opacity: 0;
+  height: -webkit-fill-available;
+  animation: 0.35s ease-out 0.55s forwards modal-show-up;
+}
+.modalPanel::after {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 1px #c7d3ea1f, inset 0 24px 48px #c7d3ea0d;
+}
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes modal-show-up {
+  from {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .modalOverlay,
+  .modal {
+    animation: none;
+    opacity: 1;
   }
 }

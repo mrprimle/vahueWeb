@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { ASSET, CONTAINER, SectionHeader } from './Sections'
 import { Play } from './icons'
@@ -32,52 +32,89 @@ const PHASES = [
   },
 ]
 
+/*
+ * Scale's Modal (chunk 2vj2iettvig10.js, module 582844), as the Features block opens it:
+ *  - while open: document.body.style.overflow = 'hidden' (reset to '' on close); document keydown Escape closes
+ *  - a click anywhere outside [data-modal] closes (the dialog layer covers the viewport)
+ *  - overlay bg #060606/70, CSS fadeIn 0.35s ease-out; dialog layer opacity 0 -> showUp (opacity 0 -> 1,
+ *    scale 1.1 -> 1) 0.35s ease-out after 0.55s; no exit animation (unmounts on close)
+ *  - panel w 95vw / md 80vw / lg 70vw, max-w 7xl, radius 16, bg white/15 + backdrop-blur-xl, inset ring;
+ *    24px white/20 close chip in flow above a px-4 pb-4 body holding the 16:9 video
+ */
 function VideoModal({ open, onClose, poster }: { open: boolean; onClose: () => void; poster: string }) {
   useEffect(() => {
-    if (!open) return
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    document.body.style.overflow = open ? 'hidden' : ''
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
   }, [open, onClose])
   if (!open) return null
   return createPortal(
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60" onClick={onClose} role="dialog" aria-modal="true">
+    <>
+      <div data-qa="modal-overlay" className={`${s.modalOverlay} fixed inset-0 h-screen w-screen bg-[#060606]/70`} style={{ zIndex: 60 }} />
       <div
-        className="relative w-[95vw] max-w-7xl overflow-hidden rounded-2xl bg-white/[15%] p-2 backdrop-blur-xl md:w-[80vw] lg:w-[70vw]"
-        onClick={(e) => e.stopPropagation()}
+        className={`${s.modal} fixed inset-0 h-screen w-full overflow-y-scroll outline-none`}
+        style={{ zIndex: 60 }}
+        role="dialog"
+        aria-modal="true"
+        tabIndex={-1}
+        onClick={(e) => {
+          if (!(e.target as HTMLElement).closest('[data-modal]')) onClose()
+        }}
       >
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Close"
-          className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white"
-        >
-          ✕
-        </button>
-        <div className="aspect-video w-full overflow-hidden rounded-xl bg-black">
-          {/* TODO: Vahue video (Scale streams a Mux HLS clip here) */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={poster} alt="" className="h-full w-full object-cover" />
+        <div className="relative z-40 flex min-h-screen items-center justify-center sm:py-6">
+          <div
+            data-modal
+            className={`${s.modalPanel} relative flex w-[95vw] max-w-7xl flex-col rounded-2xl bg-white/[15%] pb-8 backdrop-blur-xl sm:min-h-[auto] sm:pb-0 md:w-[80vw] md:text-center lg:w-[70vw]`}
+          >
+            <div>
+              <button
+                type="button"
+                onClick={onClose}
+                aria-label="Close"
+                className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20"
+              >
+                <svg aria-hidden="true" className="h-[10px] w-[10px]" fill="none" viewBox="0 0 10 10">
+                  <path
+                    fill="white"
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M9.817 9.823a.625.625 0 0 1-.885 0L4.995 5.886 1.061 9.82a.626.626 0 0 1-.884-.884L4.11 5.002.177 1.069a.625.625 0 1 1 .885-.885l3.933 3.933L8.931.18a.625.625 0 0 1 .885.885L5.88 5.002l3.937 3.937a.625.625 0 0 1 0 .885Z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div className="h-auto overflow-hidden px-4 pb-4 text-white/70">
+              <div className="aspect-video w-full overflow-hidden rounded-2xl bg-black">
+                {/* TODO: Vahue video (Scale streams a Mux HLS clip here, autoPlay) */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={poster} alt="" className="h-full w-full object-contain" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>,
+    </>,
     document.body,
   )
 }
 
 function PhaseMedia({ image }: { image: string }) {
   const [open, setOpen] = useState(false)
+  const close = useCallback(() => setOpen(false), [])
   return (
     <div className="relative aspect-[3/2] w-full overflow-hidden rounded-lg">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={image} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
-      <VideoModal open={open} onClose={() => setOpen(false)} poster={image} />
+      <VideoModal open={open} onClose={close} poster={image} />
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
         <button
           type="button"
           onClick={() => setOpen(true)}
           aria-label="Play video"
-          className="pointer-events-auto flex h-16 w-16 items-center justify-center rounded-full bg-black/40 transition-colors duration-150 hover:bg-black/60"
+          className="pointer-events-auto flex h-16 w-16 items-center justify-center rounded-full bg-black/40 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-black/60"
         >
           <Play />
         </button>

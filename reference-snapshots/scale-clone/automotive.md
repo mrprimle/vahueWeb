@@ -38,8 +38,8 @@ Files: `app/scale-clone/automotive/page.tsx`, `components/scale-clone/automotive
 | Text tab highlights | panel mount | 4 colour groups (`#ECA6FA`, `#E7FE53`, `#DBC6FC`, `#B2FCD2`) `autoAlpha 0, y 10` → `1, 0`; first delay 0.5, then `'>'` | `Power2.inOut` 0.6s, stagger 0.03 | one-shot |
 | Glass CTA hover | :hover | ring `scale 1.02` + glow `0 0 20px rgba(255,255,255,.12)`; fill brightness 1.15 + inset highlight; sheen `before` opacity 0→1, translate(8px,−8px); arrow `translateX(4px)` | 0.5s `cubic-bezier(0,0,.2,1)` (arrow 0.3s) | CSS |
 | Play button | :hover | `bg-black/40 → /60` | 150ms | CSS |
-| FlatCta hover | pointerenter / leave | currentColor layer slides in from below (from the left on the arrow CTA), then out the opposite side; label `scale .9`; arrow track −50% → 0 | 300ms (600ms arrow), `cubic-bezier(0,0,.2,1)` | CSS |
-| Keen Slider (resources) | drag | `mode: snap`, `perView 1.05`, `spacing 24`, `rubberband: false`; ≥640 free 1.4, ≥768 free 2, ≥1280 free 2.8; cursor switches between grab and grabbing; track opacity .5 → 1 on `created` (1s fallback), 0.3s ease-in-out | n/a | n/a |
+| FlatCta hover | pointerenter / leave (JS state machine, module 892855) | currentColor layer slides in from below (from the left on the arrow CTA), then out the opposite side and snaps back after 680ms; label `scale .9` (fill/border only, CSS hover); arrow track −50% → 0, snaps back on leave | 300ms (600ms arrow), `cubic-bezier(0,0,.2,1)` | state + CSS transition |
+| Keen Slider (resources) | drag / trackpad wheel / Tab | plugin WheelControls; Tab / Shift+Tab → next / prev; focusin on the first / last card → min / max index; `mode: snap`, `perView 1.05`, `spacing 24`, `rubberband: false`; ≥640 free 1.4, ≥768 free 2, ≥1280 free 2.8; cursor switches between grab and grabbing; track opacity .5 → 1 on `created` (1s fallback), 0.3s ease-in-out | n/a | n/a |
 | Logo marquee (<768) | always | `translateX(0 → −100%)` per copy, duration = width / 50px·s⁻¹ | linear, infinite | CSS |
 
 In the sampled run I scrolled in half-viewport steps and read the inline styles of everything in `main`. Apart from the AnimatedText intro, the pre-footer clip and the FullBleed media scale, Scale has no scroll reveals on this page. That first pass missed the media scale; the REA re-check at the end of this spec added it. The clone was sampled mid-intro: a hero line caught at yPercent 309.65 → 29.47 → 0.09, tinted green → purple → white. The tab pill was caught at left 160 → 212 mid-tween. The pre-footer clip was caught at `inset(3.59%)`.
@@ -55,10 +55,10 @@ All of the above reverts on unmount (gsap.context, SplitText.revert, ResizeObser
 - Not present on this page: three.js/ShaderMaterial, Rive, Embla, pinning.
 
 REA `inspect_web_event_listeners` listener map:
-- `.keen-slider`: `click` (capture), `dragstart`, `ksDragStart/ksDrag/ksDragEnd`, `mousedown/move/up/leave`, `touchstart` (passive), `touchmove`, `touchend`, all from `2vj2iettvig10.js` (Keen).
+- `.keen-slider`: `click` (capture), `dragstart`, `ksDragStart/ksDrag/ksDragEnd`, `mousedown/move/up/leave`, `touchstart` (passive), `touchmove`, `touchend`, `touchcancel`, plus a non-passive `wheel` (WheelControls, module 29713; the first pass missed it, see the interaction inventory), all from `2vj2iettvig10.js`.
 - `.ekJjCG_tabs button` and the `.PrXvJq_feature` play button: a single `click` from `42ixmvih7808g.js`, which is React's root-delegated handler (headless-ui and the modal state).
 - `main a.FlatCta`: no direct listeners (hover is React-delegated pointer events plus CSS).
-- No `pointermove` or `wheel` handlers on page content, so there's no cursor-reactive section to sample at several mouse positions.
+- No `pointermove` handlers on page content, so there's no cursor-reactive section. The only `wheel` handler is the Keen WheelControls one above.
 
 ## Assets (public/scale-clone/automotive)
 `hero.webp` (1920×1078), `prefooter.jpg` (downscaled from the 7952px `prefooter.webp` to 2400px wide), `lidar.jpg` (the 3D tab placeholder still), `living-room.webp` (Image tab), `map.webp` (Mapping tab), `phase-base/improvement/target.webp` (1152×912 product screenshots), `foundation-model.webp` (1920×1079), and `resource-guide.png` (chip render).
@@ -92,3 +92,117 @@ REA `analyze_web_bundle` on https://scale.com/automotive (evidence `ev_4858ef1c1
 - Applied: `components/scale-clone/automotive/FullBleedMedia.tsx` and the Vahue `/automations/scoring-decisions` copy (`components/automation/workflows/automotive/FullBleedMedia.tsx`, on its dot-texture media layer) now scrub the media layer 1.25 → 1 on the section. The scrub is off under reduced motion.
 - Not re-screenshotted: Playwright was in use by another agent, so there are no new QA images for this change.
 
+
+## Interaction inventory (audit 2026-10-31)
+
+Method: REA on a fresh CDP 9230 tab. `analyze_web_bundle` (ev_7d80065a10ea…, 58/58 scripts parsed; the page chunk `2kbgdjj-19374.js` and FullBleed `37xz28pjbnlx4.js` hashes are unchanged since the build) and `inspect_web_event_listeners` on every section root and interactive child (ids below). Each handler was traced into the downloaded chunks. Then Playwright with identical inputs on scale.com, the clone and `/automations/scoring-decisions` (script `scratchpad/am-audit/qa.js`), covering:
+- CTA hover, leave and re-enter, sampled every 100ms
+- the border CTA
+- tab clicks, with the pill sampled every 50ms
+- tab keyboard (Arrow, Home/End, PageUp/PageDown)
+- glass CTA hover and press
+- play-button hover and the modal open/close sequence
+- resources drag, trackpad wheel, focus and Tab/Shift+Tab at 1440 and 390
+- foundation-link hover
+- the pre-footer scrub at 10 points
+- a 3×3 mouse grid over every section, with a no-mouse control snapshot
+- the mobile marquee
+
+QA images: `qa/automotive/interactions/<name>-{scale,clone,vahue}.jpg`.
+
+Page-wide listeners: `html` has a passive `scroll` from GSAP ScrollTrigger (`1h0nvyhf5gbrf.js`, ev_b66fffdd7e5d…) plus OneTrust `keydown`/`click`, and `body` has a passive `touchstart` (ev_483c179135f6…). Every interactive child carries only a HubSpot capture `mousedown` (`4823527.js`) and React's root-delegated `click` (`42ixmvih7808g.js`). The mouse grid found **no pointer-tracking effect** on any section of any of the three pages. The only elements that change after the grid moves are the shared header's reveal bar (shared chrome, outside this page's sections), and those change the same way on Scale and the clone.
+
+### 1 · Hero (FullBleedMediaSection, startPercentage 0)
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| section | scroll | ScrollTrigger via `html` scroll | `37xz28pjbnlx4.js` mod 540431 | media scale 1.25 → 1 over `top bottom → center center`, no clip | yes | — |
+| headline / body / CTA | scroll `top center`, once | ScrollTrigger | `1h0nvyhf5gbrf.js` | AnimatedText cascade; CTA "filledWhiteArrow" 0.85s after 0.5s | yes | — |
+| FlatCta (arrow) | pointerenter / pointerleave | React `onPointerEnter/Leave` (ev_4acfe9dc769a…: only HubSpot + React click on the node) | `1h0nvyhf5gbrf.js` mod 892855 | wash −100% → 0 → +100%, then snaps back on the 680ms timer; strip −50% → 0, snaps back on leave; 600ms ease-out | yes. **Fixed**: it was a 4-phase approximation, now Scale's state machine with re-entry snap and the strip snapping back. See the note below. | `cta-hover-300ms-*`, `cta-leave-200ms-*` |
+
+Samples, wash x as a fraction of its width:
+- Enter at 0/100/200/300/400ms: Scale −1, −0.559, −0.315, −0.141, −0.036; clone −0.997, −0.557, −0.283, −0.141, −0.036.
+- Leave at 100/200/300/400/500/600/700ms: Scale 0.388, 0.652, 0.877, 0.955, 0.993, 1, −1; clone 0.387, 0.683, 0.874, 0.952, 0.993, 0.997, −0.997.
+- Re-enter 200ms into a leave: Scale −1, −0.736, −0.422, −0.229; clone −0.997, −0.734, −0.421, −0.228.
+
+Note: Scale also wires `onTransitionEnd` on the fill and resets on `propertyName === 'transform'`. Its Tailwind 4 `translate-*` classes animate the `translate` property, though, so that handler never matches and the 680ms timer does the reset. The clone animates `transform`, so it leaves the handler out to keep the same timing. The data-engine and generative-ai-data-engine clones still reset on transitionend, about 80ms earlier than Scale.
+
+### 2 · Logo cloud
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| mobile marquee (<768) | none | none | react-fast-marquee | `scroll` keyframes, 7.8s (= 390px / 50px·s⁻¹), linear, infinite | yes (7.8s on all three) | — |
+| desktop logos | none | none | `970272` LogoCloud | static, no hover | yes | — |
+
+### 3 · Overview (ChecklistWithMedia)
+No listeners, no hover and no pointer or scroll effects. Matched (none).
+
+### 4 · Supported Data (DataLabeling tabs)
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| `[role=tablist]` | none | none on the node (ev_65fcff94916d…) | headless-ui `Tab.Group` in `2kbgdjj-19374.js` | none | yes | — |
+| tab | click | React-delegated (ev_3bc60dee62c2…) | same, component `aB` | `onChange` → pill `left/width/height` tween 0.2s `Power2.inOut` in a `{autoRemoveChildren, smoothChildTiming}` timeline; text black/50 ↔ black 200ms; divider `scale-y-0` on the selected tab and the one before it (100ms) | yes | `tabs-text-{1440,390}-*` |
+| tab | keydown | headless-ui (React) | same | horizontal, automatic activation: ArrowRight/Left wrap; Home and PageUp go to the first tab; End and PageDown go to the last; focus and selection move together | yes. **Fixed**: the clone only handled Arrow keys, and only relative to the selected tab | — |
+| Text panel | mount | GSAP | same | 4 highlight groups `autoAlpha 0, y 10` → 1/0, 0.6s `Power2.inOut`, stagger 0.03, first delay 0.5, then `'>'` | yes | same |
+| glass CTA | hover / active | CSS | `51051` CTAs → NewButtonLink "glass" | ring `scale 1.02` + glow 20px/0.12 (0.5s ease-out); inner brightness 1.15 + inset 2px/4px; sheen `::before` opacity 0 → 1, translate (8, −8) over 0.5s **cubic-bezier(.4,0,.2,1)**; arrow +4px over 0.3s; active: inner `scale .97`, brightness 1.05 | yes. **Fixed**: the sheen ran on CSS `ease`. In Tailwind 4, `--tw-ease` is registered `inherits:false`, so the pseudo-element ignores the link's `ease-out` | `glass-hover-*` |
+
+Pill `left` samples every 50ms after a click (px):
+- Audio: Scale 125, 204, 250, 268, 271; clone 126, 189, 235, 267, 271.
+- 3D: Scale 271, 168, 64, 10, 5; clone 271, 153, 72, 12, 5.
+
+The final pill (5/50/38/5 at rest) and every resting tab colour match. Keyboard sequence from Text: → Audio, → 3D, Home 3D, End Audio, ← Text, PageUp 3D, PageDown Audio. This is identical on all three pages after the fix.
+
+Glass at 150ms of hover: ring scale 1.01 on both; inner brightness 1.075 on both; sheen opacity 0.134 on both (the clone was 0.295 before the fix); arrow 2.30px on both.
+
+### 5 · Phases (Features with numbers)
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| play button | hover | CSS | `0vl8zp9uyr6-0.js` mod 450359 | `bg-black/40 → /60`, 150ms `cubic-bezier(.4,0,.2,1)` | yes (alpha 0.4 → 0.6; 0.567 vs 0.537 at 80ms) | — |
+| play button | click | React-delegated (ev_6a1c50fbb498…) | same | opens Modal `582844` with the video (Mux, autoPlay) | yes (the poster stands in for the video) | `modal-open-1440-*` |
+| Modal | open | effect | `2vj2iettvig10.js` mod 582844 | `body.style.overflow = hidden`; overlay `#060606/70` `fadeIn` 0.35s ease-out; dialog layer `showUp` (opacity 0 → 1, scale 1.1 → 1) 0.35s ease-out after 0.55s; panel `w-[95vw] md:80vw lg:70vw max-w-7xl rounded-2xl bg-white/15 backdrop-blur-xl` with the inset ring `::after`; 24px `bg-white/20` close chip in flow at the panel's top-left | yes. **Fixed**: the clone had a static `bg-black/60` overlay with no animation and no scroll lock, and an absolute 32px close button | same |
+| Modal | Escape / click outside `[data-modal]` / close | `document` keydown; dialog `onClick` | same | unmount, `body.style.overflow = ''`, no exit animation | yes (**fixed**: the clone listened on window and closed on overlay click only) | — |
+
+Modal samples every 100ms after the click:
+- Overlay opacity: Scale 0, 0.43, 0.76, 0.98, 1; clone 0, 0.22, 0.60, 0.91, 1.
+- Dialog layer from 600ms: Scale opacity 0.29 / 0.66 / 0.94 / 1 at scale 1.071 / 1.034 / 1.006 / 1; clone 0.08 / 0.49 / 0.84 / 1 at 1.092 / 1.051 / 1.016 / 1.
+- The clone trails by about one sampling interval (~50ms), which is Playwright round-trip noise.
+- Close chip at (216, 156) on both. Panel 1008px wide at 1440 on both. The video is letterboxed (`object-contain`) as on Scale.
+
+### 6 · Why (FeaturesWithIcons)
+No listeners and no hover. Matched (none).
+
+### 7 · Resources (Keen Slider)
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| `.keen-slider` | drag / touch | Keen core (ev_c416b664e695…) | `0vl8zp9uyr6-0.js` mod 382790 | options as in the motion table; cursor `grabbing` while dragging | yes | `resources-{1440,390}-*` |
+| `.keen-slider` | trackpad `wheel` (non-passive) | same evidence: `wheel` from `2vj2iettvig10.js` | WheelControls mod 29713 | deltaX replayed as ksDragStart/ksDrag/ksDragEnd; preventDefault only when deltaX ≠ 0; ends 50ms after the last event | yes (**added**: `keenWheel.ts`) | same |
+| `.overflow-x-hidden` wrapper | `keydown` Tab / Shift+Tab | ev_1a430681af96… (`0vl8zp9uyr6-0.js` @3:23401) | mod 382790 | `next()` / `prev()`; focus still moves | yes (**added**) | same |
+| wrapper | `focusin` on the first / last card | same evidence | same | `moveToIdx(minIdx / maxIdx)` | yes (**added**) | same |
+| track | created | Keen `created` + 1s fallback | same | inline `visibility: visible; transition: opacity 0.3s ease-in-out`, opacity 0.5 → 1 | yes (`visibility` added) | — |
+
+Samples at 390, x of the first slide:
+- A 300px drag gives −303 mid-drag on all three; one sample read −348 in one clone run (timing noise).
+- After release it snaps to −352.857 on all three.
+- A wheel −720 brings it back to 0 on all three (on the clone it couldn't move before the fix).
+- Focusing the first card gives 0; Tab gives −352.857; Shift+Tab gives 0. Identical on all three.
+
+At 1440, two cards at perView 2.8 give zero track length, so nothing moves on any page.
+
+### 8 · Foundation model
+| Element | Input | Listener | Source | Params | Reproduced |
+|---|---|---|---|---|---|
+| link | hover | CSS | page chunk | black → gray-600, `transition-colors` 150ms `cubic-bezier(.4,0,.2,1)` | yes (TW4 `lab(35.6 …)` vs TW3 `rgb(75,85,99)`, the same grey) |
+
+### 9 · Pre-footer (startPercentage 10)
+| Element | Input | Listener | Source | Params | Reproduced |
+|---|---|---|---|---|---|
+| section | scroll scrub | ScrollTrigger | `37xz28pjbnlx4.js` | clip 5% → 0, media scale 1.25 → 1 | yes |
+
+10-point scrub (section top 900 → 360 in 60px steps): the clip reads `inset(5%)`, 4.630, 4.259, 3.889, 3.519, 3.148, 2.778, 2.407, 2.037, 1.667% on all three pages. Media scale at top 720 / 540 / 360: 1.1944 / 1.1389 / 1.0833 on all three. At top 900, Scale hasn't written a scale yet (no update before the first progress), while the clone has already set 1.25. That frame is off-screen.
+
+### Vahue page (`/automations/scoring-decisions`, `components/automation/workflows/automotive/`)
+The same fixes with the same params: the FlatCta state machine on the hero and pre-footer, the headless-ui tab keyboard model, the glass sheen easing, and WheelControls, Tab/focusin and `visibility` on the case slider. Re-measured with identical numbers to the clone (see above); no console errors, and both pages return 200. The Phases cards on the Vahue page have no video and so no play button or modal; that was a deliberate build decision, so the modal interaction doesn't apply there.
+
+### Can't be reproduced
+- The Mux HLS video in the modal (hls.js isn't installed): the poster stands in for it.
+- The `aria-hidden="true"` that Scale puts on its open `role=dialog`: an accessibility bug, deliberately not copied.
+- The tab pill's mount tween (Scale tweens from an unset size to tab 0 on mount, off-screen at load). The clone sets it at rest, then re-measures after web fonts load.
+- HubSpot capture `mousedown`, OneTrust `keydown`/`click` and OptinMonster are third-party tracking, left out deliberately.

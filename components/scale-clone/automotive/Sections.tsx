@@ -221,7 +221,7 @@ export function Foundation() {
           <p className="text-[16px] leading-6 tracking-[-0.01em] text-[#a1a1aa]">
             Placeholder line about a modern, language-led perception system built to speed up self-driving work.
           </p>
-          <a href="#" className="mt-2 text-[16px] leading-6 text-black transition-colors duration-150 hover:text-gray-600">
+          <a href="#" data-qa="foundation-link" className="mt-2 text-[16px] leading-6 text-black transition-colors duration-150 hover:text-gray-600">
             Try the System →
           </a>
         </div>

@@ -29,7 +29,7 @@ export default function LogoMarquee({ logos }: { logos: [number, number][] }) {
     </div>
   )
   return (
-    <div ref={root} className="relative flex w-full overflow-hidden">
+    <div ref={root} data-qa="marquee" className="relative flex w-full overflow-hidden">
       {group('a')}
       {group('b')}
     </div>
