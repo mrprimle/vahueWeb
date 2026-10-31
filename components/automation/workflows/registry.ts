@@ -6,4 +6,5 @@ import type { Workflow } from '@/lib/automation-content'
 export const WORKFLOW_PAGES: Record<string, () => Promise<{ default: ComponentType<{ workflow: Workflow }> }>> = {
   'back-office-sync': () => import('./generative-ai-data-engine/WorkflowPage'),
   'document-intake': () => import('./physical-ai/WorkflowPage'),
+  'engineering-enablement': () => import('./rlenvironments/WorkflowPage'),
 }
