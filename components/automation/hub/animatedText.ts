@@ -13,6 +13,10 @@ gsap.registerPlugin(SplitText)
  *   line  colour -> #79648C at +0.22 (0.3276s), then -> CSS colour (0.4524s), power1.inOut
  *   words -> x 0, opacity 1, 0.9s power3.out, stagger 0.03 at +0.04
  *   words colour -> #79648C at +0.238 (0.29484s), then -> CSS colour (0.40716s), stagger 0.03
+ *
+ * variant 'flip': the ClientTestimonials customAnimation (chunk 1a9k8nwrsxal6.js, module 685963,
+ * replaceBuiltIn: true, so no tint): lines start transformPerspective 900, origin 50% 100%, rotationX -90,
+ * yPercent 108, opacity 1, and flip to rotationX 0 / yPercent 0 in 0.48s power2.out, stagger 0.05.
  */
 
 const GREEN = '#72CE7B'
@@ -30,7 +34,9 @@ export function createAnimatedText(
   el: HTMLElement,
   type: 'lines,words' | 'lines' = 'lines,words',
   descender = false,
+  variant: 'default' | 'flip' = 'default',
 ): AnimatedText {
+  const flip = variant === 'flip'
   let done = false
   let tl: gsap.core.Timeline | null = null
 
@@ -41,11 +47,20 @@ export function createAnimatedText(
     }))
 
   const setHidden = (split: SplitText) => {
+    if (flip) {
+      gsap.set(split.lines, { transformPerspective: 900, transformOrigin: '50% 100%', rotationX: -90, yPercent: 108, opacity: 1, force3D: true })
+      return
+    }
     gsap.set(split.lines, { yPercent: 400, opacity: 0, color: GREEN })
     if (split.words.length) gsap.set(split.words, { x: '30%', opacity: 0, color: GREEN })
   }
 
   const build = (split: SplitText, delay: number) => {
+    if (flip) {
+      const t = gsap.timeline({ delay, onComplete: () => void (done = true) })
+      t.to(split.lines, { rotationX: 0, yPercent: 0, opacity: 1, duration: 0.48, stagger: 0.05, ease: 'power2.out', force3D: true }, 0)
+      return t
+    }
     const final = getComputedStyle(el).color
     const t = gsap.timeline({
       delay,
@@ -84,7 +99,7 @@ export function createAnimatedText(
       if (descender && self.masks.length)
         gsap.set(self.masks, { paddingTop: '0.12em', marginTop: '-0.12em', paddingBottom: '0.12em', marginBottom: '-0.12em' })
       // autoSplit re-runs on font load and resize: keep the current state.
-      if (done) gsap.set([...self.lines, ...self.words], { yPercent: 0, x: 0, opacity: 1 })
+      if (done) gsap.set([...self.lines, ...self.words], { yPercent: 0, x: 0, opacity: 1, ...(flip ? { rotationX: 0 } : {}) })
       else if (tl) {
         tl.kill()
         tl = build(self, 0)

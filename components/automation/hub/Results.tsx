@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useKeenSlider } from 'keen-slider/react'
 import 'keen-slider/keen-slider.min.css'
@@ -13,6 +13,8 @@ import s from './hub.module.css'
  * Results: verified Vahue cases (lib/case-studies.ts). Clone: Resources block (Resources.tsx).
  * 4-up grid from lg (2 cols) / xl (4 cols); below lg a Keen Slider with Scale's options:
  * snap, perView 1.05, spacing 24, rubberband off; free mode from 640 (1.4), 768 (2), 1280 (2.8).
+ * Plugins: WheelControls. keydown Tab / Shift+Tab on the overflow wrapper -> slider.next() / prev(); focusin on the
+ * first / last slide -> moveToIdx(minIdx / maxIdx); ready on created, false on destroyed, forced after 1s (as on Scale).
  * The black image tile carries the case metric instead of a thumbnail; tag + 2-line title as on the clone.
  */
 
@@ -36,7 +38,8 @@ function Card({ c, className = '' }: { c: CaseStudy; className?: string }) {
 
 export default function Results() {
   const [ready, setReady] = useState(false)
-  const [ref] = useKeenSlider<HTMLDivElement>({
+  const wrapper = useRef<HTMLDivElement>(null)
+  const [ref, slider] = useKeenSlider<HTMLDivElement>({
     initial: 0,
     mode: 'snap',
     rubberband: false,
@@ -47,6 +50,7 @@ export default function Results() {
       '(min-width: 1280px)': { mode: 'free', slides: { perView: 2.8, spacing: 24 } },
     },
     created: () => setReady(true),
+    destroyed: () => setReady(false),
     dragStarted: (sl) => {
       sl.container.style.cursor = 'grabbing'
     },
@@ -55,13 +59,42 @@ export default function Results() {
     },
   }, [WheelControls])
 
+  useEffect(() => {
+    if (ready) return
+    const t = setTimeout(() => setReady(true), 1000)
+    return () => clearTimeout(t)
+  }, [ready])
+
+  useEffect(() => {
+    const el = wrapper.current
+    if (!el) return
+    const onKey = (e: KeyboardEvent) => {
+      if (slider.current && e.key === 'Tab') {
+        if (e.shiftKey) slider.current.prev()
+        else slider.current.next()
+      }
+    }
+    const onFocus = (e: FocusEvent) => {
+      const sl = slider.current
+      if (!sl?.slides?.length || !sl.track?.details) return
+      if (e.target === sl.slides[0]) sl.moveToIdx(sl.track.details.minIdx)
+      if (e.target === sl.slides[sl.slides.length - 1]) sl.moveToIdx(sl.track.details.maxIdx)
+    }
+    el.addEventListener('keydown', onKey)
+    el.addEventListener('focusin', onFocus)
+    return () => {
+      el.removeEventListener('keydown', onKey)
+      el.removeEventListener('focusin', onFocus)
+    }
+  }, [slider])
+
   return (
     <section className="pb-14 md:pb-20">
       <div className="mx-auto w-full max-w-[1472px] px-6">
         <SectionHeader className="mb-10" over="Results" title="Read More About Our Results" />
         <div className="relative z-0">
           <div className={`${s.glow} pointer-events-none absolute inset-0 -bottom-[20%] -top-[80%] select-none opacity-30`} />
-          <div className="overflow-x-hidden lg:hidden">
+          <div ref={wrapper} className="overflow-x-hidden lg:hidden">
             <div
               ref={ref}
               className={`keen-slider h-full cursor-grab !overflow-visible ${ready ? 'opacity-100' : 'opacity-50'}`}
