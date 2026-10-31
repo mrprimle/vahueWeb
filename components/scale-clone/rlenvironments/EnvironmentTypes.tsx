@@ -1,9 +1,9 @@
 'use client'
 
-import { useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import { ASSET, environmentTypes } from './content'
 import { Glyph } from './icons'
-import { gsap, ScrollTrigger, playCascade, prepareCascade, reducedMotion } from './motion'
+import { gsap, ScrollTrigger, observeInViewPlayback, playCascade, prepareCascade, reducedMotion } from './motion'
 import styles from './styles.module.css'
 
 // scale.com EnterprisePillars (chunk 1pr295x5wseyf.js, module 909085). Static left column
@@ -18,6 +18,10 @@ export default function EnvironmentTypes() {
   const titles = useRef<(HTMLHeadingElement | null)[]>([])
   const bodies = useRef<(HTMLParagraphElement | null)[]>([])
   const dividers = useRef<(HTMLDivElement | null)[]>([])
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  // ResponsiveVideo (module 310080): plays only while in the viewport; no reduced-motion branch
+  useEffect(() => observeInViewPlayback(videoRef.current), [])
 
   useLayoutEffect(() => {
     if (reducedMotion()) {
@@ -84,6 +88,8 @@ export default function EnvironmentTypes() {
           <div className="relative aspect-square w-full overflow-hidden rounded-2xl">
             <div className="absolute inset-0 h-full w-full overflow-clip">
               <video
+                ref={videoRef}
+                data-qa="pillars-video"
                 src={`${ASSET}/environment-types.mp4`}
                 autoPlay
                 loop

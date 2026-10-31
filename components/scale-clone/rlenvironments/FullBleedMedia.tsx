@@ -1,9 +1,9 @@
 'use client'
 
-import { useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import { useRefreshOnPageGrow } from '@/lib/useRefreshOnPageGrow'
 import ArrowCta, { type ArrowCtaHandle } from './ArrowCta'
-import { gsap, ScrollTrigger, playCascade, prepareCascade, reducedMotion } from './motion'
+import { gsap, ScrollTrigger, observeInViewPlayback, playCascade, prepareCascade, reducedMotion, retroactiveEnter } from './motion'
 import styles from './styles.module.css'
 
 type Props = {
@@ -45,18 +45,22 @@ export default function FullBleedMedia({
   const ctaRef = useRef<ArrowCtaHandle>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
 
+  // ResponsiveVideo: plays only while in the viewport, reduced motion or not (Scale has no reduced-motion branch)
+  useEffect(() => observeInViewPlayback(videoRef.current), [video])
+
   useLayoutEffect(() => {
-    if (reducedMotion()) {
-      videoRef.current?.pause()
-      return
-    }
+    if (reducedMotion()) return
     let cancelled = false
+    let offRetro = () => {}
     const splits: { revert: () => void }[] = []
     const ctx = gsap.context(() => {})
+    // Media scale 1.25 -> 1 only on the image branch: Scale hands the scale ref to ResponsiveVideo, a plain
+    // function component that never attaches it, so `$.current` stays null and a video (the hero) never scales.
+    const scaleMedia = !video
     const apply = (p: number) => {
       const inset = (1 - p) * 0.5 * startPercentage
       if (clip.current) clip.current.style.clipPath = `inset(${inset}% round 1.5rem)`
-      if (media.current) gsap.set(media.current, { scale: 1.25 + (1 - 1.25) * p })
+      if (scaleMedia && media.current) gsap.set(media.current, { scale: 1.25 + (1 - 1.25) * p })
     }
     ctx.add(() => {
       ScrollTrigger.create({
@@ -76,24 +80,26 @@ export default function FullBleedMedia({
         const p = para.current && prepareCascade(para.current)
         if (h) splits.push(h.split)
         if (p) splits.push(p.split)
-        ScrollTrigger.create({
-          trigger: section.current,
-          start: 'top center',
-          once: true,
-          onEnter: () => {
-            ctaRef.current?.play(0.5)
-            if (h) playCascade(h, 0)
-            if (p) playCascade(p, 0.2)
-          },
-        })
+        let played = false
+        const enter = () => {
+          if (played) return
+          played = true
+          ctaRef.current?.play(0.5)
+          if (h) playCascade(h, 0)
+          if (p) playCascade(p, 0.2)
+        }
+        // useScrollTrigger (module 210104): start `top center`, default end `bottom 20%`, retroactiveOnEnter
+        const st = ScrollTrigger.create({ trigger: section.current, start: 'top center', end: 'bottom 20%', onEnter: enter })
+        offRetro = retroactiveEnter(st, enter)
       })
     })
     return () => {
       cancelled = true
+      offRetro()
       ctx.revert()
       splits.forEach((sp) => sp.revert())
     }
-  }, [startPercentage])
+  }, [startPercentage, video])
 
   return (
     <div className={wrapperClassName}>
@@ -124,7 +130,7 @@ export default function FullBleedMedia({
                 </div>
                 <div className={`absolute left-0 top-0 h-full w-full origin-center overflow-hidden rounded-3xl ${styles.roundClip}`}>
                   <div className="pointer-events-none absolute inset-0 z-10 rounded-3xl bg-black/45" />
-                  <div ref={media} className="absolute inset-0 h-full w-full overflow-hidden rounded-3xl bg-[#193a29]">
+                  <div ref={media} data-qa="media" className="absolute inset-0 h-full w-full overflow-hidden rounded-3xl bg-[#193a29]">
                     {video ? (
                       <video
                         ref={videoRef}

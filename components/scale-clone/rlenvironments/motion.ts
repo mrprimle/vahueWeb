@@ -48,3 +48,65 @@ export function playCascade(
   tl.add(() => gsap.set([...split.lines, ...split.words], { clearProps: 'color' }))
   return tl
 }
+
+// scale.com ResponsiveVideo (chunk 37xz28pjbnlx4.js, module 310080): an autoplay + muted video only plays while
+// it is in the viewport. An IntersectionObserver (threshold 0) plays/pauses it, and a rect check
+// (bottom >= 0 && top <= innerHeight) runs on mount and on window pageshow / focus / scroll (passive) / resize and
+// document visibilitychange. There is no reduced-motion branch: the video plays either way.
+export function observeInViewPlayback(video: HTMLVideoElement | null) {
+  if (!video) return () => {}
+  const check = () => {
+    const r = video.getBoundingClientRect()
+    if (r.bottom >= 0 && r.top <= window.innerHeight) video.play().catch(() => {})
+    else video.pause()
+  }
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) if (e.target === video) (e.isIntersecting ? video.play().catch(() => {}) : video.pause())
+    },
+    { threshold: 0 },
+  )
+  io.observe(video)
+  window.addEventListener('pageshow', check)
+  document.addEventListener('visibilitychange', check)
+  window.addEventListener('focus', check)
+  window.addEventListener('scroll', check, { passive: true })
+  window.addEventListener('resize', check)
+  check()
+  return () => {
+    io.disconnect()
+    window.removeEventListener('pageshow', check)
+    document.removeEventListener('visibilitychange', check)
+    window.removeEventListener('focus', check)
+    window.removeEventListener('scroll', check)
+    window.removeEventListener('resize', check)
+  }
+}
+
+// scale.com useScrollTrigger hook (module 210104) with retroactiveOnEnter: besides ScrollTrigger's own onEnter,
+// it fires onEnter on every refresh once the trigger's progress > 0 or the scroll is at/after start - 1, so a
+// page loaded or restored below the section still plays the intro. Callers guard against repeats.
+export function retroactiveEnter(st: ScrollTrigger, fire: () => void) {
+  const check = () => {
+    if (st.progress > 0 || st.scroll() >= st.start - 1) fire()
+  }
+  ScrollTrigger.addEventListener('refresh', check)
+  check()
+  return () => ScrollTrigger.removeEventListener('refresh', check)
+}
+
+// scale.com CardGrid (module 540409) defers its intro while the tab is hidden: onEnter marks it pending, and a
+// document visibilitychange to "visible" plays it.
+export function whenVisible(fire: () => void) {
+  if (typeof document === 'undefined' || !document.hidden) {
+    fire()
+    return () => {}
+  }
+  const onVis = () => {
+    if (document.visibilityState !== 'visible') return
+    document.removeEventListener('visibilitychange', onVis)
+    fire()
+  }
+  document.addEventListener('visibilitychange', onVis)
+  return () => document.removeEventListener('visibilitychange', onVis)
+}

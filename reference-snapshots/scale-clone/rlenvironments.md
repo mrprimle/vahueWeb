@@ -32,11 +32,11 @@ Header and footer come from the shared clone layout. The header stays light: Sca
 | Element | Trigger | start → end | From → to | Ease / duration / stagger | Scrub / pin |
 |---|---|---|---|---|---|
 | Hero / prefooter clip | ClipScrollSection root | `top bottom` → `center center` | `inset((1−p)·0.5·startPercentage % round 1.5rem)`: hero 0 (none), prefooter 5% → 0 | linear map | onUpdate |
-| Hero / prefooter media | same | same | `scale 1.25 → 1` | linear | onUpdate |
+| Prefooter media | same | same | `scale 1.25 → 1` (image branch only: on the hero the ref goes to ResponsiveVideo, which never attaches it, so the hero video stays at scale 1; measured, see the interaction inventory) | linear | onUpdate |
 | Heading + body (AnimatedText cascade) | section `top center`, once, retroactive | — | lines `yPercent 400, opacity 0`, words `x 30%`, colour `#72CE7B` → `#79648C` → own colour; line i at 0.08·i | lines 1s `power3.out`; words 0.9s stagger 0.03; colour `power1.inOut` | — |
 | Body | same | — | same, +0.2s | | |
 | CTA filledWhiteArrow | same, delay 0.5 | — | `autoAlpha 0, scaleX 0, radius 0` → `1, 1, 8`; chevron `x −6 → 0` | 0.85s `power2.out` / `power3.inOut` | — |
-| CTA hover | pointerenter / leave | — | 35% sheet `−100% → 0 → +100%`; chevron track `−50% → 0` | CSS 600ms ease-out | — |
+| CTA hover | pointerenter / leave | — | 35% sheet `−100% → 0 → +100%`, reset on the 680ms timer; chevron track `−50% → 0`, snaps back on leave | CSS 600ms ease-out | — |
 | Feature card (BaseCardScroll) | each card | `top bottom` → `top 50%` | `scale 0.96 → 1`, `opacity 0 → 1`; ≥1024px: x `−160` (col 1, origin right) / `+160` (col 4, origin left) → 0 | progress windowed per card: `l = min(0.1, 0.85/(n−1))`, card i maps `[i·l, i·l + 1 − (n−1)·l]`, then `power2.out` | scrub (onUpdate) |
 | Feature icon tile | CardGrid section `top bottom`, once | — | `clip-path inset(0 100% 0 0 round 10px)` → `inset(0)` | 0.5s `power1.out`, delay 0.05·i + 0.125 | — |
 | Feature glyph | same | — | opacity 0 → 1 | 1s `power1.out`, +0.05 | — |
@@ -45,7 +45,7 @@ Header and footer come from the shared clone layout. The header stays light: Sca
 | Env-type headline / subtitle | same, `setTimeout(i·200ms)` | — | cascade | headline delay 0.2 (word stagger 0.06), subtitle delay 0.4 (0.03) | — |
 | Env-type divider | same | — | `scaleX 0 → 1` (origin left) | 0.5s, delay 0.2·i + 0.2 | — |
 
-Section headers, Overview cards and Capabilities rows have no motion. Under `prefers-reduced-motion` nothing is split or tweened, dividers render full width, and the hero video is paused on its poster.
+Section headers, Overview cards and Capabilities rows have no motion. Under `prefers-reduced-motion` nothing is split or tweened and dividers render full width. Both videos keep playing, as on Scale (ResponsiveVideo has no reduced-motion branch), and each one plays only while it is in the viewport.
 
 ## Libraries / versions
 GSAP 3.15 (ScrollTrigger, SplitText via `gsap.matchMedia`/`gsap.context`), and Lenis from the shared clone layout (lerp 0.14). This page uses no Keen, Embla, three.js scene or Rive.
@@ -70,4 +70,61 @@ Screenshots of Scale and the clone at 1440×900 and 390×844 (every 50% of the v
 - The imagery is still Scale's: the hero/product/capability renders, both videos and the prefooter photo. The two capability screenshots show Scale's internal "GUI/MCP Agent Executor" UI text, and they need Vahue replacements.
 - The hero intro cascade reuses the measured AnimatedText implementation from the public-sector clone. I didn't re-sample it mid-animation on this page.
 - `oml:` (Scale's short-landscape variant: pillars switch to a row, CardGrid drops its padding) is not reproduced.
-- I didn't verify how Scale's hero video behaves under reduced motion. The clone pauses it, which leaves the poster or first frame showing.
+- Resolved by the interaction audit: under reduced motion Scale keeps both videos playing, and the clone now does the same.
+
+## Interaction inventory (audit 2026-10-31)
+
+Method: REA on a fresh CDP 9230 tab. `analyze_web_bundle` (ev_3ecc573d4e2e…, 47/47 scripts parsed). The chunks were read by sha256: page `3za68ndmpk06v.js` (`6f898a7a…`), CardGrid/EnterprisePillars `1pr295x5wseyf.js` (`597efa5b…`), FullBleed/ResponsiveVideo/useScrollTrigger `37xz28pjbnlx4.js` (`b234eef5…`) and FlatCta/AnimatedText `1h0nvyhf5gbrf.js` (`10b2627a…`). The last two are byte-identical to the chunks in the automotive audit, so its FlatCta findings carry over. `inspect_web_event_listeners` ran on every section root and interactive child (ids below), and each handler was traced into the downloaded chunks. Then Playwright ran identical inputs on scale.com, the clone and `/automations/engineering-enablement` (script `scratchpad/rl-audit/qa.js`) at 1440×900:
+- hero and pre-footer CTA hover, leave and re-enter, sampled every 100ms
+- the hero media at 5 scroll positions
+- the pre-footer scrub at 10 points
+- the feature-card scrub at 5 points
+- video play/pause at the top, at the pillars and back at the top, with and without reduced motion
+- a 3×3 mouse grid over every section, with a no-mouse control snapshot (transform, opacity, translate, background and text colour of every visible node)
+
+QA images: `qa/rlenvironments/interactions/<name>-{scale,clone,vahue}.jpg`.
+
+Page-wide listeners: `html` has a passive `scroll` from GSAP ScrollTrigger (`1h0nvyhf5gbrf.js`) plus OneTrust `keydown`/`click` (ev_cb6c0268663e…); `body` has a passive `touchstart` (ev_69adaad3cc24…). Window/document listeners found in the source: ResponsiveVideo (310080) adds `pageshow`, `focus`, passive `scroll`, `resize` on window and `visibilitychange` on document; useScrollTrigger (210104) adds `pageshow` and `visibilitychange` (ticker resume); CardGrid adds `visibilitychange`; PageTheme adds `pagehide`/`beforeunload`/`pageshow`/`focus`/`visibilitychange` (header theme, shared chrome). The mouse grid found **no pointer-tracking effect** on any section of the three pages (0 nodes changed after the grid on every section; the non-zero no-mouse drift is the intro cascades and videos still running).
+
+### 1 · Hero (FullBleedMediaSection compact, startPercentage 0)
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| media (video) | scroll | ScrollTrigger via `html` scroll | `37xz28pjbnlx4.js` mod 540431 | trigger registered (1.25 → 1 over `top bottom → center center`), but the ref sits on ResponsiveVideo, a plain function component that never attaches it, so `$.current` is null and nothing scales. Measured at scroll 0/150/300/450/600: Scale scale 1 at every point, no clip | yes. **Fixed**: the clone scaled its hero video 1.25 → 1. | `hero-scroll-300-*` |
+| video | viewport | React media props only (ev_1bb3d5cae62a…); IO plus window listeners from source | `37xz28pjbnlx4.js` mod 310080 ResponsiveVideo | plays while `bottom ≥ 0 && top ≤ innerHeight` (IntersectionObserver threshold 0 plus a rect check on pageshow/focus/scroll/resize/visibilitychange); no reduced-motion branch | yes. **Fixed**: it was a plain autoplay loop that never paused off-screen and paused under reduced motion. Measured on both: playing at top, paused at the pillars, playing again back at the top, with and without reduced motion | — |
+| headline / body / CTA | scroll `top center` | useScrollTrigger (210104), `retroactiveOnEnter` | `37xz28pjbnlx4.js` / `1h0nvyhf5gbrf.js` | AnimatedText cascade (body +0.2s); CTA "filledWhiteArrow" 0.85s after 0.5s; retroactive refresh check `progress > 0 \|\| scroll ≥ start − 1` | yes. **Fixed**: added the retroactive refresh check (the clone used `once` only) | — |
+| FlatCta (arrow) | pointerenter / pointerleave | React `onPointerEnter/Leave`; the node only has a HubSpot capture `mousedown` (ev_a0551b41d53c…) | `1h0nvyhf5gbrf.js` mod 892855 | wash −100% → 0 → +100%, then snaps back on the 680ms timer; strip −50% → 0, snaps back on leave; 600ms ease-out | yes. **Fixed**: same as the automotive audit. The 4-phase approximation became Scale's state machine with the re-entry snap, and the strip now snaps back instead of easing back over 600ms. | `cta-hero-hover-300ms-*`, `cta-hero-leave-200ms-*` |
+
+Samples, wash x as a fraction of its width:
+- Enter at 0–600ms: Scale −1, −0.559, −0.315, −0.161, −0.045, −0.007, 0; clone −1.002, −0.559, −0.315, −0.161, −0.028, −0.002, 0.
+- Strip enter: Scale −0.5, −0.279, −0.157, −0.08, −0.022, −0.003, 0; clone the same within 0.004.
+- Leave at 0–800ms: Scale 0, 0.388, 0.652, 0.877, 0.955, 0.996, 1, −1, −1; clone 0, 0.389, 0.653, 0.86, 0.947, 0.991, 1.002, −1.002, −1.002. The strip is at −0.5 from the first sample on both.
+- Re-enter 200ms into a leave: Scale −1, −0.736, −0.422, −0.205; clone −1.002, −0.738, −0.423, −0.23.
+
+### 2 · Features (SectionHeader + CardGrid of LinkCards)
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| card wrapper (BaseCardScroll) | scroll scrub | ScrollTrigger via `html` scroll; `.LinkCard` has no listeners (ev_3e3631cefc5f…) | `1pr295x5wseyf.js` mod 598042 | see the motion table. Measured with the first card's top at 850/750/650/550/450 px, cards 1–4 `[opacity, x, scale]`: identical on Scale and clone, e.g. at 750 `[.856 −23 .994] [.704 0 .988] [.469 0 .979] [.136 138.2 .965]` | yes (exact) | — |
+| icon tile / glyph / title / body | scroll `top bottom` | useScrollTrigger, retroactive; CardGrid `visibilitychange` | `1pr295x5wseyf.js` mod 540409 / 874328 | intro as in the motion table; if `document.hidden` at enter it waits for `visibilitychange` → visible | yes. **Fixed**: added the retroactive check and the hidden-tab deferral | — |
+| card hover | pointer | none (`section.CardGrid` ev_b42f23f55e3f…: no listeners) | 874328 | `hoveredColor` and `link` unset on this page, so there's no hover fill and no card CTA | n/a (none) | grid: 0 changes |
+
+### 3 · Overview cards · 4 · Capabilities rows
+No listeners (overview card ev_1b1220f6c315…, `main article` ev_85e334ca1da3…), no hover, no pointer or scroll effects. Matched (none).
+
+### 5 · Environment types (EnterprisePillars)
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| section | scroll `top 80%` | useScrollTrigger (no retroactive); `section.EnterprisePillars` has no listeners (ev_3a82e41743d5…) | `1pr295x5wseyf.js` mod 909085 | icon fade, cascades via `setTimeout(i·200)`, dividers, as in the motion table | yes | — |
+| square video | viewport | React media props (ev_147185c14254…); IO plus window listeners from source | 310080 ResponsiveVideo | same gating as the hero video; under reduced motion the video is still used because no `image` prop is passed | yes. **Fixed**: it was a plain autoplay loop. Measured paused at the top, playing at the section, paused again back at the top, on both | — |
+
+### 6 · Pre-footer (FullBleedMediaSection, startPercentage 10)
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| clip + media | scroll scrub | ScrollTrigger | 540431 + ClipScrollSection | clip `inset(5% → 0)`, image `scale 1.25 → 1`. 10 points: Scale 5 / 4.630 / 4.259 / 3.889 / 3.519 … % with scale 1.2315 / 1.213 / 1.1944 …; clone 5 / 4.648 / 4.278 / 3.907 … with 1.2324 / 1.2139 / 1.1954 … (3px of Lenis lag) | yes | `prefooter-scrub-5-*` |
+| FlatCta (arrow) | pointerenter / leave | HubSpot `mousedown` plus React `click` (ev_d137aecf224f…) | 892855 | as on the hero | yes (fixed with the hero) | `cta-prefooter-*` |
+
+### Vahue `/automations/engineering-enablement`
+It uses the same components (`components/automation/workflows/rlenvironments/`), and the same fixes were ported. CTA samples: enter −0.999, −0.558, −0.315, −0.161, −0.036 …; leave 0.388, 0.651, 0.858 … then −0.999 at 700ms; re-enter −0.999, −0.735, −0.422, −0.229. The card scrub is identical to Scale's, and the pre-footer scrub runs 4.944% → 1.611% with scale 1.2472 → 1.0806. The hero is an image where Scale has a video, so it passes `staticMedia` to keep Scale's effective scale of 1 (measured as 1 at every scroll point). The page has no videos. The square slot is an SVG, so there's no playback gating. Its FullBleed still pauses a video under reduced motion, per the Vahue reduced-motion rule. The mouse grid found 0 changes and there are no console errors.
+
+### Not reproduced
+- `oml:` (short-landscape) variants: still out of scope, as noted under Remaining gaps.
+- EnterprisePillars is not retroactive on Scale (`retroactiveOnEnter` false). The clone's `once` ScrollTrigger behaves the same for normal scrolling. A load already scrolled past `bottom 20%` was not tested on either side.

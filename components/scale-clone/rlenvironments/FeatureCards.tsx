@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef } from 'react'
 import { features } from './content'
 import { Glyph } from './icons'
-import { gsap, ScrollTrigger, playCascade, prepareCascade, reducedMotion } from './motion'
+import { gsap, ScrollTrigger, playCascade, prepareCascade, reducedMotion, retroactiveEnter, whenVisible } from './motion'
 import { SectionHeader } from './SectionHeader'
 import styles from './styles.module.css'
 
@@ -35,6 +35,8 @@ export default function FeatureCards() {
   useLayoutEffect(() => {
     if (reducedMotion()) return
     let cancelled = false
+    let offRetro = () => {}
+    let offVis = () => {}
     const splits: { revert: () => void }[] = []
     const count = features.cards.length
     const ctx = gsap.context(() => {
@@ -80,11 +82,13 @@ export default function FeatureCards() {
         const t = titles.current.map(pad)
         const b = bodies.current.map(pad)
         ;[...t, ...b].forEach((x) => x && splits.push(x.split))
-        ScrollTrigger.create({
-          trigger: section.current,
-          start: 'top bottom',
-          once: true,
-          onEnter: () => {
+        // CardGrid (module 540409): useScrollTrigger start `top bottom` (end `bottom 20%`), retroactiveOnEnter; the
+        // intro waits for document visibilitychange -> visible if the tab is hidden when it enters, and runs once.
+        let started = false
+        const play = () => {
+          if (started || cancelled) return
+          started = true
+          ctx.add(() => {
             features.cards.forEach((_, i) => {
               const s = 0.05 * i + 0.125
               gsap.to(tiles.current[i], { clipPath: 'inset(0% 0% 0% 0% round 10px)', duration: 0.5, ease: 'power1.out', delay: s })
@@ -95,12 +99,22 @@ export default function FeatureCards() {
               if (ti) playCascade(ti, c)
               if (bi) playCascade(bi, c + 0.18)
             })
-          },
-        })
+          })
+        }
+        let pending = false
+        const enter = () => {
+          if (pending || started) return
+          pending = true
+          offVis = whenVisible(play)
+        }
+        const st = ScrollTrigger.create({ trigger: section.current, start: 'top bottom', end: 'bottom 20%', onEnter: enter })
+        offRetro = retroactiveEnter(st, enter)
       })
     })
     return () => {
       cancelled = true
+      offRetro()
+      offVis()
       ctx.revert()
       splits.forEach((sp) => sp.revert())
     }
