@@ -1,8 +1,9 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useRefreshOnPageGrow } from '@/lib/useRefreshOnPageGrow'
 import FlatCta from './FlatCta'
 import { createAnimatedText, prefersReducedMotion, type AnimatedText } from './animatedText'
 import s from './healthcare.module.css'
@@ -20,7 +21,10 @@ gsap.registerPlugin(ScrollTrigger)
  *   media           scale 1.25 -> 1 (trigger = section; sampled 1.0139 at scroll 0 on the hero)
  * One-shot, "top center" (retroactive): headline AnimatedText delay 0, body delay 0.2,
  *   CTA filledWhiteArrow 0.85s delay 0.5.
- * .media-overlay is linear-gradient(#0000, #000) (it overrides the bg-black/45 class).
+ * .media-overlay is linear-gradient(#0000, #000): its unlayered `background` shorthand beats the layered
+ *   bg-black/45 utility, so "flat" and "gradient" overlayVariant render the same.
+ * useRefreshOnPageGrow re-measures every ScrollTrigger when the page grows (lazy images, tab mockups, fonts)
+ * so the pre-footer clip/scale trigger doesn't fire late.
  * Logo marquee: LogoMarquee, `animate-logo-marquee` 40s linear infinite, translateX 0 -> -50%, gap 32,
  * the logo row is rendered twice; wrapper opacity .4.
  */
@@ -28,7 +32,10 @@ gsap.registerPlugin(ScrollTrigger)
 type Cta = { label: string; href: string }
 
 type Props = {
-  image: string
+  image?: string
+  imageAlt?: string
+  /** Replaces the image (e.g. a Vahue visual); it gets the same 1.25 -> 1 scale. */
+  media?: ReactNode
   imageBg?: string
   headline: string
   body?: string
@@ -36,16 +43,17 @@ type Props = {
   priority?: boolean
   startPercentage?: number
   narrow?: boolean
-  logos?: { label: string; widths: { w: number; h: number }[] }
+  logos?: { label: string; slots: { w: number; h: number }[] } | null
 }
 
-export default function FullBleedMedia({ image, imageBg, headline, body, primary, priority, startPercentage = 10, narrow, logos }: Props) {
+export default function FullBleedMedia({ image, imageAlt = '', media: mediaNode, imageBg, headline, body, primary, priority, startPercentage = 10, narrow, logos }: Props) {
   const section = useRef<HTMLElement>(null)
   const clip = useRef<HTMLDivElement>(null)
   const media = useRef<HTMLDivElement>(null)
   const h2 = useRef<HTMLHeadingElement>(null)
   const p = useRef<HTMLParagraphElement>(null)
   const cta1 = useRef<HTMLAnchorElement>(null)
+  useRefreshOnPageGrow()
 
   useEffect(() => {
     const root = section.current
@@ -138,10 +146,9 @@ export default function FullBleedMedia({ image, imageBg, headline, body, primary
   return (
     <div className="isolate relative w-full bg-white px-4">
       <div ref={clip} className="h-full w-full overflow-hidden" style={{ clipPath: 'inset(0% round 1.5rem)' }}>
-        <section ref={section} className="relative overflow-hidden rounded-3xl bg-white text-black">
+        <section ref={section} className="FullBleedMediaSection relative overflow-hidden rounded-3xl bg-white text-black">
           <div className="relative flex min-h-[480px] items-end overflow-hidden rounded-3xl p-8 md:min-h-[720px] md:p-16">
             <div className="relative z-20 flex w-full max-w-[72rem] flex-col gap-6 text-white">
-              {/* TODO: Vahue copy */}
               <h2
                 ref={h2}
                 className={`${s.header2} ${s.pending} font-display font-normal text-white ${narrow ? 'max-w-[620px]' : ''}`}
@@ -149,7 +156,6 @@ export default function FullBleedMedia({ image, imageBg, headline, body, primary
                 {headline}
               </h2>
               {body ? (
-                /* TODO: Vahue copy */
                 <p ref={p} className={`${s.body1} ${s.pending} w-full font-display text-white`} style={{ textWrap: 'balance' }}>
                   {body}
                 </p>
@@ -166,13 +172,12 @@ export default function FullBleedMedia({ image, imageBg, headline, body, primary
                 <div className="mt-4 flex w-full min-w-0 max-w-md flex-col gap-2">
                   <div className="flex items-center gap-2">
                     <span aria-hidden="true" className="h-[6px] w-[6px] shrink-0 bg-[#929292]" style={{ clipPath: 'polygon(0 0, 100% 100%, 100% 0)' }} />
-                    {/* TODO: Vahue copy */}
                     <p className="font-display text-[0.625rem] uppercase leading-[15px] tracking-[0.05em] text-[#929292]">{logos.label}</p>
                   </div>
                   <div className="w-full min-w-0 overflow-hidden opacity-40" role="presentation" aria-hidden="true">
                     <div className={`flex w-max gap-8 overflow-hidden will-change-transform ${s.marquee}`}>
-                      {[...logos.widths, ...logos.widths].map((l, i) => (
-                        // TODO: customer logo (neutral placeholder tile, same box as Scale's logo slot)
+                      {[...logos.slots, ...logos.slots].map((l, i) => (
+                        // customer logos are not shipped: neutral tile in Scale's rendered logo box
                         <div key={i} className="relative flex h-[35px] shrink-0 items-start overflow-hidden" style={{ width: l.w }}>
                           <div className="rounded-[3px] bg-white" style={{ width: l.w, height: l.h }} />
                         </div>
@@ -188,13 +193,16 @@ export default function FullBleedMedia({ image, imageBg, headline, body, primary
                 style={{ backgroundImage: 'linear-gradient(#0000 0%, #000 100%)' }}
               />
               <div ref={media} className="absolute inset-0 overflow-hidden rounded-3xl" style={{ background: imageBg }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={image}
-                  alt=""
-                  loading={priority ? 'eager' : 'lazy'}
-                  className="absolute inset-0 h-full w-full rounded-[inherit] object-cover"
-                />
+                {mediaNode ??
+                  (image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={image}
+                      alt={imageAlt}
+                      loading={priority ? 'eager' : 'lazy'}
+                      className="absolute inset-0 h-full w-full rounded-[inherit] object-cover"
+                    />
+                  ) : null)}
               </div>
             </div>
           </div>

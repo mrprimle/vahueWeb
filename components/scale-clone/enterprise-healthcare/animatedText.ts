@@ -112,7 +112,14 @@ export function createAnimatedText(el: HTMLElement, { type = 'lines,words', vari
   const buildOut = (split: SplitText, delay: number) => {
     const t = gsap.timeline({ delay })
     if (variant === 'flip') {
-      t.to(split.lines, { rotationX: 90, yPercent: -108, opacity: 1, duration: 0.48, stagger: 0.05, ease: 'power2.out', force3D: true }, 0)
+      // the object literal on scale.com declares onAnimateOut twice; the later one (mask-padding aware) wins
+      const yOut = (_: number, line: HTMLElement) => {
+        const n = line.offsetHeight
+        if (!n) return -108
+        const pad = parseFloat(getComputedStyle(line.parentElement as Element).paddingTop) || 0
+        return -Math.max(108, ((n + pad + 1) / n) * ((900 + n) / 900) * 100)
+      }
+      t.to(split.lines, { rotationX: 90, yPercent: yOut, opacity: 1, duration: 0.48, stagger: 0.05, ease: 'power2.out', force3D: true }, 0)
       return t
     }
     if (variant === 'fade') {

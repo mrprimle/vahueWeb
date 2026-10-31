@@ -28,7 +28,6 @@ gsap.registerPlugin(ScrollTrigger)
  *   play button: hover scale 1.1 + bg black/70, 300ms; click opens a video dialog (Radix on scale.com).
  */
 
-const ASSET = '/scale-clone/enterprise-healthcare'
 
 // cubic-bezier(0.23, 1, 0.32, 1) as a GSAP ease function
 function bezier(x1: number, y1: number, x2: number, y2: number) {
@@ -50,30 +49,31 @@ function bezier(x1: number, y1: number, x2: number, y2: number) {
 }
 const easeOutQuint = bezier(0.23, 1, 0.32, 1)
 
-type Tile = { variant: 'titleOnly' | 'overlay' | 'caption'; area: string; swatch: string; title: string; image?: string; video?: boolean }
+type Variant = 'titleOnly' | 'overlay' | 'caption'
+export type BlogTileContent = { title: string; image?: string; fill?: string; video?: boolean; href?: string }
+type Tile = BlogTileContent & { variant: Variant; area: string; swatch: string }
 
-// TODO: Vahue copy (titles); tile 2 and 3 images are neutral placeholders (Scale's thumbnails carry its brand)
-const tiles: Tile[] = [
-  { variant: 'titleOnly', area: '1 / 1 / 5 / 3', swatch: '#C4B8D4', title: 'Placeholder Video Title About a Solution', image: `${ASSET}/tile-rad-agent.webp`, video: true },
-  { variant: 'overlay', area: '1 / 3 / 6 / 5', swatch: '#1D4133', title: 'Placeholder Infrastructure Title for Ready AI Agents', video: true },
-  { variant: 'caption', area: '5 / 1 / 7 / 3', swatch: '#5A6B85', title: 'Placeholder Partner + Vahue: Placeholder Article Title' },
+// Desktop slots (titleOnly / overlay / caption) with their grid areas and category swatches, in tile order.
+const SLOTS: { variant: Variant; area: string; swatch: string }[] = [
+  { variant: 'titleOnly', area: '1 / 1 / 5 / 3', swatch: '#C4B8D4' },
+  { variant: 'overlay', area: '1 / 3 / 6 / 5', swatch: '#1D4133' },
+  { variant: 'caption', area: '5 / 1 / 7 / 3', swatch: '#5A6B85' },
 ]
 
-const CategoryIcon = ({ color }: { color: string }) => (
+const CategoryIcon = ({ color, label }: { color: string; label: string }) => (
   <div className="inline-flex min-w-0 max-w-full items-center justify-center gap-2 rounded-sm p-1">
     <span className="inline-flex size-[26px] shrink-0 items-center justify-center rounded-[5px]" style={{ backgroundColor: color }} aria-hidden="true">
       <svg className="block size-[8px] shrink-0" width="8" height="8" viewBox="0 0 8 8" fill="none">
         <path d="M6.79229 0H0.500785C0.0554314 0 -0.167603 0.538452 0.14731 0.853365L6.43881 7.14487C6.75373 7.45978 7.29218 7.23675 7.29218 6.79139V0.5C7.29218 0.223858 7.06832 0 6.79229 0Z" fill="white" />
       </svg>
     </span>
-    {/* TODO: Vahue copy */}
     <span className={`${s.detailMono} flex min-h-[26px] min-w-0 flex-1 items-center self-center truncate font-mono !text-[11px] !leading-none tracking-[0.05em] text-white`}>
-      Placeholder
+      {label}
     </span>
   </div>
 )
 
-function Media({ image, imgRef }: { image?: string; imgRef: React.RefObject<HTMLDivElement | null> }) {
+function Media({ image, fill, imgRef }: { image?: string; fill?: string; imgRef: React.RefObject<HTMLDivElement | null> }) {
   return (
     <div className="absolute inset-0 z-0 overflow-hidden">
       <div ref={imgRef} className="absolute inset-0" style={{ transformOrigin: '50% 50%' }}>
@@ -81,15 +81,14 @@ function Media({ image, imgRef }: { image?: string; imgRef: React.RefObject<HTML
           // eslint-disable-next-line @next/next/no-img-element
           <img src={image} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
         ) : (
-          // TODO: tile image (neutral placeholder)
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #20262f 0%, #0b0d10 55%, #000 100%)' }} />
+          <div className="absolute inset-0" style={{ background: fill ?? '#000' }} />
         )}
       </div>
     </div>
   )
 }
 
-function BlogTile({ tile, index, desktop, visible }: { tile: Tile; index: number; desktop: boolean; visible: boolean }) {
+function BlogTile({ tile, index, desktop, visible, category }: { tile: Tile; index: number; desktop: boolean; visible: boolean; category: string }) {
   const card = useRef<HTMLDivElement>(null)
   const img = useRef<HTMLDivElement>(null)
   const title = useRef<HTMLHeadingElement>(null)
@@ -157,15 +156,14 @@ function BlogTile({ tile, index, desktop, visible }: { tile: Tile; index: number
     variant === 'caption' ? (
       <div className="flex h-full min-h-[280px] w-full flex-col overflow-hidden bg-[#f2f2f2] p-4 text-[#101010] lg:min-h-0 lg:p-5">
         <div className="relative isolate aspect-[16/10] min-h-0 w-full flex-1 overflow-hidden rounded-xl bg-[#e5e5e5] lg:aspect-video">
-          <Media image={tile.image} imgRef={img} />
+          <Media image={tile.image} fill={tile.fill} imgRef={img} />
           <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-black/55 via-black/[0.14] to-transparent" />
           <div className={`absolute z-10 ${chipPos}`}>
-            <CategoryIcon color={tile.swatch} />
+            <CategoryIcon color={tile.swatch} label={category} />
           </div>
         </div>
         <div className="flex shrink-0 flex-col justify-end overflow-hidden pt-4 lg:pt-5">
           <div>
-            {/* TODO: Vahue copy */}
             <h3 ref={title} className={`${s.pending} text-left font-display text-base font-medium leading-[22px] tracking-[-0.025em] text-[#101010]`} style={{ textWrap: 'pretty' }}>
               {tile.title}
             </h3>
@@ -175,17 +173,16 @@ function BlogTile({ tile, index, desktop, visible }: { tile: Tile; index: number
     ) : (
       <div className="relative flex h-full min-h-[280px] w-full flex-col overflow-hidden lg:min-h-0">
         <div className="relative min-h-0 flex-1 overflow-hidden">
-          <Media image={tile.image} imgRef={img} />
+          <Media image={tile.image} fill={tile.fill} imgRef={img} />
           <div
             className="pointer-events-none absolute inset-0 z-[1]"
             style={{ backgroundImage: 'linear-gradient(180deg, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0) 40%), linear-gradient(0deg, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0) 68%)' }}
           />
           <div className={`absolute z-10 ${chipPos}`}>
-            <CategoryIcon color={tile.swatch} />
+            <CategoryIcon color={tile.swatch} label={category} />
           </div>
           <div className="absolute inset-x-0 bottom-0 z-10 p-6">
             <div>
-              {/* TODO: Vahue copy */}
               <h3 ref={title} className={`${s.pending} text-left font-display text-[32px] font-normal leading-[38px] tracking-[-0.01em] text-white`} style={{ textWrap: 'pretty' }}>
                 {tile.title}
               </h3>
@@ -226,14 +223,14 @@ function BlogTile({ tile, index, desktop, visible }: { tile: Tile; index: number
                     </svg>
                   </button>
                 </div>
-                {/* TODO: Vahue video */}
+                {/* video embed not shipped (Scale streams an MP4 here) */}
                 <div className="aspect-video w-full overflow-hidden bg-black" />
               </div>
             </div>
           ) : null}
         </>
       ) : (
-        <a href="#" className={cls}>
+        <a href={tile.href ?? '#'} className={cls}>
           {body}
         </a>
       )}
@@ -241,7 +238,8 @@ function BlogTile({ tile, index, desktop, visible }: { tile: Tile; index: number
   )
 }
 
-export default function BlogPreview() {
+export default function BlogPreview({ heading: headline, category, tiles: items }: { heading: string; category: string; tiles: BlogTileContent[] }) {
+  const tiles: Tile[] = items.slice(0, SLOTS.length).map((t, i) => ({ ...t, ...SLOTS[i] }))
   const heading = useRef<HTMLParagraphElement>(null)
   const slots = useRef<HTMLDivElement[]>([])
   const [visible, setVisible] = useState<Set<number>>(() => new Set())
@@ -273,13 +271,12 @@ export default function BlogPreview() {
   }, [])
 
   return (
-    <section className="isolate w-full scroll-mt-28 overflow-hidden bg-white py-12 md:py-16">
+    <section className="BlogPreview isolate w-full scroll-mt-28 overflow-hidden bg-white py-12 md:py-16">
       <div className="grid grid-cols-8 gap-2 px-6 md:grid-cols-12">
         <div className="col-span-full md:col-span-10 md:col-start-2">
           <div className="mb-8 md:mb-20">
-            {/* TODO: Vahue copy */}
             <p ref={heading} className={`${s.pending} text-center font-display text-[32px] font-normal leading-[1.05] tracking-[-0.01em] text-black lg:text-[4rem]`} style={{ textWrap: 'balance' }}>
-              Placeholder Section Title
+              {headline}
             </p>
           </div>
           <div className={s.bpGrid}>
@@ -293,7 +290,7 @@ export default function BlogPreview() {
                 className={s.bpSlot}
                 style={{ '--bp-grid-area': t.area } as React.CSSProperties}
               >
-                <BlogTile tile={t} index={i} desktop={desktop} visible={visible.has(i)} />
+                <BlogTile tile={t} index={i} desktop={desktop} visible={visible.has(i)} category={category} />
               </div>
             ))}
           </div>

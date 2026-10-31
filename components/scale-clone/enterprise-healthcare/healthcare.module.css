@@ -132,6 +132,8 @@
   white-space: nowrap;
   font-size: 14px;
   line-height: 21px;
+  /* label span carries Scale's .cta class: text-transform capitalize */
+  text-transform: capitalize;
 }
 .ctaArrow {
   border-radius: 8px;

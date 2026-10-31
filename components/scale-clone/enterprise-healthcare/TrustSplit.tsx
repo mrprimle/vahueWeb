@@ -11,34 +11,35 @@ import s from './healthcare.module.css'
  * Headline + subtitle = HeadlineWithCta (AnimatedText, IntersectionObserver -15%, delays 0.5 / 1).
  */
 
-// TODO: certification badges are third-party marks; neutral round placeholder tiles keep the layout.
-const BADGES = 8
-
-export default function TrustSplit() {
+export default function TrustSplit({ headline, body, badges }: { headline: string; body: string; badges: { alt: string; src?: string }[] }) {
   const h = useRef<HTMLHeadingElement>(null)
   const p = useRef<HTMLDivElement>(null)
   useRevealText(h)
   useRevealText(p, { delay: 1 })
 
   return (
-    <section className="bg-[#f9fafb] py-20 text-black">
+    <section className="TextImageSplit bg-[#f9fafb] py-20 text-black">
       <div className="mx-auto w-full max-w-[1472px] px-6">
         <div className="flex flex-col items-center gap-10 md:flex-row md:gap-16">
           <div className="flex flex-1 flex-col items-start gap-6 py-6">
-            {/* TODO: Vahue copy */}
             <h3 ref={h} className={`${s.header2} ${s.pending} w-full text-left font-display font-normal text-black`}>
-              Placeholder headline on trust and privacy
+              {headline}
             </h3>
-            {/* TODO: Vahue copy */}
             <div ref={p} className={`${s.splitBody} ${s.pending} w-full text-left font-display text-black`} style={{ textWrap: 'pretty' }}>
-              Placeholder sentence on the security, safety and quality standards we meet.
+              {body}
             </div>
           </div>
           <div className="relative w-full shrink-0 md:w-[clamp(320px,38vw,580px)]">
             <div className="grid grid-cols-4 gap-3 md:gap-4">
-              {Array.from({ length: BADGES }).map((_, i) => (
-                <div key={i} className="relative aspect-square p-[12%]">
-                  <div className="relative h-full w-full rounded-full bg-[#929292] opacity-35" />
+              {badges.map((b) => (
+                <div key={b.alt} className="relative aspect-square p-[12%]">
+                  {b.src ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={b.src} alt={b.alt} className="relative h-full w-full object-contain opacity-35 grayscale" />
+                  ) : (
+                    // third-party certification mark not shipped: neutral tile in the same cell
+                    <div role="img" aria-label={b.alt} className="relative h-full w-full rounded-full border-[3px] border-[#929292] bg-[#929292]/40 opacity-35" />
+                  )}
                 </div>
               ))}
             </div>

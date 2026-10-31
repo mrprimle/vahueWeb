@@ -23,7 +23,7 @@ import {
 /*
  * The three TabbedPanel mockups (chunk 0sni47mcvnqwg.js): OrderGuidanceMockup (module 453596),
  * SchedulingEngineMockup (218184) and CustomAgentsMockup (69472). Plain React state + CSS transitions on
- * scale.com (no GSAP); timings copied from the bundle. All demo data below is placeholder (TODO: Vahue copy).
+ * scale.com (no GSAP); timings, markup and demo data transcribed from the bundle.
  */
 
 const reduced = () => typeof window !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -66,6 +66,10 @@ const chips = [
   { key: 'problems', label: 'Problem List', Icon: MdListAlt },
 ]
 const STEPS = chips.length + 5
+const INDICATION =
+  'Urgent wide excisional biopsy with sentinel lymph node mapping for: (1) 6-week history of a rapidly enlarging, irregular pigmented lesion on the back with color variation, now 14mm (ABCDE-positive: Asymmetry, Border irregularity, Color variation, Diameter, Evolving); (2) 12 lb unintentional weight loss over 10 weeks; (3) new ulceration and intermittent bleeding from the lesion (2 weeks); (4) new palpable satellite nodule adjacent to the primary lesion; (5) regional ultrasound showing a 1.8 cm left axillary lymph node with loss of normal fatty hilum — radiologist recommends histopathological correlation; (6) LDH elevated at 285 U/L; (7) Strong family history — father melanoma age 55, maternal uncle melanoma age 62. Prior incomplete shave biopsy (community clinic, 2022) — insufficient depth, Breslow staging not possible. Tertiary dermatologic oncology center required for wide excision with sentinel lymph node biopsy given anatomical/staging complexity.'
+const DIAGNOSES =
+  'L98.9 — Disorder of the skin and subcutaneous tissue, unspecified (evolving pigmented lesion); R59.0 — Localized enlarged lymph nodes; R63.4 — Abnormal weight loss; Z80.8 — Family history of malignant neoplasm of other organs (melanoma); D48.5 — Neoplasm of uncertain behavior, skin (rule out — biopsy pending); R79.89 — Other specified abnormal findings of blood chemistry (elevated LDH); N18.3 — Chronic kidney disease, Stage 3a (eGFR 58); E11.9 — Type 2 diabetes mellitus without complications (newly diagnosed).'
 const field = (on: boolean) => `transition-all duration-500 ease-out ${on ? 'translate-y-0 opacity-100' : 'translate-y-1 opacity-0'}`
 
 export function OrderGuidanceMockup() {
@@ -106,16 +110,15 @@ export function OrderGuidanceMockup() {
   const checked = Math.min(step, chips.length)
   const shown = Math.max(0, step - chips.length)
 
-  // TODO: Vahue copy (placeholder demo record)
   return (
     <div ref={ref} aria-hidden="true" className="relative flex h-full w-full flex-col overflow-hidden bg-white text-left">
-      <AppBar org="Placeholder Health" product="Suite" />
-      <Title title="Order Guidance" sub="Review a placeholder order with assisted checks" />
+      <AppBar org="ACME Health" product="CAM Suite" />
+      <Title title="Order Guidance" sub="Review clinical order with AI-powered assistance" />
       <div className="mx-5 mt-4 flex flex-col gap-2 rounded-lg border border-[#f2f2f2] p-3">
-        <p className={`${D} font-medium ${G10}`}>Patient Placeholder</p>
-        <p className={`${D} ${G30}`}>MRN 0000-0000-0000 · DOB 1900-01-01 · 60 Male · Placeholder Plan</p>
+        <p className={`${D} font-medium ${G10}`}>James Okonkwo</p>
+        <p className={`${D} ${G30}`}>MRN DERM-2024-0089 · DOB 1961-11-04 · 62 Male · Medicare Advantage</p>
         <div className="flex flex-wrap items-center gap-1.5 pt-1">
-          <span className={`${D} font-medium ${G10}`}>EHR</span>
+          <span className={`${D} font-medium ${G10}`}>EPIC EHR</span>
           {chips.map(({ key, label, Icon }, i) => {
             const on = i < checked
             return (
@@ -139,42 +142,32 @@ export function OrderGuidanceMockup() {
             <MdDescription size={13} />
             Referral Order
           </span>
-          <span className={`${s.detailMono} font-mono ${G30}`}>order_0</span>
+          <span className={`${s.detailMono} font-mono ${G30}`}>order_3</span>
         </div>
         <div className="grid grid-cols-2 gap-3 px-3">
           <div className={field(shown > 0)}>
             <p className={`${D} ${G30}`}>PROCEDURE</p>
-            <p className={`${D} font-medium ${G10}`}>Placeholder procedure name (Urgent) — complete with a secondary placeholder step</p>
+            <p className={`${D} font-medium ${G10}`}>Wide Excisional Biopsy (Urgent) — Complete with Sentinel Lymph Node Mapping</p>
           </div>
           <div className={field(shown > 1)}>
             <p className={`${D} ${G30}`}>ORDERING PROVIDER</p>
-            <p className={`${D} font-medium ${G10}`}>Dr. Placeholder Name, MD — Primary Care</p>
+            <p className={`${D} font-medium ${G10}`}>Dr. Rachel Torres, MD — Primary Care</p>
           </div>
         </div>
         <div className={`px-3 ${field(shown > 2)}`}>
           <p className={`${D} ${G30}`}>REQUESTED WINDOW</p>
-          <p className={`${D} ${G10}`}>Within 5 days — URGENT (placeholder reason one + placeholder reason two + reason three)</p>
+          <p className={`${D} ${G10}`}>Within 5 days — URGENT (regional lymphadenopathy + elevated LDH + worsening systemic symptoms)</p>
         </div>
         <div className={`overflow-hidden px-3 ${field(shown > 3)}`}>
           <p className={`${D} ${G30}`}>INDICATION</p>
           <p className={`${D} ${G30}`} style={{ textWrap: 'pretty' }}>
-            Placeholder indication text for the referral order: (1) a first placeholder finding described over several
-            weeks with a measured change in size and character; (2) a second placeholder finding with a duration; (3) a
-            third placeholder observation over two weeks; (4) a fourth placeholder finding adjacent to the first; (5) an
-            imaging result that recommends further correlation by a specialist; (6) a lab value outside its reference
-            range; (7) relevant family history with two placeholder entries. A prior incomplete procedure at a
-            community clinic was insufficient for staging. A tertiary center is required given the anatomical and
-            staging complexity of the case, so the order is routed for a specialist review placeholder.
+            {INDICATION}
           </p>
         </div>
         <div className={`overflow-hidden px-3 pb-3 ${field(shown > 4)}`}>
-          <p className={`${D} ${G30}`}>DIAGNOSES (CODES)</p>
+          <p className={`${D} ${G30}`}>DIAGNOSES (ICD-10)</p>
           <p className={`${D} ${G30}`} style={{ textWrap: 'pretty' }}>
-            X00.0 — Placeholder diagnosis one, unspecified (evolving finding); X00.1 — Placeholder diagnosis two; X00.2 —
-            Placeholder diagnosis three; X00.3 — Family history placeholder (two entries); X00.4 — Placeholder neoplasm
-            of uncertain behavior (rule out — pending); X00.5 — Other specified abnormal placeholder findings (elevated
-            value); X00.6 — Chronic placeholder condition, stage 3a; X00.7 — Placeholder condition without
-            complications (newly diagnosed).
+            {DIAGNOSES}
           </p>
         </div>
       </div>
@@ -190,63 +183,63 @@ const recs = [
     date: '7/28',
     time: '09:00',
     duration: '45m',
-    clinician: 'Dr. Placeholder A, MD',
-    specialty: 'Specialty — Placeholder Screening & Procedures',
+    clinician: 'Dr. Sarah Chen, MD',
+    specialty: 'Dermatology — Skin Cancer Screening & Excisions',
     room: 'Procedure Room A',
     description:
-      'This slot is on Tuesday, July 28 at 9:00 AM with Dr. Placeholder A, who specializes in the requested procedure, in a suitable room, and fits the morning preference.',
-    step: 'The requested scheduling window is within 4 weeks, so we prioritized the earliest specialist opening.',
+      "This slot is on Tuesday, July 28 at 9:00 AM with Dr. Sarah Chen, who specializes in skin cancer screening and excisions, in a suitable room, and fits the patient's morning preference.",
+    step: 'The requested scheduling window is within 4 weeks, so we prioritized the earliest dermatology opening.',
   },
   {
     day: 'WED',
     date: '7/29',
     time: '09:00',
     duration: '45m',
-    clinician: 'Dr. Placeholder B, MD',
-    specialty: 'Specialty — General Consult',
+    clinician: 'Dr. Priya Nair, MD',
+    specialty: 'Dermatology — General Consult',
     room: 'Procedure Room C',
     description:
-      'This slot is on Wednesday, July 29 at 9:00 AM with Dr. Placeholder B, whose schedule has an open procedure window that meets the requested five-day turnaround.',
-    step: "Dr. Placeholder A's calendar had no earlier match, so we surfaced the next specialist with an open procedure room.",
+      'This slot is on Wednesday, July 29 at 9:00 AM with Dr. Priya Nair, whose schedule has an open procedure window that meets the requested five-day turnaround.',
+    step: "Dr. Chen's calendar had no earlier match, so we surfaced the next specialist with an open procedure room.",
   },
   {
     day: 'THU',
     date: '7/30',
     time: '08:30',
     duration: '45m',
-    clinician: 'Dr. Placeholder A, MD',
-    specialty: 'Specialty — Placeholder Screening & Procedures',
+    clinician: 'Dr. Sarah Chen, MD',
+    specialty: 'Dermatology — Skin Cancer Screening & Excisions',
     room: 'Procedure Room A',
     description:
-      'This slot is on Thursday, July 30 at 8:30 AM with Dr. Placeholder A, keeping continuity of care with the same clinician and room as the prior visit.',
+      'This slot is on Thursday, July 30 at 8:30 AM with Dr. Sarah Chen, keeping continuity of care with the same clinician and room as the prior visit.',
     step: 'Continuity of care outweighed earliness, so we matched the patient back to their original clinician and room.',
   },
 ]
-type Slot = { time: string; clinician: string; occupied?: boolean }
+type Slot = { time: string; duration: string; clinician: string; room: string; occupied?: boolean }
 const slots: Record<string, Slot[]> = {
   MON: [
-    { time: '07:00', clinician: 'Dr. Quinn', occupied: true },
-    { time: '07:30', clinician: 'Dr. Avery', occupied: true },
-    { time: '08:00', clinician: 'Dr. Placeholder C' },
-    { time: '11:00', clinician: 'Dr. Blake', occupied: true },
+    { time: '07:00', duration: '60m', clinician: 'Dr. Webb', room: 'Endoscopy Suite A', occupied: true },
+    { time: '07:30', duration: '45m', clinician: 'Dr. Chen', room: 'Procedure Room C', occupied: true },
+    { time: '08:00', duration: '45m', clinician: 'Dr. Marcus Webb', room: 'Procedure Room A' },
+    { time: '11:00', duration: '30m', clinician: 'Dr. Nair', room: 'Procedure Room C', occupied: true },
   ],
   TUE: [
-    { time: '09:00', clinician: 'Dr. Placeholder A' },
-    { time: '10:00', clinician: 'Dr. Placeholder A' },
-    { time: '15:00', clinician: 'Dr. Avery', occupied: true },
-    { time: '15:30', clinician: 'Dr. Blake', occupied: true },
+    { time: '09:00', duration: '45m', clinician: 'Dr. Sarah Chen', room: 'Procedure Room A' },
+    { time: '10:00', duration: '45m', clinician: 'Dr. Sarah Chen', room: 'Procedure Room A' },
+    { time: '15:00', duration: '45m', clinician: 'Dr. Chen', room: 'Sedation Room B', occupied: true },
+    { time: '15:30', duration: '30m', clinician: 'Dr. Nair', room: 'Procedure Room C', occupied: true },
   ],
   WED: [
-    { time: '09:00', clinician: 'Dr. Placeholder B' },
-    { time: '13:00', clinician: 'Dr. Placeholder C' },
-    { time: '14:00', clinician: 'Dr. Blake', occupied: true },
-    { time: '14:30', clinician: 'Dr. Quinn', occupied: true },
+    { time: '09:00', duration: '45m', clinician: 'Dr. Priya Nair', room: 'Procedure Room C' },
+    { time: '13:00', duration: '45m', clinician: 'Dr. Marcus Webb', room: 'Procedure Room A' },
+    { time: '14:00', duration: '30m', clinician: 'Dr. Nair', room: 'Procedure Room C', occupied: true },
+    { time: '14:30', duration: '60m', clinician: 'Dr. Webb', room: 'Endoscopy Suite A', occupied: true },
   ],
   THU: [
-    { time: '07:00', clinician: 'Dr. Quinn', occupied: true },
-    { time: '07:30', clinician: 'Dr. Avery', occupied: true },
-    { time: '08:30', clinician: 'Dr. Placeholder A' },
-    { time: '11:00', clinician: 'Dr. Blake', occupied: true },
+    { time: '07:00', duration: '60m', clinician: 'Dr. Webb', room: 'Endoscopy Suite A', occupied: true },
+    { time: '07:30', duration: '45m', clinician: 'Dr. Chen', room: 'Procedure Room C', occupied: true },
+    { time: '08:30', duration: '45m', clinician: 'Dr. Sarah Chen', room: 'Procedure Room A' },
+    { time: '11:00', duration: '30m', clinician: 'Dr. Nair', room: 'Procedure Room C', occupied: true },
   ],
 }
 const days = [
@@ -297,12 +290,11 @@ export function SchedulingMockup() {
 
   const fade = `transition-all duration-300 ease-out ${vis ? 'translate-y-0 opacity-100' : '-translate-y-1 opacity-0'}`
 
-  // TODO: Vahue copy (placeholder demo record)
   return (
     <div ref={ref} aria-hidden="true" className="relative flex h-full w-full flex-col overflow-hidden bg-white text-left">
-      <AppBar org="Placeholder" product="Suite" />
-      <Title title="Scheduling Engine" sub="Placeholder slot recommendation and one-click booking" />
-      <p className={`${D} px-5 pt-3 ${G30}`}>Patient Placeholder · Placeholder Procedure — Type</p>
+      <AppBar org="ACME" product="CAM Suite" />
+      <Title title="Scheduling Engine" sub="Intelligent slot recommendation and one-click booking" />
+      <p className={`${D} px-5 pt-3 ${G30}`}>Robert Tanaka · Excisional Biopsy — Nevus</p>
       <div className="mt-4 grid flex-1 grid-cols-1 gap-3 overflow-hidden px-5 pb-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
         <div className={`${fade} flex flex-col gap-3 rounded-lg border border-[#f2f2f2] p-3`}>
           <div className="flex items-center justify-between">
@@ -310,7 +302,7 @@ export function SchedulingMockup() {
               <MdThumbUp size={14} />
               <span className={`${D} font-medium ${G10}`}>Agent Recommendation</span>
             </div>
-            <span className={`${D} rounded bg-[#f2f2f2] px-2 py-0.5 !text-[10px] font-medium ${G30}`}>AGENT</span>
+            <span className={`${D} rounded bg-[#f2f2f2] px-2 py-0.5 !text-[10px] font-medium ${G30}`}>SGP AGENT</span>
           </div>
           <div className="rounded-md border border-[#f2f2f2] p-3">
             <div className="flex items-center justify-between">
@@ -350,7 +342,7 @@ export function SchedulingMockup() {
                 <span className={`${D} ${G30}`}>(4 steps)</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className={`${D} rounded bg-[#f2f2f2] px-2 py-0.5 !text-[10px] font-medium ${G30}`}>TRACING</span>
+                <span className={`${D} rounded bg-[#f2f2f2] px-2 py-0.5 !text-[10px] font-medium ${G30}`}>SGP TRACING</span>
                 <MdExpandMore size={14} className={G30} />
               </div>
             </div>
@@ -433,12 +425,24 @@ const rows: {
   note: string
   risk: keyof typeof risk
 }[] = [
-  { name: 'Patient One', mrn: 'MRN-000001 · 58F', finding: '14 mm placeholder finding, location A — category 4A', study: 'Study type A · 2026-03-12', followUp: 'Repeat study at 3 months', interval: 'interval: 3 months', due: '2026-06-12', late: '74 days late', tone: 'red', segs: ['done', 'stalled', 'todo', 'todo'], note: 'stalled: never ordered', risk: 'high' },
-  { name: 'Patient Two', mrn: 'MRN-000002 · 64M', finding: 'Placeholder finding 1.8 cm with a secondary feature — category 4', study: 'Study type B · 2026-05-02', followUp: 'Guided placeholder procedure', interval: 'interval: 3 months', due: '2026-08-05', late: '20 days late', tone: 'red', segs: ['done', 'stalled', 'todo', 'todo'], note: 'stalled: order expired', risk: 'high' },
-  { name: 'Patient Three', mrn: 'MRN-000003 · 71M', finding: 'Indeterminate 2.4 cm placeholder mass, value 18', study: 'Study type C · 2026-01-28', followUp: 'Protocol study at 6 months', interval: 'interval: 6 months', due: '2026-07-30', late: '26 days late', tone: 'amber', segs: ['done', 'done', 'stalled', 'todo'], note: 'stalled: no-show, not rebooked', risk: 'medium' },
-  { name: 'Patient Four', mrn: 'MRN-000004 · 69F', finding: '3.1 cm placeholder finding, location D', study: 'Study type C · 2025-08-14', followUp: 'Surveillance study at 12 months', interval: 'interval: 12 months', due: '2026-08-18', late: '7 days late', tone: 'amber', segs: ['done', 'done', 'todo', 'todo'], note: 'awaiting scheduling', risk: 'medium' },
-  { name: 'Patient Five', mrn: 'MRN-000005 · 55F', finding: 'Placeholder lesion 1.9 cm — category 3, indeterminate', study: 'Study type C · 2026-06-02', followUp: 'Follow-up study with agent', interval: 'interval: 3 months', due: '2026-09-02', late: '8 days out', tone: 'gray', segs: ['done', 'done', 'done', 'todo'], note: 'booked 2026-08-29', risk: 'ontrack' },
-  { name: 'Patient Six', mrn: 'MRN-000006 · 62M', finding: 'Incidental 1.2 cm placeholder cystic finding, subtype B', study: 'Study type D · 2025-11-14', followUp: 'Surveillance at 12 months', interval: 'interval: 12 months', due: '2026-11-14', late: '81 days out', tone: 'gray', segs: ['done', 'done', 'todo', 'todo'], note: 'on schedule', risk: 'ontrack' },
+  { name: 'Angela Rivera', mrn: 'MRN-118204 · 58F', finding: '14 mm solid nodule, right upper lobe — Lung-RADS 4A', study: 'CT chest w/ contrast · 2026-03-12', followUp: 'Repeat CT chest at 3 months', interval: 'interval: 3 months', due: '2026-06-12', late: '74 days late', tone: 'red', segs: ['done', 'stalled', 'todo', 'todo'], note: 'stalled: never ordered', risk: 'high' },
+  { name: 'Marcus Bell', mrn: 'MRN-155902 · 64M', finding: 'Thyroid nodule 1.8 cm with punctate calcification — TI-RADS 4', study: 'US neck · 2026-05-02', followUp: 'US-guided fine needle aspiration', interval: 'interval: 3 months', due: '2026-08-05', late: '20 days late', tone: 'red', segs: ['done', 'stalled', 'todo', 'todo'], note: 'stalled: order expired', risk: 'high' },
+  { name: 'Daniel Whitfield', mrn: 'MRN-097331 · 71M', finding: 'Indeterminate 2.4 cm left adrenal mass, 18 HU', study: 'CT abdomen · 2026-01-28', followUp: 'Adrenal-protocol CT at 6 months', interval: 'interval: 6 months', due: '2026-07-30', late: '26 days late', tone: 'amber', segs: ['done', 'done', 'stalled', 'todo'], note: 'stalled: no-show, not rebooked', risk: 'medium' },
+  { name: 'Priya Raman', mrn: 'MRN-204118 · 69F', finding: '3.1 cm infrarenal abdominal aortic aneurysm', study: 'CT abdomen · 2025-08-14', followUp: 'Ultrasound surveillance at 12 months', interval: 'interval: 12 months', due: '2026-08-18', late: '7 days late', tone: 'amber', segs: ['done', 'done', 'todo', 'todo'], note: 'awaiting scheduling', risk: 'medium' },
+  { name: 'Susan Okafor', mrn: 'MRN-133870 · 55F', finding: 'Hepatic lesion 1.9 cm — LI-RADS 3, indeterminate', study: 'CT abdomen · 2026-06-02', followUp: 'MRI abdomen with hepatocyte agent', interval: 'interval: 3 months', due: '2026-09-02', late: '8 days out', tone: 'gray', segs: ['done', 'done', 'done', 'todo'], note: 'booked 2026-08-29', risk: 'ontrack' },
+  { name: 'Tomas Lindqvist', mrn: 'MRN-166245 · 62M', finding: 'Incidental 1.2 cm pancreatic cystic lesion, side-branch IPMN', study: 'MRI abdomen · 2025-11-14', followUp: 'MRCP surveillance at 12 months', interval: 'interval: 12 months', due: '2026-11-14', late: '81 days out', tone: 'gray', segs: ['done', 'done', 'todo', 'todo'], note: 'on schedule', risk: 'ontrack' },
+]
+const loopCheck: { label: string; seg: Seg; note: string }[] = [
+  { label: 'Reported', seg: 'done', note: '2026-03-12 · signed by radiology, released to chart' },
+  { label: 'Ordered', seg: 'stalled', note: 'no order was ever generated' },
+  { label: 'Scheduled', seg: 'todo', note: '—' },
+  { label: 'Completed', seg: 'todo', note: '—' },
+]
+const traceSteps = [
+  { n: 1, title: 'Read', body: 'Parsed all 9,610 signed reports and their addenda, isolating sentences that create a follow-up obligation rather than merely describing a finding.' },
+  { n: 2, title: 'Normalise', body: 'Resolved each recommendation into a modality, an interval and an absolute due date — turning phrasing like "in 3 months" into 2026-06-12.' },
+  { n: 3, title: 'Join', body: 'Matched every obligation against the order, scheduling and results feeds to find where the loop actually broke, instead of assuming it closed.' },
+  { n: 4, title: 'Rank', body: 'Ordered the open loops by the malignancy risk of the finding class, then by how far past the specified interval they now are.' },
 ]
 const cols = 'grid grid-cols-[1.2fr_1.6fr_1.1fr_0.7fr_0.9fr_0.6fr] gap-2'
 
@@ -476,7 +480,6 @@ export function CustomAgentsMockup() {
     return () => io.disconnect()
   }, [])
 
-  // TODO: Vahue copy (placeholder demo data)
   return (
     <div ref={ref} aria-hidden="true" className="relative h-full w-full overflow-hidden">
       <div
@@ -484,17 +487,17 @@ export function CustomAgentsMockup() {
           on ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
         }`}
       >
-        <AppBar org="Placeholder Health" product="Inpatient Monitoring" avatar={{ initials: 'AB', bg: '#193A29' }} />
-        <Title title="Placeholder Alert Agent Dashboard" sub="Review escalating signals, the case against it, and the action bundle." />
+        <AppBar org="ACME Health" product="Inpatient Deterioration" avatar={{ initials: 'JT', bg: '#193A29' }} />
+        <Title title="Deterioration Alert Agent Dashboard" sub="Review escalating signals, the case against it, and the action bundle." />
         <div className="mx-5 mt-4 flex flex-col gap-1 rounded-md border border-[#a8927c]/30 bg-[#a8927c]/10 p-3">
           <div className="flex items-center justify-between">
-            <p className={`${D} font-medium ${G10}`}>Patient Placeholder · MRN-000000 · 68M · Bed 0W-00</p>
+            <p className={`${D} font-medium ${G10}`}>Marcus Ferreira · MRN-330914 · 68M · Bed 7W-12</p>
           </div>
           <p className={`${D} flex items-center gap-1 font-medium text-[#79648C]`}>
             <MdErrorOutline size={13} />
             ESCALATION RECOMMENDED — fired 10:31 · unacknowledged for 14 minutes
           </p>
-          <p className={`${D} ${G30}`}>Placeholder procedure context · no known allergies · full code placeholder</p>
+          <p className={`${D} ${G30}`}>POD 2 laparoscopic right hemicolectomy · no known drug allergies · full code</p>
         </div>
         <div className="mt-4 grid flex-1 grid-cols-2 gap-3 overflow-hidden px-5 pb-5">
           <div className="flex flex-col gap-2 overflow-hidden">
@@ -508,11 +511,11 @@ export function CustomAgentsMockup() {
                 </div>
               ))}
             </div>
-            <p className={`${D} ${G30}`}>Placeholder lab value 4.1 and still climbing (threshold 2.0).</p>
+            <p className={`${D} ${G30}`}>Serum lactate 4.1 mmol/L and still climbing (sepsis threshold 2.0).</p>
           </div>
           <div className="flex flex-col gap-1.5 overflow-hidden">
-            <p className={`${D} font-medium ${G10}`}>3-hour action bundle — clock started 10:31</p>
-            {['Placeholder action one completed first', 'Placeholder action two within 1 hour'].map((t) => (
+            <p className={`${D} font-medium ${G10}`}>3-hour sepsis bundle — clock started 10:31</p>
+            {['Blood cultures ×2 drawn before antibiotics', 'Broad-spectrum antibiotics within 1 hour'].map((t) => (
               <p key={t} className={`${D} flex items-center gap-1.5 ${G30}`}>
                 <MdCheckCircle size={12} className="text-[#193A29]" />
                 {t}
@@ -526,13 +529,13 @@ export function CustomAgentsMockup() {
           on ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
         }`}
       >
-        <AppBar org="Placeholder Health" product="Safety Net" avatar={{ initials: 'CD', bg: '#273252' }} />
-        <p className={`${s.header5} px-5 pt-4 ${G10}`}>Placeholder Follow-Up Agent</p>
+        <AppBar org="ACME Health" product="Radiology Safety Net" avatar={{ initials: 'RS', bg: '#273252' }} />
+        <p className={`${s.header5} px-5 pt-4 ${G10}`}>Oncology Follow-Up Agent</p>
         <div className="mt-4 grid grid-cols-4 gap-2 px-5">
           {[
-            ['OVERDUE AND HIGH-RISK', '66', 'Category 4, category 4–5, category 4+', 'border-[#79648C]/30 bg-[#79648C]/5', 'text-[#79648C]'],
+            ['OVERDUE AND MALIGNANT-RISK', '66', 'Lung-RADS 4, TI-RADS 4–5, LI-RADS 4+', 'border-[#79648C]/30 bg-[#79648C]/5', 'text-[#79648C]'],
             ['OVERDUE', '172', 'past the interval the report specified', 'border-[#f2f2f2]', 'text-[#A8927C]'],
-            ['LOOPS CLOSED', '1,046', 'follow-up completed or clinically cancelled', 'border-[#f2f2f2]', G30],
+            ['LOOPS CLOSED', '1,046', 'imaging completed or clinically cancelled', 'border-[#f2f2f2]', G30],
             ['RECOMMENDATIONS FOUND', '1,284', 'extracted from 9,610 reports, last 90 days', 'border-[#f2f2f2]', G30],
           ].map(([label, value, sub, box, color]) => (
             <div key={label} className={`flex flex-col rounded-md border p-2 ${box}`}>
@@ -577,6 +580,71 @@ export function CustomAgentsMockup() {
               </div>
             </div>
           ))}
+          <div className="mx-3 my-2 flex flex-col gap-2 rounded-md border border-[#f2f2f2] bg-[#f2f2f2]/40 p-2.5">
+            <div className="flex items-start gap-1.5 rounded border border-[#f2f2f2] bg-white p-2">
+              <span className="mt-0.5 h-full w-0.5 shrink-0 rounded-full bg-[#A6353E]" />
+              <div className="flex flex-col gap-0.5">
+                <p className={`${D} font-medium ${G30}`}>VERBATIM — IMPRESSION, ITEM 3</p>
+                <p className={`${D} ${G10}`} style={{ textWrap: 'pretty' }}>
+                  New 14 mm solid nodule in the right upper lobe, not present on the 2024 comparison study. Given size and documented interval growth this is Lung-RADS 4A; recommend repeat CT chest in 3 months, with PET-CT or tissue sampling if it persists or enlarges.
+                </p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <div className="rounded border border-[#f2f2f2] bg-white p-2">
+                <p className={`${D} font-medium ${G30}`}>NORMALISED</p>
+                <p className={`${D} ${G10}`}>Solid pulmonary nodule · 14 mm · right upper lobe · Lung-RADS 4A</p>
+                <p className={`${D} ${G30}`}>SNOMED 427359005 · LOINC 24627-2</p>
+              </div>
+              <div className="rounded border border-[#f2f2f2] bg-white p-2">
+                <p className={`${D} font-medium ${G30}`}>OBLIGATION</p>
+                <p className={`${D} ${G10}`}>CT chest without contrast, 3-month interval — due 2026-06-12</p>
+                <p className={`${D} ${G30}`}>extracted at 0.94 confidence · human-reviewed 2026-03-13</p>
+              </div>
+            </div>
+            <div className="rounded border border-[#f2f2f2] bg-white p-2">
+              <p className={`${D} font-medium ${G30}`}>LOOP CHECK</p>
+              <div className="mt-1.5 grid grid-cols-4 gap-2">
+                {loopCheck.map((l) => (
+                  <div key={l.label} className="flex flex-col gap-1">
+                    <div className={`h-1 rounded-sm ${segColor[l.seg]}`} />
+                    <p className={`${D} font-medium ${G10}`}>{l.label}</p>
+                    <p className={`${D} ${G30}`}>{l.note}</p>
+                  </div>
+                ))}
+              </div>
+              <p className={`${D} mt-1.5 ${G10}`} style={{ textWrap: 'pretty' }}>
+                The report was signed and filed correctly. Nothing downstream of it happened — no order, no task, no owner. The loop has been open for 74 days.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className={`${D} rounded-full bg-[#193A29] px-3 py-1.5 font-medium text-white`}>Place the CT order now</span>
+              <span className={`${D} rounded-full border border-[#eaeaea] bg-white px-3 py-1.5 font-medium ${G10}`}>Page Dr. L. Menon</span>
+              <span className={`${D} rounded-full border border-[#eaeaea] bg-white px-3 py-1.5 font-medium ${G10}`}>Assign to nurse navigator</span>
+              <span className={`${D} ${G30}`}>Mark clinically cancelled</span>
+            </div>
+          </div>
+        </div>
+        <div className="mx-5 mb-4 mt-3 shrink-0 rounded-md border border-[#79648C]/35 bg-white p-2.5">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="size-1.5 shrink-0 rounded-full bg-[#79648C]" />
+            <p className={`${D} font-medium text-[#79648C]`}>How the loop was reconstructed</p>
+            <p className={`${D} ${G30}`}>run 2026-08-25 06:00 · 9,610 reports · 41s</p>
+            <span className={`${D} rounded border border-[#79648C]/30 bg-[#79648C]/10 px-1.5 py-0.5 font-medium text-[#79648C]`}>SGP TRACING</span>
+          </div>
+          <div className="mt-2 grid grid-cols-4 gap-2">
+            {traceSteps.map((t) => (
+              <div key={t.n} className="flex flex-col gap-1">
+                <div className="flex items-center gap-1.5">
+                  <span className={`${D} flex size-4 shrink-0 items-center justify-center rounded-full bg-[#79648C]/15 !text-[10px] font-medium text-[#79648C]`}>{t.n}</span>
+                  <p className={`${D} font-medium ${G10}`}>{t.title}</p>
+                </div>
+                <p className={`${D} ${G30}`} style={{ textWrap: 'pretty' }}>
+                  {t.body}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

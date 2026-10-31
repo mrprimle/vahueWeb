@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { createAnimatedText, prefersReducedMotion, type AnimatedText } from './animatedText'
@@ -18,96 +18,8 @@ gsap.registerPlugin(ScrollTrigger)
  *             animation) animateIn, delay 0.25 * cardIndex (cardIndex is never passed -> 0);
  *             onLeaveBack: animateOut
  *   section   "top center" onLeaveBack: every card animateOut, delay 0.1 i
- * Illustration (HealthcareLeadingSystemsIllustration, animation "gsap"): 736x691 stage scaled to the
- * container width (offsetWidth / 736); three layers float y 0 -> -6, yoyo, repeat -1, sine.inOut,
- * duration = cssDuration / 2 (3.25 / 4.25 / 3.5s), delay |cssDelay| (4 / 2.5 / 0s); tweens play on
- * enter/enterBack and pause on leave/leaveBack (trigger "top 80%" -> "bottom 20%").
+ * The media node (HealthcareIllustration on scale.com) is passed in via `media`.
  */
-
-const ASSET = '/scale-clone/enterprise-healthcare'
-const layers = [
-  { key: 'diagram', left: 10, top: 6, width: 719, height: 453.5, z: 30, duration: 6.5, delay: -4 },
-  { key: 'dashboard', left: 6, top: 188, width: 723.5, height: 456, z: 20, duration: 8.5, delay: -2.5 },
-  { key: 'avatars', left: 122, top: 402, width: 489.75, height: 282.75, z: 10, duration: 7, delay: 0 },
-]
-
-function Illustration() {
-  const box = useRef<HTMLDivElement>(null)
-  const stage = useRef<HTMLDivElement>(null)
-  const items = useRef<HTMLDivElement[]>([])
-  const [scale, setScale] = useState(1)
-
-  useLayoutEffect(() => {
-    const el = box.current
-    if (!el) return
-    const fit = () => setScale(el.offsetWidth / 736)
-    fit()
-    const ro = new ResizeObserver(fit)
-    ro.observe(el)
-    return () => ro.disconnect()
-  }, [])
-
-  useEffect(() => {
-    if (prefersReducedMotion() || !stage.current) return
-    const tweens = layers.map((l, i) =>
-      gsap.to(items.current[i], { y: -6, duration: l.duration / 2, delay: Math.abs(l.delay), ease: 'sine.inOut', yoyo: true, repeat: -1, paused: true }),
-    )
-    const play = () => tweens.forEach((t) => t.play())
-    const pause = () => tweens.forEach((t) => t.pause())
-    const st = ScrollTrigger.create({
-      trigger: stage.current,
-      start: 'top 80%',
-      end: 'bottom 20%',
-      onEnter: play,
-      onEnterBack: play,
-      onLeave: pause,
-      onLeaveBack: pause,
-      onRefresh: (self) => {
-        if (self.isActive) play()
-      },
-    })
-    return () => {
-      st.kill()
-      tweens.forEach((t) => t.kill())
-    }
-  }, [])
-
-  return (
-    <div ref={box} aria-hidden="true" className="relative w-full overflow-hidden" style={{ aspectRatio: '736 / 691' }}>
-      <div ref={stage} className="absolute left-0 top-0 origin-top-left" style={{ width: 736, height: 691, transform: `scale(${scale})` }}>
-        {layers.map((l, i) => (
-          <div
-            key={l.key}
-            ref={(el) => {
-              if (el) items.current[i] = el
-            }}
-            className="absolute"
-            style={{ left: l.left, top: l.top, width: l.width, height: l.height, zIndex: l.z }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`${ASSET}/layer-${l.key}.webp`} alt="" className="absolute inset-0 h-full w-full object-contain" />
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-// TODO: Vahue copy
-const cards = [
-  {
-    title: 'Placeholder card title about teams',
-    body: 'Placeholder description of embedded teams working inside the organization, accountable for outcomes, not just delivery.',
-  },
-  {
-    title: 'Placeholder card title about value',
-    body: 'Placeholder description of evaluations and domain experts that encode knowledge to keep improving each agent over time.',
-  },
-  {
-    title: 'Placeholder title, on your terms',
-    body: 'Placeholder description of connecting to existing systems and data. No migration required, and it works with any model.',
-  },
-]
 
 type Handle = { out: (d: number) => void }
 
@@ -143,13 +55,11 @@ function Card({ title, body, index, handles }: { title: string; body: string; in
   return (
     <article ref={ref} className="flex min-h-[211px] flex-col justify-between gap-2 rounded-xl bg-white p-8">
       <div className="flex w-full items-center justify-between gap-2">
-        {/* TODO: Vahue copy */}
         <h3 ref={h} className={`${s.header2b} ${s.pending} font-display font-normal text-[#212121]`}>
           {title}
         </h3>
       </div>
       <div className={`${s.body3} font-display text-[#575757]`}>
-        {/* TODO: Vahue copy */}
         <div ref={p} className={s.pending}>
           {body}
         </div>
@@ -158,7 +68,7 @@ function Card({ title, body, index, handles }: { title: string; body: string; in
   )
 }
 
-export default function SgpStack() {
+export default function SgpStack({ heading: headline, media, cards }: { heading: string; media: ReactNode; cards: { title: string; body: string }[] }) {
   const section = useRef<HTMLElement>(null)
   const bg = useRef<HTMLDivElement>(null)
   const heading = useRef<HTMLHeadingElement>(null)
@@ -188,12 +98,11 @@ export default function SgpStack() {
   }, [])
 
   return (
-    <section ref={section} className="relative isolate grid grid-cols-1 gap-2 overflow-hidden bg-transparent px-6 pb-7 pt-0 lg:px-0">
+    <section ref={section} className="SgpStack relative isolate grid grid-cols-1 gap-2 overflow-hidden bg-transparent px-6 pb-7 pt-0 lg:px-0">
       <div className="mb-10 text-center md:mb-6">
         <div className="flex flex-col items-center gap-6">
-          {/* TODO: Vahue copy */}
           <h3 ref={heading} className={`${s.header3} ${s.pending} mx-auto w-full max-w-[960px] text-center font-display font-normal text-[#212121]`}>
-            Placeholder headline about the reliability layer
+            {headline}
           </h3>
         </div>
       </div>
@@ -201,7 +110,7 @@ export default function SgpStack() {
         <div className={s.sgpGrid}>
           <div className={s.sgpMedia}>
             <div className="w-full max-w-[685px]">
-              <Illustration />
+              {media}
             </div>
           </div>
           <div className={s.sgpCards}>
