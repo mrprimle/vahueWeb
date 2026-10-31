@@ -18,7 +18,9 @@ gsap.registerPlugin(ScrollTrigger)
  *   after 0.35s; old name out at 0.5s, new name in at 0.5s; role chip shrinks to 20px (0.5s power3.out), swaps text,
  *   fades it in (0.5s) and grows to text width + 26px.
  * - Logo tiles: the white fill slides in along y (desktop) / x (mobile) over 0.3s from the side of the previous tile.
- * - Arrow buttons: hover fills white with evergreen icon over 0.3s.
+ * - Arrow buttons: hover fills white with evergreen icon over 0.3s. Arrow and tile clicks scroll the section into view
+ *   via Lenis (offset -24) before changing the index. Tiles: `transition-all`, 150ms (Scale's `transition-duration-800`
+ *   is not a utility class, so the computed duration is the default).
  */
 
 const INK = '#193A29' // evergreen, as on the clone: text on the white chip, active tile and hovered arrow
@@ -27,6 +29,8 @@ const WHITE_0 = 'rgba(255, 255, 255, 0)'
 
 export type CaseItem = { name: string; title: string; quote: string; href: string; note?: string }
 type Item = CaseItem
+
+type LenisLike = { scrollTo: (target: HTMLElement, o?: { offset?: number }) => void }
 
 type ChipHandle = { animateToText: (o: { text: string; delay?: number }) => Promise<void> }
 
@@ -142,7 +146,7 @@ function Tile({
       tabIndex={isActive ? 0 : -1}
       onClick={onSelect}
       aria-label={`Show the ${item.name} result`}
-      className="relative box-border flex aspect-square w-full max-w-20 cursor-pointer items-center justify-center overflow-hidden rounded-lg border border-solid p-3 transition-all duration-[800ms] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 lg:max-w-[152px] lg:p-4"
+      className="relative box-border flex aspect-square w-full max-w-20 cursor-pointer items-center justify-center overflow-hidden rounded-lg border border-solid p-3 transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 lg:max-w-[152px] lg:p-4"
       style={{ color: isActive ? INK : WHITE, borderColor: WHITE }}
     >
       <div ref={fill} className="absolute -z-10 h-full w-full" style={{ background: WHITE }} />
@@ -162,7 +166,8 @@ export default function CaseResults({ heading, items }: { heading: string; items
   const prev = useRef(-1)
   const [isMobile, setIsMobile] = useState(false)
 
-  const safe = items.length ? Math.max(0, Math.min(active, items.length - 1)) : 0
+  // Scale: safeIndex = min(index, n - 1), so nothing is selected (-1) until the section enters at "top 80%".
+  const safe = items.length ? Math.min(active, items.length - 1) : 0
 
   useEffect(() => {
     const mq = matchMedia('(max-width: 768px)')
@@ -211,14 +216,27 @@ export default function CaseResults({ heading, items }: { heading: string; items
     return () => ctx.revert()
   }, [])
 
+  // Arrow / tile clicks first scroll the section into view through Lenis (offset -24; the root's scroll-mt-28 is
+  // subtracted too, so it lands at 136px), as Scale's useLenis().scrollTo does.
+  const scrollIntoPlace = useCallback(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const lenis = (window as unknown as { __lenis?: LenisLike }).__lenis
+    if (lenis) return lenis.scrollTo(el, { offset: -24 })
+    const margin = parseFloat(getComputedStyle(el).scrollMarginTop) || 0
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 24 - margin, behavior: reduce ? 'auto' : 'smooth' })
+  }, [])
+
   const go = useCallback(
     (dir: 'left' | 'right') => {
+      scrollIntoPlace()
       setActive((i) => {
         if (dir === 'left') return i <= 0 ? items.length - 1 : i - 1
         return i >= items.length - 1 ? 0 : i + 1
       })
     },
-    [items.length],
+    [items.length, scrollIntoPlace],
   )
 
   const tiles = () =>
@@ -232,7 +250,10 @@ export default function CaseResults({ heading, items }: { heading: string; items
         activeIndex={active}
         total={items.length}
         isMobile={isMobile}
-        onSelect={() => setActive(i)}
+        onSelect={() => {
+          scrollIntoPlace()
+          setActive(i)
+        }}
       />
     ))
 
