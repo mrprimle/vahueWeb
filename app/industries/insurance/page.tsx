@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
-import SegmentLanding from '@/components/segments/SegmentLanding'
+import IndustryPage from '@/components/industry/enterprise-insurance/IndustryPage'
 import { insuranceContent } from '@/components/segments/content/insurance'
+import { INDUSTRY_WORKFLOWS } from '@/lib/automation-content'
 
 export const metadata: Metadata = {
   title: 'AI for Insurance | Vahue',
@@ -21,5 +22,5 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  return <SegmentLanding content={insuranceContent} />
+  return <IndustryPage content={insuranceContent} workflows={INDUSTRY_WORKFLOWS.insurance.workflows} />
 }
