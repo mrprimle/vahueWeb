@@ -15,8 +15,10 @@ gsap.registerPlugin(ScrollTrigger)
  *
  * Scrubbed (ClipScrollSection), trigger = wrapper, start "top bottom" -> end "center center":
  *   clip container  clip-path inset(0.5*startPercentage % -> 0% round 1.5rem)
- *   FullBleedMediaSection passes startPercentage 10 (pre-footer) and startScale 1 (so no media scale);
- *   the page-header variant (hero) passes startPercentage 0: no clip at all.
+ *   FullBleedMediaSection passes startPercentage 10 (pre-footer) and startScale 1 to the ClipScrollSection;
+ *   the page-header variant (hero, module 478135) passes startPercentage 0: no clip at all.
+ * Media-scrubbed (FullBleedMediaSection's own trigger, module 540431), trigger = section, same range:
+ *   media           scale 1.25 -> 1 on the hero and the pre-footer (REA-verified on scale.com/automotive)
  * .media-overlay is `background: linear-gradient(#0000, #000)` and overrides the bg-black/45 class,
  * so the overlay is the gradient only.
  * One-shot, start "top center" (retroactive onEnter):
@@ -71,6 +73,23 @@ export default function FullBleedMedia({ image, imageBg, headline, body, primary
           end: 'center center',
           onUpdate: ({ progress }) => apply(progress),
           onRefresh: ({ progress }) => apply(progress),
+        })
+      }
+
+      // FullBleedMediaSection's own media scrub (module 540431): `v(progress, 0, 1, 1.25, 1, clamp)` on the
+      // media layer, trigger = section, "top bottom" -> "center center". Runs on the hero and the pre-footer
+      // alike (it is independent of the ClipScrollSection's startScale 1 and startPercentage).
+      if (!reduced) {
+        const scale = (progress: number) => {
+          if (media.current) gsap.set(media.current, { scale: gsap.utils.mapRange(0, 1, 1.25, 1, gsap.utils.clamp(0, 1, progress)) })
+        }
+        scale(0)
+        ScrollTrigger.create({
+          trigger: root,
+          start: 'top bottom',
+          end: 'center center',
+          onUpdate: ({ progress }) => scale(progress),
+          onRefresh: ({ progress }) => scale(progress),
         })
       }
 

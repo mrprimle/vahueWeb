@@ -15,7 +15,9 @@ gsap.registerPlugin(ScrollTrigger)
  *
  * Clip-scrubbed (ClipScrollSection), trigger = wrapper, start "top bottom" -> end "center center":
  *   clip container  clip-path inset(0.5*startPercentage % -> 0% round 1.5rem)
- *   startScale 1 on this page, so the media layer does not scale; the hero passes startPercentage 0 (no clip).
+ *   the hero passes startPercentage 0 (no clip).
+ * Media-scrubbed (FullBleedMediaSection, module 540431), trigger = section, same range:
+ *   media layer     scale 1.25 -> 1 (hero and prefooter; REA-verified on scale.com/automotive)
  * One-shot, start "top center" (retroactive onEnter):
  *   headline        AnimatedText intro, delay 0
  *   body            AnimatedText intro, delay 0.2
@@ -43,6 +45,7 @@ export default function FullBleedMedia({ headline, as = 'h2', body, primary, sec
   useRefreshOnPageGrow()
   const section = useRef<HTMLElement>(null)
   const clip = useRef<HTMLDivElement>(null)
+  const media = useRef<HTMLDivElement>(null)
   const h = useRef<HTMLHeadingElement>(null)
   const p = useRef<HTMLParagraphElement>(null)
   const cta1 = useRef<HTMLAnchorElement>(null)
@@ -69,6 +72,23 @@ export default function FullBleedMedia({ headline, as = 'h2', body, primary, sec
           end: 'center center',
           onUpdate: ({ progress }) => apply(progress),
           onRefresh: ({ progress }) => apply(progress),
+        })
+      }
+
+      // FullBleedMediaSection's own media scrub (module 540431): `v(progress, 0, 1, 1.25, 1, clamp)` on the
+      // media layer, trigger = section, "top bottom" -> "center center". Runs on the hero and the pre-footer
+      // alike (it is independent of the ClipScrollSection's startScale 1 and startPercentage).
+      if (!reduced) {
+        const scale = (progress: number) => {
+          if (media.current) gsap.set(media.current, { scale: gsap.utils.mapRange(0, 1, 1.25, 1, gsap.utils.clamp(0, 1, progress)) })
+        }
+        scale(0)
+        ScrollTrigger.create({
+          trigger: root,
+          start: 'top bottom',
+          end: 'center center',
+          onUpdate: ({ progress }) => scale(progress),
+          onRefresh: ({ progress }) => scale(progress),
         })
       }
 
@@ -170,7 +190,7 @@ export default function FullBleedMedia({ headline, as = 'h2', body, primary, sec
                   className="pointer-events-none absolute inset-0 z-10 rounded-3xl"
                   style={{ backgroundImage: 'linear-gradient(rgba(2,2,2,0) 0%, #020202 100%)' }}
                 />
-                <div className="hero-texture absolute inset-0 overflow-hidden rounded-3xl border border-border-soft bg-surface" />
+                <div ref={media} className="hero-texture absolute inset-0 overflow-hidden rounded-3xl border border-border-soft bg-surface" />
               </div>
             </div>
           </section>

@@ -29,7 +29,7 @@ Files: `app/scale-clone/automotive/page.tsx`, `components/scale-clone/automotive
 |---|---|---|---|---|
 | ClipScrollSection (pre-footer) | wrapper `top bottom` → `center center` | `clip-path: inset(5% round 1.5rem)` → `inset(0%)` (FullBleed passes `startPercentage: 10`, ×0.5) | linear map | scrub (onUpdate progress) |
 | ClipScrollSection (hero) | same | none: the page-header variant passes `startPercentage: 0` | n/a | n/a |
-| FullBleed media scale | same | none: FullBleedMediaSection passes `startScale: 1`. The data-engine clone's 1.25 → 1 doesn't apply. | n/a | n/a |
+| FullBleed media scale (hero and pre-footer) | section `top bottom` → `center center` (FullBleedMediaSection's own trigger) | media layer `scale 1.25` → `1` (`v(progress, 0, 1, 1.25, 1, true)` in module 540431). The `startScale: 1` it passes only switches off ClipScrollSection's second scale, not this one | linear map, clamped | scrub (onUpdate progress) |
 | FullBleed headline / body | section `top center`, retroactive | AnimatedText intro (SplitText `lines,words`, mask lines): lines `yPercent 400, opacity 0` → 0/1 over 1s, power3.out, at 0.08·i; words `x 30%` → 0 over 0.9s, stagger 0.03; tint `#72CE7B` → `#79648C` → CSS colour. Body delay 0.2 | see left | one-shot |
 | FullBleed CTAs | same, delay 0.5 | arrow CTA: root `autoAlpha 0, scaleX 0, radius 0` → `1, 1, 8px`, inner scaleX at +0.1, arrow `x −6→0`; border CTA `autoAlpha 0→1` | power3.out 0.85s | one-shot |
 | Tab indicator | tab change (headless-ui Tab.Group onChange) | `left/width/height` → selected tab's offsets | `Power2.inOut` 0.2s, timeline `{autoRemoveChildren, smoothChildTiming}` | tween |
@@ -42,7 +42,7 @@ Files: `app/scale-clone/automotive/page.tsx`, `components/scale-clone/automotive
 | Keen Slider (resources) | drag | `mode: snap`, `perView 1.05`, `spacing 24`, `rubberband: false`; ≥640 free 1.4, ≥768 free 2, ≥1280 free 2.8; cursor switches between grab and grabbing; track opacity .5 → 1 on `created` (1s fallback), 0.3s ease-in-out | n/a | n/a |
 | Logo marquee (<768) | always | `translateX(0 → −100%)` per copy, duration = width / 50px·s⁻¹ | linear, infinite | CSS |
 
-In the sampled run I scrolled in half-viewport steps and read the inline styles of everything in `main`. Apart from the AnimatedText intro and the pre-footer clip, Scale has no scroll reveals on this page. The clone was sampled mid-intro: a hero line caught at yPercent 309.65 → 29.47 → 0.09, tinted green → purple → white. The tab pill was caught at left 160 → 212 mid-tween. The pre-footer clip was caught at `inset(3.59%)`.
+In the sampled run I scrolled in half-viewport steps and read the inline styles of everything in `main`. Apart from the AnimatedText intro, the pre-footer clip and the FullBleed media scale, Scale has no scroll reveals on this page. That first pass missed the media scale; the REA re-check at the end of this spec added it. The clone was sampled mid-intro: a hero line caught at yPercent 309.65 → 29.47 → 0.09, tinted green → purple → white. The tab pill was caught at left 160 → 212 mid-tween. The pre-footer clip was caught at `inset(3.59%)`.
 
 All of the above reverts on unmount (gsap.context, SplitText.revert, ResizeObserver disconnect, key listener removed). With reduced motion: no split, no clip scrub, no tab tween (it snaps), no text-tab stagger, no marquee, and CTA, glass and panel transitions are off.
 
@@ -79,6 +79,16 @@ Screenshots are 100%-viewport steps at both widths: 9 stops at 1440 and 11 at 39
 - Phase video modals show the poster frame. Scale streams Mux HLS, and hls.js isn't installed (native HLS would only work in Safari).
 - Phase number chips: Scale asks for `font-family: Inter`, which isn't loaded, so they render in the browser serif. The clone falls back to a sans face.
 - At lg (1024–1279) the Supported Data media sits in normal flow beside the 47% text column, which I approximated. Only xl and mobile were QA'd.
-- The FullBleed scroll behaviour comes from the source props, not from the data-engine clone: there's no media scale on either section, and no clip on the hero.
+- The FullBleed scroll behaviour comes from the source props: media scale 1.25 → 1 on both sections, clip only on the pre-footer (none on the hero). An earlier version of this spec said there was no media scale; the REA re-check below corrected that.
 - Shared header: the clone and Scale both show the announcement bar on mobile, so the hero top matches at 198.
 - All copy and links are placeholders (`TODO: Vahue copy`). The logos, the webinar thumbnail and the diagram labels are placeholders too.
+
+## REA re-check: FullBleed media scale (2026-10-31)
+
+REA `analyze_web_bundle` on https://scale.com/automotive (evidence `ev_4858ef1c1e8a88ef…`, 58/58 scripts parsed). The chunks were read by their sha256: page component `2kbgdjj-19374.js` (`cd0e6084…`) and FullBleed/ClipScroll `37xz28pjbnlx4.js` (`b234eef5…`, the same file the early clones were checked against).
+- Hero: `aH = a.i(478135)`, the page-header wrapper. It renders the 540431 FullBleedMediaSection with `{...props, startPercentage: 0}` inside `pb-10! pt-24!`. Props: `headline "Automotive Data Engine"`, `body`, `cta {Book a Demo, /demo}`, `backdropColor {white, #010101}`, `media [imageWithMeta automative-data-engine.webp]`.
+- Pre-footer: `aY = a.i(540431)`, FullBleedMediaSection used directly in `mt-16! pb-8`. Props: `headline "The future of your industry starts here"`, `cta {Book a Demo, /demo}`, `secondaryCta {Build AI, /data-engine}`, `backdropColor {white, #010101}`, `media [imageWithMeta prefooter.webp]`. No `startPercentage` is passed, so the default 10 applies.
+- In 540431, `startPercentage = 10` and `overlayVariant = "flat"` by default. It passes `startScale: 1` to ClipScrollSection, and also registers its own trigger: `(0,h.f)(P, {start: "top bottom", end: "center center", onUpdate: e => m.U.set($.current, {scale: v(e.progress, 0, 1, 1.25, 1, true)})})`. `P` is the section and `$` is the media `div` (the image branch; the video branch puts the same ref on the video). Both automotive sections use `imageWithMeta`, so both scale.
+- Applied: `components/scale-clone/automotive/FullBleedMedia.tsx` and the Vahue `/automations/scoring-decisions` copy (`components/automation/workflows/automotive/FullBleedMedia.tsx`, on its dot-texture media layer) now scrub the media layer 1.25 → 1 on the section. The scrub is off under reduced motion.
+- Not re-screenshotted: Playwright was in use by another agent, so there are no new QA images for this change.
+
