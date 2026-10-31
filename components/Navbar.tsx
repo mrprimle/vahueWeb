@@ -429,9 +429,9 @@ const navGroups: NavGroup[] = [
 const isLightEnterprisePage = (p: string) =>
   /^\/(operations|industries\/(banking-financial-services|retail-ecommerce|distribution-manufacturing))\/?$/.test(p)
 
-// /automations hub and workflow pages: strict-parity rebuilds in Scale's own (light) colours, light bar.
+// /automations hub and workflow pages on light Scale clones (knowledge-agents is on a black clone): light bar.
 const isLightAutomationPage = (p: string) =>
-  /^\/automations(\/(back-office-sync|document-intake|support-agents|scoring-decisions|engineering-enablement|knowledge-agents))?\/?$/.test(p)
+  /^\/automations(\/(back-office-sync|document-intake|support-agents|scoring-decisions|engineering-enablement))?\/?$/.test(p)
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)

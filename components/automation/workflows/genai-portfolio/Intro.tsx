@@ -46,8 +46,8 @@ const MOBILE_OFFSETS = [
   { x: 1, y: 0.5 },
   { x: 0.5, y: 0.5 },
 ]
-// Step chips: single-hue dark tints (Vahue palette) in place of Scale's brand colours.
-const CHIP = ['#1a1a1c', '#1d1d1f', '#202022', '#1d1d1f']
+// Step chips: the clone's colours (atlas-blue, evergreen, foundry-tan, archive-purple); dark text from step 3.
+const CHIP = ['#273252', '#193a29', '#a8927c', '#79648c']
 
 function windows(n: number) {
   if (n === 4) return { starts: T_STARTS, pct: T_WINDOWS }
@@ -115,16 +115,16 @@ const Step = forwardRef<StepHandle, { title: string; body: string; index: number
       <div className="col-span-full mb-8 flex h-fit flex-col gap-4 md:col-span-5 md:col-start-2 md:mb-0 xl:col-span-3 xl:col-start-2">
         <div
           ref={chip}
-          className="flex w-fit items-center gap-3 rounded border border-border-soft px-1.5 py-1.5 md:px-3 md:py-2"
+          className="flex w-fit items-center gap-3 rounded px-1.5 py-1.5 md:px-3 md:py-2"
           style={{ backgroundColor: CHIP[index % CHIP.length] }}
         >
-          <div className="h-2 w-2 bg-white" style={{ clipPath: 'polygon(0 0, 100% 100%, 100% 0)' }} />
-          <p className={`${s.mono} font-mono tracking-[0.05em] text-white/70`}>{`Step ${index + 1} of ${total}`}</p>
+          <div className={`h-2 w-2 ${index >= 2 ? 'bg-black' : 'bg-white'}`} style={{ clipPath: 'polygon(0 0, 100% 100%, 100% 0)' }} />
+          <p className={`${s.mono} font-mono tracking-[0.05em] ${index >= 2 ? 'text-black' : 'text-[#c7c7c7]'}`}>{`Step ${index + 1} of ${total}`}</p>
         </div>
         <h3 ref={h} className={`${s.header3} ${s.pending} !leading-none`}>
           {title}
         </h3>
-        <div ref={p} className={`${s.pending} h-fit text-sm leading-[21px] tracking-normal text-white/70`}>
+        <div ref={p} className={`${s.pending} h-fit text-sm leading-[21px] tracking-normal text-[#c7c7c7]`}>
           {body}
         </div>
       </div>
@@ -341,7 +341,7 @@ export default function Intro({ heading, body, steps, sources }: Props) {
         if (e.key === 'ArrowRight') go(1)
         else if (e.key === 'ArrowLeft') go(-1)
       }}
-      className="relative w-full bg-bg text-white outline-none"
+      className="relative w-full bg-black text-white outline-none"
       style={{ height: '600vh' }}
     >
       <div ref={pin} className="relative flex h-dvh w-full flex-col overflow-hidden md:block">
@@ -372,7 +372,7 @@ export default function Intro({ heading, body, steps, sources }: Props) {
           <h2 ref={introH} className={`${s.header4} ${s.pending} col-span-6 col-start-2 mb-6 text-balance !leading-none md:col-span-5 md:col-start-2 md:text-left xl:col-span-3`}>
             {heading}
           </h2>
-          <div ref={introP} className={`${s.pending} col-span-6 col-start-2 leading-6 tracking-normal text-white/70 md:col-span-5 md:col-start-2 xl:col-span-3`}>
+          <div ref={introP} className={`${s.pending} col-span-6 col-start-2 leading-6 tracking-normal md:col-span-5 md:col-start-2 xl:col-span-3`}>
             {body}
           </div>
         </div>
@@ -383,16 +383,16 @@ export default function Intro({ heading, body, steps, sources }: Props) {
               <ArrowButton dir="prev" disabled={cur <= 1} onClick={() => go(-1)} />
               <ArrowButton dir="next" disabled={cur >= n} onClick={() => go(1)} />
             </div>
-            <div className="mx-auto mb-0 flex items-end justify-end gap-3 text-[10px] font-medium uppercase leading-[15px] tracking-[0.05em] text-white/45 md:mb-10">
+            <div className="mx-auto mb-0 flex items-end justify-end gap-3 text-[10px] font-medium uppercase leading-[15px] tracking-[0.05em] text-[#575757] md:mb-10">
               <span>Scroll to explore</span>
             </div>
             <div
-              className="relative mt-2 h-0.5 w-full overflow-hidden rounded-full bg-white/[0.12]"
+              className="relative mt-2 h-0.5 w-full overflow-hidden rounded-full bg-[#212121]"
               style={{ clipPath: 'inset(0% 0% 0% 18%)', transformOrigin: 'left center', transform: `scaleX(${100 / 82}) translateX(-18%)` }}
             >
-              <div ref={fill} className="h-full w-full origin-left rounded-full bg-white/60 will-change-transform" style={{ transform: 'scaleX(0)' }} />
+              <div ref={fill} className="h-full w-full origin-left rounded-full bg-[#575757] will-change-transform" style={{ transform: 'scaleX(0)' }} />
               {ticks.map((t) => (
-                <div key={t} className="absolute left-0 top-0 z-10 h-[400px] w-2 -translate-x-1/2 bg-bg" style={{ left: `${t}%` }} />
+                <div key={t} className="absolute left-0 top-0 z-10 h-[400px] w-2 -translate-x-1/2 bg-black" style={{ left: `${t}%` }} />
               ))}
             </div>
           </div>
@@ -409,7 +409,7 @@ function ArrowButton({ dir, disabled, onClick }: { dir: 'prev' | 'next'; disable
       disabled={disabled}
       onClick={onClick}
       aria-label={dir === 'prev' ? 'Previous step' : 'Next step'}
-      className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-border-soft bg-white/[0.06] text-white transition-colors duration-300 hover:bg-white/[0.12] ${disabled ? '!cursor-default opacity-50' : ''}`}
+      className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg bg-[#212121] text-white ${disabled ? '!cursor-default opacity-50' : ''}`}
     >
       <svg width="9" height="16" viewBox="0 0 9 16" fill="none" aria-hidden="true">
         <path

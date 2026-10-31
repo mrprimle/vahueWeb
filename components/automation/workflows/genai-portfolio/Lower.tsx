@@ -23,25 +23,253 @@ const useMobile = () => {
   return mobile
 }
 
+/* ====================== SgpPlatformDifferentiators ====================== */
+
+export type Mark = 'A' | 'P' | 'N' // applicable / partialApplicable / notApplicable
+export type Cell = { m: Mark; note?: string }
+
+export type DiffRow = { label: string; cells: Cell[] }
+
+const Check = ({ className }: { className: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M20 6 9 17l-5-5" />
+  </svg>
+)
+const Cross = ({ className }: { className: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M18 6 6 18" />
+    <path d="m6 6 12 12" />
+  </svg>
+)
+const Minus = ({ className }: { className: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M5 12h14" />
+  </svg>
+)
+
+const markBox = (m: Mark, hasNote: boolean) =>
+  m === 'A' ? 'bg-[#193a29]' : m === 'P' ? `bg-[#c7c7c7] ${hasNote ? 'group-hover/card:bg-black' : ''}` : 'bg-transparent'
+const markIcon = (m: Mark) =>
+  m === 'A' ? (
+    <Check className="relative size-4 shrink-0 text-white" />
+  ) : m === 'P' ? (
+    <Check className="relative size-4 shrink-0 text-black" />
+  ) : (
+    <Cross className="relative size-4 shrink-0 text-[#929292]" />
+  )
+
+/*
+ * Desktop tooltip (cells with a note): clip-path inset(0 100% 100% 0 round 10px) -> inset(0 round 4px) 0.4s power1.out,
+ * note opacity 0 / scale .8 -> 1 0.3s power1.out at "<0.1"; mouseleave reverses. Last column opens to the left.
+ * Phones (<769): tapping a partial cell with a note opens a full-screen card (opacity 0.3s).
+ */
+const MatrixCell = forwardRef<HTMLButtonElement, { cell: Cell; last: boolean; mobile: boolean }>(function MatrixCell({ cell, last, mobile }, ref) {
+  const tip = useRef<HTMLDivElement>(null)
+  const note = useRef<HTMLDivElement>(null)
+  const tl = useRef<gsap.core.Timeline | null>(null)
+  const [open, setOpen] = useState(false)
+  useEffect(() => {
+    const el = tip.current
+    if (!el) return
+    gsap.set(el, { clipPath: last ? 'inset(0% 0% 100% 100% round 10px)' : 'inset(0% 100% 100% 0% round 10px)' })
+    gsap.set(note.current, { opacity: 0, scale: 0.8, transformOrigin: last ? 'right top' : 'left top' })
+    const t = gsap.timeline({ paused: true })
+    t.to(el, { clipPath: 'inset(0% 0% 0% 0% round 4px)', duration: 0.4, ease: 'power1.out' })
+    t.to(note.current, { opacity: 1, scale: 1, duration: 0.3, ease: 'power1.out' }, '<0.1')
+    tl.current = t
+    return () => {
+      t.kill()
+    }
+  }, [last, mobile])
+  return (
+    <div className="flex flex-1 items-center justify-center px-2 py-3 md:px-3" role="cell">
+      <div
+        onMouseEnter={() => tl.current?.play()}
+        onMouseLeave={() => tl.current?.reverse()}
+        className="group/card relative cursor-pointer"
+      >
+        <button
+          ref={ref}
+          type="button"
+          onClick={() => mobile && setOpen(true)}
+          aria-label={cell.m === 'N' ? 'Not included' : 'Included'}
+          className={`relative z-10 flex h-6 w-6 cursor-pointer items-center justify-center rounded-sm ${markBox(cell.m, !!cell.note)}`}
+        >
+          {markIcon(cell.m)}
+        </button>
+        {cell.note && !mobile ? (
+          <div
+            ref={tip}
+            className={`pointer-events-none absolute -top-6 z-20 flex w-[228px] flex-col gap-4 rounded-md bg-[#eaeaea] p-6 ${last ? '-right-6 items-end' : '-left-6 items-baseline'}`}
+          >
+            <div className={`relative z-10 flex h-6 w-6 items-center justify-center rounded-sm ${markBox(cell.m, false)}`}>
+              <Minus className="relative size-4 shrink-0 text-white" />
+            </div>
+            <div ref={note} className="text-base leading-6 text-black">
+              {cell.note}
+            </div>
+          </div>
+        ) : null}
+        {cell.note && mobile && cell.m === 'P' && open ? (
+          <div className="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/20 p-10">
+            <div className="flex flex-col gap-4 rounded-md bg-[#eaeaea] p-6">
+              <div className="flex w-full justify-between">
+                <div className="relative z-10 flex h-6 w-6 items-center justify-center rounded-sm bg-black">
+                  <Minus className="relative size-5 shrink-0 text-white" />
+                </div>
+                <button type="button" onClick={() => setOpen(false)} className="cursor-pointer" aria-label="Close">
+                  <Cross className="relative size-5 shrink-0 text-[#929292]" />
+                </button>
+              </div>
+              <div className="text-base leading-6 text-black">{cell.note}</div>
+            </div>
+          </div>
+        ) : null}
+      </div>
+    </div>
+  )
+})
+
+/*
+ * Heading animates in on "top 80%". Table on "top center+=20%": row dividers scaleX 0 -> 1 (stagger .25, 1.2s
+ * power2.out), header + row labels AnimatedText (delay .1*i), mark buttons scale 0 -> 1 (1.2s, delay .1*row + .1*col).
+ */
+export function Differentiators({ title, capability, categories, rows: ROWS }: { title: string; capability: string; categories: string[]; rows: DiffRow[] }) {
+  const root = useRef<HTMLElement>(null)
+  const table = useRef<HTMLDivElement>(null)
+  const h = useRef<HTMLHeadingElement>(null)
+  const capHead = useRef<HTMLDivElement>(null)
+  const dividers = useRef<(HTMLSpanElement | null)[]>([])
+  const labels = useRef<(HTMLParagraphElement | null)[]>([])
+  const buttons = useRef<(HTMLButtonElement | null)[][]>(ROWS.map(() => []))
+  const [mobile, setMobile] = useState(false)
+
+  useEffect(() => {
+    let t = 0
+    const r = () => {
+      clearTimeout(t)
+      t = window.setTimeout(() => setMobile(window.innerWidth < 769), 50)
+    }
+    window.addEventListener('resize', r)
+    r()
+    return () => window.removeEventListener('resize', r)
+  }, [])
+
+  useEffect(() => {
+    const el = root.current
+    if (!el) return
+    const heading = createAnimatedText(h.current as HTMLElement)
+    const head = createAnimatedText(capHead.current as HTMLElement)
+    const rowTexts: AnimatedText[] = labels.current.filter(Boolean).map((l) => createAnimatedText(l as HTMLElement, { type: 'lines' }))
+    const ctx = gsap.context(() => {
+      if (prefersReducedMotion()) {
+        gsap.set(dividers.current, { scaleX: 1 })
+        return
+      }
+      const btns = buttons.current.flat().filter(Boolean)
+      gsap.set(btns, { scale: 0 })
+      onEnter(el, 'top 80%', () => heading.animateIn())
+      onEnter(table.current as Element, 'top center+=20%', () => {
+        gsap.fromTo(dividers.current, { scaleX: 0 }, { scaleX: 1, transformOrigin: 'left center', stagger: 0.25, duration: 1.2, ease: 'power2.out' })
+        head.animateIn()
+        rowTexts.forEach((t, i) => t.animateIn({ delay: 0.1 * i }))
+        buttons.current.forEach((row, ri) =>
+          row.forEach((b, ci) => b && gsap.fromTo(b, { scale: 0 }, { scale: 1, duration: 1.2, ease: 'power2.out', delay: 0.1 * ri + 0.1 * ci })),
+        )
+      })
+    }, el)
+    return () => {
+      heading.revert()
+      head.revert()
+      rowTexts.forEach((t) => t.revert())
+      ctx.revert()
+    }
+  }, [])
+
+  return (
+    <section ref={root} className="relative flex min-h-full items-end justify-center bg-white pb-16 text-black md:py-20">
+      <div className="flex w-full flex-col gap-24 md:gap-[120px]">
+        <div className={s.grid}>
+          <h4 ref={h} className={`${s.header2} ${s.pending} col-span-5 col-start-4 text-balance md:col-span-4 md:col-start-8 md:!text-5xl xl:!text-[4rem]`}>
+            {title}
+          </h4>
+        </div>
+        <div className="w-full overflow-x-clip">
+          <div ref={table} className="relative w-full" role="table" aria-label="Platform differentiators">
+            <div className={`${s.grid} mb-8`} role="row">
+              <div ref={capHead} className={`${s.pending} col-span-3 flex items-center bg-white text-sm leading-[1.35] tracking-normal text-[#212121] md:text-base md:leading-6`} role="columnheader">
+                {capability}
+              </div>
+              <div className="col-span-5 col-start-4 flex gap-0.5 md:col-start-8 md:gap-1.5">
+                {categories.map((c, i) => (
+                  <div key={c} className="flex-1">
+                    <div
+                      className={`flex h-full items-center justify-center rounded-md p-0.5 py-2 text-center text-[10px] capitalize leading-tight tracking-[0.025em] md:p-2 md:text-sm md:leading-[21px] ${
+                        i === 0 ? 'bg-black text-white' : 'bg-[#eaeaea] text-black'
+                      }`}
+                      role="columnheader"
+                    >
+                      {c}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {ROWS.map((row, ri) => (
+              <div key={row.label} className={`${s.grid} relative ${ri % 2 === 0 ? 'bg-white' : 'bg-[#f2f2f2]'}`} role="row">
+                <span
+                  ref={(el) => {
+                    dividers.current[ri] = el
+                  }}
+                  aria-hidden="true"
+                  className="pointer-events-none absolute left-0 right-0 top-0 z-[1] block h-px origin-left scale-x-0 bg-[#c7c7c7] will-change-transform"
+                />
+                <p
+                  ref={(el) => {
+                    labels.current[ri] = el
+                  }}
+                  className={`${s.body1} ${s.pending} col-span-3 flex items-center py-6 text-black`}
+                >
+                  {row.label}
+                </p>
+                <div className="col-span-5 col-start-4 flex gap-1.5 md:col-start-8">
+                  {row.cells.map((cell, ci) => (
+                    <MatrixCell
+                      key={ci}
+                      ref={(el) => {
+                        buttons.current[ri][ci] = el
+                      }}
+                      cell={cell}
+                      last={ci === row.cells.length - 1}
+                      mobile={mobile}
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 /* ====================== SgpSecurity -> integrations ====================== */
 
 /*
- * Template SgpSecurity on Vahue dark: heading column 5-8 + link, badge column 10-11 (here the workflow's systems),
- * then a 360px media row in a ClipScroll (start 10, scale 1.2). Scale's photo is replaced by a dot-texture panel
- * carrying the deployment statement.
+ * Template SgpSecurity in the clone's colours (#c7c7c7): heading column 5-8 + link, 4 badges in column 10-11, then a
+ * 360px media row in a ClipScroll (start 10, scale 1.2) holding our own photo on the clone's #ab8167.
  */
 export function Integrations({
-  eyebrow,
   title,
   link,
   badges,
-  panel,
+  image,
 }: {
-  eyebrow: string
   title: string
   link: { href: string; label: string }
   badges: string[]
-  panel: { eyebrow: string; title: string; body: string }
+  image: string
 }) {
   const root = useRef<HTMLElement>(null)
   const h = useRef<HTMLHeadingElement>(null)
@@ -55,35 +283,29 @@ export function Integrations({
     }
   }, [])
   return (
-    <section ref={root} className="relative border-t border-border-soft bg-[#0b0b0c] pb-16 pt-16 text-white md:pt-28">
+    <section ref={root} className="relative bg-[#c7c7c7] pb-16 pt-16 text-neutral-900 md:pt-28">
       <div className={`${s.grid} w-full !gap-y-16 md:!gap-y-28`}>
         <div className="col-span-full flex flex-col gap-6 md:col-span-4 md:col-start-5 md:row-start-1 md:gap-16">
-          <div className="flex flex-col gap-6">
-            <Eyebrow>{eyebrow}</Eyebrow>
-            <h2 ref={h} className={`${s.header3} ${s.pending} text-balance text-white`}>
-              {title}
-            </h2>
-          </div>
-          <a href={link.href} className="group/link relative w-max text-sm font-medium leading-[21px] tracking-normal text-white transition-colors">
+          <h2 ref={h} className={`${s.header3} ${s.pending} text-balance !text-black`}>
+            {title}
+          </h2>
+          <a href={link.href} className="group/link relative w-max text-sm font-medium leading-[21px] tracking-normal text-[#212121] transition-colors">
             {link.label}
-            <span className="absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-white transition-transform duration-300 ease-in-out group-hover/link:scale-x-100" />
+            <span className="absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-black transition-transform duration-300 ease-in-out group-hover/link:scale-x-100" />
           </a>
         </div>
-        <ul aria-label={eyebrow} className="col-span-full flex flex-col items-start gap-2 md:col-span-2 md:col-start-10 md:row-start-1 md:content-start">
+        <ul aria-label="Controls" className="col-span-full flex flex-col items-start gap-2 md:col-span-2 md:col-start-10 md:row-start-1 md:content-start">
           {badges.map((b) => (
-            <li key={b} className="inline-flex w-fit max-w-full items-center rounded-lg border border-border-strong px-3 py-1 text-sm leading-[21px] tracking-normal text-white/85">
+            <li key={b} className="inline-flex w-fit max-w-full items-center rounded-lg border border-[#212121] px-3 py-1 text-sm leading-[21px] tracking-normal text-[#212121]">
               {b}
             </li>
           ))}
         </ul>
         <div className="col-span-full md:row-start-2">
-          <ClipScroll startPercentage={10} startScale={1.2} radius={mobile ? 0.5 : 1} backdrop="#0b0b0c">
-            <div className="hero-texture relative flex h-[312px] w-full flex-col justify-between overflow-hidden rounded-2xl border border-border-soft bg-[#121214] p-6 md:h-[360px] md:p-10">
-              <Eyebrow>{panel.eyebrow}</Eyebrow>
-              <div className="flex max-w-3xl flex-col gap-3">
-                <p className={`${s.header3} text-white`}>{panel.title}</p>
-                <p className="text-base leading-6 text-white/55">{panel.body}</p>
-              </div>
+          <ClipScroll startPercentage={10} startScale={1.2} radius={mobile ? 0.5 : 1} backdrop="#c7c7c7">
+            <div className="relative aspect-video h-[312px] w-full overflow-hidden rounded-2xl bg-[#ab8167] md:h-[360px]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={image} alt="" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
             </div>
           </ClipScroll>
         </div>
@@ -200,7 +422,7 @@ export function Results({ label, items }: { label: string; items: ResultItem[] }
       type="button"
       onClick={() => go(dir)}
       aria-label={dir < 0 ? 'Previous result' : 'Next result'}
-      className="flex aspect-square w-10 cursor-pointer items-center justify-center rounded-md border border-white/60 text-white transition-colors duration-300 hover:bg-white hover:text-bg lg:w-full"
+      className="flex aspect-square w-10 cursor-pointer items-center justify-center rounded-md border border-black text-black transition-colors duration-300 hover:bg-black hover:text-[#a8927c] lg:w-full"
     >
       <svg width="8" height="12" viewBox="0 0 8 12" fill="none" aria-hidden="true" style={dir > 0 ? { transform: 'scaleX(-1)' } : undefined}>
         <path
@@ -212,14 +434,14 @@ export function Results({ label, items }: { label: string; items: ResultItem[] }
   )
 
   return (
-    <div ref={wrap} className="relative scroll-mt-28 bg-bg pb-16 pt-20 text-white md:pb-20 md:pt-20">
+    <div ref={wrap} className="relative scroll-mt-28 bg-white pb-16 pt-20 text-black md:pb-20 md:pt-20">
       <div className="grid grid-cols-8 gap-2 px-3 lg:grid-cols-[repeat(12,minmax(0,150px))] lg:justify-center lg:px-6">
         <div ref={sizer} className="relative isolate col-span-full min-w-0">
-          <div ref={panel} className="hero-texture pointer-events-none absolute inset-y-0 left-1/2 z-0 -translate-x-1/2 rounded-2xl border border-border-soft bg-[#121214]" aria-hidden="true" />
+          <div ref={panel} className="pointer-events-none absolute inset-y-0 left-1/2 z-0 -translate-x-1/2 rounded-2xl bg-[#a8927c]" aria-hidden="true" />
           <div className="relative z-10 flex flex-col gap-8 p-8 lg:grid lg:grid-cols-[repeat(12,minmax(0,150px))] lg:justify-center lg:gap-x-2 lg:px-0 lg:py-20">
             <div className="col-span-full flex w-full flex-row items-start justify-between gap-8 text-left md:items-center md:justify-start lg:col-span-1 lg:col-start-2 lg:flex-col lg:items-stretch lg:justify-between">
               <div className="flex flex-col gap-8">
-                <p className="w-full whitespace-pre-line font-mono text-xs font-medium uppercase leading-snug tracking-[0.05em] text-white/70 max-lg:w-auto">{label}</p>
+                <p className="w-full whitespace-pre-line font-mono text-xs font-medium uppercase leading-snug tracking-[-0.01em] max-lg:w-auto">{label}</p>
                 <div className="hidden flex-col gap-2 lg:flex" role="tablist">
                   {items.map((q, i) => (
                     <Tab
@@ -266,13 +488,10 @@ export function Results({ label, items }: { label: string; items: ResultItem[] }
                     />
                   ))}
                   <div className="mt-1 flex flex-wrap items-center gap-3 lg:justify-end">
-                    <div className="inline-block rounded-sm bg-white p-1 px-2 font-mono text-[10px] uppercase leading-snug text-bg">
-                      <span className="mr-1 inline-block h-[6px] w-[6px] bg-bg align-middle" style={{ clipPath: 'polygon(0 0, 100% 100%, 100% 0)' }} />
-                      <span className="inline-block text-nowrap">{items[cur].note}</span>
+                    <div className="inline-block rounded-sm bg-black p-1 px-2 font-mono text-[10px] uppercase leading-snug">
+                      <span className="mr-1 inline-block h-[6px] w-[6px] bg-[#a8927c] align-middle" style={{ clipPath: 'polygon(0 0, 100% 100%, 100% 0)' }} />
+                      <span className="inline-block text-nowrap text-[#a8927c]">{items[cur].note}</span>
                     </div>
-                    <a href={items[cur].href} className="flex items-center gap-1 text-sm font-medium leading-[21px] text-white transition-colors duration-300 hover:text-white/70">
-                      Read the case study
-                    </a>
                   </div>
                 </div>
               </div>
@@ -307,10 +526,10 @@ function Tab({ active, label, metric, onClick, fillRef, small }: { active: boole
       aria-selected={active}
       aria-label={`Show result from ${label}`}
       onClick={onClick}
-      className={`relative isolate box-border flex aspect-square w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg border border-solid border-white/60 p-2 ${small ? 'max-w-20' : 'max-w-[152px] lg:p-3'}`}
+      className={`relative isolate box-border flex aspect-square w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg border border-solid border-black p-2 ${small ? 'max-w-20' : 'max-w-[152px] lg:p-3'}`}
     >
-      <div ref={fillRef} className="absolute -z-10 h-full w-full bg-white" style={{ transform: active ? 'none' : small ? 'translateX(100%)' : 'translateY(100%)' }} />
-      <span className={`relative z-10 block text-balance text-center font-display leading-[1.1] tracking-[-0.02em] transition-colors duration-300 ${small ? 'text-[11px]' : 'text-[13px] xl:text-[15px]'} ${active ? 'text-bg' : 'text-white/70'}`}>
+      <div ref={fillRef} className="absolute -z-10 h-full w-full bg-black" style={{ transform: active ? 'none' : small ? 'translateX(100%)' : 'translateY(100%)' }} />
+      <span className={`relative z-10 block text-balance text-center font-display leading-[1.1] tracking-[-0.02em] transition-colors duration-300 ${small ? 'text-[11px]' : 'text-[13px] xl:text-[15px]'} ${active ? 'text-[#a8927c]' : 'text-black/60'}`}>
         {metric}
       </span>
     </button>
@@ -395,15 +614,14 @@ export function Demo({
     }
   }, [])
   return (
-    <section ref={root} className="relative isolate h-screen min-h-screen w-full overflow-hidden bg-bg text-white">
+    <section ref={root} className="relative isolate h-screen min-h-screen w-full overflow-hidden bg-black text-white">
       <div className={`${s.grid} relative z-10 h-full min-h-dvh w-full content-center md:min-h-screen`}>
         <div className="order-2 col-span-full flex flex-col pb-[25vw] max-md:justify-center md:order-1 md:col-span-3 md:col-start-2 md:self-center md:pb-[15vh]">
           <div className="flex flex-col items-center gap-6 md:items-start">
-            <Eyebrow>{eyebrow}</Eyebrow>
-            <h2 ref={h} className={`${s.header3} ${s.pending} w-full text-balance text-center !leading-none md:text-left`}>
+            <h2 ref={h} className={`${s.header3} ${s.pending} w-full text-center !leading-none md:text-left`}>
               {title}
             </h2>
-            <div ref={p} className={`${s.pending} w-full max-w-xl text-center text-sm leading-[21px] tracking-normal text-white/55 md:max-w-none md:text-left md:text-base md:leading-6`}>
+            <div ref={p} className={`${s.pending} w-full max-w-xl text-center text-sm leading-[21px] tracking-normal text-[#929292] md:max-w-none md:text-left md:text-base md:leading-6`}>
               {body}
             </div>
             <FlatCta ref={ctaRef} href={cta.href} variant="arrow" theme="white" className="max-md:mx-auto">
@@ -423,7 +641,7 @@ export function Demo({
                   className={`${s.ortho} absolute aspect-[1.5] w-full overflow-hidden rounded-lg shadow-[0_28px_90px_rgba(0,0,0,0.5)] ring-1 ring-white/10 md:rounded-2xl`}
                   style={{ zIndex: 3 - i, perspective: '1000px' }}
                 >
-                  <div className="hero-texture absolute inset-0 flex flex-col justify-between bg-[#121214] p-4 md:p-8">
+                  <div className="absolute inset-0 flex flex-col justify-between bg-[#212121] p-4 md:p-8">
                     <div className="flex items-center justify-between">
                       <Eyebrow>{c.eyebrow}</Eyebrow>
                       <span className="font-mono text-[10px] uppercase tracking-[0.05em] text-white/45 md:text-[13px]">{String(i + 1).padStart(2, '0')}</span>
@@ -462,7 +680,7 @@ function FaqItem({ item, index, active, setActive, cta }: { item: FaqItemData; i
     gsap.to(el, { height: open ? el.scrollHeight : 0, duration: prefersReducedMotion() ? 0 : 0.5 })
   }, [open])
   return (
-    <li className="border-b border-border-mid last:border-b-0">
+    <li className="border-b border-[#01010160] last:border-b-0">
       <div className="grid grid-cols-8 items-center gap-2 px-0 py-6 md:grid-cols-[repeat(12,minmax(0,150px))] md:items-start md:justify-center">
         <button
           type="button"
@@ -471,17 +689,17 @@ function FaqItem({ item, index, active, setActive, cta }: { item: FaqItemData; i
           className="col-span-full row-start-1 grid h-full cursor-pointer grid-cols-8 items-center gap-0 border-none bg-transparent p-0 text-left md:grid-cols-12 md:items-start"
         >
           <div aria-hidden="true" className="col-start-1 flex h-8 select-none items-center justify-start md:justify-center">
-            <div className={`absolute h-[2px] w-4 origin-center scale-x-[1.2] bg-white transition-all duration-300 ${open ? '' : 'rotate-90'}`} />
-            <div className="absolute h-[2px] w-4 origin-center scale-x-[1.2] bg-white" />
+            <div className={`absolute h-[2px] w-4 origin-center scale-x-[1.2] bg-black transition-all duration-300 ${open ? '' : 'rotate-90'}`} />
+            <div className="absolute h-[2px] w-4 origin-center scale-x-[1.2] bg-black" />
           </div>
-          <h3 className="col-span-6 col-start-3 text-left text-base !font-bold leading-[22px] text-white md:col-span-3 md:col-start-5 md:text-2xl md:!font-medium md:leading-9">
+          <h3 className="col-span-6 col-start-3 text-left text-base !font-bold leading-[22px] !text-black md:col-span-3 md:col-start-5 md:text-2xl md:!font-medium md:leading-9">
             {item.q}
           </h3>
         </button>
         <div ref={body} className="col-span-6 col-start-3 row-start-2 overflow-clip md:col-span-3 md:col-start-9 md:row-start-1">
           <div className="flex flex-col gap-4" aria-hidden={!open}>
-            <div className="flex flex-col gap-3 text-sm leading-[21px] text-white/70 md:text-base md:leading-6">{item.a}</div>
-            <FlatCta href={cta.href} variant="border" theme="white" className="mb-3">
+            <div className="flex flex-col gap-3 text-sm leading-[21px] text-black md:text-base md:leading-6">{item.a}</div>
+            <FlatCta href={cta.href} variant="border" theme="black" className="mb-3">
               {cta.label}
             </FlatCta>
           </div>
@@ -491,17 +709,17 @@ function FaqItem({ item, index, active, setActive, cta }: { item: FaqItemData; i
   )
 }
 
-/* FAQ card inside a ClipScroll (dark backdrop, startPercentage 8, startScale .9, progressOffset .4, radius 1 / .5). */
+/* FAQ card inside a ClipScroll (black backdrop, startPercentage 8, startScale .9, progressOffset .4, radius 1 / .5). */
 export function Faqs({ title, items, cta }: { title: string; items: FaqItemData[]; cta: { href: string; label: string } }) {
   const [active, setActive] = useState(0)
   const mobile = useMobile()
   return (
-    <div className="bg-bg pb-16">
-      <ClipScroll startPercentage={8} startScale={0.9} radius={mobile ? 0.5 : 1} backdrop="#020202" progressOffset={0.4} className={s.grid} clipClassName="col-span-full">
-        <section className="relative scroll-mt-28 rounded-l-lg border border-border-soft bg-[#121214] px-0 pt-6 text-white md:rounded-2xl">
+    <div className="bg-black">
+      <ClipScroll startPercentage={8} startScale={0.9} radius={mobile ? 0.5 : 1} backdrop="#000" progressOffset={0.4} className={s.grid} clipClassName="col-span-full">
+        <section className="relative scroll-mt-28 rounded-l-lg bg-[#f2f2f2] px-0 pt-6 text-black md:rounded-2xl">
           <div className={`${s.grid} w-full !gap-y-10 md:!gap-y-12`}>
-            <h2 className={`${s.header2} col-span-full text-balance text-white`}>{title}</h2>
-            <ul className="col-span-full flex list-none flex-col gap-0 border-t border-border-mid p-0">
+            <h2 className={`${s.header2} col-span-full text-balance !text-black`}>{title}</h2>
+            <ul className="col-span-full flex list-none flex-col gap-0 border-t border-[#01010160] p-0">
               {items.map((f, i) => (
                 <FaqItem key={i} item={f} index={i} active={active} setActive={setActive} cta={cta} />
               ))}
@@ -510,5 +728,144 @@ export function Faqs({ title, items, cta }: { title: string; items: FaqItemData[
         </section>
       </ClipScroll>
     </div>
+  )
+}
+
+/* ====================== BlogPreview ====================== */
+
+const Brand = ({ bg }: { bg: string }) => (
+  <span className="inline-flex size-[26px] shrink-0 items-center justify-center rounded-[5px] shadow-sm" style={{ backgroundColor: bg }} aria-hidden="true">
+    <svg className="block size-[8px] text-white" width={12} height={12} viewBox="0 0 12 12" fill="none">
+      <path
+        d="M10.6884 0H0.652204C0.0720246 0 -0.218065 0.700892 0.192105 1.11106L10.2283 11.1473C10.6385 11.5575 11.3394 11.2667 11.3394 10.6872V0.650964C11.3394 0.291354 11.048 0 10.6884 0Z"
+        fill="currentColor"
+      />
+    </svg>
+  </span>
+)
+
+function Tile({ children, index, href, className = '' }: { children: ReactNode; index: number; href: string; className?: string }) {
+  const el = useRef<HTMLAnchorElement>(null)
+  useEffect(() => {
+    const t = el.current
+    if (!t || prefersReducedMotion()) return
+    const r = t.getBoundingClientRect()
+    if (r.top < window.innerHeight && r.bottom > 0) return
+    gsap.set(t, { scale: 0.96, opacity: 0, x: 0, y: 0 })
+    const io = new IntersectionObserver(
+      (es) => {
+        if (!es.some((e) => e.isIntersecting)) return
+        io.disconnect()
+        gsap.to(t, { scale: 1, opacity: 1, x: 0, y: 0, duration: 0.6, delay: 0.05 * Math.min(index, 3), ease: 'cubic-bezier(0.23, 1, 0.32, 1)', overwrite: 'auto' })
+      },
+      { threshold: 0.15 },
+    )
+    io.observe(t)
+    return () => io.disconnect()
+  }, [index])
+  return (
+    <a ref={el} href={href} className={`block h-full w-full overflow-hidden rounded-2xl ${className}`}>
+      {children}
+    </a>
+  )
+}
+
+/*
+ * BlogPreview bento (col 2-11): left column = text tile (304) over image+caption tile (407); right = full-bleed image
+ * (468) over two square-ish tiles (243). Single column with 16px gaps on phones. Tiles enter on intersection:
+ * scale .96 / opacity 0 -> 1, 0.6s cubic-bezier(.23,1,.32,1), delay .05*min(i,3). Heading animates in at "top 80%".
+ */
+export type BlogPost = { href: string; title: string; tag?: string; image?: string }
+
+/** Vahue posts in the clone's five bento slots: [text tile, image + caption, full-bleed image, image, image + tag + caption]. */
+export function Blog({ heading, posts }: { heading: string; posts: [BlogPost, BlogPost, BlogPost, BlogPost, BlogPost] }) {
+  const [t1, t2, t3, t4, t5] = posts
+  const h = useRef<HTMLHeadingElement>(null)
+  const head = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const t = createAnimatedText(h.current as HTMLElement)
+    const st = onEnter(head.current as Element, 'top 80%', () => t.animateIn({ delay: 0.05 }))
+    return () => {
+      st.kill()
+      t.revert()
+    }
+  }, [])
+  const caption = 'text-pretty text-left text-base !font-medium leading-[22px] !tracking-[-0.025em] !text-white'
+  return (
+    <section data-nav-theme="dark" className="isolate w-full scroll-mt-28 overflow-hidden bg-black py-12 md:py-16">
+      <div className={s.grid}>
+        <div className="col-span-full md:col-span-10 md:col-start-2">
+          <div ref={head} className="mb-8 md:mb-20">
+            <h2 ref={h} className={`${s.pending} text-balance text-center text-[32px] font-normal leading-[1.05] !text-white lg:text-[4rem]`}>
+              {heading}
+            </h2>
+          </div>
+          <div className="flex flex-col gap-4 md:flex-row md:gap-2">
+            <div className="flex flex-col gap-4 max-md:contents md:flex-1 md:gap-2">
+              <div className="max-md:order-1 md:h-[304px]">
+                <Tile index={0} href={t1.href} className="bg-white/5">
+                  <div className="relative flex h-full min-h-[115px] w-full flex-col p-4 text-white lg:p-5">
+                    <div className="inline-flex items-center gap-1.5">
+                      <Brand bg="#575757" />
+                      <span className="truncate font-mono text-[11px] uppercase leading-none tracking-[0.05em] text-white/90">{t1.tag}</span>
+                    </div>
+                    <div className="mt-auto flex w-full flex-col items-start pb-0.5">
+                      <h3 className="text-balance text-left text-[24px] font-normal leading-[1.25] !text-white lg:text-[2.5rem]">{t1.title}</h3>
+                    </div>
+                  </div>
+                </Tile>
+              </div>
+              <div className="h-[312px] max-md:order-3 md:h-[407px]">
+                <Tile index={2} href={t2.href} className="bg-white/5">
+                  <div className="flex h-full flex-col gap-5 p-4 lg:p-5">
+                    <div className="relative min-h-0 flex-1 overflow-hidden rounded-lg">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={t2.image} alt="" className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out hover:scale-105" loading="lazy" />
+                    </div>
+                    <h3 className={caption}>{t2.title}</h3>
+                  </div>
+                </Tile>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 max-md:contents md:flex-1 md:gap-2">
+              <div className="h-[280px] max-md:order-2 md:h-[468px]">
+                <Tile index={1} href={t3.href} className="relative bg-neutral-900">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={t3.image} alt={t3.title} className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out hover:scale-105" loading="lazy" />
+                  <div className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(180deg,rgba(0,0,0,0.42)_0%,rgba(0,0,0,0)_40%),linear-gradient(0deg,rgba(0,0,0,0.58)_0%,rgba(0,0,0,0.14)_38%,rgba(0,0,0,0)_68%)]" />
+                </Tile>
+              </div>
+              <div className="flex flex-col gap-4 max-md:contents md:h-[243px] md:flex-row md:gap-2">
+                <div className="h-[220px] max-md:order-4 md:h-full md:flex-1">
+                  <Tile index={3} href={t4.href} className="bg-white/5">
+                    <div className="h-full p-4 lg:p-5">
+                      <div className="relative h-full overflow-hidden rounded-lg">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={t4.image} alt={t4.title} className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+                      </div>
+                    </div>
+                  </Tile>
+                </div>
+                <div className="h-[260px] max-md:order-5 md:h-full md:flex-1">
+                  <Tile index={4} href={t5.href} className="bg-white/5">
+                    <div className="flex h-full flex-col gap-5 p-4 lg:p-5">
+                      <div className="relative min-h-0 flex-1 overflow-hidden rounded-lg">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={t5.image} alt="" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+                        <div className="absolute left-4 top-4 z-10 inline-flex items-center gap-1.5">
+                          <Brand bg="#86bff2" />
+                          <span className="font-mono text-[11px] uppercase leading-none tracking-[0.05em] text-white">{t5.tag}</span>
+                        </div>
+                      </div>
+                      <h3 className={caption}>{t5.title}</h3>
+                    </div>
+                  </Tile>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }

@@ -3,7 +3,7 @@
 import { useEffect, useImperativeHandle, useRef, forwardRef, type ReactNode } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { createAnimatedText, mapRange, prefersReducedMotion } from './motion'
+import { createAnimatedText, mapRange, onEnter, prefersReducedMotion } from './motion'
 import s from './styles.module.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -18,7 +18,7 @@ export const ArrowRight = () => (
 )
 
 export const Eyebrow = ({ children, className = '' }: { children: ReactNode; className?: string }) => (
-  <p className={`${s.mono} font-mono tracking-[0.05em] text-white/45 ${className}`}>{children}</p>
+  <p className={`${s.mono} font-mono tracking-[0.05em] text-[#929292] ${className}`}>{children}</p>
 )
 
 /*
@@ -30,7 +30,7 @@ export function ClipScroll({
   startPercentage = 75,
   startScale = 1.25,
   radius = 1,
-  backdrop = '#020202',
+  backdrop = '#fff',
   progressOffset = 1,
   className = '',
   clipClassName = '',
@@ -80,7 +80,7 @@ export function ClipScroll({
 }
 
 /*
- * TwoColumnTextWithVideo, "videoFirst" variant, on Vahue dark: py-24, md:gap-y-16 (row gap 8 on phones). Copy isn't
+ * TwoColumnTextWithVideo, "videoFirst" variant, in the clone's colours (white): py-24, md:gap-y-16 (row gap 8 on phones). Copy isn't
  * split (Scale passes noSplit for videoFirst), so it renders static. Optional media sits in a ClipScroll
  * (startPercentage 20 -> inset 10%, scale 1.25 -> 1).
  */
@@ -101,14 +101,14 @@ export function TwoColumn({
 }) {
   const link = (
     <div className="mt-6">
-      <a href={cta.href} className="flex w-fit items-center gap-1 align-middle text-sm font-medium leading-[21px] tracking-normal text-white transition-colors duration-300 hover:text-white/70">
+      <a href={cta.href} className="flex w-fit items-center gap-1 align-middle text-sm font-medium leading-[21px] tracking-normal text-black">
         {cta.label}
         <ArrowRight />
       </a>
     </div>
   )
   return (
-    <section className="relative bg-bg text-white">
+    <section className="relative bg-white text-black">
       <div className={`${s.grid} w-full !py-24 sm:!gap-y-5 md:!gap-y-16`}>
         {media ? (
           <div className="order-1 col-span-full w-full overflow-clip rounded-2xl md:col-span-10 md:col-start-2">
@@ -137,11 +137,13 @@ type ConvergeHandle = { play: () => void; reset: () => void }
 
 const DOTS = 7 * 7
 // Deterministic scatter so server and client render the same positions.
-const scatter = (i: number) => {
-  const a = Math.sin(i * 12.9898) * 43758.5453
-  const b = Math.sin(i * 78.233) * 12345.6789
-  return { x: 60 + (a - Math.floor(a)) * 480, y: 60 + (b - Math.floor(b)) * 480 }
+// Integer hash (no Math.sin): server and client must render identical cx/cy strings (hydration).
+const hash = (n: number) => {
+  let h = (n * 2654435761) >>> 0
+  h = ((h ^ (h >>> 15)) * 2246822519) >>> 0
+  return (h ^ (h >>> 13)) >>> 0
 }
+const scatter = (i: number) => ({ x: 60 + (hash(i * 2 + 1) % 481), y: 60 + (hash(i * 2 + 2) % 481) })
 const target = (i: number) => ({ x: 150 + (i % 7) * 50, y: 150 + Math.floor(i / 7) * 50 })
 
 const Converge = forwardRef<ConvergeHandle>(function Converge(_, ref) {
@@ -190,7 +192,7 @@ const Converge = forwardRef<ConvergeHandle>(function Converge(_, ref) {
 
 /* ---------------- SgpStack -> before and after ---------------- */
 
-const CARD_ACCENTS = ['rgba(255,255,255,0.85)', 'rgba(255,255,255,0.6)', 'rgba(255,255,255,0.45)']
+const CARD_ACCENTS = ['#79648c', '#a8927c', '#839cb2']
 type CardApi = { in: (d?: number) => void; out: (d?: number) => void }
 
 function StackCard({ title, body, accent, index, register }: { title: string; body?: string; accent: string; index: number; register: (i: number, api: CardApi) => void }) {
@@ -237,12 +239,12 @@ function StackCard({ title, body, accent, index, register }: { title: string; bo
     }
   }, [index, register])
   return (
-    <article ref={root} className="flex min-h-[211px] flex-col justify-between gap-2 rounded-xl border border-border-soft bg-white/[0.06] p-8">
-      <div className="flex w-full items-start justify-between gap-2">
-        <h3 ref={h} className={`${s.header2b} ${s.pending} !leading-[1.15] text-white`}>
+    <article ref={root} className="flex min-h-[211px] flex-col justify-between gap-2 rounded-xl bg-[#373737] p-8">
+      <div className="flex w-full items-center justify-between gap-2">
+        <h3 ref={h} className={`${s.header2b} ${s.pending} !leading-none !text-white`}>
           {title}
         </h3>
-        <div ref={tri} className="h-[17px] w-[17px] shrink-0 opacity-0" style={{ color: accent }}>
+        <div ref={tri} className="h-[17px] w-[17px] opacity-0" style={{ color: accent }}>
           <svg width="6" height="6" viewBox="0 0 6 6" fill="none" className="inline-block h-full w-full align-top" aria-hidden="true">
             <path
               d="M5.0957 0H0.376033C0.041944 0 -0.125369 0.403928 0.110868 0.640165L4.83054 5.35983C5.06677 5.59607 5.4707 5.42876 5.4707 5.09467V0.375C5.4707 0.167893 5.30281 0 5.0957 0Z"
@@ -252,9 +254,8 @@ function StackCard({ title, body, accent, index, register }: { title: string; bo
         </div>
       </div>
       {body ? (
-        <div className={`${s.body3} tracking-normal text-white/55`}>
+        <div className={`${s.body3} text-[#929292] tracking-normal`}>
           <div ref={p} className={s.pending}>
-            <span className="text-white/35">Before: </span>
             {body}
           </div>
         </div>
@@ -268,9 +269,8 @@ function StackCard({ title, body, accent, index, register }: { title: string; bo
  * Headline via HeadlineWithCta (IntersectionObserver -15%: title delay .5, subtitle 1).
  * The drawing fades in (1s) and plays at "top center"; on leave-back it fades out, resets and the cards animate out.
  * Cards: "top 85%" -> in with delay .25*i (title default, copy "rise", accent triangle 0.85s), leave-back -> out.
- * Here each card pairs an "after" outcome (title) with the "before" it replaces (body).
  */
-export function Stack({ eyebrow, title, subtitle, after, before }: { eyebrow: string; title: string; subtitle: string; after: string[]; before: string[] }) {
+export function Stack({ title, subtitle, cards: pairs }: { title: string; subtitle: string; cards: { title: string; body: string }[] }) {
   const root = useRef<HTMLElement>(null)
   const panel = useRef<HTMLDivElement>(null)
   const mediaWrap = useRef<HTMLDivElement>(null)
@@ -282,8 +282,6 @@ export function Stack({ eyebrow, title, subtitle, after, before }: { eyebrow: st
   const register = useRef((i: number, api: CardApi) => {
     cards.current[i] = api
   }).current
-  const count = Math.max(after.length, before.length)
-  const pairs = Array.from({ length: count }, (_, i) => ({ title: after[i] ?? before[i], body: after[i] ? before[i] : undefined }))
 
   useEffect(() => {
     const el = root.current
@@ -335,16 +333,15 @@ export function Stack({ eyebrow, title, subtitle, after, before }: { eyebrow: st
   }, [])
 
   return (
-    <section ref={root} className={`${s.grid} relative isolate overflow-hidden bg-bg !pb-7 pt-0 lg:!px-0`}>
+    <section ref={root} className={`${s.grid} relative isolate overflow-hidden bg-black !pb-7 pt-0 lg:!px-0`}>
       <div className="relative col-span-full py-5 pb-7 md:py-10 md:!pb-0 md:pl-10 md:pr-10 lg:col-span-12 lg:col-start-1">
         <div className={`${s.grid} ${s.gridDouble} md:!pb-10`}>
           <div className="relative z-[2] col-span-full pb-0 lg:col-span-12 lg:col-start-1 lg:self-start xl:col-span-7 xl:col-start-1">
             <div ref={head} className="flex flex-col items-start gap-6">
-              <Eyebrow className="md:mt-[-0.5rem]">{eyebrow}</Eyebrow>
-              <h2 ref={h} className={`${s.header3} ${s.pending} w-full text-balance text-left text-white`}>
+              <h2 ref={h} className={`${s.header3} ${s.pending} w-full text-balance text-left !text-white md:mt-[-0.5rem]`}>
                 {title}
               </h2>
-              <div ref={p} className={`${s.pending} w-full text-pretty text-left text-sm leading-[21px] tracking-normal text-white/55 md:text-base md:leading-6`}>
+              <div ref={p} className={`${s.pending} w-full text-pretty text-left text-sm leading-[21px] tracking-normal text-[#929292] md:text-base md:leading-6`}>
                 {subtitle}
               </div>
             </div>
@@ -365,9 +362,120 @@ export function Stack({ eyebrow, title, subtitle, after, before }: { eyebrow: st
           </div>
         </div>
         <div className={`${s.grid} ${s.gridDouble} absolute inset-0 z-0 h-full w-full max-lg:!p-0`}>
-          <div ref={panel} className="hero-texture col-span-full h-full w-full rounded-2xl border border-border-soft bg-[#0d0d0e] lg:col-span-24" />
+          <div ref={panel} className="col-span-full h-full w-full rounded-2xl bg-[#212121] lg:col-span-24" />
         </div>
       </div>
     </section>
+  )
+}
+
+/* ---------------- Section (evergreen) + CardGrid: copied from the clone, content passed in ---------------- */
+
+const ease2 = gsap.parseEase('power2.out')
+const stagger = (p: number, i: number, n: number) => {
+  if (n <= 1) return p
+  const r = Math.min(0.1, 0.85 / Math.max(1, n - 1))
+  const a = i * r
+  return mapRange(p, a, a + (1 - (n - 1) * r), 0, 1)
+}
+
+function TrustCard({ title, body, index, count }: { title: string; body: string; index: number; count: number }) {
+  const root = useRef<HTMLDivElement>(null)
+  const h = useRef<HTMLHeadingElement>(null)
+  const p = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const el = root.current
+    if (!el) return
+    const texts = [createAnimatedText(h.current as HTMLElement), createAnimatedText(p.current as HTMLElement)]
+    const reduced = prefersReducedMotion()
+    if (reduced) return () => texts.forEach((t) => t.revert())
+    // BaseCardScroll: scrub "top bottom" -> "top 50%", eased power2.out, scale .96 -> 1, opacity 0 -> 1
+    // directionalEntrance: first card slides in from -160px (origin right), last from +160px (origin left)
+    const set = (prog: number) => {
+      const n = window.innerWidth >= 1024 ? count : 1
+      const e = ease2(stagger(prog, n > 1 ? index : 0, n))
+      const dx = n <= 1 ? 0 : index === 0 ? -160 : index === n - 1 ? 160 : 0
+      const origin = n <= 1 ? 'center center' : index === 0 ? 'right center' : index === n - 1 ? 'left center' : 'center center'
+      gsap.set(el, { scale: mapRange(e, 0, 1, 0.96, 1), opacity: e, x: mapRange(e, 0, 1, dx, 0), transformOrigin: origin })
+    }
+    const st = ScrollTrigger.create({
+      trigger: el,
+      start: 'top bottom',
+      end: 'top 50%',
+      onUpdate: (self) => set(self.progress),
+      onRefresh: (self) => set(self.progress),
+    })
+    const enter = onEnter(el.closest('section') as Element, 'top bottom', () => {
+      texts[0].animateIn({ delay: 0.125 + 0.1 * index })
+      texts[1].animateIn({ delay: 0.125 + 0.1 * index + 0.14 })
+    })
+    return () => {
+      st.kill()
+      enter.kill()
+      texts.forEach((t) => t.revert())
+    }
+  }, [index, count])
+  return (
+    <div ref={root} style={{ transformOrigin: 'center center' }}>
+      <div className="Card h-full rounded-[8px] bg-white/[0.13] text-white xl:rounded-2xl">
+        <div className="flex h-full flex-col justify-between gap-5 p-6 md:gap-16 xl:p-8">
+          <div className="flex flex-col gap-5 md:gap-16">
+            <div className="flex items-center gap-2" />
+            <h3 ref={h} className={`${s.header5} ${s.pending} max-xl:!text-[18px] max-xl:!leading-[1.35]`}>
+              {title}
+            </h3>
+          </div>
+          <div ref={p} className={`${s.pending} text-base leading-6`}>
+            {body}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/*
+ * Section (bg evergreen #193A29, py-16 / md:py-32, content xl:col 2-11, parallaxFadeOut):
+ * scrubbed "bottom 100%" -> "bottom top": section yPercent 0 -> 20 (power3.in), inner opacity 1 -> 0 (none, from .15).
+ * CardGrid heading animates in (delay .125) when the grid enters "top bottom".
+ */
+export function TrustCards({ heading, cards }: { heading: string; cards: { title: string; body: string }[] }) {
+  const root = useRef<HTMLDivElement>(null)
+  const inner = useRef<HTMLDivElement>(null)
+  const h = useRef<HTMLHeadingElement>(null)
+  useEffect(() => {
+    const el = root.current
+    if (!el) return
+    const t = createAnimatedText(h.current as HTMLElement)
+    const ctx = gsap.context(() => {
+      if (prefersReducedMotion()) return
+      onEnter(el, 'top bottom', () => t.animateIn({ delay: 0.125 }))
+      gsap
+        .timeline({ scrollTrigger: { trigger: el, start: 'bottom 100%', end: 'bottom top', scrub: true } })
+        .to(el, { yPercent: 20, duration: 1, ease: 'power3.in' }, 0)
+        .fromTo(inner.current, { opacity: 1 }, { opacity: 0, duration: 0.75, ease: 'none' }, 0.15)
+    }, el)
+    return () => {
+      t.revert()
+      ctx.revert()
+    }
+  }, [])
+  return (
+    <div ref={root} data-nav-theme="dark" className={`${s.grid} relative isolate overflow-hidden bg-[#193a29] !py-16 text-white md:!py-32`}>
+      <div ref={inner} className="relative isolate col-span-full rounded-3xl md:col-span-12 md:col-start-1 xl:col-span-10 xl:col-start-2">
+        <section className="w-full py-12 xl:py-24">
+          <div className="mx-auto w-full">
+            <h3 ref={h} className={`${s.header3} ${s.pending} mb-[48px] w-4/5 text-center max-sm:mx-auto md:w-full xl:mb-16`}>
+              {heading}
+            </h3>
+            <div className="flex flex-col gap-2 lg:grid lg:grid-cols-3">
+              {cards.map((c, i) => (
+                <TrustCard key={i} title={c.title} body={c.body} index={i} count={cards.length} />
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
   )
 }

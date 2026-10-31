@@ -1,5 +1,5 @@
 /*
- * Workflow page on the scale.com/genai-portfolio layout (Vahue dark): grid + type ladder measured on the live page (1440 / 390).
+ * /automations/knowledge-agents: the genai-portfolio clone's styles, unchanged (Scale's own colours). Grid + type ladder measured on the live page (1440 / 390).
  * Scale's breakpoint for the type ladder and grid swap is 768px (max-width: 767px = mobile).
  */
 
@@ -198,6 +198,7 @@
   z-index: 1;
   display: inline-block;
   font-weight: 500;
+  text-transform: capitalize;
   transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1);
 }
 .cta:not(.ctaArrow):hover .ctaLabel {

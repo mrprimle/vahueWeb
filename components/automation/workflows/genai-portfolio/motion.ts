@@ -28,9 +28,8 @@ gsap.registerPlugin(ScrollTrigger, SplitText)
  *           yPercent -108, same timing.
  */
 
-// Scale flashes lines green -> purple on reveal; on Vahue the flash is neutral (dim white -> bright white).
-const GREEN = 'rgba(255, 255, 255, 0.35)'
-const PURPLE = 'rgba(255, 255, 255, 0.8)'
+const GREEN = '#72CE7B'
+const PURPLE = '#79648C'
 
 export const prefersReducedMotion = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches

@@ -3,14 +3,13 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { createAnimatedText, prefersReducedMotion, type AnimatedText } from './motion'
-import FlatCta from './FlatCta'
 import Orbit from './Orbit'
 import s from './styles.module.css'
 
 /*
- * Template SgpHero on Vahue dark. Media column 2-6 / copy column 8-11 on the 12-col grid; stacked + centred on phones.
- * Scale's transparent hero video is replaced by Vahue's own drawing (sources orbiting one agent).
- * Vahue's navbar sits in the flow (88px), so the section is 100vh minus the bar instead of h-screen under an overlay.
+ * Template SgpHero, in the clone's colours (black). Media column 2-6 / copy column 8-11 on the 12-col grid; stacked +
+ * centred on phones. Scale's transparent hero video is replaced by Vahue's own drawing (sources orbiting one agent).
+ * h-screen as on Scale: the page pulls itself up under Vahue's 88px navbar.
  * Intro on mount (Scale: animateSet -> animateIn):
  *   media wrapper   opacity 0 -> 1, 1s, delay 2
  *   headline        AnimatedText default, delay 1.5; subtitle delay 1.6
@@ -18,14 +17,13 @@ import s from './styles.module.css'
  *   scroll cue      label AnimatedText delay 1 + box autoAlpha 1 (0.25s); arrow loop y -100% -> 0, 0.5s, repeatDelay 5
  */
 
-type Props = { headline: string; body: string; tools: string[]; cta: { href: string; label: string } }
+type Props = { headline: string; body: string; tools: string[] }
 
-export default function Hero({ headline, body, tools, cta }: Props) {
+export default function Hero({ headline, body, tools }: Props) {
   const root = useRef<HTMLDivElement>(null)
   const media = useRef<HTMLDivElement>(null)
   const h = useRef<HTMLHeadingElement>(null)
   const p = useRef<HTMLDivElement>(null)
-  const ctaWrap = useRef<HTMLDivElement>(null)
   const marquee = useRef<HTMLDivElement>(null)
   const cueLabel = useRef<HTMLParagraphElement>(null)
   const cueBox = useRef<HTMLDivElement>(null)
@@ -38,14 +36,13 @@ export default function Hero({ headline, body, tools, cta }: Props) {
       ;[h.current, p.current, cueLabel.current].forEach((el) => el && texts.push(createAnimatedText(el)))
       if (reduced) return
       gsap.set(media.current, { opacity: 0 })
-      gsap.set([marquee.current, ctaWrap.current], { opacity: 0 })
+      gsap.set(marquee.current, { opacity: 0 })
       gsap.set(cueBox.current, { autoAlpha: 0 })
       gsap.to(media.current, { opacity: 1, duration: 1, delay: 2 })
       texts[0]?.animateIn({ delay: 1.5 })
       texts[1]?.animateIn({ delay: 1.6 })
       texts[2]?.animateIn({ delay: 1 })
       gsap.to(cueBox.current, { autoAlpha: 1, duration: 0.25, delay: 1 })
-      gsap.to(ctaWrap.current, { opacity: 1, duration: 0.85, delay: 1.9, ease: 'power3.out' })
       gsap.to(marquee.current, { opacity: 1, duration: 1, delay: 2.2, ease: 'power2.out' })
       const a = arrows.current?.children
       if (a) {
@@ -62,7 +59,7 @@ export default function Hero({ headline, body, tools, cta }: Props) {
   const row = tools.length ? tools : []
 
   return (
-    <div ref={root} className="relative h-[calc(100svh-88px)] min-h-[640px] bg-bg text-white">
+    <div ref={root} className="relative h-screen bg-black text-white">
       <div className={`${s.grid} h-full !gap-y-8 !py-10 md:!gap-y-0 md:!py-16`}>
         <div
           ref={media}
@@ -77,18 +74,12 @@ export default function Hero({ headline, body, tools, cta }: Props) {
             <h1 ref={h} className={`${s.header3} ${s.pending} w-full text-balance text-center !leading-none md:text-left`}>
               {headline}
             </h1>
-            <div ref={p} className={`${s.pending} w-full text-center text-sm text-white/55 md:text-left md:text-base md:leading-6`}>
+            <div ref={p} className={`${s.pending} w-full text-center text-sm text-[#929292] md:text-left md:text-base md:leading-6`}>
               {body}
-            </div>
-            <div ref={ctaWrap}>
-              <FlatCta href={cta.href} variant="arrow" theme="white">
-                {cta.label}
-              </FlatCta>
             </div>
           </div>
           {row.length ? (
             <div className="flex w-full min-w-0 flex-col gap-2">
-              <p className={`${s.mono} font-mono tracking-[0.05em] text-white/45 max-md:text-center`}>Integrations</p>
               <div ref={marquee} className="w-full min-w-0 overflow-hidden opacity-50">
                 <ul aria-label="Integrations" className={`${s.marquee} flex w-max gap-8`}>
                   {[...row, ...row].map((t, i) => (
