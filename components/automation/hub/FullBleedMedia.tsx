@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { useRefreshOnPageGrow } from '@/lib/useRefreshOnPageGrow'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import FlatCta from './FlatCta'
@@ -51,6 +52,7 @@ export default function FullBleedMedia({
   level = 'h2',
   imageAlt = '',
 }: Props) {
+  useRefreshOnPageGrow()
   const Heading = level
   const section = useRef<HTMLElement>(null)
   const clip = useRef<HTMLDivElement>(null)

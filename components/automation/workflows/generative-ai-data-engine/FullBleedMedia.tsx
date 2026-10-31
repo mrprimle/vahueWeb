@@ -1,6 +1,7 @@
 'use client'
 
 import { createElement, useLayoutEffect, useRef } from 'react'
+import { useRefreshOnPageGrow } from '@/lib/useRefreshOnPageGrow'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import FlatCta from './FlatCta'
@@ -26,6 +27,7 @@ type Props = {
 // Intro:  section "top center" (retroactive): headline lines in, body +0.2s; CTA "filledWhiteArrow"
 //         0.85s with 0.5s delay.
 export default function FullBleedMedia({ image, headline, as = 'h2', body, cta, startPercentage, wrapperClassName }: Props) {
+  useRefreshOnPageGrow()
   const clipRef = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLElement>(null)
   const mediaRef = useRef<HTMLDivElement>(null)

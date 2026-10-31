@@ -1,6 +1,7 @@
 'use client'
 
 import { useLayoutEffect, useRef } from 'react'
+import { useRefreshOnPageGrow } from '@/lib/useRefreshOnPageGrow'
 import ArrowCta, { type ArrowCtaHandle } from './ArrowCta'
 import BorderCta, { type BorderCtaHandle } from './BorderCta'
 import { gsap, ScrollTrigger, playCascade, prepareCascade, reducedMotion } from './motion'
@@ -37,6 +38,7 @@ export default function FullBleedMedia({
   wrapperClassName,
   priority,
 }: Props) {
+  useRefreshOnPageGrow()
   const root = useRef<HTMLDivElement>(null)
   const clip = useRef<HTMLDivElement>(null)
   const section = useRef<HTMLElement>(null)

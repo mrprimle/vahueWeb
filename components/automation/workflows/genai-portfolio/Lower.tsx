@@ -1,6 +1,7 @@
 'use client'
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState, type ReactNode } from 'react'
+import { useRefreshOnPageGrow } from '@/lib/useRefreshOnPageGrow'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { createAnimatedText, mapRange, onEnter, prefersReducedMotion, type AnimatedText } from './motion'
@@ -343,6 +344,7 @@ export function Demo({
   cta: { href: string; label: string }
   cards: DemoCard[]
 }) {
+  useRefreshOnPageGrow()
   const root = useRef<HTMLElement>(null)
   const cardEls = useRef<(HTMLDivElement | null)[]>([])
   const h = useRef<HTMLHeadingElement>(null)

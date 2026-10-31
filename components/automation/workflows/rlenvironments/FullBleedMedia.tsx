@@ -1,6 +1,7 @@
 'use client'
 
 import { useLayoutEffect, useRef } from 'react'
+import { useRefreshOnPageGrow } from '@/lib/useRefreshOnPageGrow'
 import ArrowCta, { type ArrowCtaHandle } from './ArrowCta'
 import { gsap, ScrollTrigger, playCascade, prepareCascade, reducedMotion } from './motion'
 import styles from './styles.module.css'
@@ -24,6 +25,7 @@ type Props = {
 // The template's looping video / photo is Scale's, so the media layer is the flat dark surface with the
 // dot texture and a vignette fade to the page background (DESIGN.md hero rules: no coloured glow).
 export default function FullBleedMedia({ headline, as = 'h2', body, cta, startPercentage, wrapperClassName }: Props) {
+  useRefreshOnPageGrow()
   const root = useRef<HTMLDivElement>(null)
   const clip = useRef<HTMLDivElement>(null)
   const section = useRef<HTMLElement>(null)

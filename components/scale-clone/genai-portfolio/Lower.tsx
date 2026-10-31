@@ -1,6 +1,7 @@
 'use client'
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import { useRefreshOnPageGrow } from '@/lib/useRefreshOnPageGrow'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { createAnimatedText, mapRange, onEnter, prefersReducedMotion, type AnimatedText } from './motion'
@@ -590,6 +591,7 @@ const vw = (px: number, base: number) => (100 * px) / base
  * (phones: 80 / 50, base 390). Copy animates in at "top bottom-=50%": headline 0, subtitle .5, CTA 1.
  */
 export function Demo() {
+  useRefreshOnPageGrow()
   const root = useRef<HTMLElement>(null)
   const cards = useRef<(HTMLDivElement | null)[]>([])
   const h = useRef<HTMLHeadingElement>(null)

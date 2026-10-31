@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useLayoutEffect, useRef } from 'react'
+import { useRefreshOnPageGrow } from '@/lib/useRefreshOnPageGrow'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import AnimatedText, { type AnimatedTextHandle } from './AnimatedText'
@@ -41,6 +42,7 @@ const map = (v: number, a: number, b: number, c: number, d: number) => {
 }
 
 export default function FullBleedMedia({ image, headline, as = 'h2', body, primary, secondary, strip, startPercentage, wrapperClassName }: Props) {
+  useRefreshOnPageGrow()
   const clipRoot = useRef<HTMLDivElement>(null)
   const clip = useRef<HTMLDivElement>(null)
   const section = useRef<HTMLElement>(null)
