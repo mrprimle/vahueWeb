@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { useRefreshOnPageGrow } from '@/lib/useRefreshOnPageGrow'
 import gsap from 'gsap'
+import { useRefreshOnPageGrow } from '@/lib/useRefreshOnPageGrow'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import FlatCta from './FlatCta'
 import { createAnimatedText, prefersReducedMotion } from './animatedText'
@@ -11,12 +11,15 @@ import s from './hub.module.css'
 gsap.registerPlugin(ScrollTrigger)
 
 /*
- * Port of the data-engine clone's FullBleedMedia (scale.com FullBleedMediaSection in a ClipScrollSection),
- * used for the /automations hero and the closing call to action. Motion params unchanged.
+ * Data-engine clone's FullBleedMedia (scale.com FullBleedMediaSection inside a ClipScrollSection), used for the
+ * /automations hero and the pre-footer CTA. Same markup, colours and motion params as the clone.
  *
- * Scrubbed, trigger = section, start "top bottom" -> end "center center":
- *   clip container  clip-path inset(5% -> 0% round 1.5rem)   (startPercentage 10, x0.5)
- *   media           scale 1.25 -> 1
+ * Scrubbed, start "top bottom" -> end "center center" (REA-verified against chunk 37xz28pjbnlx4.js + live samples):
+ *   clip container  clip-path inset(0.5*startPercentage % -> 0% round 1.5rem), trigger = ClipScrollSection wrapper.
+ *                   FullBleedMediaSection defaults startPercentage to 10 (pre-footer: 5% -> 0); the hero passes 0 (no clip).
+ *   media           scale 1.25 -> 1 (FullBleedMediaSection's own scrub on the section; ClipScrollSection gets startScale 1)
+ * .media-overlay is `background: linear-gradient(#0000, #000)`; the shorthand cancels the bg-black/45 class
+ * (computed background-color is transparent on scale.com), so the overlay is the gradient only.
  * One-shot, start "top center" (retroactive onEnter):
  *   headline        AnimatedText intro, delay 0
  *   body            AnimatedText intro, delay 0.2
@@ -35,6 +38,8 @@ type Props = {
   secondary?: Cta
   backdrop: string
   priority?: boolean
+  /** ClipScrollSection startPercentage: 0 on the hero (no clip), 10 on the pre-footer. Defaults to 0 when `priority` (hero). */
+  startPercentage?: number
   /** Hero renders the headline as the page h1. */
   level?: 'h1' | 'h2'
   imageAlt?: string
@@ -49,12 +54,14 @@ export default function FullBleedMedia({
   secondary,
   backdrop,
   priority,
+  startPercentage,
   level = 'h2',
   imageAlt = '',
 }: Props) {
-  useRefreshOnPageGrow()
   const Heading = level
+  useRefreshOnPageGrow()
   const section = useRef<HTMLElement>(null)
+  const wrapper = useRef<HTMLDivElement>(null)
   const clip = useRef<HTMLDivElement>(null)
   const media = useRef<HTMLDivElement>(null)
   const h2 = useRef<HTMLHeadingElement>(null)
@@ -70,17 +77,26 @@ export default function FullBleedMedia({
 
     const ctx = gsap.context(() => {
       if (!reduced) {
+        const maxInset = 0.5 * (startPercentage ?? (priority ? 0 : 10))
+        const apply = (progress: number) => {
+          if (clip.current) clip.current.style.clipPath = `inset(${gsap.utils.clamp(0, maxInset, maxInset * (1 - progress))}% round 1.5rem)`
+        }
+        apply(0)
+        ScrollTrigger.create({
+          trigger: wrapper.current ?? root,
+          start: 'top bottom',
+          end: 'center center',
+          onUpdate: ({ progress }) => apply(progress),
+          onRefresh: ({ progress }) => apply(progress),
+        })
         ScrollTrigger.create({
           trigger: root,
           start: 'top bottom',
           end: 'center center',
           onUpdate: ({ progress }) => {
-            const inset = gsap.utils.clamp(0, 5, 5 * (1 - progress))
-            if (clip.current) clip.current.style.clipPath = `inset(${inset}% round 1.5rem)`
             if (media.current) gsap.set(media.current, { scale: 1.25 - 0.25 * progress })
           },
           onRefresh: ({ progress }) => {
-            if (clip.current) clip.current.style.clipPath = `inset(${5 * (1 - progress)}% round 1.5rem)`
             if (media.current) gsap.set(media.current, { scale: 1.25 - 0.25 * progress })
           },
         })
@@ -150,12 +166,12 @@ export default function FullBleedMedia({
       texts.forEach((t) => t.revert())
       ctx.revert()
     }
-  }, [])
+  }, [priority, startPercentage])
 
   return (
-    <div className={`isolate relative w-full px-4`} style={{ background: backdrop }}>
+    <div ref={wrapper} className={`isolate relative w-full px-4`} style={{ background: backdrop }}>
       <div ref={clip} className="h-full w-full overflow-hidden" style={{ clipPath: 'inset(0 round 1.5rem)' }}>
-        <section ref={section} className="relative overflow-hidden rounded-3xl bg-bg text-white">
+        <section ref={section} className="relative overflow-hidden rounded-3xl bg-white text-black">
           <div className="relative flex min-h-[480px] items-end overflow-hidden rounded-3xl p-8 md:min-h-[720px] md:p-16">
             <div className="relative z-20 flex w-full max-w-[72rem] flex-col gap-6 text-white">
               <Heading ref={h2} className={`${s.header2} ${s.pending} font-display font-normal text-white`}>
@@ -178,10 +194,10 @@ export default function FullBleedMedia({
               </div>
             </div>
             <div className="absolute left-0 top-0 h-full w-full origin-center overflow-hidden rounded-3xl">
-              {/* .media-overlay: gradient to black over a flat 45% black (bg-black/45) */}
+              {/* .media-overlay: gradient only (its `background` shorthand cancels bg-black/45 on scale.com) */}
               <div
                 className="pointer-events-none absolute inset-0 z-10 rounded-3xl"
-                style={{ backgroundColor: 'rgb(0 0 0 / 0.45)', backgroundImage: 'linear-gradient(#0000 0%, #000 100%)' }}
+                style={{ background: 'linear-gradient(#0000 0%, #000 100%)' }}
               />
               <div ref={media} className="absolute inset-0 overflow-hidden rounded-3xl" style={{ background: imageBg }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}

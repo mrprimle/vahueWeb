@@ -425,6 +425,10 @@ const navGroups: NavGroup[] = [
 /* =========================================================
    Navbar
    ========================================================= */
+// /automations hub and workflow pages: strict-parity rebuilds in Scale's own (light) colours, light bar.
+const isLightAutomationPage = (p: string) =>
+  /^\/automations(\/(back-office-sync|document-intake|support-agents|scoring-decisions|engineering-enablement|knowledge-agents))?\/?$/.test(p)
+
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -436,7 +440,7 @@ export default function Navbar() {
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const isHomePage = pathname === '/' || pathname === ''
   // light bar on the vacancy pages and /contact (light scale.com/demo layout); /careers itself is dark
-  const isCareersPage = /^\/careers\/.+/.test(pathname) || /^\/contact\/?$/.test(pathname)
+  const isCareersPage = /^\/careers\/.+/.test(pathname) || /^\/contact\/?$/.test(pathname) || isLightAutomationPage(pathname)
   const liRefs = useRef<Record<string, HTMLLIElement | null>>({})
   const [portalReady, setPortalReady] = useState(false)
   const [menuRect, setMenuRect] = useState<{

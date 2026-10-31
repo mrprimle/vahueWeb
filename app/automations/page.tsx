@@ -7,7 +7,7 @@ import HowItWorks from '@/components/automation/hub/HowItWorks'
 import PhaseLoop from '@/components/automation/hub/PhaseLoop'
 import WorkflowGrid from '@/components/automation/hub/WorkflowGrid'
 import Results from '@/components/automation/hub/Results'
-import Guardrails from '@/components/automation/hub/Guardrails'
+import Testimonial from '@/components/automation/hub/Testimonial'
 
 const PAGE_URL = 'https://vahue.ai/automations/'
 const DESCRIPTION = `${POSITIONING.promise} Audit, pilot, then we run it.`
@@ -20,40 +20,40 @@ export const metadata: Metadata = {
 }
 
 // Automation hub on the layout of the data-engine clone (app/scale-clone/data-engine, spec in
-// reference-snapshots/scale-clone/data-engine.md). Clone's light surfaces inverted to Vahue dark.
+// reference-snapshots/scale-clone/data-engine.md). Strict parity: every clone section in order, in the clone's own
+// (Scale) colours; Vahue fonts, logo, copy and own imagery.
 export default function Automations() {
   return (
-    <div className="overflow-x-hidden bg-bg font-display text-white">
+    <div className="overflow-x-hidden bg-white font-display text-black">
       <SmoothScroll />
       <div className="pb-10 pt-24">
         <FullBleedMedia
           level="h1"
-          backdrop="#020202"
+          backdrop="#fff"
           image="/img/work2.jpg"
           priority
-          headline={POSITIONING.line}
-          body={POSITIONING.promise}
-          primary={{ label: 'Book a workflow audit', href: '/contact/' }}
+          headline="Vahue Workflow Automation"
+          body="Map one workflow. Run it with agents. Measure it. Repeat."
+          primary={{ label: 'Book an Audit', href: '/contact/' }}
         />
       </div>
       <IntegrationStrip />
       <WhoItsFor />
       <FeaturedCase />
-      <div className="w-full bg-[#0a0a0b]">
+      <div className="w-full bg-[#f2f2f2]">
         <HowItWorks />
         <PhaseLoop />
         <WorkflowGrid />
         <Results />
-        <Guardrails />
+        <Testimonial />
         <div className="pb-14 md:pb-20">
           <FullBleedMedia
-            backdrop="#0a0a0b"
+            backdrop="#f9fafb"
             image="/img/careers/office-3.jpg"
-            imageBg="#111"
-            headline="Start with one workflow and a two-week audit"
-            body="We map it, record the baseline and agree the target before anything is built."
-            primary={{ label: 'Book a workflow audit', href: '/contact/' }}
-            secondary={{ label: 'See case studies', href: '/case-studies/' }}
+            imageBg="#193A29"
+            headline="Your busiest workflow, run by agents"
+            primary={{ label: 'Book an Audit', href: '/contact/' }}
+            secondary={{ label: 'See Case Studies', href: '/case-studies/' }}
           />
         </div>
       </div>

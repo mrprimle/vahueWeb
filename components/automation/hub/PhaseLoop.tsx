@@ -8,10 +8,10 @@ import s from './hub.module.css'
  * on scale.com's 1920x1006 grid; node positions and connectors are unchanged, labels carry Vahue copy.
  */
 
-const BOX = { fill: 'rgba(255,255,255,0.05)', stroke: 'rgba(255,255,255,0.14)', strokeWidth: 1.5 }
-const LINE = { stroke: 'rgba(255,255,255,0.35)', strokeWidth: 2, fill: 'none' }
-const TITLE = { fontSize: 26, fill: '#fff' }
-const SMALL = { fontSize: 18, fill: 'rgba(255,255,255,0.55)' }
+const BOX = { fill: '#fff' }
+const LINE = { stroke: '#8a8a8a', strokeWidth: 2, fill: 'none' }
+const TITLE = { fontSize: 26, fill: '#111' }
+const SMALL = { fontSize: 18, fill: '#6b6b6b' }
 
 const [audit, pilot, operate] = PHASES
 
@@ -25,9 +25,10 @@ function LoopDiagram() {
     >
       <defs>
         <marker id="hub-loop-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
-          <path d="M0 1 L9 5 L0 9 z" fill="rgba(255,255,255,0.45)" />
+          <path d="M0 1 L9 5 L0 9 z" fill="#8a8a8a" />
         </marker>
       </defs>
+      <rect width="1920" height="1006" fill="#f3f3f3" />
 
       {/* connectors */}
       <path d="M323 455 H471" {...LINE} markerEnd="url(#hub-loop-arrow)" />
@@ -52,7 +53,7 @@ function LoopDiagram() {
       <text x="1728" y="464" textAnchor="middle" {...TITLE}>
         Your systems
       </text>
-      <rect x="1545" y="710" width="300" height="87" rx="43" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.22)" strokeWidth="1.5" strokeDasharray="7 6" />
+      <rect x="1545" y="710" width="300" height="87" rx="43" fill="#fff" stroke="#cfcfcf" strokeWidth="1.5" strokeDasharray="7 6" />
       <text x="1695" y="762" textAnchor="middle" {...TITLE} fontSize={24}>
         Exceptions
       </text>
@@ -119,19 +120,19 @@ function LoopDiagram() {
         </text>
       </g>
 
-      <text x="960" y="917" textAnchor="middle" fontSize={22} fill="rgba(255,255,255,0.55)">
+      <text x="960" y="917" textAnchor="middle" fontSize={22} fill="#6b6b6b">
         The target, and the point at which we stop, are agreed in the Audit before anything is built.
       </text>
     </svg>
   )
 }
 
+// Clone: 4 features, 1-2 word title + one short line each.
 const FEATURES = [
-  ...PHASES.map((p) => ({ title: `${p.name} · ${p.length}`, body: p.body })),
-  {
-    title: 'Next workflow',
-    body: 'Once the first workflow holds its accuracy, the same team takes on the next one, measured against its own baseline.',
-  },
+  { title: audit.name, body: 'Map one workflow and record its baseline: volume, minutes, errors and cost.' },
+  { title: pilot.name, body: 'Your own data at real volume, with a person checking every output.' },
+  { title: operate.name, body: 'We run the agents day to day and report monthly against the baseline.' },
+  { title: 'Next Workflow', body: 'Once accuracy holds, the same team takes on the next workflow.' },
 ]
 
 export default function PhaseLoop() {
@@ -140,23 +141,23 @@ export default function PhaseLoop() {
       <div className="mx-auto w-full max-w-[1472px] px-6">
         <SectionHeader
           className="mb-10"
-          over="How we work"
-          title="Audit, pilot, then we run it"
-          sub="Every engagement starts with one workflow and a measured baseline. We only widen the scope once the numbers hold."
+          over="How We Work"
+          title="Audit, Pilot, Then We Run It"
+          sub="Every engagement starts with one workflow and a measured baseline: volume, minutes, errors and cost. We widen the scope only once the numbers hold."
         />
         <div className="mx-auto mt-12 max-w-[1216px]">
           <div className="mx-auto max-w-[980px]">
             <LoopDiagram />
           </div>
           <div className="mt-12">
-            <p className={`${s.detailMono} text-center font-mono text-white/55`}>Engagement</p>
+            <p className={`${s.detailMono} text-center font-mono text-[#575757]`}>Engagement Phases</p>
             <div className="mt-8 grid gap-8 md:grid-cols-2 xl:grid-cols-4">
               {FEATURES.map((f) => (
                 <div key={f.title} className="flex items-start gap-4">
-                  <Check className="mt-1 h-5 w-5 shrink-0 text-white" />
+                  <Check className="mt-1 h-5 w-5 shrink-0 text-[#212121]" />
                   <div>
-                    <h3 className={`${s.header5} font-normal text-white`}>{f.title}</h3>
-                    <p className={`${s.body2} mt-3 text-white/60`}>{f.body}</p>
+                    <h3 className={`${s.header5} font-normal text-[#212121]`}>{f.title}</h3>
+                    <p className={`${s.body2} mt-3 text-[#575757]`}>{f.body}</p>
                   </div>
                 </div>
               ))}

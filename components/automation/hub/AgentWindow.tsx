@@ -6,7 +6,7 @@ import s from './hub.module.css'
 
 /*
  * Document-intake agent demo. Port of the data-engine clone's ChatWindow (scale.com Build AI block),
- * same timings, dark skin and Vahue strings. Looping state machine:
+ * same timings and light skin as the clone, Vahue strings. Looping state machine:
  *   0  --1s-->  3   question pill slides in (300ms, from -100% x) and types (40ms/key +-50%), +300ms -> 4
  *   4           thinking bubble scales in (200ms, .95 -> 1); dots sequence (500ms holds)        -> 5
  *   5           ranking panel rises (300ms, translateY 100% + scale .95);  +1s -> 6 (pills swap, 300ms)
@@ -19,10 +19,10 @@ const QUESTION = 'New invoice in the inbox: 14 lines against PO 4471'
 const ANSWER = '13 lines posted to the ERP. Line 7 sent to review.'
 const RANKS = ['Supplier and PO matched', 'Line 7: unit price differs from the PO', 'Tax codes valid on all lines']
 
-// Stand-ins for the clone's avatar photos: a muted dot for the sender, a white dot for the agent.
-const SenderDot = () => <span aria-hidden="true" className="inline-block h-2 w-2 shrink-0 rounded-full bg-white/30 sm:h-[18px] sm:w-[18px]" />
+// Stand-ins for the clone's avatar photos: a muted dot for the sender, a blue dot for the agent.
+const SenderDot = () => <span aria-hidden="true" className="inline-block h-2 w-2 shrink-0 rounded-full bg-black/20 sm:h-[18px] sm:w-[18px]" />
 const AgentDot = ({ big = false }: { big?: boolean }) => (
-  <span aria-hidden="true" className={`inline-block h-2 w-2 shrink-0 rounded-full bg-white ${big ? 'sm:h-6 sm:w-6' : 'sm:h-[18px] sm:w-[18px]'}`} />
+  <span aria-hidden="true" className={`inline-block h-2 w-2 shrink-0 rounded-full bg-[#4d7df7] ${big ? 'sm:h-6 sm:w-6' : 'sm:h-[18px] sm:w-[18px]'}`} />
 )
 const DOTS = ['.', '..', '...', '..', '.', '..', '...']
 
@@ -167,7 +167,7 @@ export default function AgentWindow() {
           <div className="h-1.5 w-1.5 rounded-full bg-[#FFD600] sm:h-3 sm:w-3" />
           <div className="h-1.5 w-1.5 rounded-full bg-[#72CE7B] sm:h-3 sm:w-3" />
         </div>
-        <div className={`${s.chatMuted} flex justify-center pt-2 text-[7px] font-medium leading-[1.65] sm:text-base`}>Document intake agent</div>
+        <div className={`${s.chatMuted} flex justify-center pt-2 text-[7px] font-medium leading-[1.65] sm:text-base`}>Document Intake Agent</div>
         <div />
       </div>
 
@@ -186,7 +186,7 @@ export default function AgentWindow() {
             leaveTo={{ opacity: 0, transform: 'scale(0.95)' }}
           >
             <div className={`${s.gradientRing} rounded-[18px] p-[0.5px] sm:p-px`}>
-              <div className="flex h-[19px] w-full items-center gap-1 rounded-[18px] bg-[#0b0b0c] p-[3px] sm:gap-2 md:h-auto">
+              <div className="flex h-[19px] w-full items-center gap-1 rounded-[18px] bg-black p-[3px] sm:gap-2 md:h-auto">
                 <Dots active={step === 4 && !still} onDone={() => setStep(5)} />
                 <AgentDot />
               </div>
@@ -228,8 +228,8 @@ export default function AgentWindow() {
           }}
           afterLeave={() => setStep(9)}
         >
-          <div className="relative m-1 flex flex-col space-y-2.5 rounded-sm p-2 pb-[14px] text-sm text-white/70 sm:m-2 sm:space-y-6 sm:rounded-md sm:pb-6 md:pb-9">
-            <p className="text-center text-[6px] text-[#b8b8ff] sm:text-[13px] sm:leading-6 md:pt-6">Confidence check · least certain goes to a person</p>
+          <div className="relative m-1 flex flex-col space-y-2.5 rounded-sm p-2 pb-[14px] text-sm text-[#404040] sm:m-2 sm:space-y-6 sm:rounded-md sm:pb-6 md:pb-9">
+            <p className="text-center text-[6px] text-[#C88BC4] sm:text-[13px] sm:leading-6 md:pt-6">Field Confidence Ranking</p>
             <div className="flex justify-center">
               <div className="flex flex-col items-center space-y-1 sm:space-y-[7px]">
                 <div
