@@ -20,6 +20,7 @@ const staticRoutes: { path: string; priority: number; changeFrequency: MetadataR
   { path: '/industries/insurance',                   priority: 0.75, changeFrequency: 'monthly' },
   { path: '/industries/healthcare-life-sciences',    priority: 0.75, changeFrequency: 'monthly' },
   { path: '/industries/retail-ecommerce',            priority: 0.75, changeFrequency: 'monthly' },
+  { path: '/industries/distribution-manufacturing',  priority: 0.75, changeFrequency: 'monthly' },
   // Horizontal segment pages (re-uses the bfsi / ops / cs routes)
   { path: '/bfsi',                                   priority: 0.7,  changeFrequency: 'monthly' },
   { path: '/operations',                             priority: 0.7,  changeFrequency: 'monthly' },
