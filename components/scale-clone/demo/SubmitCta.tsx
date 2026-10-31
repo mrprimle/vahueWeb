@@ -17,7 +17,7 @@ export const Chevron = () => (
   </svg>
 )
 
-export default function SubmitCta({ label, onClick }: { label: string; onClick?: () => void }) {
+export default function SubmitCta({ label, onClick, busy = false }: { label: string; onClick?: () => void; busy?: boolean }) {
   // idle -> in (hovered) -> out (leaving) -> reset (snap back without transition) -> idle
   const [phase, setPhase] = useState<'idle' | 'in' | 'out' | 'reset'>('idle')
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -46,7 +46,15 @@ export default function SubmitCta({ label, onClick }: { label: string; onClick?:
   const transform = phase === 'in' ? 'translate(0,0)' : phase === 'out' ? 'translateX(100%)' : 'translateX(-100%)'
 
   return (
-    <button type="submit" onClick={onClick} onPointerEnter={enter} onPointerLeave={leave} className={`FlatCta ${s.cta}`}>
+    <button
+      type="submit"
+      onClick={onClick}
+      onPointerEnter={enter}
+      onPointerLeave={leave}
+      disabled={busy}
+      aria-busy={busy || undefined}
+      className={`FlatCta ${s.cta}`}
+    >
       <span
         aria-hidden="true"
         className={s.ctaFill}

@@ -545,12 +545,37 @@
   align-items: center;
   justify-content: center;
 }
+.cta:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+/* async send failed (only used when onSubmit returns a promise) */
+.sendError {
+  margin-top: 1rem;
+  color: var(--demo-error);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.sendError a {
+  color: inherit;
+  text-decoration: underline;
+}
 .cta:focus-visible {
   outline: 2px solid var(--demo-strong);
   outline-offset: 2px;
 }
 
 /* ---------- sidebar ---------- */
+/* text wordmark in a logo slot (DemoLogo.text) */
+.logoText {
+  display: block;
+  white-space: nowrap;
+  font-size: 15px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--demo-logo);
+}
 .card {
   display: flex;
   flex-direction: column;

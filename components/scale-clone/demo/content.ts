@@ -66,6 +66,8 @@ export type DemoFormContent = {
   submitLabel: string
   /** Inline thank-you message that replaces the form after a valid submit. */
   successHtml: string
+  /** Shown under Submit when an async `onSubmit` rejects (the form stays filled so the visitor can retry). */
+  submitErrorHtml?: string
   messages: FormMessages
   /** Email domains rejected on blur (Scale's form uses HubSpot's default free-mail block list + "hmail.com,outlook.com"). */
   blockedEmailDomains?: string[]
@@ -78,6 +80,8 @@ export type DemoLogo = {
   height: number
   /** SVG used as a CSS mask filled with --demo-logo; a neutral tile is drawn when omitted. */
   src?: string
+  /** Draw `alt` as a text wordmark in the slot instead of a mark (width/height are then ignored). */
+  text?: boolean
 }
 
 export type DemoContent = {
@@ -86,6 +90,8 @@ export type DemoContent = {
   form: DemoFormContent
   sidebar: {
     quote: string
+    /** Draw the serif quote marks (default true). Turn off when the slot holds a case summary, not a person's words. */
+    quoteMarks?: boolean
     name: string
     position: string
     trustedLabel: string

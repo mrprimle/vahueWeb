@@ -55,18 +55,23 @@ export default function QuoteSidebar({ sidebar }: { sidebar: DemoContent['sideba
   }, [])
 
   const rows = [sidebar.logos.slice(0, 4), sidebar.logos.slice(4)]
+  const showMarks = sidebar.quoteMarks !== false
 
   return (
     <div ref={card} className={s.card}>
       <blockquote className="relative m-0">
-        <span aria-hidden="true" className={`${s.mark} absolute -left-4 top-0 text-3xl leading-none`}>
-          “
-        </span>
+        {showMarks ? (
+          <span aria-hidden="true" className={`${s.mark} absolute -left-4 top-0 text-3xl leading-none`}>
+            “
+          </span>
+        ) : null}
         <p ref={quote} className={`AnimatedText ${s.quote} ${s.pending} m-0`}>
           {sidebar.quote}
-          <span aria-hidden="true" className={`${s.mark} ml-0.5`}>
-            ”
-          </span>
+          {showMarks ? (
+            <span aria-hidden="true" className={`${s.mark} ml-0.5`}>
+              ”
+            </span>
+          ) : null}
         </p>
       </blockquote>
       <div ref={person} className={`AnimatedText ${s.pending}`}>
@@ -84,7 +89,11 @@ export default function QuoteSidebar({ sidebar }: { sidebar: DemoContent['sideba
             >
               {row.map((l) => (
                 <span key={l.alt} className="flex h-10 w-[96px] shrink-0 items-center justify-center">
-                  {l.src ? (
+                  {l.text ? (
+                    <span role="img" aria-label={l.alt} className={s.logoText}>
+                      {l.alt}
+                    </span>
+                  ) : l.src ? (
                     <span
                       role="img"
                       aria-label={l.alt}

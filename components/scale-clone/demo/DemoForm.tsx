@@ -17,6 +17,8 @@ import s from './demo.module.css'
  *   - once a field shows an error it re-validates on every change (live validation)
  *   - Submit validates every visible field; the error rollup stays hidden (Scale's CSS)
  *   - dependent fields (showWhen) mount/unmount with their parent's value; hidden values are kept but not submitted
+ * If `onSubmit` returns a promise (a real send, e.g. Vahue's /contact), Submit is disabled while it is pending; the
+ * thank-you state only appears once it resolves, and a rejection shows `submitErrorHtml` with the form still filled.
  */
 
 type Values = Record<string, string | string[]>
@@ -37,11 +39,13 @@ export default function DemoForm({
   form: DemoFormContent
   /** Used in input ids (HubSpot uses `<name>-<formId>`). */
   formId?: string
-  onSubmit?: (values: Values) => void
+  onSubmit?: (values: Values) => void | Promise<unknown>
 }) {
   const [values, setValues] = useState<Values>({})
   const [errors, setErrors] = useState<Record<string, string | undefined>>({})
   const [submitted, setSubmitted] = useState(false)
+  const [pending, setPending] = useState(false)
+  const [sendFailed, setSendFailed] = useState(false)
   const formRef = useRef<HTMLFormElement>(null)
 
   const fields = useMemo(() => form.rows.flatMap((r) => r.fields), [form.rows])
@@ -87,8 +91,9 @@ export default function DemoForm({
     setErrors((prev) => ({ ...prev, [f.name]: validate(f, values[f.name]) }))
   }
 
-  const submit = (e: FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault()
+    if (pending) return
     const next: Record<string, string | undefined> = {}
     let ok = true
     for (const f of fields) {
@@ -103,7 +108,19 @@ export default function DemoForm({
       const f = byName.get(k)
       return !!f && isVisible(f, values)
     })
-    onSubmit?.(Object.fromEntries(visible))
+    const result = onSubmit?.(Object.fromEntries(visible))
+    if (result && typeof (result as Promise<unknown>).then === 'function') {
+      setPending(true)
+      setSendFailed(false)
+      try {
+        await result
+      } catch {
+        setSendFailed(true)
+        setPending(false)
+        return
+      }
+      setPending(false)
+    }
     setSubmitted(true)
   }
 
@@ -304,7 +321,10 @@ export default function DemoForm({
           </fieldset>
         ) : null}
       </div>
-      <SubmitCta label={form.submitLabel} />
+      <SubmitCta label={form.submitLabel} busy={pending} />
+      {sendFailed && form.submitErrorHtml ? (
+        <div className={s.sendError} role="alert" dangerouslySetInnerHTML={{ __html: form.submitErrorHtml }} />
+      ) : null}
     </form>
   )
 }

@@ -435,8 +435,8 @@ export default function Navbar() {
   const pathname = usePathname()
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const isHomePage = pathname === '/' || pathname === ''
-  // light bar on the vacancy pages only; /careers itself is dark
-  const isCareersPage = /^\/careers\/.+/.test(pathname)
+  // light bar on the vacancy pages and /contact (light scale.com/demo layout); /careers itself is dark
+  const isCareersPage = /^\/careers\/.+/.test(pathname) || /^\/contact\/?$/.test(pathname)
   const liRefs = useRef<Record<string, HTMLLIElement | null>>({})
   const [portalReady, setPortalReady] = useState(false)
   const [menuRect, setMenuRect] = useState<{

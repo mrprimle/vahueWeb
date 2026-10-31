@@ -18,13 +18,17 @@ export default function DemoPage({
   content,
   className = '',
   onSubmit,
+  as: Root = 'main',
 }: {
   content: DemoContent
   className?: string
-  onSubmit?: (values: Record<string, string | string[]>) => void
+  /** May return a promise; see DemoForm. */
+  onSubmit?: (values: Record<string, string | string[]>) => void | Promise<unknown>
+  /** Root element; 'div' when the host layout already renders <main>. */
+  as?: 'main' | 'div'
 }) {
   return (
-    <main className={`${s.root} min-h-screen overflow-x-hidden font-display ${className}`}>
+    <Root className={`${s.root} min-h-screen overflow-x-hidden font-display ${className}`}>
       <section className="pb-[72px] pt-24 md:pb-[120px]">
         <div className="mx-auto w-full max-w-[1472px] pe-6 ps-6">
           <div className={s.grid}>
@@ -39,6 +43,6 @@ export default function DemoPage({
           </div>
         </div>
       </section>
-    </main>
+    </Root>
   )
 }
