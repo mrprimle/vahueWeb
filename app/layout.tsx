@@ -6,6 +6,7 @@ import localFont from 'next/font/local'
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import HideUnderClone from '@/components/scale-clone/shared/HideUnderClone'
 import {
   organizationWithReviewsSchema,
   websiteSchema,
@@ -190,9 +191,13 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans bg-bg text-white">
-        <Navbar />
+        <HideUnderClone>
+          <Navbar />
+        </HideUnderClone>
         <main>{children}</main>
-        <Footer />
+        <HideUnderClone>
+          <Footer />
+        </HideUnderClone>
         <Analytics />
       </body>
     </html>
