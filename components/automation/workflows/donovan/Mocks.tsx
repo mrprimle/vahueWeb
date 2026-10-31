@@ -93,7 +93,7 @@ function Shell({ label, crumb, status, children }: { label: string; crumb: strin
       className="relative w-full overflow-hidden rounded-xl font-sans text-base leading-[1.5] tracking-normal [&_p]:font-display [&_p]:tracking-[-0.01em]"
       style={{
         aspectRatio: '764 / 560',
-        background: 'radial-gradient(ellipse 90% 65% at 50% 0%, rgba(255,255,255,0.07) 0%, transparent 65%), #0a0a0a',
+        background: 'radial-gradient(ellipse 90% 65% at 50% 0%, rgba(124,106,247,0.18) 0%, transparent 65%), radial-gradient(ellipse 50% 40% at 50% 105%, rgba(14,165,233,0.07) 0%, transparent 60%), #0c0b0f', // clone's card glow
       }}
     >
       <div aria-hidden className="absolute left-0 top-0 origin-top-left" style={{ width: CANVAS, height: CANVAS_H, transform: `scale(${scale})` }}>
@@ -117,7 +117,7 @@ function Shell({ label, crumb, status, children }: { label: string; crumb: strin
           />
           <div className="relative flex h-full w-full flex-col overflow-hidden" style={{ background: '#080808' }}>
             <div className="flex shrink-0 items-center gap-1.5 px-3 py-2" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', background: '#060606' }}>
-              <span className="h-2.5 w-2.5 shrink-0 rounded-sm" style={{ background: 'rgba(255,255,255,0.85)' }} />
+              <span className="h-2.5 w-2.5 shrink-0 rounded-sm" style={{ background: '#7c6af7' }} />
               <span className="text-[8.5px]" style={{ color: 'rgba(255,255,255,0.3)' }}>
                 Support agent
               </span>
@@ -456,4 +456,4 @@ export function ReviewMock() {
 }
 
 /** One mock per workflow step, used by the (client) showcase. The before/after list lives in Sections.tsx. */
-export const STEP_MOCKS = [VoiceMock, ActionsMock, HandoffMock, ReviewMock]
+export const STEP_MOCKS = [VoiceMock, ActionsMock, HandoffMock, ReviewMock, QueueMock]

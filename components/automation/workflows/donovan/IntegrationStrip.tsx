@@ -4,14 +4,14 @@ import { useEffect, useRef, useState } from 'react'
 import s from './styles.module.css'
 
 /*
- * Template LogoStrip (section !py-12). Vahue ships no customer logos, so the row lists the systems the workflow
- * runs inside as plain wordmarks.
+ * Template LogoStrip (section !py-12, 5 marks). Vahue ships no customer logos, so the row lists the systems the
+ * workflow runs inside as plain wordmarks, black like Scale's brightness-0 logos.
  * Desktop (md+): one row, max-w 1280 with px-8, justify-between, gap 32, min-h 52.
- * Mobile: marquee at 50px/s, two copies of the track, ml-12 per item.
+ * Mobile: marquee at 50px/s, two copies of the track, ml-12 per item. Items keep the 63px height of Scale's tallest mark.
  */
 
 const Name = ({ name }: { name: string }) => (
-  <span className="block whitespace-nowrap font-display text-[20px] font-normal leading-[1.4] tracking-[-0.01em] text-white/55">
+  <span className="block whitespace-nowrap font-display text-[20px] font-medium leading-[1.4] tracking-[-0.02em] text-black/80">
     {name}
   </span>
 )
@@ -44,7 +44,7 @@ export default function IntegrationStrip({ tools }: { tools: string[] }) {
             }`}
           >
             {tools.map((t) => (
-              <li key={t} className="flex flex-col items-center justify-center gap-3">
+              <li key={t} className="flex min-h-[63px] flex-col items-center justify-center gap-3">
                 <Name name={t} />
               </li>
             ))}
@@ -55,7 +55,7 @@ export default function IntegrationStrip({ tools }: { tools: string[] }) {
             {[0, 1].map((copy) => (
               <div key={copy} ref={copy === 0 ? track : undefined} className={s.marqueeTrack} aria-hidden={copy === 1}>
                 {tools.map((t) => (
-                  <div key={t} className="ml-12 flex shrink-0 flex-col items-center justify-center gap-3">
+                  <div key={t} className="ml-12 flex min-h-[63px] shrink-0 flex-col items-center justify-center gap-3">
                     <Name name={t} />
                   </div>
                 ))}

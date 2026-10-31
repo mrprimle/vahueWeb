@@ -1,11 +1,9 @@
 import type { ReactNode } from 'react'
-import Link from 'next/link'
-import type { Workflow } from '@/lib/automation-content'
 import { ChatMock, HandoffMock, QueueMock } from './Mocks'
 import s from './styles.module.css'
 
 /*
- * Static sections of the donovan clone on Vahue dark. These have no scroll motion on scale.com.
+ * Static sections of the donovan clone, in the clone's own colours. These have no scroll motion on scale.com.
  * Shell: py-18 lg:py-20 (72 / 80), container max-w 1472 px-6.
  */
 export function Section({ children, className = 'py-[72px] lg:py-20' }: { children: ReactNode; className?: string }) {
@@ -36,13 +34,13 @@ export function SectionHeader({
     >
       <div className="flex flex-col">
         <div className="flex flex-col">
-          <div className="mb-5 font-mono text-xs uppercase leading-6 tracking-[1px] text-white/55">
+          <div className="mb-5 font-mono text-xs uppercase leading-6 tracking-[1px] text-[#525252]">
             <span>{eyebrow}</span>
           </div>
-          <h2 className={`${s.sectionHeaderTitle} font-display font-normal tracking-[-0.01em] text-white [text-wrap:balance]`}>{title}</h2>
+          <h2 className={`${s.sectionHeaderTitle} font-display font-normal tracking-[-0.01em] text-black [text-wrap:balance]`}>{title}</h2>
         </div>
         {subtitle ? (
-          <p className="mt-4 block w-full text-base font-normal leading-[1.6] tracking-[-0.01em] text-white/70 [text-wrap:balance] lg:mt-2 lg:text-xl lg:leading-[1.6]">
+          <p className="mt-4 block w-full text-base font-normal leading-[1.6] tracking-[-0.01em] text-black/70 [text-wrap:balance] lg:mt-2 lg:text-xl lg:leading-[1.6]">
             {subtitle}
           </p>
         ) : null}
@@ -86,22 +84,17 @@ export const Glyph = ({ name, size = 22 }: { name: IconName; size?: number }) =>
 // Mocks module is a client module, so the list is built here (a client-module array is opaque to the server).
 const OUTCOME_MOCKS = [ChatMock, HandoffMock, QueueMock]
 
-/* ---------- Product overview -> Before and after: one product-UI card per outcome (aspect 764/560) ---------- */
-export function OutcomeCards({ before, after }: Pick<Workflow, 'before' | 'after'>) {
+/* ---------- Product overview: 3 product-UI cards (aspect 764/560), title + body ---------- */
+export function OverviewCards({ cards }: { cards: { title: string; body: string }[] }) {
   return (
     <div className="mt-2 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {after.map((outcome, i) => {
+      {cards.map((c, i) => {
         const Mock = OUTCOME_MOCKS[i % OUTCOME_MOCKS.length]
         return (
-          <div key={outcome}>
+          <div key={c.title}>
             <Mock />
-            <p className="mt-8 font-display text-2xl leading-[1.5] tracking-[-0.01em] text-white lg:mt-10">{outcome}</p>
-            {before[i] ? (
-              <p className="mt-3 text-base leading-[1.65] tracking-[-0.01em] text-white/55">
-                <span className="mr-2 font-mono text-[12px] uppercase tracking-[1px] text-white/45">Before</span>
-                {before[i]}
-              </p>
-            ) : null}
+            <p className="mt-8 font-display text-2xl leading-[1.5] tracking-[-0.01em] text-black lg:mt-10">{c.title}</p>
+            <p className="mt-3 text-base leading-[1.65] tracking-[-0.01em] text-black/70">{c.body}</p>
           </div>
         )
       })}
@@ -110,22 +103,19 @@ export function OutcomeCards({ before, after }: Pick<Workflow, 'before' | 'after
 }
 
 /* ---------- Foundation: top row, a brace, bottom row (flex-wrap, left-aligned like Scale) on a lifted band ---------- */
-function FoundationCard({ title, body, icon }: { title: string; body?: string; icon: IconName }) {
+function FoundationCard({ title, icon }: { title: string; icon: IconName }) {
   return (
-    <div className="flex w-full flex-col items-center gap-6 rounded-2xl border border-solid border-border-soft bg-surface p-6 sm:w-[368px]">
-      <figure className="relative flex h-11 w-11 select-none items-center justify-center rounded-lg text-white">
+    <div className="flex w-[368px] max-w-full flex-col items-center gap-6 rounded-2xl border border-solid border-black/5 bg-white p-6">
+      <figure className="relative flex h-11 w-11 select-none items-center justify-center rounded-lg text-[#B9B9B9]">
         <Glyph name={icon} size={24} />
       </figure>
-      <div className="flex flex-col items-center gap-2 self-stretch">
-        <p className="text-center font-display text-2xl font-normal leading-8 tracking-[-0.01em] text-white">{title}</p>
-        {body ? <p className="text-center text-[14px] leading-[1.5] tracking-[-0.01em] text-white/55">{body}</p> : null}
-      </div>
+      <p className="self-stretch text-center font-display text-2xl font-normal leading-8 tracking-[-0.01em] text-black">{title}</p>
     </div>
   )
 }
 
 const Brace = () => (
-  <svg viewBox="0 0 687 36" fill="none" aria-hidden="true" className="h-auto w-full max-w-[687px] shrink-0">
+  <svg width="687" height="36" viewBox="0 0 687 36" fill="none" aria-hidden="true" className="shrink-0">
     <g opacity="0.45">
       <path
         d="M0.527344 35.1703C0.527344 22.8684 10.5 12.8958 22.8018 12.8958H330.542C337.664 12.8958 343.437 7.12213 343.437 0"
@@ -141,7 +131,7 @@ const Brace = () => (
   </svg>
 )
 
-type FoundationItem = { title: string; body?: string; icon: IconName }
+type FoundationItem = { title: string; icon: IconName }
 
 export function Foundation({
   eyebrow,
@@ -156,9 +146,9 @@ export function Foundation({
   top: FoundationItem[]
   bottom: FoundationItem[]
 }) {
-  const row = 'flex flex-wrap content-start items-stretch justify-center gap-8 self-stretch rounded-2xl p-6'
+  const row = 'flex flex-wrap content-start items-start gap-8 self-stretch rounded-2xl p-6'
   return (
-    <div className="border-y border-border-soft bg-white/[0.02]">
+    <div className="bg-[#f9fafb]">
       <Section>
         <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
         <div className="mb-24 flex flex-col items-center gap-6">
@@ -180,7 +170,7 @@ export function Foundation({
 }
 
 /* ---------- Icon feature grid (template "Overmatch" / "Trusted & Secure") ---------- */
-export type Feature = { icon: IconName; title: string; body?: ReactNode; meta?: string; href?: string; linkLabel?: string }
+export type Feature = { icon: IconName; title: string; body: ReactNode }
 
 export function FeatureGrid({
   eyebrow,
@@ -200,33 +190,17 @@ export function FeatureGrid({
       <SectionHeader eyebrow={eyebrow} title={title} subtitle={subtitle} tightBottom />
       <div className="flex flex-wrap gap-16 md:gap-x-6 md:gap-y-20 xl:gap-x-14">
         {items.map((f) => (
-          <div key={f.title} className="shrink-0 grow basis-full text-white md:max-w-[368px] lg:basis-1/4">
+          <div key={f.title} className="shrink-0 grow basis-full text-black md:max-w-[368px] lg:basis-1/4">
             <div>
-              <figure className="relative flex h-11 w-11 select-none items-center justify-center rounded-lg border border-border-mid bg-white/[0.09] text-white">
+              <figure className="relative flex h-11 w-11 select-none items-center justify-center rounded-lg border border-black/10 bg-black/[0.09] text-black">
                 <span className="flex h-6 w-6 items-center justify-center">
                   <Glyph name={f.icon} />
                 </span>
               </figure>
             </div>
             <div>
-              {f.meta ? <p className="mt-6 font-mono text-[12px] uppercase leading-6 tracking-[1px] text-white/55">{f.meta}</p> : null}
-              <h3
-                className={`relative ${f.meta ? 'mt-1' : 'mt-6'} whitespace-pre-line font-display text-2xl font-normal leading-[1.5] tracking-[-0.01em] text-white`}
-              >
-                {f.title}
-              </h3>
-              {f.body ? <p className="relative mt-4 text-base leading-6 tracking-[-0.01em] text-white/55">{f.body}</p> : null}
-              {f.href ? (
-                <Link
-                  href={f.href}
-                  className="group mt-4 inline-flex items-center gap-1 text-[14px] font-medium text-white transition-colors duration-300 hover:text-white/70"
-                >
-                  {f.linkLabel ?? 'Read more'}
-                  <span aria-hidden className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1">
-                    →
-                  </span>
-                </Link>
-              ) : null}
+              <h3 className="relative mt-6 whitespace-pre-line font-display text-2xl font-normal leading-[1.5] tracking-[-0.01em] text-black">{f.title}</h3>
+              <p className="relative mt-4 text-base leading-6 tracking-[-0.01em] text-[#525252]">{f.body}</p>
             </div>
           </div>
         ))}

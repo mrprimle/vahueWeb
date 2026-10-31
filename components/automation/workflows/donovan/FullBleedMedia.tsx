@@ -1,8 +1,8 @@
 'use client'
 
 import { createElement, useEffect, useRef } from 'react'
-import { useRefreshOnPageGrow } from '@/lib/useRefreshOnPageGrow'
 import gsap from 'gsap'
+import { useRefreshOnPageGrow } from '@/lib/useRefreshOnPageGrow'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import FlatCta from './FlatCta'
 import { createAnimatedText, prefersReducedMotion } from './animatedText'
@@ -11,13 +11,15 @@ import s from './styles.module.css'
 gsap.registerPlugin(ScrollTrigger)
 
 /*
- * scale.com FullBleedMediaSection inside a ClipScrollSection (hero and pre-footer CTA), copied from the donovan
- * clone and moved to Vahue dark: the media layer is the flat surface with the dot texture (no Scale imagery) and the
- * overlay is a vignette to the page background. Motion is unchanged:
+ * The donovan clone's FullBleedMedia (scale.com FullBleedMediaSection inside a ClipScrollSection), same colours and
+ * motion; Vahue photos in the media layer and an `as` prop so the hero renders the page H1.
  *
- * Scrubbed, trigger = section, start "top bottom" -> end "center center":
- *   clip container  clip-path inset(5% -> 0% round 1.5rem)   (startPercentage 10, x0.5)
- *   media           scale 1.25 -> 1
+ * Scrubbed, start "top bottom" -> end "center center" (REA-verified against chunk 37xz28pjbnlx4.js + live samples):
+ *   clip container  clip-path inset(0.5*startPercentage % -> 0% round 1.5rem), trigger = ClipScrollSection wrapper.
+ *                   FullBleedMediaSection defaults startPercentage to 10 (pre-footer: 5% -> 0); the hero passes 0 (no clip).
+ *   media           scale 1.25 -> 1 (FullBleedMediaSection's own scrub on the section; ClipScrollSection gets startScale 1)
+ * .media-overlay is `background: linear-gradient(#0000, #000)`; the shorthand cancels the bg-black/45 class
+ * (computed background-color is transparent on scale.com), so the overlay is the gradient only.
  * One-shot, start "top center" (retroactive onEnter):
  *   headline        AnimatedText intro, delay 0
  *   body            AnimatedText intro, delay 0.2
@@ -28,20 +30,23 @@ gsap.registerPlugin(ScrollTrigger)
 type Cta = { label: string; href: string }
 
 type Props = {
-  /** Optional Vahue photo for the media layer; without one it is the dark dot-texture surface. */
-  image?: string
+  image: string
+  imageBg?: string
   headline: string
-  /** The hero renders the page H1, the pre-footer an H2. */
-  as?: 'h1' | 'h2'
   body?: string
   primary: Cta
   secondary?: Cta
+  backdrop: string
   priority?: boolean
+  /** ClipScrollSection startPercentage: 0 on the hero (no clip), 10 on the pre-footer. Defaults to 0 when `priority` (hero). */
+  startPercentage?: number
+  as?: 'h1' | 'h2'
 }
 
-export default function FullBleedMedia({ image, headline, as = 'h2', body, primary, secondary, priority }: Props) {
+export default function FullBleedMedia({ image, imageBg, headline, body, primary, secondary, backdrop, priority, startPercentage, as = 'h2' }: Props) {
   useRefreshOnPageGrow()
   const section = useRef<HTMLElement>(null)
+  const wrapper = useRef<HTMLDivElement>(null)
   const clip = useRef<HTMLDivElement>(null)
   const media = useRef<HTMLDivElement>(null)
   const h2 = useRef<HTMLHeadingElement>(null)
@@ -57,17 +62,26 @@ export default function FullBleedMedia({ image, headline, as = 'h2', body, prima
 
     const ctx = gsap.context(() => {
       if (!reduced) {
+        const maxInset = 0.5 * (startPercentage ?? (priority ? 0 : 10))
+        const apply = (progress: number) => {
+          if (clip.current) clip.current.style.clipPath = `inset(${gsap.utils.clamp(0, maxInset, maxInset * (1 - progress))}% round 1.5rem)`
+        }
+        apply(0)
+        ScrollTrigger.create({
+          trigger: wrapper.current ?? root,
+          start: 'top bottom',
+          end: 'center center',
+          onUpdate: ({ progress }) => apply(progress),
+          onRefresh: ({ progress }) => apply(progress),
+        })
         ScrollTrigger.create({
           trigger: root,
           start: 'top bottom',
           end: 'center center',
           onUpdate: ({ progress }) => {
-            const inset = gsap.utils.clamp(0, 5, 5 * (1 - progress))
-            if (clip.current) clip.current.style.clipPath = `inset(${inset}% round 1.5rem)`
             if (media.current) gsap.set(media.current, { scale: 1.25 - 0.25 * progress })
           },
           onRefresh: ({ progress }) => {
-            if (clip.current) clip.current.style.clipPath = `inset(${5 * (1 - progress)}% round 1.5rem)`
             if (media.current) gsap.set(media.current, { scale: 1.25 - 0.25 * progress })
           },
         })
@@ -137,21 +151,17 @@ export default function FullBleedMedia({ image, headline, as = 'h2', body, prima
       texts.forEach((t) => t.revert())
       ctx.revert()
     }
-  }, [])
+  }, [priority, startPercentage])
 
   return (
-    <div className="relative isolate w-full px-4">
+    <div ref={wrapper} className={`isolate relative w-full px-4`} style={{ background: backdrop }}>
       <div ref={clip} className="h-full w-full overflow-hidden" style={{ clipPath: 'inset(0 round 1.5rem)' }}>
-        <section ref={section} className="relative overflow-hidden rounded-3xl bg-bg text-white">
+        <section ref={section} className="relative overflow-hidden rounded-3xl bg-white text-black">
           <div className="relative flex min-h-[480px] items-end overflow-hidden rounded-3xl p-8 md:min-h-[720px] md:p-16">
             <div className="relative z-20 flex w-full max-w-[72rem] flex-col gap-6 text-white">
-              {createElement(
-                as,
-                { ref: h2, className: `${s.header2} ${s.pending} font-display font-normal text-white` },
-                headline,
-              )}
+              {createElement(as, { ref: h2, className: `${s.header2} ${s.pending} font-display font-normal text-white` }, headline)}
               {body ? (
-                <p ref={p} className={`${s.body1} ${s.pending} w-full max-w-[48rem] font-display text-white/85`}>
+                <p ref={p} className={`${s.body1} ${s.pending} w-full font-display text-white`}>
                   {body}
                 </p>
               ) : null}
@@ -167,20 +177,19 @@ export default function FullBleedMedia({ image, headline, as = 'h2', body, prima
               </div>
             </div>
             <div className="absolute left-0 top-0 h-full w-full origin-center overflow-hidden rounded-3xl">
-              {/* Vignette fade to the page background (no coloured glow in the hero, per DESIGN.md). */}
-              <div className="pointer-events-none absolute inset-0 z-10 rounded-3xl bg-[linear-gradient(rgba(2,2,2,0)_0%,#020202_100%)]" />
-              <div ref={media} className="absolute inset-0 overflow-hidden rounded-3xl">
-                <div className="hero-texture relative h-full w-full overflow-hidden rounded-3xl border border-border-soft bg-surface">
-                  {image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={image}
-                      alt=""
-                      loading={priority ? 'eager' : 'lazy'}
-                      className="absolute inset-0 h-full w-full rounded-[inherit] object-cover"
-                    />
-                  ) : null}
-                </div>
+              {/* .media-overlay: gradient only (its `background` shorthand cancels bg-black/45 on scale.com) */}
+              <div
+                className="pointer-events-none absolute inset-0 z-10 rounded-3xl"
+                style={{ background: 'linear-gradient(#0000 0%, #000 100%)' }}
+              />
+              <div ref={media} className="absolute inset-0 overflow-hidden rounded-3xl" style={{ background: imageBg }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={image}
+                  alt=""
+                  loading={priority ? 'eager' : 'lazy'}
+                  className="absolute inset-0 h-full w-full rounded-[inherit] object-cover"
+                />
               </div>
             </div>
           </div>
