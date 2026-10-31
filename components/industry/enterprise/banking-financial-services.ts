@@ -11,8 +11,8 @@ const approvals = CONTROL_FEATURES.find((f) => f.title === 'Approvals and dry ru
 export const bankingConfig: IndustryConfig = {
   key: 'banking-financial-services',
   hero: {
-    headline: 'Loan files and KYC, run by agents.', // page copy
-    body: 'Loan documents, KYC packs and reconciliations handled inside your systems. Uncertain items go to your team, and every action is logged.', // page copy
+    headline: 'Loan files, KYC and reconciliations, run by agents.', // page copy
+    body: 'Loan documents, KYC packs and reconciliations handled inside your systems, with exceptions reviewed by your team.', // page copy
     systems: ['Salesforce', 'SharePoint', 'Outlook', 'SAP', 'Snowflake', 'NetSuite', 'Power BI'],
   },
   problem: [
