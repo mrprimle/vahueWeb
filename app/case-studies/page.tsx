@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import SmoothScroll from '@/components/home/scroll-hero/SmoothScroll'
 import BookIndexHero from '@/components/book-index/BookIndexHero'
 import BookGrid from '@/components/book-index/BookGrid'
-import IndexList, { type IndexGroup } from '@/components/book-index/IndexList'
 import FullBleedMedia from '@/components/book-index/FullBleedMedia'
 import { caseStudies } from '@/lib/case-studies'
 
@@ -19,57 +18,38 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://vahue.ai/case-studies/' },
 }
 
-// Case studies index on the layout of the guides clone (app/scale-clone/guides, spec in
-// reference-snapshots/scale-clone/guides.md): each verified case is a book with its metric.
-// The text index below the grid keeps the service grouping, client, summaries and the disclaimer.
+/*
+ * /case-studies in strict parity with the guides clone (app/scale-clone/guides, spec
+ * reference-snapshots/scale-clone/guides.md): Scale's three sections (centred hero, 12-book grid, clip-opening
+ * pre-footer) in Scale's colours, Vahue fonts and logo. The 12 books are Vahue's 10 cases from lib/case-studies.ts plus
+ * the audit and operate pages, each cover carrying only what Scale's does (mark, index, title). The hero sub carries the disclosure note.
+ * Copy written here is marked `// page copy`.
+ */
 export default function CaseStudiesPage() {
-  const books = caseStudies.map((c) => ({
-    href: `/case-studies/${c.slug}/`,
-    title: c.title,
-    metric: c.metric,
-    label: `${c.service} · ${c.disclosure}`,
-  }))
-
-  const services = Array.from(new Set(caseStudies.map((c) => c.service)))
-  const groups: IndexGroup[] = services.map((service) => ({
-    heading: service,
-    items: caseStudies
-      .filter((c) => c.service === service)
-      .map((c) => ({
-        href: `/case-studies/${c.slug}/`,
-        title: c.title,
-        meta: `${c.client} · ${c.disclosure}`,
-        summary: c.summary,
-      })),
-  }))
+  const books = [
+    ...caseStudies.map((c) => ({ href: `/case-studies/${c.slug}/`, title: c.title })),
+    // Vahue has 10 published cases; Scale's grid has 12 books. The last two slots hold the method every case ran on.
+    { href: '/strategy/', title: 'How a two-week audit records the baseline' }, // page copy
+    { href: '/operations/', title: 'Running agents month to month against the baseline' }, // page copy
+  ]
 
   return (
-    <main className="bg-bg">
+    <main className="bg-white">
       <SmoothScroll />
       <BookIndexHero
         overtitle="Selected work"
-        title="Evidence from work we actually delivered."
-        sub="Named clients are shown where disclosure is permitted. Other engagements are deliberately anonymised. We publish only the scope and results approved for public use."
+        title="Case studies"
+        // page copy
+        sub="Named clients appear where disclosure is permitted; others are anonymised. Results are measured or client-reported, not audited."
       />
       <BookGrid books={books} ariaLabel="Case studies" />
-      <IndexList
-        overtitle="By service"
-        title="All case studies"
-        groups={groups}
-        footnote={
-          <p>
-            Results reflect project measurements and/or client-reported outcomes available to Vahue. They have not been
-            independently audited and should not be read as a guarantee of future performance.
-          </p>
-        }
-      />
       <div className="pb-8">
         <FullBleedMedia
-          backdrop="#020202"
+          backdrop="#fff"
           image="/img/careers/team.jpg"
-          imageBg="#111"
-          headline="Start with one workflow and a result you can measure."
-          primary={{ label: 'Talk to us', href: '/contact/' }}
+          imageBg="#193A29"
+          headline="Start with one workflow today." // page copy
+          primary={{ label: 'Book an Audit', href: '/contact/' }}
         />
       </div>
     </main>

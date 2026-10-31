@@ -1,5 +1,5 @@
 /* Vahue book index (/guides, /case-studies). Ported from components/scale-clone/guides/guides.module.css:
-   sizes and motion unchanged; the book's page block and shadows inverted for the dark site. */
+   sizes, motion and Scale's colours unchanged (white pages, #d4d4d4 page edge, Scale's shadows). */
 
 @media (prefers-reduced-motion: no-preference) {
   .pending {
@@ -129,7 +129,7 @@
 .book:focus-visible .bookCover {
   transform-style: preserve-3d;
   transform: perspective(2000px) rotateY(-30deg);
-  box-shadow: 10px 0 10px -5px #00000080;
+  box-shadow: 10px 0 10px -5px #00000030;
 }
 .book:hover .effect,
 .book:focus-visible .effect {
@@ -141,40 +141,27 @@
   width: 70%;
 }
 .bookInside {
-  /* Scale: white pages, #d4d4d4 edge. Vahue dark: graphite pages with the same page-edge stack. */
-  background: #1b1b1f;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #fff;
+  border: 1px solid #d4d4d4;
   border-radius: 3px;
   width: calc(100% - 2px);
   height: 96%;
   position: relative;
   top: 2%;
   box-shadow:
-    0 20px 25px #0000004d,
-    0 10px 10px #00000026,
-    inset -2px 0 #2a2a30,
-    inset -3px 0 #35353c,
-    inset -4px 0 #1b1b1f,
-    inset -5px 0 #35353c,
-    inset -6px 0 #1b1b1f,
-    inset -7px 0 #35353c,
-    inset -8px 0 #1b1b1f,
-    inset -9px 0 #35353c;
-}
-/* hairline so dark covers hold their edge on the #020202 page */
-.bookCover::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  pointer-events: none;
+    0 20px 25px #4a4a8b1a,
+    0 10px 10px #4a4a8b0a,
+    inset -2px 0 #d4d4d4,
+    inset -3px 0 #dbdbdb,
+    inset -4px 0 #fff,
+    inset -5px 0 #dbdbdb,
+    inset -6px 0 #fff,
+    inset -7px 0 #dbdbdb,
+    inset -8px 0 #fff,
+    inset -9px 0 #dbdbdb;
 }
 .book:focus-visible {
-  /* Scale has no keyboard state; the hover pose plus a soft ring keeps focus visible */
-  outline: 2px solid rgba(255, 255, 255, 0.6);
-  outline-offset: 4px;
-  border-radius: 3px;
+  outline: none;
 }
 @media (prefers-reduced-motion: reduce) {
   .bookCover,
