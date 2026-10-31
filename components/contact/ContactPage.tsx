@@ -24,6 +24,8 @@ async function sendContact(values: Values) {
 
   const heard = str(values.heard_from) === 'Other' ? `Other: ${str(values.heard_from_other)}` : str(values.heard_from)
   const params = {
+    // Recipient for templates that use {{to_email}}; the EmailJS template's own "To" field wins otherwise.
+    to_email: 'human@vahue.ai',
     name: `${str(values.firstname)} ${str(values.lastname)}`.trim(),
     email: str(values.email),
     company: str(values.company),
