@@ -6,7 +6,8 @@ import { useEffect, useRef, useState } from 'react'
  * scale.com ProvenModelImprovementsChart (chunk 197mu5y2fw9hi, module 77633), redrawn 1:1.
  * 580x360 viewBox on #080808, 12px radius, aspect-video. Three log curves (ceilings 0.4 / 0.65 / 0.9) draw in with
  * stroke-dashoffset over 1.6s cubic-bezier(0.4,0,0.2,1), delays 0 / 0.3 / 0.6s, once 25% of the chart is visible.
- * Each label fades in (0.5s ease) at delay + 1.6 - 0.15s.
+ * Each label fades in (0.5s ease) at delay + 1.6 - 0.15s. As on Scale, the curves are fully drawn until the observer
+ * fires (no dash set yet), then snap to hidden and draw in; the labels stay at opacity 0 until then.
  */
 
 const SERIES = [
@@ -104,7 +105,6 @@ export default function ModelChart({ yAxis, xAxis, labels }: { yAxis: string; xA
                 fill="none"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                style={shown ? undefined : { opacity: 0 }}
               />
               {(labels[i] ?? []).map((l, j) => (
                 <text

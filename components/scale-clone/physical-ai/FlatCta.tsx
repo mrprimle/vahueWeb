@@ -1,6 +1,6 @@
 'use client'
 
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState, type TransitionEvent } from 'react'
 import gsap from 'gsap'
 
 /*
@@ -37,18 +37,39 @@ const FlatCta = forwardRef<FlatCtaHandle, Props>(function FlatCta({ href, text, 
   const arrow = useRef<HTMLDivElement>(null)
   const tl = useRef<gsap.core.Timeline | null>(null)
 
-  // Wash states mirror Scale's: idle -> hover -> leaving (exits the far side) -> reset (snaps back, no transition).
-  const [wash, setWash] = useState<'idle' | 'hover' | 'leaving' | 'reset'>('idle')
+  // Same state machine as Scale's FlatCta (chunk 1h0nvyhf5gbrf.js, module 892855):
+  //   hovered -> wash at 0; leaving -> wash exits the far side; resetting -> wash snaps back to the start with no
+  //   transition, released after two rAFs. Leave resets on the wash's transform transitionend, or after 680ms.
+  //   Re-entering while the wash is still leaving snaps it back first, so it always enters from the start side.
+  //   Arrow strip: hovered slides -50% -> 0 (600ms); leave snaps it back (transition none).
+  const [hovered, setHovered] = useState(false)
+  const [leaving, setLeaving] = useState(false)
+  const [resetting, setResetting] = useState(false)
   const [arrowIn, setArrowIn] = useState(false)
   const [arrowSnap, setArrowSnap] = useState(false)
+  const pending = useRef(false)
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
+  const clearTimer = () => {
+    if (leaveTimer.current != null) clearTimeout(leaveTimer.current)
+    leaveTimer.current = null
+  }
+  useEffect(() => clearTimer, [])
+
+  const finishLeave = useCallback(() => {
+    if (!pending.current) return
+    clearTimer()
+    pending.current = false
+    setLeaving(false)
+    setResetting(true)
+  }, [])
+
   useEffect(() => {
-    if (wash !== 'reset' && !arrowSnap) return
+    if (!resetting && !arrowSnap) return
     let r2 = 0
     const r1 = requestAnimationFrame(() => {
       r2 = requestAnimationFrame(() => {
-        if (wash === 'reset') setWash('idle')
+        setResetting(false)
         setArrowSnap(false)
       })
     })
@@ -56,13 +77,14 @@ const FlatCta = forwardRef<FlatCtaHandle, Props>(function FlatCta({ href, text, 
       cancelAnimationFrame(r1)
       cancelAnimationFrame(r2)
     }
-  }, [wash, arrowSnap])
-
-  useEffect(() => () => void (leaveTimer.current && clearTimeout(leaveTimer.current)), [])
+  }, [resetting, arrowSnap])
 
   const onEnter = useCallback(() => {
-    if (leaveTimer.current) clearTimeout(leaveTimer.current)
-    setWash('hover')
+    clearTimer()
+    setResetting(pending.current)
+    pending.current = false
+    setLeaving(false)
+    setHovered(true)
     if (isArrow) {
       setArrowSnap(false)
       setArrowIn(true)
@@ -73,9 +95,20 @@ const FlatCta = forwardRef<FlatCtaHandle, Props>(function FlatCta({ href, text, 
       setArrowIn(false)
       setArrowSnap(true)
     }
-    setWash('leaving')
-    leaveTimer.current = setTimeout(() => setWash('reset'), 680)
-  }, [isArrow])
+    setHovered(false)
+    if (resetting) return
+    setLeaving(true)
+    pending.current = true
+    clearTimer()
+    leaveTimer.current = setTimeout(() => {
+      leaveTimer.current = null
+      finishLeave()
+    }, 680)
+  }, [isArrow, resetting, finishLeave])
+  const onWashEnd = (e: TransitionEvent<HTMLDivElement>) => {
+    if (e.target !== e.currentTarget) return
+    if (e.propertyName === 'transform' || e.propertyName === 'translate') finishLeave()
+  }
 
   useImperativeHandle(ref, () => {
     const set = () => {
@@ -117,14 +150,13 @@ const FlatCta = forwardRef<FlatCtaHandle, Props>(function FlatCta({ href, text, 
     return { set, animateIn }
   })
 
-  const washPos =
-    wash === 'reset'
-      ? isArrow ? '-translate-x-full' : 'translate-y-full'
-      : wash === 'hover'
-        ? 'translate-x-0 translate-y-0'
-        : wash === 'leaving'
-          ? isArrow ? 'translate-x-full' : '-translate-y-full'
-          : isArrow ? '-translate-x-full' : 'translate-y-full'
+  const washPos = resetting
+    ? isArrow ? '-translate-x-full' : 'translate-y-full'
+    : hovered
+      ? 'translate-x-0 translate-y-0'
+      : leaving
+        ? isArrow ? 'translate-x-full' : '-translate-y-full'
+        : isArrow ? '-translate-x-full' : 'translate-y-full'
 
   return (
     <a
@@ -141,8 +173,9 @@ const FlatCta = forwardRef<FlatCtaHandle, Props>(function FlatCta({ href, text, 
         aria-hidden
         className={`pointer-events-none absolute inset-0 z-0 size-full rounded-[inherit] bg-current ease-out motion-reduce:transition-none ${
           isArrow ? 'opacity-35' : 'opacity-30'
-        } ${washPos} ${wash === 'reset' ? 'transition-none' : 'transition-transform'}`}
+        } ${washPos} ${resetting ? 'transition-none' : 'transition-transform'}`}
         style={{ transitionDuration: isArrow ? '600ms' : '300ms' }}
+        onTransitionEnd={onWashEnd}
       />
       <div className={`relative z-[1] inline-flex max-w-full flex-wrap items-center justify-center ${isArrow ? 'py-1 pl-4 pr-1' : 'px-4 py-2'}`}>
         <div

@@ -64,9 +64,9 @@ Screenshots in `reference-snapshots/scale-clone/qa/physical-ai/`: `1440-{scale,c
 
 ## Remaining gaps
 
-- On Scale, clicking a testimonial arrow also scrolls the section into view with Lenis (`scrollTo(section, { offset: -24 })`). The shared layout doesn't expose its Lenis instance, so the clone skips this scroll.
+- ~~Clicking a testimonial arrow doesn't scroll the section with Lenis.~~ Fixed in the interaction audit below (arrows and tiles both scroll, through `window.__lenis`).
 - On Scale, the testimonial flip-in starts about 100ms later after a click than in the clone (React/Lenis overhead on their side). Durations, eases and staggers match.
-- The model chart's curves stay hidden until the chart is 25% in view. On Scale they are fully drawn until then and snap back to draw in, which looks like a flash. Not reproduced.
+- ~~The model chart's curves stay hidden until 25% in view.~~ Now as on Scale: fully drawn until the observer fires, then they snap to hidden and draw in (interaction audit below).
 - Testimonial tiles show the client name. Scale's code supports client logos in the tiles, but this page uses names only.
 - Hero logo strip uses placeholder tiles (TODO: partner logos).
 - Scale's `lg:line-clamp-8` on the quotes is not applied. The placeholder quotes fit in 8 lines, and `max-h-[8lh]` with `overflow-y: clip` is kept.
@@ -109,3 +109,73 @@ Overlay computed `background-color: rgba(0,0,0,0)` on both.
 - Clone re-sampled: the pre-footer with its top at 450 reads `inset(2.27778%)` and scale 1.1139, against Scale's 2.2222% and 1.1111 (a 0.05% difference from the 2px taller clone card). No console errors.
 - QA re-shot: `qa/physical-ai/1440-{scale,clone}-rea-{hero,prefooter}.jpg`.
 - **Still unknown:** none.
+
+## Interaction audit (2026-10-31)
+
+**Method.** REA on a fresh CDP 9230 tab of scale.com/physical-ai: `analyze_web_bundle` (ev_4bea7658e124…, 46/46 scripts parsed, 0 failures), `inspect_web_event_listeners` on `html` (ev_67135ca089e7…), `body` (ev_ed97f690d84…), `.FullBleedMediaSection` (ev_4acf872f2ca1…), `.ClientTestimonials` (ev_0e57e423d05b…), `.ClientTestimonials button[role=tab]` (ev_8e4e4b1557e…) and the previous arrow (ev_fcbd1fab728…). React handlers (onPointerEnter, onClick, onMouseEnter) are delegated to the root, so REA can't see them on the element; I traced them in the chunk sources instead. The page chunk `197mu5y2fw9hi.js` holds ClientTestimonials (module 685963), FeaturesWithIcons (460138) and the chart (77633). Module 685963 is byte-for-byte the same code as on /data-engine after normalising minified names, and `1h0nvyhf5gbrf.js` (FlatCta 892855, AnimatedText 668761) and `37xz28pjbnlx4.js` (FullBleedMediaSection) are identical files. So the data-engine audit's findings for these modules apply here as well. Then Playwright (1440×900 and 390×844), with identical inputs on scale.com, `/scale-clone/physical-ai/` and `/automations/document-intake/`. The inputs: hover enter/leave/re-enter on every in-page CTA (sampled at 0/60/120/200/320/700/900 ms), the testimonial reveal (0–2200 ms), arrow hover, next-arrow click, tile click, the previous-arrow wrap, the mobile arrow click, the chart's IntersectionObserver on a fresh load, the pre-footer scrub at 10 points, and a 6×4 cursor grid sweep at 4 scroll depths (compared against the same wait without a sweep). Scripts: `scratchpad/pai-audit/qa.js`, `qa2.js`. Images: `qa/physical-ai/interactions/`.
+
+**Window / document level.** `html` has a passive `scroll` listener (ScrollTrigger's scroller cache, `1h0nvyhf5gbrf.js`) plus the OneTrust `keydown`/`click` listeners. `body` has one passive `touchstart` (ScrollTrigger). Lenis 1.3.21 runs through lenis/react (`useLenis`, module 255667). There's no `pointermove`, `mousemove` or `wheel` listener anywhere, no Keen/Embla, and no canvas/WebGL (the three.js chunk is preloaded through 120064 but not mounted). The cursor grid sweep changed exactly 1 element on all three pages at every depth (the CSS logo marquee, which also changes with no mouse), so there are **no cursor-driven effects**.
+
+### 1. Hero FullBleedMediaSection
+| Element | Input | Listener (REA) | Source module | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| clip wrapper / media | scroll | ScrollTrigger (html scroll, ev_67135ca0) | `37xz28pjbnlx4.js` FullBleedMediaSection + ClipScrollSection | startPercentage 0 (no clip), media scale 1.25 → 1, `top bottom → center center`, scrub | yes (verified in the REA pass above) | `../1440-*-rea-hero.jpg` |
+| headline / body / CTA | enter `top center` (once) | ScrollTrigger | `1h0nvyhf5gbrf.js` AnimatedText 668761 + FlatCta reveal | as in the Motion table | yes | n/a |
+| "Book a Demo" CTA (arrow, white) | pointerenter / pointerleave | React delegated (no direct listeners, ev_4acf872f) | FlatCta 892855 | wash `translate-x` −100% → 0 → +100%, 600ms ease-out, opacity .35. It resets on the wash `transitionend` or after 680ms (snaps with no transition, released after 2 rAF). Re-entry while leaving snaps back first. Chevron track −50% → 0 (600ms) on enter, **snaps back on leave** | **fixed** (re-entry used to reverse from the exit side; no transitionend reset) | `1440-{scale,clone,vahue}-cta0-hover.jpg` |
+| logo marquee | none | none (CSS animation, no hover pause) | `animate-logo-marquee` | 40s linear, −50% | yes | n/a |
+
+Hover samples, wash position in % of its own width. Enter: Scale −100 / −81 / −56 / −35 / −16 / 0 at 0/60/120/200/320/700 ms; the clone gives −100 / −81 / −56 / −35 / −16 / 0. Leave: 0 → 19 → 44 → 65 → 84, then reset to −100 by 700 ms (both). Re-enter 80 ms after leaving: Scale −100 / −100 / −73.6 / −42.2 / −10.8 at 0/40/100/200/400 ms; the clone gives −100.3 / −100.3 / −73.8 / −42.4 / −10.7. **Before the fix** the clone gave 20.6 / 16.7 / 11.5 / 6.5 / 1.4, sliding back from the exit side. Track: −50 → −40.5 → −27.9 → −17.4 → −8 → 0 on enter, −50 at once on leave, re-enter −50 / −44.7 / −30.6 / −17.4 / −3.9 (identical on all three).
+
+### 2. Product overview, 4. Use case, 5. Embodiments, 6. Environments, 8. The difference
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| all children | hover / click / scroll | none (static legacy markup: no anchors, no hover/transition classes in the SSR of these sections) | FeaturesWithIcons 460138, legacy SideBySide/cards | n/a | n/a (nothing to reproduce) | n/a |
+
+### 3. Client testimonials (ClientTestimonials, module 685963, evergreen, 2 items)
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| panel bg | scroll | ScrollTrigger | 685963 | width 90% → 100%, power3.out, scrub, `top bottom → bottom 75%` | yes | n/a |
+| section | enter `top 80%` (hook 210104) | ScrollTrigger | 685963 | state −1 → 0. `safeIndex = min(index, n−1)` is −1 before entry, so **no tile is selected** (fills at y 100%, labels white), and the chip is empty (26px) | **fixed**: the clone clamped to 0, so tile 0 rendered selected (fill at 0, evergreen label) before entry | `1440-*-testimonial-entered.jpg` |
+| quote / name / chip | index change | same | AnimatedText 668761 customAnimation (flip) + `animateToText` | as in the Motion table (flip .48s power2.out stagger .05; quote in at .35, name out/in at .5; chip 20px → text + 26px) | yes | same |
+| tile `[role=tab]` | activation | React state | 685963 `c` | fill y ±100% → 0 / 0 → ∓100%, 0.3s, GSAP default ease (x below 768px). Label colour white ↔ evergreen with `transition-all`. Scale's `transition-duration-800` isn't a utility class, so the computed duration is the **0.15s** default | **fixed** (the clone used `duration-[800ms]`: computed 0.8s) | same |
+| tile | click | React delegated `onClick` (REA: HubSpot `mousedown` capture + `click` on 42ixmvih7808g.js, ev_8e4e4b1557e) | 685963 `ei` | Lenis `scrollTo(root, { offset: −24 })`, then select. The root keeps `scroll-mt-28`, so it lands at 136px | **fixed** (was select only, no scroll) | n/a |
+| prev / next arrow | click | React delegated (ev_fcbd1fab728: same pair) | 685963 `ea` | same Lenis scroll, then index −1 / +1 with wrap-around | **fixed** (no scroll before) | `1440-*-next-click.jpg`, `390-*-next-click.jpg` |
+| prev / next arrow | mouseenter / mouseleave | React delegated | 685963 `a` | GSAP `to` .3s (default ease): bg `rgba(255,255,255,0)` → white, colour white → `#193A29`, border white → transparent; reverse on leave | yes | n/a |
+| tablist | keyboard | none (no arrow-key handler; roving `tabIndex` 0 on the active tile, −1 on the others) | 685963 | n/a | yes (same markup) | n/a |
+
+**Samples.** Before entry, all three show `sel 00`, fills `y 99.7%`, labels white, tile transition `0.15s all`, chip 26px empty, and section height 717. Reveal: Scale's fill goes 99.7 → 55.6 → 17 → 0 % at 0/100/200/350 ms; the chip goes 26 → 20 px by 350 ms, gets its text at ≈700 ms and reaches 125 px by 1000 ms. The clone runs the same sequence about 300 ms earlier: fill at 0 by 100 ms, chip text by 350 ms, 120 px by 700 ms. As on /data-engine, that offset is Scale's main-thread latency, not a parameter.
+
+**Arrow hover.** Background alpha 0 / .545 / .886 / 1 at 0/100/200/400 ms on all three. Leave: 1 / .25 / 0.
+
+**Next click** (section top at 250). Scale: top 188 / 164 / 150 / 143 / 137 / 136 at 0/100/200/300/500/800 ms. Clone: 250 / 179 / 157 / 145 / 137 / 136. Vahue: 199 / 178 / 154 / 144 / 137 / 136. Tile fills: Scale's tile 0 goes to +99.7 and tile 1 from −47 → 0 by 300 ms; the clone matches by 300 ms.
+
+**Tile click** (section top at 500). Scale 407 / 253 / 187 / 158 / 140 / 136 at 0/100/200/300/500/1000 ms; the clone 500 / 293 / 204 / 165 / 141 / 136. The previous arrow at index 0 wraps to the last item on all three.
+
+**390 next click.** Tile fills move on x. Scale 59.5 / 69 / 95 / 100 % and −40.5 / −31 / −5 / 0 at 0/100/200/400 ms; the clone 45.7 / 63.2 / 92.5 / 100 and −54.3 / −36.8 / −7.5 / 0. The section lands at 136 on all three.
+
+### 7. Annotations + model chart (ProvenModelImprovementsChart, module 77633)
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| chart root | IntersectionObserver (threshold .25, once) | IO (not an event listener) | 77633 | before: paths drawn, no dash, labels opacity 0. On intersect: dash = length, offset = length; after 2 rAF, `stroke-dashoffset` → 0 over 1.6s `cubic-bezier(0.4,0,0.2,1)`, delays 0 / .3 / .6; labels opacity → 1 over .5s ease at delay + 1.45s | **fixed** (the clone hid the paths with opacity 0 until intersect) | `1440-*-chart-peek.jpg`, `1440-*-chart-drawing.jpg` |
+| multimodal screenshot | none | none | legacy | n/a | n/a | n/a |
+
+Peek (40 px of the chart visible, fresh load): Scale, clone and Vahue all read `nodash, offset 0, label 0`. Draw (scrolled to 200 px visible): the clone reads 381.5 / 423.6 / 465.3 px at 0 ms and 0 / 6.1 / 39.7 px at 1500 ms; the labels reach 1 by 2400 ms. Scale draws the same curve about 300 ms later (IO → React render latency): 50 / 158 / 387 px at 1000 ms against the clone's 20.7 / 79.6 / 240.
+
+### 9. Pre-footer FullBleedMediaSection
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| clip wrapper / media | scroll | ScrollTrigger | 37xz28pjbnlx4.js | clip inset 5% → 0, media scale 1.25 → 1, `top bottom → center center` | yes | `../1440-*-rea-prefooter.jpg` |
+| arrow CTA + "Build AI" border CTA | pointerenter / leave | React delegated | FlatCta 892855 | arrow as in the hero. Border: wash `translate-y` 100% → 0 → −100%, 300ms ease-out, opacity .30; label `scale .9` (CSS group-hover, 300ms ease-out); same reset and re-entry rules | **fixed** (re-entry; shared FlatCta) | `1440-*-cta2-hover.jpg` |
+
+10-point scrub (wrapper top 900 → 0 in 100 px steps), identical on all three: clip 5 / 4.383 / 3.765 / 3.148 / 2.531 / 1.914 / 1.296 / 0.679 / 0.062 / 0 %; media scale 1.25 / 1.2191 / 1.1883 / 1.1574 / 1.1265 / 1.0957 / 1.0648 / 1.034 / 1.0031 / 1. Border CTA re-entry: 100 / 100 / 55.8 / 16.1 / 0 % at 0/40/100/200/400 ms (Scale, clone, Vahue). At 320 ms after entering, the arrow wash sits at −16.1% on all three.
+
+### Fixes in this pass
+- `FlatCta.tsx`: Scale's state machine (reset on `transitionend` or after 680ms, re-entry snap, arrow track snaps back on leave).
+- `Testimonials.tsx`: unselected until `top 80%` (`safeIndex` can be −1); arrow and tile clicks scroll the section through Lenis (`window.__lenis.scrollTo(root, { offset: -24 })`, with a smooth `scrollTo` fallback); tile transition 150ms.
+- `ModelChart.tsx`: curves stay drawn until the observer fires (no opacity-0 pre-state).
+- Same changes on `/automations/document-intake` (`components/automation/workflows/physical-ai/`: FlatCta, CaseResults; it imports the clone's ModelChart).
+
+### Not reproducible / not applicable
+- The ~300 ms reveal and chart-draw latency on scale.com is runtime jank, not a parameter.
+- Scale's `lg:line-clamp-8` truncation (visible as "in…" on the second quote) stays unapplied (see Remaining gaps).
+- Scale's metric-variant and pin-on-exit branches of module 685963 (`variant: 'metrics'`, `pinOnExit`) are off on this page.
