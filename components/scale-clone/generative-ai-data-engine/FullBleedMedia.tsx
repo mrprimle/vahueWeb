@@ -88,8 +88,22 @@ export default function FullBleedMedia({ image, headline, body, cta, startPercen
       })
     }, section)
 
+    // Sections above (lazy images, sliders, fonts) grow after these triggers are created, which left the
+    // pre-footer clip/scale ~130-875px late in live sampling. Re-measure when the document height changes.
+    let lastH = document.documentElement.scrollHeight
+    let refreshTimer: ReturnType<typeof setTimeout> | undefined
+    const heightWatch = new ResizeObserver(() => {
+      const h = document.documentElement.scrollHeight
+      if (h === lastH) return
+      lastH = h
+      clearTimeout(refreshTimer)
+      refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 150)
+    })
+    heightWatch.observe(document.body)
     return () => {
       alive = false
+      heightWatch.disconnect()
+      clearTimeout(refreshTimer)
       ctx.revert()
       reveals.forEach((r) => r.revert())
       if (clipRef.current) clipRef.current.style.clipPath = ''

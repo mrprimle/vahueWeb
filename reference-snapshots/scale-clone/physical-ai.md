@@ -11,7 +11,7 @@ Y positions are relative to the hero top (1440 / 390). After QA the clone matche
 
 | # | Section | Layout | Type / spacing |
 |---|---|---|---|
-| 1 | **Hero** (FullBleedMediaSection in ClipScrollSection, `startPercentage 0`) | wrapper `pt-24 pb-10`; 16px side gutter; card 1408×720 (358×480 mobile), radius 24, `clip-path: inset(0 round 1.5rem)`; padding 64 (32 mobile); content bottom-aligned, `flex-col gap-6`, max-w 72rem | H2 `clamp(2rem, .5rem+5vw, 4rem)` / 1.05, white. Body 20/1.5 (16/1.45 mobile). CTA arrow pill (below). Logo strip: `mt-4 gap-2 max-w-md`, 6px triangle + 10px uppercase +0.05em label `#929292`; marquee `opacity .4`, gap 32, logos ≤70×28. Media: `#193A29` fill, image cover, overlay `bg-black/45` + `linear-gradient(#0000, #000)` |
+| 1 | **Hero** (FullBleedMediaSection in ClipScrollSection, `startPercentage 0`) | wrapper `pt-24 pb-10`; 16px side gutter; card 1408×720 (358×480 mobile), radius 24, `clip-path: inset(0 round 1.5rem)`; padding 64 (32 mobile); content bottom-aligned, `flex-col gap-6`, max-w 72rem | H2 `clamp(2rem, .5rem+5vw, 4rem)` / 1.05, white. Body 20/1.5 (16/1.45 mobile). CTA arrow pill (below). Logo strip: `mt-4 gap-2 max-w-md`, 6px triangle + 10px uppercase +0.05em label `#929292`; marquee `opacity .4`, gap 32, logos ≤70×28. Media: `#193A29` fill, image cover, overlay `linear-gradient(#0000, #000)` only (`.media-overlay`'s `background` shorthand cancels `bg-black/45`; see REA verification) |
 | 2 | **Product overview** | legacy section `pt-16 pb-16 md:pt-20`; container max 1280, px 24 / 32 (1216 content); header `max-w-3xl md:mt-12 mb-10` centred | Eyebrow 12/24 mono +1px uppercase (black here, `#525252` elsewhere), `mb-5`. H2 48/1.25 (30/1.375 mobile; 40 at md). 2-col grid `gap-x-14 gap-y-12`; item `flex gap-4`: 44×44 icon tile (radius 8, `bg black/9%`, 1px `black/10%`, 22px icon), h4 24/1.5 regular, p `mt-4` 16/1.5 `#525252` |
 | 3 | **Client testimonials** (evergreen) | `pt-20 pb-20` (pb 64 mobile); 12-col grid gap 8, px 24 (8 cols, px 12 mobile); panel bg `#193A29` radius 16, width 90%→100%; inner `lg:py-20`, `p-8` mobile. Left column col 2 (109px): heading, tiles (109² , radius 8, 1px white, gap 8, `mb-2`), arrows (50² at 1440, 40² mobile, radius 6). Right: cols 5–11, `flex-col justify-between gap-16` | Heading 12/1.375 mono medium uppercase. Quote 40/44 (24/28 mobile), tracking −0.05em, first-line indent 160px (100 mobile), line masks add 0.12em → 48.8px pitch. Name 18/1.25 medium (16 mobile), right-aligned at lg. Role chip mono 10px, white bg, evergreen text, radius 4, `p-1 px-2`. Mobile: header row (heading w-1/2 + arrows), quote stack (grid-area 1/1, height = longest quote), name, 80px tile row |
 | 4 | **Use case** | legacy section; 2-col grid `gap-12` (`gap-8` mobile), items centred | h3 24/1.5 medium `mb-4`; p 16/1.5 gray-700 (`#364153`), `mb-4` between. Isometric PNG 584 wide, natural ratio, in `rounded-2xl` wrapper (overflow visible ≥md) |
@@ -71,3 +71,41 @@ Screenshots in `reference-snapshots/scale-clone/qa/physical-ai/`: `1440-{scale,c
 - Hero logo strip uses placeholder tiles (TODO: partner logos).
 - Scale's `lg:line-clamp-8` on the quotes is not applied. The placeholder quotes fit in 8 lines, and `max-h-[8lh]` with `overflow-y: clip` is kept.
 - Scale's screenshots include their cookie banner overlay (not part of the page).
+
+
+## REA verification (2026-10-31)
+
+**Fingerprint:** REA `analyze_web_bundle` on a fresh CDP tab (127.0.0.1:9230, `include_script_sources: true`) — evidence `ev_9e1f3fbba6f13eff…`, 35/35 scripts parsed, 0 failures; Next.js (Turbopack chunks) + React. Chunk graph: page chunks `197mu5y2fw9hi.js`, `0mp_wvkveczep.js`; shared `37xz28pjbnlx4.js`, `09t-e4mmc8vy5.js`, `1h0nvyhf5gbrf.js`, `0sle6wl7ucd3b.js`. No three.js/WebGL, Rive or Embla on this page.
+
+**FullBleedMediaSection (read from chunk `37xz28pjbnlx4.js`, identical on all six pages):**
+- `FullBleedMediaSection({ startPercentage = 10, overlayVariant = 'flat', ... })` renders `ClipScrollSection` with `startPercentage` and **`startScale: 1`**, so ClipScrollSection's own inner `scale()` stays 1 (it always reads `transform: scale(1)` live).
+- FullBleedMediaSection **also runs its own scrub** on the `<section>`: `start 'top bottom' → end 'center center'`, `onUpdate: scale = mapRange(progress, 0, 1, 1.25, 1, clamp)` set on the media wrapper (image div or video). So the media **does** scale 1.25 → 1. The automotive note ("no media scale") is refuted for this page: live samples below show `matrix(1.233…)` → `1.1636` → `1.0941` → `1`.
+- ClipScrollSection: trigger = its own wrapper div, `top bottom → center center`, `clip-path: inset(mapRange(p, 0, 1, 0.5·startPercentage, 0)% round 1.5rem)`.
+- The hero is rendered with `startPercentage 0` (live hero clip reads `inset(0%)` at every scroll position). The pre-footer uses the default 10, so it runs 5% → 0.
+- Overlay: SSR markup is `media-overlay … bg-black/45` (`overlayVariant 'flat'`), but `.media-overlay { background: linear-gradient(#0000 0%, #000 100%) }` (CSS chunk `3ektzubma58z1.css`) uses the `background` shorthand, which resets `background-color`. Computed `background-color` is `rgba(0, 0, 0, 0)` on both sections, so the overlay is **gradient only, with no 45% black** (confirms the automotive note).
+- AnimatedText intro (chunk `1h0nvyhf5gbrf.js`): lines `yPercent 400, opacity 0` → 0/1, 1s power3.out at `0.08·i`; words `x 30%` → 0, 0.9s power3.out, stagger 0.03 at +0.04; tint `#72CE7B` → `#79648C` (0.3276s at +0.22) → CSS colour (0.4524s). The clone matches.
+
+**Live samples (Playwright, 1440×900, 225px steps, values read from inline style / computed transform):**
+
+| scrollY | section | clip | media scale |
+|---|---|---|---|
+| 0 | hero (top 135) | inset(0%) | 1.0139 |
+| 5400 | pre-footer (top 942) | inset(5%) | — (not started) |
+| 5625 | pre-footer (top 717) | inset(3.87037%) | 1.1935 |
+| 5850 | pre-footer (top 492) | inset(2.48148%) | 1.1241 |
+| 6075 | pre-footer (top 267) | inset(1.09259%) | 1.0546 |
+| 6300 | pre-footer (top 42) | inset(0%) | 1 |
+Overlay computed `background-color: rgba(0,0,0,0)` on both.
+
+**Listener map (REA `inspect_web_event_listeners`, direct listeners on the first match):**
+- `[role=tab]` (feature / model tabs) and `button[aria-label="Next testimonial"]`: HubSpot `mousedown` (capture) plus `click` (`42ixmvih7808g.js`) only. (ev_0ad9f582, ev_dd751e89)
+- `.LogoMarquee` (hero logos): no listeners. It's a CSS/GSAP marquee with no hover pause. (ev_5483b5cb)
+- `.FullBleedMediaSection a`: the same delegated pair. (ev_168250b2)
+- No Keen, canvas or `pointermove` on this page.
+
+**Result:**
+- **Confirmed:** `startPercentage` 0 (hero) and 10 (pre-footer), the clip trigger on the wrapper, media scale 1.25 → 1 on the section, and the AnimatedText intro. The clone already took these per instance.
+- **Fixed:** the overlay. The clone combined `bg-black/45` with `bg-[linear-gradient(...)]`. In this repo's Tailwind those set `background-color` and `background-image` separately, so both applied. It is now `[background:linear-gradient(#0000_0%,#000_100%)]` (shorthand, as on Scale), and the computed bg-color is transparent. The section-table note "overlay `bg-black/45` + gradient" above should read "gradient only".
+- Clone re-sampled: the pre-footer with its top at 450 reads `inset(2.27778%)` and scale 1.1139, against Scale's 2.2222% and 1.1111 (a 0.05% difference from the 2px taller clone card). No console errors.
+- QA re-shot: `qa/physical-ai/1440-{scale,clone}-rea-{hero,prefooter}.jpg`.
+- **Still unknown:** none.

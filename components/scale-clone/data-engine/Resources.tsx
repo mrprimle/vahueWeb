@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useKeenSlider } from 'keen-slider/react'
+import { WheelControls } from './keenWheel'
 import 'keen-slider/keen-slider.min.css'
 import { SectionHeader } from './StaticSections'
 import s from './dataEngine.module.css'
@@ -61,7 +62,7 @@ export default function Resources() {
     dragEnded: (sl) => {
       sl.container.style.cursor = 'grab'
     },
-  })
+  }, [WheelControls])
 
   return (
     <section className="pb-14 md:pb-20">

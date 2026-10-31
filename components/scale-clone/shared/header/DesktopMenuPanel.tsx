@@ -82,6 +82,10 @@ export default function DesktopMenuPanel({ category, openKey, isOpen, onClosed, 
           if (items.length) {
             gsap.set(items, { autoAlpha: 0, y: 10 })
             tl.to(items, { autoAlpha: 1, y: 0, duration: 0.36, ease: 'power2.out', stagger: { each: STAGGER, from: 'start' } }, fill ? '-=0.28' : 0)
+          } else {
+            // Scale's fallback for a panel without [data-menu-text-reveal] items (nav chunk 0sle6wl7ucd3b.js)
+            gsap.set(content, { autoAlpha: 0 })
+            tl.to(content, { autoAlpha: 1, duration: 0.22, ease: 'power2.out' }, fill ? '-=0.22' : 0)
           }
           tl.fromTo(Array.from(content.querySelectorAll('img')), { scale: 1.4 }, { scale: 1, duration: 0.8, ease: 'power3.out' }, 0)
         }

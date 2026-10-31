@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useKeenSlider } from 'keen-slider/react'
+import { WheelControls } from './keenWheel'
 import 'keen-slider/keen-slider.min.css'
 import styles from './styles.module.css'
 
@@ -36,7 +37,7 @@ export default function Resources() {
     },
     created: () => setReady(true),
     destroyed: () => setReady(false),
-  })
+  }, [WheelControls])
 
   return (
     <div className="relative z-0">

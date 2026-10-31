@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useKeenSlider } from 'keen-slider/react'
+import { WheelControls } from './keenWheel'
 import { resources } from './content'
 import { CONTAINER, SECTION, SectionHeader } from './StaticSections'
 import styles from './styles.module.css'
@@ -31,7 +32,7 @@ export default function Resources() {
     },
     created: () => setReady(true),
     destroyed: () => setReady(false),
-  })
+  }, [WheelControls])
 
   useEffect(() => {
     const t = window.setTimeout(() => setReady(true), 1000)

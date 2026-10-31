@@ -14,7 +14,7 @@ Files: `app/scale-clone/data-engine/page.tsx`, `components/scale-clone/data-engi
 
 | # | Section | Layout (desktop / mobile) | Type | Notes |
 |---|---|---|---|---|
-| 1 | Hero `FullBleedMediaSection` | wrapper `pt-24 pb-10`, clip wrapper `px-4`, card radius 24, `p-16` / `p-8`, min-h 720 / 480, content bottom-left, max-w 72rem, gap 24 | h2 `clamp(2rem, .5rem+5vw, 4rem)` / 1.05; p 20/30 → 16/23.2 | photo `hero.webp` object-cover; overlay = `rgba(0,0,0,.45)` + `linear-gradient(#0000, #000)` (`.media-overlay`) |
+| 1 | Hero `FullBleedMediaSection` | wrapper `pt-24 pb-10`, clip wrapper `px-4`, card radius 24, `p-16` / `p-8`, min-h 720 / 480, content bottom-left, max-w 72rem, gap 24 | h2 `clamp(2rem, .5rem+5vw, 4rem)` / 1.05; p 20/30 → 16/23.2 | photo `hero.webp` object-cover; overlay = `linear-gradient(#0000, #000)` only (`.media-overlay` cancels `bg-black/45`; see REA verification) |
 | 2 | Logo strip | `pt-10 pb-14 md:pb-20`, `justify-around`, gap 40 (48 on mobile, horizontal scroll, `min-w-max`) | n/a | 7 logos at 90×23, 100×24, 100×20, 112×20, 111×23, 60×24, 100×24 → neutral `bg-black/10` tiles (TODO) |
 | 3 | "Best in the business" | `#f2f2f2` card, radius 16, padding 48/40/24; grid `minmax(0,.95fr) minmax(560px,1.05fr)`, gap 40; right side is a 2×2 card grid, gap 16 (12 on mobile) | h2 40/50 → 24/25.2; p 16/24 → 14/18.9 `#575757`; card h3 24/36 → 22/23.1 `#212121` | illustration min-h 560 (360 on mobile), max-w 760; cards white, radius 12, `p-8`/`p-6`, min-h 200, `justify-between`; corner glyph 17px in `#79648C` `#A8927C` `#273252` `#193A29` |
 | 4 | Case study | grid `minmax(320px,.85fr) minmax(0,1.15fr)`, gap 16; red panel `#E7131A`, radius 16, min-h 420 / 280; text column `p-12/p-10/p-6`, `justify-between`, gap 48 | mono 13 → 10 uppercase `#575757`; h3 40/50 → 24/25.2 | customer wordmark → white/25 placeholder tile (TODO); black fill CTA |
@@ -29,7 +29,7 @@ Files: `app/scale-clone/data-engine/page.tsx`, `components/scale-clone/data-engi
 
 | Element | Trigger / start → end | From → to | Ease / duration / stagger | Mode |
 |---|---|---|---|---|
-| ClipScrollSection (hero, pre-footer) | section `top bottom` → `center center` | `clip-path: inset(5% round 1.5rem)` → `inset(0%)` (startPercentage 10 × 0.5) | linear map | scrub (onUpdate progress) |
+| ClipScrollSection (pre-footer; hero has startPercentage 0 = no clip) | wrapper `top bottom` → `center center` | `clip-path: inset(5% round 1.5rem)` → `inset(0%)` (startPercentage 10 × 0.5) | linear map | scrub (onUpdate progress) |
 | FullBleed media | same | `scale 1.25 → 1` | linear map | scrub |
 | FullBleed headline | section `top center`, retroactive onEnter | AnimatedText intro (below), delay 0 | | one-shot |
 | FullBleed body | same | AnimatedText intro, delay 0.2 | | one-shot |
@@ -59,3 +59,43 @@ I compared 8 stops at 1440 and 10 at 390, each step 100% of the viewport, stoppi
 - Scale's ClientTestimonials can switch between several testimonials; this page has only one, so only one tab is built.
 - The Keen Slider plugin Scale passes (keyboard Tab-to-next and focus snapping) isn't ported.
 - All copy and links are placeholders (`TODO: Vahue copy`); the logo tiles, case-study wordmark tile and resource card 1 are placeholders too.
+
+
+## REA verification (2026-10-31)
+
+**Fingerprint:** REA `analyze_web_bundle` on a fresh CDP tab (127.0.0.1:9230, `include_script_sources: true`) — evidence `ev_f5b3722f23c9c302…`, 36/36 scripts parsed, 0 failures; Next.js (Turbopack chunks) + React. Chunk graph: page chunks `31xvc_-2ufv3i.js` (Keen + WheelControls), `1a9k8nwrsxal6.js`, `0pxfxpo1hc-6g.js` (Resources slider options); shared `37xz28pjbnlx4.js` (ClipScrollSection / FullBleedMediaSection), `09t-e4mmc8vy5.js` (GSAP core / ScrollTrigger), `1h0nvyhf5gbrf.js` (AnimatedText / SplitText), `0sle6wl7ucd3b.js` (nav), `42ixmvih7808g.js` (React runtime). No three.js/WebGL, Rive or Embla on this page.
+
+**FullBleedMediaSection (read from chunk `37xz28pjbnlx4.js`, identical on all six pages):**
+- `FullBleedMediaSection({ startPercentage = 10, overlayVariant = 'flat', ... })` renders `ClipScrollSection` with `startPercentage` and **`startScale: 1`**, so ClipScrollSection's own inner `scale()` stays 1 (it always reads `transform: scale(1)` live).
+- FullBleedMediaSection **also runs its own scrub** on the `<section>`: `start 'top bottom' → end 'center center'`, `onUpdate: scale = mapRange(progress, 0, 1, 1.25, 1, clamp)` set on the media wrapper (image div or video). So the media **does** scale 1.25 → 1. The automotive note ("no media scale") is refuted for this page: live samples below show `matrix(1.233…)` → `1.1636` → `1.0941` → `1`.
+- ClipScrollSection: trigger = its own wrapper div, `top bottom → center center`, `clip-path: inset(mapRange(p, 0, 1, 0.5·startPercentage, 0)% round 1.5rem)`.
+- The hero is rendered with `startPercentage 0` (live hero clip reads `inset(0%)` at every scroll position). The pre-footer uses the default 10, so it runs 5% → 0.
+- Overlay: SSR markup is `media-overlay … bg-black/45` (`overlayVariant 'flat'`), but `.media-overlay { background: linear-gradient(#0000 0%, #000 100%) }` (CSS chunk `3ektzubma58z1.css`) uses the `background` shorthand, which resets `background-color`. Computed `background-color` is `rgba(0, 0, 0, 0)` on both sections, so the overlay is **gradient only, with no 45% black** (confirms the automotive note).
+- AnimatedText intro (chunk `1h0nvyhf5gbrf.js`): lines `yPercent 400, opacity 0` → 0/1, 1s power3.out at `0.08·i`; words `x 30%` → 0, 0.9s power3.out, stagger 0.03 at +0.04; tint `#72CE7B` → `#79648C` (0.3276s at +0.22) → CSS colour (0.4524s). The clone matches.
+
+**Live samples (Playwright, 1440×900, 225px steps, values read from inline style / computed transform):**
+
+| scrollY | section | clip | media scale |
+|---|---|---|---|
+| 0 | hero (top 135) | inset(0%) | 1.0139 |
+| 225 | hero | inset(0%) | 1 |
+| 5400 | pre-footer (top 701) | inset(3.7716%) | 1.1886 |
+| 5625 | pre-footer (top 476) | inset(2.38272%) | 1.1191 |
+| 5850 | pre-footer (top 251) | inset(0.993827%) | 1.0497 |
+| 6075 | pre-footer (top 26) | inset(0%) | 1 |
+Overlay computed `background-color: rgba(0,0,0,0)` with the gradient as `background-image`, on both sections.
+
+**Listener map (REA `inspect_web_event_listeners`, direct listeners on the first match):**
+- `.keen-slider` (Resources): `click` (capture), `dragstart`, `ksDragStart/ksDrag/ksDragEnd`, `mousedown/mousemove/mouseleave/mouseup`, `touchstart` (passive), `touchmove/touchend/touchcancel`, all from `31xvc_-2ufv3i.js` (Keen core). There's also a non-passive **`wheel`** at `31xvc_-2ufv3i.js:665`, which is Scale's WheelControls plugin (module 29713, passed as `useKeenSlider(opts, [r.f])` in `0pxfxpo1hc-6g.js`). (ev_7e811ef5bf85891e)
+- `[role=tab]` (annotation tabs), `button[aria-label^="Show testimonial"]`, `.FullBleedMediaSection a`: `mousedown` (capture) from HubSpot's `4823527.js` tracker plus `click` from `42ixmvih7808g.js`. That's analytics plus the framework; there's no motion handler on the element itself. (ev_c481d8fe, ev_08974605, ev_380efc2d)
+- `.OpfpwG_box__chat` (chat window): no direct listeners. (ev_3caaca4f)
+- No `pointermove`, canvas or WebGL on this page.
+
+**Result:**
+- **Fixed:** the hero clip. The clone clipped the hero 5% → 0 too. `FullBleedMedia` now takes `startPercentage` (default `priority ? 0 : 10`, because `app/scale-clone/data-engine/page.tsx` sits outside this pass's edit scope and only passes `priority` on the hero), so the hero is 0 and the pre-footer 10. The clip trigger is now the ClipScrollSection-equivalent wrapper, as on Scale.
+- **Fixed:** the overlay. It was `rgba(0,0,0,.45)` plus the gradient, which made it too dark. It is now the gradient only.
+- **Fixed:** added the Keen `WheelControls` plugin (`keenWheel.ts`) to the Resources slider, so trackpad horizontal swipes drag it as on Scale.
+- **Confirmed:** media scale 1.25 → 1 on the section (`top bottom → center center`). The automotive agent's "no media scale" doesn't apply here. Also confirmed: the Keen options (`snap`, perView 1.05, spacing 24, `rubberband:false`, free 1.4/2/2.8 at 640/768/1280) and the AnimatedText and CTA intro values.
+- Clone re-sampled after the fix (1440): hero `inset(0%)`, scale 1.0139 → 1. Pre-footer with its top at 450: clip `inset(2.22222%)`, scale 1.1111, identical to Scale at the same position. Overlay bg-color is transparent. No console errors, 200.
+- QA re-shot: `qa/data-engine/1440-{scale,clone}-rea-hero.jpg` and `1440-{scale,clone}-rea-prefooter.jpg`.
+- **Still unknown:** the pre-footer image covering only the upper part on Scale (listed under Remaining gaps) wasn't re-investigated.

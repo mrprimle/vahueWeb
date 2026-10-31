@@ -14,14 +14,17 @@ type Props = {
   backdrop: string
   wrapperClassName: string
   priority?: boolean
+  /** ClipScrollSection startPercentage (REA-verified): 0 on the hero (no clip), 10 on the pre-footer. Defaults to 0 when `priority`. */
+  startPercentage?: number
 }
 
 // scale.com FullBleedMediaSection inside a ClipScrollSection (chunk 37xz28pjbnlx4.js):
-//   clip:  inset(5% -> 0% round 1.5rem), trigger = section root, top bottom -> center center
+//   clip:  inset(0.5*startPercentage % -> 0% round 1.5rem), trigger = ClipScrollSection root, top bottom -> center center
+//          (hero passes startPercentage 0 = no clip; pre-footer uses the default 10 = 5% -> 0)
 //   media: scale 1.25 -> 1, same range
 //   text:  on "top center" (retroactive) heading + body run the AnimatedText cascade
 //          (body 0.2s after heading), CTA plays filledWhiteArrow (0.85s, delay 0.5s)
-export default function FullBleedMedia({ image, title, body, cta, backdrop, wrapperClassName, priority }: Props) {
+export default function FullBleedMedia({ image, title, body, cta, backdrop, wrapperClassName, priority, startPercentage: startPct }: Props) {
   const root = useRef<HTMLDivElement>(null)
   const clip = useRef<HTMLDivElement>(null)
   const section = useRef<HTMLElement>(null)
@@ -35,7 +38,7 @@ export default function FullBleedMedia({ image, title, body, cta, backdrop, wrap
     let cancelled = false
     const splits: { revert: () => void }[] = []
     const ctx = gsap.context(() => {})
-    const startPercentage = 10
+    const startPercentage = startPct ?? (priority ? 0 : 10)
     const apply = (p: number) => {
       const inset = (1 - p) * 0.5 * startPercentage
       if (clip.current) clip.current.style.clipPath = `inset(${inset}% round 1.5rem)`
@@ -80,12 +83,26 @@ export default function FullBleedMedia({ image, title, body, cta, backdrop, wrap
         })
       })
     })
+    // Sections above (lazy images, sliders, fonts) grow after these triggers are created, which left the
+    // pre-footer clip/scale ~130-875px late in live sampling. Re-measure when the document height changes.
+    let lastH = document.documentElement.scrollHeight
+    let refreshTimer: ReturnType<typeof setTimeout> | undefined
+    const heightWatch = new ResizeObserver(() => {
+      const h = document.documentElement.scrollHeight
+      if (h === lastH) return
+      lastH = h
+      clearTimeout(refreshTimer)
+      refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 150)
+    })
+    heightWatch.observe(document.body)
     return () => {
       cancelled = true
+      heightWatch.disconnect()
+      clearTimeout(refreshTimer)
       ctx.revert()
       splits.forEach((sp) => sp.revert())
     }
-  }, [])
+  }, [priority, startPct])
 
   return (
     <div className={wrapperClassName}>

@@ -164,7 +164,7 @@ export default function FullBleedMedia({
                   ) : null}
                 </div>
                 <div className="absolute left-0 top-0 h-full w-full origin-center overflow-hidden rounded-3xl [clip-path:inset(0_round_1.5rem)]">
-                  <div className="pointer-events-none absolute inset-0 z-10 h-full w-full overflow-hidden rounded-3xl bg-black/45 bg-[linear-gradient(#0000_0%,#000_100%)] [clip-path:inset(0_round_1.5rem)]" />
+                  <div className="pointer-events-none absolute inset-0 z-10 h-full w-full overflow-hidden rounded-3xl [background:linear-gradient(#0000_0%,#000_100%)] [clip-path:inset(0_round_1.5rem)]" />
                   <div ref={media} className="absolute inset-0 h-full w-full overflow-hidden rounded-3xl [clip-path:inset(0_round_1.5rem)]">
                     <div className="relative h-full w-full overflow-hidden rounded-3xl bg-[#193A29]">
                       <Image src={image} alt="" fill priority={priority} sizes="100vw" className="object-cover" />

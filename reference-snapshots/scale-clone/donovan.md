@@ -25,7 +25,7 @@ Files:
 
 | # | Section | Layout (desktop / mobile) | Type | Notes |
 |---|---|---|---|---|
-| 1 | Hero `FullBleedMediaSection` | wrapper `pt-24 pb-10`; `px-4` clip wrapper; card radius 24, `p-16` / `p-8`, min-h 720 / 480, content bottom-left, max-w 72rem, gap 24 | h2 `clamp(2rem,.5rem+5vw,4rem)` / 1.05 (64/67.2 at 1440); p 20/30 → 16 | `hero.webp` 1920×1282, image bg `#193A29`, overlay black/45 + `linear-gradient(#0000,#000)`. One arrow CTA (white, 154×40, radius 8, label 14/21 500) |
+| 1 | Hero `FullBleedMediaSection` | wrapper `pt-24 pb-10`; `px-4` clip wrapper; card radius 24, `p-16` / `p-8`, min-h 720 / 480, content bottom-left, max-w 72rem, gap 24 | h2 `clamp(2rem,.5rem+5vw,4rem)` / 1.05 (64/67.2 at 1440); p 20/30 → 16 | `hero.webp` 1920×1282, image bg `#193A29`, overlay `linear-gradient(#0000,#000)` only (`.media-overlay` cancels black/45; see REA verification). One arrow CTA (white, 154×40, radius 8, label 14/21 500) |
 | 2 | Logo strip | md+: `container` 1280, `px-8`, `justify-between`, gap 32, min-h 52; mobile: react-fast-marquee (`ml-12` items) | — | 5 marks at 65×45, 48×63, 68×53, 79×22, 70×16 → neutral `bg-black/10` tiles (TODO) |
 | 3 | Product overview | grid 1 → md 2 → lg 3 columns, gap 24, `mt-2`. Card mock aspect 764/560 (448×328), radius 12 | title p 24/36 `mt-8 lg:mt-10`; body 16/26.4 black/70 `mt-3` | Mock: bg `#0c0b0f` + violet/cyan radial glows; inner window inset 20, radius 10, 1px white/10, triple shadow, 1px top highlight; UI in Inter 6.5–10px (font-sans). Ported 1:1 in `Mocks.tsx` |
 | 4 | Foundation (gray-50) | header (h2); column `items-center gap-6 mb-24`; rows `flex-wrap gap-8 p-6` (left-aligned, the grid is not centred on Scale either); cards `w-[368px]` (shrinks to 294 on mobile) `p-6 gap-6` radius 16, white, 1px black/5 | card label 24/32 centred | 3 cards, then a 687×36 brace SVG (stroke `#959595`, opacity .45), then 6 cards. Icons are 24px grey (`#B9B9B9`) SVGs |
@@ -38,7 +38,7 @@ Files:
 
 | Element | Trigger / start → end | From → to | Ease / duration / stagger | Mode |
 |---|---|---|---|---|
-| ClipScrollSection (hero, pre-footer) | section `top bottom` → `center center` | `clip-path inset(5% round 1.5rem)` → `inset(0%)`; media `scale 1.25 → 1` | linear map | scrub (onUpdate) |
+| ClipScrollSection (pre-footer; hero startPercentage 0 = no clip) | wrapper `top bottom` → `center center` | `clip-path inset(5% round 1.5rem)` → `inset(0%)`; media `scale 1.25 → 1` | linear map | scrub (onUpdate) |
 | Hero / pre-footer headline | section `top center`, once, retroactive | AnimatedText: SplitText `lines,words`, `mask: lines`; lines `yPercent 400, opacity 0` → 0/1; words `x 30%` → 0; tint `#72CE7B` → `#79648C` → CSS colour | line 1s power3.out at 0.08·i; words 0.9s power3.out, stagger 0.03 | one-shot |
 | Hero body | same | same, delay 0.2 | | one-shot |
 | Arrow CTA intro | same, delay 0.5 | `autoAlpha 0, scaleX 0, radius 0` → `1, 1, 8px` (origin left); inner `scaleX` at +0.1; arrow `x −6 → 0`; label fades in at 0.75 | power3.out 0.85s (arrow power3.inOut) | one-shot |
@@ -116,3 +116,41 @@ Screenshots in `qa/donovan/`:
 - **Mobile swipe** is a simple pointer threshold (>50px). Scale's swipe container is presumably similar, but I didn't confirm its exact threshold.
 - **Mock UI text** is Inter (Vahue's `font-sans`), and Scale's paragraph text inside the mocks inherits Scale's display face. The clone maps those paragraphs to Vahue's `font-display`.
 - **Data I didn't capture:** I didn't fetch Scale's script bundles with REA. Every motion value above comes from runtime DOM and style sampling plus the shared Scale component ports (AnimatedText, ClipScrollSection, FlatCta) already verified on data-engine.
+
+
+## REA verification (2026-10-31)
+
+**Fingerprint:** REA `analyze_web_bundle` on a fresh CDP tab (127.0.0.1:9230, `include_script_sources: true`) — evidence `ev_357362ce10800619…`, 47/47 scripts parsed, 0 failures; Next.js (Turbopack chunks) + React. Chunk graph: page chunks `1rp7r9sw0y_aw.js`, `1fzcrwo_jci11.js`, `2_p1pc_oq7ewa.js`, `1x2up343t82em.js`, `2-uspc48boy4_.js`, `0cqri1imnx4ln.js`, plus the Plasmic/CMS set shared with generative-ai (`059q_ihpcslaa.js` 5.1 MB, `2oqqgjzhyolwf.js`, `19p53ufb3n98_.js`, `239g4jr8_7s86.js`, `3d2zty6gdk3do.js`); shared `37xz28pjbnlx4.js`, `09t-e4mmc8vy5.js`, `1h0nvyhf5gbrf.js`, `0sle6wl7ucd3b.js`. No three.js/WebGL, Rive or Embla on this page.
+
+**FullBleedMediaSection (read from chunk `37xz28pjbnlx4.js`, identical on all six pages):**
+- `FullBleedMediaSection({ startPercentage = 10, overlayVariant = 'flat', ... })` renders `ClipScrollSection` with `startPercentage` and **`startScale: 1`**, so ClipScrollSection's own inner `scale()` stays 1 (it always reads `transform: scale(1)` live).
+- FullBleedMediaSection **also runs its own scrub** on the `<section>`: `start 'top bottom' → end 'center center'`, `onUpdate: scale = mapRange(progress, 0, 1, 1.25, 1, clamp)` set on the media wrapper (image div or video). So the media **does** scale 1.25 → 1. The automotive note ("no media scale") is refuted for this page: live samples below show `matrix(1.233…)` → `1.1636` → `1.0941` → `1`.
+- ClipScrollSection: trigger = its own wrapper div, `top bottom → center center`, `clip-path: inset(mapRange(p, 0, 1, 0.5·startPercentage, 0)% round 1.5rem)`.
+- The hero is rendered with `startPercentage 0` (live hero clip reads `inset(0%)` at every scroll position). The pre-footer uses the default 10, so it runs 5% → 0.
+- Overlay: SSR markup is `media-overlay … bg-black/45` (`overlayVariant 'flat'`), but `.media-overlay { background: linear-gradient(#0000 0%, #000 100%) }` (CSS chunk `3ektzubma58z1.css`) uses the `background` shorthand, which resets `background-color`. Computed `background-color` is `rgba(0, 0, 0, 0)` on both sections, so the overlay is **gradient only, with no 45% black** (confirms the automotive note).
+- AnimatedText intro (chunk `1h0nvyhf5gbrf.js`): lines `yPercent 400, opacity 0` → 0/1, 1s power3.out at `0.08·i`; words `x 30%` → 0, 0.9s power3.out, stagger 0.03 at +0.04; tint `#72CE7B` → `#79648C` (0.3276s at +0.22) → CSS colour (0.4524s). The clone matches.
+
+**Live samples (Playwright, 1440×900, 225px steps, values read from inline style / computed transform):**
+
+Sampled after hydration (the first run sampled before hydration and showed only the SSR `inset(0 round 1.5rem)`):
+| scrollY | section | clip | media scale |
+|---|---|---|---|
+| 0 | hero (top 135) | inset(0%) | 1.0139 |
+| 225 | hero | inset(0%) | 1 |
+| 4725 | pre-footer (top 792) | inset(4.33333%) | 1.2167 |
+| 4950 | pre-footer (top 567) | inset(2.94444%) | 1.1472 |
+| 5175 | pre-footer (top 342) | inset(1.55556%) | 1.0778 |
+| 5400 | pre-footer (top 117) | inset(0.166667%) | 1.0083 |
+Overlay computed `background-color: rgba(0,0,0,0)` on both.
+
+**Listener map (REA `inspect_web_event_listeners`, direct listeners on the first match):**
+- `[role=tab]` and `button[aria-label^="Select tab"]` (showcase tabs), `.FullBleedMediaSection a`: HubSpot `mousedown` (capture, `4823527.js`) plus `click` (`42ixmvih7808g.js`) only. Tab state is React; there are no pointer or scroll handlers on the elements. (ev_c65e0a6f, ev_69f1f772, ev_23a16d58)
+- No Keen slider, canvas or `pointermove` on this page.
+
+**Result:**
+- **Fixed:** the hero clip (the clone clipped 5% → 0). `DonovanPage.tsx` now passes `startPercentage={0}` to the hero and `{10}` to the pre-footer, and the component defaults to `priority ? 0 : 10`. The clip trigger is the wrapper.
+- **Fixed:** the overlay (black/45 plus gradient became gradient only).
+- **Confirmed:** media scale 1.25 → 1 and the AnimatedText and CTA intros.
+- Clone re-sampled: the pre-footer with its top at 450 reads `inset(2.22222%)` and scale 1.1111, the same as Scale. Hero `inset(0%)`. No console errors.
+- QA re-shot: `qa/donovan/1440-{scale,clone}-rea-{hero,prefooter}.jpg`.
+- **Still unknown:** nothing new on the motion side.

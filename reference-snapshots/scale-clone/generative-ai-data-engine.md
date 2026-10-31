@@ -70,3 +70,39 @@ Screenshots are in `reference-snapshots/scale-clone/qa/generative-ai-data-engine
 - The first resources card is a neutral tile, since the original is a customer-brand image.
 - scale.com sometimes renders the resources carousel at `perView 2` at 1440 (breakpoint measured with the scrollbar). The clone follows the `2.8` state seen in most captures.
 - Fonts are Vahue's, so line breaks and the quote's line count differ slightly from Scale's Aeonik.
+
+
+## REA verification (2026-10-31)
+
+**Fingerprint:** REA `analyze_web_bundle` on a fresh CDP tab (127.0.0.1:9230, `include_script_sources: true`) — evidence `ev_fd1e722dad4c92e6…`, 45/45 scripts parsed, 0 failures; Next.js (Turbopack chunks) + React. Chunk graph: CMS-rendered page: `059q_ihpcslaa.js` (5.1 MB), `2oqqgjzhyolwf.js` (testimonial / demo sliders), `30w17vppvfdah.js` (Resources and Demos Keen sliders), `3hpmz3b0is2de.js`, `19p53ufb3n98_.js`, `239g4jr8_7s86.js`, `055kw1f0p2ydh.js`, `3d2zty6gdk3do.js` (WheelControls), `0oxj3l_iruc4b.js`, `1ws_ika9aqv1h.js`; shared `37xz28pjbnlx4.js`, `09t-e4mmc8vy5.js`, `1h0nvyhf5gbrf.js`, `0sle6wl7ucd3b.js`. No three.js/WebGL, Rive or Embla on this page.
+
+**FullBleedMediaSection (read from chunk `37xz28pjbnlx4.js`, identical on all six pages):**
+- `FullBleedMediaSection({ startPercentage = 10, overlayVariant = 'flat', ... })` renders `ClipScrollSection` with `startPercentage` and **`startScale: 1`**, so ClipScrollSection's own inner `scale()` stays 1 (it always reads `transform: scale(1)` live).
+- FullBleedMediaSection **also runs its own scrub** on the `<section>`: `start 'top bottom' → end 'center center'`, `onUpdate: scale = mapRange(progress, 0, 1, 1.25, 1, clamp)` set on the media wrapper (image div or video). So the media **does** scale 1.25 → 1. The automotive note ("no media scale") is refuted for this page: live samples below show `matrix(1.233…)` → `1.1636` → `1.0941` → `1`.
+- ClipScrollSection: trigger = its own wrapper div, `top bottom → center center`, `clip-path: inset(mapRange(p, 0, 1, 0.5·startPercentage, 0)% round 1.5rem)`.
+- The hero is rendered with `startPercentage 0` (live hero clip reads `inset(0%)` at every scroll position). The pre-footer uses the default 10, so it runs 5% → 0.
+- Overlay: SSR markup is `media-overlay … bg-black/45` (`overlayVariant 'flat'`), but `.media-overlay { background: linear-gradient(#0000 0%, #000 100%) }` (CSS chunk `3ektzubma58z1.css`) uses the `background` shorthand, which resets `background-color`. Computed `background-color` is `rgba(0, 0, 0, 0)` on both sections, so the overlay is **gradient only, with no 45% black** (confirms the automotive note).
+- AnimatedText intro (chunk `1h0nvyhf5gbrf.js`): lines `yPercent 400, opacity 0` → 0/1, 1s power3.out at `0.08·i`; words `x 30%` → 0, 0.9s power3.out, stagger 0.03 at +0.04; tint `#72CE7B` → `#79648C` (0.3276s at +0.22) → CSS colour (0.4524s). The clone matches.
+
+**Live samples (Playwright, 1440×900, 225px steps, values read from inline style / computed transform):**
+
+| scrollY | section | clip | media scale |
+|---|---|---|---|
+| 225 | hero | inset(0%) | 1 |
+| 6750 | pre-footer (top 845) | inset(4.66049%) | 1.233 |
+| 6975 | pre-footer (top 620) | inset(3.2716%) | 1.1636 |
+| 7200 | pre-footer (top 395) | inset(1.88272%) | 1.0941 |
+| 7425 | pre-footer (top 170) | inset(0.493827%) | 1.0247 |
+Overlay computed `background-color: rgba(0,0,0,0)`.
+
+**Listener map (REA `inspect_web_event_listeners`, direct listeners on the first match):**
+- `.keen-slider`: the Keen core set from `30w17vppvfdah.js`, plus a non-passive `wheel` from `3d2zty6gdk3do.js:665` (WheelControls plugin, module 29713). (ev_5cdb7ef3)
+- `button[aria-label^="Play"]` (demo video), `button[aria-label^="Slide to"]` (testimonial dots), `[role=tab]`, `.FullBleedMediaSection a`: HubSpot `mousedown` (capture) plus `click` (`42ixmvih7808g.js`) only. (ev_7e944890, ev_90af7ffe, ev_9555c4d6, ev_73a47c30)
+
+**Result:**
+- **Confirmed:** `startPercentage` 0 and 10, the gradient-only overlay, media scale 1.25 → 1, the Keen options for Resources and Demos, and the AnimatedText cascade.
+- **Fixed:** the pre-footer ran late. Its clip and scale lagged Scale by about 0.15 progress (about 120px of scroll) because the ScrollTrigger positions went stale after content above grew. It now gets the same debounced ScrollTrigger refresh on document height change. Re-sampled: with its top at 450 it reads `inset(2.2284%)` and scale 1.1114, against Scale's 2.2222% and 1.1111.
+- **Fixed:** added the WheelControls plugin (`keenWheel.ts`) to both Keen sliders.
+- **Changed:** Demos mobile breakpoint, dropped `origin: 'center'`. Scale passes `centered: true`, which the bundled Keen v6 never reads (its track only reads `slides.origin`, default `auto`). With `perView 1` both give origin 0, so there's no visual change. It now matches the bundle literally.
+- QA re-shot: `qa/generative-ai-data-engine/1440-{scale,clone}-rea-{hero,prefooter}.jpg` (the hero is unchanged, so it's kept for reference).
+- **Still unknown:** none.

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useKeenSlider } from 'keen-slider/react'
+import { WheelControls } from './keenWheel'
 import { demos } from './content'
 import { Play } from './icons'
 import { CONTAINER, SECTION, SectionHeader } from './StaticSections'
@@ -57,7 +58,7 @@ export default function Demos() {
       '(min-width: 768px) and (max-width: 1040px)': { slides: { perView: 3.1, spacing: 32 }, mode: 'snap' },
       '(min-width: 1041px)': { slides: { perView: 3, spacing: 32 }, mode: 'snap' },
     },
-  })
+  }, [WheelControls])
 
   return (
     <section className={SECTION}>

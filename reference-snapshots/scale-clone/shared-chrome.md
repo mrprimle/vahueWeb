@@ -147,3 +147,20 @@ The clone was captured on `/scale-clone/` (the index page), because page bodies 
 - Sub-header labels follow the registry: "Data / Applications / Evaluation" instead of Scale's "Build AI / Apply AI / Evaluate AI", and "Company" instead of "In Scale".
 - The orientation-specific `oml:` (mobile landscape) variants are not replicated. They only cover tablet column starts in the footer and smaller mobile link type in landscape.
 - The cookie-preferences button and Log In link are dead (`#`).
+
+
+## REA verification (2026-10-31)
+
+**Fingerprint:** REA `analyze_web_bundle` on https://scale.com/ (evidence `ev_789019398f7b3043…`, 52/52 scripts parsed). Next.js + React. The homepage also loads a three.js-class WebGL bundle (`3kd41k7ews14b.js`, 349 KB, `WEBGL_*` extension probes) and `0sni47mcvnqwg.js` (975 KB). Those belong to the home body, not the chrome. The nav chunk `0sle6wl7ucd3b.js` (31,175 B, sha256 `3feec91c…`) is the same file on all six pages checked (/, data-engine, generative-ai-data-engine, public-sector-data-engine, physical-ai, donovan).
+
+**Listener map (REA `inspect_web_event_listeners`):**
+- `header`: no direct listeners. (ev_80f501d6)
+- `header button` (Products trigger) and `button[aria-label="Open menu"]`: HubSpot `mousedown` (capture, `4823527.js`) plus `click` (`42ixmvih7808g.js`). Hover/open/close are React synthetic handlers delegated from the root, consistent with the clone's React handlers. (ev_927fc9f3, ev_4ae291eb)
+- `footer a`: the same pair, with no motion handler. (ev_f00ee2d2)
+- Hide-on-scroll is driven from Lenis's scroll callback in the nav chunk, not from a DOM listener on the header, so it doesn't show in the element listener map.
+
+**Motion values re-checked against `0sle6wl7ucd3b.js`:**
+- Confirmed: hide clamp `-max(offsetHeight || 0, 90)`, the `--header-y` var, panel open `.36 power2.out` with items at `-=0.28` and stagger `{each: .044·.7}`, the switch at `.34`, close `.18`/`.14 power2.in`, the backdrop fill `scaleY 0→1, 1s expo.out, delay .1` and close `.5s expo.out`, the image `scale 1.4→1, .8 power3.out`, the mobile list fade `.22`/`.18 power2.in` and `.32` in, the mobile fill `.52 power2.in`. The clone's duration/ease histogram matches the chunk.
+- Added: the fallback branch for a panel with no `[data-menu-text-reveal]` items, `content autoAlpha 0 → 1, .22s power2.out at '-=0.22'`, in `shared/header/DesktopMenuPanel.tsx`. Every current panel has reveal items, so nothing visible changes.
+- Footer: no motion in the bundle beyond CSS hover colours. Nothing to change.
+- Not re-screenshotted: nothing visible changed.

@@ -18,6 +18,7 @@ export default function DonovanPage() {
             body={hero.body}
             primary={hero.primary}
             backdrop="#fff"
+            startPercentage={0}
             priority
           />
         </div>
@@ -49,6 +50,7 @@ export default function DonovanPage() {
             primary={prefooter.primary}
             secondary={prefooter.secondary}
             backdrop="#fff"
+            startPercentage={10}
           />
         </div>
       </div>

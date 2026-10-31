@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useKeenSlider } from 'keen-slider/react'
+import { WheelControls } from './keenWheel'
 import 'keen-slider/keen-slider.min.css'
 import styles from './styles.module.css'
 
@@ -32,12 +33,12 @@ export default function Demos() {
     dragEnded: () => setCursor('grab'),
     slideChanged: (s) => setActive(s.track.details.abs),
     breakpoints: {
-      '(min-width: 0px) and (max-width: 639px)': { slides: { perView: 1, spacing: 32, origin: 'center' }, mode: 'snap' },
+      '(min-width: 0px) and (max-width: 639px)': { slides: { perView: 1, spacing: 32 }, mode: 'snap' },
       '(min-width: 640px) and (max-width: 767px)': { slides: { perView: 2, spacing: 32 }, mode: 'free' },
       '(min-width: 768px) and (max-width: 1040px)': { slides: { perView: 3.1, spacing: 32 }, mode: 'snap' },
       '(min-width: 1041px)': { slides: { perView: 3, spacing: 32 }, mode: 'snap' },
     },
-  })
+  }, [WheelControls])
 
   return (
     <div className="relative scroll-mt-[-15px]">

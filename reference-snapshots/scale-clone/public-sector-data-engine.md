@@ -25,7 +25,7 @@ Header and footer come from the shared clone layout.
 
 | Element | Trigger | start → end | From → to | Ease / duration / stagger | Scrub / pin |
 |---|---|---|---|---|---|
-| Hero + prefooter clip | ClipScrollSection root | `top bottom` → `center center` | `clip-path: inset(5% round 1.5rem)` → `inset(0% …)` (startPercentage 10 × 0.5) | linear map of progress | onUpdate (no tween) |
+| Prefooter clip (hero: startPercentage 0, no clip) | ClipScrollSection root | `top bottom` → `center center` | `clip-path: inset(5% round 1.5rem)` → `inset(0% …)` (startPercentage 10 × 0.5) | linear map of progress | onUpdate (no tween) |
 | Hero + prefooter media | section | `top bottom` → `center center` | `scale 1.25` → `1` | linear | scrub |
 | Full-bleed heading + body (AnimatedText default intro) | section `top center`, once, retroactive | — | lines `yPercent 400, opacity 0`, words `x 30%, opacity 0`, colour `#72CE7B` → line i at `0.08·i`: line `yPercent 0, opacity 1` 1s; words at +0.04 `x 0, opacity 1` 0.9s stagger 0.03; colour → `#79648C` (+0.22 line / +0.238 words, 0.3276s / 0.29484s) → own colour (0.4524s / 0.40716s) | `power3.out` (moves), `power1.inOut` (colour) | — |
 | Body | same | — | same, delay 0.2s | | |
@@ -72,3 +72,41 @@ Screenshots at every 100% viewport over the page body, both sites, at 1440 and 3
 - The Wistia player is not reproduced. The play buttons are inert.
 - On mobile, Scale's active demo dot is white on a white page, so it's invisible. This is copied as-is.
 - The resources radial wash (white on white, opacity 30, invisible) is omitted.
+
+
+## REA verification (2026-10-31)
+
+**Fingerprint:** REA `analyze_web_bundle` on a fresh CDP tab (127.0.0.1:9230, `include_script_sources: true`) — evidence `ev_f7fd03f202aa10f3…`, 45/45 scripts parsed, 0 failures; Next.js (Turbopack chunks) + React. Chunk graph: page chunk `3_bsw0kgw5l_w.js` plus the CMS set shared with generative-ai (`30w17vppvfdah.js` holds Keen, the Resources and Demos sliders and WheelControls; `3d2zty6gdk3do.js`; `059q_ihpcslaa.js` and others); shared `37xz28pjbnlx4.js`, `09t-e4mmc8vy5.js`, `1h0nvyhf5gbrf.js`, `0sle6wl7ucd3b.js`. No three.js/WebGL, Rive or Embla on this page.
+
+**FullBleedMediaSection (read from chunk `37xz28pjbnlx4.js`, identical on all six pages):**
+- `FullBleedMediaSection({ startPercentage = 10, overlayVariant = 'flat', ... })` renders `ClipScrollSection` with `startPercentage` and **`startScale: 1`**, so ClipScrollSection's own inner `scale()` stays 1 (it always reads `transform: scale(1)` live).
+- FullBleedMediaSection **also runs its own scrub** on the `<section>`: `start 'top bottom' → end 'center center'`, `onUpdate: scale = mapRange(progress, 0, 1, 1.25, 1, clamp)` set on the media wrapper (image div or video). So the media **does** scale 1.25 → 1. The automotive note ("no media scale") is refuted for this page: live samples below show `matrix(1.233…)` → `1.1636` → `1.0941` → `1`.
+- ClipScrollSection: trigger = its own wrapper div, `top bottom → center center`, `clip-path: inset(mapRange(p, 0, 1, 0.5·startPercentage, 0)% round 1.5rem)`.
+- The hero is rendered with `startPercentage 0` (live hero clip reads `inset(0%)` at every scroll position). The pre-footer uses the default 10, so it runs 5% → 0.
+- Overlay: SSR markup is `media-overlay … bg-black/45` (`overlayVariant 'flat'`), but `.media-overlay { background: linear-gradient(#0000 0%, #000 100%) }` (CSS chunk `3ektzubma58z1.css`) uses the `background` shorthand, which resets `background-color`. Computed `background-color` is `rgba(0, 0, 0, 0)` on both sections, so the overlay is **gradient only, with no 45% black** (confirms the automotive note).
+- AnimatedText intro (chunk `1h0nvyhf5gbrf.js`): lines `yPercent 400, opacity 0` → 0/1, 1s power3.out at `0.08·i`; words `x 30%` → 0, 0.9s power3.out, stagger 0.03 at +0.04; tint `#72CE7B` → `#79648C` (0.3276s at +0.22) → CSS colour (0.4524s). The clone matches.
+
+**Live samples (Playwright, 1440×900, 225px steps, values read from inline style / computed transform):**
+
+Sampled after hydration:
+| scrollY | section | clip | media scale |
+|---|---|---|---|
+| 0 | hero (top 135) | inset(0%) | 1.0139 |
+| 225 | hero | inset(0%) | 1 |
+| 4725 | pre-footer (top 799) | inset(4.37654%) | 1.2188 |
+| 4950 | pre-footer (top 574) | inset(2.98765%) | 1.1494 |
+| 5175 | pre-footer (top 349) | inset(1.59877%) | 1.0799 |
+| 5400 | pre-footer (top 124) | inset(0.209877%) | 1.0105 |
+Overlay computed `background-color: rgba(0,0,0,0)`.
+
+**Listener map (REA `inspect_web_event_listeners`, direct listeners on the first match):**
+- `.keen-slider`: the Keen core set (`click` capture, `dragstart`, `ksDrag*`, `mouse*`, `touch*`) from `30w17vppvfdah.js`, plus a non-passive **`wheel`** from `3d2zty6gdk3do.js:665` (WheelControls, module 29713). Both the Resources slider (`[o.f]`) and the Demos slider (`[a.f]`) pass it. (ev_6859cb14)
+- `[role=tab]`, `button[aria-label^="Play"]` (demo video), `.FullBleedMediaSection a`: HubSpot `mousedown` (capture) plus `click` (`42ixmvih7808g.js`) only. (ev_57bdb3dc, ev_6da4b5e5, ev_7e2aadb2)
+
+**Result:**
+- **Fixed:** the hero clip. `startPercentage` was hard-coded to 10 for both instances, so it now defaults to `priority ? 0 : 10` (`page.tsx` sits outside this pass's scope and passes `priority` on the hero only).
+- **Fixed:** the pre-footer ran late. Live sampling showed the clone's pre-footer clip and scale stuck at 5% / 1.25 until the card was 76px *above* the viewport top. ScrollTrigger start/end had been measured before the sections above (sliders, lazy images) grew. After a forced refresh the values matched Scale, so the component now refreshes ScrollTrigger (debounced 150ms) whenever the document height changes, using a ResizeObserver that's cleaned up on unmount. Re-sampled: the pre-footer with its top at 450 reads `inset(2.22222%)` and scale 1.1111, identical to Scale.
+- **Fixed:** added the WheelControls plugin (`keenWheel.ts`) to the Resources and Demos sliders.
+- **Confirmed:** the overlay is gradient only (`.mediaOverlay`), media scale 1.25 → 1, the Keen options, and the AnimatedText cascade.
+- QA re-shot: `qa/public-sector-data-engine/1440-{scale,clone}-rea-{hero,prefooter}.jpg`.
+- **Still unknown:** none on the motion side.
