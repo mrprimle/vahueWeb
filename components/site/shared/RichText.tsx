@@ -1,7 +1,7 @@
 'use client'
 
 // Scale module 141280: portable-text blocks. Multi-block values fade as one instead of splitting.
-import { useMemo, type ReactNode, type Ref } from 'react'
+import { Fragment, useMemo, type ReactNode, type Ref } from 'react'
 import { cn } from '../lib/cn'
 import { AnimatedText, type AnimatedTextHandle, type TextAnimation } from './AnimatedText'
 import { CMSLink } from './CMSLink'
@@ -30,7 +30,16 @@ const CLASS: Record<string, [keyof React.JSX.IntrinsicElements, string]> = {
 }
 
 function renderSpans(block: RichBlock): ReactNode {
-  if (!block.children) return block.text
+  if (!block.children) {
+    // Portable Text renders a newline in a span as a hard break.
+    if (!block.text?.includes('\n')) return block.text
+    return block.text.split('\n').map((line, i) => (
+      <Fragment key={i}>
+        {i > 0 ? <br /> : null}
+        {line}
+      </Fragment>
+    ))
+  }
   return block.children.map((s, i) => {
     const inner = s.highlightGray ? <span className="highlight gray text-scale-gray-60" key={i}>{s.text}</span> : s.text
     return s.href ? (

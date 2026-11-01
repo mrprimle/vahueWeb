@@ -14,9 +14,11 @@ export type LogoMarqueeHandle = {
 }
 
 /** Neutral stand-in at Scale's logo bounds (70x28). */
-export function LogoTile({ label = 'Logo', className }: { label?: string; className?: string }) {
+export function LogoTile({ label = 'Logo', className, style, 'aria-hidden': ariaHidden }: { label?: string; className?: string; style?: React.CSSProperties; 'aria-hidden'?: boolean }) {
   return (
-    <span className={cn('flex h-7 w-[70px] items-center justify-center rounded-sm border border-current text-[10px] opacity-60', className)}>{label}</span>
+    <span className={cn('flex h-7 w-[70px] items-center justify-center rounded-sm border border-current text-[10px] opacity-60', className)} style={style} aria-hidden={ariaHidden}>
+      {label}
+    </span>
   )
 }
 

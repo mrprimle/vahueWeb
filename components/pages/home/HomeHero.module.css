@@ -1,0 +1,21 @@
+/* Scale CSS module B7tvvG (chunk 2h0gxg24im1sd.css). */
+.category {
+  white-space: nowrap;
+}
+.category > div:first-child > div:first-child::before {
+  content: '';
+  vertical-align: top;
+  background: linear-gradient(to top right, #0000 50%, currentColor 50%);
+  width: 0.45rem;
+  height: 0.45rem;
+  margin: 0.225rem 0.45rem 0 0;
+  display: inline-block;
+  position: relative;
+}
+@media (min-width: 768px) {
+  .category > div:first-child > div:first-child::before {
+    width: 0.5rem;
+    height: 0.5rem;
+    margin: 0.25rem 0.5rem 0 0;
+  }
+}
