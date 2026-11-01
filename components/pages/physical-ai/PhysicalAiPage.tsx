@@ -74,7 +74,7 @@ function CardsGrid({ cards }: { cards: FeatureCard[] }) {
 }
 
 function MarqueeLogoNode({ logo }: { logo: MarqueeLogoItem }) {
-  if (!logo.src) return <LogoTile />
+  if (!logo.src) return <LogoTile className="h-[27px]" />
   const url = `url("${logo.src}")`
   return (
     <div
