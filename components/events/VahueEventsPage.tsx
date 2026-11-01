@@ -81,8 +81,9 @@ export default function VahueEventsPage() {
   return (
     // The site navbar is sticky and in the flow (89px, light on this route), so the hero section starts at 89px; on the
     // clone it starts at 102px below md and 39px from md. Shift the page so the h1 sits where it does on the clone
-    // (measured: h1 top 246 at 390px, 199 at 768px and up).
-    <div className="mt-[13px] bg-white md:-mt-[50px]">
+    // (measured: h1 top 246 at 390px, 199 at 768px and up). Below md the 13px is padding, not margin, so no dark strip
+    // shows under the light navbar (same fix as VahueBlogPage).
+    <div className="bg-white pt-[13px] md:-mt-[50px] md:pt-0">
       <SmoothScroll />
       <EventsPage content={vahueEventsContent} as="div" />
     </div>
