@@ -1,4 +1,4 @@
-import { FREE_EMAIL_DOMAINS, type DemoContent, type FormRow } from '@/components/scale-clone/demo/content'
+import { type DemoContent, type FormRow } from '@/components/scale-clone/demo/content'
 import { INTEGRATIONS, WORKFLOWS } from '@/lib/automation-content'
 import { getCaseStudy } from '@/lib/case-studies'
 
@@ -109,7 +109,7 @@ export const vahueContactContent: DemoContent = {
       email: 'Email must be formatted correctly.',
       blockedEmail: 'Please use your work email. This form does not accept addresses from {domain}.',
     },
-    blockedEmailDomains: FREE_EMAIL_DOMAINS,
+    // No free-mail block on /contact: the old Vahue form accepted any address, so leads aren't turned away.
   },
   sidebar: {
     quote: PROOF.summary,
