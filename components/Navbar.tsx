@@ -452,7 +452,7 @@ export default function Navbar() {
   // light bar on /careers and its vacancy pages and /contact (light scale.com/demo layout)
   // A template page's dark band (setScaleNavTheme, e.g. the /about stats) swaps the light bar for the dark one.
   const [sectionTheme, setSectionTheme] = useState<NavTheme | null>(null)
-  const isCareersPage = sectionTheme !== 'dark' && (/^\/careers\/.+/.test(pathname) || /^\/contact\/?$/.test(pathname) || isLightEnterprisePage(pathname) || isLightCloneParityPage(pathname) || isLightAutomationPage(pathname))
+  const isCareersPage = sectionTheme !== 'dark' && (/^\/careers\/.+/.test(pathname) || /^\/contact\/?$/.test(pathname) || isLightEnterprisePage(pathname) || isLightCloneParityPage(pathname) || isLightAutomationPage(pathname) || isHomePage)
   const liRefs = useRef<Record<string, HTMLLIElement | null>>({})
   const [portalReady, setPortalReady] = useState(false)
   const [menuRect, setMenuRect] = useState<{
