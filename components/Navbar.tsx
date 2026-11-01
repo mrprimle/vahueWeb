@@ -433,7 +433,7 @@ const isLightEnterprisePage = (p: string) =>
 // Pages rebuilt in strict parity with light Scale clones (security, evaluation-enterprise, enterprise-insurance,
 // enterprise-healthcare, careers, guides, events, blog), in Scale's own colours: light bar. /case-studies is on the guides
 // clone too; /blog and its category pages are on the blog clone (post pages stay dark).
-const isLightCloneParityPage = (p: string) => /^\/(about|experts|security|strategy|careers|events|blog(\/category\/[^/]+)?|guides|case-studies|industries\/(insurance|healthcare-life-sciences))\/?$/.test(p)
+const isLightCloneParityPage = (p: string) => /^\/(about|experts|partnership|security|strategy|careers|events|blog(\/category\/[^/]+)?|guides|case-studies|industries\/(insurance|healthcare-life-sciences))\/?$/.test(p)
 
 // /automations hub and workflow pages on light Scale clones (knowledge-agents is on a black clone): light bar.
 const isLightAutomationPage = (p: string) =>

@@ -14,6 +14,8 @@ export type PartnerItem = {
   title: string
   description: string
   logo?: PartnerLogo
+  /** Card target, instead of hrefBase + slug + hrefSuffix (for a page without partner detail routes). */
+  href?: string
 }
 
 export type PartnershipContent = {

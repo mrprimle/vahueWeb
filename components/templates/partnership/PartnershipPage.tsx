@@ -116,7 +116,7 @@ export default function PartnershipPage({
                   <PartnerCard
                     key={item.slug}
                     item={item}
-                    href={`${hrefBase}/${item.slug}${hrefSuffix}`}
+                    href={item.href ?? `${hrefBase}/${item.slug}${hrefSuffix}`}
                     color={cardColors[i % cardColors.length]}
                     perRow={perRow[i]}
                     linkLabel={linkLabel}
