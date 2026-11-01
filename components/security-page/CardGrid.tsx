@@ -17,10 +17,13 @@ gsap.registerPlugin(ScrollTrigger)
  * Per card, scrubbed (trigger = card, "top bottom" -> "top 50%", scrub: true, pinSpacing false):
  *   staggered progress: r = min(0.1, 0.85 / (n - 1)), window [i*r, i*r + 1 - (n-1)*r], eased power2.out
  *   scale 0.96 -> 1, opacity 0 -> 1, transform-origin center center
- * One-shot, trigger = CardGrid section, "top bottom" (retroactive onEnter), delay 0.125, per card index i:
- *   icon box  clip-path inset(0 100% 0 0 round 10px) -> inset(0 round 10px), 0.5s power1.out, delay 0.1i
- *   icon      opacity 0 -> 1, 1s power1.out, delay 0.1i + 0.1
- *   title     AnimatedText intro, delay 0.1i; description AnimatedText intro, delay 0.1i + 0.14
+ * One-shot, trigger = CardGrid section, "top bottom" (retroactive onEnter), e = 0.125, per card index i.
+ * The commitment cards are `linkCard` slices, so the timing is LinkCard's (chunk 0c1-uups1drfu.js, module 874328),
+ * not the plain Card's: s = 0.05i + e
+ *   icon box  clip-path inset(0 100% 0 0 round 10px) -> inset(0 round 10px), 0.5s power1.out, delay s
+ *   icon      opacity 0 -> 1, 1s power1.out, delay s + 0.05
+ *   title     AnimatedText intro, delay s + 0.16; description AnimatedText intro, delay s + 0.16 + 0.18
+ * If the tab is hidden when the grid enters, the intro waits for visibilitychange (module 540409).
  */
 
 type Card = { icon: ReactNode; title: string; body: string }
@@ -44,6 +47,7 @@ export default function CardGrid({ cards }: { cards: Card[] }) {
     if (!root) return
     const reduced = prefersReducedMotion()
     const texts: ReturnType<typeof createAnimatedText>[][] = []
+    let onVisible: (() => void) | null = null
 
     const ctx = gsap.context(() => {
       const cardEls = gsap.utils.toArray<HTMLElement>('[data-card]', root)
@@ -78,18 +82,25 @@ export default function CardGrid({ cards }: { cards: Card[] }) {
       })
 
       let played = false
+      let wanted = false
       const play = () => {
         if (played) return
+        wanted = true
+        if (document.hidden) return
         played = true
         cardEls.forEach((card, i) => {
-          const d = 0.1 * i + 0.125
+          const d = 0.05 * i + 0.125
           const box = card.querySelector('[data-icon-box]')
           const icon = card.querySelector('[data-icon]')
           if (box) gsap.to(box, { clipPath: 'inset(0% 0% 0% 0% round 10px)', duration: 0.5, ease: 'power1.out', delay: d })
-          if (icon) gsap.to(icon, { opacity: 1, duration: 1, ease: 'power1.out', delay: d + 0.1 })
-          texts[i]?.forEach((t, k) => t.animateIn({ delay: d + 0.14 * k }))
+          if (icon) gsap.to(icon, { opacity: 1, duration: 1, ease: 'power1.out', delay: d + 0.05 })
+          texts[i]?.forEach((t, k) => t.animateIn({ delay: d + 0.16 + 0.18 * k }))
         })
       }
+      onVisible = () => {
+        if (document.visibilityState === 'visible' && wanted && !played) play()
+      }
+      document.addEventListener('visibilitychange', onVisible)
       ScrollTrigger.create({
         trigger: root,
         start: 'top bottom',
@@ -102,6 +113,7 @@ export default function CardGrid({ cards }: { cards: Card[] }) {
     }, root)
 
     return () => {
+      if (onVisible) document.removeEventListener('visibilitychange', onVisible)
       texts.flat().forEach((t) => t.revert())
       ctx.revert()
     }
