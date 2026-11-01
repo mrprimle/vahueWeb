@@ -77,6 +77,8 @@ export type Testimonial = {
   title?: string
   testimonial?: ReactNode
   logoLabel?: string
+  /** Scale's no-logo branch: the tile shows the client name, not a logo. */
+  nameTile?: boolean
   metricValue?: string
   metricLabel?: string
 }
@@ -144,7 +146,11 @@ function LogoTab({
       aria-label={`Show testimonial from ${name}`}
     >
       <div ref={fill} className="absolute w-full h-full -z-10" style={{ background: contrastColor }} />
-      <LogoTile label={item.logoLabel ?? 'Logo'} className="relative z-10" />
+      {item.nameTile ? (
+        <div className={cn('relative text-xs font-medium text-center truncate max-w-28 z-10', isActive ? `${activeColor}` : `text-${activeColor}/90`)}>{name}</div>
+      ) : (
+        <LogoTile label={item.logoLabel ?? 'Logo'} className="relative z-10" />
+      )}
     </button>
   )
 }

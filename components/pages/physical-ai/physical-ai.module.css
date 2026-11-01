@@ -1,0 +1,15 @@
+/* Scale chunk 0npdyq12us3md.css, PrXvJq_feature. */
+.feature {
+  border-radius: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+.feature::after {
+  pointer-events: none;
+  user-select: none;
+  content: '';
+  border: 1px solid #fff3;
+  border-radius: 0.75rem;
+  position: absolute;
+  inset: 0;
+}
