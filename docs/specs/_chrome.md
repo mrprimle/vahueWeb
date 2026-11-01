@@ -16,7 +16,7 @@ Live source: https://scale.com (checked on `/data-engine`, `/about`, `/enterpris
 Module 677474. Region in normal flow above the header, `z-30`, evergreen `#193a29`, on all pages. 39.25 tall at 1440, 101.75 at 390. A scroll listener and `ResizeObserver` write `--announcement-offset = max(0, bar.bottom)`, so the fixed header rides up with it. Dismiss: `max-h-40` to 0, 300ms ease-out, no persistence (Scale also comes back on reload).
 
 ### Header
-Module 511174. `fixed`, `top: var(--announcement-offset)`. 88 tall at 1440, 70 at 390. Row is `grid-layout-desktop` from `md`; triggers at x 140.7, 224.7, 310.1, 396.2 (Scale 140.7, 225.2, 311.2, 397.4: Aeonik vs Aeonik Pro widths). The announced menu data has 4 categories, 12, 6, 5 and 11 links.
+Module 511174. `fixed`, `top: var(--announcement-offset)`. 88 tall at 1440, 70 at 390. Row is `grid-layout-desktop` from `md`; triggers at x 140.7, 224.7, 310.1, 396.2 (Scale 140.7, 225.2, 311.2, 397.4: Aeonik vs Aeonik Pro widths). 4 categories with 12, 6, 5 and 11 links.
 
 ### Desktop menus
 Backdrop height at 1440 equals Scale's: Products 488.5, Solutions 392, Research 417.5, Resources 492.19. Link 20/27.5, -0.5px, hover `#775893` over 200ms. Hover or focus on a link swaps the image.
@@ -63,7 +63,7 @@ See the Lenis section of stack.md.
 - **Logo:** `Logo` is a text wordmark, narrower than the 80px box it sits in. `LogoMark` stands in for Scale's triangle in the announcement bar and footer.
 - **Consent:** Scale's OneTrust banner and analytics are not built. "Cookie preferences" is an inert button.
 - **Social icons:** drawn inline. Scale serves 16px CMS SVGs.
-- **Logos and `--header-*`:** same behaviour, but `<Header>` mounts in the layout, where Scale mounts it inside each page.
+- **Header mount:** `<Header>` mounts in the layout, where Scale mounts it inside each page. Behaviour is the same.
 - **Route transition:** `CMSLink` on Scale checks `window.__scaleTransitionNavigate`, but nothing in any fetched chunk sets it. Not ported.
 - **Favicon:** none yet, so browsers log one 404.
 
