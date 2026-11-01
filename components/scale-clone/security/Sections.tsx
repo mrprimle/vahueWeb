@@ -125,6 +125,7 @@ const promos = [
     title: 'Placeholder Sector Title',
     body: 'Placeholder sentence about programs delivered for public sector partners across agencies.',
     cta: 'Learn more',
+    external: false,
     image: `${ASSET}/capitol.webp`,
     fit: 'object-cover object-top',
   },
@@ -133,6 +134,7 @@ const promos = [
     title: 'Placeholder title on how we protect ourselves and customers',
     body: 'Placeholder sentence about programs delivered across defense, intelligence and civilian agencies, kept to similar length.',
     cta: 'Visit the Trust Center',
+    external: true, // trust.scale.com: CMSLink external branch, no focus outline
     image: `${ASSET}/shield.webp`,
     fit: 'object-contain',
   },
@@ -155,7 +157,7 @@ export function Promos() {
                 <h2 className={`${s.header3} font-display font-normal text-black`}>{p.title}</h2>
                 {/* TODO: Vahue copy */}
                 <p className={`${s.body2} font-display text-black/70`}>{p.body}</p>
-                <FlatCta href="#" variant="borderArrow" theme="black" className="font-display">
+                <FlatCta href="#" variant="borderArrow" theme="black" external={p.external} className="font-display">
                   {p.cta}
                 </FlatCta>
               </div>
