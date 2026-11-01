@@ -9,7 +9,7 @@ type Props = {
   image: string
   title: string
   body?: string
-  cta: string
+  cta: { label: string; href: string }
   /** backdrop colour behind the rounded clip (white on the hero, gray-50 on the prefooter) */
   backdrop: string
   wrapperClassName: string
@@ -118,7 +118,6 @@ export default function FullBleedMedia({ image, title, body, cta, backdrop, wrap
             <section ref={section} className={`overflow-hidden rounded-3xl bg-white text-black ${styles.roundClip}`}>
               <div className={`relative flex min-h-[480px] items-end overflow-hidden rounded-3xl p-8 md:min-h-[720px] md:p-16 ${styles.roundClip}`}>
                 <div className="relative z-20 flex w-full max-w-[72rem] flex-col gap-6 text-white">
-                  {/* TODO: Vahue copy */}
                   <h2
                     ref={heading}
                     className="text-balance text-[clamp(2rem,0.5rem+5vw,4rem)] font-normal leading-[1.05] tracking-[-0.01em] text-white"
@@ -126,7 +125,6 @@ export default function FullBleedMedia({ image, title, body, cta, backdrop, wrap
                     {title}
                   </h2>
                   {body ? (
-                    // TODO: Vahue copy
                     <p
                       ref={para}
                       className="w-full text-balance text-[16px] leading-[1.45] tracking-[-0.01em] text-white md:text-[20px] md:leading-[1.5]"
@@ -135,7 +133,7 @@ export default function FullBleedMedia({ image, title, body, cta, backdrop, wrap
                     </p>
                   ) : null}
                   <div className="flex flex-col gap-4 md:flex-row">
-                    <ArrowCta ref={ctaRef} href="#" label={cta} />
+                    <ArrowCta ref={ctaRef} href={cta.href} label={cta.label} />
                   </div>
                 </div>
                 <div className={`absolute left-0 top-0 h-full w-full origin-center overflow-hidden rounded-3xl ${styles.roundClip}`}>

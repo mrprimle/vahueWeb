@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useKeenSlider } from 'keen-slider/react'
 import { WheelControls } from './keenWheel'
-import { resources } from './content'
+import type { PublicSectorDataEngineContent } from './content'
 import { CONTAINER, SECTION, SectionHeader } from './StaticSections'
 import styles from './styles.module.css'
 
@@ -12,7 +12,7 @@ import styles from './styles.module.css'
 //   Track fades 50% -> 100% (0.3s ease-in-out) once created; grab / grabbing cursor;
 //   Tab / Shift+Tab step slides (keydown on the overflow wrapper); focusin on the first / last slide moves to
 //   minIdx / maxIdx (REA ev_fadad1fea6f0: keydown + focusin on div.overflow-x-hidden).
-export default function Resources() {
+export default function Resources({ content: resources }: { content: PublicSectorDataEngineContent['resources'] }) {
   const [ready, setReady] = useState(false)
   const wrap = useRef<HTMLDivElement>(null)
   const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
@@ -74,11 +74,12 @@ export default function Resources() {
               style={{ visibility: 'visible', transition: 'opacity 0.3s ease-in-out' }}
             >
               {resources.items.map((r) => (
-                <a key={r.title} href="#" className="keen-slider__slide block">
-                  {/* TODO: Vahue resource image (source thumbnails carry Scale and partner marks) */}
-                  <div className="relative z-10 aspect-[389/243] overflow-hidden rounded-lg bg-black" />
+                <a key={r.title} href={r.href} className="keen-slider__slide block">
+                  <div className="relative z-10 aspect-[389/243] overflow-hidden rounded-lg bg-black">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={r.image} alt="" loading="lazy" draggable={false} className="absolute inset-0 h-full w-full object-cover" />
+                  </div>
                   <div className="relative z-20 pt-6">
-                    {/* TODO: Vahue copy */}
                     <p className="text-[14px] font-medium leading-[1.71] tracking-[-0.01em] text-[#D1AAD7]">{r.tag}</p>
                     <h5 className="mt-1 line-clamp-2 text-[24px] font-normal leading-[1.33] tracking-[-0.01em] text-black">{r.title}</h5>
                   </div>

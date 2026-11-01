@@ -1,4 +1,4 @@
-import { ASSET, logos, overview, why } from './content'
+import type { PublicSectorDataEngineContent } from './content'
 import { Check, FeatureGlyph } from './icons'
 import styles from './styles.module.css'
 
@@ -22,7 +22,6 @@ export function SectionHeader({
     <div className="mx-auto mb-10 flex max-w-3xl flex-col items-center justify-center text-center md:mt-12">
       <div className="flex flex-col">
         <div className="flex flex-col">
-          {/* TODO: Vahue copy */}
           <div className={`mb-5 font-mono text-[12px] uppercase leading-6 tracking-[1px] ${eyebrowClassName}`}>
             <span>{eyebrow}</span>
           </div>
@@ -40,24 +39,23 @@ export function SectionHeader({
   )
 }
 
-function Tile({ w, h }: { w: number; h: number }) {
-  // TODO: partner logo. Neutral placeholder at the source logo's rendered size.
-  return <div className="rounded-[4px] bg-black/10" style={{ width: w, height: h }} aria-hidden />
+function Logo({ src, alt, width, height }: PublicSectorDataEngineContent['logos']['items'][number]) {
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={src} alt={alt} width={width} height={height} className="block max-w-none brightness-0" style={{ width, height }} />
 }
 
-export function LogoWall() {
-  const total = logos.tiles.reduce((s, t) => s + t.w + 48, 0)
+export function LogoWall({ content: logos }: { content: PublicSectorDataEngineContent['logos'] }) {
+  const total = logos.items.reduce((s, t) => s + t.width + 48, 0)
   return (
     <section className="pb-10 pt-8 md:pt-10">
       <div className={`${CONTAINER} relative`}>
-        {/* TODO: Vahue copy */}
         <p className="mx-auto mb-12 w-full max-w-[698px] text-balance px-4 text-center text-[16px] leading-[1.65] tracking-[-0.01em] text-[#374151]">
           <span className="mr-2">{logos.lead}</span>
           <span className="inline">
             {/* ArrowLink theme "light": `text-link hover:text-blue-700`, but Scale's CSS has no blue-700 rule, so the
                 colour stays #008eff on hover; only the arrow moves (translate-x 4px, 300ms ease-out). */}
-            <a href="#" data-qa="logo-link" className="group inline-flex items-center gap-1 text-[#008eff] transition-colors duration-300">
-              <span className="font-medium">{logos.link}</span>
+            <a href={logos.link.href} data-qa="logo-link" className="group inline-flex items-center gap-1 text-[#008eff] transition-colors duration-300">
+              <span className="font-medium">{logos.link.label}</span>
               <span aria-hidden className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1">
                 →
               </span>
@@ -65,10 +63,10 @@ export function LogoWall() {
           </span>
         </p>
         <div className="hidden md:block">
-          <ul className="mx-auto flex w-full items-center justify-between gap-8 px-6 sm:min-h-[52px] md:gap-y-16 md:max-w-[768px] lg:max-w-[1024px] lg:px-8 xl:max-w-[1280px]">
-            {logos.tiles.map((t, i) => (
-              <li key={i} className="flex flex-col items-center justify-center gap-3">
-                <Tile {...t} />
+          <ul className="mx-auto flex w-full items-center justify-between gap-8 px-6 min-h-[63px] md:gap-y-16 md:max-w-[768px] lg:max-w-[1024px] lg:px-8 xl:max-w-[1280px]">
+            {logos.items.map((t) => (
+              <li key={t.src} className="flex flex-col items-center justify-center gap-3">
+                <Logo {...t} />
               </li>
             ))}
           </ul>
@@ -77,10 +75,10 @@ export function LogoWall() {
           <div className="overflow-hidden">
             <div className={styles.marquee} style={{ ['--marquee-duration' as string]: `${total / 50}s` }}>
               {[0, 1].map((copy) => (
-                <ul key={copy} className="flex items-center" aria-hidden={copy === 1}>
-                  {logos.tiles.map((t, i) => (
-                    <li key={i} className="ml-12 flex flex-col items-center justify-center gap-3">
-                      <Tile {...t} />
+                <ul key={copy} className="flex min-h-[63px] items-center" aria-hidden={copy === 1}>
+                  {logos.items.map((t) => (
+                    <li key={t.src} className="ml-12 flex flex-col items-center justify-center gap-3">
+                      <Logo {...t} />
                     </li>
                   ))}
                 </ul>
@@ -93,7 +91,7 @@ export function LogoWall() {
   )
 }
 
-export function ProductOverview() {
+export function ProductOverview({ content: overview }: { content: PublicSectorDataEngineContent['overview'] }) {
   return (
     <section className={SECTION}>
       <div className={`${CONTAINER} relative`}>
@@ -107,7 +105,6 @@ export function ProductOverview() {
                 </span>
               </figure>
               <div>
-                {/* TODO: Vahue copy */}
                 <h4 className="relative mt-6 whitespace-pre-line text-[24px] text-black font-normal leading-[1.5] tracking-[-0.01em]">{c.title}</h4>
                 <p className="relative mt-4 text-[16px] leading-[1.5] tracking-[-0.01em] text-[#525252]">{c.body}</p>
               </div>
@@ -119,7 +116,7 @@ export function ProductOverview() {
   )
 }
 
-export function WhyScale() {
+export function WhyScale({ content: why }: { content: PublicSectorDataEngineContent['why'] }) {
   return (
     <section className={SECTION}>
       <div className={`${CONTAINER} relative`}>
@@ -133,7 +130,6 @@ export function WhyScale() {
                     <Check className="h-3 w-3 text-black/70" />
                   </div>
                   <div className="flex flex-col gap-2">
-                    {/* TODO: Vahue copy */}
                     <p className="text-[16px] font-medium leading-[1.5] tracking-[-0.01em] text-black">{item.title}</p>
                     <p className="text-[14px] leading-[1.5] tracking-[-0.01em] text-black/70">{item.body}</p>
                   </div>
@@ -143,9 +139,9 @@ export function WhyScale() {
             ))}
           </div>
           <div className="flex w-full justify-center p-2 md:w-7/12">
-            {/* TODO: Vahue diagram. Scale's flywheel illustration (labels are Scale copy). */}
+            {/* The slot keeps the aspect of Scale's 1944x1740 raster, whatever image is passed. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`${ASSET}/why-scale.png`} alt="" width={1944} height={1740} loading="lazy" className="h-auto w-full" />
+            <img src={why.image.src} alt={why.image.alt} width={why.image.width} height={why.image.height} loading="lazy" className="aspect-[1944/1740] h-auto w-full object-contain" />
           </div>
         </div>
       </div>

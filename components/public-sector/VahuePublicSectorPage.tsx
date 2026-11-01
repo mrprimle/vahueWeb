@@ -84,7 +84,7 @@ export const vahuePublicSectorContent: PublicSectorContent = {
           { title: 'Inside the tools you already use', body: 'Agents connect to your email, document stores, ERP and CRM, with your existing permissions kept in place.' },
           { title: 'Operated month to month', body: 'We handle monitoring, exceptions, accuracy reviews and model updates.' },
         ],
-        cta: { label: 'Learn more', href: '/automations/' },
+        cta: { label: 'Learn more', href: '/public-sector-data-engine/' },
       },
       {
         heading: 'Control Layer', // page copy

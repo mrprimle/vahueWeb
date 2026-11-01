@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { testimonial } from './content'
+import type { PublicSectorDataEngineContent } from './content'
 import { Triangle } from './icons'
 import { gsap, ScrollTrigger, playFlip, prepareFlip, reducedMotion, type SplitText } from './motion'
 
@@ -30,7 +30,8 @@ function scrollToTestimonial(el: HTMLElement | null) {
 //           then select. focus-visible: 2px white/80 outline, offset 2.
 //   flip:   transformPerspective 900, origin 50% 100%, rotationX -90 / yPercent 108 -> 0,
 //           0.48s power2.out, stagger 0.05
-export default function Testimonial() {
+export default function Testimonial({ content: testimonial }: { content: PublicSectorDataEngineContent['testimonial'] }) {
+  const { role } = testimonial
   const wrap = useRef<HTMLDivElement>(null)
   const inner = useRef<HTMLDivElement>(null)
   const panel = useRef<HTMLDivElement>(null)
@@ -68,7 +69,7 @@ export default function Testimonial() {
       playRef.current = () => {
         if (played) return
         played = true
-        if (chipText.current) chipText.current.textContent = testimonial.role
+        if (chipText.current) chipText.current.textContent = role
       }
       const st = ScrollTrigger.create({ trigger: wrap.current, start: 'top 80%', onEnter: select })
       return () => st.kill()
@@ -91,7 +92,7 @@ export default function Testimonial() {
     playRef.current = () => {
       if (played) return
       played = true
-      animateToText(testimonial.role, 0.05)
+      animateToText(role, 0.05)
       // AnimatedText.ready(): the splits exist once fonts are in; if they are not yet, play when they are.
       document.fonts.ready.then(() => {
         if (cancelled) return
@@ -128,7 +129,7 @@ export default function Testimonial() {
       ctx.revert()
       splits.forEach((sp) => sp.revert())
     }
-  }, [select])
+  }, [select, role])
 
   const tile = (size: string, i: number) => (
     <button
@@ -151,8 +152,7 @@ export default function Testimonial() {
         className="absolute -z-10 h-full w-full"
         style={{ background: '#000', transform: 'translateY(100%)' }}
       />
-      {/* TODO: client logo */}
-      <div className="relative z-10 max-w-[112px] truncate text-center text-[12px] font-medium leading-[1.5]">{testimonial.name}</div>
+      <div className="relative z-10 max-w-[112px] truncate text-center text-[12px] font-medium leading-[1.5]">{testimonial.tileLabel ?? testimonial.name}</div>
     </button>
   )
 
@@ -173,7 +173,6 @@ export default function Testimonial() {
                 role="tablist"
                 aria-label="Client testimonials"
               >
-                {/* TODO: Vahue copy */}
                 <p className="col-span-full w-1/2 whitespace-pre-line font-mono text-[12px] font-medium uppercase leading-[1.375] tracking-[-0.01em] text-white lg:w-full">
                   {testimonial.eyebrow}
                 </p>
@@ -189,13 +188,12 @@ export default function Testimonial() {
                       aria-hidden={!active}
                       className={active ? 'relative z-10' : 'pointer-events-none relative z-0 overflow-hidden lg:absolute lg:inset-0'}
                     >
-                      {/* TODO: Vahue copy */}
                       <div
                         ref={quote}
                         className="max-w-none pr-2.5 text-[24px] font-normal leading-7 tracking-[-0.05em] text-white lg:text-[40px] lg:leading-[2.75rem]"
                       >
                         <span className="inline-block w-[100px] lg:w-[160px]">&nbsp;</span>
-                        “{testimonial.quote}”
+                        {testimonial.plainText ? testimonial.quote : `“${testimonial.quote}”`}
                       </div>
                     </div>
                   </div>

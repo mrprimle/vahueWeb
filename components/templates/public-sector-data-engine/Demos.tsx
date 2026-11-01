@@ -3,37 +3,41 @@
 import { useEffect, useRef, useState } from 'react'
 import { useKeenSlider } from 'keen-slider/react'
 import { WheelControls } from './keenWheel'
-import { demos } from './content'
+import type { PublicSectorDataEngineContent } from './content'
 import { Play } from './icons'
 import { CONTAINER, SECTION, SectionHeader } from './StaticSections'
 import styles from './styles.module.css'
 
-// TODO: Vahue demo poster. Scale's posters are product screenshots with baked-in titles,
-// so a dark panel in the same colour family stands in for them.
-function Poster() {
-  return <div aria-hidden className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_40%,#1a1530_0%,#07050f_70%)]" />
+type Demo = PublicSectorDataEngineContent['demos']['items'][number]
+
+function Poster({ poster }: { poster: Demo['poster'] }) {
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={poster.src} alt={poster.alt} loading="lazy" draggable={false} className="absolute inset-0 h-full w-full object-contain" />
 }
 
 // scale.com ResponsiveVideo -> WistiaPlayer (chunk 30w17vppvfdah.js, module 832862): a poster button that swaps itself
-// for the Wistia iframe (`?autoPlay=1`) on click, or straight away when rendered with autoPlay.
-function Player({ title, autoPlay = false, className = '' }: { title: string; autoPlay?: boolean; className?: string }) {
+// for the embed on click, or straight away when rendered with autoPlay. A demo with no video is a still frame, with no
+// play control.
+function Player({ demo, autoPlay = false, className = '' }: { demo: Demo; autoPlay?: boolean; className?: string }) {
   const [playing, setPlaying] = useState(autoPlay)
-  if (playing) {
-    // TODO: Vahue demo video. Scale embeds its own Wistia product videos here; the frame keeps the iframe's box.
+  const frame = `relative aspect-video w-full overflow-hidden rounded-2xl bg-[#f2f2f2] ${className}`
+  if (!demo.video) {
     return (
-      <div className={`relative aspect-video w-full overflow-hidden rounded-2xl ${className}`} data-qa="demo-playing">
-        <Poster />
+      <div className={frame} data-qa="demo-still">
+        <Poster poster={demo.poster} />
+      </div>
+    )
+  }
+  if (playing) {
+    return (
+      <div className={frame} data-qa="demo-playing">
+        <iframe src={demo.video} title={demo.title} allow="autoplay; fullscreen" className="absolute inset-0 h-full w-full" />
       </div>
     )
   }
   return (
-    <button
-      type="button"
-      onClick={() => setPlaying(true)}
-      aria-label={`Play ${title}`}
-      className={`group relative block aspect-video w-full cursor-pointer overflow-hidden rounded-2xl bg-[#f2f2f2] ${className}`}
-    >
-      <Poster />
+    <button type="button" onClick={() => setPlaying(true)} aria-label={`Play ${demo.title}`} className={`group block cursor-pointer ${frame}`}>
+      <Poster poster={demo.poster} />
       <span className="absolute left-1/2 top-1/2 flex h-[72px] w-[72px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 transition-colors duration-200 group-hover:bg-black/70 sm:h-24 sm:w-24">
         <Play className="h-[27px] w-[27px] sm:h-9 sm:w-9" />
       </span>
@@ -46,7 +50,7 @@ function Player({ title, autoPlay = false, className = '' }: { title: string; au
 //   768-1040 perView 3.1 snap, >=1041 perView 3 snap. Inactive slides 50% (70% on hover).
 //   Slide click: select it; on >=640px also autoplay the main player and window.scrollTo({ behavior: 'smooth' })
 //   the gallery root to 16px below the viewport top. slideChanged selects the slide and clears autoplay.
-export default function Demos() {
+export default function Demos({ content: demos }: { content: PublicSectorDataEngineContent['demos'] }) {
   const [active, setActive] = useState(0)
   const [autoPlay, setAutoPlay] = useState(false)
   const gallery = useRef<HTMLDivElement>(null)
@@ -85,7 +89,7 @@ export default function Demos() {
         <SectionHeader eyebrow={demos.eyebrow} title={demos.title} eyebrowClassName="text-black" />
         <div ref={gallery} data-qa="gallery" className="relative">
           <div className="relative mb-12 flex flex-col gap-y-10 sm:mb-0">
-            <Player key={demos.items[active].title} title={demos.items[active].title} autoPlay={autoPlay} className={`hidden sm:block ${styles.fadeIn}`} />
+            <Player key={demos.items[active].title} demo={demos.items[active]} autoPlay={autoPlay} className={`hidden sm:block ${styles.fadeIn}`} />
             <div ref={sliderRef} style={{ cursor }} className={`keen-slider ${styles.keen}`}>
               {demos.items.map((d, i) => (
                 <div
@@ -100,16 +104,15 @@ export default function Demos() {
                   className={`keen-slider__slide grid h-fit cursor-pointer !overflow-visible opacity-100 transition-opacity duration-300 ${active !== i ? 'hover:opacity-70 sm:opacity-50' : ''}`}
                 >
                   {mobile ? (
-                    <Player title={d.title} />
+                    <Player demo={d} />
                   ) : (
                     <div className={styles.videoThumbnail}>
-                      <div className="relative aspect-[384/235] w-full overflow-hidden rounded-[11px]">
-                        <Poster />
+                      <div className="relative aspect-[384/235] w-full overflow-hidden rounded-[11px] bg-[#f2f2f2]">
+                        <Poster poster={d.poster} />
                       </div>
                     </div>
                   )}
                   <div className="relative">
-                    {/* TODO: Vahue copy */}
                     <h4 className="mb-3 mt-2 text-[24px] font-normal leading-[1.33] tracking-[-0.01em] text-black">{d.title}</h4>
                   </div>
                 </div>
