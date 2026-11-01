@@ -29,7 +29,7 @@ export default function VideoCta({ content, media }: { content: HomeContent['pre
   const dark = content.contrast === 'black'
 
   useEffect(() => {
-    const els = [head.current, desc.current].filter((e): e is HTMLElement => !!e)
+    const els = ([head.current, desc.current] as (HTMLElement | null)[]).filter((e): e is HTMLElement => !!e)
     texts.current = els.map((e) => createAnimatedText(e))
     cta.current?.set()
     let st: ScrollTrigger | null = null

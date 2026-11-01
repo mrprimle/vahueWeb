@@ -52,7 +52,7 @@ const postImages: Record<string, string> = {
 }
 const blogTile = (slug: string, extra: { gradient?: boolean; chip?: boolean } = {}) => {
   const p = vahueBlogPosts.find((x) => x.slug === slug)
-  return { title: p?.title ?? '', href: p?.href ?? '/blog', category: extra.chip === false ? undefined : p?.category.name, image: postImages[slug], textColor: 'light' as const, gradient: extra.gradient }
+  return { title: p?.title ?? '', href: p?.href ?? '/blog', category: extra.chip === false ? undefined : p?.category?.name, image: postImages[slug], textColor: 'light' as const, gradient: extra.gradient }
 }
 const caseTile = (slug: string, image: string) => {
   const c = getCaseStudy(slug)
