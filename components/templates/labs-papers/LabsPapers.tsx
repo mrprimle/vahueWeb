@@ -7,14 +7,14 @@ import s from '@/components/templates/labs-shared/labs.module.css'
 import type { LabsPaper, LabsPapersContent } from './content'
 
 /*
- * 1:1 clone of https://labs.scale.com/papers: labs' `ResearchTable` (chunk 2khvrmlfrtnxz.js, module 782200) with
+ * Labs papers layout: `ResearchTable` (chunk 2khvrmlfrtnxz.js, module 782200) with
  * `useCategoryFilter` + `CategoryFilterPills` (module 353007/622866). One section, no ScrollReveal on this route.
  *   state: sortField "date" | "title" | "category" (default "date"), sortDir (default "desc"), activeIndex (0),
  *          activeCategory ("All").
  *   pill click  -> setActiveCategory(c), activeIndex 0
  *   header click -> same field: toggle dir; other field: field = it, dir = "asc"; activeIndex 0
  *   desktop row mouseenter -> activeIndex = row (never reset on leave); preview (lg+, sticky top-20) shows it
- *   row click / Enter -> router.push(`/papers/${slug}`) (clone: the live labs.scale.com detail page)
+ *   row click / Enter -> router.push(`/papers/${slug}`) (here: p.href, a real route)
  * Spec: reference-snapshots/scale-clone/labs-papers.md
  */
 
@@ -89,11 +89,11 @@ export default function LabsPapers({ content }: { content: LabsPapersContent }) 
   )
   const cur = rows[active] || rows[0]
 
-  const go = (p: LabsPaper) => window.location.assign(labsHref(`/papers/${p.slug}`))
+  const go = (p: LabsPaper) => window.location.assign(labsHref(p.href))
   const rowProps = (p: LabsPaper) => ({
     role: 'link' as const,
     tabIndex: 0,
-    'data-href': labsHref(`/papers/${p.slug}`),
+    'data-href': labsHref(p.href),
     onClick: () => go(p),
     onKeyDown: (e: KeyboardEvent) => e.key === 'Enter' && go(p),
   })
@@ -241,10 +241,10 @@ export default function LabsPapers({ content }: { content: LabsPapersContent }) 
 
         <div className="mt-6">
           <p className="text-[12px] leading-[1.5] text-[#737373] m-0">
-            {rows.length} {rows.length === 1 ? 'paper' : 'papers'} found
+            {rows.length} {rows.length === 1 ? content.noun : `${content.noun}s`} found
           </p>
         </div>
-        {rows.length === 0 && <p className="text-[14px] leading-[1.5] text-[#737373] text-center py-20 m-0">No papers found in this category.</p>}
+        {rows.length === 0 && <p className="text-[14px] leading-[1.5] text-[#737373] text-center py-20 m-0">No {content.noun}s found in this category.</p>}
       </div>
     </section>
   )
