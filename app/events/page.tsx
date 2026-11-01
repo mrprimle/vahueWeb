@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   alternates: { canonical: PAGE_URL },
 }
 
-// Built on the scale.com/events clone (components/scale-clone/events) in Scale's own colours.
+// Built on the scale.com/events clone (components/templates/events) in Scale's own colours.
 export default function Page() {
   return <VahueEventsPage />
 }

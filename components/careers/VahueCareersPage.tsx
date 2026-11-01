@@ -2,19 +2,19 @@ import Image from 'next/image'
 import { POSITIONING } from '@/lib/automation-content'
 import { getCaseStudy } from '@/lib/case-studies'
 import SmoothScroll from '@/components/home/scroll-hero/SmoothScroll'
-import CareersPage from '@/components/scale-clone/careers/CareersPage'
-import type { CareersContent } from '@/components/scale-clone/careers/content'
+import CareersPage from '@/components/templates/careers/CareersPage'
+import type { CareersContent } from '@/components/templates/careers/content'
 import { EvidenceArt, FlexArt, GLOBE_ICON, MeasureArt, OwnerArt, RespectArt, ShareArt } from './careersArt'
 import v from './vahueCareers.module.css'
 
 /*
- * Vahue /careers on the scale.com/careers clone (components/scale-clone/careers, spec
+ * Vahue /careers on the scale.com/careers clone (components/templates/careers, spec
  * reference-snapshots/scale-clone/careers.md). Strict parity: every clone section, in the same order, with the same
  * element roles and counts (hero H2 + body + CTA, 3 news cards, mission lead + 1 left + 3 right paragraphs, 6 credos,
  * 4 benefits, open positions, pre-footer H2 + CTA). Only the copy and visuals change:
  *   - copy from the previous /careers page (CareersExperience), the vacancy pages, lib/automation-content.ts and
  *     lib/case-studies.ts ("In The News" holds three named Vahue cases, linking to their case-study pages)
- *   - photos are Vahue's own (public/img/careers), line art is own SVG (careersArt.tsx); nothing from public/scale-clone
+ *   - photos are Vahue's own (public/img/careers), line art is own SVG (careersArt.tsx); nothing from public/templates
  *   - Scale's own colours (the clone's light --car-* defaults, evergreen / atlas-blue / gray-10 news cards); only the
  *     filter bar's sticky offset is set, for the sticky site navbar (light on this route, see Navbar.tsx)
  * Copy written for this page is marked `// page copy`.

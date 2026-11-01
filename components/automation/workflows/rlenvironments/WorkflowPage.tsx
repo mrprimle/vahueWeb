@@ -8,7 +8,7 @@ import { AfterMock, BeforeMock, ControlMock, PlatformsLineArt, ReviewMock, Waves
 
 /*
  * /automations/engineering-enablement on the scale.com/rlenvironments layout, strict parity with the clone
- * (app/scale-clone/rlenvironments/page.tsx): hero -> 4 feature cards -> 3 overview cards -> 2 capability rows
+ * (scale.com/rlenvironments): hero -> 4 feature cards -> 3 overview cards -> 2 capability rows
  * -> 3 "offered as" cards with the square visual -> pre-footer, in the clone's own colours, built from the clone's
  * components with the content passed in. Source: lib/automation-content.ts (WORKFLOWS 'engineering-enablement');
  * text written for this page is listed in the strict-parity report.

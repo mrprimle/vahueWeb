@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import type { CaseStudy } from '@/lib/case-studies'
-import { Bolt, Check, Flame, Gauge } from '@/components/scale-clone/automotive/icons'
+import { Bolt, Check, Flame, Gauge } from '@/components/templates/automotive/icons'
 import LogoMarquee from './LogoMarquee'
 import s from './styles.module.css'
 
 /*
- * Static sections of the automotive clone (components/scale-clone/automotive/Sections.tsx), same markup and colours,
+ * Static sections of the automotive clone (components/templates/automotive/Sections.tsx), same markup and colours,
  * with Vahue copy passed in. Media slots carry our own SVG visuals (no Scale imagery).
  */
 

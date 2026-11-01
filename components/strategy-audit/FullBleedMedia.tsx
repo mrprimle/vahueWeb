@@ -25,7 +25,7 @@ type Props = {
   priority?: boolean
 }
 
-// Copied from components/scale-clone/evaluation-enterprise/FullBleedMedia.tsx: motion and Scale's colours
+// Copied from components/templates/evaluation-enterprise/FullBleedMedia.tsx: motion and Scale's colours
 // unchanged (gradient-only overlay, #193a29 media fill); real links and a heading level (h1 on the hero).
 //
 // scale.com FullBleedMediaSection inside a ClipScrollSection (chunk 37xz28pjbnlx4.js):

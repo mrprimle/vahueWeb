@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import styles from './styles.module.css'
 
 /*
- * Sections of the generative-ai-data-engine clone (components/scale-clone/generative-ai-data-engine/Sections.tsx),
+ * Sections of the generative-ai-data-engine clone (components/templates/generative-ai-data-engine/Sections.tsx),
  * in the clone's own colours. Where Scale ships a raster with baked-in text (expertise.png, product-overview.webp,
  * lifecycle.png) we draw our own SVG on the same viewBox, so the panel scales exactly like Scale's image.
  */

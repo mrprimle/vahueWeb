@@ -26,10 +26,10 @@ Last updated: 2026-11-01 (all clones, audits and Vahue pages done; PR to main op
 | Research doc | "AI Automation Agencies — Jobs Research & Ideal Company Blueprint", a Claude Doc: https://claude.ai/artifact/LmiQYQr5koeghEbXd9gkPf. If a new account can't open it, ask Mike to share it or export it. |
 | Research copy for the site | `lib/automation-content.ts`: positioning, Audit/Pilot/Operate phases, control features, integrations, the 6 workflows, industry workflows, and `PAGE_TEMPLATES` (which Scale clone layout each Vahue page reuses) |
 | Scale stack analysis (REA) | `reference-snapshots/scale-motion-stack.md`: GSAP 3.15 + ScrollTrigger/SplitText/Flip, Lenis 1.3.21 (lerp 0.14, gsap.ticker), three r181, Keen Slider, Embla, Rive. Includes easing, durations and the SplitText reveal variants |
-| Scale page list | `reference-snapshots/scale-pages.md` (32 menu pages) and the registry `components/scale-clone/shared/pages.ts` |
+| Scale page list | `reference-snapshots/scale-pages.md` (32 menu pages) (the old registry `shared/pages.ts` is in git at the commit below) |
 | Per-page clone specs + QA notes | `reference-snapshots/scale-clone/<slug>.md` (sections, motion params, listeners, QA, remaining gaps) |
 | QA screenshots | `reference-snapshots/scale-clone/qa/<slug>/` |
-| Clone routes | `/scale-clone/<slug>`, built from `app/scale-clone/` and `components/scale-clone/<slug>/` |
+| Templates | `components/templates/<slug>/` (one folder per Scale page, Scale's copy still in each `content` file), assets in `public/templates/<slug>/`. No routes: `/scale-clone` was removed from the site, see below |
 
 ## Research summary (full version in the doc)
 
@@ -42,9 +42,16 @@ Last updated: 2026-11-01 (all clones, audits and Vahue pages done; PR to main op
 
 ## Scale clone status (32 menu pages) — updated 2026-11-01
 
-All 32 menu pages are cloned at `/scale-clone/<slug>/` (index at `/scale-clone/`), each with a full spec in `reference-snapshots/scale-clone/<slug>.md` that ends with a per-section **Interaction inventory** (REA listener evidence ids, source modules, params, Scale-vs-clone measurements) and QA images in `reference-snapshots/scale-clone/qa/<slug>/` (+ `interactions/`).
+**Clones removed from the site (2026-11-01, Mike: "all should be in vahue /").** `app/scale-clone/` and the `/scale-clone` URLs are gone. Last commit containing them: `0e79e405400bdbd82064fd6cd9788cd09f4acf23` (`0e79e40`); use it to see how a template was mounted (`git show 0e79e40:app/scale-clone/<slug>/page.tsx`) or to read the removed chrome. Compare new pages against live scale.com.
+- Every template stays in `components/templates/<slug>/` (including labs*, docs, evaluation-*, public-sector*, global-public-sector, about, experts, partnership), because each Scale page gets research copy at a real Vahue URL. Their Scale copy and assets stay until that page is built.
+- Assets moved from `public/templates/` to `public/templates/`. Real Vahue pages must not use them.
+- Clone-only chrome deleted: ScaleHeader, ScaleFooter, CloneChrome, HideUnderClone, `shared/pages.ts`, `shared/footer`, `shared/header` except `navTheme.ts`, and `public/templates/shared`. `labs-shared` stays. The clone layout's wrapper (`bg-white text-[#0a0a0a] font-display`, SmoothScroll) is also gone, so a new page has to supply these itself.
+- Links in template data had the `/scale-clone` prefix stripped (`/scale-clone/demo` became `/contact`). Many targets (`/data-engine`, `/donovan`, `/labs`...) don't exist yet: set the real URLs when each page is built.
+- Older sections below say "clone" and `/scale-clone/<slug>`: read those as the template and its spec in `reference-snapshots/scale-clone/` (kept as documentation).
+
+All 32 menu pages were cloned (now templates, see above), each with a full spec in `reference-snapshots/scale-clone/<slug>.md` that ends with a per-section **Interaction inventory** (REA listener evidence ids, source modules, params, Scale-vs-clone measurements) and QA images in `reference-snapshots/scale-clone/qa/<slug>/` (+ `interactions/`).
 - Every clone was instrumented per section with REA (listeners traced to source + params) and driven with Playwright at identical inputs on scale.com and the clone (cursor paths, hovers, drag, wheel/scroll scrub, keyboard, triggers) at 1440×900 and 390×844.
-- labs.scale.com (labs, labs-papers, labs-leaderboard, labs-blog, labs-jobs) is a separate stack (Next + Tailwind 4 + framer-motion + WebGPU hero): see `labs-stack.md`; shared chrome in `components/scale-clone/labs-shared/`. `/scale-clone/docs` is Scale's Mintlify docs. Both skip the scale.com header/footer via `components/scale-clone/shared/CloneChrome.tsx`.
+- labs.scale.com (labs, labs-papers, labs-leaderboard, labs-blog, labs-jobs) is a separate stack (Next + Tailwind 4 + framer-motion + WebGPU hero): see `labs-stack.md`; shared chrome in `components/templates/labs-shared/`. `/scale-clone/docs` is Scale's Mintlify docs. Both skip the scale.com header/footer via `components/templates/shared/CloneChrome.tsx`.
 - Shared fixes proven across clones: FlatCta state machine (wash on CSS `translate`, reset on the 680ms timer only), `#86bff2` `:focus` outline on internal links, retroactive intro trigger (end `bottom 20%`), `lib/useRefreshOnPageGrow.ts`, full-bleed media scale only during scroll.
 - Known shared gaps: Vahue fonts instead of Scale's commercial fonts (small text-width deltas), shared footer 40px shorter at 390, third-party logos as neutral tiles, `oml:` short-landscape variants not reproduced, static data snapshots (blog/events/careers/labs) dated in each spec.
 

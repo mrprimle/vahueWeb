@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   alternates: { canonical: PAGE_URL },
 }
 
-// Built on the scale.com/blog clone (components/scale-clone/blog) in Scale's own colours.
+// Built on the scale.com/blog clone (components/templates/blog) in Scale's own colours.
 export default function Page() {
   return <VahueBlogPage />
 }

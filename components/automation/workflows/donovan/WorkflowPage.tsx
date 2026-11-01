@@ -8,7 +8,7 @@ import { SUPPORT as C } from './content'
 
 /**
  * /automations/support-agents on the scale.com/donovan layout, strict parity with the clone
- * (components/scale-clone/donovan/DonovanPage.tsx): the same 8 sections in the same order, in the clone's own
+ * (components/templates/donovan/DonovanPage.tsx): the same 8 sections in the same order, in the clone's own
  * colours. hero -> logo strip -> product overview (3 UI cards) -> foundation (3 + brace + 6) -> tabbed showcase
  * (5 tabs) -> icon grid (6) -> trusted & secure (3) -> pre-footer. Copy and slot mapping: ./content.ts.
  */

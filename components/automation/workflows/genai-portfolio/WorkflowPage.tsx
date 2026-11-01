@@ -10,7 +10,7 @@ import s from './styles.module.css'
 
 /*
  * /automations/knowledge-agents on the scale.com/genai-portfolio layout, strict parity with the clone
- * (components/scale-clone/genai-portfolio/GenAiPortfolioPage.tsx): all 13 sections in Scale's order and colours
+ * (components/templates/genai-portfolio/GenAiPortfolioPage.tsx): all 13 sections in Scale's order and colours
  * (black hero, intro, white two-column, black stack, evergreen cards, #eaeaea flywheel, white two-column with media,
  * white differentiators, #c7c7c7 security, foundry-tan testimonials, black demo, #f2f2f2 FAQ, black blog).
  * Scale's scene videos are replaced by Vahue's own SVG drawings on the same pin / scrub params.

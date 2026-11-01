@@ -7,7 +7,7 @@ import type { InsuranceLayoutContent } from './content'
 
 /**
  * Industry landing in strict parity with the scale.com/enterprise/insurance clone
- * (app/scale-clone/enterprise-insurance, spec reference-snapshots/scale-clone/enterprise-insurance.md): the same six
+ * (scale.com/enterprise-insurance, spec reference-snapshots/scale-clone/enterprise-insurance.md): the same six
  * sections in Scale's order, Scale's own colours (white page, black type, empty overtitles, glass button), the same
  * counts (7 logos in 4 + 3, 3 + 3 icon cards, 2 video cards); Vahue fonts, logo and copy (./content.ts).
  * Section mapping: hero -> the industry promise; logo carousel -> named clients as text tiles; blind spots -> the

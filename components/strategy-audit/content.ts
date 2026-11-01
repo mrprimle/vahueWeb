@@ -1,5 +1,5 @@
 // Copy for /strategy (Workflow audit), in strict parity with the evaluation-enterprise clone
-// (components/scale-clone/evaluation-enterprise/content.ts, Scale's own text in reference-snapshots): the same
+// (components/templates/evaluation-enterprise/content.ts, Scale's own text in reference-snapshots): the same
 // slots and counts (2 hero CTAs, 3 challenge items, 3 checklist items, 5 how-it-works rows, 2 pre-footer CTAs) and
 // each line about the length and Title Case of Scale's line in that slot. Phase and positioning copy comes from
 // lib/automation-content.ts (PHASES, POSITIONING); lines marked "page copy" were written for this page.

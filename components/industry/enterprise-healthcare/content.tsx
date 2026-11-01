@@ -1,4 +1,4 @@
-import type { HealthcareContent } from '@/components/scale-clone/enterprise-healthcare/content'
+import type { HealthcareContent } from '@/components/templates/enterprise-healthcare/content'
 import { caseStudies, type CaseStudy } from '@/lib/case-studies'
 import { dots } from '@/components/enterprise-vahue/art'
 import ControlIllustration from './ControlIllustration'
@@ -6,7 +6,7 @@ import { FindingsMockup, IntakeMockup, SummaryMockup } from './Mockups'
 
 /*
  * /industries/healthcare-life-sciences content for the scale.com/enterprise/healthcare layout (the clone's
- * HealthcarePage, components/scale-clone/enterprise-healthcare), in strict parity with Scale's page: the same
+ * HealthcarePage, components/templates/enterprise-healthcare), in strict parity with Scale's page: the same
  * slots and counts (8 marquee slots, 3 tabs, 1 metrics testimonial, 3 stack cards, 3 blog tiles, 8 badge cells)
  * and Scale's colours (tab indicators, testimonial theme, media fills). Each line is about the length and casing of
  * Scale's line in that slot (Scale's text: reference-snapshots / the clone's scaleHealthcareContent).

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import s from './book-index.module.css'
 
 /*
- * Book grid (template: components/scale-clone/guides/GuidesPage.tsx). 1 / sm 2 / lg 3 / xl 4 columns,
+ * Book grid (template: components/templates/guides/GuidesPage.tsx). 1 / sm 2 / lg 3 / xl 4 columns,
  * gap 32px, 280x376 "book" cards with the pure-CSS page-turn hover (rotateY(-30deg) at perspective
  * 2000px, 0.3s ease-out). Scale's cover colours in Scale's order; each cover carries what Scale's does:
  * the 80x20 brand mark (the Vahue logo here), the index number and the title.

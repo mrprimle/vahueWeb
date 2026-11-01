@@ -1,9 +1,9 @@
-import { type DemoContent, type FormRow } from '@/components/scale-clone/demo/content'
+import { type DemoContent, type FormRow } from '@/components/templates/demo/content'
 import { INTEGRATIONS, WORKFLOWS } from '@/lib/automation-content'
 import { getCaseStudy } from '@/lib/case-studies'
 
 /*
- * /contact copy on the scale.com/demo layout (components/scale-clone/demo, spec reference-snapshots/scale-clone/demo.md).
+ * /contact copy on the scale.com/demo layout (components/templates/demo, spec reference-snapshots/scale-clone/demo.md).
  * Strict parity: same six fieldsets in the same order with the same field kinds as Scale's form
  *   1 two text | 2 two text | 3 email | 4 select + consent | 5 select + dependent textarea | 6 select + dependent text
  * and the same sidebar slots (quote block, person block, label, 4 + 3 wordmarks).

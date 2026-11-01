@@ -1,11 +1,11 @@
 import SmoothScroll from '@/components/home/scroll-hero/SmoothScroll'
-import EnterprisePage from '@/components/scale-clone/enterprise/EnterprisePage'
+import EnterprisePage from '@/components/templates/enterprise/EnterprisePage'
 import { operationsContent } from './content'
 import { AuditLog, MonthlyReport, PhaseTrack, ReviewQueue, Rings } from '@/components/enterprise-vahue/Media'
 import { OperateLoop } from './Media'
 
 /*
- * /operations ("How we operate") on the scale.com/enterprise layout (template clone: components/scale-clone/enterprise,
+ * /operations ("How we operate") on the scale.com/enterprise layout (template clone: components/templates/enterprise,
  * spec reference-snapshots/scale-clone/enterprise.md). Composed, not forked: Vahue content and own visuals go in
  * through EnterprisePage's `content` and `media`. Strict parity with the clone: all 12 sections in Scale's order and
  * Scale's own colours (the --ent-* tokens stay at the clone defaults); Vahue fonts and logo.

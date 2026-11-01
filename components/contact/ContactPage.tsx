@@ -1,7 +1,7 @@
 'use client'
 
 import emailjs from '@emailjs/browser'
-import DemoPage from '@/components/scale-clone/demo/DemoPage'
+import DemoPage from '@/components/templates/demo/DemoPage'
 import { vahueContactContent } from './content'
 import s from './contact.module.css'
 

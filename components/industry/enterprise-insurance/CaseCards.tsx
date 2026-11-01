@@ -2,7 +2,7 @@ import s from './styles.module.css'
 
 /*
  * scale.com "Features" slice with video cards (chunk 17ea4hx823ss4, module 450359), in the clone's layout and
- * colours (components/scale-clone/enterprise-insurance/VideoFeatures.tsx): 1 col gap 56 -> md 2 cols gap 24 ->
+ * colours (components/templates/enterprise-insurance/VideoFeatures.tsx): 1 col gap 56 -> md 2 cols gap 24 ->
  * lg gap 56; card .feature (radius 12) > 3:2 media, rounded-lg, centred 64px round button bg-black/40 -> hover /60;
  * title mt-8 lg:mt-12 24/36; description mt-3 16/26.4 black/70.
  * Vahue: each card is a verified case. The video poster becomes an own panel (Scale palette tone under the dot

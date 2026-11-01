@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 }
 
 // Workflow audit page in strict parity with the evaluation-enterprise clone
-// (app/scale-clone/evaluation-enterprise, spec reference-snapshots/scale-clone/evaluation-enterprise.md):
+// (scale.com/evaluation-enterprise, spec reference-snapshots/scale-clone/evaluation-enterprise.md):
 // the same five sections, counts and Scale's own colours (white page, #f9fafb pre-footer backdrop, #193a29 media
 // fill); Vahue fonts, logo, photography and copy (components/strategy-audit/content.ts).
 export default function Strategy() {

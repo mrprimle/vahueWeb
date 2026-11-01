@@ -6,7 +6,7 @@ import type { CaseCard } from './CaseCards'
 
 /*
  * Content for an industry page on the scale.com/enterprise/insurance layout, in strict parity with the clone
- * (app/scale-clone/enterprise-insurance; Scale's own text in reference-snapshots): hero (headline, ~30-word body,
+ * (scale.com/enterprise-insurance; Scale's own text in reference-snapshots): hero (headline, ~30-word body,
  * 1 CTA) -> logo carousel (line + link, 7 logos in 4 + 3) -> 3 problem cards -> 3 solution cards + glass button ->
  * 2 video cards -> pre-footer (headline + 1 CTA). Each line is about the length and Title Case of Scale's line in
  * that slot. Sources: lib/automation-content.ts (INDUSTRY_WORKFLOWS, WORKFLOWS), lib/case-studies.ts, and the

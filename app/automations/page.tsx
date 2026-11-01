@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   alternates: { canonical: PAGE_URL },
 }
 
-// Automation hub on the layout of the data-engine clone (app/scale-clone/data-engine, spec in
+// Automation hub on the layout of the data-engine clone (scale.com/data-engine, spec in
 // reference-snapshots/scale-clone/data-engine.md). Strict parity: every clone section in order, in the clone's own
 // (Scale) colours; Vahue fonts, logo, copy and own imagery.
 export default function Automations() {

@@ -1,10 +1,10 @@
 import SmoothScroll from '@/components/home/scroll-hero/SmoothScroll'
-import EnterprisePage from '@/components/scale-clone/enterprise/EnterprisePage'
+import EnterprisePage from '@/components/templates/enterprise/EnterprisePage'
 import { AuditLog, MonthlyReport, PhaseTrack, Pipeline, ReviewQueue, Rings } from '@/components/enterprise-vahue/Media'
 import { buildIndustryContent, type IndustryConfig } from './build'
 
 /*
- * Industry landing on the scale.com/enterprise layout (template clone: components/scale-clone/enterprise, spec
+ * Industry landing on the scale.com/enterprise layout (template clone: components/templates/enterprise, spec
  * reference-snapshots/scale-clone/enterprise.md), the same composition as /operations: EnterprisePage with Vahue
  * content and own visuals, in Scale's own colours (--ent-* tokens at the clone defaults). Used by /industries/banking-financial-services,
  * /industries/retail-ecommerce and /industries/distribution-manufacturing (configs in this folder).

@@ -5,7 +5,7 @@ import s from './styles.module.css'
 
 /*
  * scale.com LogoCarousel (chunk 01xb85jkvr5_y, module 236943), 1:1 from the enterprise-insurance clone
- * (components/scale-clone/enterprise-insurance/LogoCarousel.tsx), Scale's colours.
+ * (components/templates/enterprise-insurance/LogoCarousel.tsx), Scale's colours.
  * Logos chunked in groups of 4 (Scale: 7 logos, 4 + 3). Desktop (md+): groups stacked absolutely in a 64px row,
  * justify-between; the active group is opacity-100 with delay-300, the rest opacity-0, transition-opacity 700ms.
  * A setTimeout of 4500ms advances the index (re-armed on every change). Mobile: one horizontal overflow-x list

@@ -1,9 +1,9 @@
 import { WORKFLOWS } from '@/lib/automation-content'
 import { getCaseStudy } from '@/lib/case-studies'
-import type { IconName } from '@/components/scale-clone/physical-ai/content'
+import type { IconName } from '@/components/templates/physical-ai/content'
 
 /*
- * /automations/document-intake on the physical-ai clone. Same shape as components/scale-clone/physical-ai/content.ts:
+ * /automations/document-intake on the physical-ai clone. Same shape as components/templates/physical-ai/content.ts:
  * one entry per clone slot, each about the length of Scale's text there. Source: lib/automation-content.ts
  * (WORKFLOWS 'document-intake', CONTROL_FEATURES) and lib/case-studies.ts; short labels written for this page
  * are listed in the strict-parity report.

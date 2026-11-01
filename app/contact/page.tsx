@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   alternates: { canonical: PAGE_URL },
 }
 
-// Contact page on the layout of the scale.com/demo clone (app/scale-clone/demo, spec in
+// Contact page on the layout of the scale.com/demo clone (scale.com/demo, spec in
 // reference-snapshots/scale-clone/demo.md), with Vahue copy and the Vahue dark palette.
 export default function Page() {
   return (

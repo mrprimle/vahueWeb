@@ -1,4 +1,4 @@
-// Icons from components/scale-clone/evaluation-enterprise/icons.tsx: Material Design paths
+// Icons from components/templates/evaluation-enterprise/icons.tsx: Material Design paths
 // (react-icons "md" set, 24×24 viewBox, fill currentColor), the FlatCta chevron and the
 // BrowserMockup traffic lights. `flag` (MdOutlinedFlag) replaces the clone's shield-x.
 

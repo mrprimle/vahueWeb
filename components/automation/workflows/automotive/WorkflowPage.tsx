@@ -10,7 +10,7 @@ import { SCORING as C } from './content'
 
 /**
  * /automations/scoring-decisions on the scale.com/automotive layout, strict parity with the clone
- * (app/scale-clone/automotive/page.tsx): the same 9 sections in the same order, in the clone's own colours.
+ * (scale.com/automotive): the same 9 sections in the same order, in the clone's own colours.
  * hero -> 2-logo cloud -> overview checklist + loop -> supported data (5 tabs) -> phases (3) -> why (3)
  * -> resources slider (2) -> foundation split (one case) -> pre-footer. Copy and slot mapping: ./content.ts.
  */

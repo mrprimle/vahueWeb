@@ -6,7 +6,7 @@ import s from './hub.module.css'
 
 /*
  * Static blocks of the /automations hub, on the data-engine clone's layout
- * (components/scale-clone/data-engine/StaticSections.tsx), in the clone's own (Scale) colours.
+ * (components/templates/data-engine/StaticSections.tsx), in the clone's own (Scale) colours.
  */
 
 /* ---------- Logo strip (clone: 7 customer marks, brightness-0) -> 7 integration wordmarks in black ---------- */

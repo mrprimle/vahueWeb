@@ -5,7 +5,7 @@ import s from './security.module.css'
 
 /*
  * Static sections of Vahue /security, in strict parity with the security clone
- * (components/scale-clone/security/Sections.tsx, spec reference-snapshots/scale-clone/security.md): the same
+ * (components/templates/security/Sections.tsx, spec reference-snapshots/scale-clone/security.md): the same
  * sections, element roles, counts and Scale's own colours; only the copy is Vahue's. Each line is about the length
  * of Scale's line in that slot. Lines written for this page (not in lib/automation-content.ts or
  * lib/case-studies.ts) are marked "page copy" for copy review.

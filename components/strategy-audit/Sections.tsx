@@ -4,7 +4,7 @@ import { Glyph, TrafficLights } from './icons'
 import { AuditMockup, PhaseTimeline } from './Mockups'
 
 // /strategy (Workflow audit): the evaluation-enterprise clone's sections 1:1
-// (components/scale-clone/evaluation-enterprise/Sections.tsx), Scale's colours and type; Vahue copy from ./content.
+// (components/templates/evaluation-enterprise/Sections.tsx), Scale's colours and type; Vahue copy from ./content.
 // Where Scale shows its product screenshots (dark chart panel, dark browser mockups) the same frames hold own SVG
 // mock UIs (./Mockups). Headings are h2/h3 as on Scale; the challenge item titles are h3 instead of h4.
 

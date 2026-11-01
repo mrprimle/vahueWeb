@@ -1,7 +1,7 @@
-import { scaleBlogLabels, type BentoEntry, type BlogContent, type BlogPost, type BlogTag } from '@/components/scale-clone/blog/content'
+import { scaleBlogLabels, type BentoEntry, type BlogContent, type BlogPost, type BlogTag } from '@/components/templates/blog/content'
 
 /*
- * Vahue /blog on the scale.com/blog clone (components/scale-clone/blog, spec reference-snapshots/scale-clone/blog.md).
+ * Vahue /blog on the scale.com/blog clone (components/templates/blog, spec reference-snapshots/scale-clone/blog.md).
  *
  * Posts are Vahue's six real articles, the same list the previous /blog index rendered and app/blog/[slug]/page.tsx
  * serves (title, date, category and cover copied verbatim; newest first). Nothing is invented.

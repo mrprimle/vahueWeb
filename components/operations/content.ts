@@ -1,4 +1,4 @@
-import type { EnterpriseContent, StatsContent, TestimonialsContent } from '@/components/scale-clone/enterprise/content'
+import type { EnterpriseContent, StatsContent, TestimonialsContent } from '@/components/templates/enterprise/content'
 import { CONTROL_FEATURES, PHASES, POSITIONING, WORKFLOWS } from '@/lib/automation-content'
 import { caseStudies, type CaseStudy } from '@/lib/case-studies'
 import { WORKFLOW_ART, cardMark, dots, tileIconFor } from '@/components/enterprise-vahue/art'
@@ -6,7 +6,7 @@ import { BLOG_SWATCHES, BLOG_TONES, NODE_COLORS, PILLAR_COLORS, POWERED_ICON_COL
 
 /*
  * /operations ("How we operate") on the scale.com/enterprise layout, in strict parity with the clone
- * (components/scale-clone/enterprise/content.ts): every section, the same element roles and counts (7 hero nodes,
+ * (components/templates/enterprise/content.ts): every section, the same element roles and counts (7 hero nodes,
  * 4 carousel cards, 10 sphere tiles, 5 stat cards, 3 testimonials, 3 pillars, 2 + 3 cards), and each line about
  * the length of Scale's line in that slot. Facts come from lib/automation-content.ts and lib/case-studies.ts.
  * Lines written for these pages are marked "page copy" (listed for copy review). The slices exported below are

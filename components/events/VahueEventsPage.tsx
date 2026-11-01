@@ -1,9 +1,9 @@
 import SmoothScroll from '@/components/home/scroll-hero/SmoothScroll'
-import EventsPage from '@/components/scale-clone/events/EventsPage'
-import type { EventsContent, EventItem } from '@/components/scale-clone/events/content'
+import EventsPage from '@/components/templates/events/EventsPage'
+import type { EventsContent, EventItem } from '@/components/templates/events/content'
 
 /*
- * Vahue /events on the scale.com/events clone (components/scale-clone/events, spec
+ * Vahue /events on the scale.com/events clone (components/templates/events, spec
  * reference-snapshots/scale-clone/events.md). Same three sections in Scale's order and colours: centred hero,
  * #upcoming grid of tall cards, #past grid with "Show more events" (+6 from 6). Vahue fonts and navbar (light on this
  * route, see isLightCloneParityPage in Navbar.tsx).

@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react'
 import SmoothScroll from '@/components/home/scroll-hero/SmoothScroll'
 import type { Workflow } from '@/lib/automation-content'
-import ModelChart from '@/components/scale-clone/physical-ai/ModelChart'
-import { FeaturesTwoCol, FeaturesWrap, Section, SectionHeader, SplitRow } from '@/components/scale-clone/physical-ai/Sections'
-import cloneStyles from '@/components/scale-clone/physical-ai/physical-ai.module.css'
+import ModelChart from '@/components/templates/physical-ai/ModelChart'
+import { FeaturesTwoCol, FeaturesWrap, Section, SectionHeader, SplitRow } from '@/components/templates/physical-ai/Sections'
+import cloneStyles from '@/components/templates/physical-ai/physical-ai.module.css'
 import FullBleedMedia from './FullBleedMedia'
 import CaseResults from './CaseResults'
 import { CardScene, IntakeIsometric, SourceTrace } from './Visuals'
@@ -30,7 +30,7 @@ const Media = ({ children }: { children: ReactNode }) => <div className="w-full"
 
 /**
  * /automations/document-intake on the scale.com/physical-ai layout, strict parity with the clone
- * (components/scale-clone/physical-ai/PhysicalAiPage.tsx): the same 9 sections in the same order, in the clone's
+ * (components/templates/physical-ai/PhysicalAiPage.tsx): the same 9 sections in the same order, in the clone's
  * own colours, reusing the clone's section components. Copy and slot mapping: ./content.ts.
  */
 export default function WorkflowPage({ workflow: _workflow }: { workflow: Workflow }) {

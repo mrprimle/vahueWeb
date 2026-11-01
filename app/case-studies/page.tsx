@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 }
 
 /*
- * /case-studies in strict parity with the guides clone (app/scale-clone/guides, spec
+ * /case-studies in strict parity with the guides clone (scale.com/guides, spec
  * reference-snapshots/scale-clone/guides.md): Scale's three sections (centred hero, 12-book grid, clip-opening
  * pre-footer) in Scale's colours, Vahue fonts and logo. The 12 books are Vahue's 10 cases from lib/case-studies.ts plus
  * the audit and operate pages, each cover carrying only what Scale's does (mark, index, title). The hero sub carries the disclosure note.

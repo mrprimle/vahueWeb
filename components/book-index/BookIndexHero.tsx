@@ -1,7 +1,7 @@
 import s from './book-index.module.css'
 
 /*
- * Centred index hero (template: components/scale-clone/guides/GuidesPage.tsx, CMS SectionHeader), Scale's colours.
+ * Centred index hero (template: components/templates/guides/GuidesPage.tsx, CMS SectionHeader), Scale's colours.
  * Scale: section py-16 md:py-24 with the column at md:mt-12. Vahue's navbar sits in the flow (88px), so the top
  * padding is set to put the h1 where the clone's is (y 227 at 1440, 210 at 390): pt-[77px] / md:pt-12.
  */

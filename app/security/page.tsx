@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 }
 
 /*
- * /security in strict parity with the security clone (app/scale-clone/security, spec
+ * /security in strict parity with the security clone (scale.com/security, spec
  * reference-snapshots/scale-clone/security.md): the same six sections in Scale's order and Scale's own colours
  * (white page, #f2f2f2 band, black ScrollReveal panel, slate promo cards); Vahue fonts, logo, photography and copy.
  * Section mapping: hero -> security at Vahue; commitment (3 cards) -> controls; compliance (4 cards) -> ISO 27001,

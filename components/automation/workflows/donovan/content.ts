@@ -3,7 +3,7 @@ import type { IconName } from './Sections'
 import type { ShowcaseTab } from './Showcase'
 
 /*
- * /automations/support-agents on the donovan clone. Same slots as components/scale-clone/donovan/content.ts, each
+ * /automations/support-agents on the donovan clone. Same slots as components/templates/donovan/content.ts, each
  * about the length of Scale's text there. Source: lib/automation-content.ts (WORKFLOWS 'support-agents',
  * POSITIONING, PHASES, CONTROL_FEATURES) and lib/case-studies.ts; text written for this page is listed in the
  * strict-parity report.

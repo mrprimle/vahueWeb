@@ -7,7 +7,7 @@ import 'keen-slider/keen-slider.min.css'
 import styles from './styles.module.css'
 
 /*
- * Clone Demos (components/scale-clone/generative-ai-data-engine/Demos.tsx): big player + Keen carousel of 3,
+ * Clone Demos (components/templates/generative-ai-data-engine/Demos.tsx): big player + Keen carousel of 3,
  * same options and colours. Scale's posters are Wistia stills of its product; ours are SVG mocks of the
  * workflow (illustrative strings, not a client record). There is no video, so no play disc: the slide click
  * swaps the big panel exactly as on Scale.

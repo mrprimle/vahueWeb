@@ -1,12 +1,12 @@
 // Copy for the automation-first site, from the AI automation agency research
 // (87 published cases and Clutch reviews, Oct 2026). Each Vahue page names the
-// scale.com page whose layout it reuses (see components/scale-clone/shared/pages.ts).
+// scale.com page whose layout it reuses.
 // Rule: no third-party metrics here. Numbers on the site come from Vahue's own cases only.
 
 export type Workflow = {
   slug: string
   label: string
-  /** scale-clone slug whose layout this page reuses */
+  /** template slug whose layout this page reuses */
   template: string
   headline: string
   summary: string
@@ -192,7 +192,7 @@ export const INDUSTRY_WORKFLOWS: Record<string, { template: string; workflows: s
   },
 }
 
-// Vahue page -> scale-clone template it reuses.
+// Vahue page -> template it reuses.
 export const PAGE_TEMPLATES: { path: string; label: string; template: string }[] = [
   { path: '/', label: 'Home', template: 'home' },
   { path: '/automations', label: 'Automation hub', template: 'data-engine' },

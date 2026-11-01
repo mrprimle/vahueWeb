@@ -26,7 +26,7 @@ const workflow = (slug: string) => {
 }
 
 /*
- * /guides in strict parity with the guides clone (app/scale-clone/guides, spec reference-snapshots/scale-clone/guides.md):
+ * /guides in strict parity with the guides clone (scale.com/guides, spec reference-snapshots/scale-clone/guides.md):
  * Scale's three sections (centred hero, 12-book grid, clip-opening pre-footer) in Scale's colours (white page, Scale's
  * five cover colours and white page blocks), Vahue fonts and logo. Vahue has one long-form guide so far; the other
  * eleven book slots hold the closest research pages (workflow audit, operations, workflow and industry pages), with

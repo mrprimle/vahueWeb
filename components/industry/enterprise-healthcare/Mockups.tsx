@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, type ReactNode, type RefObject } from 'react'
-import s from '@/components/scale-clone/enterprise-healthcare/healthcare.module.css'
+import s from '@/components/templates/enterprise-healthcare/healthcare.module.css'
 import {
   MdAssignment,
   MdCheckCircle,
@@ -10,11 +10,11 @@ import {
   MdListAlt,
   MdPerson,
   MdThumbUp,
-} from '@/components/scale-clone/enterprise-healthcare/icons'
+} from '@/components/templates/enterprise-healthcare/icons'
 
 /*
  * Vahue mock UIs for the three TabbedPanel tabs, one per healthcare workflow. They reuse the clone's three
- * motion patterns (components/scale-clone/enterprise-healthcare/Mockups.tsx), plain React state + CSS:
+ * motion patterns (components/templates/enterprise-healthcare/Mockups.tsx), plain React state + CSS:
  *   SummaryMockup   = OrderGuidance sequence: when 30% visible, step +1 every 450ms (sources, then lines),
  *                     hold 3200ms, loop
  *   IntakeMockup    = CustomAgents intro: two windows enter 700ms ease-out from translate-y-2 / -4, the

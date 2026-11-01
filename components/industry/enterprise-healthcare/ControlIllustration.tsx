@@ -3,7 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { prefersReducedMotion } from '@/components/scale-clone/enterprise-healthcare/animatedText'
+import { prefersReducedMotion } from '@/components/templates/enterprise-healthcare/animatedText'
 
 gsap.registerPlugin(ScrollTrigger)
 

@@ -1,4 +1,4 @@
-import type { EnterpriseContent, PullApartItem } from '@/components/scale-clone/enterprise/content'
+import type { EnterpriseContent, PullApartItem } from '@/components/templates/enterprise/content'
 import type { LogLine, QueueRow } from '@/components/enterprise-vahue/Media'
 import {
   BLOG_HEADING,

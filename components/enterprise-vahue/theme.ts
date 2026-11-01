@@ -2,7 +2,7 @@
  * Colours for the Vahue pages on the scale.com/enterprise layout (/operations and the banking / retail /
  * distribution industry pages). Mike, 2026-10-31: these pages use Scale's own colour design, so the layout's
  * --ent-* tokens are left at the clone's defaults (no override) and the per-item colours below are Scale's values
- * from the clone data (components/scale-clone/enterprise/content.ts). Fonts and logo stay Vahue's.
+ * from the clone data (components/templates/enterprise/content.ts). Fonts and logo stay Vahue's.
  */
 
 /** Hero graph node colours, in Scale's node order (used under the dot texture where Scale had photos). */

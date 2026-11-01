@@ -13,7 +13,7 @@ const pick = (slugs: string[]) => slugs.map((s) => caseStudies.find((c) => c.slu
 
 /**
  * /automations/back-office-sync on the scale.com/generative-ai-data-engine layout, strict parity with the clone
- * (app/scale-clone/generative-ai-data-engine/page.tsx): the same 11 sections in the same order, in the clone's own
+ * (scale.com/generative-ai-data-engine): the same 11 sections in the same order, in the clone's own
  * colours. hero -> logo strip -> product overview -> expertise panel -> testimonial -> overview split -> lifecycle
  * -> key features -> demos -> resources -> pre-footer. Copy and slot mapping: ./content.ts.
  */

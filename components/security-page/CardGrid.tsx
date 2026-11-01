@@ -9,7 +9,7 @@ import s from './security.module.css'
 gsap.registerPlugin(ScrollTrigger)
 
 /*
- * Vahue /security control cards: the security clone's CardGrid (components/scale-clone/security/CardGrid.tsx)
+ * Vahue /security control cards: the security clone's CardGrid (components/templates/security/CardGrid.tsx)
  * 1:1, Scale's colours; only the card title is an h3 instead of h5.
  *
  * scale.com CardGrid (chunk 2k1qlgdxlbmz1, "BaseCardScroll" + LinkCard), 3 cards, directionalEntrance off.
