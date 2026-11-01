@@ -32,7 +32,7 @@ export default function SectionTheme() {
         const start = r.top + y
         // this page starts dark (data-initial-chrome-theme="dark"): a dark section that begins under the announcement
         // bar owns the top of the page too
-        return { start: start <= 100 ? 0 : start, end: r.top + r.height + y }
+        return { start: start <= 110 ? 0 : start, end: r.top + r.height + y }
       })
     }
     const check = () => {
