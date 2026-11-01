@@ -36,7 +36,7 @@ const NEWS_LOOK: Record<string, { image: string; overlay?: boolean; gradient?: b
 
 const newsPosts: AboutNewsPost[] = vahueBlogPosts
   .filter((p) => NEWS_LOOK[p.slug])
-  .map((p) => ({ title: p.title, category: p.category.name, href: p.href ?? `/blog/${p.slug}/`, ...NEWS_LOOK[p.slug] }))
+  .map((p) => ({ title: p.title, category: p.category?.name ?? '', href: p.href ?? `/blog/${p.slug}/`, ...NEWS_LOOK[p.slug] }))
 
 export const vahueAboutContent: AboutContent = {
   hero: {
