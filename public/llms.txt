@@ -122,7 +122,10 @@ Global. Primary markets: United States, European Union, United Kingdom. Founder 
 - AI-Native Engineering: https://vahue.ai/ai-native-engineering
 - AI Team Training: https://vahue.ai/team-training
 - Enterprise AI / Vahue AI Hub: https://vahue.ai/enterprise-ai
-- AI Strategy & Advisory: https://vahue.ai/strategy
+- Workflow Audit: https://vahue.ai/strategy
+- Automations (hub): https://vahue.ai/automations
+- How we operate: https://vahue.ai/operations
+- Industries — Distribution & Manufacturing: https://vahue.ai/industries/distribution-manufacturing
 - Vahue Incubator: https://vahue.ai/vahue-incubator
 - Industries — Banking & Financial Services: https://vahue.ai/industries/banking-financial-services
 - Industries — Insurance: https://vahue.ai/industries/insurance
