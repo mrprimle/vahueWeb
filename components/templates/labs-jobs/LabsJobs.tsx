@@ -3,7 +3,7 @@ import s from '@/components/templates/labs-shared/labs.module.css'
 import type { LabsJobsContent } from './content'
 
 /*
- * 1:1 clone of https://labs.scale.com/jobs: labs' `JobsList` (chunk 0yqh0pl17sga4.js, module 163195), rendered as
+ * Labs jobs layout: `JobsList` (chunk 0yqh0pl17sga4.js, module 163195), rendered as
  * the only child of <main class="mx-auto max-w-[1400px] px-6 lg:px-10 py-14">. No state, no ScrollReveal, no Lenis.
  *   jobs = greenhouseJobs.length ? greenhouseJobs : fallback list `n`
  *   date = `${MM}.${DD}.${YYYY}` of updated_at in UTC (labs' `r()`)
@@ -63,8 +63,6 @@ export default function LabsJobs({ content }: { content: LabsJobsContent }) {
           <a
             key={j.id}
             href={j.absolute_url}
-            target="_blank"
-            rel="noopener noreferrer"
             data-job-row="md"
             className={`hidden md:grid grid-cols-[100px_1fr_1fr_24px] gap-x-4 py-3 ${ROW}`}
           >
@@ -80,8 +78,6 @@ export default function LabsJobs({ content }: { content: LabsJobsContent }) {
           <a
             key={`m-${j.id}`}
             href={j.absolute_url}
-            target="_blank"
-            rel="noopener noreferrer"
             data-job-row="sm"
             className={`grid grid-cols-[1fr_24px] gap-x-3 py-3 ${ROW} md:hidden`}
           >
