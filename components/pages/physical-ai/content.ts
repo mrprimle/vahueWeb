@@ -2,9 +2,7 @@
 // Lines marked PLACEHOLDER are for Mike to replace with real data.
 import type { MarqueeLogoItem, PhysicalAiContent } from './types'
 
-const NEUTRAL = '/site/nav/neutral.svg'
 const card = (slug: string, alt: string) => ({ src: `/physical-ai/${slug}.webp`, alt, width: 480, height: 360 })
-const neutralCard = (alt: string) => ({ src: NEUTRAL, alt, width: 480, height: 360 })
 const logo = (i: number): MarqueeLogoItem => ({ key: `customer-${i}`, alt: 'Logo', src: null })
 
 export const content: PhysicalAiContent = {
@@ -14,7 +12,7 @@ export const content: PhysicalAiContent = {
     body: 'Powering the Next Generation of Operations',
     cta: { text: 'Book a Demo', url: '/demo' },
     backdrop: { tailwindClass: 'white', contrastColor: '#010101' },
-    image: { path: '/physical-ai/hero.webp' },
+    image: { path: '/physical-ai/hero-documents.webp' },
     logos: {
       label: "Trusted by the world's most ambitious AI teams", // PLACEHOLDER
       items: [logo(1), logo(2), logo(3), logo(4), logo(5)], // PLACEHOLDER
@@ -43,7 +41,7 @@ export const content: PhysicalAiContent = {
       {
         clientName: 'Full Name', // PLACEHOLDER
         title: 'Role, Company', // PLACEHOLDER
-        testimonial: "At our firm, our mission is to deploy AI agents at scale through our ops team. I feel fortunate to have worked with the Vahue team in the past and know first-hand that Vahue is unique in its ability to quickly adapt to the needs of their partners. We're excited by the work Vahue has already done in building this data set and look forward to partnering to push the data frontier in document intake.", // PLACEHOLDER
+        testimonial: "At our firm, our mission is to deploy AI agents at scale through our ops team. I feel fortunate to have worked with the Vahue team in the past and know first-hand that Vahue is unique in its ability to quickly adapt to the needs of their partners. We're excited by the work Vahue has already done in building this data set and look forward to partnering to raise the bar for quality in document intake.", // PLACEHOLDER
       },
     ],
   },
@@ -55,16 +53,16 @@ export const content: PhysicalAiContent = {
       "1000+ hours of diverse document data are collected and uploaded to Vahue's data platform every day.", // PLACEHOLDER
       'Leverage our platform to accelerate your program and supercharge agent performance.',
     ],
-    image: { src: '/physical-ai/use-case.png', alt: '', width: 1214, height: 636 },
+    image: { src: '/physical-ai/use-case-documents.png', alt: '', width: 1214, height: 636 },
   },
   embodiments: {
     overtitle: 'Key Features',
     title: 'Growing Document Portfolio',
     subtitle: 'Access data from invoices, claims and reports calibrated for performant intake operations.',
     cards: [
-      { title: 'Invoices and Claims', body: 'Field-level extraction from industry-standard documents', image: neutralCard('Invoices and Claims') },
-      { title: 'Vahue Harness', body: 'Agent platform designed for distributed document collection', image: card('img-embodiment-2', 'Vahue Harness') },
-      { title: 'Bespoke Document Types', body: 'Your formats, managed and operated by Vahue', image: neutralCard('Bespoke Document Types') },
+      { title: 'Invoices and Claims', body: 'Field-level extraction from industry-standard documents', image: card('img-portfolio-1', 'Invoices and Claims') },
+      { title: 'Vahue Harness', body: 'Agent platform designed for distributed document collection', image: card('img-portfolio-2', 'Vahue Harness') },
+      { title: 'Bespoke Document Types', body: 'Your formats, managed and operated by Vahue', image: card('img-portfolio-3', 'Bespoke Document Types') },
     ],
   },
   environments: {
@@ -72,9 +70,9 @@ export const content: PhysicalAiContent = {
     title: 'Expansive Global Environments',
     subtitle: 'Train on data collected from diverse locations around the world.',
     cards: [
-      { title: 'Inboxes and Portals', body: 'High-volume centralized collection operations', image: card('img-environment-1', 'Inboxes and Portals') },
-      { title: 'Remote Teams', body: 'At-home collection with globally-distributed engineering teams', image: card('img-environment-2', 'Remote Teams') },
-      { title: 'Commercial and Industrial', body: 'In-field deployments of collection agents', image: card('img-environment-3', 'Commercial and Industrial') },
+      { title: 'Inboxes and Portals', body: 'High-volume centralized collection operations', image: card('img-sources-1', 'Inboxes and Portals') },
+      { title: 'Remote Teams', body: 'Remote review with globally-distributed operations teams', image: card('img-sources-2', 'Remote Teams') },
+      { title: 'Commercial and Industrial', body: 'In-field deployments of intake agents', image: card('img-sources-3', 'Commercial and Industrial') },
     ],
   },
   annotations: {
