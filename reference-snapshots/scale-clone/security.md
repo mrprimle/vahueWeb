@@ -114,6 +114,26 @@ Screenshots every 100% viewport (both widths): `1440-{scale,clone}-00..06.jpg`, 
 | clip | scroll | ScrollTrigger | 37xz28 | Clip at wrapper tops 900/600/300/0: `5% / 3.148% / 1.296% / 0%`, identical on all three | yes | n/a |
 | "Go to Careers" arrow CTA | intro + pointerenter/leave + focus | ScrollTrigger + React | AnimatedFlatCta 961870 + FlatCta 892855 | Intro: 0.85s power3.out, delay 0.5. Hover as in the promos (arrow, white). Focus `1px #86bff2` (internal link) | **fixed** (hover state machine, focus) | `1440-*-cta2-hover.jpg` |
 
+### 390×844 pass and 3×3 cursor grid (2026-11-01, follow-up)
+Same inputs on scale.com, `/scale-clone/security/` and `/security/`. Scripts: `scratchpad/followups/secqa.js` (the 1440 script parametrised by viewport) and `scratchpad/followups/grid.js`. Raw output: `scratchpad/followups/sec390.json`, `grid390.json` and `grid1440.json`.
+
+**390×844 interactions**
+| Element | Input | Scale | Clone / Vahue | Reproduced | QA |
+|---|---|---|---|---|---|
+| BaseCard ×3 | scroll scrub, 5 points | `.96/0` → `.9877/.69` → `.9983/.95` → `1/1` → card 2 `.9832/.58` | identical (Vahue `.9834/.58` at point 5) | yes | n/a |
+| ScrollReveal panel | scroll scrub, 10 points | `1/0` (not set before the first update), then `.9385/16` ×4, `.9470/13.77`, `.9642/9.32`, `.9811/4.91`, `.9982/.45`, `1/0`. The 12px inset under 768 gives scaleX `.9385` at 390 | identical from point 2 on. At point 1 they show `.9385/16`, the same mount difference as at 1440 | yes | n/a |
+| Pre-footer clip | scroll, 4 points | `5% / 2.870% / 0.748% / 0%` | identical (Vahue 2.878% at point 2) | yes | n/a |
+| Promo + pre-footer FlatCtas | enter / leave / re-enter / focus | Fill −100% → 0 in 700ms, exits to +100% by 600ms, back at the start by 800ms (680ms timer). Re-entry starts from the start side. Focus `1px #86bff2` on internal links | same curve on all three CTAs. Focus matches on internal links | yes | `390-*-cta{0,1,2}-hover.jpg` |
+| Trust Center (external) | focus | UA ring `auto 1px` | clone `solid 2px transparent` (the app's global focus style). Vahue's slot is an internal link, so it gets `1px #86bff2` | partly (same gap as at 1440) | n/a |
+| Card intro (icon clip, text) | grid enters | **Already played at load.** Before fonts settle, Scale's CardGrid top is at 807px (above the 844 fold), so the retroactive `top bottom` trigger fires, and the layout then settles at 908 | the CardGrid top is 908 from the first frame, so the intro plays when the grid scrolls in (s = 0.125 + 0.05i, as at 1440) | no, on purpose: this is a font-swap race on Scale, not designed behaviour, and with cached fonts it depends on load timing | n/a |
+
+**3×3 cursor grid.** At every full-viewport scroll step (1440: 7 steps, 390: 9 steps), the cursor moved from the bottom-right corner to the 9 points at 1/6, 1/2 and 5/6 of the viewport width and height (4-step moves, 250ms dwell). At each point every in-viewport element's transform, translate, scale, rotate, opacity, clip-path, background, colour and filter was compared with the corner baseline, and the cursor style was recorded.
+- No pointer-driven effect anywhere on any of the three pages: there is no parallax, tilt or magnetic effect, and the LinkCards have no hover. The only changes are CTA fills under a hovered CTA (390, step 5908: the promo CTA wash on all three).
+- Scale 1440 shows changes at steps 900 (93 elements) and 4500 (2 elements). These are drift and happen at every point including the return to the corner: the card AnimatedText intro and the pre-footer `filledWhiteArrow` intro still running, not cursor effects.
+- Cursor styles match (`pointer` only over links/CTAs).
+- Page height at 390: Scale 7712, clone 7672 (the known 40px shared-footer gap). Vahue is 7156 (different copy).
+- No console errors.
+
 ### Not reproduced
 - Scale's internal links navigate through `window.__scaleTransitionNavigate` (its page-transition router). The clone and /security use plain links; that belongs to the site chrome.
 - Track readings: my probe picked a different element on Scale (−78 instead of −50 for the "−50%" rest state). The direction and timing match, and so do the hover screenshots.
