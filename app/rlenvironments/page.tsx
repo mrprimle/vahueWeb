@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { content } from '@/components/pages/rlenvironments/content.scale'
+import { content } from '@/components/pages/rlenvironments/content'
 import { RlEnvironmentsPage } from '@/components/pages/rlenvironments/RlEnvironmentsPage'
 
 export const metadata: Metadata = { title: content.meta.title, description: content.meta.description }
