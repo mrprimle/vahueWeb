@@ -8,11 +8,11 @@ const DIR = '/generative-ai-data-engine'
 export const content: GenAiContent = {
   meta: {
     title: 'Back-office Sync Agents | Vahue',
-    description: 'Build reliable AI agents with Back-office Sync: human review, clean data, agent evaluation, safety, and alignment.',
+    description: 'Build reliable AI agents with Back-office Sync: human review, clean data, agent evaluation, and guardrails.',
   },
   hero: {
     headline: 'Back-office Sync Agents',
-    body: 'Powering the Next Frontier of AI.',
+    body: 'Keeping CRM, ERP and Finance in Step.',
     cta: { text: 'Book a Demo', url: '/demo' },
     image: { path: `${DIR}/hero.webp` },
     backdrop: WHITE,
@@ -30,8 +30,7 @@ export const content: GenAiContent = {
     overtitle: 'PRODUCT OVERVIEW',
     title: 'Back-office Sync Agents',
     subtitle: "Enables rapid creation of tailored, high-quality datasets curated by vetted subject matter experts to power the world's most reliable agents.",
-    // PLACEHOLDER: the map dots and legend in this image are not Vahue's real regions.
-    image: { src: `${DIR}/capabilities.webp`, alt: 'Back-office Sync connects CRM records, ERP and finance, other systems and reconciliations across 14+ integrations', width: 1214, height: 720 },
+    image: { src: `${DIR}/sync-capabilities.webp`, alt: 'Back-office Sync Agents connect CRM records, ERP and finance, other systems and reconciliations', width: 1214, height: 720 },
   },
   testimonials: {
     heading: 'Don’t just take our word for it',
@@ -55,7 +54,7 @@ export const content: GenAiContent = {
     overtitle: 'Build AI',
     title: 'Improve Your Agents By Improving Your Data',
     subtitle: 'High-quality data, curated by subject matter experts, is crucial for developing powerful, accurate, Generative AI agents.',
-    image: { src: `${DIR}/sync-loop.webp`, alt: 'New records move through Watch, Match and Write into your systems, a daily Report feeds back to Watch, and exceptions go to a review queue', width: 1216, height: 638 },
+    image: { src: `${DIR}/data-improvement-loop.webp`, alt: 'Data from your systems moves through Collect, Curate, Improve and Evaluate in a loop to produce reliable agents, with expert review', width: 1216, height: 638 },
   },
   features: {
     overtitle: 'Key Features',
@@ -74,8 +73,8 @@ export const content: GenAiContent = {
     overtitle: 'Demos',
     title: 'Context Engine Demos',
     videos: [
-      { src: `${DIR}/demo-1.mp4`, title: 'Assisted Instruction Following Demo', cover: `${DIR}/demo-1.webp`, description: '' }, // PLACEHOLDER
-      { src: `${DIR}/demo-2.mp4`, title: 'Span Review', cover: `${DIR}/demo-2.webp`, description: '' }, // PLACEHOLDER
+      { src: `${DIR}/demo-1.mp4`, title: 'Assisted Record Matching Demo', cover: `${DIR}/demo-1.webp`, description: '' }, // PLACEHOLDER
+      { src: `${DIR}/demo-2.mp4`, title: 'Record Match Review', cover: `${DIR}/demo-2.webp`, description: '' }, // PLACEHOLDER
       { src: `${DIR}/demo-3.mp4`, title: 'Human Feedback and Preference Ranking', cover: `${DIR}/demo-3.webp`, description: '' }, // PLACEHOLDER
     ],
   },
