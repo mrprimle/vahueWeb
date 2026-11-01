@@ -75,6 +75,9 @@ Each is ported once from the module named. Before reimplementing something, chec
 | Faqs | `shared/Faqs.tsx` | 966098 | `058pnujclak3f.js` (`b0ed240d21441c66`) | not counted | `/genai-portfolio`: height curve, clip and `aria-expanded` equal |
 | TransparentVideo, ScrollToExplore | `shared/TransparentVideo.tsx`, `shared/ScrollToExplore.tsx` | 553471, 265985 | `1p75rvt-mr0xr.js`, `0sni47mcvnqwg.js` | not counted | `/genai-portfolio`. Safari branch not played |
 | VideoGallery (page-level, shared by import) | `components/pages/generative-ai-data-engine/VideoGallery.tsx` | 482270, 832862 | `30w17vppvfdah.js` | not counted | `/generative-ai-data-engine`, `/public-sector-data-engine`: drag, click, dots equal |
+| LogoCarousel | `shared/LogoCarousel.tsx` | 236943 | `01xb85jkvr5_y.js` (`dffba02723ca9734`) | not counted | `/enterprise/insurance`: pages of 4, 4.5s, 700ms cross-fade, native row below `md`, equal |
+| VideoFeatures (Features with video thumb and modal, Wistia iframe or local file) | `shared/VideoFeatures.tsx` | 450359, 582844, 832862 | `17ea4hx823ss4.js` (`c43bcba50a21f636`) | not counted | `/enterprise/insurance`: 2 items, modal timing, close paths equal at 1440 and 390. `numbers`, bullets, `cta` not ported (`/automotive` keeps its own) |
+| GlassButtonLink | `shared/NewButtonLink.tsx` | 408298 glass branch via 51051 | `17ea4hx823ss4.js` | not counted | `/enterprise/insurance`: hover curves equal. Width differs by the arrow glyph |
 
 Other shared modules a page may meet, not ported yet because few pages use them: `MeshGlobeHero` 478135, plus everything in the 975 KB `0sni47mcvnqwg.js` (`SideBySide`, `TabbedPanel`, `MilestoneTimeline`…, 7 pages). If you port one, put it in `components/site/shared` and add a row here.
 
