@@ -110,20 +110,17 @@ The scrub counts follow frame timing. Module attribution on ours is by function 
 - **Pre-footer image:** a webp of the same picture instead of Scale's JPEG, as on physical-ai.
 
 ## Copy mapping
-Engineering Enablement, the research's own mapping for this template (`research.ts`, `template: 'rlenvironments'`). Substance comes from that entry: the headline, control group, uneven adoption, no agreed measure, Baseline, Pilot, Coach, Scale, code stays in your repositories, security review, GitHub, GitLab, Jira. Also from the full research's jobs on software delivery: reviewed output with cycle time, correctness and developer control (L07), changing an inherited codebase without added defect risk (F12), and consistent QA artifacts (M171).
+Keep rule (Mike, 2026-11-01): each string starts from Scale's text, stays verbatim if true for Vahue with the brand swapped, otherwise changes only the words the swap dictionary and phrase bank require, same template and word count. Counts come from a path-by-path compare with `content.scale.ts`, alt text, code samples and URLs excluded. Verbatim means equal after Scale to Vahue. Light means up to 3 words or about a third changed.
 
-Features became the promises. Overview became the trigger, the measurement and the coaching. Capabilities became the agents. Environment Types became the three stages. "Features", "Overview", "Capabilities" and "Available as" are unchanged generic labels.
-
-Word counts: 45 strings compared, 38 within 15%. Of the other 7, 5 are one or two words off: one card description, one alt and three short titles. "Inside Vahue's Engineering Rollout" and "Try Engineering Enablement" are one word short so they keep Scale's line count. The two larger gaps are the metadata title (9 to 4) and "Agents and practices, measured on one team for 12 weeks." (6 to 10), which keeps the two-line row at 390, 1024 and 1280.
+Menu label: Agent Environments. RL became Agent, and nearly everything else is Scale's line. This replaces the earlier Engineering Enablement story, so Mike should confirm Vahue sells simulated test environments. 42 strings: 33 verbatim, 9 light, 0 rewritten. Section heights equal the previous fill at 1440 and 390. Alt text stays as it was, because it describes the images.
 
 ## Placeholders
-None. Scale's page has no numbers, customers, case studies or quotes, so there are no `// PLACEHOLDER` lines. "12 weeks" comes from `research.ts`.
+None. Scale's page has no numbers, customers, case studies or quotes, so there are no `// PLACEHOLDER` lines.
 
 ## For Mike
-- **Pilot length:** this page says 12 weeks, from the research's engineering entry. The menu says "Pilot in Six Weeks". Pick one.
 - **Capability screenshots:** both are Scale's own product UI, with no Scale name in them. They show "GUI Agent Executor", "MCP Agent Executor", a calendar task, GPT-5.1 and tool names such as `zendesk_get-tickets`, not code review or tests. They carry no brand, so the rule keeps them, but they do not show our offer. Replace them if you have real screens.
 - **Overview illustrations:** same point, neutral UI drawings, kept.
-- **Claims:** "Security review" and "code stays in your repositories" are from the research. Check they hold before publishing.
+- **Offer:** this page now sells agent test environments, not Engineering Enablement. `/experts` still has a card titled "Engineering Enablement: Environments for AI Agents".
 
 ## Gaps
 - `oml:` landscape and real iOS were not driven: touch runs through CDP on Chrome.
