@@ -1,10 +1,11 @@
 'use client'
 
 // Scale modules 808358, 189756 (slot table) and 280239 (CategoryIcon), chunk 3x8z3_0hhtdcb.js.
-// The video-tile branch (Radix dialog) is not ported: /  does not use it. Port it from 808358 if a page needs it.
+// The video tile (`videoUrl`) opens BlogVideoDialog. Scale uses a Radix dialog there.
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { cn } from '../lib/cn'
 import { gsap, ScrollTrigger } from '../lib/gsap'
 import { mapRange } from '../lib/math'
@@ -16,6 +17,8 @@ import { BaseCard } from './BaseCard'
 import styles from './BlogPreview.module.css'
 import { isInternalHref } from './CMSLink'
 import { RichText, type RichBlock } from './RichText'
+
+const BlogVideoDialog = dynamic(() => import('./BlogVideoDialog').then((m) => m.BlogVideoDialog), { ssr: false })
 
 export type BlogCategory = { name: string; color?: { hex: string } | null }
 export type BlogPreviewPost = {
@@ -31,6 +34,8 @@ export type BlogPreviewPost = {
   titleOnly?: boolean
   openInNewTab?: boolean
   variantOverride?: Variant
+  /** Scale's `videoUrl`: the tile becomes a button that plays this file in a dialog. */
+  videoUrl?: string
 }
 
 type Variant = 'titleOnly' | 'overlay' | 'caption'
@@ -101,6 +106,11 @@ function Tile({
   const played = useRef(false)
   const lastVariant = useRef<Variant | null>(null)
   const [imageIsDark, setImageIsDark] = useState(true)
+  const [videoOpen, setVideoOpen] = useState(false)
+  const videoButton = useRef<HTMLButtonElement>(null)
+  const closeVideo = useCallback(() => setVideoOpen(false), [])
+  const refocusVideo = useCallback(() => videoButton.current?.focus(), [])
+  const videoUrl = post.videoUrl?.trim() ?? ''
   const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)') === true
   const title = post.title
   const category = categoryOverride ?? post.category
@@ -217,7 +227,7 @@ function Tile({
       : 'pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(180deg,rgba(255,255,255,0.38)_0%,rgba(255,255,255,0)_40%),linear-gradient(0deg,rgba(255,255,255,0.48)_0%,rgba(255,255,255,0.12)_38%,rgba(255,255,255,0)_68%)]'
     : null
   const captionGradient = gradient ? (lightText ? 'pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-black/55 via-black/14 to-transparent' : 'pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-white/52 via-white/14 to-transparent') : null
-  const hasContent = !!title || !!(typeof href === 'string' && href.trim()) || !!image
+  const hasContent = !!title || !!(typeof href === 'string' && href.trim()) || !!image || !!videoUrl
   const chipPos = 'absolute left-5 top-5 z-10'
   const chip = (onImage: boolean, darkLabel = false) =>
     category ? <CategoryIcon category={category} colorHex={swatch} labelClassName={onImage ? (darkLabel ? 'text-neutral-950' : undefined) : lightPage ? 'text-neutral-800' : 'text-white/90'} /> : null
@@ -304,6 +314,24 @@ function Tile({
     </BaseCard>
   )
   if (!hasContent) return wrap(<div className={cn(tileClass, 'min-h-[280px] lg:min-h-0', lightPage ? 'bg-neutral-200/50' : 'bg-white/[0.03]')} aria-hidden />)
+  if (videoUrl)
+    return (
+      <>
+        {wrap(
+          <button ref={videoButton} type="button" onClick={() => setVideoOpen(true)} className={cn(tileClass, 'group/video relative cursor-pointer text-left')} aria-label={`Play video: ${title || 'Healthcare video'}`}>
+            {body}
+            <span className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center" aria-hidden>
+              <span className="flex size-14 items-center justify-center rounded-full bg-black/55 text-white shadow-lg backdrop-blur-sm transition duration-300 group-hover/video:scale-110 group-hover/video:bg-black/70">
+                <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="1em" width="1em" className="size-7 translate-x-px" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </span>
+            </span>
+          </button>,
+        )}
+        {videoOpen ? <BlogVideoDialog title={title || 'Healthcare video'} src={videoUrl} poster={image ?? undefined} onClose={closeVideo} returnFocus={refocusVideo} /> : null}
+      </>
+    )
   if (!href) return wrap(<div className={tileClass}>{body}</div>)
   if (isInternalHref(href))
     return wrap(

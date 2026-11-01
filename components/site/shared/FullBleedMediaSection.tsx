@@ -41,6 +41,8 @@ export type FullBleedMediaSectionProps = {
    * an in-view hero's CTA hidden for good: the prepare kills the intro, then `started` stops the retry.
    */
   stableCtaIntro?: boolean
+  /** Scale's palette colour for this image, shown behind it while it loads (module 669677). */
+  imageBackgroundColor?: string
 }
 
 export function FullBleedMediaSection({
@@ -59,6 +61,7 @@ export function FullBleedMediaSection({
   overlayVariant = 'flat',
   headlineWidth = 'wide',
   stableCtaIntro = false,
+  imageBackgroundColor,
 }: FullBleedMediaSectionProps) {
   const clip = useRef<ClipScrollHandle>(null)
   const section = useRef<HTMLElement>(null)
@@ -163,6 +166,7 @@ export function FullBleedMediaSection({
                   className={cn('w-full h-full', rounded && ROUNDED_MEDIA)}
                   sizes="(max-width: 640px) 640px, (max-width: 768px) 768px, (max-width: 1920px) 100vw, 1920px"
                   objectCover
+                  backgroundColor={imageBackgroundColor}
                 />
               </div>
             ) : null}
