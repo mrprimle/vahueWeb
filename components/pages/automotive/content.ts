@@ -140,7 +140,7 @@ export const content: AutomotiveContent = {
     image: { src: '/automotive/foundation.webp', alt: 'Decision Scoring Agent', width: 544, height: 306 }, // PLACEHOLDER
   },
   prefooter: {
-    headline: 'The end of guesswork starts here',
+    headline: 'The end of guessing starts here',
     cta: { text: 'Book an Audit', url: '/demo' },
     secondaryCta: { text: 'All Workflows', url: '/data-engine' },
     backdrop: WHITE,
