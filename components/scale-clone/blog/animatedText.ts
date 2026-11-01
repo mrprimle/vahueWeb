@@ -23,6 +23,8 @@ export const prefersReducedMotion = () =>
 
 export type AnimatedText = {
   animateIn: (o?: { delay?: number }) => gsap.core.Timeline | null
+  /** Jump to the finished state (used when a re-split happens after the intro played). */
+  seek: () => void
   revert: () => void
 }
 
@@ -70,7 +72,7 @@ export function createAnimatedText(
   }
 
   if (prefersReducedMotion()) {
-    return { animateIn: () => null, revert: () => {} }
+    return { animateIn: () => null, seek: () => {}, revert: () => {} }
   }
 
   const split = SplitText.create(el, {
@@ -100,6 +102,12 @@ export function createAnimatedText(
       if (done || tl) return tl
       tl = build(split, delay)
       return tl
+    },
+    seek() {
+      tl?.kill()
+      tl = null
+      done = true
+      gsap.set([...split.lines, ...split.words], { yPercent: 0, x: 0, opacity: 1, clearProps: 'color' })
     },
     revert() {
       tl?.kill()

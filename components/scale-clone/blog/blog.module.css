@@ -1,9 +1,88 @@
-/* scale.com/blog clone: page-specific styles. Measured at 1440x900 and 390x844 (2026-10-31). */
+/* scale.com/blog clone: page-specific styles. Measured at 1440x900 and 390x844 (2026-11-01). */
 
 @media (prefers-reduced-motion: no-preference) {
   .pending {
     opacity: 0;
   }
+}
+
+/* Scale's lenis css stops the page with overflow: clip (the app's shared rule uses hidden). */
+:global(html.lenis.lenis-stopped):has(.root) {
+  overflow: clip;
+}
+
+/* Tailwind v4 transition-colors / transition-transform defaults: 150ms cubic-bezier(.4,0,.2,1). */
+.ease {
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Tailwind v4 hover variants only apply on hover-capable pointers. */
+@media (hover: hover) {
+  .hoverGray90:hover {
+    background-color: #eaeaea;
+  }
+  .hoverGray95:hover {
+    background-color: #f2f2f2;
+  }
+  .hoverItem:hover {
+    background-color: #f2f2f2;
+    color: #000;
+  }
+  .hoverSearch:hover,
+  .hoverLoad:hover {
+    border-color: #575757;
+    color: #000;
+  }
+  .hoverBlack:hover {
+    color: #000;
+  }
+  .row:hover {
+    background-color: #f2f2f2;
+  }
+  .row:hover .rowTitle {
+    color: #575757;
+  }
+}
+
+/* Plain Next Links on Scale (no CMSLink focus rule): UA focus ring. The app resets `a { outline }`. */
+.row:focus-visible,
+.focusRing:focus-visible {
+  outline: revert;
+}
+
+/* focus:outline-none on Scale (Tailwind v4: outline-style none). The app's preflight gives a transparent 2px
+   outline on links and a 3px ring on buttons instead. */
+.noOutline,
+.noOutline:focus,
+.noOutline:focus-visible {
+  outline-style: none;
+}
+/* Links / Load more keep the UA ring at a 1px offset (Scale), the app resets it. */
+.row:focus-visible,
+.focusRing:focus-visible {
+  outline-offset: 1px;
+}
+
+/* Search input: @tailwindcss/forms [type=search] base (padding .5rem .75rem, 1px #6b7280 border, radius 0, no
+   appearance) with Scale's focus:outline-none focus:ring-0, so focus leaves the forms plugin's #2563eb border. */
+.input {
+  appearance: none;
+  border: 1px solid #6b7280;
+  border-radius: 0;
+  padding: 8px 12px;
+}
+.input:focus {
+  border-color: #2563eb;
+  box-shadow: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+/* Buttons keep the default cursor (Tailwind v4 preflight). */
+.root button,
+.modal button {
+  cursor: default;
 }
 
 /* ---------- type scale (Scale sizes, Vahue faces) ---------- */
@@ -27,6 +106,17 @@
   letter-spacing: -0.01em;
   text-wrap: balance;
 }
+/* body2-regular: 14/1.35 -> 16/1.5, -0.01em */
+.body2 {
+  font-size: 14px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+/* text-xs (16px line box; Scale's line box grows to 18px where the ⌘ glyph falls back to another font) */
+.kbd {
+  font-size: 12px;
+  line-height: 18px;
+}
 @media (min-width: 768px) {
   .detailMono {
     font-size: 13.008px;
@@ -35,6 +125,24 @@
     font-size: 20px;
     line-height: 1.5;
   }
+  .body2 {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+}
+
+.input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+/* "More" chevron: transition-transform (rotate property in Tailwind v4) 150ms. */
+.chevron {
+  transition-property: transform, translate, scale, rotate;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.chevronOpen {
+  rotate: 180deg;
 }
 
 /* ---------- bento (CSS module gUrnSq_* on scale.com) ---------- */
@@ -72,35 +180,38 @@
   .slotProportional {
     min-height: 0;
   }
-  /* Scale's 5th bento tile is desktop-only; on < 1024px that post leads the list. */
-  .desktopOnly {
-    display: none;
-  }
 }
 
 .tile {
   container: tile / inline-size;
 }
 
-/* overlay variant: top + bottom gradient */
+/* overlay variant shades (dark text tone flips to the white pair) */
 .overlayShade {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0) 40%),
     linear-gradient(0deg, rgba(0, 0, 0, 0.58) 0%, rgba(0, 0, 0, 0.14) 38%, rgba(0, 0, 0, 0) 68%);
 }
+.overlayShadeLight {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0) 40%),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.48) 0%, rgba(255, 255, 255, 0.12) 38%, rgba(255, 255, 255, 0) 68%);
+}
 /* caption variant: bg-gradient-to-t from-black/60 via-black/10 to-transparent */
 .captionShade {
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1), transparent);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.1) 50%, transparent 100%);
 }
 
-/* image hover: group-hover scale-105, transition-transform 1000ms ease-out */
-.thumb {
-  transition: transform 1000ms cubic-bezier(0, 0, 0.2, 1);
+/* image hover: group-hover/<wrapper>:scale-105, transition-transform 1000ms ease-out (scale property in v4) */
+.cover {
+  transition-property: transform, translate, scale, rotate;
+  transition-duration: 1000ms;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
-.tile:hover .thumb {
-  transform: scale(1.05);
+@media (hover: hover) {
+  .media:hover .cover {
+    scale: 1.05;
+  }
 }
 
-/* Line masks keep descenders (lineMaskDescenderCompensation). */
 .title {
   text-wrap: pretty;
 }
