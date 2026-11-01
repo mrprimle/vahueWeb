@@ -1,6 +1,6 @@
 # Handoff: AI automation research + Scale 1:1 clone + Vahue rebuild
 
-Last updated: 2026-11-01 (all clones, audits and Vahue pages done; PR to main open). If there are newer commits on the branch than this file describes, trust `git log`.
+Last updated: 2026-11-01. The whole site is the Scale clone filled with the research; PR to main is open. If there are newer commits on the branch than this file describes, trust `git log`.
 
 ## The original ask (Mike, verbatim)
 
@@ -39,6 +39,16 @@ Last updated: 2026-11-01 (all clones, audits and Vahue pages done; PR to main op
 - Gap in the market: agencies rarely publish a baseline; handover is the top complaint; almost nobody runs the agents after launch.
 - Chosen direction (hypothesis): mid-market ops/finance leaders (100–2,000 staff). Positioning: "Your busiest workflows, run by agents. Measured from day one." Offer: Audit (2 wk) → Pilot (4–6 wk) → Operate (monthly).
 - Riskiest assumption: buyers will pay a monthly fee to have the agents run for them. Test plan is in the doc.
+
+## Current state (read this first)
+
+Mike's final direction (2026-11-01): the site itself is the Scale clone, every Scale menu page plus the homepage, at Vahue URLs, filled with the NMT research. There is no /scale-clone route any more.
+- Templates (motion, layout, content props): `components/templates/<slug>/`. They still hold Scale's copy as default data in their `content` files, so every page must pass its own content.
+- Scale's media were removed from `public/`; the last commit with the runnable clones and media is `0e79e40`.
+- Specs and interaction inventories: `reference-snapshots/scale-clone/<slug>.md`; QA in `qa/<slug>/` and `qa/vahue-<slug>/`. Compare against live scale.com.
+- New filled routes at Scale's paths: `/`, `/about`, `/experts`, `/partnership`, `/docs`, `/evaluation/model-developers`, `/evaluation/public-sector`, `/public-sector`, `/global-public-sector`, `/public-sector/national-security`, `/labs`, `/labs/papers`, `/labs/leaderboard`, `/labs/blog`, `/labs/jobs`. `/docs` and `/labs*` use their own chrome (see `components/SiteChrome.tsx`).
+- Scale pages under Vahue names: /automations* (data-engine, generative-ai-data-engine, physical-ai, donovan, automotive, rlenvironments, genai-portfolio), /operations (enterprise), /strategy (evaluation-enterprise). public-sector-data-engine has no Vahue page yet.
+- 10 older non-Scale pages are untouched: /ai-native-engineering, /ai-seo, /bfsi, /customer-support, /enterprise-ai, /leader-board, /marketplace, /platform, /team-training, /vahue-incubator.
 
 ## Scale clone status (32 menu pages) — updated 2026-11-01
 
