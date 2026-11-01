@@ -1,0 +1,26 @@
+/* Scale's CSS modules, copied rule for rule from 0npdyq12us3md.css: _5VC0Rq (tabs), dB_njW (video). Modal: it_l1W from 0iw3n0ipld-_4.css, _1N8NtW from 0wrf93oshhpjv.css. */
+.bullet { padding-left: 24px; position: relative; }
+.bullet picture { margin: 4px 0 0; position: absolute; left: 0; }
+@media (min-width: 1024px) { .bullet { padding-left: 32px; } }
+.bullet:not(:last-of-type) { margin-bottom: 14px; }
+.bullet a { color: #fff; }
+.image { position: relative; }
+.imageBorder { border: 1px solid #d1aad729; }
+.tabs { border: 1px solid; border-color: rgba(var(--marker-color), 0.15); border-radius: 100px; min-width: max-content; max-width: max-content; padding: 4px; font-size: 14px; line-height: 22px; display: flex; position: relative; }
+.box { box-sizing: border-box; z-index: 1; background: rgba(var(--marker-color), 0.01); border-radius: 16px; position: relative; }
+.box:before, .box:after { content: ''; box-sizing: border-box; border-radius: 16px; position: absolute; inset: 0; }
+.box:before { border: 1px solid rgba(var(--marker-color), 0.06); }
+.box:after { background: rgba(var(--marker-color), 0.02); box-shadow: 0px 0px 12px 0px rgba(var(--marker-color), 0.08) inset; }
+.swipeContainer { touch-action: pan-y; -webkit-user-select: none; user-select: none; }
+
+.wrapper { border-radius: 12px; width: 100%; position: relative; overflow: hidden; -webkit-mask-image: -webkit-radial-gradient(#fff, #000); opacity: 1; transition: opacity 1s ease-out; }
+.playTrap { z-index: 3; opacity: 1; cursor: pointer; position: absolute; inset: 0; }
+.playTrap.animate { pointer-events: none; }
+.videoContainer { z-index: 2; flex-direction: column; align-items: center; width: 100%; height: 100%; display: flex; position: absolute; bottom: 0; right: 0; }
+
+.modalOverlay { opacity: 0; animation: 0.35s ease-out forwards modalFade; }
+.modal { color: #000; text-align: left; opacity: 0; height: -webkit-fill-available; animation: 0.35s ease-out 0.55s forwards modalShow; }
+@keyframes modalFade { 0% { opacity: 0; } to { opacity: 1; } }
+@keyframes modalShow { 0% { opacity: 0; transform: scale(1.1); } to { opacity: 1; transform: scale(1); } }
+@media screen and (min-width: 768px) { .modalWidth { min-width: 50vw; } }
+@media screen and (min-width: 1024px) { .modalWidth { min-width: 540px; } }
