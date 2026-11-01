@@ -123,7 +123,7 @@ export const content: ExpertsContent = {
       { _key: 'leaderboard', title: 'Vahue Labs: AI Agent Leaderboards & Benchmarks', category: 'Leaderboard', image: NEUTRAL, url: '/labs/leaderboard' },
       { _key: 'hfc', title: 'Human Expert Collective: Lead the Future of Intelligence, Together', category: 'Fellowship', image: '/experts/resources-hfc.webp', url: '/careers' },
       { _key: 'network', title: 'Experts: Become the Expert That AI Learns From', category: 'Platform', image: NEUTRAL, url: '/careers' },
-      { _key: 'rlenvironments', title: 'Engineering Enablement Programs for AI Agents', category: 'Product', image: '/experts/resources-rlenvironments.webp', url: '/rlenvironments' },
+      { _key: 'rlenvironments', title: 'Agent Environments for AI Agents', category: 'Product', image: '/experts/resources-rlenvironments.webp', url: '/rlenvironments' },
       { _key: 'back-office', title: 'Back-office Sync', category: 'Product', image: NEUTRAL, url: '/generative-ai-data-engine' },
     ],
   },

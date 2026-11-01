@@ -6,12 +6,12 @@ const A = '/evaluation-model-developers'
 
 export const content: EvaluationModelDevelopersContent = {
   meta: {
-    title: 'AI Audit for Teams Deploying Agents | Vahue',
+    title: 'AI Evaluation for Operations Teams | Vahue',
     description: 'Vahue Audit is a platform for analyzing model performance, identifying weaknesses, and improving model quality.',
   },
   hero: {
-    headline: 'Audit for Teams Deploying Agents',
-    body: 'Trusted LLM capability and safety audits in two weeks.',
+    headline: 'Evaluation for Operations Teams',
+    body: 'Trusted LLM capability and safety evaluations.',
     cta: { text: 'Book a Demo', url: '/demo' },
     backdrop: { tailwindClass: 'white', contrastColor: '#010101' },
     image: { path: `${A}/hero-filled.webp` },
