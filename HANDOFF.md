@@ -1,6 +1,6 @@
 # Handoff: AI automation research + Scale 1:1 clone + Vahue rebuild
 
-Last updated: 2026-10-31 by the cloud session. If there are newer commits on the branch than this file describes, trust `git log`.
+Last updated: 2026-11-01 (all clones, audits and Vahue pages done; PR to main open). If there are newer commits on the branch than this file describes, trust `git log`.
 
 ## The original ask (Mike, verbatim)
 
@@ -40,88 +40,42 @@ Last updated: 2026-10-31 by the cloud session. If there are newer commits on the
 - Chosen direction (hypothesis): mid-market ops/finance leaders (100–2,000 staff). Positioning: "Your busiest workflows, run by agents. Measured from day one." Offer: Audit (2 wk) → Pilot (4–6 wk) → Operate (monthly).
 - Riskiest assumption: buyers will pay a monthly fee to have the agents run for them. Test plan is in the doc.
 
-## Scale clone status (32 menu pages)
+## Scale clone status (32 menu pages) — updated 2026-11-01
 
-Page list: `reference-snapshots/scale-pages.md`. Registry: `components/scale-clone/shared/pages.ts`. Every clone lives at `/scale-clone/<slug>/`, with an index at `/scale-clone/`.
-
-**Done (spec, motion table and side-by-side QA at 1440×900 and 390×844):**
-- data-engine, generative-ai-data-engine, physical-ai, public-sector-data-engine, donovan
-  - first built without REA; then an REA verification pass (commit 1c2b96b) fixed the hero clip, overlay, late pre-footer trigger and slider wheel plugin
-  - each spec now ends with an "REA verification" section
-- automotive, rlenvironments, security, evaluation-enterprise, enterprise-insurance, guides, genai-portfolio
-  - built with REA from the start
-- shared header, announcement bar and footer (`shared-chrome.md`)
-  - pages switch the dark nav with `data-nav-theme="dark"` or `setScaleNavTheme()`
-
-Each spec lists its own small gaps: placeholder logos and imagery, Wistia/HLS video not embedded, Scale imagery with Scale text baked in, and text-wrap deltas from placeholder copy.
-
-**Known follow-up (not done):**
-- The automotive clone has no media scale. The REA pass showed Scale scales full-bleed media 1.25→1 on every page it checked, so automotive (and `/automations/scoring-decisions`, built from it) probably needs that scale added.
-- Re-check the late pre-footer trigger (fixed in the five early clones with a ResizeObserver re-measure) on rlenvironments, security, evaluation-enterprise, enterprise-insurance and guides, and on the Vahue pages copied from clones.
-- A fix-propagation agent was stopped before it changed any files.
-
-**WIP, committed but unfinished:** enterprise, enterprise-healthcare, blog, events
-- the agents were stopped mid-build
-- the code compiles and `npm run build` passes
-- each has a stub spec marked WIP
-- enterprise has the most done (three.js hero, drag-to-rotate object, Embla 3D carousel and the pull-apart text variant in progress); see the existing QA images in `qa/enterprise/`
-
-**Not started:** experts, evaluation-model-developers, evaluation-public-sector, public-sector, global-public-sector, public-sector-national-security, labs-papers, labs-leaderboard, labs, labs-blog, labs-jobs, about, careers, demo, docs, partnership.
-- Priority: finish enterprise and enterprise-healthcare first (Vahue pages depend on them), then careers, demo, about and experts.
-- The public-sector and research (labs.scale.com) pages have no Vahue page to fill, so they come last.
+All 32 menu pages are cloned at `/scale-clone/<slug>/` (index at `/scale-clone/`), each with a full spec in `reference-snapshots/scale-clone/<slug>.md` that ends with a per-section **Interaction inventory** (REA listener evidence ids, source modules, params, Scale-vs-clone measurements) and QA images in `reference-snapshots/scale-clone/qa/<slug>/` (+ `interactions/`).
+- Every clone was instrumented per section with REA (listeners traced to source + params) and driven with Playwright at identical inputs on scale.com and the clone (cursor paths, hovers, drag, wheel/scroll scrub, keyboard, triggers) at 1440×900 and 390×844.
+- labs.scale.com (labs, labs-papers, labs-leaderboard, labs-blog, labs-jobs) is a separate stack (Next + Tailwind 4 + framer-motion + WebGPU hero): see `labs-stack.md`; shared chrome in `components/scale-clone/labs-shared/`. `/scale-clone/docs` is Scale's Mintlify docs. Both skip the scale.com header/footer via `components/scale-clone/shared/CloneChrome.tsx`.
+- Shared fixes proven across clones: FlatCta state machine (wash on CSS `translate`, reset on the 680ms timer only), `#86bff2` `:focus` outline on internal links, retroactive intro trigger (end `bottom 20%`), `lib/useRefreshOnPageGrow.ts`, full-bleed media scale only during scroll.
+- Known shared gaps: Vahue fonts instead of Scale's commercial fonts (small text-width deltas), shared footer 40px shorter at 390, third-party logos as neutral tiles, `oml:` short-landscape variants not reproduced, static data snapshots (blog/events/careers/labs) dated in each spec.
 
 ## Vahue pages built from clones (copy from lib/automation-content.ts)
 
-Workflow pages load through `app/automations/[slug]/page.tsx` and `components/automation/workflows/registry.ts`, which maps each workflow slug to `components/automation/workflows/<template>/WorkflowPage.tsx`.
+Mike's rules (2026-10-31), applied to every page below: strict parity with the clone (every section in order, same element roles/counts, copy of similar length doing the same storytelling job; only the copy comes from the research), **Scale's colour design** (supersedes the earlier Vahue-dark rule), Vahue fonts and logo, no Scale imagery/logos, placeholder numbers allowed where Scale has a number but marked `// PLACEHOLDER METRIC`, and every clone interaction kept with the same params. Agent-written copy is marked `// page copy`.
 
-**Done and checked on the dev server** (200, no console errors, compared with the template clone):
-- `/automations` hub (data-engine layout)
-- `/automations/back-office-sync` (generative-ai-data-engine)
-- `/automations/document-intake` (physical-ai)
-- `/automations/support-agents` (donovan)
-- `/automations/scoring-decisions` (automotive)
-- `/automations/engineering-enablement` (rlenvironments)
-- `/security` (security)
-  - ISO 27001 and GDPR are claimed because the site already claims them elsewhere
-  - confirm the ISO certificate is current before shipping
+| Vahue page | Clone |
+|---|---|
+| `/automations` hub | data-engine |
+| `/automations/back-office-sync` | generative-ai-data-engine |
+| `/automations/document-intake` | physical-ai |
+| `/automations/support-agents` | donovan |
+| `/automations/scoring-decisions` | automotive |
+| `/automations/engineering-enablement` | rlenvironments |
+| `/automations/knowledge-agents` | genai-portfolio |
+| `/operations` (How we operate) | enterprise |
+| `/industries/banking-financial-services`, `/retail-ecommerce`, `/distribution-manufacturing` (new) | enterprise (shared `components/industry/enterprise/` + `components/enterprise-vahue/`) |
+| `/industries/insurance` | enterprise-insurance |
+| `/industries/healthcare-life-sciences` | enterprise-healthcare (renders the clone's `HealthcarePage`) |
+| `/strategy` (Workflow audit) | evaluation-enterprise |
+| `/security` | security |
+| `/guides`, `/case-studies` | guides |
+| `/careers` | careers |
+| `/contact` | demo (EmailJS, same as the site's other form; accepts free-mail addresses; `to_email: human@vahue.ai`) |
+| `/blog` (+ `/blog/category/[slug]`) | blog |
+| `/events` | events |
 
-**Built but not fully checked** (the agents were stopped during their final screenshot pass; `npm run build` passes):
-- `/strategy` → "Workflow audit" (evaluation-enterprise; components in `components/strategy-audit/`)
-- `/industries/insurance` (enterprise-insurance; generic `components/industry/enterprise-insurance/IndustryPage.tsx` taking `{ content, workflows }`)
-- `/guides` and `/case-studies` indexes (guides book-card layout; `components/book-index/`)
+Also done: homepage copy pass (positioning, six workflows, Audit → Pilot → Operate), Navbar (Automation menu incl. Knowledge agents, Distribution & Manufacturing, Security under Resources), case-study fields (point A, time to live, point B, payback — only where stated), llms alternates and `llms.txt` updated for rebuilt pages.
 
-**WIP, not committed:** `/automations/knowledge-agents` on genai-portfolio
-- the agent was stopped mid-build and the files don't compile yet (`Lower.tsx` syntax error)
-- parked locally, gitignored, in `.wip/knowledge-agents-genai-portfolio/`
-- to finish:
-  - move it back to `components/automation/workflows/genai-portfolio/`
-  - fix it
-  - add `'knowledge-agents': () => import('./genai-portfolio/WorkflowPage'),` to the registry
-- the plan: replace Scale's scene videos with our own SVG/three.js visuals on the same pin/scrub params
-
-**Navbar:** an Automation menu was added first, with the hub, five workflows and How we operate.
-- Knowledge agents and the Distribution & Manufacturing industry link are left out until those pages exist.
-- How we operate links to the existing `/operations`, which isn't rebuilt yet.
-
-**Rules applied to the Vahue pages:**
-- no imagery from `public/scale-clone/` on Vahue pages
-- dark dot-texture panels where Scale had media
-- only verified cases from `lib/case-studies.ts`
-- some headings, CTA labels and mock UI text were written by agents (not in `lib/automation-content.ts`), so give them a copy review
-
-**Still to do:**
-- `/automations/knowledge-agents` (above)
-- `/operations` → "How we operate" on enterprise, once that clone is finished
-- the other industry landings with `INDUSTRY_WORKFLOWS`:
-  - banking and retail on enterprise
-  - healthcare on enterprise-healthcare
-  - a new `/industries/distribution-manufacturing` on enterprise
-  - then add Distribution & Manufacturing and Knowledge agents to the Navbar
-- `/blog`, `/events`, `/careers` and `/contact` on their clones
-- Security under Resources in the Navbar
-- Case-study template fields: point A, time to first agent live, point B, payback
-- Homepage copy pass with the positioning, the six workflows and Audit → Pilot → Operate
-- Final side-by-side QA of the real pages, `npm run build`, then open a PR to `main` (don't deploy)
+**For Mike to review** (full list in the PR description): agent-written copy, placeholder metrics (`grep -rn "PLACEHOLDER METRIC"`), /guides slots that link to service pages under guide titles, ISO 27001 claim on /security and healthcare, unused old components (`components/careers/CareersExperience.tsx`, `components/events/EventsClient.tsx`, `BookNowModal.tsx`, `components/segments/content/operations.ts`), experts clone ships Scale's 5.3 MB hero video.
 
 ## Mac memory budget (Mike's rules, mandatory)
 
@@ -134,10 +88,10 @@ The Mac has 16 GB, shared with other Claude sessions and a Chrome on port 9223 t
 ## Rules to follow
 
 - `DESIGN.md` and `PRODUCT.md` in the repo, and the project memory rules:
-  - Vahue fonts, logo and dark palette (don't ship Scale's commercial font or logos)
-  - no gradient hero, no blue+purple pairing
+  - Vahue fonts and logo (don't ship Scale's commercial font or logos)
+  - on pages built from a Scale clone, Mike's 2026-10-31 override applies: Scale's colour design (not the Vahue dark palette / no-gradient / no-blue+purple rules), strict structural parity, placeholder numbers allowed but marked `// PLACEHOLDER METRIC`
   - no AJTBD words in section labels
-  - no third-party or unverified metrics; only Vahue's own cases from `lib/case-studies.ts`
+  - otherwise only Vahue's own cases from `lib/case-studies.ts`; never invent cases, quotes, events or posts
 - Same libraries and parameters as Scale (see `scale-motion-stack.md`). Honour reduced motion.
 
 ## Tools and setup
