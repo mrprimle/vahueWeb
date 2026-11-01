@@ -1,6 +1,6 @@
 'use client'
 
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState, type TransitionEvent } from 'react'
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import gsap from 'gsap'
 
 /*
@@ -39,7 +39,9 @@ const FlatCta = forwardRef<FlatCtaHandle, Props>(function FlatCta({ href, text, 
 
   // Same state machine as Scale's FlatCta (chunk 1h0nvyhf5gbrf.js, module 892855):
   //   hovered -> wash at 0; leaving -> wash exits the far side; resetting -> wash snaps back to the start with no
-  //   transition, released after two rAFs. Leave resets on the wash's transform transitionend, or after 680ms.
+  //   transition, released after two rAFs. Leave resets after 680ms: Scale also listens for the wash's `transform`
+  //   transitionend, but its Tailwind 4 translate-* classes animate `translate`, so that never matches and the
+  //   680ms timer is what resets it (measured: wash at +100% / -100% until ~700ms). The clone skips the handler.
   //   Re-entering while the wash is still leaving snaps it back first, so it always enters from the start side.
   //   Arrow strip: hovered slides -50% -> 0 (600ms); leave snaps it back (transition none).
   const [hovered, setHovered] = useState(false)
@@ -105,10 +107,6 @@ const FlatCta = forwardRef<FlatCtaHandle, Props>(function FlatCta({ href, text, 
       finishLeave()
     }, 680)
   }, [isArrow, resetting, finishLeave])
-  const onWashEnd = (e: TransitionEvent<HTMLDivElement>) => {
-    if (e.target !== e.currentTarget) return
-    if (e.propertyName === 'transform' || e.propertyName === 'translate') finishLeave()
-  }
 
   useImperativeHandle(ref, () => {
     const set = () => {
@@ -175,7 +173,6 @@ const FlatCta = forwardRef<FlatCtaHandle, Props>(function FlatCta({ href, text, 
           isArrow ? 'opacity-35' : 'opacity-30'
         } ${washPos} ${resetting ? 'transition-none' : 'transition-transform'}`}
         style={{ transitionDuration: isArrow ? '600ms' : '300ms' }}
-        onTransitionEnd={onWashEnd}
       />
       <div className={`relative z-[1] inline-flex max-w-full flex-wrap items-center justify-center ${isArrow ? 'py-1 pl-4 pr-1' : 'px-4 py-2'}`}>
         <div

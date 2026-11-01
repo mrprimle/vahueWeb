@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState, type TransitionEvent } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import styles from './styles.module.css'
 
@@ -31,8 +31,10 @@ function useRelease(flag: boolean, release: () => void) {
 /*
  * White FlatCta, "arrow" variant (scale.com chunk 1h0nvyhf5gbrf.js, module 892855), same state machine:
  *  pointerenter  wash (35% black) slides translateX(-100%) -> 0, chevron strip -50% -> 0, 600ms ease-out
- *  pointerleave  wash keeps going to +100% (exits right); on its transform transitionend, or after 680ms,
- *                it snaps back to -100% with the transition off, released after two rAFs.
+ *  pointerleave  wash keeps going to +100% (exits right); after 680ms it snaps back to -100% with the
+ *                transition off, released after two rAFs. (Scale also listens for a `transform` transitionend,
+ *                but its Tailwind 4 classes animate `translate`, so that never matches and the 680ms timer is
+ *                what resets it; measured: the wash sits at +100% until ~700ms. The clone skips the handler.)
  *                The strip snaps straight back to -50% (transition none), released after two rAFs.
  *  re-enter while the wash is still leaving: it snaps to -100% first, so it always enters from the left.
  * Intro parts are tagged with data-cta-* hooks (FullBleedMedia runs the "filledWhiteArrow" intro).
@@ -86,11 +88,6 @@ export default function FlatCta({ href, children }: { href: string; children: Re
     }, 680)
   }, [resetting, finishLeave])
 
-  const onWashEnd = (e: TransitionEvent<HTMLSpanElement>) => {
-    if (e.target !== e.currentTarget) return
-    if (e.propertyName === 'transform' || e.propertyName === '-webkit-transform') finishLeave()
-  }
-
   const wash = resetting ? 'rest' : hovered ? 'in' : leaving ? 'out' : 'rest'
 
   return (
@@ -104,7 +101,6 @@ export default function FlatCta({ href, children }: { href: string; children: Re
       <span
         aria-hidden
         data-state={wash}
-        onTransitionEnd={onWashEnd}
         className={`${styles.ctaWash} ${resetting ? styles.snap : ''} pointer-events-none absolute inset-0 z-0 rounded-[inherit] bg-black opacity-35`}
       />
       <span className="relative z-[1] inline-flex items-center justify-center py-1 pl-4 pr-1">

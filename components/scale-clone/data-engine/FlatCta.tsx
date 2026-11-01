@@ -1,6 +1,6 @@
 'use client'
 
-import { forwardRef, useCallback, useEffect, useRef, useState, type ReactNode, type TransitionEvent } from 'react'
+import { forwardRef, useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import s from './dataEngine.module.css'
 
 /*
@@ -37,8 +37,11 @@ const FlatCta = forwardRef<HTMLAnchorElement, Props>(function FlatCta(
   const outline = variant === 'border'
   // Same state machine as Scale's FlatCta (chunk 1h0nvyhf5gbrf.js, module 892855):
   //   hovered (U) -> fill at 0; leaving (D) -> fill exits the far side; resetting (j) -> fill snaps back to the
-  //   start with no transition, released after two rAFs. Leave resets on the fill's transform transitionend,
-  //   or after 680ms. Re-entering while the fill is still leaving snaps it back first, so it always enters
+  //   start with no transition, released after two rAFs. Leave resets after 680ms: Scale also listens for the
+  //   fill's `transform` transitionend, but its Tailwind 4 translate-* classes animate the `translate` property,
+  //   so that handler never matches and the 680ms timer is what resets it (measured on scale.com: the arrow wash
+  //   sits at +100% and the border fill at -100% until ~700ms). The clone animates `transform`, so it skips the
+  //   handler. Re-entering while the fill is still leaving snaps it back first, so it always enters
   //   from the start side. Arrow track: hovered slides -50% -> 0 (600ms); leave snaps it back (transition none).
   const [hovered, setHovered] = useState(false)
   const [leaving, setLeaving] = useState(false)
@@ -115,11 +118,6 @@ const FlatCta = forwardRef<HTMLAnchorElement, Props>(function FlatCta(
     }, 680)
   }, [arrow, resetting, finishLeave])
 
-  const onFillEnd = (e: TransitionEvent<HTMLSpanElement>) => {
-    if (e.target !== e.currentTarget) return
-    if (e.propertyName === 'transform' || e.propertyName === '-webkit-transform') finishLeave()
-  }
-
   const start = arrow ? 'translateX(-100%)' : 'translateY(100%)'
   const fillTransform = resetting
     ? start
@@ -152,7 +150,6 @@ const FlatCta = forwardRef<HTMLAnchorElement, Props>(function FlatCta(
       <span
         aria-hidden="true"
         className={s.ctaFill}
-        onTransitionEnd={onFillEnd}
         style={{
           opacity: fillOpacity,
           transform: fillTransform,
