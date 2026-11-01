@@ -46,21 +46,21 @@ export const content: EvaluationModelDevelopersContent = {
       { key: 'risk-2', icon: 'en', iconColor: '#A8927C', title: 'Unqualified Advice', description: 'Advice on sensitive topics (i.e. medical, legal, financial) that may result in material harm to the user.' },
       { key: 'risk-3', icon: 'w9', iconColor: '#839CB2', title: 'Bias', description: 'Responses that reinforce and perpetuate stereotypes that harm specific groups.' },
       { key: 'risk-4', icon: 'Yr', iconColor: '#839CB2', title: 'Privacy', description: 'Disclosing personally identifiable information (PII) or leaking private data.' },
-      { key: 'risk-5', icon: 'be', iconColor: '#79648C', title: 'Cyberattacks', description: 'A malicious actor using a language model to conduct or accelerate a cyberattack.' },
-      { key: 'risk-6', icon: 'lF', iconColor: '#A8927C', title: 'Dangerous Actions', description: 'Assisting bad actors in acquiring or creating fraudulent payments or credits (e.g. refunds, write-offs).' },
+      { key: 'risk-5', icon: 'be', iconColor: '#79648C', title: 'Prompt Attacks', description: 'A malicious caller using crafted prompts to extract private data or trick an agent into acting.' },
+      { key: 'risk-6', icon: 'lF', iconColor: '#A8927C', title: 'Unauthorised Actions', description: 'Issuing payments or credits (e.g. refunds, write-offs) beyond an agent’s limits without human approval.' },
     ],
   },
   experts: {
     overtitle: 'EXPERTS',
     title: 'Expert Red Teamers',
     subtitle: 'Vahue has a diverse network of experts to perform the LLM evaluation and red teaming to identify risks.',
-    taxonomy: { src: `${A}/taxonomy.webp`, alt: 'Red team techniques connected to identifiable model harms.' },
+    taxonomy: { src: `${A}/taxonomy-agents.webp`, alt: 'Red team techniques connected to identifiable agent harms.' },
     cards: [
       { key: 'red-team-1', icon: 'yN', iconColor: '#79648C', title: 'Red Team Staff', description: '100s of red teamers trained on advanced tactics and in-house prompt engineers enable state of the art red teaming at scale.' }, // PLACEHOLDER
       { key: 'red-team-2', icon: 'kk', iconColor: '#A8927C', title: 'Content Libraries', description: 'Extensive libraries and taxonomies of tactics and harms ensure broad coverage of vulnerability areas' },
       { key: 'red-team-3', icon: 'St', iconColor: '#839CB2', title: 'Adversarial Datasets', description: 'Proprietary adversarial prompt sets are used to conduct systematic model vulnerability scans.' },
       { key: 'red-team-4', icon: 'bZ', iconColor: '#79648C', title: 'Product Experience', description: "Vahue's red teaming product was selected by a mid-market insurer to conduct private assessments of models from leading AI developers." }, // PLACEHOLDER
-      { key: 'red-team-5', icon: 'b', iconColor: '#A8927C', title: 'Model-Assisted Research', description: "Research conducted by Vahue's Safety, Evaluations, and Analysis Lab will enable model-assisted approaches." },
+      { key: 'red-team-5', icon: 'b', iconColor: '#A8927C', title: 'Model-Assisted Research', description: "Research conducted by Vahue's Evaluations and Analysis team will enable model-assisted approaches." },
     ],
   },
   testimonials: {
@@ -83,9 +83,9 @@ export const content: EvaluationModelDevelopersContent = {
     overtitle: 'RESOURCES',
     title: 'Learn More About Our LLM Capabilities',
     items: [
-      { href: '/labs/leaderboard', category: 'Blog', title: "Vahue's Research Lab Launches Expert-Evaluated Agency Leaderboards", image: `${A}/leaderboard.png` },
+      { href: '/labs/leaderboard', category: 'Blog', title: "Vahue's Research Lab Launches Expert-Evaluated Agent Leaderboards", image: `${A}/leaderboard.png` },
       { href: '/blog', category: 'Blog', title: 'Test and Evaluation Blog', image: `${A}/test-evaluation.png` },
-      { href: '/guides', category: 'Blog', title: 'Introducing the Audit: Measuring and Mitigating Catastrophic Risk Potential from LLMs', image: `${A}/wmdp-risk.png` },
+      { href: '/guides', category: 'Blog', title: 'Introducing the Audit: Measuring and Mitigating Operational Risk Potential from LLMs', image: `${A}/wmdp-risk.png` },
       { href: '/blog', category: 'Blog', title: 'Mid-Market Launch Partner', image: `${A}/llama-partner.png` }, // PLACEHOLDER
     ],
   },
