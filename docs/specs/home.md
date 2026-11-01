@@ -32,7 +32,7 @@ Measured with the same script on both sites (`motion.cjs`, `motion2.cjs` in the 
 | Element | Input | Listener | Source | Params | Scale vs ours |
 |---|---|---|---|---|---|
 | Hero pin | scroll | ScrollTrigger pin, no spacing | 677838 | End `4.5vh` (`2.32vh` at most 768px). `yPercent` -10 between .8 and 1 | -9.07, -66.28, -89.63, -90, both |
-| Hero timeline | animated scroll | gsap ticker `onTick` | 140914 | Progress = scroll / (4.7vh, phone 2.15vh). `t1` over .2, rotation -.6 to -1, alpha out from .8 | Compared on screenshots only: uniforms are not exposed |
+| Hero timeline | animated scroll | gsap ticker `onTick` | 140914 | Progress = scroll / (4.7vh, phone 2.15vh). `t1` over .2, rotation -.6 to -1, alpha out from .8 | Uniforms equal at 23 scroll points and through real wheel, see Hero review |
 | Pull-apart blocks | progress | zustand store | 140914, 677838 | Visible at .1, .3, .6, last ends .85 (.997 scrolling back) | Visibility strings equal at 15 scroll points |
 | Heading and hint | progress | store | 677838 | Hide above .035, hint back after 1s | Equal on the clone |
 | Block reveal | visibility | gsap | 677838 | Category .8s, title .8s at .3, body 1.8s at .5, CTA .85s at 1.3, logos from 2.3, stagger .08 | Same params. Timed in dev: ours starts about 200ms later, logos about 400ms. See Gaps |
@@ -61,6 +61,17 @@ Measured with the same script on both sites (`motion.cjs`, `motion2.cjs` in the 
 
 Section tops and heights equal Scale's table above at both sizes. The carousel reads 580.4 at load instead of 589 (529.6 instead of 536.8 at 390), because its copy wraps differently before the text is split; the Applications section height is unaffected. Settled card heights at 1440 equal Scale (carousel 373.4, link cards 556, blog tiles same list). At 390 they equal too (carousel 348, link cards 349, 322, 335). Motion re-sampled on the filled page: same values, except quote word opacity (different word count), CTA width (longer label) and the cycling word box.
 
+## Hero review, 2026-11-01 (Mike: different motion and direction, top of the video covered by the header)
+Read the real WebGL uniforms on both sites by hooking `uniform1f` and `uniformMatrix4fv` before page load (`uni.cjs`, scratchpad), which replaces the screenshot-only check noted under Gaps.
+
+- **Scroll mapping:** 23 scroll points at 1440x900, 1728x1000 and 390x844 (headless), and 25 real wheel steps down and 25 up at 1512x860 DPR 2 on the real GPU (headed). `uTransition1..3`, `uAlpha`, `uColorMix`, group rotation, group z scale, camera, pulled-apart block visibility and pin offset all agree. The only deltas are short tweens read at slightly different moments and the camera still settling just after load.
+- **Pointer:** camera at the four corners matches to .001 (for example -.595, -.296 at the top left).
+- **Layout depends on width, on Scale too:** from 1450 the scene moves sideways and the text sits beside it. Below 1450 there is no sideways move and the text sits underneath.
+- **Video frame on Scale:** rounded and clear of the header from 1450 and on phones. Between 768 and 1449 Scale's own frame starts at 75px under an 88px header, so the header cuts its rounded top. Ours did the same.
+- **Change, a deliberate deviation from Scale:** between 768 and 1449 our frame starts at 88px (`navBarPad` in two hero shaders, and the black loading panel), so the rounded top shows. Phone and 1450+ are unchanged. Chrome header untouched.
+- **REA:** `ev_df4bbf68…`, foreground tab, wheel and pointer through the hero: `onTick` 702 calls, `onMouseMove` 23, section callbacks and the `uTransition2`/`uTransition3` tween callbacks all ran. It matches the source mapping: progress = animated scroll / (4.7 x viewport height, phone 2.15), rotation -.6 to -1 linear after the intro, `uTransition1` over the first .2.
+- **Still open:** no motion difference reproduced at equal viewport, so no motion code changed. Needed from Mike: the URL and window width of the Vahue view.
+
 ## Assets
 - `packed.mp4` is Scale's 10 MB `Packed.mp4` re-encoded at 1920x1080 to 2.8 MB. Same size, so the shader's texture lookups hold. Its top strip holds the outline matte and its corner the frame offset, so it cannot be swapped for an ordinary video.
 - Also in `public/home`: orbit tiles, quote video, Satellite video, and Scale's two scene textures.
@@ -72,7 +83,7 @@ Section tops and heights equal Scale's table above at both sizes. The carousel r
 ## Deviations and gaps
 - **Fonts:** Aeonik and DM Mono, see stack.md. Causes the small text-width deltas above.
 - **Timing, unverified:** the reveal lag was measured against Scale's production build on our dev server. Params are the same, and a production build was not run, so the cause is not proven.
-- **Scene uniforms:** compared by screenshot, not numerically. The video and 30 random scene points differ per load, on Scale too.
+- **Scene:** uniforms now compared numerically, see Hero review. The video frame and 30 random scene points differ per load, on Scale too.
 - **Not sampled:** 768 to 1449 band beyond 1440, tablet, `oml:` landscape, the fallback image path, reduced motion on blog images.
 - **Touch:** carousel checked with a tap on Next. Touch drag was not run.
 - **BlogPreview:** the video tile branch (Radix dialog) is not ported, home has none.

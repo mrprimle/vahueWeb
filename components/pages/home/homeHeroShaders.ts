@@ -96,7 +96,9 @@ void main() {
   float borderPad = mix(33.0, 24.0, isMobile);
   float padx = borderPad * widthPx;
   float pady = borderPad * heightPx;
-  float navBarPad = mix(88.0, 72.0, isMobile) * heightPx;
+  // Scale leaves isMobile at 0.8 here, so its frame starts at 75px between 768 and 1449 and the 88px header
+  // cuts the rounded top. We keep 88 at those widths; phone stays 72.
+  float navBarPad = mix(88.0, 72.0, step(0.9, isMobile)) * heightPx;
 
   float sideMask = step(0.0, position.x) * 2.0 - 1.0;
   float upMask = step(0.0, position.y);
@@ -417,7 +419,9 @@ void main() {
   float borderPad = mix(24.0, 16.0, isMobile);
   float padx = borderPad * widthPx;
   float pady = borderPad * heightPx;
-  float navBarPad = mix(88.0, 72.0, isMobile) * heightPx;
+  // Scale leaves isMobile at 0.8 here, so its frame starts at 75px between 768 and 1449 and the 88px header
+  // cuts the rounded top. We keep 88 at those widths; phone stays 72.
+  float navBarPad = mix(88.0, 72.0, step(0.9, isMobile)) * heightPx;
 
   vNavBarPad = navBarPad;
 
