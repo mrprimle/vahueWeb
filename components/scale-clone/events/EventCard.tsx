@@ -1,11 +1,15 @@
-import type { EventItem } from './eventsData'
+import Link from 'next/link'
+import type { ReactNode } from 'react'
+import type { EventItem } from './content'
 import s from './events.module.css'
 
-// lucide "calendar-days" (strokeWidth 1.8), as rendered on Scale. Also at public/scale-clone/events/calendar-days.svg.
+// lucide "calendar-days" (strokeWidth 1.8), as rendered on Scale (size-7 upcoming, size-6 past).
 export function CalendarDays() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -28,10 +32,30 @@ export function CalendarDays() {
   )
 }
 
-// Upcoming card: 64px tile, "TYPE · DATE" row, 30px title, 18px description.
+/*
+ * Scale's card link (module 187078 `l`): /^https?:\/\//i -> <a target=_blank rel="noopener noreferrer">,
+ * otherwise next/link. Neither carries CMSLink focus classes, so the UA focus ring shows (s.card resets the
+ * app's global `a { outline: none }`).
+ */
+function CardLink({ href, className, children }: { href: string; className: string; children: ReactNode }) {
+  if (/^https?:\/\//i.test(href)) {
+    return (
+      <a href={href} className={className} target="_blank" rel="noopener noreferrer">
+        {children}
+      </a>
+    )
+  }
+  return (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
+  )
+}
+
+// Upcoming card (server-rendered on Scale): 64px tile, "TYPE · DATE" row, 30px title, 18px description.
 export function UpcomingCard({ event }: { event: EventItem }) {
   return (
-    <a href={event.href} className={`${s.card} ${s.cardUpcoming} group`}>
+    <CardLink href={event.href} className={`${s.card} ${s.cardUpcoming}`}>
       <div className={`${s.tile} ${s.tileLg}`}>
         <CalendarDays />
       </div>
@@ -43,31 +67,28 @@ export function UpcomingCard({ event }: { event: EventItem }) {
           </span>
           <span className={s.meta}>{event.date}</span>
         </div>
-        {/* TODO: Vahue copy */}
         <h3 className={`${s.cardTitle} font-display`}>{event.title}</h3>
-        {/* TODO: Vahue copy */}
-        <p className={`${s.desc} font-display`}>{event.description}</p>
+        {event.description && <p className={`${s.desc} font-display`}>{event.description}</p>}
       </div>
-      <span className={s.cta}>Learn more</span>
-    </a>
+      <span className={s.cta}>{event.cta || 'Learn more'}</span>
+    </CardLink>
   )
 }
 
-// Past card: 56px tile with shadow-sm, "DATE   TYPE" line, 24px title, 16px description.
+// Past card (PastEventsList `n`): 56px tile with shadow-sm, "DATE   TYPE" (three spaces, filter(Boolean)), 24px title, 16px description.
 export function PastCard({ event }: { event: EventItem }) {
+  const meta = [event.date, event.type].filter(Boolean).join('   ')
   return (
-    <a href={event.href} className={`${s.card} ${s.cardPast} group`}>
+    <CardLink href={event.href} className={`${s.card} ${s.cardPast}`}>
       <div className={`${s.tile} ${s.tileSm}`}>
         <CalendarDays />
       </div>
       <div className={s.bodyPast}>
-        <p className={s.meta}>{[event.date, event.type].join('   ')}</p>
-        {/* TODO: Vahue copy */}
+        {meta && <p className={s.meta}>{meta}</p>}
         <h3 className={`${s.cardTitle} ${s.cardTitleSm} font-display`}>{event.title}</h3>
-        {/* TODO: Vahue copy */}
-        <p className={`${s.desc} ${s.descSm} font-display`}>{event.description}</p>
+        {event.description && <p className={`${s.desc} ${s.descSm} font-display`}>{event.description}</p>}
       </div>
-      <span className={s.cta}>Learn more</span>
-    </a>
+      <span className={s.cta}>{event.cta || 'Learn more'}</span>
+    </CardLink>
   )
 }
