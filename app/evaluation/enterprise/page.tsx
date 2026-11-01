@@ -1,15 +1,9 @@
-// Stub: the page agent for /evaluation/enterprise replaces this file.
-import Link from 'next/link'
+import type { Metadata } from 'next'
+import { content } from '@/components/pages/evaluation-enterprise/content.scale'
+import { EvaluationEnterprisePage } from '@/components/pages/evaluation-enterprise/EvaluationEnterprisePage'
+
+export const metadata: Metadata = { title: content.meta.title, description: content.meta.description }
 
 export default function Page() {
-  return (
-    <section className="min-h-svh px-6 pt-40 pb-24 text-center">
-      <h1 className="header2">Evaluation for Enterprise</h1>
-      <p className="mt-6 body2-regular">
-        <Link className="underline" href="/">
-          Home
-        </Link>
-      </p>
-    </section>
-  )
+  return <EvaluationEnterprisePage content={content} />
 }
