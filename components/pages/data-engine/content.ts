@@ -1,18 +1,18 @@
-// Copy for /data-engine ("All Workflows" in the menu), from research/research.ts.
-// Same shape and counts as content.scale.ts. Lines marked PLACEHOLDER are for Mike to replace with real data.
+// Scale's copy under the 80% rule for /data-engine ("Vahue Context Engine" in the menu). Same shape and counts as content.scale.ts.
+// Lines marked PLACEHOLDER are for Mike to replace with real data.
 import type { DataEngineContent, LogoItem } from './types'
 
 const logo = (key: string, width: number, height: number): LogoItem => ({ key, alt: 'Logo', width, height })
 
 export const content: DataEngineContent = {
   meta: {
-    title: 'All Workflows | Vahue',
-    description: 'We take a high-volume workflow off your team and run it with AI agents inside the tools you already use, so operations keep up with growth without new hires.',
+    title: 'Vahue Context Engine | AI Agents at Scale | Vahue',
+    description: 'Collect, Curate, and annotate data. Build agents and evaluate. Repeat.',
   },
   hero: {
-    headline: 'All Workflows',
-    body: 'Audit, Pilot, and operate agents. Measure against your baseline. Repeat.',
-    cta: { text: 'Book an Audit', url: '/demo' },
+    headline: 'Context Engine',
+    body: 'Collect, Curate, and annotate data. Build agents and evaluate. Repeat.',
+    cta: { text: 'Book a Demo', url: '/demo' },
     image: { path: '/data-engine/hero.webp' },
     backdrop: { tailwindClass: 'white', contrastColor: '#010101' },
   },
@@ -26,77 +26,77 @@ export const content: DataEngineContent = {
     logo('customer-7', 100, 24), // PLACEHOLDER
   ],
   best: {
-    title: 'Measured From Day One',
-    body: 'Vahue runs the busiest workflows for operations and finance leaders whose volume has outgrown the team, without new hires.',
+    title: 'The Best In The Business',
+    body: "The Vahue Context Engine is trusted by the world's leading operations teams to accelerate the development of their agents.", // PLACEHOLDER
     image: { src: '/data-engine/the-business.webp', alt: '', width: 2048, height: 2048 },
     cards: [
-      { title: 'Accuracy', body: 'A person on your team checks every output until accuracy holds on real volume.', iconClass: 'text-archive-purple' },
-      { title: 'Clear Baseline', body: 'Record volume, minutes per item, error rate and cost first. Then, track hours returned against that baseline every month.', iconClass: 'text-foundry-tan' },
-      { title: 'Capacity', body: 'Agents keep operations in step with growth, from one pilot workflow to high-volume daily production work. Add volume, or hold steady, without hiring.', iconClass: 'text-atlas-blue' },
-      { title: 'Control', body: 'Review queues, approvals, role-based access and a full audit log keep every single agent action inside the limits you set.', iconClass: 'text-evergreen' },
+      { title: 'Quality', body: 'Vahue can provide the core tenet of any dataset with high-quality context from domain experts.', iconClass: 'text-archive-purple' },
+      { title: 'Cost Effective', body: 'Easily find, categorize, and fix agent failures with Vahue’s Context Engine. Then, optimize run costs with high-value curated data.', iconClass: 'text-foundry-tan' },
+      { title: 'Scalability', body: 'Vahue’s context engine can support any AI project from lower-volume experiments to high-volume production projects. Scale up, or down, as needed.', iconClass: 'text-atlas-blue' },
+      { title: 'Diversity', body: 'Vahue delivers the greatest variety and diversity of data to help deliver the greatest value to your agent performance.', iconClass: 'text-evergreen' },
     ],
   },
   caseStudy: {
     overtitle: 'Customer Case Study',
-    description: 'A mid-market insurer and Vahue moved first notice of loss intake to agents, posting clean claims records as they arrive.', // PLACEHOLDER
+    description: 'An insurer and Vahue partnered to transform claims workflows with generative AI experiences built for a global audience.', // PLACEHOLDER
     cta: { text: 'Read customer story', url: '/enterprise/insurance' },
     tileClass: 'bg-evergreen',
     logo: { key: 'case-study', alt: 'Logo', width: 240, height: 75, className: 'text-white' }, // PLACEHOLDER
   },
   buildAi: {
-    overtitle: 'Run Agents',
-    title: 'Checked By People',
-    subtitle: 'Answers from your own data, in plain English.',
-    showcaseTitle: 'Knowledge Agents',
-    showcaseSubtitle: 'Answers from your documents, wikis and databases',
-    body: 'Vahue Knowledge Agents let staff ask questions of documents, wikis and databases and get sourced answers in Slack or Teams, with existing permissions, logged queries, review, and full audit logs.',
-    primaryCta: { text: 'Book an Audit', url: '/demo' },
-    secondaryCta: { text: 'Knowledge Agents', url: '/genai-portfolio' },
+    overtitle: 'Build AI',
+    title: 'Powering Reliable AI',
+    subtitle: 'Next Generation AI powered by world-class data.',
+    showcaseTitle: 'Generative AI',
+    showcaseSubtitle: 'Powering the next generation of Generative AI',
+    body: 'Vahue Context Engine powers many of the most reliable agents and generative workflows in the world through world-class context, data preparation, agent evaluation, safety, and alignment.',
+    primaryCta: { text: 'Book a Demo', url: '/demo' },
+    secondaryCta: { text: 'Build AI', url: '/generative-ai-data-engine' },
     chat: {
-      windowTitle: 'Knowledge Agent Chat',
-      question: 'Which supplier invoices failed the NetSuite match last night?',
-      rankingTitle: 'Reviewer Answer Ranking',
+      windowTitle: 'AI Text Generator',
+      question: 'Why is human feedback necessary for accurate llm responses?',
+      rankingTitle: 'Human Feedback Ranking',
       ranking: [
-        'Three invoices failed because the finance team was on holiday',
-        'Three invoices failed because PO numbers do not match NetSuite',
-        'Nothing failed. Every invoice posted cleanly to the ledger',
+        'LLMs are trained by garden gnomes, who are known to lie',
+        'LLMs are not always truthful or aligned with human preferences',
+        'Humans enjoy giving opinions. It makes them feel important',
       ],
-      answer: 'Three invoices failed because PO numbers do not match NetSuite.',
+      answer: 'LLMs are not always truthful or aligned with human preferences.',
       userAvatar: '/data-engine/avatar.webp',
       agentAvatar: '/data-engine/llm-1.webp',
     },
   },
   whatIs: {
-    overtitle: 'WHAT VAHUE RUNS FOR YOU',
-    title: 'One Team For Busy Workflows',
-    subtitle: 'Vahue takes a high-volume workflow off your team and runs it with AI agents inside the systems you already use. Keep throughput well ahead of growth, without additional hires.',
+    overtitle: 'WHAT IS THE CONTEXT ENGINE',
+    title: 'The One-Stop-Shop For Building AI',
+    subtitle: 'Context engine is the process of improving AI agents with high quality, diverse and large datasets powered by experts. Unlock agent performance with the Vahue Context Engine.',
     image: { src: '/data-engine/diagram-workflow.webp', alt: 'Records move from your systems through Watch, Match and Write, with exceptions going to review, and a daily report at the end', width: 2432, height: 1274 },
-    label: 'Back-office Sync Agent Steps',
+    label: 'Generative AI Context Engine',
     items: [
-      { title: 'Watch', body: 'Agents continuously monitor changed records across every connected system.' },
-      { title: 'Match', body: 'Match records and check your rules.' },
-      { title: 'Write', body: 'Write clean matches; queue exceptions for review.' },
-      { title: 'Report', body: 'A daily summary shows what moved, what matched, and what still needs a person.' },
+      { title: 'Generation', body: 'After initial setup, create complex prompt-response pairs from scratch.' },
+      { title: 'Human Review', body: 'Apply human preferences to agent outputs.' },
+      { title: 'Red Teaming', body: 'Use prompt injection techniques to find vulnerabilities.' },
+      { title: 'Evaluation', body: 'Evaluate your agent against a set of complex and diverse prompts to find weak points.' },
     ],
   },
   types: {
-    overtitle: 'WORKFLOW INPUTS',
-    title: 'Supported Workflow Types',
+    overtitle: 'DATA INPUTS',
+    title: 'Supported Automation Types',
     cards: [
-      { title: 'Vahue Documents', icon: 'text', items: ['Invoice Intake', 'KYC Document Intake', 'Treaty Review', 'Claims & Contracts'] },
-      { title: 'Vahue Scans', icon: 'image', items: ['Packing Slips', 'Drawings', 'Lab Reports'] },
-      { title: 'Vahue Voice', icon: 'video', items: ['Inbound Phone Calls', 'Routine Request Resolution'] },
-      { title: 'Vahue Back-office Sync', icon: 'cube', items: ['Reconciliation'] },
+      { title: 'Vahue Text', icon: 'text', items: ['Document Processing', 'Natural Language Processing', 'Transcription', 'Content & Language'] },
+      { title: 'Vahue Image', icon: 'image', items: ['Scanned Documents', 'Photos & Drawings', 'Transcription'] },
+      { title: 'Vahue Voice', icon: 'video', items: ['Inbound Phone Calls', 'Natural Language Processing'] },
+      { title: 'Vahue Cross-system Sync', icon: 'cube', items: ['CRM & ERP'] },
     ],
   },
   resources: {
     overtitle: 'RESOURCES',
-    title: 'Learn More About Workflow Agents',
+    title: 'Learn More About Context Engine',
     items: [
-      { id: 'stalled-pilots', overtitle: 'Blog', title: 'Why Do Pilots Keep Stalling?', image: { src: '/data-engine/01.png', alt: 'Stalled pilots' }, description: 'Most agencies never publish a baseline, and almost nobody runs the agents after launch. Understand why pilots and RPA projects stall and what it takes to keep them running at real volume.', link: '/blog' },
-      { id: 'guide-baselines', overtitle: 'Guide', title: 'Guide to Workflow Baselines', image: { src: '/data-engine/02.png', alt: 'Baselines' }, description: 'The value of an agent depends on what the work cost before it. Read our guide to recording volume, minutes per item, error rate and cost.', link: '/guides' },
-      { id: 'guide-document-intake', overtitle: 'Guide', title: 'Guide: Document Intake', image: { src: '/data-engine/03.png' }, description: 'Document intake turns invoices, claims and supplier sheets into clean records in your systems. Read our guide to learn how it works and where people stay in review.', link: '/physical-ai' },
-      { id: 'guide-scoring', overtitle: 'Guide', title: 'Guide: Scoring & Routing Decisions', image: { src: '/data-engine/04.png' }, description: 'Scoring models take past decisions as inputs and give each new item a score and an explanation. Read our guide to learn more about routing borderline cases to reviewers.', link: '/automotive' },
+      { id: 'chatgpt-rlhf', overtitle: 'Blog', title: 'Why Is ChatGPT So Good?', image: { src: '/data-engine/01.png', alt: 'Human feedback' }, description: 'OpenAI applied reinforcement learning with human feedback (RLHF) to enhance ChatGPT. Understand the role RLHF plays in enhancing large language models and how to implement it.', link: '/blog' },
+      { id: 'guide-data-preparation', overtitle: 'Guide', title: 'Guide to Data Preparation', image: { src: '/data-engine/02.png', alt: 'Blur' }, description: 'The success of AI agents is dependent on data and context quality. Read our authoritative guide to ensure you get the highest quality context.', link: '/guides' },
+      { id: 'guide-computer-vision', overtitle: 'Guide', title: 'Guide: Computer Vision', image: { src: '/data-engine/03.png' }, description: 'Computer Vision focuses on developing systems that can process, analyze, and make sense of visual data. Read our guide to learn about how it works and top use cases by industry.', link: '/guides' },
+      { id: 'guide-building-agents', overtitle: 'Guide', title: 'Guide: Building & Testing Agents', image: { src: '/data-engine/04.png' }, description: 'AI agents take data as inputs and deliver a classification, a prediction, or some other indicator as an output. Read our guide to learn more about how to evaluate agents.', link: '/guides' },
     ],
   },
   testimonials: {
@@ -106,14 +106,14 @@ export const content: DataEngineContent = {
       {
         clientName: 'Full Name', // PLACEHOLDER
         title: 'Role, Company', // PLACEHOLDER
-        testimonial: 'Vahue has made it easier for us to keep up with invoice volume without new hires. The review queue is simple to navigate, and the daily summary and exception list save us time and help enforce our approval rules so that we can close the month on schedule.', // PLACEHOLDER
+        testimonial: 'Vahue has made it easier for us to clear our backlog at a good price point. The UI is simple to navigate, and the built in evaluation pipeline and batch options saves us time and helps enforce best practices so that we can get high-quality agent output.', // PLACEHOLDER
       },
     ],
   },
   prefooter: {
-    headline: 'Your busiest work, run by agents',
-    cta: { text: 'Book an Audit', url: '/demo' },
-    secondaryCta: { text: 'Back-office Sync', url: '/generative-ai-data-engine' },
+    headline: 'The future of your industry starts here',
+    cta: { text: 'Book a Demo', url: '/demo' },
+    secondaryCta: { text: 'Build AI', url: '/generative-ai-data-engine' },
     image: { path: '/data-engine/prefooter.webp' },
     backdrop: { tailwindClass: 'gray-50', contrastColor: '#010101' },
   },

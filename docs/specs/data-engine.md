@@ -107,9 +107,11 @@ Playwright and CDP also ran: `DOMDebugger.getEventListeners` on every `main` nod
 - Headless UI and react-type-animation versions were chosen by behaviour, not read from Scale.
 
 ## Copy mapping
-Hub page, so it sells all workflows and the Audit, Pilot and Operate offer. Best in business became the four promises from the research gap (accuracy check, baseline, capacity, control). The chat showcase became Knowledge Agents, with the ranking step shown as a reviewer choosing the right answer. The diagram and four steps became Back-office Sync (Watch, Match, Write, Report), the top job. Annotation types became the workflow types. Resources became stalled pilots, baselines, document intake and scoring. CTA "Build AI" became the menu label of its destination: Knowledge Agents, Back-office Sync. Generic labels are unchanged: "Customer Case Study", "Read customer story", "RESOURCES", "Don't just take our word for it".
+Keep rule (Mike, 2026-11-01): each string starts from Scale's text, stays verbatim if true for Vahue with the brand swapped, otherwise changes only the words the swap dictionary and phrase bank require, same template and word count. Counts come from a path-by-path compare with `content.scale.ts`, alt text, code samples and URLs excluded. Verbatim means equal after Scale to Vahue. Light means up to 3 words or about a third changed.
 
-Word counts are within 15% of Scale's for 73 of 82 strings. The exceptions, all one word off unless noted: "Measured From Day One" (the research's own line), the Write title, Treaty Review, Lab Reports, Vahue Back-office Sync, Learn More About Workflow Agents, the hidden blog description (32 vs 26), and the page meta title and description. The meta strings are not visible. The visible ones stay short because longer versions wrapped onto extra lines and changed section heights.
+Menu label: Vahue Context Engine. Data Engine became Context Engine, the dictionary's swap, in every line. Frontier AI became Reliable AI. CTAs are Scale's: Book a Demo, Build AI. The chat showcase, including the garden gnomes line, is unchanged. 82 strings: 48 verbatim, 34 light, 0 rewritten. Section heights equal the previous fill at 1440 and 390. Case study follows the Insurer proof pattern.
+
+**Image no longer fits:** `diagram-workflow.webp` shows Watch, Match, Write and Review Queue, while the label and steps now read Generation, Human Review, Red Teaming, Evaluation.
 
 ## Placeholders
-`// PLACEHOLDER` in `content.ts`: 7 logo tiles, case study text and logo tile, testimonial name, role and quote. 12 lines. No numbers on this page.
+`// PLACEHOLDER` in `content.ts`, 13 lines: trust line, 7 logo tiles, case study text and logo tile, testimonial name, role and quote.
