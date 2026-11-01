@@ -7,7 +7,7 @@ import s from '@/components/templates/labs-shared/labs.module.css'
 import type { LabsBlogContent, LabsBlogPost } from './content'
 
 /*
- * 1:1 clone of https://labs.scale.com/blog: labs' `BlogList` (chunk 3d2wpwokq5chh.js, module 835536) with
+ * Labs blog layout: `BlogList` (chunk 3d2wpwokq5chh.js, module 835536) with
  * `useCategoryFilter` + `CategoryFilterPills` (modules 622866 / 353007). One section, no ScrollReveal, no Lenis.
  *   state: sortField "date" | "title" | "category" (default "date"), sortDir ("desc"), expanded (null), activeCategory ("All")
  *   pill click   -> setActiveCategory(c) (expanded is NOT reset)
@@ -196,7 +196,7 @@ export default function LabsBlog({ content }: { content: LabsBlogContent }) {
                   const cats = p.categories.join(', ')
                   const onClick = () => {
                     if (intro) setOpen(isOpen ? null : key)
-                    else if (slug) window.location.assign(labsHref(`/blog/${slug}`))
+                    else if (slug) window.location.assign(p.href ?? labsHref(`/blog/${slug}`))
                   }
                   const ptr = intro || slug ? 'cursor-pointer' : ''
                   return (
@@ -241,7 +241,7 @@ export default function LabsBlog({ content }: { content: LabsBlogContent }) {
                           <div className="min-w-0">
                             <p className="text-[12px] text-[#525252] leading-[1.625] mb-3 mt-0">{intro}</p>
                             <a
-                              href={slug ? labsHref(`/blog/${slug}`) : '#'}
+                              href={p.href ?? (slug ? labsHref(`/blog/${slug}`) : '#')}
                               className="inline-flex items-center gap-1.5 text-[12px] leading-[1.5] text-[color:var(--color-ink)] [@media(hover:hover){&:hover}]:text-[#525252] transition-colors uppercase tracking-[0.025em] no-underline"
                             >
                               Read post <ArrowRight className="w-3 h-3" />
