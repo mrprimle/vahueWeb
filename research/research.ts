@@ -1,12 +1,9 @@
 // Copy for the automation-first site, from the AI automation agency research
-// (87 published cases and Clutch reviews, Oct 2026). Each Vahue page names the
-// scale.com page whose layout it reuses.
-// Rule: no third-party metrics here. Numbers on the site come from Vahue's own cases only.
+// (87 published cases and Clutch reviews, Oct 2026).
 
 export type Workflow = {
   slug: string
   label: string
-  /** template slug whose layout this page reuses */
   template: string
   headline: string
   summary: string
@@ -191,19 +188,3 @@ export const INDUSTRY_WORKFLOWS: Record<string, { template: string; workflows: s
     workflows: ['Supplier onboarding', 'Quotes and configurators', 'Invoices from packing slips', 'Drawings to bills of materials'],
   },
 }
-
-// Vahue page -> template it reuses.
-export const PAGE_TEMPLATES: { path: string; label: string; template: string }[] = [
-  { path: '/', label: 'Home', template: 'home' },
-  { path: '/automations', label: 'Automation hub', template: 'data-engine' },
-  ...WORKFLOWS.map((w) => ({ path: `/automations/${w.slug}`, label: w.label, template: w.template })),
-  { path: '/operations', label: 'How we operate', template: 'enterprise' },
-  { path: '/strategy', label: 'Workflow audit', template: 'evaluation-enterprise' },
-  { path: '/security', label: 'Security', template: 'security' },
-  { path: '/case-studies', label: 'Case studies', template: 'guides' },
-  { path: '/blog', label: 'Blog', template: 'blog' },
-  { path: '/guides', label: 'Guides', template: 'guides' },
-  { path: '/events', label: 'Events', template: 'events' },
-  { path: '/careers', label: 'Careers', template: 'careers' },
-  { path: '/contact', label: 'Contact', template: 'demo' },
-]
