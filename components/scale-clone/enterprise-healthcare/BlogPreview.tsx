@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { createAnimatedText, prefersReducedMotion } from './animatedText'
@@ -26,6 +27,12 @@ gsap.registerPlugin(ScrollTrigger)
  *     (sampled 1.0768 / 1.0502 / 1.0237 / 1 at scroll 2900 / 3100 / 3300 / 3500)
  *   heading: AnimatedText, trigger "top 80%", delay 0.05
  *   play button: hover scale 1.1 + bg black/70, 300ms; click opens a video dialog (Radix on scale.com).
+ *   dialog (Radix Dialog, modal): no enter/exit animation; focus moves to "Close video", Tab stays inside, Esc /
+ *     overlay click close and focus returns to the tile; body gets overflow hidden + pointer-events none while open
+ *     (the page still scrolls under Lenis on scale.com, measured 320px for a 400px wheel on both).
+ *   image hover: Scale's images carry group-hover/caption:scale-105 (1000ms ease-out), but the group is the image
+ *     wrapper, which sits under the tile's gradient/chip overlays (not pointer-events-none), so it never fires
+ *     (measured scale 1 throughout a 1.2s hover). Not reproduced on purpose.
  */
 
 
@@ -93,6 +100,10 @@ function BlogTile({ tile, index, desktop, visible, category }: { tile: Tile; ind
   const img = useRef<HTMLDivElement>(null)
   const title = useRef<HTMLHeadingElement>(null)
   const [open, setOpen] = useState(false)
+  const trigger = useRef<HTMLButtonElement>(null)
+  const dialog = useRef<HTMLDivElement>(null)
+  const closeBtn = useRef<HTMLButtonElement>(null)
+  const dialogId = useId()
   const variant = desktop ? tile.variant : 'caption'
 
   // entrance initial state
@@ -143,11 +154,31 @@ function BlogTile({ tile, index, desktop, visible, category }: { tile: Tile; ind
     }
   }, [visible, index, variant])
 
+  // Radix Dialog behaviour (see header): focus, Tab trap, Esc, body lock, focus return.
   useEffect(() => {
     if (!open) return
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
+    const body = document.body
+    const prev = { overflow: body.style.overflow, pointerEvents: body.style.pointerEvents }
+    body.style.overflow = 'hidden'
+    body.style.pointerEvents = 'none'
+    closeBtn.current?.focus()
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') return setOpen(false)
+      if (e.key !== 'Tab' || !dialog.current) return
+      const f = [...dialog.current.querySelectorAll<HTMLElement>('button, [href], iframe, video, [tabindex]:not([tabindex="-1"])')]
+      if (!f.length) return
+      const i = f.indexOf(document.activeElement as HTMLElement)
+      e.preventDefault()
+      f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus()
+    }
     addEventListener('keydown', onKey)
-    return () => removeEventListener('keydown', onKey)
+    const btn = trigger.current
+    return () => {
+      removeEventListener('keydown', onKey)
+      body.style.overflow = prev.overflow
+      body.style.pointerEvents = prev.pointerEvents
+      btn?.focus()
+    }
   }, [open])
 
   const chipPos = variant === 'caption' ? 'left-2 top-1.5 lg:left-3 lg:top-2.5' : 'left-5 top-5'
@@ -198,7 +229,15 @@ function BlogTile({ tile, index, desktop, visible, category }: { tile: Tile; ind
     <div ref={card} className="h-full min-h-0 w-full" style={{ transformOrigin: 'center center' }}>
       {tile.video ? (
         <>
-          <button type="button" aria-label={`Play video: ${tile.title}`} className={`group/video relative cursor-pointer ${cls}`} onClick={() => setOpen(true)}>
+          <button
+            ref={trigger}
+            type="button"
+            aria-label={`Play video: ${tile.title}`}
+            aria-haspopup="dialog"
+            aria-expanded={open}
+            aria-controls={dialogId}
+            data-state={open ? 'open' : 'closed'}
+            className={`group/video relative cursor-pointer ${cls}`} onClick={() => setOpen(true)}>
             {body}
             <span aria-hidden="true" className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
               <span className="flex size-14 items-center justify-center rounded-full bg-black/55 text-white shadow-lg backdrop-blur-sm transition duration-300 group-hover/video:scale-110 group-hover/video:bg-black/70">
@@ -206,17 +245,20 @@ function BlogTile({ tile, index, desktop, visible, category }: { tile: Tile; ind
               </span>
             </span>
           </button>
-          {open ? (
-            <div role="dialog" aria-modal="true" aria-label={tile.title}>
-              <div className="fixed inset-0 z-[998] bg-black/70 backdrop-blur-sm" onClick={() => setOpen(false)} />
-              <div className="fixed left-1/2 top-1/2 z-[999] w-[95vw] max-w-7xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border border-white/10 bg-neutral-950 shadow-2xl md:w-[80vw] lg:w-[70vw]">
+          {/* Radix renders the dialog in a Portal on <body>: inside the tile it would be positioned against the
+              tile's GSAP transform (a containing block for position: fixed). */}
+          {open ? createPortal(
+            <div ref={dialog} id={dialogId} role="dialog" aria-modal="true" aria-label={tile.title} className="font-display">
+              <div className="pointer-events-auto fixed inset-0 z-[998] bg-black/70 backdrop-blur-sm" onClick={() => setOpen(false)} />
+              <div className="pointer-events-auto fixed left-1/2 top-1/2 z-[999] w-[95vw] max-w-7xl -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border border-white/10 bg-neutral-950 shadow-2xl md:w-[80vw] lg:w-[70vw]">
                 <div className="flex items-center justify-between gap-4 px-4 py-3 text-white">
                   <p className="text-left font-display text-base font-normal md:text-lg">{tile.title}</p>
                   <button
+                    ref={closeBtn}
                     type="button"
                     aria-label="Close video"
                     onClick={() => setOpen(false)}
-                    className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25"
+                    className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   >
                     <svg viewBox="0 0 24 24" className="size-5" fill="currentColor" aria-hidden="true">
                       <path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
@@ -226,7 +268,8 @@ function BlogTile({ tile, index, desktop, visible, category }: { tile: Tile; ind
                 {/* video embed not shipped (Scale streams an MP4 here) */}
                 <div className="aspect-video w-full overflow-hidden bg-black" />
               </div>
-            </div>
+            </div>,
+            document.body,
           ) : null}
         </>
       ) : (

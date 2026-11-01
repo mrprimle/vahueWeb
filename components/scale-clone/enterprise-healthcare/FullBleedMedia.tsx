@@ -19,7 +19,7 @@ gsap.registerPlugin(ScrollTrigger)
  * Scrubbed, trigger = wrapper, "top bottom" -> "center center":
  *   clip container  clip-path inset(0.5 * startPercentage % -> 0% round 1.5rem)
  *   media           scale 1.25 -> 1 (trigger = section; sampled 1.0139 at scroll 0 on the hero)
- * One-shot, "top center" (retroactive): headline AnimatedText delay 0, body delay 0.2,
+ * One-shot, "top center" -> "bottom 20%" (retroactiveOnEnter): headline AnimatedText delay 0, body delay 0.2,
  *   CTA filledWhiteArrow 0.85s delay 0.5.
  * .media-overlay is linear-gradient(#0000, #000): its unlayered `background` shorthand beats the layered
  *   bg-black/45 utility, so "flat" and "gradient" overlayVariant render the same.
@@ -63,6 +63,7 @@ export default function FullBleedMedia({ image, imageAlt = '', media: mediaNode,
     if (!root) return
     const reduced = prefersReducedMotion()
     const texts: AnimatedText[] = []
+    let offRetro = () => {}
 
     const ctx = gsap.context(() => {
       if (!reduced && startPercentage > 0) {
@@ -129,18 +130,19 @@ export default function FullBleedMedia({ image, imageAlt = '', media: mediaNode,
           if (arrow) tl.to(arrow, { x: 0, duration: d, ease: 'power3.inOut' }, 0)
         }
       }
-      ScrollTrigger.create({
-        trigger: root,
-        start: 'top center',
-        once: true,
-        onEnter: play,
-        onRefresh: (self) => {
-          if (self.progress > 0) play()
-        },
-      })
+      // useScrollTrigger (chunk 37xz28pjbnlx4, module 210104): start `top center`, default end `bottom 20%`,
+      // retroactiveOnEnter: on every refresh, fire onEnter once progress > 0 or the scroll is at/after start - 1.
+      const st = ScrollTrigger.create({ trigger: root, start: 'top center', end: 'bottom 20%', onEnter: play })
+      const retro = () => {
+        if (st.progress > 0 || st.scroll() >= st.start - 1) play()
+      }
+      ScrollTrigger.addEventListener('refresh', retro)
+      retro()
+      offRetro = () => ScrollTrigger.removeEventListener('refresh', retro)
     }, root)
 
     return () => {
+      offRetro()
       texts.forEach((t) => t.revert())
       ctx.revert()
     }

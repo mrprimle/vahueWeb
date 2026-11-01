@@ -103,7 +103,7 @@ There are no pointermove or drag handlers on this page. FlatCta hover runs throu
 | Blog tile image | tile | top bottom → center center | scale 1.08 → 1 | scrubbed | 1.0571 vs 1.057 at scroll 3048 (1440); 1.0414 vs 1.0416 (390) |
 | Play button | hover | — | scale 1.1, bg black/55 → /70 | 300ms | click opens the dialog (Esc / overlay closes) |
 | TextImageSplit headline / subtitle | IntersectionObserver −15% | once | AnimatedText | delays 0.5 / 1 | |
-| FlatCta hover | pointer | — | fill slides in, chevron track −50% → 0 | 600ms cubic-bezier(0,0,.2,1) | |
+| FlatCta hover | pointer | — | fill slides in, chevron track −50% → 0 | 600ms cubic-bezier(0,0,.2,1) | Scale's state machine (see Interaction inventory): strip snaps back on leave, 680ms reset, re-entry snap |
 
 **Pre-footer samples (1440)**, identical on Scale and the clone:
 
@@ -119,6 +119,99 @@ At 390 they also match exactly: 1.1934 / `inset(3.86707%)` at 4738, and 1.1178 /
 `useRefreshOnPageGrow` (`lib/useRefreshOnPageGrow.ts`) is called from FullBleedMedia. Any growth in document height (lazy images, tab mockups, fonts) re-measures every ScrollTrigger after a 150ms debounce, so the pre-footer trigger isn't late.
 
 **Reduced motion:** text starts visible, there is no clip or scale scrub, the testimonial backdrop is full width, the mockups show their final state, and the marquee and CSS transitions are off. Checked: 200, no hidden text, pre-footer `inset(0%)`, no console errors.
+
+
+## Interaction inventory (audit 2026-11-01)
+
+Method: REA on a fresh CDP 9230 tab (closed afterwards). `analyze_web_bundle` `ev_3d27a97f1474…` parsed 47/47 scripts with 0 failures. Every page chunk is byte-identical to the build capture and to the genai-portfolio / enterprise-insurance audits (sha256): slices `0sni47mcvnqwg.js` `0e137e33…`, ClientTestimonials/BlogPreview `3x8z3_0hhtdcb.js` `89a4cc62…`, FlatCta/AnimatedText `1h0nvyhf5gbrf.js` `10b2627a…`, FullBleed/ClipScroll/useScrollTrigger/LogoMarquee `37xz28pjbnlx4.js` `b234eef5…`, HeadlineWithCta `2k1qlgdxlbmz1.js` `bb51ad26…`. So the shared FlatCta, FullBleed intro and testimonial findings carry over, and their fixes were ported.
+
+`inspect_web_event_listeners` ran on every section root and on its interactive children. The ids are listed per row below. Then Playwright ran identical inputs on scale.com, the clone and `/industries/healthcare-life-sciences`, using the script `scratchpad/hc-audit/qa.js` at 1440×900 (the tab bar and the testimonial click also at 390×844). The inputs were:
+- tabs: 9s idle, then hover, click and keyboard (Tab / Enter / ←); each mockup's state was sampled every 250ms for 10s
+- the Book a Demo hover
+- the testimonial: activation sampled every 100ms, a tab click (scrollY every 100ms), and focus
+- the stack: illustration float sampled every 250ms for 7s, cards on leave-back and re-enter, and a mouse grid
+- the blog: tile hover, play hover, and the dialog (focus, Tab, Esc, overlay click, wheel)
+- marquee speed over 2s and a hero mouse grid
+- the pre-footer CTA: enter, leave, re-enter and focus
+
+QA images: `qa/enterprise-healthcare/interactions/<name>-{scale,clone,vahue}.jpg`.
+
+Page-wide listeners:
+- `html` (`ev_4a36b68a6eb33…`): the ScrollTrigger `scroll` (passive) plus OneTrust `keydown`/`click`.
+- React handles every click at the root (`42ixmvih7808g.js`), and HubSpot adds a `mousedown` to each button and link (`4823527.js`).
+- The section roots `.TabbedPanel` (`ev_83221166c0ce…`) and `.SgpStack` (`ev_cb799ac2997…`) have **no listeners**.
+- The mouse grids (hero, stack) changed no transform on any of the three pages.
+
+### 1 · pageHero (FullBleedMediaSection + LogoMarquee)
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| media / clip | scroll | ScrollTrigger via `html` | 540431 | scale 1.25 → 1 `top bottom` → `center center` (build QA) | yes | — |
+| headline / body | mount / `top center` | useScrollTrigger | 540431 + 210104 | **Fixed**: end `bottom 20%` + retroactiveOnEnter on every refresh (was `once` + `progress > 0`), as in the insurance audit | yes | — |
+| LogoMarquee | mount | — | 880750 `startMarquee()` on mount (no hideUntilAnimate) | `animate-logo-marquee` 40s linear, 0 → −50%: 17.6 px/s on Scale and on the clone (Vahue 21.2 px/s: its text row is wider, with the same 40s) | yes | — |
+
+### 2 · TabbedPanel
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| tab buttons | click | React `click` + HubSpot `mousedown` (`ev_6efae27900374…`) | 591798 `onClick: n && f(r)` | `useState` swap and no auto-advance (same title after 9s idle on all three). Background `transition-colors` 150ms cubic-bezier(.4,0,.2,1): Scale .82/.17/.03 → 0, clone .55/.17/.01 → 0 (same 150ms, different first sample) | yes | `tabs-tab1-*`, `tabs-tab2-*` |
+| tab buttons | hover | — | no hover classes | no change on hover; cursor pointer | yes | — |
+| tab buttons | keyboard | native `<button>` | — | Tab moves focus, Enter switches, ← does nothing (no roving tabindex) on all three. The focus ring is the UA `auto 1px`. On Scale, Tailwind 4's `transition-colors` also animates `outline-color`, so the ring fades in from currentColor over 150ms; the clone (Tailwind 3) shows it at once | yes (ring fade: no) | — |
+| "Book a Demo" link | hover | HubSpot `mousedown` only (`ev_f02e3d8b237ee…`) | 591798 | `hover:opacity-70 transition-opacity` 150ms: .99, .79, .71, .70 on Scale vs .99, .79, .71, .70 on the clone | yes | — |
+| Order Guidance mockup | IntersectionObserver .3 | — | 453596 | step +1 every 450ms to 10, hold 3200ms, loop. The low-opacity field count steps 5 → 0 after the 5 chip ticks; the cycle restarts after 29 samples on Scale and 28 on the clone (inside sampling jitter) | yes | — |
+| Scheduling Engine mockup | IO .3 | — | 218184 | every 4s: fade out 300ms, swap after 220ms. Text changes at sample 14/15 on Scale vs 15 on the clone, then 30 vs 31 | yes | `tabs-tab1-*` |
+| Custom Agents mockup | IO .3, once | — | 69472 | windows 700ms ease-out, second `delay-150` | yes | `tabs-tab2-*` |
+| tab bar (390) | overflow scroll | — | `overflow-x-auto no-scrollbar` | scrollWidth 617 vs 613 at clientWidth 340 | yes | — |
+
+### 3 · ClientTestimonials (metrics, one testimonial)
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| logo tab | activation `top 80%` | — | 685963 (active −1 → 0) | **Fixed**: before activation the tab is `aria-selected=false`, `tabIndex −1` and coloured with the contrast colour #010101. It becomes true / 0 / #839CB2 through `transition-all` (150ms; `transition-duration-800` is not a class). The clone had them static. Fill y: Scale .997, .375, .08, 0; clone .997, .443, .078, 0 | yes | — |
+| role chip | activation | — | `animateToText` | 26 → 20 (0.5s power3.out, +.05) → text + 26: 26, 23, 21, 20 … on both | yes | — |
+| logo tab | click | React `click` + HubSpot (`ev_660b12807bf4…`) | 685963 `el` → `er()` | **Fixed** (the clone had no handler): `lenis.scrollTo(section, {offset: −24})`; the section's `scroll-mt-28` adds 112px. From 500px above the section: Scale 1530, 1694, 1775, 1813 … 1835; clone 1517, 1699, 1775, 1810 … 1835 (= top 1971 − 136). At 390 the section is already at its target, so the scroll stays put on both | yes | `testimonial-after-click-*` |
+| logo tab | focus-visible | — | `focus-visible:outline-2 outline-offset-2 outline-white/80` | **Fixed**: after 400ms the ring is `solid 2px rgba(255,255,255,.8)`, offset 2, on both, and it animates in from `solid 3px currentColor` through `transition-all` | yes | — |
+| arrows | — | — | rendered only when there is more than one testimonial | none on this page | n/a | — |
+
+### 4 · SgpStack
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| root | scroll | none (`ev_cb799ac2997…`) | 290276 | backdrop scale .98 → 1 scrub (build QA); cards out on leave-back, in on re-enter: min opacity 1 / 0 / 1 on all three | yes | — |
+| illustration layers | ScrollTrigger play/pause | — | 892353 | y 0 → −6 yoyo, sine.inOut, 3.25 / 4.25 / 3.5s: three moving nodes on each page with the same curves (e.g. layer 3: Scale −2.64 … −5.99 … −0.01, clone −3.71 … −5.99 … −0.02, phase offset only) | yes | `stack-float-*` |
+
+### 5 · BlogPreview
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| play tiles | hover | React `click` + HubSpot (`ev_c0f4fe64762a…`) | 808358 | `group-hover/video:scale-110 bg-black/70` 300ms. Background α .55, .65, .70 on Scale vs .55, .64, .69 on the clone. Scale (Tailwind 4) animates the `scale` property, the clone animates `transform` | yes | — |
+| tile images | hover | — | `group-hover/caption:scale-105` 1000ms | The group is the image wrapper, which sits under the tile's gradient and chip overlays (not `pointer-events-none`), so the zoom never fires on Scale (scale 1 throughout a 1.2s hover). The clone has no hover zoom either | yes (inert) | — |
+| play tile | click → dialog | React | Radix Dialog | **Fixed**: the dialog now renders in a portal on `<body>`. Before, it sat inside the tile's GSAP transform, which pinned the `fixed` overlay and panel to the tile. Also fixed: focus moves to "Close video" and Tab stays inside the dialog (on Scale Tab goes to the player; the clone has no player, so it cycles on Close); Esc and overlay click close; focus returns to the tile; body gets `overflow: hidden` and `pointer-events: none` while open; the trigger carries `aria-haspopup=dialog`, `aria-expanded` and `aria-controls`; Close has a 2px white focus-visible ring. No enter/exit animation on either. A 400px wheel still scrolls the page 320px under Lenis on both | yes | `blog-dialog-*` |
+| entrance / title / image scrub | scroll | IO + ScrollTrigger | 808358 + 598042 | the build already matched the genai-portfolio fixes (y16, threshold .12, titles, 1.08 → 1) | yes | — |
+
+### 6 · TextImageSplit
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| headline / subtitle | IO −15% | — | HeadlineWithCta 925107 | AnimatedText delays .5 / 1 (build QA); no pointer handlers | yes | — |
+
+### 7 · Pre-footer FullBleedMediaSection
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| CTA `a.FlatCta` (filledWhiteArrow) | pointerenter / leave | React `click` + HubSpot (`ev_459c375e198ce…`) | 892855 | **Fixed** (the security port of Scale's state machine, as in genai-portfolio): wash −1 → 0, strip −.5 → 0 (600ms); on leave the wash exits to +1 and resets to −1 at 680ms while the strip snaps back. Leave: 0, .388, .652, .839, .934, .985, 1, −1 on Scale vs 0, .388, .685, .839, .934, .985, 1, −1 on the clone. Re-enter: −1, −.736, −.422, −.204 on Scale vs −1, −.736, −.422, −.205 on the clone. Before the fix the clone's strip slid out on leave and re-entry started from +.58 | yes | `cta-prefooter-hover-*` |
+| same | focus | — | CMSLink internal | **Fixed**: `solid 1px #86bff2` on both (was the site's 2px transparent ring) | yes | — |
+| intro | `top center` | useScrollTrigger | 961870 | end `bottom 20%` + retroactive (see section 1) | yes | — |
+
+### Vahue `/industries/healthcare-life-sciences`
+It renders the clone's own `HealthcarePage`, so every fix above applies there with the same params. Same script:
+- tabs: no auto-advance; the 150ms tab fill and the CTA opacity .79 / .71 / .70 match
+- the Vahue mockups run Scale's loops: the 450ms step loop with a 3200ms hold, and the 4s swap; the intake mockup adds an 850ms start delay after its window entrance
+- testimonial: the tab is unselected / −1 / #010101 until activation; a click scrolls to top − 136 (1797 for top 1933); the focus ring is 2px white/80
+- stack: same float curves, and the cards go out and back in
+- marquee: 40s
+- CTA: identical enter, leave and re-enter, with a 1px #86bff2 focus ring
+- no console errors
+
+The Vahue blog tiles are links (no video), so they have no dialog.
+
+### Not reproduced
+- Scale's video player inside the dialog (Wistia/MP4); the clone shows an empty 16:9 frame.
+- The 150ms outline-colour fade on the tab focus ring and the Tailwind 4 `scale` property on the play button. Both come from Tailwind 4 vs 3, and the end states are the same.
+- HubSpot `mousedown`, OneTrust and OptinMonster listeners: these are third-party and were left out on purpose.
 
 ## Libraries
 - **Scale:** GSAP 3.15.0 (ScrollTrigger, SplitText), Lenis (shared site settings), React / Next.js. No Keen, Embla or Rive on this page; the three.js chunk loads but stays idle.

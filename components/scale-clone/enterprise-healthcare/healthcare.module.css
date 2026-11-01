@@ -145,7 +145,8 @@
   pointer-events: none;
   border-radius: inherit;
   background: currentColor;
-  transition-property: transform;
+  /* Tailwind 4 translate-* animate `translate`, so Scale's `transform` transitionend check never fires */
+  transition-property: translate;
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
 .ctaLabel {
@@ -172,9 +173,6 @@
   width: 200%;
   transform: translateX(-50%);
   transition: transform 0.6s cubic-bezier(0, 0, 0.2, 1);
-}
-.cta:hover .ctaTrack {
-  transform: translateX(0);
 }
 .ctaTrack > span {
   display: flex;
@@ -364,6 +362,10 @@
 .ctaBorderArrow {
   border-radius: 6px;
 }
+/* CMSLink internal: focus:outline-1 focus:outline-scale-skyblue */
+.ctaFocus:focus {
+  outline: 1px solid #86bff2;
+}
 .cta:not(.ctaArrow):not(.ctaBorderArrow):hover .ctaLabel {
   transform: scale(0.9);
 }
@@ -373,8 +375,9 @@
   .ctaTrack {
     transition: none !important;
   }
-  .cta:hover .ctaTrack {
-    transform: translateX(-50%);
+  /* Scale: motion-reduce:!translate-x-0 on the chevron strip */
+  .ctaTrack {
+    transform: translateX(0) !important;
   }
   .marquee {
     animation: none;

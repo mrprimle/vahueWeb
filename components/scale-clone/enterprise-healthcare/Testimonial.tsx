@@ -47,6 +47,9 @@ export default function Testimonial({ color, contrast, quote: QUOTE, metricValue
   const tagText = useRef<HTMLDivElement>(null)
   const logoLayers = useRef<HTMLDivElement[]>([])
   const [mobile, setMobile] = useState(false)
+  // Scale's active index starts at -1: the logo tab is aria-selected false / tabIndex -1 / colour = contrast until
+  // the section reaches "top 80%".
+  const [activeTab, setActiveTab] = useState(false)
 
   useEffect(() => {
     const mq = matchMedia('(max-width: 768px)')
@@ -66,6 +69,7 @@ export default function Testimonial({ color, contrast, quote: QUOTE, metricValue
     const ctx = gsap.context(() => {
       const layers = logoLayers.current.filter(Boolean)
       if (reduced) {
+        setActiveTab(true)
         gsap.set(bg.current, { width: '100%' })
         if (tagText.current) tagText.current.textContent = TITLE
         gsap.set(layers, { x: '0%', y: '0%' })
@@ -100,6 +104,7 @@ export default function Testimonial({ color, contrast, quote: QUOTE, metricValue
       const activate = () => {
         if (active) return
         active = true
+        setActiveTab(true)
         gsap.fromTo(layers, mobile ? { x: '100%' } : { y: '100%' }, mobile ? { x: '0%', duration: 0.3 } : { y: '0%', duration: 0.3 })
         q?.animateIn({ delay: 0.35 })
         n?.animateIn({ delay: 0.5 })
@@ -124,14 +129,25 @@ export default function Testimonial({ color, contrast, quote: QUOTE, metricValue
     }
   }, [mobile, TITLE])
 
+  // Scale's el(): Lenis scrollTo(section, { offset: -24 }) (the section's scroll-mt-28 adds 112px), then
+  // setActive(i) (a no-op with one testimonial).
+  const pick = () => {
+    const lenis = (window as unknown as { __lenis?: { scrollTo: (t: Element, o?: { offset?: number }) => void } }).__lenis
+    if (section.current && lenis) lenis.scrollTo(section.current, { offset: -24 })
+  }
+
+  // transition-all (150ms; Scale's `transition-duration-800` is not a Tailwind class) carries the colour change on
+  // activation and the focus-visible outline (2px white/80, offset 2).
   const logoTile = (i: number, size: string) => (
     <button
       type="button"
       role="tab"
-      aria-selected="true"
+      aria-selected={activeTab}
+      tabIndex={activeTab ? 0 : -1}
       aria-label={`Show testimonial from ${NAME}`}
-      className={`relative box-border flex aspect-square w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg border border-solid ${size}`}
-      style={{ color, borderColor: contrast }}
+      onClick={pick}
+      className={`relative box-border flex aspect-square w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg border border-solid transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 ${size}`}
+      style={{ color: activeTab ? color : contrast, borderColor: contrast }}
     >
       <div
         ref={(el) => {
