@@ -155,7 +155,7 @@ export const SCALE_FLAGS: Record<string, string> = {
 }
 
 const missionLink = (href: string, label: string) => (
-  <a href={href} className="underline transition-colors hover:text-[color:var(--car-fg-2,#212121)]">
+  <a href={href} className="underline transition-colors hover:text-[color:var(--car-fg-2,#212121)] focus-visible:[outline:revert]">
     {label}
   </a>
 )
@@ -166,7 +166,7 @@ export const scaleCareersContent: CareersContent = {
     body: 'Join us as we develop reliable AI systems for the world’s most important decisions.',
     image: `${ASSET}/hero.webp`,
     imageBg: '#193A29',
-    cta: { label: 'View Open Positions', href: '#open-roles', smoothScrollTargetId: 'open-roles' },
+    cta: { label: 'View Open Positions', href: '/scale-clone/careers/#open-roles', smoothScrollTargetId: 'open-roles' },
   },
   news: {
     overtitle: 'In The News',

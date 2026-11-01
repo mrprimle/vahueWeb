@@ -1,15 +1,21 @@
 'use client'
 
-import { forwardRef, useCallback, useEffect, useRef, useState, type MouseEvent, type ReactNode } from 'react'
+import { forwardRef, useCallback, useEffect, useRef, useState, type MouseEvent, type ReactNode, type TransitionEvent } from 'react'
 import s from './careers.module.css'
 
 /*
- * scale.com FlatCta (same component as the security / healthcare clones) wrapped in Scale's CMSLink behaviour
- * (chunk 1h0nvyhf5gbrf.js module 737900):
- *   - smoothScrollTargetId: click -> document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' })
- *   - external hrefs (http…) open in a new tab unless they point at scale.com (rel noopener noreferrer)
+ * scale.com FlatCta (chunk 1h0nvyhf5gbrf.js sha256 10b2627a…, module 892855; same hover state machine as the security /
+ * guides / enterprise audits) wrapped in Scale's CMSLink behaviour (module 737900):
+ *   - internal hrefs: next/link with `focus:outline-1 focus:outline-scale-skyblue` (1px #86bff2 on :focus)
+ *   - external hrefs: plain <a>, target _blank unless the URL contains scale.com, rel noopener noreferrer, no focus
+ *     classes (the UA focus ring shows)
+ *   - smoothScrollTargetId (the hero "View Open Positions" -> #open-roles). Measured on scale.com/careers (2026-11-01):
+ *     the click pushes `#open-roles` onto the history and the page glides there through Lenis (per-frame
+ *     scrollTo({ behavior: 'instant' }), lerp ~0.14), not a native scrollIntoView. The clone does the same through the
+ *     shared Lenis (window.__lenis); without Lenis it falls back to scrollIntoView smooth.
  * Hover slides a currentColor layer (opacity .35 / .30) in from below (from the left for the arrow variants) and out the
- * opposite side on leave. Fill / border: 300ms, label scales to .9. Arrow: 600ms, the chevron track slides one slot.
+ * opposite side on leave. Fill / border: 300ms, label scales to .9. Arrow: 600ms, the chevron track slides one slot in
+ * and snaps back on leave.
  * Variants: "arrow" (filled + 32px icon box), "borderArrow" (= Scale's arrowOutline: 1px border, transparent icon box).
  */
 
@@ -36,6 +42,8 @@ export const Chevron = () => (
   </svg>
 )
 
+type LenisLike = { scrollTo: (t: HTMLElement | number, o?: { immediate?: boolean }) => void }
+
 const FlatCta = forwardRef<HTMLAnchorElement, Props>(function FlatCta(
   { href, variant = 'fill', theme = 'black', staticShape, smoothScrollTargetId, children, className = '' },
   ref,
@@ -43,45 +51,104 @@ const FlatCta = forwardRef<HTMLAnchorElement, Props>(function FlatCta(
   const arrow = variant === 'arrow' || variant === 'borderArrow'
   const outline = variant === 'border' || variant === 'borderArrow'
   const bordered = variant === 'borderArrow'
-  // idle -> in (hovered) -> out (leaving) -> reset (snap back without transition) -> idle
-  const [phase, setPhase] = useState<'idle' | 'in' | 'out' | 'reset'>('idle')
+  // Scale's state machine: hovered -> fill at 0; leaving -> fill exits the far side; resetting -> fill snaps back to the
+  // start with no transition, released after two rAFs. Leave resets on the fill's `transform` transitionend or after
+  // 680ms; Scale's fill moves on the CSS `translate` property (Tailwind v4 translate-*), so that check never matches and
+  // the reset is the 680ms timeout. The fill here animates `translate` too. Re-entering while the fill is still leaving
+  // snaps it back first, so it always enters from the start side. Arrow track: hovered slides -50% -> 0 (600ms); leave
+  // snaps it back (transition none).
+  const [hovered, setHovered] = useState(false)
+  const [leaving, setLeaving] = useState(false)
+  const [resetting, setResetting] = useState(false)
+  const [trackIn, setTrackIn] = useState(false)
+  const [trackSnap, setTrackSnap] = useState(false)
+  const pending = useRef(false)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const duration = arrow ? 600 : 300
 
-  useEffect(() => () => {
-    if (timer.current) clearTimeout(timer.current)
+  const clear = () => {
+    if (timer.current != null) clearTimeout(timer.current)
+    timer.current = null
+  }
+  useEffect(() => clear, [])
+
+  const finishLeave = useCallback(() => {
+    if (!pending.current) return
+    clear()
+    pending.current = false
+    setLeaving(false)
+    setResetting(true)
   }, [])
 
   useEffect(() => {
-    if (phase !== 'reset') return
-    const id = requestAnimationFrame(() => requestAnimationFrame(() => setPhase('idle')))
-    return () => cancelAnimationFrame(id)
-  }, [phase])
+    if (!resetting && !trackSnap) return
+    let b = 0
+    const a = requestAnimationFrame(() => {
+      b = requestAnimationFrame(() => {
+        setResetting(false)
+        setTrackSnap(false)
+      })
+    })
+    return () => {
+      cancelAnimationFrame(a)
+      cancelAnimationFrame(b)
+    }
+  }, [resetting, trackSnap])
 
   const enter = useCallback(() => {
-    if (timer.current) clearTimeout(timer.current)
-    setPhase('in')
-  }, [])
-  const leave = useCallback(() => {
-    setPhase('out')
-    timer.current = setTimeout(() => setPhase('reset'), arrow ? 680 : 380)
+    clear()
+    setResetting(pending.current)
+    pending.current = false
+    setLeaving(false)
+    setHovered(true)
+    if (arrow) {
+      setTrackSnap(false)
+      setTrackIn(true)
+    }
   }, [arrow])
+
+  const leave = useCallback(() => {
+    if (arrow) {
+      setTrackIn(false)
+      setTrackSnap(true)
+    }
+    setHovered(false)
+    if (resetting) return
+    setLeaving(true)
+    pending.current = true
+    clear()
+    timer.current = setTimeout(() => {
+      timer.current = null
+      finishLeave()
+    }, 680)
+  }, [arrow, resetting, finishLeave])
+
+  const onFillEnd = (e: TransitionEvent<HTMLSpanElement>) => {
+    if (e.target !== e.currentTarget) return
+    if (e.propertyName === 'transform' || e.propertyName === '-webkit-transform') finishLeave()
+  }
+
+  const external = /^https?:\/\//.test(href) && !href.includes('scale.com')
 
   const onClick = useCallback(
     (e: MouseEvent<HTMLAnchorElement>) => {
       if (!smoothScrollTargetId || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return
-      const target = document.getElementById(smoothScrollTargetId.replace(/^#/, ''))
+      const id = smoothScrollTargetId.replace(/^#/, '')
+      const target = document.getElementById(id)
       if (!target) return
       e.preventDefault()
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      if (location.hash !== `#${id}`) history.pushState(history.state, '', `#${id}`)
+      const lenis = (window as unknown as { __lenis?: LenisLike }).__lenis
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
+      if (lenis) lenis.scrollTo(target, reduced ? { immediate: true } : undefined)
+      else target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' })
     },
     [smoothScrollTargetId],
   )
 
-  const external = /^https?:\/\//.test(href) && !href.includes('scale.com')
-
-  const offset = arrow ? 'translateX(-100%)' : 'translateY(100%)'
-  const fillTransform =
-    phase === 'in' ? 'translate(0,0)' : phase === 'out' ? (arrow ? 'translateX(100%)' : 'translateY(-100%)') : offset
+  const start = arrow ? '-100% 0' : '0 100%'
+  const fillTranslate = resetting ? start : hovered ? '0 0' : leaving ? (arrow ? '100% 0' : '0 -100%') : start
+  const trackTransform = trackIn && !trackSnap ? 'translateX(0)' : 'translateX(-50%)'
 
   const colours = outline
     ? theme === 'white'
@@ -101,15 +168,17 @@ const FlatCta = forwardRef<HTMLAnchorElement, Props>(function FlatCta(
       onPointerEnter={enter}
       onPointerLeave={leave}
       {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-      className={`${s.cta} ${shape} ${colours} ${className}`}
+      className={`${s.cta} ${shape} ${external ? s.focusUa : s.ctaFocus} ${colours} ${className}`}
     >
       <span
         aria-hidden="true"
         className={s.ctaFill}
+        onTransitionEnd={onFillEnd}
         style={{
           opacity: fillOpacity,
-          transform: fillTransform,
-          transitionDuration: phase === 'reset' ? '0ms' : arrow ? '600ms' : '300ms',
+          translate: fillTranslate,
+          transition: resetting ? 'none' : undefined,
+          transitionDuration: resetting ? undefined : `${duration}ms`,
         }}
       />
       {arrow ? (
@@ -132,7 +201,7 @@ const FlatCta = forwardRef<HTMLAnchorElement, Props>(function FlatCta(
             }`}
             data-cta-arrow
           >
-            <span className={s.ctaTrack}>
+            <span className={s.ctaTrack} style={{ transform: trackTransform, transition: trackSnap ? 'none' : undefined }}>
               <span>
                 <Chevron />
               </span>

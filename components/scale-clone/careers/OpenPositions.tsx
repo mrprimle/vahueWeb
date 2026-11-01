@@ -23,8 +23,13 @@ import s from './careers.module.css'
  * UI:
  *   - sticky filter bar: top 0, z 10, bg white/90 + backdrop-blur 8px, pt-2 pb-6
  *   - dropdowns are a Radix DropdownMenu (modal): opens on pointerdown, align start, sideOffset 6, 288px
- *     (calc(100vw - 2rem) under 640px), max-h 60vh; body gets pointer-events none + scroll lock while open;
+ *     (calc(100vw - 2rem) under 640px), max-h 60vh, follows the trigger while the page scrolls; body gets
+ *     pointer-events none + react-remove-scroll (data-scroll-locked) while open, but Lenis still scrolls the page on
+ *     wheel (measured on scale.com: +320px for a 400px wheel with the menu open); an outside click only closes the menu
+ *     (it doesn't reach the element under it) and focuses the trigger, a right-click closes without refocusing;
  *     choosing a checkbox item toggles it and closes the menu (Radix default), focus returns to the trigger;
+ *     keys: trigger Enter/Space toggle, ArrowDown opens; menu ArrowUp/Down (no loop), Home/PageUp, End/PageDown,
+ *     typeahead (1s buffer), Escape closes, Tab does nothing; items have no keyboard highlight style;
  *     onOpenChange -> 120ms debounce -> rAF -> lenis.resize + ScrollTrigger.refresh
  *   - department rows: button px-6 py-5, hover bg gray-95; panel `grid` rows 0fr <-> 1fr, `transition-all 300ms
  *     ease-out`; chevron rotates 180deg (300ms ease-out); transitionend -> 50ms debounce -> refresh
@@ -73,46 +78,44 @@ const refreshScroll = () => {
   const check = () => {
     if (performance.now() - last < 120) return void setTimeout(check, 60)
     removeEventListener('scroll', onScroll)
-    requestAnimationFrame(() => ScrollTrigger.refresh())
+    requestAnimationFrame(() => {
+      ;(window as unknown as { __lenis?: { resize: () => void } }).__lenis?.resize()
+      ScrollTrigger.refresh()
+    })
   }
   setTimeout(check, 60)
 }
 
 /*
- * Scale calls root.scrollIntoView({ behavior: 'smooth' }) on every filter change. Here the filter also changes the page
- * height, and the ScrollTrigger refresh that follows (useRefreshOnPageGrow, dropdown / collapse refreshes) restores the
- * recorded scroll position, which cancels a native smooth scroll mid-way. So the clone drives the same smooth scroll per
- * frame (ease-in-out, ~Chrome's smooth-scroll timing, re-reading the target each frame); a refresh can't stop it. The
- * user's wheel / touch cancels it; reduced motion jumps.
+ * Scale calls root.scrollIntoView({ behavior: 'smooth' }) on every filter change (measured: 5252 -> 6000 in ~450ms, native
+ * smooth scroll, not Lenis). The clone does the same. Here the filter also changes the page height, and the ScrollTrigger
+ * refresh that follows (useRefreshOnPageGrow 150ms) restores the recorded scroll position, which cancels a native smooth
+ * scroll mid-way. So for 1.5s a refresh that leaves the root short of its target re-issues the scroll from there.
  */
-let activeScroll: (() => void) | null = null
+let pendingScroll: (() => void) | null = null
 function smoothScrollIntoView(el: HTMLElement) {
-  activeScroll?.()
-  const target = () => Math.min(el.getBoundingClientRect().top + scrollY, document.documentElement.scrollHeight - innerHeight)
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return void scrollTo(0, target())
-  const from = scrollY
-  const dist = Math.abs(target() - from)
-  if (dist < 1) return
-  const dur = Math.min(700, Math.max(300, 250 + dist / 3))
-  const t0 = performance.now()
-  let raf = 0
+  pendingScroll?.()
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
+  const go = () => el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' })
+  go()
+  if (reduced) return
+  const again = () => {
+    const arrived = Math.abs(el.getBoundingClientRect().top) < 1 || scrollY >= document.documentElement.scrollHeight - innerHeight - 1
+    if (arrived) stop()
+    else requestAnimationFrame(go)
+  }
   const stop = () => {
-    cancelAnimationFrame(raf)
+    clearTimeout(t)
+    ScrollTrigger.removeEventListener('refresh', again)
     removeEventListener('wheel', stop)
     removeEventListener('touchstart', stop)
-    activeScroll = null
+    pendingScroll = null
   }
-  const step = (now: number) => {
-    const p = Math.min(1, (now - t0) / dur)
-    const e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2
-    scrollTo(0, from + (target() - from) * e)
-    if (p < 1) raf = requestAnimationFrame(step)
-    else stop()
-  }
+  const t = setTimeout(stop, 1500)
+  ScrollTrigger.addEventListener('refresh', again)
   addEventListener('wheel', stop, { passive: true })
   addEventListener('touchstart', stop, { passive: true })
-  activeScroll = stop
-  raf = requestAnimationFrame(step)
+  pendingScroll = stop
 }
 
 const flagKey = (location = '') => {
@@ -140,6 +143,12 @@ function FilterDropdown({
   const menu = useRef<HTMLDivElement>(null)
   const refreshTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const keyboardOpen = useRef(false)
+  // Radix typeahead: a 1s search buffer
+  const search = useRef('')
+  const searchTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+  // last real pointer position over the menu: boundary events Chrome fires when a keyboard move scrolls the menu under
+  // a resting pointer carry the same coordinates, and on scale.com they don't take focus off the keyboard item
+  const lastPointer = useRef({ x: -1, y: -1 })
   // Radix portals to <body>; the clone portals into the page root so the --car-* theme variables still apply
   const [portal, setPortal] = useState<HTMLElement | null>(null)
   useEffect(() => setPortal(trigger.current?.closest<HTMLElement>('[data-careers-root]') ?? document.body), [])
@@ -151,14 +160,21 @@ function FilterDropdown({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
-  useEffect(() => () => clearTimeout(refreshTimer.current), [])
+  useEffect(
+    () => () => {
+      clearTimeout(refreshTimer.current)
+      clearTimeout(searchTimer.current)
+    },
+    [],
+  )
 
   const setOpenState = useCallback((next: boolean, focusTrigger = false) => {
     setOpen(next)
     // onOpenChange: 120ms debounce, then rAF -> lenis.resize + ScrollTrigger.refresh
     clearTimeout(refreshTimer.current)
     refreshTimer.current = setTimeout(refreshScroll, 120)
-    if (!next && focusTrigger) trigger.current?.focus({ preventScroll: true })
+    // Radix onCloseAutoFocus runs from the FocusScope unmount (a macrotask), after the outside mousedown
+    if (!next && focusTrigger) setTimeout(() => trigger.current?.focus({ preventScroll: true }), 0)
   }, [])
 
   const toggle = useCallback(
@@ -179,7 +195,8 @@ function FilterDropdown({
     [setOpenState, toggle],
   )
 
-  // Floating position: side bottom, align start, sideOffset 6; flips to top when it fits better there.
+  // Floating position: side bottom, align start, sideOffset 6; flips to top when it fits better there. Like floating-ui's
+  // autoUpdate it follows the trigger when the page scrolls (Lenis still scrolls it while the menu is open).
   const place = useCallback(() => {
     const t = trigger.current
     if (!t) return
@@ -197,20 +214,35 @@ function FilterDropdown({
     place()
     const body = document.body
     const prev = { pe: body.style.pointerEvents, ov: body.style.overflow }
+    // DismissableLayer disableOutsidePointerEvents + react-remove-scroll (body overflow hidden, data-scroll-locked)
     body.style.pointerEvents = 'none'
     body.style.overflow = 'hidden'
-    // react-remove-scroll: block wheel / touch scrolling outside the menu (and keep Lenis from seeing it)
+    body.setAttribute('data-scroll-locked', '1')
+    // react-remove-scroll blocks touch scrolling outside the menu (Lenis syncTouch would otherwise move the page);
+    // wheel is left to Lenis, which keeps scrolling the page on scale.com
     const block = (e: Event) => {
+      if (menu.current?.contains(e.target as Node)) return
       e.stopPropagation()
-      if (!menu.current?.contains(e.target as Node)) e.preventDefault()
+      e.preventDefault()
     }
+    // pointerdown outside: close; a left click refocuses the trigger, a right / ctrl click doesn't (Radix modal menu).
+    // body pointer-events stay none until the menu unmounts, so the click never reaches the element under it.
     const down = (e: PointerEvent) => {
-      if (!menu.current?.contains(e.target as Node) && !trigger.current?.contains(e.target as Node)) setOpenState(false)
+      if (menu.current?.contains(e.target as Node) || trigger.current?.contains(e.target as Node)) return
+      const secondary = e.button === 2 || (e.button === 0 && e.ctrlKey)
+      setOpenState(false, !secondary)
     }
-    window.addEventListener('wheel', block, { capture: true, passive: false })
+    // Chrome still dispatches the mousedown / click of that press to the element under the pointer once the body
+    // accepts pointer events again; Radix's menu swallows it. Eat the rest of this press.
+    let swallow = false
+    const markDown = (e: PointerEvent) => {
+      if (!menu.current?.contains(e.target as Node) && !trigger.current?.contains(e.target as Node)) swallow = true
+    }
     window.addEventListener('touchmove', block, { capture: true, passive: false })
+    document.addEventListener('pointerdown', markDown, true)
     document.addEventListener('pointerdown', down, true)
     window.addEventListener('resize', place)
+    window.addEventListener('scroll', place, { passive: true })
     requestAnimationFrame(() => {
       const first = menu.current?.querySelector<HTMLElement>('[role="menuitemcheckbox"]')
       if (menu.current && document.activeElement === trigger.current && first && keyboardOpen.current) first.focus()
@@ -219,35 +251,81 @@ function FilterDropdown({
     return () => {
       body.style.pointerEvents = prev.pe
       body.style.overflow = prev.ov
-      window.removeEventListener('wheel', block, true)
+      body.removeAttribute('data-scroll-locked')
       window.removeEventListener('touchmove', block, true)
+      document.removeEventListener('pointerdown', markDown, true)
       document.removeEventListener('pointerdown', down, true)
       window.removeEventListener('resize', place)
+      window.removeEventListener('scroll', place)
+      if (swallow) {
+        const eat = (e: Event) => {
+          e.preventDefault()
+          e.stopPropagation()
+        }
+        const done = () => {
+          document.removeEventListener('mousedown', eat, true)
+          document.removeEventListener('mouseup', eat, true)
+          document.removeEventListener('click', eat, true)
+          removeEventListener('pointerup', later, true)
+        }
+        const later = () => setTimeout(done, 0)
+        document.addEventListener('mousedown', eat, true)
+        document.addEventListener('mouseup', eat, true)
+        document.addEventListener('click', eat, true)
+        addEventListener('pointerup', later, true)
+        setTimeout(done, 1000)
+      }
     }
   }, [open, place, setOpenState])
 
+  const items = () => [...(menu.current?.querySelectorAll<HTMLElement>('[role="menuitemcheckbox"]') ?? [])]
+
+  // Radix typeahead (getNextMatch): repeated chars cycle through items starting with that char; otherwise match the
+  // buffer from the current item onwards (wrapping); a single char skips the current item.
+  const typeahead = (key: string) => {
+    const buf = search.current + key
+    search.current = buf
+    clearTimeout(searchTimer.current)
+    searchTimer.current = setTimeout(() => (search.current = ''), 1000)
+    const list = items()
+    const values = list.map((e) => (e.textContent || '').trim())
+    const current = values[list.indexOf(document.activeElement as HTMLElement)]
+    const repeated = buf.length > 1 && [...buf].every((c) => c === buf[0])
+    const q = (repeated ? buf[0] : buf).toLowerCase()
+    const from = Math.max(current ? values.indexOf(current) : -1, 0)
+    let wrapped = values.map((_, i) => values[(from + i) % values.length])
+    if (q.length === 1) wrapped = wrapped.filter((v) => v !== current)
+    const next = wrapped.find((v) => v.toLowerCase().startsWith(q))
+    if (next && next !== current) setTimeout(() => list[values.indexOf(next)]?.focus())
+  }
+
   const onMenuKey = (e: KeyboardEvent) => {
-    const items = [...(menu.current?.querySelectorAll<HTMLElement>('[role="menuitemcheckbox"]') ?? [])]
-    const i = items.indexOf(document.activeElement as HTMLElement)
-    if (e.key === 'ArrowDown') {
+    const list = items()
+    const i = list.indexOf(document.activeElement as HTMLElement)
+    const onContent = e.target === menu.current
+    const mod = e.ctrlKey || e.altKey || e.metaKey
+    if (e.key === 'Tab') return void e.preventDefault()
+    if (e.key === 'Escape') {
       e.preventDefault()
-      items[Math.min(items.length - 1, i + 1)]?.focus()
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault()
-      items[Math.max(0, i - 1)]?.focus()
-    } else if (e.key === 'Home') {
-      e.preventDefault()
-      items[0]?.focus()
-    } else if (e.key === 'End') {
-      e.preventDefault()
-      items[items.length - 1]?.focus()
-    } else if (e.key === 'Escape') {
-      e.preventDefault()
-      setOpenState(false, true)
-    } else if (e.key === 'Tab') {
-      e.preventDefault()
-      setOpenState(false, true)
+      return void setOpenState(false, true)
     }
+    if (!mod && e.key.length === 1 && !(e.key === ' ' && !search.current)) {
+      typeahead(e.key)
+      if (e.key === ' ') e.preventDefault()
+      return
+    }
+    const first = ['ArrowDown', 'PageUp', 'Home'].includes(e.key)
+    const last = ['ArrowUp', 'PageDown', 'End'].includes(e.key)
+    if (!first && !last) return
+    e.preventDefault()
+    // RovingFocusGroup moves focus in a setTimeout (a key pressed right after lands on the previous item)
+    const to = (el?: HTMLElement) => setTimeout(() => el?.focus())
+    if (onContent || i < 0) return void to(first ? list[0] : list[list.length - 1])
+    if (e.shiftKey || mod) return
+    if (e.key === 'ArrowDown') to(list[Math.min(list.length - 1, i + 1)])
+    else if (e.key === 'ArrowUp') to(list[Math.max(0, i - 1)])
+    else if (first) to(list[0])
+    else to(list[list.length - 1])
   }
 
   const active = selected.length > 0
@@ -267,11 +345,15 @@ function FilterDropdown({
           if (!open) e.preventDefault()
         }}
         onKeyDown={(e) => {
-          if (['Enter', ' ', 'ArrowDown'].includes(e.key)) {
-            e.preventDefault()
+          // Radix trigger: Enter / Space toggle, ArrowDown only opens
+          if (e.key === 'Enter' || e.key === ' ') {
             keyboardOpen.current = true
-            setOpenState(!open)
+            setOpenState(!open, open)
+          } else if (e.key === 'ArrowDown') {
+            keyboardOpen.current = true
+            if (!open) setOpenState(true)
           }
+          if (['Enter', ' ', 'ArrowDown'].includes(e.key)) e.preventDefault()
         }}
         className={`${s.trigger} ${s.tc} ${s.body3} ${active ? s.triggerActive : ''} flex w-full items-center justify-between gap-2 py-2.5 pl-4 pr-3 font-display focus:outline-none sm:w-56`}
       >
@@ -309,11 +391,24 @@ function FilterDropdown({
                     aria-checked={checked}
                     tabIndex={-1}
                     data-state={checked ? 'checked' : 'unchecked'}
-                    onPointerMove={(e) => (e.currentTarget as HTMLElement).focus({ preventScroll: true })}
+                    onPointerMove={(e) => {
+                      if (e.pointerType !== 'mouse') return
+                      lastPointer.current = { x: e.clientX, y: e.clientY }
+                      if (document.activeElement !== e.currentTarget) (e.currentTarget as HTMLElement).focus({ preventScroll: true })
+                    }}
+                    onPointerLeave={(e) => {
+                      // Radix onItemLeave: focus goes back to the content
+                      if (e.pointerType !== 'mouse') return
+                      if (e.clientX === lastPointer.current.x && e.clientY === lastPointer.current.y) return
+                      menu.current?.focus({ preventScroll: true })
+                    }}
+                    onFocus={(e) => e.currentTarget.setAttribute('data-highlighted', '')}
+                    onBlur={(e) => e.currentTarget.removeAttribute('data-highlighted')}
                     onClick={() => pick(v)}
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
+                      if (e.key === 'Enter' || (e.key === ' ' && !search.current)) {
                         e.preventDefault()
+                        e.stopPropagation()
                         pick(v)
                       }
                     }}
@@ -363,7 +458,7 @@ const PositionItem = memo(function PositionItem({
     <a
       href={href}
       aria-label={`${row.title} — ${row.office}`}
-      className={`${s.row} ${s.tc} group flex flex-col justify-between gap-3 py-4 pl-8 pr-6 sm:flex-row sm:items-center md:pl-16`}
+      className={`${s.row} ${s.tc} ${s.focusUa} group flex flex-col justify-between gap-3 py-4 pl-8 pr-6 sm:flex-row sm:items-center md:pl-16`}
     >
       <span className={`${s.body2} ${s.rowTitle} ${s.tc} text-[color:var(--car-fg-2,#212121)]`}>{row.title}</span>
       <div className="flex shrink-0 flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-5">

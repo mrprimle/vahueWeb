@@ -21,7 +21,7 @@ gsap.registerPlugin(ScrollTrigger)
  *   clip container (trigger = ClipScrollSection)  clip-path inset(0.5 * startPercentage % -> 0% round 1.5rem)
  *   media (trigger = section)                      scale 1.25 -> 1 (gsap.utils.mapRange, clamped)
  *   The hero starts ~past its end (section top 135 at 1440x900), so it reads inset(0%) / scale ~1.01 at load.
- * One-shot, "top center" (retroactive): headline AnimatedText delay 0, body delay 0.2; with animateCta the CTA
+ * One-shot, "top center" (useScrollTrigger retroactiveOnEnter, end "bottom 20%"): headline AnimatedText delay 0, body delay 0.2; with animateCta the CTA
  *   runs filledWhiteArrow (scaleX 0 -> 1, radius 0 -> 8, autoAlpha, 0.85s power3.out, delay 0.5).
  * .media-overlay computes to linear-gradient(#0000, #000) on /careers (sampled): its unlayered `background`
  *   beats the layered bg-black/45 utility of the "flat" variant.
@@ -70,6 +70,7 @@ export default function FullBleedMedia({
     if (!root) return
     const reduced = prefersReducedMotion()
     const texts: AnimatedText[] = []
+    let offRetro = () => {}
 
     const ctx = gsap.context(() => {
       if (!reduced && startPercentage > 0) {
@@ -89,13 +90,12 @@ export default function FullBleedMedia({
       }
 
       if (!reduced) {
-        const zoom = (progress: number) => media.current && gsap.set(media.current, { scale: 1.25 - 0.25 * progress })
+        // onUpdate only, as on Scale (no initial set, no onRefresh): mapRange(progress, 0, 1, 1.25, 1, clamp)
         ScrollTrigger.create({
           trigger: root,
           start: 'top bottom',
           end: 'center center',
-          onUpdate: ({ progress }) => zoom(progress),
-          onRefresh: ({ progress }) => zoom(progress),
+          onUpdate: ({ progress }) => media.current && gsap.set(media.current, { scale: 1.25 - 0.25 * progress }),
         })
       }
 
@@ -136,18 +136,20 @@ export default function FullBleedMedia({
           if (arrow) tl.to(arrow, { x: 0, duration: d, ease: 'power3.inOut' }, 0)
         }
       }
-      ScrollTrigger.create({
-        trigger: root,
-        start: 'top center',
-        once: true,
-        onEnter: play,
-        onRefresh: (self) => {
-          if (self.progress > 0) play()
-        },
-      })
+      // useScrollTrigger (chunk 37xz28pjbnlx4 module 210104; the /careers copy in 0fwc0347bccaa.js passes the same
+      // retroactiveOnEnter): start `top center`, default end `bottom 20%`; on every refresh, fire onEnter once
+      // progress > 0 or the scroll is at/after start - 1.
+      const st = ScrollTrigger.create({ trigger: root, start: 'top center', end: 'bottom 20%', onEnter: play })
+      const retro = () => {
+        if (st.progress > 0 || st.scroll() >= st.start - 1) play()
+      }
+      ScrollTrigger.addEventListener('refresh', retro)
+      retro()
+      offRetro = () => ScrollTrigger.removeEventListener('refresh', retro)
     }, root)
 
     return () => {
+      offRetro()
       texts.forEach((t) => t.revert())
       ctx.revert()
     }
