@@ -1,0 +1,6 @@
+/* Scale's PtX9LG CSS module (chunk 2h0gxg24im1sd.css), for SgpDemo. */
+.root .orthoImage { margin-top: 8vh; }
+@media (max-width: 768px) { .root .orthoImage { margin-top: 4vh; } }
+.root .orthoImage:nth-child(n + 2) :after { content: ''; background-color: #000; width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
+.root .orthoImage:nth-child(2) :after { opacity: 0.8; }
+.root .orthoImage:nth-child(3) :after { opacity: 0.9; }

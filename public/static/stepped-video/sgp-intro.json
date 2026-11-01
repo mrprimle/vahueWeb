@@ -1,0 +1,90 @@
+{
+  "files": {
+    "lines": ["sgp-intro-lines_h264.bin", "sgp-intro-lines_h265.bin"],
+    "tris": ["sgp-intro-tris_h264.bin", "sgp-intro-tris_h265.bin"],
+    "trisMask": ["sgp-intro-tris-mask_h264.bin", "sgp-intro-tris-mask_h265.bin"]
+  },
+  "frameEdges": {
+    "0,0": {
+      "activeStepIndex": 0,
+      "timelineStartPercent": 0,
+      "timelineEndPercent": 18,
+      "fromIndex": 0,
+      "toIndex": 0,
+      "fromMs": "00:00",
+      "toMs": "03:03"
+    },
+    "0,1": {
+      "activeStepIndex": 1,
+      "timelineStartPercent": 18,
+      "timelineEndPercent": 38,
+      "fromIndex": 0,
+      "toIndex": 1,
+      "fromMs": "05:01",
+      "toMs": "06:03",
+      "autoNext": true,
+      "scrollable": true
+    },
+    "1,2": {
+      "fromIndex": 1,
+      "toIndex": 2,
+      "fromMs": "06:03",
+      "toMs": "07:18",
+      "loop": true
+    },
+    "2,3": {
+      "activeStepIndex": 2,
+      "timelineStartPercent": 38,
+      "timelineEndPercent": 59,
+      "fromIndex": 2,
+      "toIndex": 3,
+      "fromMs": "07:18",
+      "toMs": "08:20",
+      "autoNext": true,
+      "scrollable": true
+    },
+    "3,4": {
+      "fromIndex": 3,
+      "toIndex": 4,
+      "fromMs": "08:20",
+      "toMs": "10:05",
+      "loop": true
+    },
+    "4,5": {
+      "activeStepIndex": 3,
+      "timelineStartPercent": 59,
+      "timelineEndPercent": 83.22,
+      "fromIndex": 4,
+      "toIndex": 5,
+      "fromMs": "10:05",
+      "toMs": "11:07",
+      "autoNext": true,
+      "scrollable": true
+    },
+    "5,6": {
+      "fromIndex": 5,
+      "toIndex": 6,
+      "fromMs": "11:07",
+      "toMs": "12:17",
+      "loop": true
+    },
+    "6,7": {
+      "activeStepIndex": 4,
+      "timelineStartPercent": 79,
+      "timelineEndPercent": 100.0,
+      "fromIndex": 6,
+      "toIndex": 7,
+      "fromMs": "12:17",
+      "toMs": "14:03",
+      "autoNext": true,
+      "scrollable": true
+    },
+    "7,8": {
+      "fromIndex": 7,
+      "toIndex": 8,
+      "fromMs": "14:03",
+      "toMs": "15:03",
+      "loop": true
+    }
+  }
+}
