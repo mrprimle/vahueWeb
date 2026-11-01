@@ -101,9 +101,11 @@ Playwright and CDP: `DOMDebugger.getEventListeners` on every `main` node, pointe
 - Execution evidence was taken at the clone stage. The filled page reran geometry and the sampled curves, not REA coverage.
 
 ## Copy mapping
-This page is the research's `back-office-sync` workflow (`template: 'generative-ai-data-engine'`), menu label Back-office Sync. Hero and overview carry the workflow headline and summary. The testimonial turns the workflow's before and after into a quote. The training-data paragraph became automation and human review. "Improve your models" became improve your close. Key features are the research's control features: results dashboard, review queues, access, accuracy reviews, approvals and audit log. Demos are three steps of the workflow. "Book a Demo" became "Book an Audit", as on `/data-engine`. "Meet our customers" points at `/enterprise` and the case study at `/enterprise`, since `/customers` is not a route here; the report points at `/guides`. Generic labels are unchanged: "PRODUCT OVERVIEW", "Key Features", "Demos", "RESOURCES", "Case Studies & Resources", "Don’t just take our word for it", "Meet our customers".
+Keep rule (Mike, 2026-11-01): each string starts from Scale's text, stays verbatim if true for Vahue with the brand swapped, otherwise changes only the words the swap dictionary and phrase bank require, same template and word count. Counts come from a path-by-path compare with `content.scale.ts`, alt text, code samples and URLs excluded. Verbatim means equal after Scale to Vahue. Light means up to 3 words or about a third changed.
 
-Word counts are within 15% of Scale's for 43 of 49 strings. The exceptions, one word off unless noted: hero, overview and demos titles ("Back-office Sync Agents" 3 vs 4), case study title, "Upholding approvals…" 7 vs 6, and the hidden meta title (4 vs 7). Longer titles wrapped onto extra lines at 390 and changed section heights.
+Menu label: For Back-office Sync. Page name: Back-office Sync Agents. Models became agents, and CTAs are Scale's. 49 strings: 26 verbatim, 18 light, 5 rewritten (meta title and description, hero and overview title, case study line). Section heights equal the previous fill at 1440 and 390.
+
+**Images that fit less well now:** `sync-loop.webp` and `capabilities.webp` still show the Back-office Sync steps and integrations, while the text around them is more general. Demo wireframes are generic.
 
 **Images replaced at fill**, removed from `public/` (recover from commit fde0271 to re-check the clone):
 - Hero: was a collage of Scale's research papers. Now a neutral field of records at 1920 x 686.
@@ -114,4 +116,4 @@ Word counts are within 15% of Scale's for 43 of 49 strings. The exceptions, one 
 - Kept: `product-overview.webp` (abstract, no brand), `prefooter.webp`.
 
 ## Placeholders
-`// PLACEHOLDER` in `content.ts`, 12 lines: trust line, 3 logo tiles, capabilities map, testimonial name, role and quote, 3 demo videos, case study row. Figures in the capabilities image: "14+ integrations" is the research's list of 14, "3+ systems per record" is its "three or more systems". The map shows Scale's coverage dots, not Vahue's regions.
+`// PLACEHOLDER` in `content.ts`, 14 lines: trust line, 3 logo tiles, capabilities map, testimonial name, role and quote, 3 demo videos, the leading-teams subtitle, case study row, AI Readiness Report row. Figures in the capabilities image: "14+ integrations" is the research's list of 14, "3+ systems per record" is its "three or more systems". The map shows Scale's coverage dots, not Vahue's regions.
