@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Risk queue</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%;overflow:hidden;background:#000;color:#fff;font:13px/1.4 -apple-system,"Helvetica Neue",Arial,sans-serif}
+.w{display:grid;grid-template-columns:1fr 216px;height:100%}.l{padding:22px 20px;overflow:auto}.h{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.h b{font-weight:500;font-size:15px}.h i{font-style:normal;color:#8a8a8a;font-size:11px}
+.r{width:100%;display:grid;grid-template-columns:76px 1fr 46px 76px;gap:8px;align-items:center;text-align:left;background:#101214;color:inherit;border:1px solid #23272b;border-radius:8px;padding:10px 12px;margin-bottom:7px;font:inherit;cursor:pointer;transition:border-color .2s,background .2s}.r:hover{background:#171a1d}.r[aria-pressed=true]{border-color:#D1AAD7}
+.n{color:#b9b9b9;font-size:11px}.s{font-variant-numeric:tabular-nums}.t{font-size:10px;border-radius:99px;padding:2px 8px;text-align:center;color:#000}.c{background:#B2FCD2}.b{background:#E7FE53}.h2{background:#ECA6FA}
+.p{border-left:1px solid #23272b;padding:22px 16px;background:#0a0b0c}.p h3{font-weight:500;font-size:14px;margin-bottom:6px}.m{height:5px;background:#23272b;border-radius:9px;overflow:hidden;margin:10px 0 14px}.m div{height:100%;background:#D1AAD7;transition:width .3s ease-out}.p p{color:#bdbdbd;font-size:12px;margin-bottom:9px}
+</style></head><body><div class="w"><div class="l"><div class="h"><b>Risk queue</b><i>Sample items</i></div><div id="q"></div></div><aside class="p"><h3 id="pt"></h3><div class="m"><div id="pm"></div></div><p id="pr"></p><p id="pa"></p></aside></div>
+<script>
+var I=[["RO-4127","Brake pads, 2h labor",.91,"Clear","c","Parts and labor match the job notes.","Flows on to invoicing."],["RO-4128","Coolant flush, 6h labor",.54,"Borderline","b","Labor hours sit above the usual range for this job.","Goes to a reviewer with the reason."],["RO-4129","Tires x4, alignment",.88,"Clear","c","All line items match past orders.","Flows on to invoicing."],["RO-4130","Transmission, no notes",.31,"Hold","h2","Technician notes are missing for a high-value part.","Held for a person before anything is billed."],["RO-4131","Oil change, filter",.97,"Clear","c","Routine order with a complete record.","Flows on to invoicing."],["RO-4132","Battery, 3h labor",.62,"Borderline","b","Labor looks high for a battery swap.","Goes to a reviewer with the reason."]];
+var q=document.getElementById("q"),a=0;function S(i){a=i;[].forEach.call(q.children,function(b,k){b.setAttribute("aria-pressed",k===i)});var x=I[i];pt.textContent=x[0];pm.style.width=x[2]*100+"%";pr.textContent=x[5];pa.textContent=x[6]}
+I.forEach(function(x,i){var b=document.createElement("button");b.className="r";b.innerHTML='<span class="n">'+x[0]+'</span><span>'+x[1]+'</span><span class="s">'+x[2].toFixed(2)+'</span><span class="t '+x[4]+'">'+x[3]+'</span>';b.onclick=function(){S(i)};b.onmouseenter=function(){S(i)};q.appendChild(b)});S(0);
+function Z(){document.documentElement.style.zoom=innerWidth/649}addEventListener("resize",Z);Z();
+</script></body></html>
