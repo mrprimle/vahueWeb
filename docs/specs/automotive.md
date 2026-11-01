@@ -58,7 +58,7 @@ Same script on both sites (`inter.cjs`, `extra.cjs` in `new-qa/automotive`). Rea
 Not on this page: pinned ranges, canvas, cursor effects, drag and drop other than the slider.
 
 ## Visual check
-Pairs at first paint (5 frames over 3.5s), every 50% of the viewport with real wheel input, and pre-footer steps, at 1440, 1100 and 390, clone and filled against Scale, 84 pairs per version. Sheets opened and read. Tab states, Run Code, modal and phone panels were paired separately.
+Pairs at first paint (5 frames over 3.5s), every 50% of the viewport with real wheel input, and pre-footer steps, at 1440, 1100 and 390, clone and filled against Scale, 84 pairs per version, on sheets of 6. Opened and read: filled 14 of 16 sheets (all of 1440 and 390, 3 of 5 at 1100), clone 9 of 16 (4 of 5 at 1440, 4 of 6 at 390, 1 of 5 at 1100). The others were not opened; their hero and pre-footer scrub values are equal. Tab states, Run Code, modal and phone panels were paired separately. The pre-footer headline was shortened after these frames, so its 2 lines at 390 come from the geometry run, not a pair.
 
 Same by eye: direction of movement, what the header covers, rounded corners from the first frame, reveal order. Differences by eye:
 - **Arrow glyph.** The `→` in the glass CTA and foundation link is wider in Aeonik than in Aeonik Pro: 14.2 vs 9.2px. Font gap, shared with all pages. CTA is 5.5px wider.
