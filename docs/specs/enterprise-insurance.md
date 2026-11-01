@@ -24,14 +24,14 @@ Filled differs by up to 0.1px in section 2 below `md` (tile boxes round differen
 Layout changes by width: `lg` (1024) sets features to `basis-1/4` and one row, and the two video features to `gap-14`. `md` (768) switches the media box to 720, the video features to 2 columns, the logos from one scrolling row to the cross-fading pages, and the heading to `text-4.5xl`. Below `md` everything stacks. `xl` (1280) widens the feature gap.
 
 Remaining differences, all from Aeonik vs Aeonik Pro, none changing a height except 768:
-- 768 only: "Insurance's 3 Most Expensive Blind Spots" needs 721.3px on one line and the box is 720, Scale's needs 719.8. It wraps, so section 3 is 55px taller at exactly 768 and 769. From 770 up it is equal.
+- 768 only: "Insurance's 3 Most Expensive Blind Spots" needs 721.3px on one line and the box is 720, Scale's needs 719.8. It wraps, so section 3 is 55px taller at 768 and 769 (heading 110 tall at 769, 55 at 770). From 770 up it is equal.
 - `→`: Aeonik's arrow is longer than Aeonik Pro's. "Meet our customers →" is 161.4 wide vs 156.1, "View all applications →" is 177.8 vs 173.2. Same in every page using the glyph.
 - 390: pre-footer headline balances to 2 lines where Scale's has 3. 1100: one feature paragraph takes 2 lines where Scale's takes 3. No height change.
 
 Differences outside this page's files, both shared chrome, known: document height 21px shorter at 1100, 1024 and 1023 and 28px shorter at 768 (footer); the page sits 20px lower at 480 (announcement bar). Section heights are equal.
 
 ## Interaction inventory
-Same script on both sites (`motion.cjs` in the scratchpad `ins` folder), real wheel and pointer input, headless. Scale's handlers all read from the chunks named; React handlers are delegated, so the direct listeners below are only HubSpot's `mousedown` and React's `click` stub.
+Same script on both sites (`motion.cjs` in the scratchpad `ins` folder), real wheel and pointer input, headless. Scale's handlers all read from the chunks named; React handlers are delegated, so elements carry only React's `click` stub and, once analytics loads, HubSpot's `mousedown`. `html` `ev_d1a981c4…` has only the passive `scroll` from `1h0nvyhf5gbrf.js`. `body` `ev_958ab2ab…`, inspected with the modal open, has the `touchstart` from the same chunk plus React's full delegated set, which the portal adds there.
 
 | Element | Input | Listener and evidence | Source | Params | Measured, Scale vs ours |
 |---|---|---|---|---|---|
@@ -39,15 +39,15 @@ Same script on both sites (`motion.cjs` in the scratchpad `ins` folder), real wh
 | Hero media | scroll 0 | Same | 478135 | Start scale from progress at load | 1.0139 at 1440, 1.006 at 390, equal |
 | Hero text | load | ScrollTrigger, retroactive `onEnter` | 540431, 947153 | Lines rise and fade, .2s stagger between headline and body | Opacity .329, .458, .596, .671, .736 vs .301, .431, .574, .679, .746 at near frames. Start time follows hydration (Scale 2.9s here, ours about .2s) |
 | Hero CTA | reveal | Same | 961870 | Delay .5s, .85s | Width at matched opacity: 23.9, 55.9, 82.8, 104.1 vs 24.6, 56.5, 82.8, 104.1 |
-| Hero CTA | hover | On `a`: HubSpot `mousedown`, React `click`, `ev_23bae036…` family | 892855 | Fill and arrow slide | Same curve at 1440, phase-shifted by the sample start: fill -100, -61.2, -38.4, -22.9, -12.3 vs -100, -67.1, -42.3, -25.6, -14.1 |
+| Hero CTA | hover | On `a` `ev_1c71d88b…`, pre-footer `ev_1a155d3d…` | 892855 | Fill and arrow slide | Same curve at 1440, phase-shifted by the sample start: fill -100, -61.2, -38.4, -22.9, -12.3 vs -100, -67.1, -42.3, -25.6, -14.1 |
 | Logo pages | timer | None on `ul` `ev_be567404…` | 236943 | 4.5s after each page change; `transition-opacity` 700ms; incoming `delay-300` | Outgoing .98, .91, .79, .61, .43, .29 vs .98, .91, .79, .61, .38, .26 (50ms samples). In and out curves equal, period 4.5s both |
 | Logo row, below `md` | wheel, touch | None on `ul.overflow-x-auto` `ev_412f9973…`: native overflow | 236943 | `scrollbar-none` | `scrollWidth` 1154, `clientWidth` 342, scrollLeft 300 after wheel 300, item boxes equal |
 | "Meet our customers" | hover | Delegated, on `a` `ev_d188fe9b…` | 236943 | Underline, `target=_blank` | CSS only, same classes |
 | "View all applications" | hover | Delegated, on `a` `ev_bd938656…` | 408298 | Wrapper scale 1.02 and glow, 500ms; inner sheen `translate(8px,-8px)`; arrow 4px, 300ms | Leave: scale 1.0112, 1.0056, 1.0028, 1.0008; sheen .915, .460, .185, .047; arrow 2.127, .430, .028, equal to about .001 |
 | Play button | hover | Delegated, `ev_1a8f942b…` | 450359 | `bg-black/40` to `/60`, 150ms | .539, .594, .6, both |
 | Play button | click | Delegated | 450359, 582844 | Overlay fade 350ms, then panel 350ms after .55s, scale 1.1 to 1; body `overflow: hidden` | Overlay 0, .36, .71, .91, 1 vs 0, .36, .66, .91, 1. Panel .43, .76, .97, 1 vs .36, .66, .91, 1 at about the same frames. Panel box 1008 x 589 at 1440 and 370.5 x 262.4 at 390, player 976 x 549 and 338.5 x 190.4, equal |
-| Modal | Escape, close button, click outside | `document` keydown, React | 582844 | Each closes at once, body overflow restored | All three close, both |
-| Keyboard | Tab | Native | | Default focus order | Same element order |
+| Modal | Escape, close button, click outside | `document` keydown, delegated: `[role=dialog]` `ev_0da17869…`, `[data-dismiss=modal]` `ev_03ac6d7d…` | 582844 | Each closes at once, body overflow restored | All three close, both |
+| Keyboard | Tab | Native | | Default focus order, from the hero CTA | Hero CTA, customers link, applications link, 2 play buttons, then the footer, both. The pre-footer CTA is skipped until revealed, both |
 
 Execution: `observe_web_execution` 14s precise coverage on Scale in a private one-tab Chrome, driven through the same target (CTA hover, wheel, glass hover, play hover and click, Escape): `ev_4bf8ed06…`, retained, 10.5 MB, over the MCP response limit. Not exported: an export writes all 349 retained session records. Behaviour above comes from the Playwright samples and reading modules 236943, 450359, 582844, 832862, 51051, 408298 and 478135 in chunks `01xb85jkvr5_y`, `17ea4hx823ss4`, `37xz28pjbnlx4`. No source maps ship, so `trace_web_source_location` does not apply.
 
