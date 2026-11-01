@@ -49,7 +49,13 @@ function useIntroAnimation({ animateSet, animateIn }: { animateSet: () => void; 
 }
 
 function MaskLogo({ src, alt }: { src?: string; alt: string }) {
-  if (!src) return <LogoTile className="h-[27px]" />
+  // Scale's logo box is 35 tall: a 28 logo plus the inline image's line box.
+  if (!src)
+    return (
+      <div className="flex h-[35px] items-center">
+        <LogoTile className="h-[27px]" />
+      </div>
+    )
   const url = `url("${src}")`
   return (
     <div className="inline-block h-full" style={{ backgroundColor: 'currentColor', WebkitMaskImage: url, maskImage: url, WebkitMaskSize: 'contain', maskSize: 'contain', WebkitMaskRepeat: 'no-repeat', maskRepeat: 'no-repeat', WebkitMaskPosition: 'center', maskPosition: 'center' }}>
@@ -112,7 +118,9 @@ function SgpHero({ c }: { c: GenAiContent['hero'] }) {
 
 type StackCardHandle = { animateIn: (o?: { delay?: number }) => Promise<void>; animateOut: (o?: { delay?: number }) => Promise<void> }
 
-const StackCard = forwardRef<StackCardHandle, { card: GenAiContent['stack']['cards'][number]; cardIndex: number }>(function StackCard({ card, cardIndex }, ref) {
+const StackCard = forwardRef<StackCardHandle, { card: GenAiContent['stack']['cards'][number] }>(function StackCard({ card }, ref) {
+  // Scale's parent never passes `cardIndex`, so its stagger stays 0.
+  const cardIndex = 0
   const root = useRef<HTMLElement>(null)
   const title = useRef<AnimatedTextHandle>(null)
   const body = useRef<AnimatedTextHandle>(null)
@@ -217,7 +225,6 @@ function SgpStack({ c }: { c: GenAiContent['stack'] }) {
               <StackCard
                 key={i}
                 card={card}
-                cardIndex={i}
                 ref={(el) => {
                   cards.current[i] = el
                 }}
@@ -499,7 +506,7 @@ function SgpPlatformDifferentiators({ c }: { c: GenAiContent['differentiators'] 
             <div ref={table} className="w-full relative" role="table" aria-label={c.heading} style={{ gridTemplateColumns: `minmax(11rem, 5.5fr) repeat(${c.categories.length}, minmax(2.75rem, 1fr))` }}>
               <div>
                 <div className="mb-8 grid-layout-mobile md:grid-layout-desktop" role="row">
-                  <AnimatedText ref={capabilitiesHead} tagName="div" className="flex items-center col-span-3 bg-white body2-regular text-scale-gray-10" role="columnheader">
+                  <AnimatedText ref={capabilitiesHead} tagName="div" className="flex items-center col-span-3 bg-white body2-regular text-scale-gray-10">
                     {c.capabilitiesLabel}
                   </AnimatedText>
                   <div className="flex col-span-5 col-start-4 md:col-start-8 gap-0.5 md:gap-1.5">

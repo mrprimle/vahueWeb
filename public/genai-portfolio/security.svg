@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" preserveAspectRatio="xMidYMid slice" font-family="Helvetica, Arial, sans-serif">
+  <rect width="1600" height="900" fill="#111"/>
+  <text x="330" y="282" fill="#fff" font-size="36">Audit log</text>
+  <g fill="#191919"><rect x="310" y="310" width="980" height="72" rx="12"/><rect x="310" y="392" width="980" height="72" rx="12"/><rect x="310" y="474" width="980" height="72" rx="12"/><rect x="310" y="556" width="980" height="72" rx="12"/></g>
+  <g font-size="30" fill="#e6e6e6">
+    <text x="334" y="357">Invoice intake</text><text x="640" y="357">Posted to ERP</text>
+    <text x="334" y="439">Knowledge agent</text><text x="640" y="439">Answered, 2 sources</text>
+    <text x="334" y="521">Back-office sync</text><text x="640" y="521">Sent to review</text>
+    <text x="334" y="603">Knowledge agent</text><text x="640" y="603">Denied by role</text>
+  </g>
+  <g font-size="28" text-anchor="end"><text x="1266" y="357" fill="#79c08a">Approved</text><text x="1266" y="439" fill="#79c08a">Logged</text><text x="1266" y="521" fill="#a8927c">Waiting</text><text x="1266" y="603" fill="#839cb2">Blocked</text></g>
+</svg>

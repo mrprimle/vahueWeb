@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 960" width="1440" height="960" font-family="Helvetica, Arial, sans-serif">
+  <rect width="1440" height="960" fill="#0a0a0a"/>
+  <rect x="24" y="30" width="200" height="440" rx="12" fill="#141414"/>
+  <text x="44" y="70" fill="#fff" font-size="26">Knowledge</text>
+  <g fill="#c7c7c7" font-size="18"><text x="44" y="130">Ask</text><text x="44" y="172">Answers</text><text x="44" y="214">Sources</text><text x="66" y="250" font-size="15" fill="#8a8a8a">Documents</text><text x="66" y="280" font-size="15" fill="#8a8a8a">Wikis</text><text x="66" y="310" font-size="15" fill="#8a8a8a">Databases</text><text x="44" y="356">Review queue</text><text x="44" y="398">Audit log</text></g>
+  <text x="274" y="70" fill="#fff" font-size="32">Ask</text>
+  <rect x="274" y="110" width="1140" height="810" rx="14" fill="#0f0f0f" stroke="#2a2a2a"/>
+  <rect x="304" y="136" width="760" height="60" rx="10" fill="#1b1b1b"/>
+  <text x="326" y="173" fill="#e8e8e8" font-size="19">What is the renewal notice period in the Northern region contract?</text>
+  <rect x="1090" y="136" width="130" height="60" rx="10" fill="#fff"/><text x="1122" y="173" font-size="19" fill="#000">Ask</text>
+  <text x="304" y="246" fill="#8a8a8a" font-size="15" letter-spacing="1">ANSWER</text>
+  <rect x="304" y="262" width="1080" height="210" rx="12" fill="#161616" stroke="#2a2a2a"/>
+  <text x="330" y="310" fill="#fff" font-size="22">The notice period is 90 days before the renewal date.</text>
+  <text x="330" y="348" fill="#b5b5b5" font-size="18">Clause 14.2 was amended in the second addendum, which replaced the earlier 60 days.</text>
+  <g font-size="15"><rect x="330" y="384" width="230" height="34" rx="8" fill="#242f3a"/><text x="346" y="406" fill="#a8c0d6">Addendum 2, page 3</text><rect x="572" y="384" width="230" height="34" rx="8" fill="#242f3a"/><text x="588" y="406" fill="#a8c0d6">Master contract, page 41</text></g>
+  <text x="330" y="450" fill="#79c08a" font-size="15">Confidence 0.96 · Access checked · Logged</text>
+  <text x="304" y="526" fill="#8a8a8a" font-size="15" letter-spacing="1">HOW IT WAS ANSWERED</text>
+  <g fill="#1b1b1b" stroke="#333"><rect x="304" y="546" width="220" height="60" rx="8"/><rect x="592" y="546" width="220" height="60" rx="8"/><rect x="880" y="546" width="220" height="60" rx="8"/><rect x="1168" y="546" width="216" height="60" rx="8"/></g>
+  <g fill="#e0e0e0" font-size="17"><text x="326" y="583">Check access</text><text x="614" y="583">Retrieve sources</text><text x="902" y="583">Draft and cite</text><text x="1190" y="583">Score confidence</text></g>
+  <g stroke="#555" stroke-width="2"><path d="M524 576h68"/><path d="M812 576h68"/><path d="M1100 576h68"/></g>
+  <text x="304" y="660" fill="#8a8a8a" font-size="15" letter-spacing="1">WAITING FOR REVIEW</text>
+  <g fill="#161616" stroke="#2a2a2a"><rect x="304" y="676" width="1080" height="64" rx="10"/><rect x="304" y="750" width="1080" height="64" rx="10"/><rect x="304" y="824" width="1080" height="64" rx="10"/></g>
+  <g fill="#d8d8d8" font-size="17"><text x="326" y="714">Which supplier terms changed this quarter?</text><text x="326" y="788">Who approves credit above the regional limit?</text><text x="326" y="862">What is the current overtime policy for contractors?</text></g>
+  <g fill="#a8927c" font-size="15"><text x="1250" y="714">Confidence 0.71</text><text x="1250" y="788">Confidence 0.64</text><text x="1250" y="862">Confidence 0.58</text></g>
+</svg>
