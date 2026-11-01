@@ -1,12 +1,13 @@
 'use client'
 
-// Scale module 872447 (ChecklistWithMedia, in 3_bsw0kgw5l_w.js). The `mockup` image branch (720912) is not ported: no page using this needs it yet.
+// Scale module 872447 (ChecklistWithMedia, in 3_bsw0kgw5l_w.js).
 import Image from 'next/image'
 import type { ReactNode } from 'react'
 import { useThemeStore } from '../lib/themeStore'
+import { BrowserFrame } from './BrowserFrame'
 
 export type ChecklistFeature = { title: string; description: string }
-export type ChecklistImage = { src: string; alt: string; width: number; height: number }
+export type ChecklistImage = { src: string; alt: string; width: number; height: number; mockup?: boolean; mockupUrl?: string }
 
 export function ChecklistWithMedia({
   features,
@@ -52,7 +53,13 @@ export function ChecklistWithMedia({
       {children ? <div>{children}</div> : null}
     </div>
   )
-  const media = (
+  const media = image.mockup ? (
+    <div className="w-full md:w-7/12">
+      <BrowserFrame url={image.mockupUrl}>
+        <Image src={image.src} alt={image.alt} width={image.width} height={image.height} className="object-cover w-full h-auto rounded-xl" />
+      </BrowserFrame>
+    </div>
+  ) : (
     <div className="flex justify-center w-full p-2 md:w-7/12">
       <Image src={image.src} alt={image.alt} width={image.width} height={image.height} className="w-full h-auto" />
     </div>
