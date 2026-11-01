@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef } from 'react'
 import { useRefreshOnPageGrow } from '@/lib/useRefreshOnPageGrow'
 import ArrowCta, { type ArrowCtaHandle } from './ArrowCta'
 import BorderCta, { type BorderCtaHandle } from './BorderCta'
-import { gsap, ScrollTrigger, playCascade, prepareCascade, reducedMotion } from './motion'
+import { gsap, ScrollTrigger, playCascade, prepareCascade, reducedMotion, retroactiveEnter } from './motion'
 import styles from './styles.module.css'
 
 type Cta = { label: string; href: string }
@@ -31,7 +31,7 @@ type Props = {
 // scale.com FullBleedMediaSection inside a ClipScrollSection (chunk 37xz28pjbnlx4.js):
 //   clip:  inset((1 - p) * 0.5 * startPercentage % round 1.5rem), root `top bottom` -> `center center`
 //   media: scale 1.25 -> 1 over the same range (onUpdate, clamped linear map of progress)
-//   text:  section `top center` (retroactiveOnEnter, once): heading + body AnimatedText cascade (body +0.2s);
+//   text:  section `top center` (retroactiveOnEnter, runs once): heading + body AnimatedText cascade (body +0.2s);
 //          both CTAs start at delay 0.5s / 0.85s: arrow "filledWhiteArrow", border "fadeIn"
 //   overlay: .media-overlay linear-gradient(transparent 0% -> black 100%) over the image
 export default function FullBleedMedia({
@@ -60,6 +60,7 @@ export default function FullBleedMedia({
   useLayoutEffect(() => {
     if (reducedMotion()) return
     let cancelled = false
+    let offRetro = () => {}
     const splits: { revert: () => void }[] = []
     const ctx = gsap.context(() => {})
     const apply = (p: number) => {
@@ -86,21 +87,23 @@ export default function FullBleedMedia({
         const p = para.current && prepareCascade(para.current)
         if (h) splits.push(h.split)
         if (p) splits.push(p.split)
-        ScrollTrigger.create({
-          trigger: section.current,
-          start: 'top center',
-          once: true,
-          onEnter: () => {
-            arrowRef.current?.play(0.5)
-            borderRef.current?.play(0.5)
-            if (h) playCascade(h, 0)
-            if (p) playCascade(p, 0.2)
-          },
-        })
+        let played = false
+        const enter = () => {
+          if (played) return
+          played = true
+          arrowRef.current?.play(0.5)
+          borderRef.current?.play(0.5)
+          if (h) playCascade(h, 0)
+          if (p) playCascade(p, 0.2)
+        }
+        // useScrollTrigger (module 210104): start `top center`, default end `bottom 20%`, retroactiveOnEnter
+        const st = ScrollTrigger.create({ trigger: section.current, start: 'top center', end: 'bottom 20%', onEnter: enter })
+        offRetro = retroactiveEnter(st, enter)
       })
     })
     return () => {
       cancelled = true
+      offRetro()
       ctx.revert()
       splits.forEach((sp) => sp.revert())
     }
@@ -136,7 +139,7 @@ export default function FullBleedMedia({
                   <div
                     className={`pointer-events-none absolute inset-0 z-10 h-full w-full rounded-3xl ${styles.roundClip} ${styles.mediaOverlay}`}
                   />
-                  <div ref={media} className={`absolute inset-0 h-full w-full overflow-hidden rounded-3xl ${styles.roundClip}`}>
+                  <div ref={media} data-qa="media" className={`absolute inset-0 h-full w-full overflow-hidden rounded-3xl ${styles.roundClip}`}>
                     <div
                       className={`relative h-full w-full rounded-3xl bg-[#193a29] ${styles.roundClip}`}
                     >

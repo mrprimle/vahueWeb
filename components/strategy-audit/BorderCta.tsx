@@ -1,20 +1,29 @@
 'use client'
 
-import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { gsap, reducedMotion } from './motion'
 
 export type BorderCtaHandle = { prepare: () => void; play: (delay?: number) => gsap.core.Tween | null }
 
-type Phase = 'rest' | 'in' | 'out' | 'reset'
-
-// scale.com FlatCta, variant "border", theme "white", intro "fadeIn" (chunk 1h0nvyhf5gbrf.js):
+// scale.com FlatCta, variant "border", theme "white", intro "fadeIn" (chunk 1h0nvyhf5gbrf.js, module 892855;
+// byte-identical to the rlenvironments / automotive audits' copy):
 //   intro: autoAlpha 0 -> 1, 0.85s power2.out (delay 0.5s, same call as the arrow CTA)
-//   hover: a current-colour sheet (opacity 30%) rises from below (translate-y-full -> 0) and
-//          leaves through the top (-translate-y-full), 300ms ease-out; label scales to 0.9 (300ms ease-out)
+//   hover state machine, same as Scale's:
+//     hovered -> the 30% current-colour wash rises translateY(100%) -> 0 (300ms ease-out)
+//     leaving -> it exits through the top (-100%); resetting -> it snaps back to +100% with no transition,
+//                released after two rAFs. The reset runs on the 680ms timer: Scale also listens for the wash's
+//                `transform` transitionend, but its Tailwind 4 translate-* classes animate the `translate`
+//                property, so that handler never matches (measured on the automotive audit).
+//     Re-entering while the wash is still leaving snaps it back first, so it always rises from below.
+//   label: CSS group-hover scale 0.9 (300ms ease-out)
 //   box:   1px white border, r6, px-4 py-2, label 14 / 1.5 medium
 const BorderCta = forwardRef<BorderCtaHandle, { href: string; label: string }>(function BorderCta({ href, label }, ref) {
   const root = useRef<HTMLAnchorElement>(null)
-  const [phase, setPhase] = useState<Phase>('rest')
+  const [hovered, setHovered] = useState(false)
+  const [leaving, setLeaving] = useState(false)
+  const [resetting, setResetting] = useState(false)
+  const pending = useRef(false)
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useImperativeHandle(ref, () => ({
     prepare() {
@@ -35,26 +44,84 @@ const BorderCta = forwardRef<BorderCtaHandle, { href: string; label: string }>(f
     },
   }))
 
-  const sweep = phase === 'in' ? 'translate-y-0' : phase === 'out' ? '-translate-y-full' : 'translate-y-full'
+  const clear = () => {
+    if (timer.current != null) clearTimeout(timer.current)
+    timer.current = null
+  }
+  useEffect(() => clear, [])
+
+  const finishLeave = useCallback(() => {
+    if (!pending.current) return
+    clear()
+    pending.current = false
+    setLeaving(false)
+    setResetting(true)
+  }, [])
+
+  useEffect(() => {
+    if (!resetting) return
+    let b = 0
+    const a = requestAnimationFrame(() => {
+      b = requestAnimationFrame(() => setResetting(false))
+    })
+    return () => {
+      cancelAnimationFrame(a)
+      cancelAnimationFrame(b)
+    }
+  }, [resetting])
+
+  const enter = useCallback(() => {
+    clear()
+    setResetting(pending.current)
+    pending.current = false
+    setLeaving(false)
+    setHovered(true)
+  }, [])
+
+  const leave = useCallback(() => {
+    setHovered(false)
+    if (resetting) return
+    setLeaving(true)
+    pending.current = true
+    clear()
+    timer.current = setTimeout(() => {
+      timer.current = null
+      finishLeave()
+    }, 680)
+  }, [resetting, finishLeave])
+
+  const washTransform = resetting
+    ? 'translateY(100%)'
+    : hovered
+      ? 'translateY(0)'
+      : leaving
+        ? 'translateY(-100%)'
+        : 'translateY(100%)'
 
   return (
     <a
       ref={root}
       href={href}
-      onPointerEnter={() => setPhase('in')}
-      onPointerLeave={() => {
-        setPhase('out')
-        window.setTimeout(() => setPhase((p) => (p === 'out' ? 'reset' : p)), 360)
-      }}
+      data-qa="cta-border"
+      onPointerEnter={enter}
+      onPointerLeave={leave}
       className="group/cta relative inline-flex h-max w-fit cursor-pointer items-center justify-center overflow-hidden rounded-md border border-white text-white"
     >
       <div
         aria-hidden
-        className={`pointer-events-none absolute inset-0 z-0 size-full rounded-[inherit] bg-current opacity-30 ease-out motion-reduce:transition-none ${sweep} ${phase === 'reset' ? 'transition-none' : 'transition-transform'}`}
-        style={{ transitionDuration: phase === 'reset' ? '0ms' : '300ms' }}
+        data-qa="cta-border-wash"
+        className="pointer-events-none absolute inset-0 z-0 size-full rounded-[inherit] bg-current opacity-30 ease-out motion-reduce:transition-none"
+        style={{
+          transform: washTransform,
+          transitionProperty: resetting ? 'none' : 'transform',
+          transitionDuration: resetting ? '0ms' : '300ms',
+        }}
       />
       <div className="relative z-[1] inline-flex items-center justify-center px-4 py-2">
-        <span className="relative z-[1] block origin-center transform-gpu self-center text-nowrap text-[14px] font-medium capitalize leading-[1.5] transition-transform duration-300 ease-out group-hover/cta:scale-90 motion-reduce:transition-none motion-reduce:group-hover/cta:scale-100">
+        <span
+          data-qa="cta-border-label"
+          className="relative z-[1] block origin-center transform-gpu self-center text-nowrap text-[14px] font-medium capitalize leading-[1.5] transition-transform duration-300 ease-out group-hover/cta:scale-90 motion-reduce:transition-none motion-reduce:group-hover/cta:scale-100"
+        >
           {label}
         </span>
       </div>

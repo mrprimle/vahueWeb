@@ -48,3 +48,15 @@ export function playCascade(
   tl.add(() => gsap.set([...split.lines, ...split.words], { clearProps: 'color' }))
   return tl
 }
+
+// scale.com useScrollTrigger hook (chunk 37xz28pjbnlx4.js, module 210104) with retroactiveOnEnter: besides
+// ScrollTrigger's own onEnter, it fires onEnter on every refresh once the trigger's progress > 0 or the scroll is
+// at/after start - 1, so a page loaded or restored below the section still plays the intro. Callers guard repeats.
+export function retroactiveEnter(st: ScrollTrigger, fire: () => void) {
+  const check = () => {
+    if (st.progress > 0 || st.scroll() >= st.start - 1) fire()
+  }
+  ScrollTrigger.addEventListener('refresh', check)
+  check()
+  return () => ScrollTrigger.removeEventListener('refresh', check)
+}
