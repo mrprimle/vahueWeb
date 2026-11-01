@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { scaleContent as content } from '@/components/pages/data-engine/content.scale'
+import { content } from '@/components/pages/data-engine/content'
 import { DataEnginePage } from '@/components/pages/data-engine/DataEnginePage'
 
 export const metadata: Metadata = { title: content.meta.title, description: content.meta.description }

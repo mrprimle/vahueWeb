@@ -58,7 +58,7 @@ export function DataEnginePage({ content: c }: { content: DataEngineContent }) {
                   <p className="body2-regular mt-4 text-scale-gray-30">{c.best.body}</p>
                 </div>
                 <div className="flex min-h-[360px] items-center justify-center lg:min-h-[560px]">
-                  <Image src={c.best.image.src} alt={c.best.image.alt} width={c.best.image.width} height={c.best.image.height} quality={85} className="h-auto w-full max-w-[760px] object-contain" />
+                  <Image src={c.best.image.src} alt={c.best.image.alt} width={c.best.image.width} height={c.best.image.height} className="h-auto w-full max-w-[760px] object-contain" />
                 </div>
               </div>
               <div className="grid gap-3 md:grid-cols-2 lg:gap-4">
@@ -111,7 +111,7 @@ export function DataEnginePage({ content: c }: { content: DataEngineContent }) {
             <SectionTitle overtitle={c.whatIs.overtitle} title={c.whatIs.title} subtitle={c.whatIs.subtitle} className="!mt-0 !mb-10" />
             <div className="mx-auto mt-12 max-w-[1216px]">
               <div className="mx-auto max-w-[980px]">
-                <Image src={c.whatIs.image.src} alt={c.whatIs.image.alt} width={c.whatIs.image.width} height={c.whatIs.image.height} quality={85} className="h-auto w-full" />
+                <Image src={c.whatIs.image.src} alt={c.whatIs.image.alt} width={c.whatIs.image.width} height={c.whatIs.image.height} className="h-auto w-full" />
               </div>
               <div className="mt-12">
                 <p className="detail-mono text-center text-scale-gray-30">{c.whatIs.label}</p>

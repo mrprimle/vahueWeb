@@ -1,4 +1,5 @@
-// Scale's original strings for https://scale.com/data-engine (RSC payload, 2026-11-01).
+// Scale's original strings for https://scale.com/data-engine (RSC payload, 2026-11-01). The page renders content.ts.
+// Its logo files and diagram image left public/ at the fill commit; they are in commit 7b500fa.
 import type { DataEngineContent } from './types'
 
 export const scaleContent: DataEngineContent = {
