@@ -46,7 +46,7 @@ const benefitPhoto = (src: string, alt: string) => (
 )
 
 const link = (href: string, label: string) => (
-  <a href={href} className="underline transition-colors hover:text-[color:var(--car-fg-2)]">
+  <a href={href} className="underline transition-colors hover:text-[color:var(--car-fg-2)] focus-visible:[outline:revert]">
     {label}
   </a>
 )
@@ -68,7 +68,7 @@ export const vahueCareersContent: CareersContent = {
     body: 'At Vahue, we value personalities, foster growth, build stable partnerships, and love what we do.',
     imageBg: '#193A29',
     media: photo('/img/careers/team-vahue-mi.png', 'The Vahue team celebrating together', '100vw', { priority: true, position: 'center 40%' }),
-    cta: { label: 'View open vacancies', href: '#open-roles', smoothScrollTargetId: 'open-roles' },
+    cta: { label: 'View open vacancies', href: '/careers/#open-roles', smoothScrollTargetId: 'open-roles' },
   },
   news: {
     overtitle: 'Case studies',
