@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useRef } from 'react'
 import ArrowCta, { type ArrowCtaHandle } from './ArrowCta'
-import { gsap, ScrollTrigger, playCascade, prepareCascade, reducedMotion } from './motion'
+import { gsap, ScrollTrigger, playCascade, prepareCascade, reducedMotion, retroactiveEnter } from './motion'
 import styles from './styles.module.css'
 
 type Props = {
@@ -36,6 +36,7 @@ export default function FullBleedMedia({ image, title, body, cta, backdrop, wrap
   useLayoutEffect(() => {
     if (reducedMotion()) return
     let cancelled = false
+    let offRetro = () => {}
     const splits: { revert: () => void }[] = []
     const ctx = gsap.context(() => {})
     const startPercentage = startPct ?? (priority ? 0 : 10)
@@ -71,16 +72,17 @@ export default function FullBleedMedia({ image, title, body, cta, backdrop, wrap
         const p = para.current && prepareCascade(para.current)
         if (h) splits.push(h.split)
         if (p) splits.push(p.split)
-        ScrollTrigger.create({
-          trigger: section.current,
-          start: 'top center',
-          once: true,
-          onEnter: () => {
-            ctaRef.current?.play(0.5)
-            if (h) playCascade(h, 0)
-            if (p) playCascade(p, 0.2)
-          },
-        })
+        let played = false
+        const enter = () => {
+          if (played) return
+          played = true
+          ctaRef.current?.play(0.5)
+          if (h) playCascade(h, 0)
+          if (p) playCascade(p, 0.2)
+        }
+        // useScrollTrigger (module 210104): start `top center`, default end `bottom 20%`, retroactiveOnEnter
+        const st = ScrollTrigger.create({ trigger: section.current, start: 'top center', end: 'bottom 20%', onEnter: enter })
+        offRetro = retroactiveEnter(st, enter)
       })
     })
     // Sections above (lazy images, sliders, fonts) grow after these triggers are created, which left the
@@ -97,6 +99,7 @@ export default function FullBleedMedia({ image, title, body, cta, backdrop, wrap
     heightWatch.observe(document.body)
     return () => {
       cancelled = true
+      offRetro()
       heightWatch.disconnect()
       clearTimeout(refreshTimer)
       ctx.revert()

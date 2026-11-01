@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useKeenSlider } from 'keen-slider/react'
 import { WheelControls } from './keenWheel'
 import { demos } from './content'
@@ -14,10 +14,22 @@ function Poster() {
   return <div aria-hidden className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_40%,#1a1530_0%,#07050f_70%)]" />
 }
 
-function Player({ title, className = '' }: { title: string; className?: string }) {
+// scale.com ResponsiveVideo -> WistiaPlayer (chunk 30w17vppvfdah.js, module 832862): a poster button that swaps itself
+// for the Wistia iframe (`?autoPlay=1`) on click, or straight away when rendered with autoPlay.
+function Player({ title, autoPlay = false, className = '' }: { title: string; autoPlay?: boolean; className?: string }) {
+  const [playing, setPlaying] = useState(autoPlay)
+  if (playing) {
+    // TODO: Vahue demo video. Scale embeds its own Wistia product videos here; the frame keeps the iframe's box.
+    return (
+      <div className={`relative aspect-video w-full overflow-hidden rounded-2xl ${className}`} data-qa="demo-playing">
+        <Poster />
+      </div>
+    )
+  }
   return (
     <button
       type="button"
+      onClick={() => setPlaying(true)}
       aria-label={`Play ${title}`}
       className={`group relative block aspect-video w-full cursor-pointer overflow-hidden rounded-2xl bg-[#f2f2f2] ${className}`}
     >
@@ -32,8 +44,12 @@ function Player({ title, className = '' }: { title: string; className?: string }
 // scale.com VideoGallery (chunk 30w17vppvfdah.js): Keen Slider, rubberband off,
 //   <640 perView 1 / spacing 32 / snap / centered, 640-767 perView 2 free,
 //   768-1040 perView 3.1 snap, >=1041 perView 3 snap. Inactive slides 50% (70% on hover).
+//   Slide click: select it; on >=640px also autoplay the main player and window.scrollTo({ behavior: 'smooth' })
+//   the gallery root to 16px below the viewport top. slideChanged selects the slide and clears autoplay.
 export default function Demos() {
   const [active, setActive] = useState(0)
+  const [autoPlay, setAutoPlay] = useState(false)
+  const gallery = useRef<HTMLDivElement>(null)
   const [created, setCreated] = useState(false)
   const [mobile, setMobile] = useState(false)
   const [cursor, setCursor] = useState(demos.items.length > 3 ? 'grab' : 'default')
@@ -51,7 +67,10 @@ export default function Demos() {
     created: () => setCreated(true),
     dragStarted: () => setCursor('grabbing'),
     dragEnded: () => setCursor('grab'),
-    slideChanged: (s) => setActive(s.track.details.abs),
+    slideChanged: (s) => {
+      setActive(s.track.details.abs)
+      setAutoPlay(false)
+    },
     breakpoints: {
       '(min-width: 0px) and (max-width: 639px)': { slides: { perView: 1, spacing: 32 }, mode: 'snap' },
       '(min-width: 640px) and (max-width: 767px)': { slides: { perView: 2, spacing: 32 }, mode: 'free' },
@@ -64,14 +83,20 @@ export default function Demos() {
     <section className={SECTION}>
       <div className={`${CONTAINER} relative`}>
         <SectionHeader eyebrow={demos.eyebrow} title={demos.title} eyebrowClassName="text-black" />
-        <div className="relative">
+        <div ref={gallery} data-qa="gallery" className="relative">
           <div className="relative mb-12 flex flex-col gap-y-10 sm:mb-0">
-            <Player key={active} title={demos.items[active].title} className={`hidden sm:block ${styles.fadeIn}`} />
+            <Player key={demos.items[active].title} title={demos.items[active].title} autoPlay={autoPlay} className={`hidden sm:block ${styles.fadeIn}`} />
             <div ref={sliderRef} style={{ cursor }} className={`keen-slider ${styles.keen}`}>
               {demos.items.map((d, i) => (
                 <div
                   key={d.title}
-                  onClick={() => setActive(i)}
+                  onClick={() => {
+                    setActive(i)
+                    if (mobile) return
+                    setAutoPlay(true)
+                    const el = gallery.current
+                    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 16, behavior: 'smooth' })
+                  }}
                   className={`keen-slider__slide grid h-fit cursor-pointer !overflow-visible opacity-100 transition-opacity duration-300 ${active !== i ? 'hover:opacity-70 sm:opacity-50' : ''}`}
                 >
                   {mobile ? (

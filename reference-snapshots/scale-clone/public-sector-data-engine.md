@@ -30,12 +30,12 @@ Header and footer come from the shared clone layout.
 | Full-bleed heading + body (AnimatedText default intro) | section `top center`, once, retroactive | — | lines `yPercent 400, opacity 0`, words `x 30%, opacity 0`, colour `#72CE7B` → line i at `0.08·i`: line `yPercent 0, opacity 1` 1s; words at +0.04 `x 0, opacity 1` 0.9s stagger 0.03; colour → `#79648C` (+0.22 line / +0.238 words, 0.3276s / 0.29484s) → own colour (0.4524s / 0.40716s) | `power3.out` (moves), `power1.inOut` (colour) | — |
 | Body | same | — | same, delay 0.2s | | |
 | CTA "filledWhiteArrow" intro | same, delay 0.5s | — | root `autoAlpha 0, scaleX 0, borderRadius 0` (origin left) → `1, 1, 8`; inner counter `scaleX 0 → 1` at +0.1; label opacity at 0.75; chevron `x −6 → 0` | root `power2.out` 0.85s; chevron `power3.inOut` 0.85s | — |
-| CTA hover | pointerenter / leave | — | 35% current-colour sheet `-100% → 0` on enter, `0 → +100%` on leave (then snaps back); chevron track `-50% → 0` | CSS `ease-out` 600ms | — |
+| CTA hover | pointerenter / leave | — | 35% current-colour sheet `-100% → 0` on enter, `0 → +100%` on leave, snapped back to `-100%` by the 680ms timer; re-entry during a leave snaps it back first; chevron track `-50% → 0` on enter, snaps back on leave | CSS `ease-out` 600ms | — |
 | Testimonial panel | inner column | `top bottom` → `bottom 75%` | `width 90%` → `100%` | `power3.out`, 1.15 | scrub |
 | Testimonial quote | wrapper `top 80%`, once | — | lines (masked) `rotationX −90, yPercent 108, transformPerspective 900, origin 50% 100%` → `0, 0` | `power2.out` 0.48s, stagger 0.05, delay 0.35 | — |
 | Testimonial name | same | — | same flip | delay 0.5 | — |
 | Testimonial tile fill | same | — | `y 100% → 0` | 0.3s | — |
-| Testimonial role pill | same | — | text types in (Scale `animateToText`) | approximated: clip reveal 0.6s `power2.out`, delay 0.35 | — |
+| Testimonial role pill | same | — | ClientName `animateToText`: empty pill (26px) → width 20 → text set → width `textWidth + 26` | width tweens 0.5s `power3.out` (delay 0.05), 10ms gap, text opacity 0.5s `none` | — |
 | Demo slides | hover / select | — | inactive 50% → 70% hover → 100% active | CSS opacity 0.3s | — |
 | Main player | slide change | — | `fadeIn` keyframe 0 → 1 | 0.6s ease-out | — |
 | Resources track | Keen `created` (or 1s fallback) | — | opacity 0.5 → 1 | 0.3s ease-in-out | — |
@@ -68,8 +68,7 @@ Screenshots at every 100% viewport over the page body, both sites, at 1440 and 3
 ## Remaining gaps
 - Placeholder imagery: the demo posters and resource thumbnails are plain panels (see Assets), and the logo wall uses tiles.
 - `why-scale.png` is still Scale's diagram, and its labels are Scale copy. It needs a Vahue replacement.
-- Testimonial role pill: Scale types the text in (`animateToText`); the clone uses a left-to-right clip reveal.
-- The Wistia player is not reproduced. The play buttons are inert.
+- The Wistia player is not reproduced: a play click (or a thumbnail click on ≥640px) swaps the poster button for a placeholder frame of the iframe's box, where Scale loads `fast.wistia.net/embed/iframe/<id>?autoPlay=1`.
 - On mobile, Scale's active demo dot is white on a white page, so it's invisible. This is copied as-is.
 - The resources radial wash (white on white, opacity 30, invisible) is omitted.
 
@@ -110,3 +109,78 @@ Overlay computed `background-color: rgba(0,0,0,0)`.
 - **Confirmed:** the overlay is gradient only (`.mediaOverlay`), media scale 1.25 → 1, the Keen options, and the AnimatedText cascade.
 - QA re-shot: `qa/public-sector-data-engine/1440-{scale,clone}-rea-{hero,prefooter}.jpg`.
 - **Still unknown:** none on the motion side.
+
+
+## Interaction inventory (audit 2026-11-01)
+
+Method: REA on fresh CDP 9230 tabs. `analyze_web_bundle` (ev_47d27eb825ff…, 56/56 scripts parsed, 0 failures). Chunks read by sha256: FlatCta/AnimatedText `1h0nvyhf5gbrf.js` (`10b2627a…`) and FullBleed/ClipScroll/useScrollTrigger `37xz28pjbnlx4.js` (`b234eef5…`). Both are byte-identical to the chunks in the security and rlenvironments audits, so their FlatCta and retroactive-intro findings carry over. ClientTestimonials `3_bsw0kgw5l_w.js` (`a08f46ff…`), module 685963, is the same code as data-engine's `1a9k8nwrsxal6.js` copy: same length, and the only differences are minifier variable names. Keen/VideoGallery/ResourcesSlider/ArrowLink are in `30w17vppvfdah.js` (`47631648…`), and WheelControls is in `3d2zty6gdk3do.js` (`056791f3…`). `inspect_web_event_listeners` ran on every section root and its interactive children (ids below), and each handler was traced into the downloaded chunks. Playwright then ran identical inputs on scale.com and the clone (script `scratchpad/psde-audit/qa.js`) at 1440×900, plus 390×844 for the testimonial:
+- CTA enter, leave and re-enter, sampled at 100/300/650ms and 100/300/640/760ms
+- CTA focus
+- logo link hover
+- testimonial state before and after select, sampled 50–1800ms, plus a tile click
+- demo slide hover and thumbnail click
+- main play click
+- resources drag, horizontal wheel, vertical wheel, focus and Tab/Shift+Tab
+- a 3×3 mouse grid per 800px band down `<main>`, with a no-mouse control snapshot
+
+QA images: `qa/public-sector-data-engine/interactions/<name>-{scale,clone}.jpg`.
+
+Page-wide listeners: `html` has a passive `scroll` (`1h0nvyhf5gbrf.js`) plus OneTrust `keydown`/`click` (ev_c8469d6091b…); `body` has a passive `touchstart` (ev_4e9c3d72aca9…). Section roots carry no direct listeners: `section.FullBleedMediaSection` (ev_7fc9ac51d0d3…) and `.ClientTestimonials` (ev_b2681990a54a…) have none. React's pointer/click handlers are delegated to the root. The mouse grid found **no pointer-tracking effect** anywhere on either site: the only nodes that changed are CSS hovers under the cursor (the play disc, and demo slides where a grid point landed on one), and the drift with no mouse is 0.
+
+### 1 · Hero / 8 · Pre-footer (FullBleedMediaSection, startPercentage 0 / 10)
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| clip + media | scroll scrub | ScrollTrigger via `html` scroll | `37xz28pjbnlx4.js` FullBleed / ClipScrollSection | see Motion and the REA samples above | yes (verified 2026-10-31) | `1440-*-rea-*` |
+| heading / body / CTA intro | scroll `top center` | useScrollTrigger (210104), `retroactiveOnEnter` | `37xz28pjbnlx4.js` / `1h0nvyhf5gbrf.js` | AnimatedText cascade (body +0.2s); CTA filledWhiteArrow 0.85s after 0.5s; refresh check `progress > 0 \|\| scroll ≥ start − 1`, default end `bottom 20%` | yes. **Fixed**: the retroactive refresh check was added (the clone used `once` only) | — |
+| FlatCta (arrow), both CTAs | pointerenter / pointerleave | React delegated; the node only has a HubSpot capture `mousedown` plus `click` (ev_e6d901f2f25…) | `1h0nvyhf5gbrf.js` mod 892855 | wash −100% → 0 → +100%, snapped back on the 680ms timer (Scale animates the CSS `translate` property, so its `transform` transitionend check never fires); strip −50% → 0, snaps back on leave; 600ms ease-out | yes. **Fixed**: the rlenvironments port. The 4-phase approximation became Scale's state machine with the re-entry snap, and the strip now snaps back instead of easing over 600ms | `1440-cta-hover-*` |
+| FlatCta focus | keyboard focus | — | CMSLink (internal) | `focus:outline-1 focus:outline-scale-skyblue` = 1px solid #86bff2 | yes. **Fixed**: added (`.ctaFocus`). Both sites read `solid 1px rgb(134,191,242)` | — |
+
+Samples, wash and strip as a fraction of their own width:
+- Enter at 100/300/650ms: wash Scale −0.612 / −0.182 / 0, clone −0.612 / −0.182 / 0; strip Scale −0.306 / −0.091 / 0, clone −0.306 / −0.091 / 0.
+- Leave at 100/300/640/760ms: wash Scale 0.388 / 0.818 / 1 / −1, clone 0.388 / 0.818 / 1 / −1; the strip is at −0.5 from the first sample on both.
+- Re-enter 200ms into a leave: at +30ms the wash is −1 on both (strip −0.447 / −0.447); at +330ms the wash is −0.182 on both.
+
+### 2 · Logo wall
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| "Meet our customers" ArrowLink | hover | HubSpot `mousedown` + `click` (ev_36947b374be3…) | `30w17vppvfdah.js` mod 890803, theme `light` | `text-link` #008eff, `hover:text-blue-700`; Scale's CSS has **no** `blue-700` rule, so the colour stays #008eff; the arrow moves translate-x 4px (300ms ease-out; 3.36px at 150ms on both) | yes. **Fixed**: the clone darkened the link to #1d4ed8 on hover | `1440-logo-hover-*` |
+| mobile marquee | time | — | react-fast-marquee | 50px/s linear | yes (CSS keyframes) | — |
+
+### 3 · Product overview · 4 · Why (ChecklistWithMedia)
+No listeners, no hover, no scroll or pointer effects (grid: 0 changes). Matched (none).
+
+### 5 · Testimonial (ClientTestimonials, `3_bsw0kgw5l_w.js` mod 685963)
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| panel | scroll scrub | ScrollTrigger | 685963 | width 90% → 100%, power3.out, `top bottom → bottom 75%` | yes (verified 2026-10-31) | — |
+| select | scroll `top 80%` | useScrollTrigger (not retroactive), end `bottom 20%`; onEnter selects 0 while the index is −1 | 685963 | quote flip delay 0.35, name flip delay 0.5, role pill `animateToText` delay 0.05 | yes. **Fixed**: the pill typed-in sequence is now exact (it was a clip reveal), and it renders empty until the select. Pill width at 50/200/400/600ms: Scale 20 / 60 / 130 / 138, clone 20 / 57 / 100 / 104 (the final widths differ only because the copy differs) | `1440-tm-selected-*`, `390-tm-selected-*` |
+| unselected layout | — | — | 685963 | at index −1 the quote wrapper is `overflow-hidden lg:absolute lg:inset-0` and the name wrapper `absolute inset-0 overflow-hidden`, so the panel grows on select | yes. **Fixed**: the panel height before select is 518px on Scale and 518px on the clone at 1440 (it was 699). At 390 the height grows +20px on both | — |
+| tile (`[role=tab]`, desktop + mobile lists) | state | HubSpot `mousedown` + `click` only (ev_ca345dd5c9f…) | 685963 `u` | inactive: `aria-selected=false`, `tabindex −1`, label #000, fill parked at y 100% (x 100% at ≤768px); active: label #839CB2, fill 100% → 0 on that axis, 0.3s | yes. **Fixed**: the clone was always selected with a slate label, and its mobile fill moved on y | — |
+| tile | click | React `onClick` | 685963 `ei` | Lenis `scrollTo(root, { offset: -24 })` (and the root's `scroll-mt-28`), then select | yes. **Fixed**: the click was missing. Clicking from the root at −150px lands at 136px on both sites (1440 and 390) | — |
+| tile | focus-visible | — | 685963 | `outline-2 outline-offset-2 outline-white/80` | yes. **Fixed**: added | — |
+| arrows (prev/next) | — | — | 685963 `o` | only rendered with more than one testimonial; this page has one | n/a | — |
+
+### 6 · Demos (VideoGallery, `30w17vppvfdah.js` mod 482270)
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| slider | drag / wheel | Keen core (`click` capture, `dragstart`, `ksDrag*`, `mouse*`, `touch*`) + non-passive `wheel` from WheelControls `3d2zty6gdk3do.js:665` (ev_3a8de9ee8a7…) | Keen 6 + module 29713 | see Keen options; three slides at perView 3 on desktop, so nothing moves at 1440 | yes | — |
+| slide | hover | React `onClick` only (ev_7c8716135db2…) | 482270 | inactive `sm:opacity-50 hover:opacity-70`, 300ms; measured `[1, .7, .5]` on both | yes | — |
+| slide | click | React `onClick` | 482270 | select; on ≥640px also `autoPlay` the main player and `window.scrollTo({ top: rootTop − 16, behavior: 'smooth' })`. Measured: the root lands at 16px on both, slides `[.5, 1, .5]` | yes. **Fixed**: the autoplay and the smooth scroll were missing | — |
+| main player | hover / click | React `onClick` | 832862 WistiaPlayer | disc `bg-black/50 → /70` 200ms; click (or autoPlay) swaps the button for `div.relative.aspect-video.rounded-2xl` holding the Wistia iframe | partly. **Fixed**: the click now swaps to the playing state, but the frame is a placeholder (no Wistia, see Remaining gaps) | — |
+| mobile dots | click | React | 482270 | `moveToIdx(i)` | yes | — |
+
+### 7 · Resources (ResourcesSlider, `30w17vppvfdah.js` mod 382790)
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| track | drag | Keen core + WheelControls `wheel` (ev_6859cb14, 2026-10-31) | Keen 6 | free mode at 1440 (perView 2.8, spacing 24). Drag 400px over 300ms: −360 while dragging, −579 (max) after release on both; cursor grab → grabbing → grab on both | yes | `1440-res-after-drag-*` |
+| track | horizontal wheel | WheelControls | 29713 | deltaX replayed as `ksDrag` (preventDefault when deltaX ≠ 0, drag ends 50ms after the last event). 6 × 40px: Scale −380 / −425, clone −385 / −514 across two runs (free-mode momentum is timing-sensitive) | yes (same plugin code) | — |
+| track | vertical wheel | — | — | the page scrolls (160px on both) and the track stays put | yes | — |
+| overflow wrapper | keydown Tab / Shift+Tab | `keydown` + `focusin` (ev_fadad1fea6f0…) | 382790 | Tab → `next()`, Shift+Tab → `prev()`; focusin on the first slide → `moveToIdx(minIdx)`, on the last → `maxIdx`. Measured focus first 0, Tab −483, Tab −579, Tab −579, Shift+Tab −483 on both | yes. **Fixed**: the `focusin` handler was missing | — |
+| track opacity | created / 1s fallback | — | 382790 | 0.5 → 1, 0.3s ease-in-out | yes | — |
+
+### Vahue page
+No Vahue page is built on this clone. `lib/automation-content.ts` PAGE_TEMPLATES and `components/automation/workflows/registry.ts` don't reference it, so there was nothing to port.
+
+### Not reproduced
+- Wistia playback: the "playing" state is a placeholder frame, because Scale's videos are its own product footage.
+- The pill timing at the moment of select differs by about ±50ms run to run on both sites, because the start is scroll-triggered through a React state update. The tween sequence and durations are identical.

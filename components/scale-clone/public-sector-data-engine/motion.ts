@@ -74,3 +74,15 @@ export function playFlip(split: SplitText, delay = 0) {
     delay,
   })
 }
+
+// scale.com useScrollTrigger hook (module 210104) with retroactiveOnEnter: besides ScrollTrigger's own onEnter,
+// it fires onEnter on every refresh once the trigger's progress > 0 or the scroll is at/after start - 1, so a
+// page loaded or restored below the section still plays the intro. Callers guard against repeats.
+export function retroactiveEnter(st: ScrollTrigger, fire: () => void) {
+  const check = () => {
+    if (st.progress > 0 || st.scroll() >= st.start - 1) fire()
+  }
+  ScrollTrigger.addEventListener('refresh', check)
+  check()
+  return () => ScrollTrigger.removeEventListener('refresh', check)
+}

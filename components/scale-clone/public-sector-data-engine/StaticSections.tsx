@@ -54,7 +54,9 @@ export function LogoWall() {
         <p className="mx-auto mb-12 w-full max-w-[698px] text-balance px-4 text-center text-[16px] leading-[1.65] tracking-[-0.01em] text-[#374151]">
           <span className="mr-2">{logos.lead}</span>
           <span className="inline">
-            <a href="#" className="group inline-flex items-center gap-1 text-[#008eff] transition-colors duration-300 hover:text-[#1d4ed8]">
+            {/* ArrowLink theme "light": `text-link hover:text-blue-700`, but Scale's CSS has no blue-700 rule, so the
+                colour stays #008eff on hover; only the arrow moves (translate-x 4px, 300ms ease-out). */}
+            <a href="#" data-qa="logo-link" className="group inline-flex items-center gap-1 text-[#008eff] transition-colors duration-300">
               <span className="font-medium">{logos.link}</span>
               <span aria-hidden className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1">
                 →

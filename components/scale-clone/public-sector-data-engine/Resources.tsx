@@ -10,7 +10,8 @@ import styles from './styles.module.css'
 // scale.com ResourcesSlider (chunk 30w17vppvfdah.js): Keen Slider, rubberband off,
 //   base perView 1.05 / spacing 24 / snap; >=640 1.4 free; >=768 2 free; >=1280 2.8 free.
 //   Track fades 50% -> 100% (0.3s ease-in-out) once created; grab / grabbing cursor;
-//   Tab / Shift+Tab step slides.
+//   Tab / Shift+Tab step slides (keydown on the overflow wrapper); focusin on the first / last slide moves to
+//   minIdx / maxIdx (REA ev_fadad1fea6f0: keydown + focusin on div.overflow-x-hidden).
 export default function Resources() {
   const [ready, setReady] = useState(false)
   const wrap = useRef<HTMLDivElement>(null)
@@ -42,10 +43,19 @@ export default function Resources() {
       if (e.shiftKey) slider.current.prev()
       else slider.current.next()
     }
+    // focusin on the first / last slide moves the track to its min / max index
+    const onFocus = (e: FocusEvent) => {
+      const s = slider.current
+      if (!s?.slides?.length || !s.track?.details) return
+      if (e.target === s.slides[0]) s.moveToIdx(s.track.details.minIdx)
+      if (e.target === s.slides[s.slides.length - 1]) s.moveToIdx(s.track.details.maxIdx)
+    }
     el?.addEventListener('keydown', onKey)
+    el?.addEventListener('focusin', onFocus)
     return () => {
       window.clearTimeout(t)
       el?.removeEventListener('keydown', onKey)
+      el?.removeEventListener('focusin', onFocus)
     }
   }, [slider])
 
@@ -57,7 +67,7 @@ export default function Resources() {
         </div>
         <div className="relative z-0 pl-6 lg:pl-[max(2rem,calc((100vw-80rem)/2+2rem))]">
           {/* Scale's white radial wash (opacity 30) sits here; it is invisible on a white page and is omitted. */}
-          <div ref={wrap} className="overflow-x-hidden">
+          <div ref={wrap} data-qa="res-wrap" className="overflow-x-hidden">
             <div
               ref={sliderRef}
               className={`keen-slider ${styles.keen} h-full cursor-grab ${ready ? 'opacity-100' : 'opacity-50'}`}

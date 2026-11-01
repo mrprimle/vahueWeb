@@ -83,3 +83,8 @@
     animation: none;
   }
 }
+
+/* CMSLink internal: focus:outline-1 focus:outline-scale-skyblue */
+.ctaFocus:focus {
+  outline: 1px solid #86bff2;
+}
