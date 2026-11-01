@@ -1,0 +1,48 @@
+/* Scale's CSS modules, from 0npdyq12us3md.css, and module 819615's styled-jsx block. */
+.chatBox {
+  background-color: #00000059;
+  box-shadow: inset 0 0 12px #ffffff14;
+}
+.chatBox::before,
+.chatBox::after {
+  content: '';
+  box-sizing: border-box;
+  border-radius: 10px;
+  position: absolute;
+  inset: 0;
+}
+.chatBox::before {
+  border: 1px solid #d1aad729;
+}
+.chatBox::after {
+  background: #bf53ff05;
+}
+
+.chatLight {
+  color: #010101;
+  box-shadow: none !important;
+  background: #fff !important;
+}
+.chatLight::before {
+  border: 0 !important;
+}
+.chatLight::after {
+  display: none !important;
+}
+.chatLight :global(.text-neutral-200),
+.chatLight :global(.text-zinc-400) {
+  color: #525252 !important;
+}
+.chatLight [class*='border-white'] {
+  border-color: #0000001f !important;
+}
+.chatLight [class*='bg-white\/5'] {
+  background-color: #0000000a !important;
+}
+
+.glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(50% 36.46%, #ffffff0a 0%, #05050b00 100%), radial-gradient(50% 38.81%, #ffffff14 0%, #05050b00 100%);
+}
