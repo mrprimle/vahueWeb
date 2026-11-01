@@ -23,7 +23,7 @@ gsap.registerPlugin(ScrollTrigger)
  * Intro: node from (xStartOffset, yStartOffset), scale 0, opacity .4 -> 0 / 1 / 1 (x 2s, y 1s, power4.inOut, delay
  *   node.delay); image scale 5 -> 1.2 (2s); clip inset(10px round 10%) -> 0 (1.6s power3.inOut); label + triangle
  *   follow. Edges draw in (dashoffset 1000 -> 0, 1.2s power2.out, delay 1.1 + .05 * target) and a black dash
- *   sweeps each edge forever (8s yoyo, delay 2 + .5 i). Headline/subtitle/CTA animateIn (1.2s; .75/.8/.9s).
+ *   sweeps each edge forever (8s yoyo, delay 2 + .5 i). Headline/subtitle/CTA animateIn (delays .75/.8/.9s; CTA .85s).
  * Scroll: hero pinned "top top" -> "bottom top" (pinSpacing false) with yPercent 0 -> -20 (power2.out), so the
  *   black pull-apart section slides over it.
  */
@@ -251,8 +251,31 @@ export default function Hero({ content: hero }: { content: HeroContent }) {
       })
     }
 
+    // Scale (module 291143): a ResizeObserver on the edges svg zeroes the idle clock, pauses the tick and resets
+    // each node-inner to x/y 0, scale 1; 250ms after the last resize it re-anchors the edges and resumes 500ms later.
+    let paused = false
+    let roTimer: ReturnType<typeof setTimeout> | undefined
+    let resumeTimer: ReturnType<typeof setTimeout> | undefined
+    let roFirst = true
+    const ro = new ResizeObserver(() => {
+      if (roFirst) return void (roFirst = false)
+      time = 0
+      paused = true
+      nodes.current.forEach((n) => {
+        const inner = n?.el()?.firstElementChild
+        if (inner) gsap.set(inner, { x: 0, y: 0, scale: 1 })
+      })
+      clearTimeout(roTimer)
+      clearTimeout(resumeTimer)
+      roTimer = setTimeout(() => {
+        updateEdges()
+        resumeTimer = setTimeout(() => void (paused = false), 500)
+      }, 250)
+    })
+    if (svg.current) ro.observe(svg.current)
+
     const tick = (_t: number, dt: number) => {
-      if (!visible) return
+      if (!visible || paused) return
       time += 1e-3 * dt
       NODES.forEach((_, i) => {
         const s = smoothed[i]
@@ -291,7 +314,8 @@ export default function Hero({ content: hero }: { content: HeroContent }) {
       await Promise.all([headRef.current?.ready(), bodyRef.current?.ready()])
       headRef.current?.animateIn({ delay: 0.75 })
       bodyRef.current?.animateIn({ delay: 0.8 })
-      ctaRef.current?.animateIn({ duration: 1.2, delay: 0.9 })
+      // HeadlineWithCta.animateIn ignores the hero's `duration: 1.2` and runs the CTA at {duration .85, delay delayCta .9}
+      ctaRef.current?.animateIn({ duration: 0.85, delay: 0.9 })
       nodes.current.forEach((n) => n?.animateIn())
       EDGES.forEach((e, i) => {
         const p = basePaths.current[i]
@@ -331,6 +355,9 @@ export default function Hero({ content: hero }: { content: HeroContent }) {
           .fromTo(arrowB.current, { y: '-100%' }, { y: '0%', duration: 0.5 }, 0)
 
     return () => {
+      ro.disconnect()
+      clearTimeout(roTimer)
+      clearTimeout(resumeTimer)
       clearTimeout(intro)
       window.removeEventListener('pointermove', onMove)
       gsap.ticker.remove(tick)
@@ -359,7 +386,7 @@ export default function Hero({ content: hero }: { content: HeroContent }) {
             >
               {hero.body}
             </AnimatedText>
-            <FlatCta ref={ctaRef} variant="arrow" theme={hero.ctaTheme ?? 'evergreen'} href={hero.cta.href} text={hero.cta.text} />
+            <FlatCta ref={ctaRef} as="button" navigate variant="arrow" theme={hero.ctaTheme ?? 'evergreen'} href={hero.cta.href} text={hero.cta.text} />
           </div>
         </div>
         <div className="graph absolute left-0 top-0 h-full w-full">

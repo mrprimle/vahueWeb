@@ -18,7 +18,7 @@ Captured 2026-10-31 at 1440×900 and 390×844 (Playwright + system Chrome, 50%-v
 | `.LogoCloud canvas` | `pointerdown`, `pointermove`, `pointerup`, `pointercancel` (drag-rotate) + `pointerdown`/`pointercancel`/`contextmenu`/`wheel` + `webglcontextlost/restored/creationerror` | `0sni47mcvnqwg.js` (scene), `3rls9s4y8-e83.js` (three controls, disabled), `3kd41k7ews14b.js:304` (three renderer). ev `ev_7fba34dba63…` |
 | `.EnterprisePullApart canvas` | `pointerdown`/`pointercancel`/`contextmenu`/`wheel` (controls, `enabled=false`) + webgl context events | `3rls9s4y8-e83.js`, `3kd41k7ews14b.js`. Pointer parallax is a window `pointermove`. ev `ev_001e33c864d…` |
 | BlogPreview3D Embla viewport | `click` (capture), `dragstart`, `mousedown`, `touchstart/move/end/cancel` (touchmove non-passive), `contextmenu` | Embla in `0sni47mcvnqwg.js`. ev `ev_e8bdbdd5e21…` |
-| Hero nodes / CTAs | none on the node (React root-delegated pointer events; FlatCta hover is CSS) | — |
+| Hero nodes / CTAs | none on the node (React root-delegated `onMouseEnter`/`onPointerEnter`; FlatCta is a React state machine, see the interaction inventory) | — |
 
 ## Sections (top → bottom; tops at 1440 / 390, Scale = clone)
 | # | Section | Top 1440 / 390 | Height 1440 / 390 | Notes |
@@ -41,7 +41,7 @@ Page height (main + shared footer): 1440 Scale 15509 / clone 15511; 390 Scale 15
 ## Motion
 | Element | Trigger | start → end | From → to | Ease / duration | Notes |
 |---|---|---|---|---|---|
-| Hero intro | page ready (~120ms) | — | nodes from (xStartOffset, yStartOffset), scale 0, opacity .4 → 0/1/1; image scale 5 → 1.2; clip `inset(10px round 10%)` → 0 | x/scale 2s, y 1s power4.inOut, delay node.delay; clip 1.6s power3.inOut | edges draw (dashoffset 1000 → 0, 1.2s power2.out, delay 1.1 + .05·target); black dash sweep 8s yoyo forever (delay 2 + .5i); headline/body/CTA animateIn .75/.8/.9 (CTA 1.2s) |
+| Hero intro | page ready (~120ms) | — | nodes from (xStartOffset, yStartOffset), scale 0, opacity .4 → 0/1/1; image scale 5 → 1.2; clip `inset(10px round 10%)` → 0 | x/scale 2s, y 1s power4.inOut, delay node.delay; clip 1.6s power3.inOut | edges draw (dashoffset 1000 → 0, 1.2s power2.out, delay 1.1 + .05·target); black dash sweep 8s yoyo forever (delay 2 + .5i); headline/body/CTA animateIn .75/.8/.9 (CTA .85s: HeadlineWithCta ignores the 1.2 duration) |
 | Hero pointer + idle | window `pointermove`, gsap.ticker | — | per node: smooth p at .3·C[i] (C = .027 .03 .01 .037 .02 .043 .046), offset p·20px·(1 + .4i)·smoothOut; idle sin/cos drift ·1.25·P[i], scale 1 + .05cos | smoothOut 0 → 1 over 4s sine.out from 1.7s | mobile: no pointer offset, drift ×.3. Hover: node 1.2, image 1.2 → 1 (.35s sine.inOut) |
 | Hero scroll | hero | top top → bottom top, pin, pinSpacing false | yPercent 0 → −20 | power2.out, scrub | the black pull-apart slides over it |
 | Pull-apart pin | content | top top → +4.5·innerHeight, pinSpacing false | `.parallaxOut` yPercent 0 → −25 at 2.2–3.7 of 3.7 | power2.inOut, scrub | scene progress = scrollY / (4.5·innerHeight) drives group scale 1.75 → .275, rotation (.5, .6), uProgress, y .165; text 0 visible in [.15, .35], text 1 in [.65, 1] |
@@ -62,7 +62,7 @@ Page height (main + shared footer): 1440 Scale 15509 / clone 15511; 390 Scale 15
 | Pre-footer media | section | top bottom → center center | scale 1.25 → 1 | linear | 1.0417 at top 225 on both |
 | Pre-footer text / CTA | section | top center, once | headline, body (+.2) AnimatedText; CTA "filledWhiteArrow" .85s delay .5 | power3.out | |
 | AnimatedText default | — | — | SplitText lines,words masked; lines yPercent 400 → 0 (1s power3.out, .08i), words x 30% → 0 (.9s, stagger .03), tint #72CE7B → #79648C → CSS colour | | port in `AnimatedText.tsx` (`default`, `flip`, `lift`) |
-| FlatCta hover | pointer | — | 35% wash slides in from left, chevron strip; border variant 30% wash rises, label .9 | 600ms / 300ms ease-out | gray variant + `group-hover/card` black (hover devices only) |
+| FlatCta hover | pointer | — | white arrow: 35% wash in from the left, out to the right, snaps back on the 680ms timer, chevron strip −50% → 0 (snaps back on leave); evergreen (hero): no wash, a black `mix-blend-multiply` layer 0 → .18 (300ms); gray fill (trusted cards): 35% wash rises, label .9; white outline: 30% | 600ms / 300ms ease-out | gray + `group-hover/card` black over 500ms (hover devices only). Full detail in the interaction inventory |
 
 Late-trigger fix: `FullBleedMedia` keeps the ResizeObserver re-measure from the data-engine family (observe `<body>`, `ScrollTrigger.refresh()` 150ms after `scrollHeight` changes), since the pinned hero/pull-apart, WebGL scenes, lazy media and SplitText all change the height after the triggers are measured. All tweens respect `prefers-reduced-motion` and are cleaned up with `gsap.context().revert()` / SplitText revert.
 
@@ -76,6 +76,131 @@ Hero node photos (7), blog-1..4, `bridge-stack.webm` (transparent), `race.mp4`, 
 - `1440-m01..m09-*.jpg`: cursor states (hero pointer top-left / bottom-right, hero CTA hover, node hover, blog card hover, logo-cloud drag + release, PoweredBy CTA hover, trusted card hover). The Scale side of these is dimmed by its cookie banner (the reject click didn't land in that run); the clone side shows the intended states.
 - Fixed in this pass: stats card value block had an extra `lg:pt-6` and mask padding (+124px page height) → removed, stats now 852 = 852; trusted CTA-less card description was bottom-aligned → reserved CTA row; trusted ClipScroll end → "center bottom" (live behaviour); LinkCard hover fill and CTA hover only on hover devices (was sticky on touch); pillar h5 22/1.05 on mobile (was 20/1.5, +21px); gray CTA black-on-hover added.
 - 200 on the dev server, no console errors on the clone (Scale itself logs a 404, a 401 and an OptinMonster warning).
+
+## Interaction inventory (audit 2026-11-01)
+
+Method: REA on a fresh CDP 9230 tab (closed afterwards). `analyze_web_bundle` (`ev_e890f4b4646a…`, 47/47 scripts parsed, 0 failures). The 32 page chunks were re-downloaded and diffed against the copies the clone was built from: 29 unchanged, 3 new (shared vendor chunks), and none of the page modules changed. Shared chunks by sha256: FlatCta / AnimatedText `1h0nvyhf5gbrf.js` (`10b2627a…`) and FullBleed / ClipScrollSection / useScrollTrigger `37xz28pjbnlx4.js` (`b234eef5…`) are byte-identical to the copies read in the guides, enterprise-insurance and public-sector-data-engine audits, so their FlatCta and retroactive-intro findings carry over. Page modules: `0sni47mcvnqwg.js` (`0e137e33…`: EnterpriseHero 291143, LogoCloud scene, PullApart scene, BlogPreview3D 62032), `2k1qlgdxlbmz1.js` (`bb51ad26…`: HeadlineWithCta 925107, LinkCard, Pillars), `3x8z3_0hhtdcb.js` (`89a4cc62…`: ClientTestimonials), `3rls9s4y8-e83.js` (`ac4814e5…`: the three scene runtime, which dispatches `onMouseMove` from a window `pointermove`/`touchmove` as `{x: clientX/innerWidth, y: 1 − clientY/innerHeight}`).
+
+`inspect_web_event_listeners` ran on every section root and interactive child (ids below). Window listeners can't be selected, so they were read from the chunk's `addEventListener` calls. Then Playwright ran identical inputs on scale.com, the clone and the four Vahue pages (script `scratchpad/ent-audit/qa.js`, 1440×900 and 390×844, OneTrust hidden with CSS so it can't swallow the pointer):
+- hero pointer path: 5 positions, held 1.2s each, node transforms sampled every 100ms
+- node hover/leave
+- hero, PoweredBy and pre-footer CTA hover, leave, re-entry and focus
+- pull-apart at 4 scroll points × 2 pointer corners
+- Bridge panel width at 5 scroll points
+- blog carousel: drag 300px in 6 steps of 50px/50ms, ArrowRight, Next arrow, card hover, card focus, autoplay after touch
+- logo-cloud drag (40% of the canvas width in 10 steps of 50ms) and release
+- testimonial tile hover, click (6 samples, 100ms apart), arrow hover and Next
+- trusted-card hover on each card (4 samples, 150ms apart), leave and focus
+- pre-footer scrub at 10 points
+- a reload followed by a jump straight to the page bottom (retroactive intro)
+
+QA images: `qa/enterprise/interactions/<w>-<name>-{scale,clone,ops,bank,retail,dist}.jpg`.
+
+Page-wide listeners:
+- `html`: `scroll` (ScrollTrigger, `1h0nvyhf5gbrf.js`) plus OneTrust `keydown`/`click` (`ev_87f14ea5158b…`).
+- `body`: a passive `touchstart` (`ev_ab9495c50539…`).
+- Window, from the chunk:
+  - the hero `pointermove`
+  - BlogPreview3D `keydown` (ArrowLeft/ArrowRight while the section is in its trigger range), `blur`/`focus`, and `visibilitychange` (autoplay pause)
+  - the scene runtime's `pointermove`/`touchmove`/`resize`
+
+### Fixes in this audit (clone; the Vahue pages render the same components)
+- **FlatCta**: Scale's state machine from module 892855, ported as on the guides / enterprise-insurance clones. Changes:
+  - re-entry snaps the wash back first
+  - leave resets on the 680ms timer; the `transform` transitionend never matches because Scale's wash moves on the CSS `translate` property, and the clone now animates `translate` too
+  - the chevron strip snaps back on leave
+  - Scale's theme rules: the **evergreen hero CTA has no wash**, only a black `mix-blend-multiply` layer, opacity 0 → .18 on hover (300ms), with the content at z-2 and `isolate`. The clone used to slide a 35% wash. Wash opacity is .35 except for the white outline (.30); the gray card CTA was .30 and is now .35.
+  - `as`: HeadlineWithCta CTAs (hero "Schedule a consult", PoweredBy "Learn More") are `<button type="button" aria-label>` elements with `onClick: router.push(url)` and no focus classes, so the UA focus ring shows. The trusted-card CTAs are buttons with no onClick; their click falls through to the card link. The pre-footer CTA stays a CMSLink `<a>` with `focus:outline-1 focus:outline-scale-skyblue` (1px #86bff2).
+  - `motion-reduce:group-hover/cta:scale-100` on the label.
+- **Hero CTA intro**: HeadlineWithCta's `animateIn` ignores the hero's `duration: 1.2` and runs the CTA at `{duration .85, delay .9}`. The clone ran it for 1.2s.
+- **Hero resize**: Scale's ResizeObserver on the edges svg zeroes the idle clock, pauses the tick and resets each node-inner to 0/0/1. 250ms later it re-anchors, and it resumes after another 500ms. This was missing in the clone.
+- **Trusted cards**: each LinkCard body is a CMSLink `<a>` (cursor pointer, 1px #86bff2 focus outline) when the card has a link, and a plain div otherwise. The clone had a div for every card.
+- **Testimonial tiles**: Scale's `transition-all transition-duration-800` is not a valid utility, so the colour swap runs on the default 150ms. The clone ran it for 800ms. Click sample at ~100ms: Scale deselected tile rgb(11,13,15), selected rgb(121,144,164); clone after the fix rgb(22,26,30) / rgb(110,131,149), and rgb(11,13,15) / rgb(121,144,164) on `/industries/retail-ecommerce` (before the fix: rgb(127,152,173) / rgb(5,5,6)).
+- **Pre-footer FullBleed**: the intro uses useScrollTrigger's end `bottom 20%` plus the retroactive refresh check (`progress > 0 || scroll ≥ start − 1`) instead of `once`. The media scale is set in `onUpdate` only, with no initial 1.25 and no `onRefresh`, as on Scale.
+
+### 1 · EnterpriseHero
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| graph nodes | window `pointermove` | window (chunk `0sni` @91111); `.EnterpriseHero` itself has none (`ev_9f0f1291a413…`) | 291143 | pointer `(clientX/innerWidth·2−1, clientY/innerHeight·2−1)`. Per node, smoothed at `.3·C[i]` (C .027 .03 .01 .037 .02 .043 .046) on the gsap ticker; offset `p·20px·(1+.4i)·smoothOut` (0 on mobile); idle `sin(.4t+1e4i)·(10+5i)·1.25·P[i]` with P .94 … 1.18. Node 6 x-shift over each 1.2s hold (TL → TR → BR → BL → centre, idle drift included): Scale −11.5 / 71.9 / 44.7 / −27.6 / 11.1 px, clone 5 / 58.8 / 35.9 / −32.5 / −5 px (same direction and size; the idle phase differs per run) | yes | `1440-hero-pointer-tl-*` |
+| node image | `onMouseEnter` / `onMouseLeave` on the clip div | React | 291143 | node scale 1 → 1.2, image 1.2 → 1, .35s sine.inOut, reversed on leave. Samples every 100ms: Scale 1.042 / 1.139 / 1.198 / 1.2, clone 1.16 / 1.2 (the first sample lands later in the transition), back to 1 on leave on both | yes | — |
+| resize | ResizeObserver on the edges svg | — | 291143 | clock 0, tick paused, node-inner reset, 250ms re-anchor, resume after 500ms | yes (**added**) | — |
+| CTA "Schedule a consult" | pointerenter / leave, focus, click | React `onPointerEnter`/`onPointerLeave`; the REA selector for an anchor found nothing (`ev_bb6e01bac384…`) because it is a `<button>` | 892855 + HeadlineWithCta 925107 | evergreen: multiply layer opacity 0 → .18 (300ms); chevron strip −50% → 0 (600ms), snaps back on leave. At 200ms: Scale .10, strip −36.8%; clone .11, strip −33.5%. 1440 focus `auto 1px rgb(0,95,204)` (UA ring) on both; click → `router.push('/demo')` | yes (**fixed**: it was an `<a>` with a sliding wash and a 1.2s intro) | `1440-cta-hero-hover-*`, `390-cta-hero-hover-*` |
+| scroll | ScrollTrigger pin | `html` scroll | 291143 | pin `top top → bottom top`, pinSpacing false, yPercent 0 → −20 | yes (unchanged) | — |
+
+### 2 · EnterprisePullApart (WebGL)
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| canvas | pointerdown / cancel / contextmenu / wheel | three OrbitControls-style listeners, `enabled = false` (`ev_fad2c88d8995…`) | `3rls9s4y8-e83.js` | inert | yes (none needed) | — |
+| camera rig | window `pointermove` / `touchmove` → scene `onMouseMove` | scene runtime | 0sni @139548 | camera target `(map(x,−1..1)·.25·4, map(y)·.25·2, 5)`, lerp .06 per frame, looks at the origin | yes | `1440-pa-{25,80}-{tl,br}-*` |
+| pinned scrub | scroll | `html` scroll | 0sni | progress = animatedScrollY / (4.5·innerHeight); group scale 1.75 → .275, rotation (.5, .6) cubic.inOut (= power2.inOut), uProgress, y .165; copy windows [.15, .35] and [.65, 1]. Screenshots at 25% / 80% match, apart from the card footage, which isn't shipped | yes | as above |
+
+### 3 · EnterpriseBridge
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| panel | scroll scrub | ScrollTrigger | 058pnujclak3f 676267 | width 90% → 100%, `top bottom → bottom 75%`, power3.out. 5 points: Scale 90 / 94.19 / 98.88 / 99.93 / 100%, clone identical | yes | — |
+| logo marquee | — | none (CSS 40s) | — | — | yes | — |
+
+### 4 · BlogPreview3D (Embla)
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| viewport | drag (mouse / touch) | `click` capture, `dragstart`, `mousedown`, `touchstart/move/end/cancel`, `contextmenu` (`ev_7a5408f5e3be…`); no `wheel` and no keyboard plugin | Embla in 0sni, `{dragFree:false, loop:true, align:"center"}` | per-slide layer `translateX(c·−.14·n·100%) scale(v)`, image `2v`, zIndex `100+900v`, opacity window, nudge. 1440 drag mid-sample (centre slide): Scale x 548, `translateX(−1.065%) scale(.9753)`; clone x 545, `translateX(−.947%) scale(.9776)`. After release both settle at x −72 / 161 / 518 / 874 / 1107 with identical transforms | yes | `1440-blog-after-drag-*`, `390-blog-after-drag-*` |
+| wheel over the carousel | wheel | no `wheel` listener on the viewport (REA above) and no Embla wheel plugin | — | the wheel just scrolls the page; the clone registers none either | yes | — |
+| keyboard | window `keydown` ArrowLeft/Right | window (0sni @30398) | 62032 | only while in the trigger range (`v.current`); ignores inputs; stops autoplay | yes (identical transforms after ArrowRight) | — |
+| arrows (xl) / dots (<xl) | click | React | 62032 | `scrollPrev/Next` / `scrollTo(i)`, stop autoplay | yes (identical after Next) | — |
+| autoplay | timer | `setInterval` 4.5s | 62032 | stops on pointerDown / arrows / keys; paused on `visibilitychange`, `blur` and hidden; off with reduced motion. No change in the 5s after a touch on either site | yes | — |
+| card | hover / focus | CSS | 62032 | image `group-hover/card:scale-125` 500ms, arrow −100% → 0. Focus: Scale `outline-none` + `focus:outline-1` gives `outline-style: none`; the clone has a transparent outline: no visible ring on either | yes | `*-blog-card-hover-*` |
+
+### 5 · LogoCloud (WebGL sphere)
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| canvas | pointerdown / move / up / cancel (drag-rotate) | `0sni` @44599–44848, plus the inert controls and the webgl context events (`ev_33532e5d468b…`) | 151755 scene | left button only; rotation.y += .004·dx, rotation.x += .004·dy; cursor `grabbing` during the drag, `''` after (sampled on both); pointer capture; on release, if the spin > 3e-4 the target is .02·the last delta | yes | `1440-cloud-{idle,drag,release}-*` |
+| idle spin | window pointer → scene `onMouseMove` | scene runtime | 151755 | target y = 35e-5 + (x−.5)·24e-5, x = 8e-5 − (y−.5)·24e-5 (y measured from the bottom); eased .03 per frame | yes | — |
+| scroll | ScrollTrigger + `onScroll` | — | 151755 | group y −.5 → 0, scale .8 → 1 on progress clamped ≥ .5 (lerp .06); rotation −(−.82·(scrollY/max − .5)) | yes (unchanged) | — |
+
+### 6 · Stats (CardGrid) · 8 · Race · 9 · Pillars
+The markup has no hover/focus utilities on these sections apart from the Race "Learn More" text link, and the chunk shows no pointer handlers for them. They only have scroll scrubs and intros, already sampled in the Motion table (stats card curve, Scale vs clone; Race / Pillars intro "top 80%", once). They weren't driven with pointer inputs in this audit. Reproduced, unchanged.
+
+### 7 · ClientTestimonials
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| logo tiles | click / hover | button: HubSpot `mousedown` (capture) + React `click` (`ev_7dcdcbb300b1…`) | 3x8z3 | fill slides on y (x below 769px), `.3s`, direction from the previous/next index; colour swap on `transition-all` (150ms default). Fill at ~100ms: Scale deselected 66.5px / selected −40.1px, clone 59.3 / −47.4 (1440); 390 on x: Scale 59.0 / −19.0, clone 49.0 / −29.0 | yes (**fixed** the 800ms colour transition) | `1440-tm-second-*`, `390-tm-second-*` |
+| prev / next arrows | hover / click | React `onMouseEnter`/`onMouseLeave` + gsap | 3x8z3 | bg transparent → ink, colour → slate, border → transparent, .3s: `rgb(1,1,1) rgb(131,156,178) rgba(1,1,1,0)` on both; Next selects the following tile on both | yes | — |
+| quotes / name / role chip | select | — | 3x8z3 | flip lines rotationX −90 → 0, .48s power2.out, stagger .05; chip `animateToText` | yes (unchanged) | — |
+
+### 10 · EnterprisePoweredBy
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| "Learn More" CTA | hover / leave / click | React | 892855 + HeadlineWithCta | white arrow button: 35% wash. Enter at 200 / 400 / 600ms: Scale −38.4 / −9.2 / −.16%, clone −34.8 / −7.8 / −.37%. Leave: Scale 0, 38.8, 65.2, 81.8, 93.4, 98.5, 100, then −100% at 700ms; clone 0, 32.9, 74.4, 93.4, 98.9, 99.96, then −100% at 600ms (`/operations`: 0, 38.8, 65.2, 81.8, 92.2, 98.5, 100, −100%: sampling jitter); click → `router.push` | yes (**fixed**: it was an `<a>` with no re-entry snap) | `1440-cta-poweredby-hover-*` |
+| image / cards | scroll | ScrollTrigger | 2k1qlgdxlbmz1 | ClipScroll scale .85 → 1; cards scale .96 → 1, x ∓160 | yes (unchanged) | — |
+
+### 11 · EnterpriseBuiltToBeTrusted
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| LinkCard | hover | none on `.LinkCard` (`ev_9d17bf84eeb1…`); CSS `group/card` | 2k1qlgdxlbmz1 LinkCard | fill `scale-y-0 → 100`, origin-bottom, 500ms ease-out. Card 2 at 150 / 300 / 450 / 600ms: Scale .685 / .919 / .9976 / 1, clone .685 / .919 / .9976 / 1 | yes | `*-trusted-hover-0-*` |
+| card CTA (gray fill button) | card hover | CSS `group-hover/card` | 892855 `as:"button"` | bg #EAEAEA → black, text → white, `transition-all` 500ms ease-out (rgb 74 / 19 / 1 / 0 at 150ms steps on both) | yes (**fixed**: `<a>` → button, wash .30 → .35) | — |
+| card link | focus / click | CMSLink | — | cards 1 and 3 are `<a>` (`/security`, `/generative-ai-data-engine`) with focus `solid 1px rgb(134,191,242)`; card 2 has no link | yes (**fixed**: the cards were divs) | — |
+| photo / parallax | scroll | ScrollTrigger | — | see the Motion table | yes (unchanged) | — |
+
+### 12 · Pre-footer FullBleedMediaSection
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| clip + media | scroll scrub | ScrollTrigger | 37xz28 540431 | 10 points: clip 5 / 4.44 / 3.89 / 3.33 / 2.78 / 2.22 / 1.67 / 1.11 / .56 / 0%, scale 1.25 → 1 in 1/36 steps: Scale = clone, identical to 4 decimals | yes | — |
+| intro | scroll `top center`, retroactive | useScrollTrigger 210104 | 37xz28 | reload + jump to the bottom: CTA visible, opacity 1 on Scale, the clone and all four Vahue pages | yes (**fixed**: `once` → Scale's refresh check) | — |
+| CTA (white arrow `<a>`) | hover / leave / focus | React | 892855 | enter at 250 / 500 / 750ms: Scale −25.56 / −2.12 / 0%, clone −25.57 / −2.12 / 0%. Leave: Scale 0, 38.8, 65.2, 81.8, 93.4, 98.5, 100, −100%; clone 0, 38.8, 65.2, 81.8, 92.2, 97.9, 100, −100%. Focus `solid 1px rgb(134,191,242)` on both | yes | `1440-cta-prefooter-hover-*` |
+
+### Vahue pages (`/operations`, `/industries/{banking-financial-services,retail-ecommerce,distribution-manufacturing}`)
+These pages render `EnterprisePage` from this clone (`components/operations/OperationsPage.tsx`, `components/industry/enterprise/EnterpriseIndustryPage.tsx`), so every fix above applies to them with the same params. Measured with the same script (`/operations` full set at 1440; banking at 1440: CTA, trusted, pre-footer, retro; retail at 1440: CTA, testimonials, retro; distribution at 390: CTA, blog, testimonials, trusted):
+- Hero CTA is a multiply button (.10 at 200ms, .18 at 600ms on `/operations`) with the UA focus ring. Node hover goes 1 → 1.2 and back to 1.
+- Pull-apart text positions and the Bridge width scrub are identical to the clone (90 / 94.19 / 98.88 / 99.93 / 100%).
+- Blog drag, key and Next end on the same transforms as Scale (x −72 / 161 / 518 / 874 / 1107). Logo-cloud cursor shows `grabbing` during the drag.
+- Testimonial click colours: rgb(11,13,15) / rgb(121,144,164) at ~100ms on retail.
+- Trusted fills .685 / .919 / .9976 / 1. Card links go to `/security/` with the skyblue focus outline.
+- Pre-footer clip scrub matches Scale (5% → 0). There is no scale reading because these pages use a media slot instead of an image. The CTA focus outline is skyblue, and the retroactive intro plays.
+- No console errors on any of the pages.
+
+### Not reproducible / not measurable
+- The WebGL uniforms on Scale (pull-apart `uProgress` and camera, logo-cloud rotation) aren't exposed on `window`. They were compared through the source (identical constants) and same-input screenshots, not as numbers.
+- Hero idle drift is time-based (`sin`/`cos` of the run clock), so per-sample node values differ between runs. Only the pointer-driven component can be compared, by direction and size.
 
 ## Remaining gaps
 - Customer, agency and testimonial logos are placeholder tiles; the LogoCloud sphere tiles are blank.

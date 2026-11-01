@@ -78,13 +78,13 @@ export default function FullBleedMedia({
 
   useEffect(() => {
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches
+    let offRetro = () => {}
     const ctx = gsap.context(() => {
       if (!reduce) {
         const setClip = (p: number) => {
           if (clip.current) clip.current.style.clipPath = `inset(${map(p, 0, 1, 0.5 * startPercentage, 0)}% round 1.5rem)`
         }
         setClip(0)
-        gsap.set(media.current, { scale: 1.25 })
         ScrollTrigger.create({
           trigger: clipRoot.current,
           start: 'top bottom',
@@ -98,16 +98,18 @@ export default function FullBleedMedia({
           start: 'top bottom',
           end: 'center center',
           scrub: true,
+          // onUpdate only, as on Scale (module 540431): no initial set, so the media sits at scale 1 until the trigger first updates
           onUpdate: (st) => gsap.set(media.current, { scale: map(st.progress, 0, 1, 1.25, 1) }),
-          onRefresh: (st) => gsap.set(media.current, { scale: map(st.progress, 0, 1, 1.25, 1) }),
         })
       }
       if (reduce && clip.current) clip.current.style.clipPath = 'inset(0% round 1.5rem)'
       let played = false
-      ScrollTrigger.create({
+      // useScrollTrigger (chunk 37xz28pjbnlx4, module 210104): start `top center`, default end `bottom 20%`,
+      // retroactiveOnEnter: on every refresh, fire onEnter once progress > 0 or the scroll is at/after start - 1.
+      const intro = ScrollTrigger.create({
         trigger: section.current,
         start: 'top center',
-        once: true,
+        end: 'bottom 20%',
         onEnter: async () => {
           if (played) return
           played = true
@@ -118,6 +120,12 @@ export default function FullBleedMedia({
           texts.forEach((t, i) => t.animateIn({ delay: 0.2 * i }))
         },
       })
+      const retro = () => {
+        if (intro.progress > 0 || intro.scroll() >= intro.start - 1) intro.vars.onEnter?.(intro)
+      }
+      ScrollTrigger.addEventListener('refresh', retro)
+      retro()
+      offRetro = () => ScrollTrigger.removeEventListener('refresh', retro)
     })
 
     let lastH = document.documentElement.scrollHeight
@@ -131,6 +139,7 @@ export default function FullBleedMedia({
     })
     heightWatch.observe(document.body)
     return () => {
+      offRetro()
       heightWatch.disconnect()
       clearTimeout(refreshTimer)
       ctx.revert()

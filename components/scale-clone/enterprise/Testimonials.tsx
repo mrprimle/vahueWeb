@@ -142,7 +142,9 @@ function Tile({
       tabIndex={isActive ? 0 : -1}
       onClick={onSelect}
       aria-label={`Show testimonial from ${item.name}`}
-      className="relative isolate box-border flex aspect-square w-full max-w-20 cursor-pointer items-center justify-center overflow-hidden rounded-lg border border-solid p-3 transition-all duration-[800ms] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 lg:max-w-[152px] lg:p-4"
+      className="relative isolate box-border flex aspect-square w-full max-w-20 cursor-pointer items-center justify-center overflow-hidden rounded-lg border border-solid p-3 transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/80 lg:max-w-[152px] lg:p-4"
+      // Scale's tile classes say `transition-all transition-duration-800`; the second is not a Tailwind utility, so the
+      // colour swap runs on transition-all's default 150ms cubic-bezier(.4,0,.2,1).
       style={{ color: isActive ? THEME : INK, borderColor: INK }}
     >
       <div ref={fill} className="absolute -z-10 h-full w-full" style={{ background: INK }} />

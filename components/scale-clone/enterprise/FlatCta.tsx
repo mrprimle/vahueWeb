@@ -1,6 +1,7 @@
 'use client'
 
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState, type TransitionEvent } from 'react'
+import { useRouter } from 'next/navigation'
 import gsap from 'gsap'
 
 /*
@@ -20,7 +21,22 @@ export type FlatCtaHandle = { set: () => void; animateIn: (o?: { duration?: numb
  * Enterprise themes: arrow/white (white pill, black 32px arrow box), arrow/evergreen (#193A29 pill, white label,
  * transparent arrow box, gap 0: the hero CTA), border/gray (#EAEAEA fill, no outline: link-card CTAs).
  */
-type Props = { href: string; text: string; variant: 'arrow' | 'border'; theme?: 'white' | 'evergreen' | 'gray' }
+type Props = {
+  href: string
+  text: string
+  variant: 'arrow' | 'border'
+  theme?: 'white' | 'evergreen' | 'gray'
+  /** Scale's CMSLink external branch: no `focus:outline-1 focus:outline-scale-skyblue` (1px #86bff2 on :focus). */
+  external?: boolean
+  /**
+   * Scale's FlatCta `as`: 'link' renders CMSLink (an anchor with the focus outline); 'button' renders
+   * <button type="button" aria-label={text}> with no focus classes. HeadlineWithCta (hero, PoweredBy) passes
+   * as:"button" + onClick router.push(url) (`navigate`); LinkCard CTAs are buttons with no onClick, so the
+   * click falls through to the card's anchor.
+   */
+  as?: 'link' | 'button'
+  navigate?: boolean
+}
 
 const Arrow = () => (
   <svg className="block shrink-0" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
@@ -33,27 +49,56 @@ const Arrow = () => (
 
 const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches
 
-const FlatCta = forwardRef<FlatCtaHandle, Props>(function FlatCta({ href, text, variant, theme = 'white' }, ref) {
+const FlatCta = forwardRef<FlatCtaHandle, Props>(function FlatCta({ href, text, variant, theme = 'white', external = false, as = 'link', navigate = false }, ref) {
   const isArrow = variant === 'arrow'
   const green = theme === 'evergreen'
-  const root = useRef<HTMLAnchorElement>(null)
+  const root = useRef<HTMLAnchorElement & HTMLButtonElement>(null)
+  const router = useRouter()
+  // Scale: T = theme !== 'evergreen' -> only non-evergreen CTAs get the sliding wash; evergreen fill/arrow gets a
+  // black mix-blend-multiply layer instead (opacity 0 -> .18 on group-hover/cta, 300ms) and isolate.
+  const washed = !green
+  const multiply = green && variant !== 'border'
+  // Wash opacity: .30 for black/evergreen fills and white outlines, .35 otherwise (white arrow, gray fill).
+  const washOpacity = variant === 'border' && theme === 'white' ? 'opacity-30' : 'opacity-35'
   const counter = useRef<HTMLDivElement>(null)
   const label = useRef<HTMLSpanElement>(null)
   const arrow = useRef<HTMLDivElement>(null)
   const tl = useRef<gsap.core.Timeline | null>(null)
 
-  // Wash states mirror Scale's: idle -> hover -> leaving (exits the far side) -> reset (snaps back, no transition).
-  const [wash, setWash] = useState<'idle' | 'hover' | 'leaving' | 'reset'>('idle')
+  // Same state machine as Scale's FlatCta (chunk 1h0nvyhf5gbrf.js sha256 10b2627a…, module 892855; ported from the
+  // guides / enterprise-insurance clones): hovered -> wash at 0; leaving -> wash exits the far side; resetting ->
+  // wash snaps back to the start with no transition, released after two rAFs. Leave resets on the wash's
+  // `transform` transitionend or after 680ms; Scale's wash moves with the CSS `translate` property (Tailwind v4
+  // translate-*), so that check never matches and the reset is the 680ms timeout. The wash here uses `translate`
+  // too. Re-entering while the wash is still leaving snaps it back first, so it always enters from the start
+  // side. Arrow strip: hovered slides -50% -> 0 (600ms); leave snaps it back (transition none).
+  const [hovered, setHovered] = useState(false)
+  const [leaving, setLeaving] = useState(false)
+  const [resetting, setResetting] = useState(false)
   const [arrowIn, setArrowIn] = useState(false)
   const [arrowSnap, setArrowSnap] = useState(false)
+  const pending = useRef(false)
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const clear = () => {
+    if (leaveTimer.current != null) clearTimeout(leaveTimer.current)
+    leaveTimer.current = null
+  }
+  useEffect(() => clear, [])
+
+  const finishLeave = useCallback(() => {
+    if (!pending.current) return
+    clear()
+    pending.current = false
+    setLeaving(false)
+    setResetting(true)
+  }, [])
 
   useEffect(() => {
-    if (wash !== 'reset' && !arrowSnap) return
+    if (!resetting && !arrowSnap) return
     let r2 = 0
     const r1 = requestAnimationFrame(() => {
       r2 = requestAnimationFrame(() => {
-        if (wash === 'reset') setWash('idle')
+        setResetting(false)
         setArrowSnap(false)
       })
     })
@@ -61,26 +106,46 @@ const FlatCta = forwardRef<FlatCtaHandle, Props>(function FlatCta({ href, text, 
       cancelAnimationFrame(r1)
       cancelAnimationFrame(r2)
     }
-  }, [wash, arrowSnap])
-
-  useEffect(() => () => void (leaveTimer.current && clearTimeout(leaveTimer.current)), [])
+  }, [resetting, arrowSnap])
 
   const onEnter = useCallback(() => {
-    if (leaveTimer.current) clearTimeout(leaveTimer.current)
-    setWash('hover')
+    if (!washed) {
+      if (isArrow) {
+        setArrowSnap(false)
+        setArrowIn(true)
+      }
+      return
+    }
+    clear()
+    setResetting(pending.current)
+    pending.current = false
+    setLeaving(false)
+    setHovered(true)
     if (isArrow) {
       setArrowSnap(false)
       setArrowIn(true)
     }
-  }, [isArrow])
+  }, [isArrow, washed])
   const onLeave = useCallback(() => {
     if (isArrow) {
       setArrowIn(false)
       setArrowSnap(true)
     }
-    setWash('leaving')
-    leaveTimer.current = setTimeout(() => setWash('reset'), 680)
-  }, [isArrow])
+    if (!washed) return
+    setHovered(false)
+    if (resetting) return
+    setLeaving(true)
+    pending.current = true
+    clear()
+    leaveTimer.current = setTimeout(() => {
+      leaveTimer.current = null
+      finishLeave()
+    }, 680)
+  }, [isArrow, washed, resetting, finishLeave])
+  const onWashEnd = (e: TransitionEvent<HTMLDivElement>) => {
+    if (e.target !== e.currentTarget) return
+    if (e.propertyName === 'transform' || e.propertyName === '-webkit-transform') finishLeave()
+  }
 
   useImperativeHandle(ref, () => {
     const set = () => {
@@ -122,22 +187,21 @@ const FlatCta = forwardRef<FlatCtaHandle, Props>(function FlatCta({ href, text, 
     return { set, animateIn }
   })
 
-  const washPos =
-    wash === 'reset'
-      ? isArrow ? '-translate-x-full' : 'translate-y-full'
-      : wash === 'hover'
-        ? 'translate-x-0 translate-y-0'
-        : wash === 'leaving'
-          ? isArrow ? 'translate-x-full' : '-translate-y-full'
-          : isArrow ? '-translate-x-full' : 'translate-y-full'
+  const start = isArrow ? '-100% 0' : '0 100%'
+  const washTranslate = resetting ? start : hovered ? '0 0' : leaving ? (isArrow ? '100% 0' : '0 -100%') : start
 
+  const Tag = as === 'button' ? 'button' : 'a'
+  const tagProps =
+    as === 'button'
+      ? { type: 'button' as const, 'aria-label': text, onClick: navigate ? () => router.push(href) : undefined }
+      : { href }
   return (
-    <a
+    <Tag
       ref={root}
-      href={href}
+      {...tagProps}
       onPointerEnter={onEnter}
       onPointerLeave={onLeave}
-      className={`group/cta relative inline-flex h-max w-fit cursor-pointer items-center justify-center overflow-hidden rounded-md ${
+      className={`group/cta relative inline-flex h-max ${as === 'link' && !external ? 'focus:outline focus:outline-1 focus:outline-[#86bff2]' : ''} ${multiply ? 'isolate' : ''} w-fit cursor-pointer items-center justify-center overflow-hidden rounded-md ${
         isArrow
           ? `origin-center transform-gpu will-change-transform ${green ? 'bg-[#193A29] text-white' : 'bg-white text-black'}`
           : theme === 'gray'
@@ -146,14 +210,25 @@ const FlatCta = forwardRef<FlatCtaHandle, Props>(function FlatCta({ href, text, 
       }`}
       style={isArrow ? { borderRadius: 8 } : undefined}
     >
-      <div
-        aria-hidden
-        className={`pointer-events-none absolute inset-0 z-0 size-full rounded-[inherit] bg-current ease-out motion-reduce:transition-none ${
-          isArrow ? 'opacity-35' : 'opacity-30'
-        } ${washPos} ${wash === 'reset' ? 'transition-none' : 'transition-transform'}`}
-        style={{ transitionDuration: isArrow ? '600ms' : '300ms' }}
-      />
-      <div className={`relative z-[1] inline-flex max-w-full flex-wrap items-center justify-center ${isArrow ? 'py-1 pl-4 pr-1' : 'px-4 py-2'}`}>
+      {washed ? (
+        <div
+          aria-hidden
+          className={`pointer-events-none absolute inset-0 z-0 size-full rounded-[inherit] bg-current ease-out motion-reduce:transition-none ${washOpacity}`}
+          onTransitionEnd={onWashEnd}
+          style={{
+            translate: washTranslate,
+            transitionProperty: resetting ? 'none' : 'translate',
+            transitionDuration: isArrow ? '600ms' : '300ms',
+          }}
+        />
+      ) : null}
+      {multiply ? (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-[1] rounded-[inherit] bg-black opacity-0 mix-blend-multiply transition-opacity duration-300 ease-out group-hover/cta:opacity-[0.18] motion-reduce:transition-none motion-reduce:group-hover/cta:opacity-0"
+        />
+      ) : null}
+      <div className={`relative ${multiply ? 'z-[2]' : 'z-[1]'} inline-flex max-w-full flex-wrap items-center justify-center ${isArrow ? 'py-1 pl-4 pr-1' : 'px-4 py-2'}`}>
         <div
           ref={counter}
           className={`relative z-[1] flex w-full max-w-full flex-1 flex-wrap items-center justify-center transform-gpu will-change-transform ${isArrow ? (green ? 'gap-0' : 'gap-4') : ''}`}
@@ -162,7 +237,7 @@ const FlatCta = forwardRef<FlatCtaHandle, Props>(function FlatCta({ href, text, 
           <span
             ref={label}
             className={`block h-fit self-center text-nowrap text-[14px] font-medium capitalize leading-[1.5] ${
-              isArrow ? '' : 'relative z-[1] inline-block origin-center transform-gpu transition-transform duration-300 ease-out group-hover/cta:scale-90 motion-reduce:transition-none'
+              isArrow ? '' : 'relative z-[1] inline-block origin-center transform-gpu transition-transform duration-300 ease-out group-hover/cta:scale-90 motion-reduce:transition-none motion-reduce:group-hover/cta:scale-100'
             }`}
           >
             {text}
@@ -187,7 +262,7 @@ const FlatCta = forwardRef<FlatCtaHandle, Props>(function FlatCta({ href, text, 
           )}
         </div>
       </div>
-    </a>
+    </Tag>
   )
 })
 

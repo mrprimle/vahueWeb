@@ -286,7 +286,7 @@ export function PoweredBy({ content: poweredBy, media }: { content: PoweredByCon
             <AnimatedText ref={sub} as="p" className="w-full text-center text-[14px] leading-[1.5] tracking-[-0.01em] text-[color:var(--ent-fg,#000)] md:w-[576px] md:text-[16px]">
               {poweredBy.body}
             </AnimatedText>
-            <FlatCta ref={cta} variant="arrow" href={poweredBy.cta.href} text={poweredBy.cta.text} />
+            <FlatCta ref={cta} as="button" navigate variant="arrow" href={poweredBy.cta.href} text={poweredBy.cta.text} />
           </div>
         </div>
         <ClipScroll
@@ -355,6 +355,16 @@ export function PoweredBy({ content: poweredBy, media }: { content: PoweredByCon
         </div>
       </div>
     </section>
+  )
+}
+
+function CardLink({ href, children }: { href?: string; children: ReactNode }) {
+  return href ? (
+    <a href={href} className="relative block h-full cursor-pointer focus:outline focus:outline-1 focus:outline-[#86bff2]">
+      {children}
+    </a>
+  ) : (
+    <div className="relative block h-full">{children}</div>
   )
 }
 
@@ -497,7 +507,9 @@ export function BuiltToBeTrusted({ content: trusted, media }: { content: Trusted
               className="h-full"
             >
               <div className="group/card relative h-full overflow-clip rounded-[8px] bg-[var(--ent-card-2,#F2F2F2)] text-[color:var(--ent-fg,#000)] xl:rounded-2xl">
-                <div className="relative block h-full">
+                {/* Scale LinkCard: the card body is a CMSLink (anchor + 1px #86bff2 :focus outline) when the card has a
+                    link, a plain div.CMSLink otherwise; the CTA inside is a button, so its click falls through. */}
+                <CardLink href={c.cta?.href}>
                   <div className="absolute bottom-0 left-0 h-full w-full origin-bottom scale-y-0 transition-transform duration-500 ease-out [@media(hover:hover)]:group-hover/card:scale-y-100" style={{ background: c.fill }} />
                   <div className="relative z-10 flex h-full flex-col justify-between gap-2 p-[24px] md:gap-4 xl:gap-8 xl:p-10">
                     <div className="flex items-center gap-2">
@@ -533,6 +545,7 @@ export function BuiltToBeTrusted({ content: trusted, media }: { content: Trusted
                             ref={(h) => {
                               ctas.current[i] = h
                             }}
+                            as="button"
                             variant="border"
                             theme="gray"
                             href={c.cta.href}
@@ -548,7 +561,7 @@ export function BuiltToBeTrusted({ content: trusted, media }: { content: Trusted
                       ) : null}
                     </div>
                   </div>
-                </div>
+                </CardLink>
               </div>
             </div>
           </div>
