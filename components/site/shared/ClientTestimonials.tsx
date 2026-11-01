@@ -77,6 +77,8 @@ export type Testimonial = {
   title?: string
   testimonial?: ReactNode
   logoLabel?: string
+  /** Scale's mask-image logo, on a clone. Filled pages leave it out and get the neutral tile. */
+  logoNode?: ReactNode
   /** Scale's no-logo branch: the tile shows the client name, not a logo. */
   nameTile?: boolean
   metricValue?: string
@@ -148,6 +150,8 @@ function LogoTab({
       <div ref={fill} className="absolute w-full h-full -z-10" style={{ background: contrastColor }} />
       {item.nameTile ? (
         <div className={cn('relative text-xs font-medium text-center truncate max-w-28 z-10', isActive ? `${activeColor}` : `text-${activeColor}/90`)}>{name}</div>
+      ) : item.logoNode ? (
+        item.logoNode
       ) : (
         <LogoTile label={item.logoLabel ?? 'Logo'} className="relative z-10" />
       )}

@@ -1,15 +1,9 @@
-// Stub: the page agent for /experts replaces this file.
-import Link from 'next/link'
+import type { Metadata } from 'next'
+import { content } from '@/components/pages/experts/content.scale'
+import { ExpertsPage } from '@/components/pages/experts/ExpertsPage'
+
+export const metadata: Metadata = { title: content.meta.title, description: content.meta.description }
 
 export default function Page() {
-  return (
-    <section className="min-h-svh px-6 pt-40 pb-24 text-center">
-      <h1 className="header2">Experts</h1>
-      <p className="mt-6 body2-regular">
-        <Link className="underline" href="/">
-          Home
-        </Link>
-      </p>
-    </section>
-  )
+  return <ExpertsPage content={content} />
 }

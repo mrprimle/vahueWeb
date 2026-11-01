@@ -24,9 +24,13 @@ export type ThreeRuntime = {
 type ScrollInfo = { scrollY: number; documentScrollHeight: number; animatedScrollY: number }
 
 export type ThreeScene = {
-  preload?: (rt: ThreeRuntime) => Promise<void> | void
-  setup: (rt: ThreeRuntime) => Promise<void> | void
-  onReady?: (rt: ThreeRuntime) => Promise<void> | void
+  // `props`: Scale's component forwards its remaining props to these three (`sceneProps` here).
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  preload?: (rt: ThreeRuntime, props?: any) => Promise<void> | void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setup: (rt: ThreeRuntime, props?: any) => Promise<void> | void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onReady?: (rt: ThreeRuntime, props?: any) => Promise<void> | void
   onDestroy?: (rt: ThreeRuntime) => void
   onTick?: (rt: ThreeRuntime, s: ScrollInfo & { delta: number; elapsed: number; width: number; height: number }) => void
   onResize?: (rt: ThreeRuntime, s: ScrollInfo & { width: number; height: number }) => void
@@ -243,11 +247,13 @@ export function ThreeCanvas({
   scene,
   fixedBackground,
   maxPixelRatio = 2,
+  sceneProps,
 }: {
   className?: string
   scene: ThreeScene
   fixedBackground?: boolean
   maxPixelRatio?: number
+  sceneProps?: Record<string, unknown>
 }) {
   const host = useRef<HTMLDivElement>(null)
   const latest = useRef(scene)
@@ -268,10 +274,10 @@ export function ThreeCanvas({
     const s = latest.current
     return mountThreeRuntime(el, {
       lenis,
-      preload: typeof s.preload === 'function' ? (rt) => latest.current.preload?.(rt) : undefined,
+      preload: typeof s.preload === 'function' ? (rt) => latest.current.preload?.(rt, sceneProps) : undefined,
       maxPixelRatio,
-      setup: (rt) => latest.current.setup(rt),
-      onReady: typeof s.onReady === 'function' ? (rt) => latest.current.onReady?.(rt) : undefined,
+      setup: (rt) => latest.current.setup(rt, sceneProps),
+      onReady: typeof s.onReady === 'function' ? (rt) => latest.current.onReady?.(rt, sceneProps) : undefined,
       onRuntimeReady: () => signal(readyKey),
       onDestroy: typeof s.onDestroy === 'function' ? (rt) => latest.current.onDestroy?.(rt) : undefined,
       onTick: typeof s.onTick === 'function' ? (rt, a) => latest.current.onTick?.(rt, a) : undefined,
