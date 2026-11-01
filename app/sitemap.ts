@@ -39,6 +39,7 @@ const staticRoutes: { path: string; priority: number; changeFrequency: MetadataR
   { path: '/marketplace',                            priority: 0.65, changeFrequency: 'weekly'  },
   { path: '/marketplace/aeo-content-skill',          priority: 0.65, changeFrequency: 'monthly' },
   { path: '/events',                                 priority: 0.6,  changeFrequency: 'weekly'  },
+  { path: '/about',                                  priority: 0.6,  changeFrequency: 'monthly' },
   { path: '/careers',                                priority: 0.6,  changeFrequency: 'monthly' },
   { path: '/careers/vacancies',                      priority: 0.6,  changeFrequency: 'weekly'  },
   { path: '/careers/senior-smm',                     priority: 0.6,  changeFrequency: 'monthly' },

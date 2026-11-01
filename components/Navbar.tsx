@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { NAV_THEME_EVENT, type NavTheme } from '@/components/templates/shared/header/navTheme'
 import type { SVGProps, ReactElement } from 'react'
 import { DISCOVERY_CALL_URL } from '@/lib/links'
 import { AttioCalendarIcon } from '@/components/icons/AttioCalendarIcon'
@@ -432,7 +433,7 @@ const isLightEnterprisePage = (p: string) =>
 // Pages rebuilt in strict parity with light Scale clones (security, evaluation-enterprise, enterprise-insurance,
 // enterprise-healthcare, careers, guides, events, blog), in Scale's own colours: light bar. /case-studies is on the guides
 // clone too; /blog and its category pages are on the blog clone (post pages stay dark).
-const isLightCloneParityPage = (p: string) => /^\/(security|strategy|careers|events|blog(\/category\/[^/]+)?|guides|case-studies|industries\/(insurance|healthcare-life-sciences))\/?$/.test(p)
+const isLightCloneParityPage = (p: string) => /^\/(about|security|strategy|careers|events|blog(\/category\/[^/]+)?|guides|case-studies|industries\/(insurance|healthcare-life-sciences))\/?$/.test(p)
 
 // /automations hub and workflow pages on light Scale clones (knowledge-agents is on a black clone): light bar.
 const isLightAutomationPage = (p: string) =>
@@ -449,7 +450,9 @@ export default function Navbar() {
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const isHomePage = pathname === '/' || pathname === ''
   // light bar on /careers and its vacancy pages and /contact (light scale.com/demo layout)
-  const isCareersPage = /^\/careers\/.+/.test(pathname) || /^\/contact\/?$/.test(pathname) || isLightEnterprisePage(pathname) || isLightCloneParityPage(pathname) || isLightAutomationPage(pathname)
+  // A template page's dark band (setScaleNavTheme, e.g. the /about stats) swaps the light bar for the dark one.
+  const [sectionTheme, setSectionTheme] = useState<NavTheme | null>(null)
+  const isCareersPage = sectionTheme !== 'dark' && (/^\/careers\/.+/.test(pathname) || /^\/contact\/?$/.test(pathname) || isLightEnterprisePage(pathname) || isLightCloneParityPage(pathname) || isLightAutomationPage(pathname))
   const liRefs = useRef<Record<string, HTMLLIElement | null>>({})
   const [portalReady, setPortalReady] = useState(false)
   const [menuRect, setMenuRect] = useState<{
@@ -460,6 +463,12 @@ export default function Navbar() {
 
   useEffect(() => {
     setPortalReady(true)
+  }, [])
+
+  useEffect(() => {
+    const onTheme = (e: Event) => setSectionTheme((e as CustomEvent<NavTheme | null>).detail)
+    window.addEventListener(NAV_THEME_EVENT, onTheme)
+    return () => window.removeEventListener(NAV_THEME_EVENT, onTheme)
   }, [])
 
   useEffect(() => {

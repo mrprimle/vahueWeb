@@ -73,7 +73,7 @@ export function Headquarters({ content }: { content: AboutContent['headquarters'
       <div className="mx-auto max-w-[1216px] px-4 lg:px-6">
         <div className="overflow-hidden rounded-2xl">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={content.image} alt={content.alt} width={content.width} height={content.height} className="block h-auto w-full" />
+          <img src={content.image} alt={content.alt} width={content.width} height={content.height} className="block h-auto w-full object-cover" style={{ aspectRatio: `${content.width} / ${content.height}` }} />
         </div>
         <p className={`${s.detailMono} mt-3 text-center font-mono text-[var(--abt-muted)]`}>{content.caption}</p>
       </div>
