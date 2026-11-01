@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import type { DocsContent } from './content'
+import DocsLogo from './DocsLogo'
 import { NavItems } from './DocsSidebar'
 import { ThemePill } from './DocsThemeMenu'
 import { Icon } from './icons'
@@ -111,12 +112,9 @@ export default function DocsMobileNav({
           </button>
           <div className={s.drawerScroll}>
             <div className={s.drawerTop}>
-              <a href={resolveHref(content, content.localPrefix.from)} className={s.logoLink}>
+              <a href={content.homeHref ?? resolveHref(content, content.localPrefix.from)} className={s.logoLink}>
                 <span className={s.srOnly}>{content.siteName} home page</span>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img className={`${s.logoImg} ${s.logoLight} ${s.logoDrawer}`} src={content.logo.light} alt={`light ${content.logo.alt}`} />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img className={`${s.logoImg} ${s.logoDark} ${s.logoDrawer}`} src={content.logo.dark} alt={`dark ${content.logo.alt}`} />
+                <DocsLogo content={content} drawer />
               </a>
               <ThemePill pref={pref} onChange={onPref} />
             </div>

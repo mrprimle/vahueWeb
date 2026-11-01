@@ -1,11 +1,12 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
 import type { DocsContent } from './content'
 import DocsSidebar from './DocsSidebar'
 import DocsSearch from './DocsSearch'
 import DocsThemeMenu from './DocsThemeMenu'
 import DocsMobileNav from './DocsMobileNav'
+import DocsLogo from './DocsLogo'
 import { AssistantDrawer, AssistantSheet, FloatingAsk, SHEET_W, type ChatMessage } from './DocsAssistant'
 import { Icon, MagnifyingGlass } from './icons'
 import { readThemePref, resolveHref, THEME_BOOT_SCRIPT, THEME_KEY, type ThemePref } from './links'
@@ -102,6 +103,9 @@ export default function DocsPage({ content }: { content: DocsContent }) {
         const el = document.getElementById(t.id)
         if (el && el.getBoundingClientRect().top <= 160) current = t.id
       }
+      // A short last section can't reach the sticky header, so the page bottom marks it active.
+      const last = content.toc[content.toc.length - 1]
+      if (last && content.toc.length > 1 && window.scrollY > 0 && window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) current = last.id
       setActiveToc(current)
     }
     onScroll()
@@ -117,10 +121,10 @@ export default function DocsPage({ content }: { content: DocsContent }) {
     if (copy) navigator.clipboard?.writeText(window.location.href).catch(() => {})
   }
 
-  const home = resolveHref(content, content.localPrefix.from)
+  const home = content.homeHref ?? resolveHref(content, content.localPrefix.from)
 
   return (
-    <div className={s.root} data-theme={theme} data-theme-preference={pref} suppressHydrationWarning>
+    <div className={s.root} data-theme={theme} data-theme-preference={pref} style={content.fontFamily ? ({ '--font': content.fontFamily } as CSSProperties) : undefined} suppressHydrationWarning>
       <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
       <a href="#content-area" className={s.skip}>
         Skip to main content
@@ -148,10 +152,7 @@ export default function DocsPage({ content }: { content: DocsContent }) {
                   <div className={s.navLeft}>
                     <a href={home} className={s.logoLink}>
                       <span className={s.srOnly}>{content.siteName} home page</span>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img className={`${s.logoImg} ${s.logoLight}`} src={content.logo.light} alt={`light ${content.logo.alt}`} />
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img className={`${s.logoImg} ${s.logoDark}`} src={content.logo.dark} alt={`dark ${content.logo.alt}`} />
+                      <DocsLogo content={content} />
                     </a>
                   </div>
                   <div className={s.navCenter}>
@@ -319,6 +320,56 @@ export default function DocsPage({ content }: { content: DocsContent }) {
                         )
                       })}
                     </div>
+                    {content.page.sections?.map((sec) => {
+                      const H = sec.level === 2 ? 'h2' : 'h3'
+                      return (
+                        <div key={sec.id}>
+                          <H id={sec.id} className={sec.level === 2 ? s.mdxH2 : s.mdxH3}>
+                            <div className={s.anchorPos}>
+                              <a
+                                href={'#' + sec.id}
+                                className={s.anchor}
+                                aria-label="Navigate to header"
+                                onClick={(e) => {
+                                  e.preventDefault()
+                                  scrollToId(sec.id, true)
+                                }}
+                              >
+                                ​
+                                <div className={s.anchorBox}>
+                                  <Icon name="Link" strokeWidth={2} className={s.anchorIcon} />
+                                </div>
+                              </a>
+                            </div>
+                            <span className={s.mdxH1Text} onClick={() => scrollToId(sec.id, true)}>
+                              {sec.title}
+                            </span>
+                          </H>
+                          {sec.body?.map((b) => (
+                            <p key={b} className={s.mdxP}>
+                              {b}
+                            </p>
+                          ))}
+                          {sec.items && (
+                            <ul className={s.mdxUl}>
+                              {sec.items.map((it) => (
+                                <li key={it.text}>
+                                  {it.label && <strong className={s.mdxStrong}>{it.label}: </strong>}
+                                  {it.text}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                          {sec.link && (
+                            <p className={s.mdxP}>
+                              <a href={resolveHref(content, sec.link.href)} className={s.mdxLink}>
+                                {sec.link.label}
+                              </a>
+                            </p>
+                          )}
+                        </div>
+                      )
+                    })}
                   </div>
 
                   {content.next && (

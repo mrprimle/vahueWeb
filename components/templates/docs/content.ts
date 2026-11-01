@@ -17,12 +17,28 @@ export type DocsTab = { label: string; href: string; active?: boolean }
 
 export type DocsCard = { title: string; body: string; href: string }
 
+/** An MDX section below the card group: an anchored h2/h3 with paragraphs, a bullet list and an optional link. */
+export type DocsSection = {
+  id: string
+  level: 2 | 3
+  title: string
+  body?: string[]
+  items?: { label?: string; text: string }[]
+  link?: { label: string; href: string }
+}
+
 /** One search record: `k` p = page, s = section; `b` = breadcrumbs; `h` = href (site-relative to `linkBase`). */
 export type SearchRecord = { t: string; h: string; b: string[]; k: 'p' | 's' }
 
 export type DocsContent = {
   siteName: string
   logo: { light: string; dark: string; alt: string }
+  /** When set, the chrome draws this name next to a round mark in text colour instead of the logo images. */
+  wordmark?: string
+  /** Where the logo goes (defaults to the docs landing). */
+  homeHref?: string
+  /** Overrides the root font stack. */
+  fontFamily?: string
   /** Hrefs in content are written as on the live site (`/docs/...`). `localPrefix` maps to this clone, everything else is sent to `linkBase`. */
   linkBase: string
   localPrefix: { from: string; to: string }
@@ -39,6 +55,7 @@ export type DocsContent = {
     heading: { id: string; text: string }
     body: string
     cards: DocsCard[]
+    sections?: DocsSection[]
   }
   toc: { id: string; title: string; depth: number }[]
   next?: { title: string; href: string }
