@@ -356,7 +356,7 @@ function tileTexture(T: typeof THREE, label: string) {
   ctx.roundRect(x, y, w, h, 14)
   ctx.stroke()
   ctx.fillStyle = '#000'
-  ctx.font = '64px aeonik, Arial, sans-serif'
+  ctx.font = `64px ${getComputedStyle(document.body).fontFamily}`
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
   ctx.fillText(label, 256, 256)

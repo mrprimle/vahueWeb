@@ -129,7 +129,7 @@ function EnterpriseBridge({ content: c }: { content: EnterpriseContent['bridge']
   useEffect(() => {
     marquee.current?.startMarquee()
   }, [])
-  const logos = useMemo(() => c.logos.map((l) => ({ id: l.alt, node: l.src ? <CustomerLogo logo={l} bounds={{ width: 70, height: 28 }} height={28} /> : undefined, label: 'Logo' })), [c.logos])
+  const logos = useMemo(() => c.logos.map((l, i) => ({ id: `${l.alt}-${i}`, node: l.src ? <CustomerLogo logo={l} bounds={{ width: 70, height: 28 }} height={28} /> : <span className="flex h-[35px] items-center"><LogoTile /></span> })), [c.logos])
   return (
     <div className="EnterpriseBridge grid-inner-8 md:grid-inner-10 w-full min-h-[60vh] py-6">
       <div className="flex flex-col justify-center col-span-8 col-start-1 gap-6 text-center md:row-start-1 oml:col-span-4 oml:col-start-4 md:col-start-2 md:col-span-4">
