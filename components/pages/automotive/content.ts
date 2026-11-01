@@ -12,7 +12,7 @@ export const content: AutomotiveContent = {
     body: 'Unlocking Decisions with best-in-class data.',
     cta: { text: 'Book a Demo', url: '/demo' },
     backdrop: WHITE,
-    image: { path: '/automotive/hero.webp' },
+    image: { path: '/automotive/hero-scoring.webp' },
   },
   logos: [
     { alt: 'Logo', width: 92, height: 40 }, // PLACEHOLDER
@@ -26,7 +26,7 @@ export const content: AutomotiveContent = {
       { title: 'Data Curation', description: 'Explore both scored and unscored data. Understand dataset distribution, curate data matching target scenarios and send data for review.' },
       { title: 'Agent Evaluation', description: 'Analyze the performance of your production AI agents. Explore agent metrics, identify agent weaknesses and evaluate your agent on scenario tests.' },
     ],
-    image: { src: '/automotive/scoring-loop.png', alt: 'Scoring, routing and monitoring loop', width: 662, height: 594 },
+    image: { src: '/automotive/scoring-curation-evaluation.png', alt: 'Data scoring, data curation and agent evaluation loop', width: 662, height: 594 },
   },
   stack: {
     overtitle: 'Decision tech stack',
@@ -39,11 +39,11 @@ export const content: AutomotiveContent = {
       titles: ['Risk', 'Image', 'Routing', 'Text', 'Audio'],
       frame: {
         src: '/automotive/risk-queue.html', // PLACEHOLDER
-        placeholder: { src: '/automotive/risk-queue.webp', alt: '', width: 1460, height: 904 },
+        placeholder: { src: '/automotive/risk-queue-invoices.webp', alt: '', width: 1460, height: 904 },
       },
       image: {
-        src: '/automotive/living-room.webp',
-        alt: 'An image with each detected item boxed for checking',
+        src: '/automotive/scanned-quote.webp',
+        alt: 'A scanned quote with each detected field boxed for checking',
         width: 649,
         height: 402,
         blurDataURL: 'data:image/webp;base64,UklGRu4AAABXRUJQVlA4TOIAAAAvBwABAM1VICICHghACgMAAADinQKYJCAAAAAAAAAAAAAAAAAAAAAAAAAAGAJDkEAQkG8GWDMiDwAAwAMByEEAAAA4/3uYiQCYfywCIDAAAAAAAAAAAAAAAAAAAAAAAAAAwAAFYLzNKhD074EApDAAAACc/71+BDQCvDDEAAAAAAAAAAAAAAAAAAAAAAAAAAAYIAAYAg9A5dn6yHOZL+39RfMzAA0s9wkf0nl7EU3cyeAdgcgR5DmOcWJ+dKq6VIwaV843upgqrKG8o9+rgq9UMl9l3VEs7bhL+o/8hd+29ugD',
@@ -84,19 +84,19 @@ export const content: AutomotiveContent = {
       {
         title: 'Base Phase',
         subtitle: "Vahue's Context Engine helps you collect and prepare a base dataset to unlock initial agent performance. Our platform lets you randomly sample data or add constraints (ex. Claim value = high) matching your intended distribution.",
-        image: { src: '/automotive/phase-audit.webp', alt: 'Base Phase' },
+        image: { src: '/automotive/phase-base.webp', alt: 'Base Phase' },
         video: '/automotive/phase-audit.mp4', // PLACEHOLDER
       },
       {
         title: 'Improvement Phase',
         subtitle: 'In this phase, the Context Engine ensures new cases continually challenge your agent and maximally improve performance. To achieve this, Vahue offers both automated (ML-based) and manual review methods.',
-        image: { src: '/automotive/phase-pilot.webp', alt: 'Improvement Phase' },
+        image: { src: '/automotive/phase-improvement.webp', alt: 'Improvement Phase' },
         video: '/automotive/phase-pilot.mp4', // PLACEHOLDER
       },
       {
         title: 'Target Phase',
         subtitle: 'Vahue helps you collect and curate data targeted to specific scenarios with Natural Language Search and Autotag, we then review that data and improve your agent performance on those specific scenarios. Vahue helps you close the loop by evaluating your agent on scenario tests.',
-        image: { src: '/automotive/phase-operate.webp', alt: 'Target Phase' },
+        image: { src: '/automotive/phase-target.webp', alt: 'Target Phase' },
         video: '/automotive/phase-operate.mp4', // PLACEHOLDER
       },
     ],
@@ -119,7 +119,7 @@ export const content: AutomotiveContent = {
         id: 'upgrading-workflow-context-engine',
         overtitle: 'Context Engine',
         title: 'Upgrading Your Workflow Into a Context Engine',
-        image: { src: '/automotive/webinar.webp', alt: 'Upgrading Your Workflow Into a Context Engine' },
+        image: { src: '/automotive/webinar-context.webp', alt: 'Upgrading Your Workflow Into a Context Engine' },
         link: '/events', // PLACEHOLDER
       },
       {
