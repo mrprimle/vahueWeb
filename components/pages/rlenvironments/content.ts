@@ -21,8 +21,8 @@ export const content: RlEnvironmentsContent = {
     cards: [
       { key: 'at-1', icon: 'bv', iconColor: '#273252', title: 'Real Applications, Rebuilt for Agents', description: 'Simulated APIs, MCP servers, and GUIs that behave like the systems agents actually use.' },
       { key: 'at-2', icon: 'dz', iconColor: '#193A29', title: 'Expert-Curated Artifacts', description: 'Files (PDFs, CSVs, PPTs, etc.), data, and state settings that reflect real professional workflows, sourced from real business settings, capturing natural messiness.' },
-      { key: 'at-3', icon: 'nz', iconColor: '#79648C', title: 'Hard Tasks with Verifiable Outcomes', description: 'Expert-designed objectives, rubrics, and automated verifiers that produce stable training signals for programmatic process and outcome evaluation.' },
-      { key: 'at-4', icon: 'ba', iconColor: '#A8927C', title: 'Easy Integration and Environment Control', description: 'Compatible with standard environment interfaces, supporting trajectories, resetting state, examining rewards, and more.' },
+      { key: 'at-3', icon: 'nz', iconColor: '#79648C', title: 'Hard Tasks with Verifiable Outcomes', description: 'Expert-designed objectives, rubrics, and automated verifiers that produce stable quality signals for programmatic process and outcome evaluation.' },
+      { key: 'at-4', icon: 'ba', iconColor: '#A8927C', title: 'Easy Integration and Environment Control', description: 'Compatible with standard environment interfaces, supporting run histories, resetting state, examining outcomes, and more.' },
     ],
   },
   overview: {
@@ -30,8 +30,8 @@ export const content: RlEnvironmentsContent = {
     title: "Inside Vahue's Agent Environments",
     cards: [
       { title: 'Built to Advance Agent Capabilities', subtitle: "Vahue's Agent Environments are simulated collections of realistic applications designed to train and evaluate agent behavior.", image: { src: '/rlenvironments/product-built-to-advance.webp', alt: 'Dashboards and tables showing delivery metrics.' } },
-      { title: 'Systems for Stronger Learning Signals', subtitle: 'They mirror real computer and API-based systems, supporting rich logs and application state that can be used for programmatic and rubric-based evaluation.', image: { src: '/rlenvironments/product-systems-signals.webp', alt: 'Code and developer tools connected to a review window.' } },
-      { title: 'Agent-Ready Expert Data', subtitle: 'Each environment combines simulated interfaces with expert-curated data and evaluators to produce reliable learning signals. Vahue also provides analysis on complexity (pass@k) and anticipated training gains.', image: { src: '/rlenvironments/product-rl-ready-data.webp', alt: 'Shared folders with a checklist and two team members.' } },
+      { title: 'Systems for Stronger Test Signals', subtitle: 'They mirror real computer and API-based systems, supporting rich logs and application state that can be used for programmatic and rubric-based evaluation.', image: { src: '/rlenvironments/product-systems-signals.webp', alt: 'Code and developer tools connected to a review window.' } },
+      { title: 'Agent-Ready Expert Data', subtitle: 'Each environment combines simulated interfaces with expert-curated data and evaluators to produce reliable test signals. Vahue also provides analysis on complexity (pass rates) and anticipated production gains.', image: { src: '/rlenvironments/product-rl-ready-data.webp', alt: 'Shared folders with a checklist and two team members.' } },
     ],
   },
   capabilities: {
