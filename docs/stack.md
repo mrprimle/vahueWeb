@@ -13,7 +13,7 @@ Read from live scale.com on 2026-11-01 with REA (`analyze_web_bundle`, evidence 
 | Keen Slider | yes (6 chunks, version string not shipped) | 6.8.6 | `data-keen-slider-` |
 | Embla | yes, 8.6-era options (`watchFocus`) | `embla-carousel-react` 8.6.0 | `dragThreshold:10` in `0sni47mcvnqwg.js` |
 | Rive | **Not used.** No `rive`, `@rive-app`, `.riv` or state machine in any of the 122 chunks fetched (HTML and lazy references). The old note matched "derive" and "drive" | not installed | word-boundary scan |
-| Others | zustand (stores), clsx (`cn`, no tailwind-merge), lucide (icons), Radix Dialog and Tooltip, react-spring (`2oqqgjzhyolwf.js`), TanStack Query, Sanity CMS, Plasmic CSS | zustand, clsx, lucide-react. Add the rest only on the page that needs it | module census |
+| Others | zustand (stores), clsx (`cn`, no tailwind-merge), lucide (icons), Headless UI `Transition` and react-type-animation (module 386218 in `1a9k8nwrsxal6.js`), Radix Dialog and Tooltip, react-spring (`2oqqgjzhyolwf.js`), TanStack Query, Sanity CMS, Plasmic CSS | zustand, clsx, lucide-react, `@headlessui/react` 2.2.9 and `react-type-animation` 3.2.0 (chat window, `/data-engine`; versions chosen, not read from Scale). Add the rest only on the page that needs it | module census |
 | Separate sites | `/docs` is Mintlify (`x-mint-proxy-version`). `labs.scale.com` is its own build: its page agents must fingerprint it first | `SEPARATE_CHROME_PREFIXES` in `components/site/SiteChrome.tsx` | response headers |
 
 ## Lenis and ScrollTrigger (exact, `2d7ykwtxp_8ed.js` function `eR`)

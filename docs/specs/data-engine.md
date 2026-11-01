@@ -24,7 +24,7 @@ Tops and heights at 1440, Scale then ours. All values measured after a full scro
 Remaining element-level deltas are text widths (Aeonik vs Aeonik Pro, or new copy) and the testimonial's mono label, which sets on 3 lines on Scale and 2 here (DM Mono). No overflow at either width.
 
 ## Interaction inventory
-Listeners: REA `inspect_web_event_listeners`, plus `DOMDebugger.getEventListeners` over all 554 `main` nodes (see Tooling). React handlers are delegated to the root, so element-level results show only native listeners.
+Listeners: REA `inspect_web_event_listeners`, plus `DOMDebugger.getEventListeners` over all 554 `main` nodes (see Other tooling). React handlers are delegated to the root, so element-level results show only native listeners.
 
 | Element | Input | Listener and evidence | Source | Params | Measured, Scale vs ours |
 |---|---|---|---|---|---|
@@ -40,6 +40,7 @@ Listeners: REA `inspect_web_event_listeners`, plus `DOMDebugger.getEventListener
 | FlatCta wash, label | pointerenter, leave, re-enter | React, shared | 892855 | Fill 300ms, arrow 600ms, label .9 | Enter 38.38%, 9.20%, .16% vs 38.40%, 9.21%, .16%. Leave -61.6, -90.8, -99.8 equal. Arrow -30.60, -17.40 vs -30.61, -17.40 |
 | CTA focus | Tab | Browser default plus `focus:outline-1` | 463059 | First Tab lands on the announcement link, both | Equal |
 | Resource cards from `lg` | hover | None | 382790 | Cursor pointer only | Equal |
+| Testimonial tab | hover, click, ArrowRight | React, shared | 685963 | One testimonial, already active | No change, both |
 | Keen Slider below `lg` | touch drag, 390 | `touchstart`, `touchmove`, `touchend`. REA `ev_c0c416a3…` | 577476, 382790 | `snap`, `perView` 1.05, spacing 24 | Slide 1: 0, -32, -80, -128, -176, -224, -298.5, -335.9, -346.7, -348.5, -348.6, equal |
 | Same | short drag, 390 | Same | | Springs back in 500ms | -701.1, -698.7, -697.5, -697.2, -697.1, equal |
 | Same | mouse drag, 800 | `mousedown`, `mousemove`, `mouseup` | | `free`, `perView` 2, cursor grabbing then grab | -270, -355.5, -447.4, -528.1, -598.5, -668.4, -718.6, -760.8, -776 vs -270, -355.6, -447.5, -528.2, -598.5, -668.4, -718.7, -760.8, -776 |
@@ -56,8 +57,49 @@ Listeners: REA `inspect_web_event_listeners`, plus `DOMDebugger.getEventListener
 - **Pre-footer image:** downscaled from 7952 to 1920 wide.
 - **Image quality:** Scale requests `q=85` for the two large images. Here they use Next's default 75: 85 is not in `images.qualities`, and `next.config.ts` is outside this page.
 
-## Tooling
-REA `analyze_web_bundle`, `observe_web_execution`, `capture_browser_scenario` and `inspect_web_page` were not run on this page: `include_script_sources` must be true on the first, and the others return every script inline (about 2 MB on this page). REA `inspect_web_event_listeners` returned 36 KB for one element. The stack evidence is in stack.md: the shared chunks it lists have the same sha256 prefixes on this page. Equivalent checks ran through Playwright and CDP and wrote to disk: `DOMDebugger.getEventListeners` on every node, `Profiler.startPreciseCoverage` during pointer grids. `new-qa/data-engine/instr.cjs` in the scratchpad holds the harness.
+## REA evidence
+Live page, 47 of 47 scripts parsed, no failures: `analyze_web_bundle` `ev_43864d21fdb3dec7040d9536d473b1153dd1fbaec677891f634d5dee69c04106`.
+
+Execution, 55s precise coverage with the same scripted drive on both pages (chat, CTA hover, testimonial scroll, then slider drag and Tab at 800 wide):
+- Scale: `observe_web_execution` `ev_1ae16a1292d95da7327146ecb5115d5bceaef82dd5709503f956f3a4fab3c0a7`
+- Ours, on the dev server: `observe_web_execution` `ev_20559ffe55aa79f6e556d57c77cff9577842ff269ea97de012b0c8b31112dcfc`
+
+Both results exceed REA's 10 MB response limit, so they were read from `export_evidence_bundle` output. Module attribution is from offsets into the retained source. On ours, the dev build's module markers put some functions under the neighbouring file, so counts below were matched by function name and source.
+
+Listeners, `inspect_web_event_listeners`: `.keen-slider` `ev_c0c416a31ec2dd40f6d4b82abebf0bf37cd57301b0951249b9fba0a5ab7d6482`. No listeners on `.ClipScrollSection` `ev_1bab15a9090379ad5271f4bce31db219fb54719f8d8d06009996a9f6ffc747fa`, `article` `ev_265a971c732dc836bd4be8491de3d0a8e2278df8f1686307cbc2140a455522aa`, `#build-ai` `ev_bc5f9502dd622e37dd9830a27158b225db42f816df94792ebf0ac9e5e4e2bf69`, `.ClientTestimonials` `ev_24a78ff54859dc6ef2222ccf41fe3e7cc2137b3becc7b214a118f1682d92cea4`, logo `ul` `ev_848c16e488d2a055d88b4ffd2bb2db85979eb35bea62d131c719f232e1c3a8de`.
+
+Not run: `capture_browser_scenario` and `inspect_web_page`. The first has no hover or drag action, so `observe_web_execution` covered the four interactions.
+
+### Calls in the window
+| Function | Module | Scale | Ours |
+|---|---|---|---|
+| Slider `dragStarted`, `dragEnded` | 382790 | 1, 1 | 1, 1 |
+| Slider `keydown` Tab, `focusin` | 382790 | 3, 5 | 3, 5 |
+| FlatCta enter, leave, 680ms timer, finish leave | 892855 | 2, 2, 2, 2 | 2, 2, 2, 2 |
+| FlatCta `transitionend` | 892855 | 4 | 4 |
+| Chat question done, dots done | 386218 | 5, 4 | 4, 4 |
+| Chat panel `afterEnter`, `afterLeave` | 386218 | 4, 4 | 4, 5 |
+| Chat answer `afterEnter` | 386218 | 4 | 5 |
+| Testimonial `onEnter`, chip `animateToText` | 685963 | 1, 1 | 1, 1 |
+| Hero and pre-footer media scrub `onUpdate` | 540431 | 73 | 75 |
+| Hero and pre-footer reveal `onEnter` | 540431 | 16 | 12 |
+
+Chat counts differ by one because the 55s window cuts the 12s loop at a different phase.
+
+### Reconciled
+- **Page code:** every function that ran in the page's modules has a counterpart in this build or the shared ports. No page code changed as a result of this pass.
+- **Reveal `onEnter`, 16 vs 12:** cause not found. A second call before the reveal ends would restart it, so the pre-footer reveal was sampled at 100ms on both. Word opacity never dips on either, and text and CTA reach their end state by about 1.5s. Mid-curve values differ (line y at about 305ms: 64.5 vs 93.0), and CTA opacity at about 610ms is .39 vs .15. I read that as sampling phase within the 100ms step, not as a measured timing match.
+- **Testimonial tab:** with one testimonial, hover, click and ArrowRight change nothing on either site. Click moves focus to the button on both; Tab then moves to the next link on both.
+- **Wheel plugin 29713:** not called in either window. The horizontal wheel test in the table above is its only check.
+- **Three.js and the 975 KB `0sni47mcvnqwg.js`:** both load on Scale's page, which has no `canvas`. They and 17 other chunks are absent from the coverage sample. REA states that absence does not prove zero execution, so this is not proof they stayed idle. Nothing on the page needs them.
+
+### Differences left, outside this page
+- **Favicon swap:** Scale's module 507085 points the SVG icon at `/favicon-dark.svg` or `/favicon-light.svg` from `prefers-color-scheme`. This repo has no favicon yet (`_chrome.md`). It belongs to the chrome and needs a Vahue icon.
+- **Analytics:** GTM, FullStory, Segment, Dreamdata, LinkedIn, Facebook, X and HubSpot scripts run on Scale. `_chrome.md` already records them as not built.
+- **Route prefetch:** Scale prefetches `_rsc` payloads for visible links. Ours requested none on the dev server. `next/link` prefetch only runs in production builds, and no production build was measured.
+
+### Other tooling
+Playwright and CDP also ran: `DOMDebugger.getEventListeners` on every `main` node, pointer grids, and the sampled curves. `new-qa/data-engine/instr.cjs` in the scratchpad holds the harness.
 
 ## Gaps
 - `oml:` landscape was not driven.
