@@ -1,0 +1,139 @@
+<svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="500" fill="#080808"/>
+
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="20" flood-color="rgba(0,0,0,0.7)"/>
+    </filter>
+  </defs>
+
+  <!-- Floating card -->
+  <rect x="72" y="44" width="656" height="412" rx="16" fill="#1C1C1C" stroke="rgba(255,255,255,0.14)" stroke-width="1" filter="url(#shadow)"/>
+
+  <g transform="translate(72, 44)">
+
+    <!-- ── NAV HEADER ── -->
+    <text x="16" y="24" font-family="-apple-system, system-ui, sans-serif" font-size="13" font-weight="700" fill="#DDDDDD">✦</text>
+    <text x="34" y="24" font-family="-apple-system, system-ui, sans-serif" font-size="11" font-weight="500" fill="#DDDDDD">Learning</text>
+    <text x="78" y="24" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#333">/</text>
+    <text x="88" y="24" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#666">AI Essentials</text>
+    <text x="432" y="24" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#AAAAAA">Overview</text>
+    <rect x="432" y="31" width="50" height="2" rx="1" fill="#777"/>
+    <text x="492" y="24" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#555">Modules</text>
+    <text x="542" y="24" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#555">Progress</text>
+
+    <!-- Nav divider -->
+    <rect x="0" y="36" width="656" height="1" fill="rgba(255,255,255,0.07)"/>
+
+    <!-- Panel divider -->
+    <rect x="420" y="37" width="1" height="358" fill="rgba(255,255,255,0.07)"/>
+
+    <!-- Right panel tint -->
+    <rect x="421" y="37" width="234" height="358" fill="rgba(0,0,0,0.12)"/>
+
+    <!-- ── LEFT PANEL ── -->
+
+    <!-- Course title -->
+    <text x="20" y="62" font-family="-apple-system, system-ui, sans-serif" font-size="17" font-weight="600" fill="#DDDDDD">AI Essentials</text>
+
+    <!-- Tag: EVERYONE -->
+    <rect x="20" y="68" width="64" height="16" rx="3" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/>
+    <text x="52" y="80" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#AAAAAA" text-anchor="middle">EVERYONE</text>
+
+    <!-- Metadata -->
+    <text x="20" y="100" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#666">8 Modules · 4.2 hrs · Beginner</text>
+
+    <!-- Description -->
+    <text x="20" y="116" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#666">Learn the foundations of AI and how to apply</text>
+    <text x="20" y="128" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#666">it in your daily work — no experience needed.</text>
+
+    <!-- CTA Button -->
+    <rect x="20" y="140" width="120" height="24" rx="5" fill="rgba(255,255,255,0.10)" stroke="rgba(255,255,255,0.18)" stroke-width="0.75"/>
+    <text x="80" y="156" font-family="-apple-system, system-ui, sans-serif" font-size="10.5" font-weight="500" fill="#DDDDDD" text-anchor="middle">Continue Learning</text>
+
+    <!-- Progress -->
+    <text x="20" y="183" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#777">Your progress</text>
+    <text x="395" y="183" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#666" text-anchor="end">3 of 8 completed</text>
+    <rect x="20" y="188" width="375" height="3" rx="1.5" fill="#2A2A2A"/>
+    <rect x="20" y="188" width="141" height="3" rx="1.5" fill="#666"/>
+
+    <!-- Modules label -->
+    <text x="20" y="210" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#666" letter-spacing="0.1em">MODULES</text>
+
+    <!-- Module 1 - Done -->
+    <rect x="20" y="218" width="388" height="40" rx="6" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.07)" stroke-width="0.5"/>
+    <circle cx="38" cy="238" r="9" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/>
+    <text x="38" y="242" font-family="-apple-system, system-ui, sans-serif" font-size="8.5" fill="#888" text-anchor="middle">✓</text>
+    <text x="56" y="235" font-family="-apple-system, system-ui, sans-serif" font-size="10.5" fill="#888">What is AI?</text>
+    <text x="56" y="248" font-family="-apple-system, system-ui, sans-serif" font-size="9" fill="#555">History, types, and real-world applications</text>
+    <text x="400" y="239" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#666" text-anchor="end">Done</text>
+
+    <!-- Module 2 - In progress -->
+    <rect x="20" y="264" width="388" height="40" rx="6" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.10)" stroke-width="0.5"/>
+    <circle cx="38" cy="284" r="9" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.14)" stroke-width="0.5"/>
+    <text x="38" y="288" font-family="-apple-system, system-ui, sans-serif" font-size="8.5" fill="#AAAAAA" text-anchor="middle">2</text>
+    <text x="56" y="281" font-family="-apple-system, system-ui, sans-serif" font-size="10.5" fill="#CCCCCC">Prompt Engineering Basics</text>
+    <text x="56" y="294" font-family="-apple-system, system-ui, sans-serif" font-size="9" fill="#666">Writing effective prompts for any task</text>
+    <text x="400" y="285" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#777" text-anchor="end">In progress</text>
+
+    <!-- Module 3 - Locked -->
+    <rect x="20" y="310" width="388" height="40" rx="6" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/>
+    <circle cx="38" cy="330" r="9" fill="#222" stroke="rgba(255,255,255,0.07)" stroke-width="0.5"/>
+    <text x="38" y="334" font-family="-apple-system, system-ui, sans-serif" font-size="8.5" fill="#555" text-anchor="middle">3</text>
+    <text x="56" y="327" font-family="-apple-system, system-ui, sans-serif" font-size="10.5" fill="#555">AI in the Workplace</text>
+    <text x="56" y="340" font-family="-apple-system, system-ui, sans-serif" font-size="9" fill="#444">Using AI tools for productivity</text>
+    <text x="400" y="330" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#555" text-anchor="end">Locked</text>
+
+    <!-- Footer -->
+    <rect x="20" y="362" width="388" height="1" fill="rgba(255,255,255,0.06)"/>
+    <text x="20" y="385" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#555">8 courses · 4 certifications earned</text>
+    <text x="400" y="385" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#444" text-anchor="end">Learning Platform</text>
+
+    <!-- ── RIGHT PANEL ── -->
+
+    <!-- What You'll Learn -->
+    <text x="436" y="56" font-family="-apple-system, system-ui, sans-serif" font-size="11" font-weight="500" fill="#DDDDDD">What You'll Learn</text>
+    <rect x="428" y="63" width="220" height="1" fill="rgba(255,255,255,0.07)"/>
+
+    <!-- Checkmark items -->
+    <text x="436" y="77" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#777">✓</text>
+    <text x="448" y="77" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#888">Core concepts of machine learning</text>
+
+    <text x="436" y="91" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#777">✓</text>
+    <text x="448" y="91" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#888">How to write effective prompts</text>
+
+    <text x="436" y="105" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#777">✓</text>
+    <text x="448" y="105" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#888">Real-world AI use cases</text>
+
+    <text x="436" y="119" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#777">✓</text>
+    <text x="448" y="119" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#888">Responsible AI principles</text>
+
+    <!-- Who This Is For -->
+    <text x="436" y="142" font-family="-apple-system, system-ui, sans-serif" font-size="11" font-weight="500" fill="#DDDDDD">Who This Is For</text>
+    <rect x="428" y="149" width="220" height="1" fill="rgba(255,255,255,0.07)"/>
+    <text x="436" y="163" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#777">Government employees and public</text>
+    <text x="436" y="176" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#777">sector professionals new to AI.</text>
+
+    <!-- Pre-requisites -->
+    <text x="436" y="198" font-family="-apple-system, system-ui, sans-serif" font-size="11" font-weight="500" fill="#DDDDDD">Pre-requisites</text>
+    <rect x="428" y="205" width="220" height="1" fill="rgba(255,255,255,0.07)"/>
+    <text x="436" y="219" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#777">None. Open to all skill levels.</text>
+
+    <!-- Certificate card -->
+    <rect x="428" y="234" width="220" height="60" rx="6" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+    <text x="438" y="254" font-family="-apple-system, system-ui, sans-serif" font-size="10.5" font-weight="500" fill="#AAAAAA">Certificate</text>
+    <text x="438" y="268" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#666">Earn upon completing all 8 modules</text>
+    <text x="438" y="281" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#666">and passing all assessments.</text>
+
+    <!-- Streak card -->
+    <rect x="428" y="308" width="220" height="38" rx="6" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+    <text x="438" y="323" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#888">14-day learning streak</text>
+    <text x="438" y="337" font-family="-apple-system, system-ui, sans-serif" font-size="9" fill="#555">You're in the top 12% of learners</text>
+
+    <!-- Footer -->
+    <rect x="428" y="362" width="220" height="1" fill="rgba(255,255,255,0.06)"/>
+    <text x="436" y="385" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#555">4 certifications earned</text>
+    <text x="640" y="385" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#444" text-anchor="end">Learning Platform</text>
+
+  </g>
+</svg>
