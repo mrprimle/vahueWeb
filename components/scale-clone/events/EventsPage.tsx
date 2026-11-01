@@ -14,7 +14,8 @@ import s from './events.module.css'
  * card and button hovers are CSS background transitions (200ms). No featured event, filters or tabs.
  */
 export default function EventsPage({ content, as: Root = 'main' }: { content: EventsContent; as?: 'main' | 'div' }) {
-  const { hero, upcoming, past } = content
+  const { hero, upcoming, past, upcomingEmpty } = content
+  const upcomingCards = upcoming.length === 0 && upcomingEmpty ? [upcomingEmpty] : upcoming
   return (
     <Root className="overflow-x-hidden bg-white font-display text-black">
       <section className={s.hero}>
@@ -27,7 +28,7 @@ export default function EventsPage({ content, as: Root = 'main' }: { content: Ev
       <section id="upcoming" className={s.upcoming}>
         <div className={`${s.container} flex flex-col gap-10`}>
           <div className={s.grid}>
-            {upcoming.map((e) => (
+            {upcomingCards.map((e) => (
               <UpcomingCard key={e.id} event={e} />
             ))}
           </div>

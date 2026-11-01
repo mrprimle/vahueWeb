@@ -23,6 +23,12 @@ export type EventItem = {
 export type EventsContent = {
   hero: { title: string; lede: string }
   upcoming: EventItem[]
+  /**
+   * Not on Scale (it always has upcoming events): a single card in the upcoming grid, shown only when `upcoming` is
+   * empty, so a site with no scheduled events keeps the section without inventing one. An empty `date` hides the
+   * "· DATE" part of the meta row.
+   */
+  upcomingEmpty?: EventItem
   past: {
     title: string
     subtitle: string

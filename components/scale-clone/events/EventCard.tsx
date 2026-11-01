@@ -62,10 +62,14 @@ export function UpcomingCard({ event }: { event: EventItem }) {
       <div className={s.bodyUpcoming}>
         <div className={s.metaRow}>
           <span className={s.meta}>{event.type}</span>
-          <span className={s.dot} aria-hidden="true">
-            ·
-          </span>
-          <span className={s.meta}>{event.date}</span>
+          {event.date && (
+            <>
+              <span className={s.dot} aria-hidden="true">
+                ·
+              </span>
+              <span className={s.meta}>{event.date}</span>
+            </>
+          )}
         </div>
         <h3 className={`${s.cardTitle} font-display`}>{event.title}</h3>
         {event.description && <p className={`${s.desc} font-display`}>{event.description}</p>}
