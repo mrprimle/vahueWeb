@@ -26,7 +26,7 @@ An index page with a fixed list of 12 guides drawn as "books". **There are no fi
   - `.light`: 90% wide, right-aligned, opacity .1, `linear-gradient(90deg,#fff0,#fff3)`, radius 3.
   - `.bookInside` (page block behind the cover): white, 1px `#d4d4d4`, radius 3, width calc(100% − 2px), height 96%, top 2%, page-edge stack of inset shadows plus `0 20px 25px #4a4a8b1a, 0 10px 10px #4a4a8b0a`.
 - **Hover** (CSS only): cover `transform: perspective(2000px) rotateY(-30deg)` + `box-shadow: 10px 0 10px -5px #00000030`; `.effect` width → 40px; `.light` opacity → 1, width → 70%. Sampled computed transform on both sites: `matrix3d(0.866025, 0, 0.5, -0.00025, …)`.
-- Clone adds the same state on `:focus-visible` (keyboard parity; Scale has none).
+- Keyboard focus: Scale's book is a plain next/link with no focus classes, so focus does not open the cover and the UA focus ring shows (`auto 1px`). The clone does the same (it restores the ring over the app's global `a { outline-none }`).
 
 ### 3. Pre-footer (FullBleedMediaSection in ClipScrollSection)
 - `div.pb-8` > ClipScrollSection (`px-4`, white backdrop) > clip container > `section` radius 24 > `relative p-8 md:p-16 min-h-[480px] md:min-h-[720px] flex items-end`.
@@ -71,10 +71,52 @@ An index page with a fixed list of 12 guides drawn as "books". **There are no fi
 Screenshots in `reference-snapshots/scale-clone/qa/guides/` (`1440-{scale,clone}-00…06`, `390-{scale,clone}-00…09`, `1440-{scale,clone}-hover`).
 - Body positions match to the pixel at both widths: h1, sub, first book, h3, index, pre-footer h2 (y 2381 at 1440, 5910 at 390), footer start (y 2608 at 1440, 6109 at 390). Page height 3506 at 1440 on both sites.
 - Placeholder titles are tuned so each book wraps to the same number of lines as Scale's at 24px and 22px.
-- Hover transform matrix identical on both.
+- Hover transform matrix identical on both. Interactions: see "Interaction audit" below.
 - Clone: HTTP 200, no console errors; `tsc` clean for these files.
 
 ## Remaining gaps
 - At 390 the page is 40px shorter (7429 vs 7469). The difference is entirely in the shared footer (its closing statement wraps to 3 lines instead of 4); the page body matches.
 - The announcement bar above the header is owned by the shared header and wasn't visible in the clone's screenshots; body offsets still match.
 - Book links point to `#` (Scale links to each guide's page).
+
+## Interaction audit (2026-11-01)
+
+Method: REA on a fresh CDP 9230 tab (closed afterwards), then Playwright (headless Chrome, one browser at a time) driving scale.com/guides, /scale-clone/guides, and the Vahue pages /guides and /case-studies with identical inputs at 1440×900 and 390×844. Script and JSON results: scratchpad `guides-audit/qa.js`, `qa-<site>-<width>.json`.
+
+Chunks compared by sha256: `1h0nvyhf5gbrf.js` (FlatCta 892855 / AnimatedText) `10b2627a…` and `37xz28pjbnlx4.js` (FullBleedMediaSection 540431 / ClipScrollSection / useScrollTrigger 210104) `b234eef5…` are byte-identical to the copies read in the security, enterprise-insurance and public-sector-data-engine audits, so the shared fixes were ported as-is. The book CSS module (`cfo7JW_*` in `2h0gxg24im1sd.css`) was re-read: unchanged from the values above; the book DOM order (inner content, `.effect`, `.light`, then `.bookInside`) matches the clone.
+
+Listeners (REA `inspect_web_event_listeners`):
+- `a[class*="_book"]` (`ev_e7d79674…`): HubSpot `mousedown` and the Next Link `click` (`42ixmvih7808g.js`). No pointer, mouse-move or hover JS.
+- `.FullBleedMediaSection a` (`ev_6d230e9d…`): HubSpot `mousedown` and Next Link `click`; the hover machine is React root-delegated pointerenter/leave.
+- `body` (`ev_e7d4c009…`): a passive `touchstart` from `1h0nvyhf5gbrf.js`. `main section` (`ev_e72c42c0…`) and `.ClipScrollSection` (`ev_7d6001d2…`): none (ScrollTrigger-driven).
+
+### Hero
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| — | — | none | — | static; no interactive children | n/a | — |
+
+### Book grid
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| `.bookCover` | hover | none (CSS `:hover`), `ev_e7d79674…` | `2h0gxg24im1sd.css` `cfo7JW_*` | `perspective(2000px) rotateY(-30deg)`, `transform-origin: 0`, 0.3s ease-out; end matrix `matrix3d(0.866025,0,0.5,-0.00025,…)` on all four pages; 100ms samples on enter/leave match within sampling jitter (Scale 0.9675 / 0.9039 / 0.8660, clone 0.9675…0.8660) | yes | `{1440,390}-book-hover-{scale,clone,vahue}.jpg`, `1440-book-hover-cases.jpg` |
+| cover shadow | hover | CSS | same | `10px 0 10px -5px #00000030`, 0.3s ease-out | yes | same |
+| `.effect` (spine) | hover | CSS | same | width 20 → 40px, 0.3s ease-out | yes | same |
+| `.light` | hover | CSS | same | opacity .1 → 1, width 90% → 70% (252 → 196px), 0.3s ease-out | yes | same |
+| book | cursor position | none | — | 15-point grid over the hovered card: transform identical at every point on Scale and the clone (no tilt-to-cursor, no parallax) | yes (none to reproduce) | — |
+| book | cursor | CSS | same | `cursor: pointer` | yes | — |
+| book | keyboard focus | none | UA | Scale: UA ring `auto 1px`, cover stays flat. Clone/Vahue had a `:focus-visible` cover open + `outline: none` (the app's global `a { outline-none }`): **fixed** to match Scale | yes (fixed) | — |
+| book | click | Next Link | `42ixmvih7808g.js` | navigation | yes (`#` in the clone, real routes on Vahue) | — |
+
+### Pre-footer
+| Element | Input | Listener | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| clip container | scroll scrub | ScrollTrigger | `37xz28pjbnlx4` ClipScrollSection | `inset(5%)` → `inset(0%)` over `top bottom → center center`; 10 points identical at 1440 and 390 | yes | — |
+| media | scroll scrub | ScrollTrigger | mod 540431 | `mapRange(progress,0,1,1.25,1)` set in **onUpdate only**. The clone also set it on refresh (1.25 before the trigger first updates; Scale leaves it at 1): **fixed**. 10 points now identical (1.0000, 1.2222 … 1.0000) | yes (fixed) | — |
+| h2 + CTA intro | scroll `top center` | useScrollTrigger 210104 `retroactiveOnEnter` | `37xz28pjbnlx4` / `1h0nvyhf5gbrf` | AnimatedText + `filledWhiteArrow` (see Motion table). The clone used `once` + `onRefresh progress > 0`; **ported** the refresh check (`progress > 0 || scroll >= start - 1`, end `bottom 20%`). Reload at page bottom: CTA visible, opacity 1 on all pages | yes (fixed) | — |
+| FlatCta arrow | pointerenter / leave | React delegated | `1h0nvyhf5gbrf` mod 892855 | wash `translate` −100% → 0 (600ms, cubic-bezier(0,0,.2,1)), leave → +100% then snap to −100% on the 680ms timer (the `transform` transitionend check never fires on a `translate` transition). Before: the clone animated `transform` and reset on its own timer; **ported** the state machine (re-entry snap, strip snaps back on leave). Samples every 100ms on leave: Scale 0 / 38.8 / 65.2 / 83.9 / 93.4 / 98.5 / 100 / −100%, clone and Vahue the same | yes (fixed) | `{1440,390}-cta-hover-*.jpg` |
+| chevron strip | hover | same | same | −50% → 0 over 600ms (Scale animates `translate`, the clone `transform: translateX`, same pixels) | yes | same |
+| FlatCta | keyboard focus | CSS | CMSLink `focus:outline-1 focus:outline-scale-skyblue` | 1px solid `#86bff2`: was missing, **added** | yes (fixed) | — |
+
+Not reproducible / not applicable: none. The clone's anchor reports `transform: none` where Scale's reports an identity matrix (Scale's `transform-gpu` class), with no visual difference.
+
+Vahue pages (/guides, /case-studies, `components/book-index/`): the same fixes with the same params; all measurements above match on both pages at 1440 and 390, no console errors.
