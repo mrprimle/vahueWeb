@@ -18,7 +18,8 @@ gsap.registerPlugin(ScrollTrigger, SplitText)
  *           out, per line i at 0.08*i: words yPercent -30 / opacity 0 0.4s power3.in stagger 0.03,
  *           line yPercent -100 / opacity 0 0.5s power3.in at +0.02.
  *  fade     ("H"): hidden lines yPercent 50, words opacity 0. In: lines -> 0 power3.out (0.052*i), words opacity 1
- *           power2.out stagger 0.025, T = max(0.55, (L-1)*0.052+0.2, (W-1)*0.025+0.2). Out: lines yPercent -50 /
+ *           power2.out stagger 0.025, T = max(0.85, 0.55, (L-1)*0.052+0.2, (W-1)*0.025+0.2) (0.85 = animateIn's
+ *           default duration, which h() uses as a floor). Out: lines yPercent -50 /
  *           opacity 0 0.32s stagger 0.055 power2.in.
  *  rise     ("F", SgpStack card copy): hidden words opacity 0, lines y 100%. In: words opacity 1 0.8s stagger 0.03,
  *           lines y 0 0.5s stagger 0.08 power2.out. Out: lines opacity 0 / x 10% 0.8s stagger 0.08 from end
@@ -117,7 +118,8 @@ export function createAnimatedText(el: HTMLElement, opts: Opts = {}): AnimatedTe
     } else if (variant === 'fade') {
       const n = lines.length > 0 ? (lines.length - 1) * 0.052 : 0
       const m = words.length > 0 ? (words.length - 1) * 0.025 : 0
-      const T = Math.max(0.55, n + 0.2, m + 0.2)
+      // h(): T = max(0.55, …), then max(introDuration, T); animateIn's duration defaults to 0.85 on Scale
+      const T = Math.max(0.85, Math.max(0.55, n + 0.2, m + 0.2))
       lines.forEach((line, i) => t.to(line, { yPercent: 0, duration: T - n, ease: 'power3.out' }, 0.052 * i))
       if (words.length) t.to(words, { opacity: 1, duration: T - m, ease: 'power2.out', stagger: 0.025 }, 0)
     } else if (variant === 'rise') {

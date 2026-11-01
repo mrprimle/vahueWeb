@@ -29,7 +29,8 @@ const ASSET = '/scale-clone/genai-portfolio'
  *   intro copy scrub <= 0.1 -> headline/body animate in (fade variant body), > 0.1 -> animate out
  *   steps      on step change: previous step animateOut, new step animateIn (title, body +0.2, chip fade 0.5s)
  *   progress   fill scaleX(scrub); track clipped at 18% and rescaled; 8px black ticks at 18/38/59/79%
- *   arrows     scroll to the middle of the step's timeline window (start+end)/2 of (height - innerHeight)
+ *   arrows     scroll to the middle of the step's timeline window (start+end)/2 of (height - innerHeight), with
+ *              Lenis.scrollTo(y) and its default lerp easing (Scale's useLenis()); keys ← / → on the focused region
  *   uScale     <=768: 2 (and uOffset tweens per step, 0.5s power2.out); else clamp(.75,1,map(1024..1728)).
  *   uOffset    >1280: (1, 0) (right/bottom aligned); else (0.5, 0.5)
  */
@@ -356,9 +357,11 @@ export default function Intro() {
     const edge = Object.values(EDGES).find((e) => e.activeStepIndex === n)
     if (!edge) return
     const t = ((edge.timelineStartPercent ?? 0) + (edge.timelineEndPercent ?? 0)) / 200
-    const top = root.getBoundingClientRect().top + window.scrollY
-    const y = Math.min(top + t * Math.max(0, root.offsetHeight - window.innerHeight), document.documentElement.scrollHeight - window.innerHeight)
-    gsap.to(window, { scrollTo: y, duration: prefersReducedMotion() ? 0 : 1.2, ease: 'power2.inOut', overwrite: true })
+    const lenis = (window as unknown as { __lenis?: { scroll: number; scrollTo: (y: number) => void } }).__lenis
+    const top = root.getBoundingClientRect().top + (lenis?.scroll ?? window.scrollY)
+    const y = Math.max(0, Math.min(top + t * Math.max(0, root.offsetHeight - window.innerHeight), document.documentElement.scrollHeight - window.innerHeight))
+    if (lenis) lenis.scrollTo(y)
+    else gsap.to(window, { scrollTo: y, duration: prefersReducedMotion() ? 0 : 1.2, ease: 'power2.inOut', overwrite: true })
     requestAnimationFrame(() => {
       activeRef.current = n
       setActive(n)
@@ -370,6 +373,7 @@ export default function Intro() {
   return (
     <div
       ref={section}
+      data-qa="intro"
       role="region"
       tabIndex={0}
       aria-label="Platform walkthrough"

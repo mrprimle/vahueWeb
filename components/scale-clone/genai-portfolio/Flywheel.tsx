@@ -65,7 +65,7 @@ const StepItem = forwardRef<StepHandle, { label: string; body: string; color: st
   { label, body, color, active },
   ref,
 ) {
-  const row = useRef<HTMLDivElement>(null)
+  const row = useRef<HTMLDivElement>(null) // the triangle (Scale fades only this; the label is AnimatedText)
   const lab = useRef<HTMLParagraphElement>(null)
   const txt = useRef<HTMLDivElement>(null)
   const texts = useRef<AnimatedText[]>([])
@@ -92,8 +92,10 @@ const StepItem = forwardRef<StepHandle, { label: string; body: string; color: st
       className={`absolute left-0 top-0 flex h-full w-full flex-col justify-end gap-16 p-8 pb-32 xl:justify-center xl:p-16 ${active ? 'pointer-events-auto' : 'pointer-events-none'}`}
     >
       <div className="flex flex-col gap-4 xl:gap-6">
-        <div ref={row} className="flex items-center gap-2">
-          <Triangle color={color} />
+        <div className="flex items-center gap-2">
+          <div ref={row} data-qa="fw-tri" style={{ color }}>
+            <Triangle color="currentColor" />
+          </div>
           <p ref={lab} className={`${s.mono} ${s.pending} font-mono !leading-none text-[#575757]`}>
             {label}
           </p>
@@ -173,7 +175,9 @@ export default function Flywheel() {
     const p = prog.current.progress
     const narrow = window.innerWidth < 1280
     const l = (1 - vid.clientWidth / box.clientWidth) * 100
-    const i = narrow ? (1 - vid.clientHeight / box.clientHeight) * 100 : 0
+    // Scale (not stepsOnly): the grey box starts just under the intro copy: (A.offsetTop + G.offsetHeight + 32) / box
+    const inner = wrap.parentElement as HTMLElement
+    const i = narrow ? ((inner.offsetTop + wrap.offsetHeight + 32) / box.clientHeight) * 100 : 0
     const { width: w, height: hh } = box.getBoundingClientRect()
     const half = hh / 2
     const d = mapRange(p, 0, 1, narrow ? i : l, 0)
@@ -224,7 +228,8 @@ export default function Flywheel() {
     const ctx = gsap.context(() => {
       apply()
       list.forEach((t) => t.set(true))
-      gsap.set([btnL.current, btnR.current], { opacity: 0, scale: 0.9 })
+      // Scale's mount-time collapse leaves the buttons at opacity 1 / scale .9 (the arrow row itself is at opacity 0)
+      gsap.set([btnL.current, btnR.current], { opacity: 1, scale: 0.9 })
       if (reduced) {
         prog.current.progress = 1
         apply()
@@ -244,11 +249,15 @@ export default function Flywheel() {
             fp.setFrame(Math.round(self.progress * fp.toFrame('02:02')))
           }
         },
+        onLeave: (self) => self.kill(),
       })
+      // Scale passes end "bottom bottom-=50%", but its pin spacer measures 450px at 1440x900 (padding-bottom 450, the
+      // panel unpins 450px after "top top"), i.e. the pin ends when the 150vh section's bottom meets the viewport
+      // bottom. "bottom bottom" reproduces that span (0.5 viewport).
       ScrollTrigger.create({
         trigger: root,
         start: 'top top',
-        end: 'bottom bottom-=50%',
+        end: 'bottom bottom',
         pin: pinEl.current,
         pinSpacing: true,
         onEnter: () => expand(),
@@ -313,19 +322,20 @@ export default function Flywheel() {
   }, [step])
 
   const next = () => {
-    if (step >= 4) return
-    fromButton.current = true
-    setStep(Math.min(step + 1, 4))
+    const n = Math.min(step + 1, 4)
+    if (n !== step) fromButton.current = true
+    setStep(n)
   }
   const prev = () => {
-    if (step <= 1) return
-    fromButton.current = true
-    setStep(Math.max(step - 1, 1))
+    const n = Math.max(step - 1, 1)
+    if (n !== step) fromButton.current = true
+    setStep(n)
   }
 
   return (
     <div
       ref={section}
+      data-qa="flywheel"
       tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === 'ArrowRight') next()
@@ -336,7 +346,7 @@ export default function Flywheel() {
     >
       <div ref={pinEl} className={`${s.grid} h-dvh min-h-0 w-full !py-6 md:!py-24`}>
         <div className="relative col-span-full flex h-full w-full flex-col md:col-span-10 md:col-start-2 xl:flex-row">
-          <div ref={bg} className="absolute left-0 top-0 z-10 h-full w-full bg-[#eaeaea]" />
+          <div ref={bg} data-qa="fw-bg" className="absolute left-0 top-0 z-10 h-full w-full bg-[#eaeaea]" />
           <div ref={introCol} className="absolute -z-10 h-full w-full p-8 xl:w-[36%] xl:p-12">
             <div className="flex h-full w-full flex-col justify-start xl:justify-center">
               <div ref={introWrap}>
@@ -354,6 +364,7 @@ export default function Flywheel() {
           </div>
           <div
             ref={label}
+            data-qa="fw-label"
             className={`${s.mono} absolute left-6 top-6 z-10 w-fit rounded-sm bg-white px-2 py-1 font-mono tracking-[-0.01em] text-black md:left-16 md:top-16`}
           >
             <p className="relative flex flex-col items-center overflow-clip">
@@ -368,12 +379,12 @@ export default function Flywheel() {
           </div>
           <div className="absolute right-6 z-10 flex h-full items-end p-6 xl:right-16 xl:items-start xl:p-16">
             <div className={`${s.mono} mb-6 w-fit overflow-clip rounded-sm font-mono tracking-[-0.01em] text-black xl:mb-0`}>
-              <p ref={counter} className="relative flex flex-col items-center overflow-clip">
+              <p ref={counter} data-qa="fw-counter" className="relative flex flex-col items-center overflow-clip">
                 {`${String(step).padStart(2, '0')} | ${String(STEPS.length).padStart(2, '0')}`}
               </p>
             </div>
           </div>
-          <div ref={stepsPanel} className="absolute z-20 h-full w-full flex-1 p-8 xl:relative xl:p-12">
+          <div ref={stepsPanel} data-qa="fw-steps" className="absolute z-20 h-full w-full flex-1 p-8 xl:relative xl:p-12">
             <div className="absolute left-0 top-0 flex h-full w-full flex-col justify-end p-8 xl:p-16">
               {STEPS.map((st, i) => (
                 <StepItem
@@ -383,7 +394,7 @@ export default function Flywheel() {
                   }}
                   label={st.label}
                   body={st.body}
-                  color={STEP_COLOR[i]}
+                  color={STEP_COLOR[Math.max(0, Math.min(step, 4) - 1)]}
                   active={step === i + 1}
                 />
               ))}

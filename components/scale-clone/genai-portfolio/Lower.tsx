@@ -101,6 +101,11 @@ const MatrixCell = forwardRef<HTMLButtonElement, { cell: Cell; last: boolean; mo
   const note = useRef<HTMLDivElement>(null)
   const tl = useRef<gsap.core.Timeline | null>(null)
   const [open, setOpen] = useState(false)
+  const sheet = useRef<HTMLDivElement>(null)
+  // Phones: the note card mounts on tap and fades in (opacity 0 -> 1, 0.3s power2.out); closing unmounts it at once.
+  useEffect(() => {
+    if (open && sheet.current) gsap.fromTo(sheet.current, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: 'power2.out' })
+  }, [open])
   useEffect(() => {
     const el = tip.current
     if (!el) return
@@ -133,6 +138,7 @@ const MatrixCell = forwardRef<HTMLButtonElement, { cell: Cell; last: boolean; mo
         {cell.note && !mobile ? (
           <div
             ref={tip}
+            data-qa="tip"
             className={`pointer-events-none absolute -top-6 z-20 flex w-[228px] flex-col gap-4 rounded-md bg-[#eaeaea] p-6 ${last ? '-right-6 items-end' : '-left-6 items-baseline'}`}
           >
             <div className={`relative z-10 flex h-6 w-6 items-center justify-center rounded-sm ${markBox(cell.m, false)}`}>
@@ -144,13 +150,13 @@ const MatrixCell = forwardRef<HTMLButtonElement, { cell: Cell; last: boolean; mo
           </div>
         ) : null}
         {cell.note && mobile && cell.m === 'P' && open ? (
-          <div className="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/20 p-10">
+          <div ref={sheet} data-qa="tip-m" className="pointer-events-none fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/20 p-10">
             <div className="flex flex-col gap-4 rounded-md bg-[#eaeaea] p-6">
               <div className="flex w-full justify-between">
                 <div className="relative z-10 flex h-6 w-6 items-center justify-center rounded-sm bg-black">
                   <Minus className="relative size-5 shrink-0 text-white" />
                 </div>
-                <button type="button" onClick={() => setOpen(false)} className="cursor-pointer" aria-label="Close">
+                <button type="button" onClick={() => setOpen(false)} className="pointer-events-auto cursor-pointer" aria-label="Close">
                   <Cross className="relative size-5 shrink-0 text-[#929292]" />
                 </button>
               </div>
@@ -220,7 +226,7 @@ export function Differentiators() {
   }, [])
 
   return (
-    <section ref={root} className="relative flex min-h-full items-end justify-center bg-white pb-16 text-black md:py-20">
+    <section ref={root} data-qa="diff" className="relative flex min-h-full items-end justify-center bg-white pb-16 text-black md:py-20">
       <div className="flex w-full flex-col gap-24 md:gap-[120px]">
         <div className={s.grid}>
           {/* TODO: Vahue copy */}
@@ -314,16 +320,19 @@ export function Security() {
     }
   }, [])
   return (
-    <section ref={root} className="relative bg-[#c7c7c7] pb-16 pt-16 text-neutral-900 md:pt-28">
+    <section ref={root} data-qa="security" className="relative bg-[#c7c7c7] pb-16 pt-16 text-neutral-900 md:pt-28">
       <div className={`${s.grid} w-full !gap-y-16 md:!gap-y-28`}>
         <div className="col-span-full flex flex-col gap-6 md:col-span-4 md:col-start-5 md:row-start-1 md:gap-16">
           {/* TODO: Vahue copy */}
           <h3 ref={h} className={`${s.header3} ${s.pending} text-balance !text-black`}>
             Security that clears public-sector review
           </h3>
-          <a href="#" className="group/link relative w-max text-sm font-medium leading-[21px] tracking-normal text-[#212121] transition-colors">
+          <a
+            href="#"
+            className="group/link relative w-max text-sm font-medium leading-[21px] tracking-normal text-[#212121] decoration-[#212121]/60 underline-offset-4 transition-colors hover:text-white hover:decoration-white/60 focus:outline focus:outline-1 focus:[outline-color:currentColor]"
+          >
             See security standards +
-            <span className="absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-black transition-transform duration-300 ease-in-out group-hover/link:scale-x-100" />
+            <span className="absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-black transition-transform duration-300 ease-in-out group-hover/link:scale-x-100 group-hover/link:bg-white" />
           </a>
         </div>
         <div className="col-span-full flex flex-col items-start gap-2 md:col-span-2 md:col-start-10 md:row-start-1 md:content-start">
@@ -369,7 +378,7 @@ const QUOTES = [
   },
 ]
 
-type QuoteHandle = { in: (d?: number) => void; out: () => void }
+type QuoteHandle = { in: (d?: number) => void; out: (d?: number) => void }
 const QuoteBlock = forwardRef<QuoteHandle, { quote: string; active: boolean }>(function QuoteBlock({ quote, active }, ref) {
   const el = useRef<HTMLDivElement>(null)
   const t = useRef<AnimatedText | null>(null)
@@ -377,7 +386,7 @@ const QuoteBlock = forwardRef<QuoteHandle, { quote: string; active: boolean }>(f
     t.current = createAnimatedText(el.current as HTMLElement, { type: 'lines', variant: 'flip' })
     return () => t.current?.revert()
   }, [])
-  useImperativeHandle(ref, () => ({ in: (d = 0) => t.current?.animateIn({ delay: d }), out: () => t.current?.animateOut() }))
+  useImperativeHandle(ref, () => ({ in: (d = 0) => t.current?.animateIn({ delay: d }), out: (d = 0) => t.current?.animateOut({ delay: d }) }))
   return (
     <div className={`[grid-area:1/1] ${active ? 'relative z-10' : 'pointer-events-none relative z-0 overflow-hidden lg:absolute lg:inset-0'}`} aria-hidden={!active}>
       <div
@@ -398,7 +407,7 @@ const NameBlock = forwardRef<QuoteHandle, { name: string; active: boolean }>(fun
     t.current = createAnimatedText(el.current as HTMLElement, { type: 'lines', variant: 'flip' })
     return () => t.current?.revert()
   }, [])
-  useImperativeHandle(ref, () => ({ in: (d = 0) => t.current?.animateIn({ delay: d }), out: () => t.current?.animateOut() }))
+  useImperativeHandle(ref, () => ({ in: (d = 0) => t.current?.animateIn({ delay: d }), out: (d = 0) => t.current?.animateOut({ delay: d }) }))
   return (
     <div className={active ? 'relative z-10' : 'pointer-events-none absolute inset-0 z-0 overflow-hidden'} aria-hidden={!active}>
       <p ref={el} className={`${s.pending} text-base font-medium leading-tight lg:text-lg`}>
@@ -410,9 +419,50 @@ const NameBlock = forwardRef<QuoteHandle, { name: string; active: boolean }>(fun
 
 /*
  * Foundry-tan panel width 90% -> 100% (scrub "top bottom" -> "bottom 75%", power3.out). First quote shows on
- * "top 80%". Switching: old quote/name flip out (rotationX 90, yPercent -108), new quote flips in at +0.35 / name
- * +0.5. Logo tabs: fill slides 100% -> 0 (y on desktop, x on phones, 0.3s). Arrow buttons fill on hover (0.3s).
+ * "top 80%". Switching (Scale's effect on the active index): old quote flips out (rotationX 90, yPercent -108),
+ * new quote flips in at +0.35; old name flips out at +0.5, new name in at +0.5. The role chip (ClientName
+ * animateToText): width -> 20px (0.5s power3.out, +0.05), swap the text, width -> text + 26 (0.5s power3.out).
+ * Logo tabs: fill slides in/out 0.3s on y (x on phones) with Scale's direction rules. Arrow buttons tween
+ * background/colour/border 0.3s on hover. Tab and arrow clicks scroll the section to 24px below the top (Lenis).
  */
+type LenisLike = { scrollTo: (t: Element, o?: { offset?: number }) => void }
+const scrollToSection = (el: Element | null) => {
+  const lenis = (window as unknown as { __lenis?: LenisLike }).__lenis
+  if (el && lenis) lenis.scrollTo(el, { offset: -24 })
+}
+
+const RoleChip = forwardRef<{ animateToText: (text: string, delay?: number) => void }>(function RoleChip(_, ref) {
+  const box = useRef<HTMLDivElement>(null)
+  const txt = useRef<HTMLDivElement>(null)
+  const run = useRef(0)
+  useImperativeHandle(ref, () => ({
+    async animateToText(text: string, delay = 0) {
+      const b = box.current
+      const t = txt.current
+      if (!b || !t) return
+      const id = ++run.current
+      if (prefersReducedMotion()) {
+        t.textContent = text.trim()
+        return
+      }
+      await gsap.to(b, { width: 20, duration: 0.5, ease: 'power3.out', delay })
+      if (id !== run.current) return
+      t.textContent = text.trim()
+      const w = t.getBoundingClientRect().width
+      await new Promise((r) => setTimeout(r, 10))
+      gsap.to(t, { opacity: 1, duration: 0.5, ease: 'none' })
+      await gsap.to(b, { width: w + 26, duration: 0.5, ease: 'power3.out' })
+    },
+  }))
+  return (
+    <div ref={box} data-qa="chip" className="mt-1 inline-block overflow-hidden rounded-sm bg-black p-1 px-2 font-mono text-[10px] uppercase leading-snug text-[#a8927c]">
+      <div className="text-nowrap">
+        <span className="mr-1 inline-block h-[6px] w-[6px] bg-[#a8927c] align-middle" style={{ clipPath: 'polygon(0 0, 100% 100%, 100% 0)' }} />
+        <div ref={txt} className="inline-block text-nowrap text-[#a8927c]" />
+      </div>
+    </div>
+  )
+})
 export function Testimonials() {
   const wrap = useRef<HTMLDivElement>(null)
   const sizer = useRef<HTMLDivElement>(null)
@@ -423,6 +473,8 @@ export function Testimonials() {
   const fillsMob = useRef<(HTMLDivElement | null)[]>([])
   const [active, setActive] = useState(-1)
   const prev = useRef(-1)
+  const lastMobile = useRef<boolean | null>(null)
+  const chip = useRef<{ animateToText: (text: string, delay?: number) => void }>(null)
   const [mobile, setMobile] = useState(false)
 
   useEffect(() => {
@@ -454,33 +506,63 @@ export function Testimonials() {
   useEffect(() => {
     if (active < 0) return
     const from = prev.current
-    if (from === active) return
+    const mobileChanged = lastMobile.current !== mobile
+    if (from === active && !mobileChanged) return
+    lastMobile.current = mobile
+    if (from === active) {
+      // breakpoint switch only: Scale's per-tab effect re-applies the rest positions
+      ;(mobile ? fillsMob : fillsDesk).current.forEach((f, i) => {
+        if (f) gsap.set(f, i === active ? { x: '0%', y: '0%' } : { x: mobile ? '100%' : '0%', y: mobile ? '0%' : '100%' })
+      })
+      return
+    }
     prev.current = active
     if (from >= 0) {
       quotes.current[from]?.out()
-      names.current[from]?.out()
+      names.current[from]?.out(0.5)
     }
     quotes.current[active]?.in(0.35)
-    names.current[active]?.in(from === -1 ? 0.35 : 0.5)
-    // tab fills
+    names.current[active]?.in(0.5)
+    chip.current?.animateToText(QUOTES[active].title, 0.05)
+    // tab fills (Scale's LogoTab effects): the active tab enters from -100% (from +100% when coming from a later
+    // tab, and always for tab 0); the previous tab leaves to +100% (-100% if it is the last tab or the new one is 0).
+    const n = QUOTES.length
     ;(mobile ? fillsMob : fillsDesk).current.forEach((f, i) => {
       if (!f) return
       const prop = mobile ? 'x' : 'y'
-      if (i === active) gsap.fromTo(f, { [prop]: from > i ? '100%' : '-100%' }, { [prop]: '0%', duration: 0.3 })
-      else if (i === from) gsap.fromTo(f, { [prop]: '0%' }, { [prop]: from > active ? '-100%' : '100%', duration: 0.3 })
-      else gsap.set(f, { x: mobile ? '100%' : '0%', y: mobile ? '0%' : '100%' })
+      if (i === active) {
+        const e = i === 0 ? 100 : from > i ? 100 : -100
+        gsap.fromTo(f, { [prop]: `${e}%` }, { [prop]: '0%', duration: 0.3 })
+      } else if (i === from) {
+        let t = from > i ? -100 : 100
+        if (i === n - 1) t = -100
+        if (active === 0) t = -100
+        gsap.fromTo(f, { [prop]: '0%' }, { [prop]: `${t}%`, duration: 0.3 })
+      } else if (mobileChanged) gsap.set(f, { x: mobile ? '100%' : '0%', y: mobile ? '0%' : '100%' })
+      // uninvolved tabs keep wherever their last tween left them (Scale's per-tab effects only run when that tab's
+      // active flag or the breakpoint changes)
     })
   }, [active, mobile])
 
-  const go = (dir: -1 | 1) => setActive((a) => (a + dir + QUOTES.length) % QUOTES.length)
+  // Scale's ei(): left from the first (or before the first) wraps to the last, right from the last wraps to 0.
+  const go = (dir: -1 | 1) => {
+    scrollToSection(wrap.current)
+    setActive((a) => (dir < 0 ? (a <= 0 ? QUOTES.length - 1 : a - 1) : a >= QUOTES.length - 1 ? 0 : a + 1))
+  }
+  const pick = (i: number) => {
+    scrollToSection(wrap.current)
+    setActive(i)
+  }
   const cur = Math.max(0, active)
 
   const Arrow = ({ dir }: { dir: -1 | 1 }) => (
     <button
       type="button"
       onClick={() => go(dir)}
+      onMouseEnter={(e) => gsap.to(e.currentTarget, { backgroundColor: '#010101', color: '#a8927c', borderColor: 'rgba(1, 1, 1, 0)', duration: 0.3 })}
+      onMouseLeave={(e) => gsap.to(e.currentTarget, { backgroundColor: 'rgba(1, 1, 1, 0)', color: '#010101', borderColor: '#010101', duration: 0.3 })}
       aria-label={dir < 0 ? 'Previous testimonial' : 'Next testimonial'}
-      className="flex aspect-square w-10 cursor-pointer items-center justify-center rounded-md border border-black text-black transition-colors duration-300 hover:bg-black hover:text-[#a8927c] lg:w-full"
+      className="flex aspect-square w-10 cursor-pointer items-center justify-center rounded-md border border-solid border-[#010101] bg-[rgba(1,1,1,0)] text-[#010101] lg:w-full"
     >
       <svg width="8" height="12" viewBox="0 0 8 12" fill="none" aria-hidden="true" style={dir > 0 ? { transform: 'scaleX(-1)' } : undefined}>
         <path
@@ -492,7 +574,7 @@ export function Testimonials() {
   )
 
   return (
-    <div ref={wrap} className="relative scroll-mt-28 bg-white pb-16 pt-20 text-black md:pb-20 md:pt-20">
+    <div ref={wrap} data-qa="testimonials" className="relative scroll-mt-28 bg-white pb-16 pt-20 text-black md:pb-20 md:pt-20">
       <div className="grid grid-cols-8 gap-2 px-3 lg:grid-cols-[repeat(12,minmax(0,150px))] lg:justify-center lg:px-6">
         <div ref={sizer} className="relative isolate col-span-full min-w-0">
           <div ref={panel} className="pointer-events-none absolute inset-y-0 left-1/2 z-0 -translate-x-1/2 rounded-2xl bg-[#a8927c]" aria-hidden="true" />
@@ -505,7 +587,7 @@ export function Testimonials() {
                 </p>
                 <div className="hidden flex-col gap-2 lg:flex" role="tablist">
                   {QUOTES.map((q, i) => (
-                    <Tab key={i} i={i} active={i === cur} label={q.name} onClick={() => setActive(i)} fillRef={(el) => {
+                    <Tab key={i} i={i} active={i === cur} label={q.name} onClick={() => pick(i)} fillRef={(el) => {
                         fillsDesk.current[i] = el
                       }} />
                   ))}
@@ -517,7 +599,7 @@ export function Testimonials() {
               </div>
             </div>
             <div className="col-span-full flex min-h-[320px] flex-col justify-between lg:col-span-7 lg:col-start-5">
-              <div className="grid">
+              <div className="grid" data-qa="quotes">
                 {QUOTES.map((q, i) => (
                   <QuoteBlock
                     key={i}
@@ -530,7 +612,7 @@ export function Testimonials() {
                 ))}
               </div>
               <div className="mt-8 flex shrink-0 items-center gap-3 lg:mt-0 lg:justify-end lg:gap-4">
-                <div className="relative min-w-0 text-left lg:text-right">
+                <div className="relative min-w-0 text-left lg:text-right" data-qa="names">
                   {QUOTES.map((q, i) => (
                     <NameBlock
                       key={i}
@@ -541,16 +623,13 @@ export function Testimonials() {
                       active={i === cur}
                     />
                   ))}
-                  <div className="mt-1 inline-block rounded-sm bg-black p-1 px-2 font-mono text-[10px] uppercase leading-snug">
-                    <span className="mr-1 inline-block h-[6px] w-[6px] bg-[#a8927c] align-middle" style={{ clipPath: 'polygon(0 0, 100% 100%, 100% 0)' }} />
-                    <span className="inline-block text-nowrap text-[#a8927c]">{QUOTES[cur].title}</span>
-                  </div>
+                  <RoleChip ref={chip} />
                 </div>
               </div>
             </div>
             <div className="flex gap-2 lg:hidden" role="tablist">
               {QUOTES.map((q, i) => (
-                <Tab key={i} i={i} active={i === cur} label={q.name} onClick={() => setActive(i)} fillRef={(el) => {
+                <Tab key={i} i={i} active={i === cur} label={q.name} onClick={() => pick(i)} fillRef={(el) => {
                     fillsMob.current[i] = el
                   }} small />
               ))}
@@ -613,10 +692,15 @@ export function Demo() {
         gsap.set(card, { top: i * c.stackTopPx, transform: `translate(${vw(x, base)}vw, -${vw(y, base)}vw) skewY(${c.skewDeg}deg)` })
       })
     }
+    let ro: ResizeObserver | null = null
     const ctx = gsap.context(() => {
       place(null)
       if (prefersReducedMotion()) return
-      ScrollTrigger.create({ trigger: el, start: 'top bottom', end: 'bottom bottom', onUpdate: (self) => place(self.progress), onRefresh: (self) => place(self.progress) })
+      // Scale only places the cards in onUpdate (and a body ResizeObserver resets them to the idle layout), so before
+      // the section enters they sit in the idle layout (no parallax term) and jump to the scroll layout on entry.
+      ro = new ResizeObserver(() => place(null))
+      ro.observe(document.body)
+      ScrollTrigger.create({ trigger: el, start: 'top bottom', end: 'bottom bottom', onUpdate: (self) => place(self.progress) })
       // CTA "filledWhiteArrow" intro
       const a = cta.current
       const counter = a?.querySelector<HTMLElement>('[data-cta-counter]')
@@ -632,17 +716,18 @@ export function Demo() {
         const t = gsap.timeline({ delay: 1 })
         t.to(a, { autoAlpha: 1, scaleX: 1, borderRadius: 8, duration: 0.85, ease: 'power3.out' }, 0)
         if (counter) t.to(counter, { scaleX: 1, duration: 0.85, ease: 'power3.out' }, 0.1)
-        if (arrow) t.to(arrow, { x: 0, duration: 0.85, ease: 'power3.inOut' }, 0.1)
-        if (label) t.to(label, { opacity: 1, duration: 0.85, ease: 'power3.out' }, 0.75)
+        if (arrow) t.to(arrow, { x: 0, duration: 0.85, ease: 'power3.inOut' }, 0)
+        if (label) t.to(label, { opacity: 1 }, 0.85 - 0.1)
       })
     }, el)
     return () => {
+      ro?.disconnect()
       texts.forEach((t) => t.revert())
       ctx.revert()
     }
   }, [])
   return (
-    <section ref={root} data-nav-theme="dark" className="relative isolate h-screen min-h-screen w-full overflow-hidden bg-black text-white">
+    <section ref={root} data-qa="demo" data-nav-theme="dark" className="relative isolate h-screen min-h-screen w-full overflow-hidden bg-black text-white">
       <div className={`${s.grid} relative z-10 h-full min-h-dvh w-full content-center md:min-h-screen`}>
         <div className="order-2 col-span-full flex flex-col pb-[25vw] max-md:justify-center md:order-1 md:col-span-3 md:col-start-2 md:self-center md:pb-[15vh]">
           <div className="flex flex-col items-center gap-6 md:items-start">
@@ -654,7 +739,7 @@ export function Demo() {
             <div ref={p} className={`${s.pending} w-full max-w-xl text-center text-sm leading-[21px] tracking-normal text-[#929292] md:max-w-none md:text-left md:text-base md:leading-6`}>
               We’ll show you VAP inside your own real setup rather than a canned demo.
             </div>
-            <FlatCta ref={cta} href="#" variant="arrow" theme="white" className="max-md:mx-auto">
+            <FlatCta ref={cta} href="#" variant="arrow" theme="white" className="max-md:mx-auto" external>
               Talk to an expert
             </FlatCta>
           </div>
@@ -701,6 +786,15 @@ function FaqItem({ item, index, active, setActive }: { item: (typeof FAQS)[numbe
   const body = useRef<HTMLDivElement>(null)
   const open = active === index
   const first = useRef(true)
+  const [full, setFull] = useState(0)
+  // Scale: a ResizeObserver keeps the target height at the answer's scrollHeight; open tweens to it, closed to 0 (0.5s).
+  useEffect(() => {
+    const el = body.current
+    if (!el) return
+    const ro = new ResizeObserver(() => setFull(el.scrollHeight))
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
   useEffect(() => {
     const el = body.current
     if (!el) return
@@ -709,8 +803,8 @@ function FaqItem({ item, index, active, setActive }: { item: (typeof FAQS)[numbe
       el.style.height = open ? 'auto' : '0px'
       return
     }
-    gsap.to(el, { height: open ? el.scrollHeight : 0, duration: prefersReducedMotion() ? 0 : 0.5 })
-  }, [open])
+    gsap.to(el, { height: open ? full || el.scrollHeight : 0, duration: prefersReducedMotion() ? 0 : 0.5 })
+  }, [open, full])
   return (
     <li className="border-b border-[#01010160] last:border-b-0">
       <div className="grid grid-cols-8 items-center gap-2 px-0 py-6 md:grid-cols-[repeat(12,minmax(0,150px))] md:items-start md:justify-center">
@@ -755,7 +849,7 @@ export function Faqs() {
     return () => mq.removeEventListener('change', f)
   }, [])
   return (
-    <div data-nav-theme="dark" className="bg-black">
+    <div data-qa="faqs" data-nav-theme="dark" className="bg-black">
       <ClipScroll startPercentage={8} startScale={0.9} radius={mobile ? 0.5 : 1} backdrop="#000" progressOffset={0.4} className={s.grid} clipClassName="col-span-full">
         <section className="relative scroll-mt-28 rounded-l-lg bg-[#f2f2f2] px-0 pt-6 text-black md:rounded-2xl">
           <div className={`${s.grid} w-full !gap-y-10 md:!gap-y-12`}>
@@ -786,29 +880,75 @@ const Brand = ({ bg }: { bg: string }) => (
   </span>
 )
 
-function Tile({ children, index, className = '' }: { children: React.ReactNode; index: number; className?: string }) {
-  const el = useRef<HTMLAnchorElement>(null)
+/*
+ * One bento tile (Scale's BlogPreviewTile inside BaseCardViewportEntrance, scaleDir "none"):
+ *  - entrance: an IntersectionObserver on the slot (threshold 0.12, rootMargin "0px 0px -6% 0px") flips it visible;
+ *    the card goes opacity 0 / y 16 -> 1 / 0, 0.6s cubic-bezier(.23,1,.32,1), delay 0.05 * min(index, 3). A card
+ *    already on screen at mount starts visible.
+ *  - title (AnimatedText) animates in with delay 0.05 once the tile is visible.
+ *  - image wrapper: scrubbed "top bottom" -> "center center" of the card, scale 1.08 -> 1 (origin 50% 50%).
+ *  - hover on the image wrapper: img scale 1.05, 1000ms ease-out.
+ */
+function Tile({ children, index, className = '', link = true }: { children: React.ReactNode; index: number; className?: string; link?: boolean }) {
+  const card = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    const t = el.current
-    if (!t || prefersReducedMotion()) return
+    const t = card.current
+    const slot = t?.parentElement
+    if (!t || !slot) return
+    const reduced = prefersReducedMotion()
+    const title = t.querySelector<HTMLElement>('h3')
+    const text = title ? createAnimatedText(title) : null
+    const img = t.querySelector<HTMLElement>('[data-qa=blog-img]')
+    let st: ScrollTrigger | null = null
+    if (img) {
+      gsap.set(img, { transformOrigin: '50% 50%' })
+      if (reduced) gsap.set(img, { scale: 1 })
+      else {
+        const set = (p: number) => gsap.set(img, { scale: mapRange(p, 0, 1, 1.08, 1) })
+        st = ScrollTrigger.create({
+          trigger: t,
+          start: 'top bottom',
+          end: 'center center',
+          invalidateOnRefresh: true,
+          onToggle: (self) => (img.style.willChange = self.isActive ? 'transform' : 'auto'),
+          onUpdate: (self) => set(self.progress),
+        })
+        set(st.progress)
+      }
+    }
+    if (reduced) return () => st?.kill()
     const r = t.getBoundingClientRect()
-    if (r.top < window.innerHeight && r.bottom > 0) return
-    gsap.set(t, { scale: 0.96, opacity: 0, x: 0, y: 0 })
+    if (r.top < window.innerHeight && r.bottom > 0) gsap.set(t, { scale: 1, opacity: 1, x: 0, y: 0 })
+    else gsap.set(t, { scale: 1, opacity: 0, x: 0, y: 16 })
+    let tween: gsap.core.Tween | null = null
     const io = new IntersectionObserver(
       (es) => {
         if (!es.some((e) => e.isIntersecting)) return
         io.disconnect()
-        gsap.to(t, { scale: 1, opacity: 1, x: 0, y: 0, duration: 0.6, delay: 0.05 * Math.min(index, 3), ease: 'cubic-bezier(0.23, 1, 0.32, 1)', overwrite: 'auto' })
+        tween = gsap.to(t, { scale: 1, opacity: 1, x: 0, y: 0, duration: 0.6, delay: 0.05 * Math.min(index, 3), ease: 'cubic-bezier(0.23, 1, 0.32, 1)', overwrite: 'auto' })
+        text?.animateIn({ delay: 0.05 })
       },
-      { threshold: 0.15 },
+      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
     )
-    io.observe(t)
-    return () => io.disconnect()
+    io.observe(slot)
+    return () => {
+      io.disconnect()
+      tween?.kill()
+      st?.kill()
+      text?.revert()
+    }
   }, [index])
+  const cls = `block h-full w-full overflow-hidden rounded-2xl ${className}`
   return (
-    <a ref={el} href="#" className={`block h-full w-full overflow-hidden rounded-2xl ${className}`}>
-      {children}
-    </a>
+    <div ref={card} data-qa="blog-card" className="h-full w-full min-h-0">
+      {link ? (
+        <a href="#" className={cls}>
+          {children}
+        </a>
+      ) : (
+        <div className={cls}>{children}</div>
+      )}
+    </div>
   )
 }
 
@@ -828,9 +968,9 @@ export function Blog() {
       t.revert()
     }
   }, [])
-  const caption = 'text-pretty text-left text-base !font-medium leading-[22px] !tracking-[-0.025em] !text-white'
+  const caption = `${s.pending} text-pretty text-left text-base !font-medium leading-[22px] !tracking-[-0.025em] !text-white`
   return (
-    <section data-nav-theme="dark" className="isolate w-full scroll-mt-28 overflow-hidden bg-black py-12 md:py-16">
+    <section data-qa="blog" data-nav-theme="dark" className="isolate w-full scroll-mt-28 overflow-hidden bg-black py-12 md:py-16">
       <div className={s.grid}>
         <div className="col-span-full md:col-span-10 md:col-start-2">
           <div ref={head} className="mb-8 md:mb-20">
@@ -841,7 +981,7 @@ export function Blog() {
           </div>
           <div className="flex flex-col gap-4 md:flex-row md:gap-2">
             <div className="flex flex-col gap-4 max-md:contents md:flex-1 md:gap-2">
-              <div className="max-md:order-1 md:h-[304px]">
+              <div data-qa="blog-slot" className="max-md:order-1 md:h-[304px]">
                 <Tile index={0} className="bg-white/5">
                   <div className="relative flex h-full min-h-[115px] w-full flex-col p-4 text-white lg:p-5">
                     <div className="inline-flex items-center gap-1.5">
@@ -851,19 +991,21 @@ export function Blog() {
                     </div>
                     <div className="mt-auto flex w-full flex-col items-start pb-0.5">
                       {/* TODO: Vahue copy */}
-                      <h3 className="text-balance text-left text-[24px] font-normal leading-[1.25] !text-white lg:text-[2.5rem]">
+                      <h3 className={`${s.pending} text-balance text-left text-[24px] font-normal leading-[1.25] !text-white lg:text-[2.5rem]`}>
                         Meet Dialect: the Layer Linking AI and Enterprise Confidence
                       </h3>
                     </div>
                   </div>
                 </Tile>
               </div>
-              <div className="h-[312px] max-md:order-3 md:h-[407px]">
+              <div data-qa="blog-slot" className="h-[312px] max-md:order-3 md:h-[407px]">
                 <Tile index={2} className="bg-white/5">
                   <div className="flex h-full flex-col gap-5 p-4 lg:p-5">
                     <div className="relative min-h-0 flex-1 overflow-hidden rounded-lg">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={`${ASSET}/blog-2.webp`} alt="" className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out hover:scale-105" loading="lazy" />
+                      <div data-qa="blog-img" className="group/img absolute inset-0">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={`${ASSET}/blog-2.webp`} alt="" className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out group-hover/img:scale-105" loading="lazy" />
+                        </div>
                     </div>
                     {/* TODO: Vahue copy */}
                     <h3 className={caption}>How can agents that are nondeterministic by nature earn trust? | In the Loop: Episode 18</h3>
@@ -872,30 +1014,36 @@ export function Blog() {
               </div>
             </div>
             <div className="flex flex-col gap-4 max-md:contents md:flex-1 md:gap-2">
-              <div className="h-[280px] max-md:order-2 md:h-[468px]">
-                <Tile index={1} className="relative bg-neutral-900">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={`${ASSET}/blog-1.webp`} alt="" className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out hover:scale-105" loading="lazy" />
+              <div data-qa="blog-slot" className="h-[280px] max-md:order-2 md:h-[468px]">
+                <Tile index={1} className="relative bg-neutral-900" link={false}>
+                  <div data-qa="blog-img" className="group/img absolute inset-0 bg-neutral-900">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={`${ASSET}/blog-1.webp`} alt="" className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out group-hover/img:scale-105" loading="lazy" />
+                  </div>
                   <div className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(180deg,rgba(0,0,0,0.42)_0%,rgba(0,0,0,0)_40%),linear-gradient(0deg,rgba(0,0,0,0.58)_0%,rgba(0,0,0,0.14)_38%,rgba(0,0,0,0)_68%)]" />
                 </Tile>
               </div>
               <div className="flex flex-col gap-4 max-md:contents md:h-[243px] md:flex-row md:gap-2">
-                <div className="h-[220px] max-md:order-4 md:h-full md:flex-1">
-                  <Tile index={3} className="bg-white/5">
+                <div data-qa="blog-slot" className="h-[220px] max-md:order-4 md:h-full md:flex-1">
+                  <Tile index={3} className="bg-white/5" link={false}>
                     <div className="h-full p-4 lg:p-5">
                       <div className="relative h-full overflow-hidden rounded-lg">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={`${ASSET}/blog-3.webp`} alt="" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+                        <div data-qa="blog-img" className="group/img absolute inset-0">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={`${ASSET}/blog-3.webp`} alt="" className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out group-hover/img:scale-105" loading="lazy" />
+                        </div>
                       </div>
                     </div>
                   </Tile>
                 </div>
-                <div className="h-[260px] max-md:order-5 md:h-full md:flex-1">
+                <div data-qa="blog-slot" className="h-[260px] max-md:order-5 md:h-full md:flex-1">
                   <Tile index={4} className="bg-white/5">
                     <div className="flex h-full flex-col gap-5 p-4 lg:p-5">
                       <div className="relative min-h-0 flex-1 overflow-hidden rounded-lg">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={`${ASSET}/blog-4.webp`} alt="" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+                        <div data-qa="blog-img" className="group/img absolute inset-0">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={`${ASSET}/blog-4.webp`} alt="" className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out group-hover/img:scale-105" loading="lazy" />
+                        </div>
                         <div className="absolute left-4 top-4 z-10 inline-flex items-center gap-1.5">
                           <Brand bg="#86bff2" />
                           {/* TODO: Vahue copy */}
