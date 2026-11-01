@@ -80,6 +80,30 @@ function Modal({ isShowing, hide, children, contentClassName }: { isShowing: boo
   )
 }
 
+/** Stands in for Wistia's player when the source is a local file: poster, centred play button, click to play. */
+function LocalPlayer({ video, controls }: { video: TabVideo; controls: boolean }) {
+  const ref = useRef<HTMLVideoElement>(null)
+  const [playing, setPlaying] = useState(false)
+  const toggle = () => {
+    const v = ref.current
+    if (!v) return
+    if (v.paused) void v.play()
+    else v.pause()
+  }
+  return (
+    <>
+      <video ref={ref} className="absolute inset-0 w-full h-full object-cover" src={video.src} poster={video.poster} controls={controls && playing} playsInline preload="metadata" onClick={toggle} onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onEnded={() => setPlaying(false)} />
+      {playing ? null : (
+        <button type="button" aria-label="Play video" onClick={toggle} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded w-[12%] aspect-[8/5] bg-[#79648C]/90">
+          <svg width={18} height={18} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" aria-hidden>
+            <path fill="#FFF" d="M48.79 26.129l-33-19.508C13.104 5.035 9 6.574 9 10.492V49.5c0 3.516 3.816 5.637 6.79 3.871l33-19.5c2.94-1.734 2.952-6.008 0-7.742z" />
+          </svg>
+        </button>
+      )}
+    </>
+  )
+}
+
 /** Module 647980. A Wistia URL is an iframe, as on Scale. A local file is a `video` in the same box. */
 function Video({ video, className, onModalClick }: { video: TabVideo; className?: string; onModalClick?: () => void }) {
   const [state, setState] = useState({ playing: false, animate: false })
@@ -96,7 +120,7 @@ function Video({ video, className, onModalClick }: { video: TabVideo; className?
             {wistia ? (
               <iframe className="absolute inset-0 w-full h-full" src={`https://fast.wistia.net/embed/iframe/${wistia}?seo=true`} loading="lazy" allow="autoplay; fullscreen" allowFullScreen title="Wistia video" />
             ) : (
-              <video className="absolute inset-0 w-full h-full object-cover" src={video.src} poster={video.poster} controls playsInline preload="metadata" />
+              <LocalPlayer video={video} controls={!onModalClick} />
             )}
           </div>
         </div>
