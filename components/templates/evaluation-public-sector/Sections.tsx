@@ -142,7 +142,7 @@ export function WhyTest({ content }: { content: C['why'] }) {
               </figure>
             </div>
             <div>
-              <h4 className="relative mt-6 whitespace-pre-line text-[24px] font-normal leading-[1.5]">{item.title}</h4>
+              <h4 className="relative mt-6 whitespace-pre-line text-[24px] font-normal leading-[1.5] text-[var(--eps-fg)]">{item.title}</h4>
               <p className="relative mt-4 text-[16px] leading-[1.5] text-[var(--eps-muted)]">{item.body}</p>
             </div>
           </div>

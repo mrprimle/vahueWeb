@@ -42,6 +42,7 @@ const staticRoutes: { path: string; priority: number; changeFrequency: MetadataR
   { path: '/about',                                  priority: 0.6,  changeFrequency: 'monthly' },
   { path: '/experts',                                priority: 0.6,  changeFrequency: 'monthly' },
   { path: '/partnership',                            priority: 0.6,  changeFrequency: 'monthly' },
+  { path: '/evaluation/public-sector',                 priority: 0.6,  changeFrequency: 'monthly' },
   { path: '/evaluation/model-developers',              priority: 0.6,  changeFrequency: 'monthly' },
   { path: '/careers',                                priority: 0.6,  changeFrequency: 'monthly' },
   { path: '/careers/vacancies',                      priority: 0.6,  changeFrequency: 'weekly'  },
