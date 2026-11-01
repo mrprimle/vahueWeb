@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useMemo, useRef, useState, type FocusEvent, type FormEvent } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 import type { ChoiceField, ConsentField, DemoFormContent, FormField, SelectField, TextField } from './content'
 import SubmitCta from './SubmitCta'
 import s from './demo.module.css'
@@ -11,10 +11,12 @@ import s from './demo.module.css'
  * `onSubmit` (no-op by default) and swaps the form for the inline thank-you message, as Scale does with
  * enableThankYou=false (the Submit button is removed, the wrapper loses its min-height, no scroll).
  *
- * Validation (HubSpot behaviour observed on scale.com):
- *   - blur of a required, empty field -> "Please complete this required field." (selects: dropdown message)
- *   - email -> format check, then the free-mail block list, on blur
- *   - once a field shows an error it re-validates on every change (live validation)
+ * Validation (HubSpot v2 embed, live validation on; js.hsforms.net/forms/embed/v2.js, input-state hook `pg`,
+ * staleTimeout 1000, and the debounce `Jo(fn, 1e3)`; measured on scale.com 2026-11-01):
+ *   - blur -> the field is validated and its error shown at once (required, email format, free-mail list)
+ *   - every change hides that field's error at once; 1000ms after the last change (the "stale" event) it is
+ *     validated and shown again, touched or not (typing "abc" in a fresh email shows the format error ~1s later)
+ *   - checkbox / radio groups validate on the blur of any of their inputs, also when focus moves to a sibling box
  *   - Submit validates every visible field; the error rollup stays hidden (Scale's CSS)
  *   - dependent fields (showWhen) mount/unmount with their parent's value; hidden values are kept but not submitted
  * If `onSubmit` returns a promise (a real send, e.g. Vahue's /contact), Submit is disabled while it is pending; the
@@ -24,6 +26,18 @@ import s from './demo.module.css'
 type Values = Record<string, string | string[]>
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+/** HubSpot's staleTimeout: a field is validated this long after its last change. */
+const STALE_MS = 1000
+
+// React 19 re-applies dangerouslySetInnerHTML whenever the {__html} object changes identity, which re-creates the
+// legal / consent links on every render and drops keyboard focus from them (Tab from the last select landed on <body>).
+// One stable object per string.
+const htmlCache = new Map<string, { __html: string }>()
+const html = (s: string) => {
+  let o = htmlCache.get(s)
+  if (!o) htmlCache.set(s, (o = { __html: s }))
+  return o
+}
 
 const isVisible = (f: FormField, values: Values) => {
   if (!f.showWhen) return true
@@ -47,6 +61,16 @@ export default function DemoForm({
   const [pending, setPending] = useState(false)
   const [sendFailed, setSendFailed] = useState(false)
   const formRef = useRef<HTMLFormElement>(null)
+  const staleTimers = useRef(new Map<string, ReturnType<typeof setTimeout>>())
+  const clearStale = (name?: string) => {
+    const t = staleTimers.current
+    for (const [k, id] of t) {
+      if (name != null && k !== name) continue
+      clearTimeout(id)
+      t.delete(k)
+    }
+  }
+  useEffect(() => () => clearStale(), [])
 
   const fields = useMemo(() => form.rows.flatMap((r) => r.fields), [form.rows])
   const byName = useMemo(() => new Map(fields.map((f) => [f.name, f])), [fields])
@@ -74,26 +98,37 @@ export default function DemoForm({
   const setValue = (name: string, v: string | string[]) => {
     // HubSpot keeps the values of dependents that get hidden (they come back filled); only visible fields are submitted
     setValues((prev) => ({ ...prev, [name]: v }))
+    // HubSpot ChangeEvent: hide this field's error now ...
     setErrors((prev) => {
       const next = { ...prev }
-      const f = byName.get(name)
-      // a key in `errors` marks the field as touched (blurred once): from then on it validates live
-      if (f && name in prev) next[name] = validate(f, v)
+      delete next[name]
       for (const d of fields) if (d.showWhen?.field === name) delete next[d.name]
       return next
     })
+    // ... StaleEvent: validate and show it 1000ms after the last change
+    const f = byName.get(name)
+    if (!f || f.kind === 'consent') return
+    clearStale(name)
+    staleTimers.current.set(
+      name,
+      setTimeout(() => {
+        staleTimers.current.delete(name)
+        setErrors((prev) => ({ ...prev, [name]: validate(f, v) }))
+      }, STALE_MS),
+    )
   }
 
-  const onBlur = (f: FormField) => (e: FocusEvent<HTMLElement>) => {
-    // group inputs: only validate when focus leaves the whole group
-    if ((f.kind === 'checkbox' || f.kind === 'radio') && e.currentTarget.contains(e.relatedTarget as Node | null)) return
+  const onBlur = (f: FormField) => () => {
+    // BlurEvent: validate at once. Group inputs validate on each input's blur (focus moving to a sibling box too).
     if (f.kind === 'consent') return
+    clearStale(f.name)
     setErrors((prev) => ({ ...prev, [f.name]: validate(f, values[f.name]) }))
   }
 
   const submit = async (e: FormEvent) => {
     e.preventDefault()
     if (pending) return
+    clearStale()
     const next: Record<string, string | undefined> = {}
     let ok = true
     for (const f of fields) {
@@ -127,7 +162,7 @@ export default function DemoForm({
   if (submitted)
     return (
       <div className={`${s.wrapper} form__wrapper form__submitted`}>
-        <div className={`submitted-message ${s.submitted}`} role="status" dangerouslySetInnerHTML={{ __html: form.successHtml }} />
+        <div className={`submitted-message ${s.submitted}`} role="status" dangerouslySetInnerHTML={html(form.successHtml)} />
       </div>
     )
 
@@ -276,7 +311,7 @@ export default function DemoForm({
                 checked={values[f.name] === 'true'}
                 onChange={(e) => setValue(f.name, e.target.checked ? 'true' : '')}
               />
-              <span dangerouslySetInnerHTML={{ __html: f.labelHtml }} />
+              <span dangerouslySetInnerHTML={html(f.labelHtml)} />
             </label>
           </li>
         </ul>
@@ -316,14 +351,14 @@ export default function DemoForm({
         {form.legalHtml ? (
           <fieldset className="form-columns-1">
             <div className="legal-consent-container">
-              <div className="hs-richtext" dangerouslySetInnerHTML={{ __html: form.legalHtml }} />
+              <div className="hs-richtext" dangerouslySetInnerHTML={html(form.legalHtml)} />
             </div>
           </fieldset>
         ) : null}
       </div>
       <SubmitCta label={form.submitLabel} busy={pending} />
       {sendFailed && form.submitErrorHtml ? (
-        <div className={s.sendError} role="alert" dangerouslySetInnerHTML={{ __html: form.submitErrorHtml }} />
+        <div className={s.sendError} role="alert" dangerouslySetInnerHTML={html(form.submitErrorHtml)} />
       ) : null}
     </form>
   )

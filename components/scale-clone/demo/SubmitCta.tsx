@@ -1,12 +1,13 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState, type TransitionEvent } from 'react'
 import s from './demo.module.css'
 
 /*
  * scale.com FlatCta, variant "arrow", theme "black", rendered `as="button"` (StaticForm's Submit, module 892855).
  * Hover: a currentColor layer (opacity .30) slides in from the left (-100% -> 0) and leaves to the right, 600ms
- * cubic-bezier(0,0,.2,1); the chevron track slides one 16px slot (-50% -> 0) over 600ms.
+ * cubic-bezier(0,0,.2,1); the chevron track slides one 16px slot (-50% -> 0) over 600ms and snaps back on leave.
+ * No focus classes on Scale's button: keyboard focus shows the browser's default ring.
  */
 export const Chevron = () => (
   <svg className="block shrink-0" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -18,32 +19,92 @@ export const Chevron = () => (
 )
 
 export default function SubmitCta({ label, onClick, busy = false }: { label: string; onClick?: () => void; busy?: boolean }) {
-  // idle -> in (hovered) -> out (leaving) -> reset (snap back without transition) -> idle
-  const [phase, setPhase] = useState<'idle' | 'in' | 'out' | 'reset'>('idle')
+  // Scale's FlatCta state machine (chunk 1h0nvyhf5gbrf.js, module 892855; byte-identical to the enterprise-healthcare
+  // audit, ported from components/scale-clone/enterprise-healthcare/FlatCta.tsx):
+  //   hovered -> fill at 0; leaving -> fill exits right (+100%); resetting -> fill snaps back to -100% with no transition,
+  //   released after two rAFs. Leave resets on the fill's `transform` transitionend or after 680ms; the fill moves with the
+  //   CSS `translate` property (Tailwind v4), so in practice the 680ms timeout wins, as on Scale. Re-entering while the fill
+  //   is still leaving snaps it back first, so it always enters from the left.
+  //   Chevron track: hovered slides -50% -> 0 over 600ms; leave snaps it back (transition none, released after two rAFs).
+  //   Disabled (busy) ignores pointerenter, as Scale's `disabled` prop does.
+  const [hovered, setHovered] = useState(false)
+  const [leaving, setLeaving] = useState(false)
+  const [resetting, setResetting] = useState(false)
+  const [trackIn, setTrackIn] = useState(false)
+  const [trackSnap, setTrackSnap] = useState(false)
+  const pending = useRef(false)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  useEffect(
-    () => () => {
-      if (timer.current) clearTimeout(timer.current)
-    },
-    [],
-  )
+  const clear = () => {
+    if (timer.current != null) clearTimeout(timer.current)
+    timer.current = null
+  }
+  useEffect(() => clear, [])
+
+  const finishLeave = useCallback(() => {
+    if (!pending.current) return
+    clear()
+    pending.current = false
+    setLeaving(false)
+    setResetting(true)
+  }, [])
+
   useEffect(() => {
-    if (phase !== 'reset') return
-    const id = requestAnimationFrame(() => requestAnimationFrame(() => setPhase('idle')))
-    return () => cancelAnimationFrame(id)
-  }, [phase])
+    if (!resetting) return
+    let b = 0
+    const a = requestAnimationFrame(() => {
+      b = requestAnimationFrame(() => setResetting(false))
+    })
+    return () => {
+      cancelAnimationFrame(a)
+      cancelAnimationFrame(b)
+    }
+  }, [resetting])
+
+  useEffect(() => {
+    if (!trackSnap) return
+    let b = 0
+    const a = requestAnimationFrame(() => {
+      b = requestAnimationFrame(() => setTrackSnap(false))
+    })
+    return () => {
+      cancelAnimationFrame(a)
+      cancelAnimationFrame(b)
+    }
+  }, [trackSnap])
 
   const enter = useCallback(() => {
-    if (timer.current) clearTimeout(timer.current)
-    setPhase('in')
-  }, [])
-  const leave = useCallback(() => {
-    setPhase('out')
-    timer.current = setTimeout(() => setPhase('reset'), 680)
-  }, [])
+    if (busy) return
+    clear()
+    setResetting(pending.current)
+    pending.current = false
+    setLeaving(false)
+    setHovered(true)
+    setTrackSnap(false)
+    setTrackIn(true)
+  }, [busy])
 
-  const transform = phase === 'in' ? 'translate(0,0)' : phase === 'out' ? 'translateX(100%)' : 'translateX(-100%)'
+  const leave = useCallback(() => {
+    setTrackIn(false)
+    setTrackSnap(true)
+    setHovered(false)
+    if (resetting) return
+    setLeaving(true)
+    pending.current = true
+    clear()
+    timer.current = setTimeout(() => {
+      timer.current = null
+      finishLeave()
+    }, 680)
+  }, [resetting, finishLeave])
+
+  const onFillEnd = (e: TransitionEvent<HTMLSpanElement>) => {
+    if (e.target !== e.currentTarget) return
+    if (e.propertyName === 'transform' || e.propertyName === '-webkit-transform') finishLeave()
+  }
+
+  const fillTranslate = resetting ? '-100% 0' : hovered ? '0 0' : leaving ? '100% 0' : '-100% 0'
+  const trackTranslate = trackIn && !trackSnap ? '0 0' : '-50% 0'
 
   return (
     <button
@@ -58,12 +119,17 @@ export default function SubmitCta({ label, onClick, busy = false }: { label: str
       <span
         aria-hidden="true"
         className={s.ctaFill}
-        style={{ transform, transitionDuration: phase === 'reset' ? '0ms' : '600ms' }}
+        onTransitionEnd={onFillEnd}
+        style={{ translate: fillTranslate, transition: resetting ? 'none' : undefined }}
       />
       <span className={s.ctaInner}>
         <span className={s.ctaLabel}>{label}</span>
         <span className={s.ctaIcon}>
-          <span aria-hidden="true" className={s.ctaTrack}>
+          <span
+            aria-hidden="true"
+            className={s.ctaTrack}
+            style={{ translate: trackTranslate, transition: trackSnap ? 'none' : undefined }}
+          >
             <span>
               <Chevron />
             </span>

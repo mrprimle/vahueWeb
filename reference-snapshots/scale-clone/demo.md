@@ -117,8 +117,8 @@ Blur/change validation comes from HubSpot's own React tree, which is delegated a
 | Blur an empty required text/email/select | "Please complete this required field." (selects too) | same |
 | Blur email `abc` | "Email must be formatted correctly." | same |
 | Free-mail domain (`useDefaultBlockList` + `hmail.com,outlook.com`) | checked by HubSpot's server email check (blocked in QA, not observed) | client list (`FREE_EMAIL_DOMAINS`) → "Please enter a different email address. This form does not accept addresses from {domain}." |
-| Uncheck the last box of a required checkbox group, then leave it | "Please complete this required field." | same |
-| Typing in a field that has an error | live re-validation | same (after first blur) |
+| Blur any box of a required checkbox / radio group (also Tab to a sibling box) | "Please complete this required field." | same (fixed: it used to wait for focus to leave the group) |
+| Any change (typing, select, tick) | the field's error hides at once; 1000ms after the last change it is validated and shown again, touched or not (HubSpot `staleTimeout` 1000) | same (fixed in the 2026-11-01 audit; it used to re-validate on every keystroke after the first blur) |
 | Change a parent select | dependents mount/unmount; hidden dependents keep their values | same; only visible values are submitted |
 | Submit with errors | all visible fields flagged, rollup hidden by CSS | same |
 | Valid submit | HubSpot posts; StaticForm adds `form__submitted`, drops the Submit button and min-height; inline message "Thanks for reaching out! We'll be in touch shortly." (16/24 `#171717`); no scroll (`enableThankYou` false) | no request; same message and layout |
@@ -133,7 +133,7 @@ Blur/change validation comes from HubSpot's own React tree, which is delegated a
 | Name + position (AnimatedText lines) | same onEnter | same intro | delay 0.15 | no descender compensation (the collapsed mask margins would add 1.68px) |
 | Logos `[role=img]` | set on mount, then same onEnter | `{opacity 0, y 8}` → `{1, 0}` | 0.5s power2.out, stagger 0.06, delay 0.3 | |
 | Inputs | focus | border + 3px ring | 150ms `cubic-bezier(.4,0,.2,1)` | CSS |
-| Submit FlatCta | pointerenter / leave | fill `translateX(-100%) → 0` → leaves to `100%` (opacity .30); chevron track `-50% → 0` | 600ms `cubic-bezier(0,0,.2,1)` | the label doesn't scale on the arrow variant |
+| Submit FlatCta | pointerenter / leave | fill `translate -100% → 0` → leaves to `100%` (opacity .30), resets to −100% at 680ms; re-entry while leaving snaps to −100% first; chevron track `-50% → 0`, snaps back on leave | 600ms `cubic-bezier(0,0,.2,1)` | Scale's state machine (module 892855), see Interaction inventory. The label doesn't scale on the arrow variant |
 
 - At 1440 the card is above the start line on load, so the reveal plays at once. At 390 it plays on scroll.
 - Reduced motion: text is visible and there are no tweens or CTA transitions.
@@ -162,6 +162,69 @@ Blur/change validation comes from HubSpot's own React tree, which is delegated a
   - Clone-only shots: `state-clone-empty-submit.jpg` (all required errors) and `state-clone-success.jpg`.
 - **Scroll sweep:** `1440-{scale,clone}-00..03.jpg`, `390-{scale,clone}-00..06.jpg`.
 - **Health:** the clone returns 200. Its only console errors were resources aborted by the QA allowlist (Vercel analytics), so there are none in normal runs.
+
+## Interaction inventory (audit 2026-11-01)
+
+Method: REA on a fresh CDP 9230 tab (closed afterwards). `analyze_web_bundle` `ev_8c015107ffe1…` parsed 44/44 scripts with 0 failures. The page chunks are byte-identical to the build capture (sha256): StaticForm / DemoQuoteSidebar `058pnujclak3f.js` `b0ed240d…` and `0_fm2xcv8_y2d.js` `1301cd02…`; FlatCta / AnimatedText / ScrollTrigger `1h0nvyhf5gbrf.js` `10b2627a…`, the same file as the enterprise, enterprise-healthcare and genai-portfolio audits. So the shared FlatCta state-machine fix was ported. HubSpot's embed `js.hsforms.net/forms/embed/v2.js` (sha256 `2ba5003c…`, 607,555 bytes) was taken from the listener evidence and read for the validation rules.
+
+`inspect_web_event_listeners` on every element that takes input:
+- `main section` `ev_6239a246f414…`, `form.hs-form` `ev_7b2cfac93a3e…` and the sidebar card `.bg-cloud-slate` `ev_e874d56a7ec7…`: **no listeners**.
+- `form.hs-form select` `ev_94e8414a5c07…` and `input[type=email]` `ev_a6726be3cb8a…`: `invalid` (v2.js col 178673, HubSpot's bundled React DOM) and `input` (col 410488, a handler for untrusted autofill input events only). The email input also has FullStory `select` (passive). Everything else (focus, blur, change) runs through HubSpot's own React root, delegated.
+- Submit `ev_884736b9c029…`: React `click` (`42ixmvih7808g.js:20015`) + HubSpot analytics `mousedown`. Privacy link `ev_9fc062d4bb10…`: HubSpot `mousedown` only.
+- `html` `ev_c6a49f8f80b7…`: ScrollTrigger `scroll` (passive, `1h0nvyhf5gbrf.js`) and OneTrust `keydown` / `click`.
+
+Playwright then ran identical inputs on scale.com, the clone and `/contact` at 1440×900. The scripts are `scratchpad/demo-audit/qa.js` and `qa2.js`. Every value was sampled per animation frame in the page.
+
+**Safety:** on scale.com every POST and every third-party request was aborted. Only scale.com GETs, `js.hsforms.net/forms/embed/*` and the form-definition GET got through. The only text typed was `abc`, plus Backspaces, select choices and box ticks. Submit was hovered and focused but never clicked, and Enter was never pressed. The aborted requests were the Dreamdata POST, Segment, Vercel analytics, HubSpot `counters.gif` and two Sanity icons. No request was made to HubSpot's submit or email-check endpoints. On `/contact`, `api.emailjs.com` was stubbed (1500ms, 200), so nothing was sent.
+
+QA images: `qa/demo/interactions/<name>-{scale,clone,vahue}.jpg`.
+
+### Form fields (HubSpot v2 embed, StaticForm 721992)
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| text / email / select / textarea | hover | — | CSS | no hover style (border, shadow and background unchanged after 300ms); cursor `auto` on all three | yes | — |
+| same | focus | — | `0wrf93oshhpjv.css` light theme | border `#d1d5db → #171717` and ring `0 0 0 3px #17171714`, 150ms `cubic-bezier(.4,0,.2,1)`. Per-frame samples: Scale 27ms `rgb(203,207,213)` / 0.098px, 60ms 124 / 1.37px, 94ms 53 / 2.51px, 161ms final; clone 32ms 203 / 0.098px, 66ms 124 / 1.37px, 99ms 53 / 2.51px, 164ms final (the same curve). A focused select loses its chevron (the `background` shorthand in the focus rule) on both | yes | `dep-model-builder-*` |
+| required field | blur (Tab) | delegated React `blur` | v2.js input state `pg` (BLUR) | error shown at once: Scale 5–16ms, clone 7–15ms, `/contact` 4–15ms. `ul.hs-error-msgs` with no animation or transition, 12/15 `#dc2626`, and the input border is unchanged | yes | `blur-error-*` |
+| any field | change | delegated React `change` | v2.js `pg` (CHANGE → STALE after `staleTimeout: 1000`, debounce `Jo(fn, 1e3)`), visibility rule `oo()` | **Fixed**: the error hides on the change, and 1000ms after the last change the field is validated and shown, even if it was never blurred. Fresh email + `abc` (60ms per key): format error at 1144 / 1172 / 1169ms. With the error shown, `d`: hidden at 16 / 18 / 13ms, back at 1016 / 1016 / 1015ms. Clearing to empty: "Please complete…" at 1016 / 1065 / 1033ms. The clone used to re-validate on every keystroke after the first blur, and showed nothing before a blur | yes | `email-error-*` |
+| email | blur | — | `Hi()` / `cs()` | format error on blur. A valid address goes to HubSpot's email check after a 500ms debounce (blocked in QA). The clone checks its free-mail list instead (`/contact` accepts free mail, decision b0f77de) | yes (server check: no) | `email-error-*` |
+| select | change | — | dependent fields `Os()` | the error clears when an option is picked (null on all three); dependents mount in the next frame | yes | — |
+| dependent fields | parent change | — | HubSpot `dependentFieldFilters` | **no animation** on any page: the form height jumps in one frame and the new field is at opacity 1 at once. Germany → consent: +95px at 23ms (Scale) vs 27ms (clone). US → hide: 15 vs 17ms. Model Builder: +847px at 19 vs 29ms, and every new field's height is the same | yes | `dep-model-builder-*` |
+| checkbox | hover / click label | — | CSS | cursor pointer, no hover change. A label click checks the box and focuses it. Checked fill + 2px ring over 150ms (the frame at about 35ms is `rgb(214,214,214)` on both) | yes | — |
+| checkbox group | blur of any box | delegated `blur` | `so()` group rule | **Fixed**: focus on the first box, then Tab to the second box (focus is still in the group): "Please complete…" at 12 / 11ms. Uncheck, then Space, then Tab Tab: error on both. The clone used to wait until focus left the whole group | yes | — |
+| checkbox | Space | native | — | Space toggles the box; there is no error while focused | yes | — |
+| radio group | click / ↓ / blur | native + `blur` | — | a click checks the radio; ↓ moves the check to the next radio; Tab out of an empty group shows the error at 17 / 15ms. Checked: 3px white radial dot, 2px ring | yes | — |
+| choice inputs | focus | — | CSS | border `#171717` and 3px ring on both. The outlines differ but are invisible on both: Scale `none` / transparent `solid 2px` (Tailwind forms), clone `none` | yes (invisible outline: no) | — |
+| keyboard | Tab through the form | native | — | the same order on Scale and the clone: firstname … how-did-you-hear → Privacy Policy → Submit → footer. **Fixed**: in the clone, Tab from the last select landed on `<body>`. React 19 re-applies `dangerouslySetInnerHTML` when the `{__html}` object changes identity, so every render rebuilt the legal link that was about to get focus. The objects are now cached per string | yes | — |
+| Enter in a field | implicit submit | — | Scale: hidden HubSpot `input[type=submit]` | not exercised on scale.com (that would be a submit attempt). In the clone, Enter submits the form through the Submit button, which validates every visible field | n/a | — |
+
+### Submit (FlatCta `as="button"`, variant arrow, theme black)
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| button | pointerenter / leave | React `click` + HubSpot `mousedown` (`ev_884736b9c029…`) | 892855 | **Fixed** (the enterprise-healthcare port of Scale's state machine). Measured as fill x / track x (fraction of width): enter −1 → −.612 → −.348 → −.182 → −.078 → −.021 → 0 and track −.5 → −.306 … 0, identical on all three. On leave Scale's track snaps to −.5 and the fill exits .191, .536, .744. On re-entry at +317ms the fill snaps to −1 and slides in again: −.612, −.348 …. Final leave: .442 … 1, then −1 at 680ms. All three now match to the third decimal. Before the fix the clone's track slid back over 600ms (−.132, −.289 …) and re-entry reversed the fill from +.74 | yes | `submit-hover-mid-*` |
+| button | focus (Tab) | — | no focus classes on FlatCta | **Fixed**: the browser default `auto 1px` ring (`rgb(0,95,204)`, offset 0) on all three. The clone used to draw a 2px `#171717` outline with a 2px offset | yes | — |
+| button | press | — | no `active:` classes | nothing changes on press (transform none, opacity 1). Scale was not pressed; this comes from the class list | yes | — |
+| button | busy | — | Scale: none (StaticForm keeps Submit as is until HubSpot reports `onFormSubmitted`, then removes it) | clone / `/contact` only: while `onSubmit`'s promise is pending the button is `disabled` + `aria-busy`, opacity .6, cursor progress, and hover is ignored (Scale's `disabled` guard). Checked on `/contact` with the stubbed send: busy at 250ms, then the inline thank-you | clone-only | `submit-busy-vahue` |
+
+### Sidebar (DemoQuoteSidebar 659050)
+| Element | Input | Listener (REA) | Source | Params | Reproduced | QA |
+|---|---|---|---|---|---|---|
+| card | pointer | none (`ev_e874d56a7ec7…`) | — | a mouse grid (4×3 points, 4 steps each) changed no transform in the section on any page | yes | — |
+| quote / name / logos | ScrollTrigger `top 85%` | ScrollTrigger `scroll` on `html` | 210104 + 668761 | unchanged since the build QA: it fires at scrollY 336 on both at 390, and the rAF curve matches (see Motion) | yes | `../390-*-reveal-450ms.jpg` |
+
+### Vahue `/contact`
+`/contact` renders the clone's `DemoPage`, so every fix above applies there with the same params. The same scripts gave:
+- focus curve, blur timing and stale validation match (1169 / 1015 / 1033ms)
+- Tab order runs through its own fields (consent + its Privacy link) to Submit, with no `<body>` drop
+- Submit hover samples are identical to Scale's; the focus ring is the browser default
+- dependent fields (workflow → message, heard_from Other → specify) appear in one frame
+- busy state, then the thank-you, with EmailJS stubbed
+- console: only the aborted Vercel analytics script
+
+### Not reproduced
+- HubSpot's server email check (`forms.hsforms.com/emailcheck`, 500ms debounce) and its block list. The clone uses a client list, and `/contact` deliberately accepts free mail.
+- Scale's invisible focus outlines on checkboxes / radios (transparent `solid 2px`, offset 2), which can't be seen.
+- Typing then Tab at once: on Scale the format error replaces the required error in the same frame. The clone shows one frame with no error (19ms) before the format error (36ms).
+- HubSpot analytics `mousedown`, FullStory `select` and OneTrust listeners: these are third-party and were left out on purpose.
 
 ## Remaining gaps
 - The customer logos (Cohere, Adept, Meta, Cisco, Time, Mayo Clinic, DLA Piper) aren't shipped. Neutral `#212121` tiles fill Scale's display boxes; pass `src` to use real marks.

@@ -497,7 +497,10 @@
   border-radius: inherit;
   background: currentColor;
   opacity: 0.3;
-  transition-property: transform;
+  translate: -100% 0;
+  /* Tailwind v4 transition-transform: transform, translate, scale, rotate */
+  transition-property: transform, translate, scale, rotate;
+  transition-duration: 600ms;
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
 .ctaInner {
@@ -532,11 +535,10 @@
   inset: 0;
   display: flex;
   width: 200%;
-  transform: translateX(-50%);
-  transition: transform 0.6s cubic-bezier(0, 0, 0.2, 1);
-}
-.cta:hover .ctaTrack {
-  transform: translateX(0);
+  translate: -50% 0;
+  transition-property: transform, translate, scale, rotate;
+  transition-duration: 600ms;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
 .ctaTrack > span {
   display: flex;
@@ -560,10 +562,7 @@
   color: inherit;
   text-decoration: underline;
 }
-.cta:focus-visible {
-  outline: 2px solid var(--demo-strong);
-  outline-offset: 2px;
-}
+/* Scale's FlatCta button has no focus classes: the browser's default focus ring (auto 1px) shows. */
 
 /* ---------- sidebar ---------- */
 /* text wordmark in a logo slot (DemoLogo.text) */
@@ -611,7 +610,8 @@
   .ctaTrack {
     transition: none !important;
   }
-  .cta:hover .ctaTrack {
-    transform: translateX(-50%);
+  /* motion-reduce:!translate-x-0 on Scale's track */
+  .ctaTrack {
+    translate: 0 0 !important;
   }
 }
