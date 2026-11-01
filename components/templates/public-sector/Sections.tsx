@@ -128,7 +128,7 @@ export function UseCases({ content }: { content: C['useCases'] }) {
                 <li key={b} className="flex items-start text-[18px]">
                   <picture className="relative flex h-[18px] w-[18px] shrink-0 translate-y-0.5 items-center justify-center rounded-full border border-[var(--ps-line)] bg-[var(--ps-tile)]">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="/templates/public-sector/check.svg" alt="" width={10} height={8} />
+                    <img src="/img/control/check.svg" alt="" width={10} height={8} />
                   </picture>
                   <p className="flex-1 translate-x-3 text-[16px] leading-6 text-[var(--ps-soft)]">{b}</p>
                 </li>
@@ -232,7 +232,7 @@ export function WhyScale({ content }: { content: C['whyScale'] }) {
               </figure>
             </div>
             <div>
-              <h4 className="relative mt-6 whitespace-pre-line text-[24px] font-normal leading-[1.5]">{item.title}</h4>
+              <h4 className="relative mt-6 whitespace-pre-line text-[24px] font-normal leading-[1.5] text-[var(--ps-fg)]">{item.title}</h4>
               <p className="relative mt-4 text-[16px] leading-[1.5] text-[var(--ps-muted)]">{item.body}</p>
             </div>
           </div>
