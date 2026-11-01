@@ -57,7 +57,11 @@ Measured with the same script on both sites (`motion.cjs`, `motion2.cjs` in the 
 | VideoCta | in view, scrub | ScrollTrigger | 590542 | `top center` (mobile `top 92%`), CTA .85s | Scale curve equal, CTA width 140.7 vs 140.6 |
 
 ## Filled page
-`content.ts` has the same shape and counts as `content.scale.ts`: 72 strings compared, all word counts within about 15%. CTA labels match the menu: For Operations Teams (`/enterprise`), Explore All Workflows (`/data-engine`).
+Keep rule (Mike, 2026-11-01): each string starts from Scale's text, stays verbatim if true for Vahue with the brand swapped, otherwise changes only the words the swap dictionary and phrase bank require, same template and word count. Counts come from a path-by-path compare with `content.scale.ts`, alt text, code samples and URLs excluded. Verbatim means equal after Scale to Vahue. Light means up to 3 words or about a third changed.
+
+Copy follows the worked home example in the positioning doc exactly, and its proof patterns for the 11 carousel cards. Blog titles, which the example doesn't cover, follow the same rule. 79 strings: 32 verbatim, 31 light, 16 rewritten, mostly the 11 prescribed case cards. CTA labels: For Enterprise (`/enterprise`), Explore Our Experts (`/experts`).
+
+**Heights changed by the prescribed copy, 2026-11-01:** carousel 589 to 550.1 at 1440 and 539.6 to 507.2 at 390, because the case cards are shorter than Scale's. Link cards 862.5 to 836.6 at 1440 and 1233.6 to 1207.7 at 390, on the prescribed card text. Page 11363 to 11298 and 9590 to 9532. The table above is the previous fill.
 
 Section tops and heights equal Scale's table above at both sizes. The carousel reads 580.4 at load instead of 589 (529.6 instead of 536.8 at 390), because its copy wraps differently before the text is split; the Applications section height is unaffected. Settled card heights at 1440 equal Scale (carousel 373.4, link cards 556, blog tiles same list). At 390 they equal too (carousel 348, link cards 349, 322, 335). Motion re-sampled on the filled page: same values, except quote word opacity (different word count), CTA width (longer label) and the cycling word box.
 
@@ -78,7 +82,7 @@ Read the real WebGL uniforms on both sites by hooking `uniform1f` and `uniformMa
 - Scale's logos and brand images remain in `public/home` for `content.scale.ts`. They are not rendered on the filled page.
 
 ## Placeholders
-24 lines marked `// PLACEHOLDER` in `content.ts`: 6 hero logos (one line), the "25% fewer errors" figure, the 90% quote, 11 carousel clients (neutral 40px "Logo" tile), the 87 cases title and the 2024 year, 8 blog posts. The 87 is from the research, but those are other agencies' cases.
+24 lines marked `// PLACEHOLDER` in `content.ts`: 6 hero logos (one line), the "25%" engineers figure, the 90% quote, 11 carousel clients (neutral 40px "Logo" tile), the 10 years title and the 2016 year, 8 blog posts.
 
 ## Deviations and gaps
 - **Fonts:** Aeonik and DM Mono, see stack.md. Causes the small text-width deltas above.
@@ -91,5 +95,5 @@ Read the real WebGL uniforms on both sites by hooking `uniform1f` and `uniformMa
 - **Copy kept:** "Scroll to explore", "Learn more" and "Real" stay as Scale has them: they are UI words with the same role.
 
 ## For Mike
-- Non-brand Scale imagery still shows on the filled page: fighter pilot and other scenes in `packed.mp4`, a dish with a US flag in the quote video, three orbit tiles (`Case Files` a fighter jet, `Exceptions` and `Code Reviews` soldiers), the Capitol in blog 4, a Qatar landmark in blog 7, robot hands in blog 8.
+- Non-brand Scale imagery still shows on the filled page: fighter pilot and other scenes in `packed.mp4`, a dish with a US flag in the quote video, three orbit tiles (`Retail` a fighter jet, `Operations` and `Logistics` soldiers), other tiles that no longer match their label (`Finance` on the research image, `Legal` on sovereignty, `Customer Service` on driving), the Capitol in blog 4, a Qatar landmark in blog 7, robot hands in blog 8.
 - Blog tiles 2, 3, 5 and 6 are neutral: their images carried company names or a Scale benchmark.
