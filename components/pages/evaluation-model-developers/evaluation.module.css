@@ -1,0 +1,8 @@
+/* Scale's styled-jsx block in module 830843, rule for rule. Global selectors there too. */
+.grid :global(.CardGrid) { padding-top: 0 !important; padding-bottom: 0 !important; }
+.grid :global(.CardGridContainer) { grid-template-columns: repeat(1, minmax(0, 1fr)) !important; }
+@media (width >= 768px) { .grid :global(.CardGridContainer) { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; display: grid !important; } }
+@media (width >= 1024px) { .grid :global(.CardGridContainer) { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; } }
+.grid :global(.LinkCard > .CMSLink > .relative) { padding: 1.5rem; }
+@media (width >= 768px) { .grid :global(.LinkCard > .CMSLink > .relative) { padding: 2rem; } }
+@media (width >= 1280px) { .grid :global(.LinkCard > .CMSLink > .relative) { padding: 3rem; } }
