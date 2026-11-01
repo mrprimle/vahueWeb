@@ -9,8 +9,8 @@ const stats = [
 
 export default function Ecosystem() {
   return (
-    <section className="relative py-20 md:py-28">
-      <div className="w-full max-w-wide mx-auto px-6 md:px-8">
+    <section className="relative py-12 md:py-24">
+      <div className="w-full max-w-shell mx-auto px-6">
         <div className="relative rounded-3xl border border-border-mid overflow-hidden">
           <div
             className="absolute inset-0 pointer-events-none"
@@ -35,7 +35,7 @@ export default function Ecosystem() {
                 <ThreadCircles className="absolute inset-0 w-full h-full text-white/45" />
                 <div className="absolute inset-0 flex items-center justify-center text-center px-10">
                   <div>
-                    <p className="font-display text-2xl md:text-3xl font-semibold text-white leading-tight">
+                    <p className="font-display text-lead font-light text-white">
                       A proven AI ecosystem at scale
                     </p>
                     <p className="text-white/65 text-[13px] md:text-sm leading-relaxed mt-3">
@@ -51,7 +51,7 @@ export default function Ecosystem() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-8 md:gap-y-10 gap-x-8 md:gap-x-12">
               {stats.map((s) => (
                 <div key={s.label}>
-                  <p className="font-display text-5xl md:text-6xl font-semibold text-white leading-none tracking-tight">
+                  <p className="font-display text-section font-light text-white leading-none">
                     {s.value}
                   </p>
                   <div className="hairline mt-4 mb-3 max-w-[220px]" />

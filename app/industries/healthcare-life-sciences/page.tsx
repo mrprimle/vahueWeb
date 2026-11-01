@@ -1,15 +1,14 @@
 import type { Metadata } from 'next'
-import SegmentLanding from '@/components/segments/SegmentLanding'
-import { healthcareLifeSciencesContent } from '@/components/segments/content/healthcare-life-sciences'
+import IndustryPage from '@/components/industry/enterprise-healthcare/IndustryPage'
 
 export const metadata: Metadata = {
   title: 'AI for Healthcare & Life Sciences | Vahue',
   description:
-    'Clinical and research AI agents — ambient scribe, prior auth, guideline surfacing, and evidence copilots — with HIPAA-grade consent, minimization, and audit.',
+    'AI agents for clinical documentation, trial and protocol summaries, and audit finding classification — with review queues, role-based access and a full audit log.',
   openGraph: {
     title: 'AI for Healthcare & Life Sciences | Vahue',
     description:
-      'Clinician-first AI deployed in your HIPAA / GxP environment — grounded, cited, and reviewable.',
+      'Clinical and research workflows run by agents in your own environment — cited, reviewed by your team, and logged.',
     url: 'https://vahue.ai/industries/healthcare-life-sciences',
   },
   alternates: {
@@ -21,5 +20,5 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  return <SegmentLanding content={healthcareLifeSciencesContent} />
+  return <IndustryPage />
 }

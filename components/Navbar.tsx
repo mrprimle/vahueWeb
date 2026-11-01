@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { NAV_THEME_EVENT, type NavTheme } from '@/components/templates/shared/header/navTheme'
 import type { SVGProps, ReactElement } from 'react'
 import { DISCOVERY_CALL_URL } from '@/lib/links'
 import { AttioCalendarIcon } from '@/components/icons/AttioCalendarIcon'
@@ -185,6 +186,20 @@ const ShoppingBagIcon = (p: IconProps) => (
   </svg>
 )
 
+// Factory — Distribution & Manufacturing
+const FactoryIcon = (p: IconProps) => (
+  <Svg24
+    {...p}
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M3 20V10l5 3v-3l5 3V4h4l1 16z" />
+    <path d="M7 16h1M11 16h1" />
+  </Svg24>
+)
+
 // Marketplace.svg
 const MarketplaceIcon = (p: IconProps) => (
   <svg
@@ -251,6 +266,19 @@ const LeaderboardIcon = (p: IconProps) => (
   </Svg24>
 )
 
+// Security — shield outline
+const ShieldIcon = (p: IconProps) => (
+  <Svg24 {...p}>
+    <path
+      d="M12 3 4.5 6v5.5c0 4.5 3.2 8.2 7.5 9.5 4.3-1.3 7.5-5 7.5-9.5V6L12 3Z"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinejoin="round"
+    />
+    <path d="m9 12 2.2 2.2L15.5 10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+  </Svg24>
+)
+
 // caseStudies.svg
 const CaseStudiesIcon = (p: IconProps) => (
   <Svg24 {...p}>
@@ -274,12 +302,30 @@ type NavLink = {
 }
 
 type NavGroup = {
-  id: 'services' | 'industries' | 'resources'
+  id: 'automation' | 'services' | 'industries' | 'resources'
   label: string
   columns: NavLink[][]
 }
 
 const navGroups: NavGroup[] = [
+  {
+    id: 'automation',
+    label: 'Automation',
+    columns: [
+      [
+        { href: '/automations', label: 'Automation hub', Icon: EnterpriseIcon },
+        { href: '/automations/back-office-sync', label: 'Back-office sync', Icon: CaseStudiesIcon },
+        { href: '/automations/document-intake', label: 'Document intake', Icon: GuidesIcon },
+        { href: '/automations/knowledge-agents', label: 'Knowledge agents', Icon: BlogIcon },
+      ],
+      [
+        { href: '/automations/support-agents', label: 'Support and voice agents', Icon: UsersIcon },
+        { href: '/automations/scoring-decisions', label: 'Scoring and decisions', Icon: FinanceIcon },
+        { href: '/automations/engineering-enablement', label: 'Engineering enablement', Icon: GraduationCapIcon },
+        { href: '/operations', label: 'How we operate', Icon: MarketplaceIcon },
+      ],
+    ],
+  },
   {
     id: 'services',
     label: 'Services',
@@ -309,6 +355,9 @@ const navGroups: NavGroup[] = [
           label: 'Enterprise AI',
           Icon: EnterpriseIcon,
         },
+        { href: '/strategy', label: 'Workflow audit', Icon: GuidesIcon },
+        { href: '/evaluation/model-developers', label: 'Agent evaluation', Icon: GraduationCapIcon },
+        { href: '/evaluation/public-sector', label: 'Evaluation for public sector', Icon: ShieldIcon },
       ],
     ],
   },
@@ -337,6 +386,16 @@ const navGroups: NavGroup[] = [
           label: 'Retail & eCommerce',
           Icon: ShoppingBagIcon,
         },
+        {
+          href: '/industries/distribution-manufacturing',
+          label: 'Distribution & Manufacturing',
+          Icon: FactoryIcon,
+        },
+        { href: '/public-sector', label: 'Public Sector', Icon: EnterpriseIcon },
+        { href: '/public-sector-data-engine', label: 'Government back offices', Icon: CaseStudiesIcon },
+        { href: '/global-public-sector', label: 'Global Public Sector', Icon: EnterpriseIcon },
+        { href: '/public-sector/national-security', label: 'National Security', Icon: ShieldIcon },
+
       ],
     ],
   },
@@ -365,6 +424,12 @@ const navGroups: NavGroup[] = [
           label: 'Careers',
           Icon: UsersIcon,
         },
+        { href: '/security', label: 'Security', Icon: ShieldIcon },
+        { href: '/about', label: 'About', Icon: UsersIcon },
+        { href: '/experts', label: 'Experts', Icon: GraduationCapIcon },
+        { href: '/partnership', label: 'Partnerships', Icon: MarketplaceIcon },
+        { href: '/docs', label: 'Documentation', Icon: GuidesIcon },
+        { href: '/labs', label: 'Labs', Icon: BlogIcon },
       ],
     ],
   },
@@ -373,6 +438,19 @@ const navGroups: NavGroup[] = [
 /* =========================================================
    Navbar
    ========================================================= */
+// Pages on the scale.com/enterprise layout in Scale's own (light) colours: light bar like the vacancy pages.
+const isLightEnterprisePage = (p: string) =>
+  /^\/(operations|industries\/(banking-financial-services|retail-ecommerce|distribution-manufacturing))\/?$/.test(p)
+
+// Pages rebuilt in strict parity with light Scale clones (security, evaluation-enterprise, enterprise-insurance,
+// enterprise-healthcare, careers, guides, events, blog), in Scale's own colours: light bar. /case-studies is on the guides
+// clone too; /blog and its category pages are on the blog clone (post pages stay dark).
+const isLightCloneParityPage = (p: string) => /^\/(public-sector-data-engine|public-sector\/national-security|global-public-sector|public-sector|evaluation\/public-sector|evaluation\/model-developers|about|experts|partnership|security|strategy|careers|events|blog(\/category\/[^/]+)?|guides|case-studies|industries\/(insurance|healthcare-life-sciences))\/?$/.test(p)
+
+// /automations hub and workflow pages on light Scale clones (knowledge-agents is on a black clone): light bar.
+const isLightAutomationPage = (p: string) =>
+  /^\/automations(\/(back-office-sync|document-intake|support-agents|scoring-decisions|engineering-enablement))?\/?$/.test(p)
+
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -383,7 +461,10 @@ export default function Navbar() {
   const pathname = usePathname()
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const isHomePage = pathname === '/' || pathname === ''
-  const isCareersPage = pathname.startsWith('/careers')
+  // light bar on /careers and its vacancy pages and /contact (light scale.com/demo layout)
+  // A template page's dark band (setScaleNavTheme, e.g. the /about stats) swaps the light bar for the dark one.
+  const [sectionTheme, setSectionTheme] = useState<NavTheme | null>(null)
+  const isCareersPage = sectionTheme !== 'dark' && (/^\/careers\/.+/.test(pathname) || /^\/contact\/?$/.test(pathname) || isLightEnterprisePage(pathname) || isLightCloneParityPage(pathname) || isLightAutomationPage(pathname) || isHomePage)
   const liRefs = useRef<Record<string, HTMLLIElement | null>>({})
   const [portalReady, setPortalReady] = useState(false)
   const [menuRect, setMenuRect] = useState<{
@@ -394,6 +475,12 @@ export default function Navbar() {
 
   useEffect(() => {
     setPortalReady(true)
+  }, [])
+
+  useEffect(() => {
+    const onTheme = (e: Event) => setSectionTheme((e as CustomEvent<NavTheme | null>).detail)
+    window.addEventListener(NAV_THEME_EVENT, onTheme)
+    return () => window.removeEventListener(NAV_THEME_EVENT, onTheme)
   }, [])
 
   useEffect(() => {
@@ -673,8 +760,10 @@ export default function Navbar() {
           document.body
         )}
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay. inert while closed: it only fades out, so without this its
+          links stay focusable and in the accessibility tree. */}
       <div
+        inert={!isMenuOpen}
         className={`md:hidden fixed inset-0 z-40 ${
           isMenuOpen ? '' : 'pointer-events-none'
         }`}

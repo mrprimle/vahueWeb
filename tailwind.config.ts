@@ -50,6 +50,7 @@ const config: Config = {
         'container-lg': '1400px',
         standard: '800px',
         wide: '1280px',
+        shell: '1472px',
       },
       letterSpacing: {
         tighter: '-0.05em',
@@ -94,6 +95,11 @@ const config: Config = {
         'display-md': ['3.5rem', { lineHeight: '1.05', letterSpacing: '-0.03em' }],
         'display-lg': ['4.5rem', { lineHeight: '1.02', letterSpacing: '-0.035em' }],
         'display-xl': ['5.5rem', { lineHeight: '1', letterSpacing: '-0.04em' }],
+        // Fluid type ladder (see DESIGN.md): 116 / 64 / 40 / 24px at ~1440px, down to 40 / 28 / 24 / 20 on phones.
+        hero: ['clamp(2.5rem, 0.5rem + 7.5vw, 7.25rem)', { lineHeight: '1', letterSpacing: '-0.01em' }],
+        section: ['clamp(1.75rem, 0.6rem + 4vw, 4rem)', { lineHeight: '1.05', letterSpacing: '-0.01em' }],
+        lead: ['clamp(1.5rem, 1rem + 1.7vw, 2.5rem)', { lineHeight: '1.15', letterSpacing: '-0.01em' }],
+        card: ['clamp(1.25rem, 1.1rem + 0.3vw, 1.5rem)', { lineHeight: '1.5', letterSpacing: '-0.01em' }],
       },
       animation: {
         'shine': 'shine 10s linear infinite',

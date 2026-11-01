@@ -1,0 +1,90 @@
+/* Page-specific styles for /public-sector-data-engine */
+
+.roundClip {
+  clip-path: inset(0 round 1.5rem);
+}
+
+.mediaOverlay {
+  background: linear-gradient(#0000 0%, #000 100%);
+}
+
+/* scale.com .rEiMFa_videoThumbnail */
+.videoThumbnail {
+  background: radial-gradient(398.67% 398.67% at 50% 100%, #ffffff4d 0%, #fff0 17.67%),
+    linear-gradient(#f3eeff00 0%, #f3eeff0a 100%);
+  border-radius: 16px;
+  height: fit-content;
+  padding: 5px;
+  position: relative;
+  box-shadow: inset 0 0 317.538px #ffffff14;
+}
+.videoThumbnail::before {
+  content: '';
+  pointer-events: none;
+  user-select: none;
+  border-radius: inherit;
+  border: 2px solid #fff3;
+  position: absolute;
+  inset: 0;
+}
+
+/* .rEiMFa_fadeIn on the main player */
+.fadeIn {
+  animation: fadeIn 0.6s ease-out;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* keen-slider base (the package stylesheet, scoped) */
+.keen {
+  display: flex;
+  position: relative;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+  overflow: visible;
+  align-content: flex-start;
+}
+.keen > :global(.keen-slider__slide) {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  flex-shrink: 0;
+}
+
+/* react-fast-marquee equivalent for the mobile logo row (default speed 50px/s) */
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-duration, 15.76s) linear infinite;
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    animation: none;
+  }
+  .fadeIn {
+    animation: none;
+  }
+}
+
+/* CMSLink internal: focus:outline-1 focus:outline-scale-skyblue */
+.ctaFocus:focus {
+  outline: 1px solid #86bff2;
+}

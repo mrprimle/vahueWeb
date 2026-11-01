@@ -8,6 +8,14 @@ export type CaseStudy = {
   outcomes: string[]
   disclosure: 'Named client' | 'Client anonymised'
   column: 1 | 2 | 3
+  /** Point A: the starting state, only as stated in this case's own text */
+  pointA?: string
+  /** Time from kickoff to the first agent live, only where stated */
+  timeToLive?: string
+  /** Point B: the result state, only as stated in this case's own text */
+  pointB?: string
+  /** Payback period, only where stated */
+  payback?: string
 }
 
 export const caseStudies: CaseStudy[] = [
@@ -26,6 +34,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     disclosure: 'Named client',
     column: 1,
+    pointB: '27% shorter time to resolution for repeatable incidents, with zero unauthorized execution recorded in UAT and staging',
   },
   {
     slug: 'rfi-response-automation',
@@ -42,6 +51,8 @@ export const caseStudies: CaseStudy[] = [
     ],
     disclosure: 'Client anonymised',
     column: 2,
+    pointA: 'RFI responses took several days',
+    pointB: 'More than 90% of RFI responses automated, turnaround in a few hours',
   },
   {
     slug: 'amerit-repair-order-ai',
@@ -58,6 +69,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     disclosure: 'Named client',
     column: 3,
+    pointB: 'Every repair order scored in seconds at 75–80% agreement',
   },
   {
     slug: 'docplanner-voicebot-recovery',
@@ -74,6 +86,8 @@ export const caseStudies: CaseStudy[] = [
     ],
     disclosure: 'Named client',
     column: 1,
+    pointA: 'An unstable scheduling voicebot converting roughly 10% of bookings',
+    pointB: 'Booking conversion of roughly 20%, with faster responses and lower token usage',
   },
   {
     slug: 'retail-nlp-delivery',
@@ -90,6 +104,8 @@ export const caseStudies: CaseStudy[] = [
     ],
     disclosure: 'Client anonymised',
     column: 2,
+    pointA: 'An eight-month NLP delivery with inherited technical issues',
+    pointB: 'Delivered in just over six months',
   },
   {
     slug: 'consumer-email-classifier',
@@ -106,6 +122,8 @@ export const caseStudies: CaseStudy[] = [
     ],
     disclosure: 'Client anonymised',
     column: 3,
+    timeToLive: 'API integration within days',
+    pointB: 'A classifier above 95% accuracy behind an API, with retraining documentation',
   },
   {
     slug: 'sky-embedded-data-science',
@@ -138,6 +156,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     disclosure: 'Named client',
     column: 2,
+    pointB: 'More than 90% reported answer accuracy and more than 30% company-wide adoption',
   },
   {
     slug: 'in-house-marketing-mix-modeling',
@@ -154,6 +173,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     disclosure: 'Client anonymised',
     column: 3,
+    pointB: 'The internal team runs, explains and extends marketing-mix modeling independently',
   },
   {
     slug: 'clinical-ai-product-roadmap',
@@ -170,6 +190,8 @@ export const caseStudies: CaseStudy[] = [
     ],
     disclosure: 'Client anonymised',
     column: 1,
+    pointA: 'Clinical expertise and distrust of vendors',
+    pointB: 'A product design, technical stack, cost range and six-week roadmap',
   },
 ]
 

@@ -1,0 +1,265 @@
+/* Page styles for /global-public-sector (scale.com/global-public-sector).
+   Scale's sizes and colours (Tailwind tokens from 3ektzubma58z1.css); Vahue faces. Theme tokens are CSS variables on
+   .root so a Vahue page can re-skin the clone. */
+
+.root {
+  --gps-ink: #000;
+  --gps-fg-1: #212121; /* scale-gray-10 */
+  --gps-fg-3: #575757; /* scale-gray-30 */
+  --gps-fg-6: #929292; /* scale-gray-60 */
+  --gps-line: #c7c7c7; /* scale-gray-80 */
+  --gps-card-2: #eaeaea; /* scale-gray-90 */
+  --gps-card: #f2f2f2; /* scale-gray-95 */
+  --gps-panel: #839cb2; /* cloud-slate */
+  --gps-glow: rgba(113, 77, 255, 0.08);
+}
+
+/* scale.com sets letter-spacing -0.01em on p and headings only */
+.root :is(p, h1, h2, h3, h4, h5, h6) {
+  letter-spacing: -0.01em;
+}
+
+/* AnimatedText "isnt-visible": hidden until SplitText has run */
+@media (prefers-reduced-motion: no-preference) {
+  .pending {
+    opacity: 0;
+  }
+}
+
+/* SectionHeader (module 1900, theme light): h3 font-aeonik leading-snug lg:leading-[1.25] text-3xl md:text-4.5xl lg:text-5xl */
+.shTitle {
+  font-size: 1.875rem;
+  line-height: 1.375;
+  font-weight: 400;
+  text-wrap: balance;
+  color: var(--gps-ink);
+}
+@media (min-width: 768px) {
+  .shTitle {
+    font-size: 2.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .shTitle {
+    font-size: 3rem;
+    line-height: 1.25;
+  }
+}
+/* p: mt-4 lg:mt-2 leading-[1.60] lg:text-xl text-black/70 */
+.shBody {
+  font-size: 1rem;
+  line-height: 1.6;
+  text-wrap: balance;
+  color: rgb(0 0 0 / 0.7);
+}
+@media (min-width: 1024px) {
+  .shBody {
+    font-size: 1.25rem;
+  }
+}
+
+/* Tailwind type tokens (3ektzubma58z1.css) */
+.header2 {
+  font-size: 4rem;
+  font-weight: 400;
+  line-height: 1.05;
+}
+.header3 {
+  font-size: 2.5rem;
+  font-weight: 400;
+  line-height: 1.25;
+}
+.header5 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.body1 {
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.body2 {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+/* pair with the font-mono utility (Vahue mono face) */
+.detailMono {
+  text-transform: uppercase;
+  font-size: 0.813rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+.detail {
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+@media (max-width: 767px) {
+  .header2 {
+    font-size: 2rem;
+  }
+  .header3 {
+    font-size: 1.5rem;
+    line-height: 1.05;
+  }
+  .header5 {
+    font-size: 1.375rem;
+    line-height: 1.05;
+  }
+  .body1 {
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+  .body2 {
+    font-size: 0.875rem;
+    line-height: 1.35;
+  }
+  .detailMono,
+  .detail {
+    font-size: 0.625rem;
+  }
+}
+
+/* grid-layout-desktop / -mobile */
+.gridDesktop {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(12, minmax(0, 150px));
+  justify-content: center;
+  padding-inline: 1.5rem;
+}
+.gridMobile {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(8, 1fr);
+  padding-inline: 1.5rem;
+}
+@media (min-width: 768px) {
+  .gridMobile {
+    grid-template-columns: repeat(12, minmax(0, 150px));
+    justify-content: center;
+  }
+}
+
+/* ---- CardGrid 540409 (Card variant) ---- */
+.cardGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+@media (min-width: 1024px) {
+  .cardGrid {
+    display: grid;
+  }
+  .cols3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .cols6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+.card {
+  border-radius: 1rem;
+  background: var(--gps-card);
+  color: var(--gps-fg-1);
+}
+.cardInner {
+  padding: 2rem;
+}
+@media (max-width: 767px) {
+  .cardInner {
+    padding: 1.5rem;
+  }
+}
+/* [&_.Card]:max-xl:!rounded-[8px] [&_.Card>div]:max-xl:!p-[24px] [&_.Card_.header5-regular]:max-xl:text-[18px]/1.35 */
+@media (max-width: 1279px) {
+  .card {
+    border-radius: 8px !important;
+  }
+  .cardInner {
+    padding: 24px !important;
+  }
+  .card .header5 {
+    font-size: 18px;
+    line-height: 1.35;
+  }
+}
+/* BaseCard [&_h2]: font-normal tracking-[-0.01em] text-[2rem] leading-[1.05] md:text-[40px] md:leading-[44px] */
+.statValue {
+  font-size: 2rem;
+  line-height: 1.05;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+@media (min-width: 768px) {
+  .statValue {
+    font-size: 40px;
+    line-height: 44px;
+  }
+}
+.fluidCell {
+  container-type: inline-size;
+  min-width: 0;
+}
+@media (min-width: 1024px) {
+  .fluidCell {
+    grid-column: span 2 / span 2;
+    height: 100%;
+  }
+  .fluidThird {
+    min-height: calc(100cqw * 268 / 320);
+  }
+}
+
+/* ---- Foundations: _5fl2pa_background _5fl2pa_background-white at opacity .25 ---- */
+.glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(50% 36.46%, #ffffff0a 0%, #05050b00 100%), radial-gradient(50% 38.81%, #ffffff14 0%, #05050b00 100%);
+}
+
+/* ---- UseCaseTabs: _5VC0Rq_tabs ---- */
+.tabs {
+  border: 1px solid;
+  border-color: rgba(var(--marker-color, 0, 0, 0), 0.15);
+  border-radius: 100px;
+  min-width: max-content;
+  max-width: max-content;
+  padding: 4px;
+  font-size: 14px;
+  line-height: 22px;
+  display: flex;
+  position: relative;
+}
+.noScrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.noScrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---- VideoGallery: rEiMFa_section / rEiMFa_fadeIn ---- */
+.videoSection {
+  scroll-margin-top: -80px;
+  position: relative;
+}
+@media (max-width: 680px) {
+  .videoSection {
+    scroll-margin-top: -15px;
+  }
+}
+.fadeIn {
+  animation: 0.6s ease-out gpsFadeIn;
+}
+@keyframes gpsFadeIn {
+  0% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

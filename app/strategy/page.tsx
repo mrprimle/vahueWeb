@@ -1,24 +1,59 @@
 import type { Metadata } from 'next'
-import StrategyPage from '@/components/pages/StrategyPage'
+import SmoothScroll from '@/components/home/scroll-hero/SmoothScroll'
+import FullBleedMedia from '@/components/strategy-audit/FullBleedMedia'
+import { Challenge, HowItWorks, Solution } from '@/components/strategy-audit/Sections'
+import { hero, prefooter } from '@/components/strategy-audit/content'
+
+const PAGE_URL = 'https://vahue.ai/strategy/'
+const TITLE = 'Workflow audit'
+const DESCRIPTION =
+  'A two-week workflow audit: we map one high-volume workflow end to end, record the baseline (volume, minutes per item, error rate and cost) and agree the target and stop point before a pilot starts.'
 
 export const metadata: Metadata = {
-  title: 'AI Strategy & Advisory | Vahue',
-  description:
-    'Transform scattered AI pilots into a coherent, funded, and governed AI portfolio. Vahue Strategy Sprint delivers a 12–24 month roadmap with architecture, governance, and activation.',
-  openGraph: {
-    title: 'AI Strategy & Advisory | Vahue',
-    description:
-      'From AI readiness diagnostic to 12–24 month roadmap — backed by Vahue\'s engineering and Hub teams so strategy leads directly to execution.',
-    url: 'https://vahue.ai/strategy',
-  },
+  title: TITLE,
+  description: DESCRIPTION,
+  openGraph: { title: `${TITLE} | Vahue`, description: DESCRIPTION, url: PAGE_URL },
   alternates: {
-    canonical: 'https://vahue.ai/strategy',
+    canonical: PAGE_URL,
     types: {
       'text/markdown': '/llms/ai-strategy.md',
     },
   },
 }
 
+// Workflow audit page in strict parity with the evaluation-enterprise clone
+// (scale.com/evaluation-enterprise, spec reference-snapshots/scale-clone/evaluation-enterprise.md):
+// the same five sections, counts and Scale's own colours (white page, #f9fafb pre-footer backdrop, #193a29 media
+// fill); Vahue fonts, logo, photography and copy (components/strategy-audit/content.ts).
 export default function Strategy() {
-  return <StrategyPage />
+  return (
+    <div className="overflow-x-clip bg-white font-display text-black">
+      <SmoothScroll />
+      <FullBleedMedia
+        level="h1"
+        image="/img/careers/office-4.jpg"
+        title={hero.title}
+        body={hero.body}
+        primary={hero.primary}
+        secondary={hero.secondary}
+        startPercentage={0}
+        backdropClassName="bg-white"
+        // Vahue's navbar sits in the flow (light on this route, see Navbar.tsx), so the clone's pt-24 gap is reduced
+        wrapperClassName="pb-10 pt-6 md:pt-10"
+        priority
+      />
+      <Challenge />
+      <Solution />
+      <HowItWorks />
+      <FullBleedMedia
+        image="/img/careers/office-2.jpg"
+        title={prefooter.title}
+        primary={prefooter.primary}
+        secondary={prefooter.secondary}
+        startPercentage={10}
+        backdropClassName="bg-[#f9fafb]"
+        wrapperClassName="pb-8 pt-16"
+      />
+    </div>
+  )
 }

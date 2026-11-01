@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import type { ReactElement, SVGProps } from 'react'
+import { INDUSTRY_WORKFLOWS } from '@/lib/automation-content'
 
 type IconProps = SVGProps<SVGSVGElement>
 
@@ -104,7 +105,6 @@ type Industry = {
   label: string
   href: string
   headline: string
-  microJobs: string[]
   accent: string
   Icon: (p: IconProps) => ReactElement
 }
@@ -116,12 +116,6 @@ const industries: Industry[] = [
     href: '/industries/banking-financial-services',
     headline:
       'Accelerate onboarding, prevent fraud in real time, and modernize core systems with AI-driven automation, cloud migration, and hyper-personalized digital banking. Translate messy M&A data into actionable intelligence, streamline lending with predictive analytics, and enable real-time, cross-border, and embedded finance — all with compliance, explainability, and zero-trust security at the core.',
-    microJobs: [
-      'Fraud prevention & compliance',
-      'AI-driven core modernization',
-      'Customer onboarding & KYC',
-      'Open banking & embedded finance',
-    ],
     accent:
       'radial-gradient(80% 80% at 100% 0%, rgba(3,137,244,0.18) 0%, transparent 70%)',
     Icon: FinanceIcon,
@@ -132,7 +126,6 @@ const industries: Industry[] = [
     href: '/industries/insurance',
     headline:
       'Translate insurance documents into actionable intelligence with reliable AI agents that learn your unique claims processing context and skills. Accelerate underwriting, automate policy workflows, and improve claims accuracy — with strict access controls and human-in-the-loop review.',
-    microJobs: ['Claims intelligence', 'Document AI', 'Underwriting ops', 'Policy automation'],
     accent:
       'radial-gradient(80% 80% at 0% 0%, rgba(132,52,233,0.18) 0%, transparent 70%)',
     Icon: InsuranceIcon,
@@ -143,7 +136,6 @@ const industries: Industry[] = [
     href: '/industries/healthcare-life-sciences',
     headline:
       'Translate patient data into actionable intelligence with AI agents that learn from your physicians — improving efficiency while preserving the standard of care. Automate scheduling, prior authorizations, and follow-ups, surface clinical guidelines, and accelerate drug discovery — with consent, minimization, and strict access controls built in.',
-    microJobs: ['Clinical AI & EHR insights', 'Patient engagement', 'Risk stratification', 'Drug discovery'],
     accent:
       'radial-gradient(80% 80% at 100% 100%, rgba(3,137,244,0.18) 0%, transparent 70%)',
     Icon: HeartPulseIcon,
@@ -154,7 +146,6 @@ const industries: Industry[] = [
     href: '/industries/retail-ecommerce',
     headline:
       'Modernize legacy stacks so inventory, logistics, and catalog data are instantly, securely retrievable by external AI agents. Engineer agent-ready digital shelves and APIs, unlock edge intelligence for real-time in-store experiences, and build scalable foundations that turn autonomous commerce into a reliable revenue engine.',
-    microJobs: ['Engineering for agents', 'Intelligence at the edge', 'Personalization', 'Supply chain visibility'],
     accent:
       'radial-gradient(80% 80% at 0% 100%, rgba(132,52,233,0.18) 0%, transparent 70%)',
     Icon: ShoppingBagIcon,
@@ -163,12 +154,12 @@ const industries: Industry[] = [
 
 export default function SegmentsGrid() {
   return (
-    <section id="segments" className="relative py-20 md:py-28 scroll-mt-20">
-      <div className="max-w-wide mx-auto px-6 md:px-8">
+    <section id="segments" className="relative py-12 md:py-24 scroll-mt-20">
+      <div className="max-w-shell mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
           <div className="max-w-2xl">
             <p className="eyebrow mb-4">Industries</p>
-            <h2 className="text-display font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.05]">
+            <h2 className="font-display text-section font-light">
               We Know Your Industry. We Build for It.
             </h2>
           </div>
@@ -220,7 +211,7 @@ export default function SegmentsGrid() {
                     <span className="shrink-0 w-12 h-12 rounded-2xl border border-border-mid bg-white/[0.04] flex items-center justify-center text-white/85 group-hover:bg-white group-hover:text-bg group-hover:border-white transition-all">
                       <Icon />
                     </span>
-                    <h3 className="text-display font-display text-2xl md:text-3xl font-semibold">
+                    <h3 className="font-display text-lead font-light">
                       {ind.label}
                     </h3>
                   </div>
@@ -230,7 +221,7 @@ export default function SegmentsGrid() {
                   </p>
 
                   <div className="flex flex-wrap gap-2">
-                    {ind.microJobs.map((job) => (
+                    {(INDUSTRY_WORKFLOWS[ind.href.split('/').pop() ?? '']?.workflows ?? []).map((job) => (
                       <span
                         key={job}
                         className="inline-flex items-center px-3 py-1 rounded-full border border-border-soft bg-white/[0.03] text-xs text-white/75"

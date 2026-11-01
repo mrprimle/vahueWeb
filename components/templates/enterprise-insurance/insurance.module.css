@@ -1,0 +1,376 @@
+/* scale.com/enterprise/insurance clone: page-specific styles. Sizes measured at 1440x900 and 390x844. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .pending {
+    opacity: 0;
+  }
+}
+
+/* ---------- type scale (Scale sizes, Vahue faces) ---------- */
+/* header2: 32/1.05 mobile -> clamp to 64/1.05 desktop */
+.header2 {
+  font-size: clamp(2rem, 0.5rem + 5vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+/* body1: 16/1.45 -> 20/1.5 */
+.body1 {
+  font-size: 16px;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+/* header3-regular: 24/1.05 -> 40/1.25 */
+.header3 {
+  font-size: 24px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+/* header5-regular: 22/1.05 -> 24/1.5 */
+.header5 {
+  font-size: 22px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+/* body2-regular: 14/1.35 -> 16/1.5 */
+.body2 {
+  font-size: 14px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+/* body3 + leading-relaxed: 14 / 22.75px */
+.body3 {
+  font-size: 14px;
+  line-height: 1.625;
+  letter-spacing: -0.01em;
+}
+/* detail-mono: 10/1.2 -> 13/1.2 uppercase */
+.detailMono {
+  font-size: 10px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+/* CMS SectionHeader */
+.overtitle {
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.sectionTitle {
+  font-size: 30px;
+  line-height: 1.375;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.sectionSub {
+  margin-top: 16px;
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+/* CardGrid card title/description: max-xl overrides 18/1.35 and 14/1.45 */
+.cardTitle {
+  font-size: 18px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+.cardBody {
+  font-size: 16px;
+  line-height: 1.5;
+}
+@media (min-width: 768px) {
+  .body1 {
+    font-size: 20px;
+    line-height: 1.5;
+  }
+  .header3 {
+    font-size: 40px;
+    line-height: 1.25;
+  }
+  .header5 {
+    font-size: 24px;
+    line-height: 1.5;
+  }
+  .body2 {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .detailMono {
+    font-size: 13px;
+  }
+  .sectionTitle {
+    font-size: 42px;
+  }
+  .sectionSub {
+    margin-top: 0;
+  }
+}
+@media (min-width: 1024px) {
+  .sectionTitle {
+    font-size: 48px;
+    line-height: 1.25;
+  }
+  .sectionSub {
+    margin-top: 8px;
+    font-size: 20px;
+  }
+}
+@media (min-width: 1280px) {
+  .cardTitle {
+    font-size: 24px;
+    line-height: 1.5;
+  }
+}
+
+/* ---------- FlatCta (hover fill + arrow track) ---------- */
+.cta {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 21px;
+}
+.ctaArrow {
+  border-radius: 8px;
+}
+.ctaFill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: currentColor;
+  /* Tailwind 4 translate-* animate `translate`, so Scale's `transform` transitionend check never fires */
+  transition-property: translate;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+.ctaLabel {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  font-weight: 500;
+  transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1);
+}
+.cta:not(.ctaArrow):not(.ctaBorderArrow):hover .ctaLabel {
+  transform: scale(0.9);
+}
+.ctaIcon {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  height: 32px;
+  width: 32px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 6px;
+}
+.ctaTrack {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  width: 200%;
+  transform: translateX(-50%);
+  transition: transform 0.6s cubic-bezier(0, 0, 0.2, 1);
+}
+.ctaTrack > span {
+  display: flex;
+  height: 100%;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ctaFill,
+  .ctaLabel,
+  .ctaTrack {
+    transition: none !important;
+  }
+  /* Scale: motion-reduce:!translate-x-0 on the chevron strip */
+  .ctaTrack {
+    transform: translateX(0) !important;
+  }
+  .cta:hover .ctaLabel {
+    transform: none;
+  }
+}
+
+.ctaBorderArrow {
+  border-radius: 6px;
+}
+/* CMSLink internal: focus:outline-1 focus:outline-scale-skyblue */
+.ctaFocus:focus {
+  outline: 1px solid #86bff2;
+}
+
+/* ---------- centred CMS SectionHeader (FeaturesWithIcons / Features slices) ---------- */
+/* sub: mt-4 lg:mt-2, 16/1.6 -> lg 20/1.6 */
+.centerSub {
+  margin-top: 16px;
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+@media (min-width: 1024px) {
+  .centerSub {
+    margin-top: 8px;
+    font-size: 20px;
+  }
+}
+/* body copy on Scale's base: 16 / 26.4px (1.65) */
+.bodyBase {
+  font-size: 16px;
+  line-height: 1.65;
+  letter-spacing: -0.01em;
+}
+/* FeaturesWithIcons card title: text-2xl 24/36, card body 16/24 */
+.iconTitle {
+  font-size: 24px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  white-space: pre-line;
+}
+.iconBody {
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- glass pill button (Button color="glass") ---------- */
+.glassWrap {
+  position: relative;
+  display: flex;
+  height: 32px;
+  padding: 1px;
+  border-radius: 9999px;
+  color: #fff;
+  background-image: linear-gradient(to bottom right, #9a9a9a 0%, #1a1a1a 50%, #6a6a6a 100%);
+  transition: all 0.5s cubic-bezier(0, 0, 0.2, 1);
+}
+.glassWrap:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.12);
+}
+.glass {
+  position: relative;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 9999px;
+  background-image: linear-gradient(#1a1a1a, #1a1a1a), linear-gradient(#0000 0%, #0a0a0a 100%);
+  backdrop-filter: blur(4px);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  transition: all 0.5s cubic-bezier(0, 0, 0.2, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+.glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.3), transparent, transparent);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass:hover {
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.25);
+  filter: brightness(1.15);
+}
+.glass:hover::before {
+  opacity: 1;
+  transform: translate(8px, -8px);
+}
+.glass:active {
+  transform: scale(0.97);
+  filter: brightness(1.05);
+}
+.glassLabel {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  padding: 8px 17px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+.glassArrow {
+  display: inline-block;
+  margin-left: 4px;
+  font-weight: 400;
+  /* duration-300 + transition-translate (not a Tailwind class): initial transition-property all, timing ease */
+  transition: transform 0.3s ease;
+}
+.glass:hover .glassArrow {
+  transform: translateX(4px);
+}
+
+/* ---------- Features (video cards) ---------- */
+.feature {
+  border-radius: 12px;
+}
+.featureTitle {
+  margin-top: 32px;
+  font-size: 24px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+@media (min-width: 1024px) {
+  .featureTitle {
+    margin-top: 48px;
+  }
+}
+
+/* ---------- video Modal (scale.com Modal CSS module it_l1W_*) ---------- */
+.modalOverlay {
+  opacity: 0;
+  animation: insModalFade 0.35s ease-out forwards;
+}
+.modal {
+  color: #000;
+  text-align: left;
+  opacity: 0;
+  height: -webkit-fill-available;
+  animation: insModalShowUp 0.35s ease-out 0.55s forwards;
+}
+@keyframes insModalFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes insModalShowUp {
+  from { opacity: 0; transform: scale(1.1); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ---------- LogoCarousel ---------- */
+.noScrollbar {
+  scrollbar-width: none;
+}
+.noScrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glassWrap,
+  .glass,
+  .glass::before,
+  .glassArrow {
+    transition: none !important;
+  }
+}

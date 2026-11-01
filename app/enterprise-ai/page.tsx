@@ -8,6 +8,9 @@ import Ecosystem from '@/components/enterprise-ai/Ecosystem'
 import Results from '@/components/enterprise-ai/Results'
 import BlogSection from '@/components/engineering/BlogSection'
 import ContactDynamic from '@/components/main/ContactDynamic'
+import AgentCarousel from '@/components/enterprise-ai/AgentCarousel'
+import RevealScope from '@/components/motion/RevealScope'
+import SmoothScroll from '@/components/home/scroll-hero/SmoothScroll'
 
 export const metadata: Metadata = {
   title: 'Enterprise AI | Vahue',
@@ -24,15 +27,19 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
+      <SmoothScroll />
       <EnterpriseHero />
-      <InsideHub />
-      <WhatPowers />
-      <WhyHub />
-      <Ecosystem />
-      <Agents />
-      <Results />
-      <BlogSection />
-      <ContactDynamic />
+      <RevealScope>
+        <InsideHub />
+        <WhatPowers />
+        <AgentCarousel />
+        <WhyHub />
+        <Ecosystem />
+        <Agents />
+        <Results />
+        <BlogSection />
+        <ContactDynamic />
+      </RevealScope>
     </>
   )
 }

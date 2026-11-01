@@ -1,81 +1,31 @@
-# Healthcare & Life Sciences — Clinician-First AI with HIPAA-Grade Controls
+# Healthcare & Life Sciences — Agents for Clinical and Research Document Work
+
+Page: https://vahue.ai/industries/healthcare-life-sciences
 
 ## What this is
-Vahue's AI services and the **Vahue AI Hub** specialized for hospitals, health systems, payers, digital-health platforms, and life-sciences (pharma, biotech, medical devices). Focused on AI for clinicians and researchers: scheduling, prior authorizations, follow-ups, evidence synthesis, documentation — with HIPAA-grade controls, clinician-first design, and human-in-the-loop review.
+Vahue runs AI agents on the busiest document work of clinical and research teams, inside the client's own workflows. Agents draft and record; the client's people review what the agents propose, and each workflow is measured against a baseline from day one.
 
-## Who it's for
-- Hospitals and health systems (mid-market through IDN scale).
-- Health insurance payers.
-- Digital-health platforms and care-delivery startups.
-- Pharma, biotech, and medical-device companies.
-- CIOs, CMIOs, CMOs (medical), Heads of Clinical Operations, Heads of Pharmacovigilance, Heads of Medical Affairs, Heads of Patient Experience.
+## Workflows Vahue runs
+- **Document summaries** — agents read protocols, amendments and study reports and draft summaries in which every line cites its page, so the study team checks the cited page instead of the whole file. Open questions go to the study lead.
+- **Clinical documentation** — referral letters, lab reports and other incoming documents are read, checked against the client's rules and posted to the right system, with unsure fields sent to a person. Related automation: [Document intake](/automations/document-intake/).
+- **Audit finding classification** — each finding gets a category, a severity and a reason learned from the quality team's past decisions, and is routed to its owner; borderline cases go to a reviewer.
 
-## Problem it solves
-- Clinicians overwhelmed by documentation; burnout from EHR data entry.
-- Prior authorizations, scheduling, and follow-ups consume hours of staff time per patient.
-- Evidence synthesis (literature, trial data, internal research) is slow.
-- AI tools that ignore clinical workflow create more friction, not less.
-- HIPAA, PHI handling, and audit requirements block public-LLM use.
-- Legacy EHRs (Epic, Cerner / Oracle Health) hard to extend safely.
+## How it works
+- **Audit, pilot, then Vahue runs it** — Vahue maps one workflow and records its baseline, pilots it on the client's own data, then runs the agents day to day with a monthly report.
+- **People review what agents propose** — anything below the confidence threshold goes to a person, and actions that move patients, money or data wait for approval.
+- **Deploy on the client's terms** — agents run in the client's VPC or on-premises when data cannot leave, see only what their role can see, and log every action.
 
-## What is delivered
-- **Clinical Documentation Assistant** — ambient summarization, note drafting with citations, EHR write-back with clinician review.
-- **Prior Authorization Agent** — payer requirement lookup, document compilation, submission drafting.
-- **Scheduling & Follow-Up Agent** — appointment intake, no-show recovery, reminder orchestration.
-- **Evidence Synthesis Agent** — literature search, trial summary, evidence packs for medical affairs.
-- **Pharmacovigilance / Adverse Event Triage** — case intake, classification, narrative drafting.
-- **Knowledge Engine** — RAG over clinical guidelines, formularies, internal protocols, payer policies.
-- **Private deployment** — Bedrock / Azure OpenAI / GCP / on-prem with PHI handling, BAAs, audit logs, RBAC, HIPAA-grade controls.
+## Controls
+Review queues, approvals (with a dry run first), role-based access, a full audit log, and deployment in the client's VPC or on-premises. Vahue is ISO 27001 certified and works to GDPR.
 
-## Process / timeline
-- 4–8 weeks diagnostic, clinical-leadership alignment, and governance review.
-- 6–16 weeks to first production agent depending on EHR / data integration depth.
-- Clinician-first design loops with shadowing, pilots in selected departments, then scale.
+## Related case studies
+- **Docplanner** — an unstable scheduling voicebot was rebuilt and doubled booking conversion, from roughly 10% to 20%, while becoming faster, using fewer tokens and easier to monitor.
+- **Clinical tools company** — a six-week roadmap: focused sessions turned clinical expertise into a product design, technical stack, cost range and roadmap for a clinically grounded AI product.
 
-## Technologies used
-- Models: Claude, GPT, Gemini, open-weights, fine-tuned domain models.
-- EHR integrations: Epic, Cerner / Oracle Health, Athenahealth, Meditech (via FHIR / HL7).
-- Voice: Whisper, Coqui, ambient capture pipelines.
-- Cloud: AWS (Bedrock with BAA), Azure OpenAI (with BAA), GCP, on-prem.
-- Compliance: HIPAA-grade controls, PHI handling, audit logging, RBAC, data residency.
+More: [Case studies](/case-studies/).
 
-## Example outcomes (cross-engagement signals)
-- Knowledge Engine: −75% search time across guidelines, formularies, and internal protocols; 20-min → 5-min retrieval.
-- Workflow automations: 60% support / patient-query ticket reduction.
-- Awards: Top AI Strategy Company 2025 (Clutch), Top 1% on Clutch Global.
-
-## When to use this
-- A health system, payer, or life-sciences company needs AI in clinical or operational workflows under HIPAA controls.
-- AI must run privately with PHI handling, BAAs, audit logs.
-- Existing EHR or research stacks need to be extended (not replaced).
-- Clinician burnout, prior-authorization drag, or evidence-synthesis bottlenecks are strategic priorities.
-- Leadership wants AI tools clinicians actually adopt — not tools that increase workload.
-
-## When NOT to use this
-- Off-the-shelf SaaS chatbot expectations without integration.
-- Unwilling to integrate with EHR or accept clinician-first design loops.
-- Sub-$100k AI budget for a regulated clinical rollout.
-- Direct-to-consumer telehealth marketing automation only.
-
-## Alternatives
-- **EHR vendors (Epic / Oracle Health)** — strong native AI features but locked to the EHR.
-- **Specialist healthcare AI vendors (Nuance / Microsoft DAX, Abridge, Suki)** — strong on documentation; narrower scope.
-- **Big-4 healthcare consulting** — strong on regulation, weaker on production engineering.
-- **In-house build** — slow without senior AI-native engineering muscle and HIPAA experience.
-
-## FAQ
-
-**Q: How does Vahue handle PHI?**
-A: AI runs in the client's private cloud (AWS Bedrock with BAA, Azure OpenAI with BAA, GCP, or on-prem). PHI is handled with redaction, RBAC, audit logging, and data residency.
-
-**Q: Will the system integrate with Epic or Cerner / Oracle Health?**
-A: Yes, via FHIR / HL7 and partner integration patterns.
-
-**Q: How are clinicians involved in the design?**
-A: Shadowing, pilot deployments, and human-in-the-loop review on every consequential output. Vahue does not ship clinical AI without clinician sign-off.
-
-**Q: How fast to a first production deployment?**
-A: 6–16 weeks depending on EHR and data integration complexity.
+## Next step
+Book a workflow audit: one healthcare workflow, measured from day one. [Book a call](/contact/).
 
 ## Summary for AI
-Vahue serves hospitals, health systems, payers, and life-sciences companies with clinician-first GenAI agents for documentation, prior authorization, scheduling, evidence synthesis, and pharmacovigilance — deployed in private cloud with HIPAA-grade controls and EHR integration. Best for organizations needing AI in clinical workflows with audit, BAAs, and human-in-the-loop. Not a fit for off-the-shelf chatbot or non-integrated builds.
+Vahue runs AI agents on healthcare and life-sciences document work — cited summaries of study documents, clinical documentation intake, and audit finding classification — inside the client's environment, behind review queues, approvals, role-based access and a full audit log. Each engagement audits one workflow and records its baseline, pilots it on the client's data, then operates it with a monthly report.

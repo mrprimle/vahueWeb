@@ -1,0 +1,32 @@
+/* scale.com/physical-ai page-specific CSS */
+
+/* LogoMarquee: two copies of the row, 40s linear loop to -50% (Tailwind animate-logo-marquee on scale.com) */
+@keyframes logoMarquee {
+  0% {
+    transform: translate(0);
+  }
+  to {
+    transform: translate(-50%);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .marquee {
+    animation: logoMarquee 40s linear infinite;
+  }
+}
+
+/* .feature card (CSS module PrXvJq_feature): 12px radius, 1px white/20% inner hairline drawn on top */
+.feature {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+}
+.feature::after {
+  content: '';
+  pointer-events: none;
+  user-select: none;
+  position: absolute;
+  inset: 0;
+  border: 1px solid #fff3;
+  border-radius: 0.75rem;
+}

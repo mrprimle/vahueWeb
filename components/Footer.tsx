@@ -111,17 +111,17 @@ export default function Footer() {
         <div className="hairline mb-8" />
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <p className="text-xs text-white/40 font-mono tracking-wide">
+          <p className="text-xs text-white/55 font-mono tracking-wide">
             © {new Date().getFullYear()} Vahue. All rights reserved.
           </p>
           <div className="flex items-center gap-8">
-            <Link href="/terms" className="text-xs text-white/40 hover:text-white/80 transition-colors font-mono tracking-wide">
+            <Link href="/terms" className="text-xs text-white/55 hover:text-white/80 transition-colors font-mono tracking-wide">
               Terms
             </Link>
-            <Link href="/privacy-policy" className="text-xs text-white/40 hover:text-white/80 transition-colors font-mono tracking-wide">
+            <Link href="/privacy-policy" className="text-xs text-white/55 hover:text-white/80 transition-colors font-mono tracking-wide">
               Privacy
             </Link>
-            <Link href="/cookie-policy" className="text-xs text-white/40 hover:text-white/80 transition-colors font-mono tracking-wide">
+            <Link href="/cookie-policy" className="text-xs text-white/55 hover:text-white/80 transition-colors font-mono tracking-wide">
               Cookies
             </Link>
           </div>

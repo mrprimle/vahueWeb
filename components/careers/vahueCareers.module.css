@@ -1,0 +1,11 @@
+/* Vahue /careers overrides on top of the scale.com/careers clone (Scale's own colours, see VahueCareersPage.tsx). */
+
+/* The clone's root is overflow-x: hidden, which makes it the scroll container for position: sticky, so the filter bar
+ * never sticks. clip keeps the horizontal clipping without that, and the bar sticks below the site navbar
+ * (--car-sticky-top). The hero CTA's scrollIntoView also stops below the navbar. */
+.vahue :global(.CareersPage) {
+  overflow-x: clip;
+}
+.vahue :global(#open-roles) {
+  scroll-margin-top: 88px;
+}

@@ -1,0 +1,157 @@
+/* labs.scale.com chrome tokens (Tailwind v4 theme in 3mzo0hj4e57ag.css). Shared by every labs clone page. */
+.root {
+  --color-ink: #111;
+  --color-ink-dim: #333;
+  --color-ink-faint: #999;
+  --color-hairline: #d9d9d9;
+  font-family: var(--font-aeonik), var(--labs-font-brand), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-ink);
+  background: #fff;
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior: none;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Portalled overlays (dialogs, search) sit outside .root but need its tokens and face. */
+.portal {
+  --color-ink: #111;
+  --color-ink-dim: #333;
+  --color-ink-faint: #999;
+  --color-hairline: #d9d9d9;
+  display: contents;
+  font-family: var(--font-aeonik), var(--labs-font-brand), ui-sans-serif, system-ui, sans-serif;
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+.portal :is(h1, h2, h3) {
+  font-family: inherit;
+}
+
+/* The site's global h1-h6 rule sets font-display; labs headings inherit the brand face instead. */
+.root :is(h1, h2, h3, h4, h5, h6) {
+  font-family: inherit;
+}
+
+.mono {
+  font-family: var(--labs-font-mono), monospace;
+}
+
+.sans {
+  font-family: var(--font-aeonik), var(--labs-font-brand), ui-sans-serif, system-ui, sans-serif;
+}
+
+.noScrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.noScrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* shadcn Button base + labs `outline` variant: focus ring, svg sizing */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  font-weight: 500;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 0.15s;
+  outline: none;
+}
+.btn:focus-visible {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #111;
+}
+.btn:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.btn svg {
+  pointer-events: none;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+/* Radix Dialog. labs' DialogContent carries the shadcn data-[state]:animate-in/zoom/slide classes, but its
+   Tailwind v4 build ships no tailwindcss-animate utilities, so open and close are instant (verified: opacity 1,
+   transform none 90ms after click). Only the centring translate remains. */
+.dialog {
+  transform: translate(-50%, -50%);
+}
+
+/* labs `html.loaded *` transition override, see LabsLoaded.tsx */
+@media (prefers-reduced-motion: no-preference) {
+  :global(html.labs-loaded) .root *,
+  :global(html.labs-loaded) .portal * {
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  }
+}
+
+/* labs has no scroll-behavior on html; the Vahue globals set `* { scroll-behavior: smooth }`, which would turn
+   window.scrollTo (Lenis' native sync, anchor jumps) into a native smooth scroll. */
+:global(html):has(.root) {
+  scroll-behavior: auto;
+}
+/* Same global also makes overflow strips (filter pills, search results, dialogs) scroll smoothly on scrollLeft/
+   scrollIntoView; labs scrolls them instantly. Elements that opt in with `scroll-smooth` (home blog carousel) keep it.
+   Lenis drives the window, not these, so it is unaffected. */
+.root :where(:not(:global(.scroll-smooth))),
+.portal :where(:not(:global(.scroll-smooth))) {
+  scroll-behavior: auto;
+}
+
+/* Vahue globals set `a { outline: 2px solid transparent }` (Tailwind 3 outline-none). labs keeps the UA keyboard
+   focus ring (auto 1px, offset 1px) on its links; shadcn buttons (.btn) keep their own ring. */
+.root a:not(.btn):focus-visible,
+.portal a:not(.btn):focus-visible {
+  outline: auto 1px -webkit-focus-ring-color;
+  outline-offset: 1px;
+}
+
+/* HubSpot newsletter form as rendered inside the labs dialog (form__wrapper__modal) */
+.hsInput {
+  width: 100%;
+  height: 45px;
+  padding: 0 16px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  font-size: 14px;
+  line-height: 1.375;
+  color: #111;
+  border-radius: 0;
+  outline: none;
+  appearance: none;
+}
+.hsInput::placeholder {
+  color: #737373;
+}
+.hsInput:focus {
+  border-color: #111;
+}
+.hsSelect {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0h10L5 6z' fill='%23111'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  color: #111;
+}
+
+/* Inkeep modal (search + chat), light forced colour mode */
+.inkeepOverlay {
+  background: rgba(30, 41, 59, 0.3);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.inkeepModal {
+  font-family: var(--font-aeonik), var(--labs-font-brand), ui-sans-serif, system-ui, sans-serif;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}

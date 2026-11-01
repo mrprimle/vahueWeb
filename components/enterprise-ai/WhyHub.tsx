@@ -29,12 +29,12 @@ const reasons: Reason[] = [
 
 export default function WhyHub() {
   return (
-    <section className="relative bg-bg py-20 md:py-28">
-      <div className="w-full max-w-wide mx-auto px-6 md:px-8">
+    <section className="relative bg-bg py-12 md:py-24">
+      <div className="w-full max-w-shell mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-20 items-start mb-12 md:mb-16">
           <div className="lg:sticky lg:top-28">
             <p className="eyebrow mb-4">Why Vahue AI Hub</p>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.05] text-white">
+            <h2 className="font-display text-section font-light text-white">
               A platform built to{' '}
               <span className="text-white/55">ship, not to demo.</span>
             </h2>
@@ -62,7 +62,7 @@ export default function WhyHub() {
                   <p className="font-mono text-[11px] uppercase tracking-widest text-white/45 mb-5">
                     {r.number}
                   </p>
-                  <h3 className="text-white text-lg md:text-xl font-semibold leading-snug mb-3">
+                  <h3 className="text-white text-card font-medium mb-3">
                     {r.title}
                   </h3>
                   <p className="text-white/65 text-sm leading-relaxed">

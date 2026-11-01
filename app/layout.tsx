@@ -6,6 +6,7 @@ import localFont from 'next/font/local'
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import SiteChrome from '@/components/SiteChrome'
 import {
   organizationWithReviewsSchema,
   websiteSchema,
@@ -190,9 +191,13 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans bg-bg text-white">
-        <Navbar />
+        <SiteChrome>
+          <Navbar />
+        </SiteChrome>
         <main>{children}</main>
-        <Footer />
+        <SiteChrome>
+          <Footer />
+        </SiteChrome>
         <Analytics />
       </body>
     </html>

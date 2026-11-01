@@ -1,0 +1,97 @@
+/* Page-specific styles for the generative-ai-data-engine clone (values measured on scale.com). */
+
+/* FlatCta "arrow" hover (state machine in FlatCta.tsx): wash -100% -> 0 on enter, -> +100% on leave, then snaps
+   back; chevron strip -50% -> 0 on enter, snaps back on leave. 600ms Tailwind ease-out. */
+.ctaWash,
+.ctaStrip {
+  transition: transform 0.6s cubic-bezier(0, 0, 0.2, 1);
+  will-change: transform;
+}
+.ctaWash {
+  transform: translateX(-100%);
+}
+.ctaWash[data-state='in'] {
+  transform: translateX(0);
+}
+.ctaWash[data-state='out'] {
+  transform: translateX(100%);
+}
+.ctaStrip {
+  transform: translateX(-50%);
+}
+.ctaStrip[data-state='in'] {
+  transform: translateX(0);
+}
+.snap {
+  transition: none !important;
+}
+
+/* Soft lilac glow behind the overview split and the resources slider (_5fl2pa_background). */
+.glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(50% 36.46%, #d1aad714 0%, #05050b00 100%),
+    radial-gradient(50% 38.81%, #d1aad729 0%, #05050b00 100%);
+}
+
+/* Demo thumbnail frame (rEiMFa_videoThumbnail). */
+.videoThumb {
+  position: relative;
+  height: fit-content;
+  padding: 5px;
+  border-radius: 16px;
+  background:
+    radial-gradient(398.67% 398.67% at 50% 100%, #ffffff4d 0%, #fff0 17.67%),
+    linear-gradient(#f3eeff00 0%, #f3eeff0a 100%);
+  box-shadow: inset 0 0 317.538px #ffffff14;
+}
+.videoThumb::before {
+  content: '';
+  pointer-events: none;
+  user-select: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid #fff3;
+}
+
+/* Player poster swap (rEiMFa_fadeIn). */
+.fadeIn {
+  animation: fadeIn 0.6s ease-out;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Mobile logo marquee (desktop shows a static row). */
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 8.6s linear infinite; /* react-fast-marquee default 50px/s over a 429px set */
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fadeIn,
+  .marquee {
+    animation: none;
+  }
+  .ctaWash,
+  .ctaStrip {
+    transition: none;
+  }
+  .ctaStrip {
+    transform: translateX(0) !important;
+  }
+}

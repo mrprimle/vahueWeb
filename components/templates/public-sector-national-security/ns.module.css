@@ -1,0 +1,353 @@
+/*
+ * scale.com/public-sector/national-security clone: grid + type ladder measured on the live page (1440 / 390, computed
+ * styles 2026-11-01). Scale's breakpoint for the type ladder is 768px (max-width: 767px = mobile).
+ * Colours are CSS variables on .root so a Vahue page can re-skin the clone (defaults = Scale's palette).
+ */
+
+.root {
+  --ns-bg: #fff;
+  --ns-fg: #000;
+  --ns-dark: #000;
+  --ns-tan: #a8927c; /* foundry-tan */
+  --ns-tan-lt: #c4b09e; /* foundry-tan-lt */
+  --ns-gray-10: #212121;
+  --ns-gray-20: #373737;
+  --ns-gray-30: #575757;
+  --ns-gray-60: #929292;
+  --ns-gray-80: #c7c7c7;
+  --ns-gray-90: #eaeaea;
+  --ns-gray-95: #f2f2f2;
+  background: var(--ns-bg);
+  color: var(--ns-fg);
+}
+
+/* scale.com sets letter-spacing -0.01em on p and headings; the site-wide h1-h6 base (white, semibold) is neutralised */
+.root :is(p, h1, h2, h3, h4, h5, h6) {
+  letter-spacing: -0.01em;
+}
+/* headings get an explicit colour class each (the site-wide h1-h6 rule paints them white otherwise) */
+.root :is(h1, h2, h3, h4, h5, h6) {
+  font-weight: 400;
+}
+
+/* AnimatedText "isnt-visible": hidden until SplitText has run */
+@media (prefers-reduced-motion: no-preference) {
+  .pending {
+    opacity: 0;
+  }
+}
+
+/* grid-layout-mobile / grid-layout-desktop. Scale writes `padding: 0 1.5rem`; inline only here so Tailwind py-* on the
+ * same element still apply. This module rule is unlayered and beats Tailwind utilities on the same element, so gap /
+ * px overrides on a .grid element are written with `!` (Tailwind v3 here: native @layer is not available in modules). */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 0.5rem;
+  padding-inline: 1.5rem;
+}
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(12, minmax(0, 150px));
+    justify-content: center;
+  }
+}
+
+/* ---------- type ladder ---------- */
+.header2 {
+  font-size: 4rem;
+  line-height: 1.05;
+}
+.header3 {
+  font-size: 2.5rem;
+  line-height: 1.25;
+}
+.header4 {
+  font-size: 2rem;
+  line-height: 1.5;
+  letter-spacing: -0.03em !important;
+}
+.header5 {
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+.header6 {
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+.body1 {
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+.body2 {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.mono {
+  text-transform: uppercase;
+  font-size: 0.813rem;
+  line-height: 1.2;
+}
+@media (max-width: 767px) {
+  .header2 {
+    font-size: 2rem;
+  }
+  .header3 {
+    font-size: 1.5rem;
+    line-height: 1.05;
+  }
+  .header4 {
+    font-size: 1.5rem;
+    line-height: 1.05;
+  }
+  .header5 {
+    font-size: 1.375rem;
+    line-height: 1.05;
+  }
+  .header6 {
+    font-size: 1.125rem;
+    line-height: 1.05;
+  }
+  .body1 {
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+  .body2 {
+    font-size: 0.875rem;
+    line-height: 1.35;
+  }
+  .mono {
+    font-size: 0.625rem;
+  }
+}
+
+/* ---------- NatSecHero logo marquee (3ektzubma58z1.css) ---------- */
+@keyframes logoRise {
+  0% {
+    opacity: 0;
+    transform: translateY(100%) scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes logoMarquee {
+  0% {
+    transform: translate(0);
+  }
+  to {
+    transform: translate(-50%);
+  }
+}
+.logoRise,
+.logoRiseItem {
+  animation-name: logoRise;
+  animation-duration: 0.8s;
+  animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+  animation-fill-mode: both;
+}
+.logoRise {
+  animation-delay: 2s;
+}
+.marquee {
+  animation-name: logoMarquee;
+  animation-duration: 40s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .logoRise,
+  .logoRiseItem,
+  .marquee {
+    animation: none;
+  }
+}
+
+/* ---------- FlatCta (hover fill + arrow track), same Scale component (892855) as the about / careers clones ---------- */
+.cta {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 21px;
+  text-transform: capitalize;
+}
+.ctaArrow {
+  border-radius: 8px;
+}
+.ctaStatic {
+  border-radius: 6px;
+}
+.ctaFill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: currentColor;
+  /* Tailwind 4 translate-* animate `translate`, so Scale's `transform` transitionend check never fires */
+  transition-property: translate;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+.ctaLabel {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  font-weight: 500;
+  transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1);
+}
+.ctaIcon {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  height: 32px;
+  width: 32px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 6px;
+}
+.ctaTrack {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  width: 200%;
+  transform: translateX(-50%);
+  transition: transform 0.6s cubic-bezier(0, 0, 0.2, 1);
+}
+.ctaTrack > span {
+  display: flex;
+  height: 100%;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+}
+/* CMSLink internal: focus:outline-1 focus:outline-scale-skyblue */
+.ctaFocus:focus {
+  outline: 1px solid #86bff2;
+}
+/* plain links / CMSLink external: the UA focus ring shows (the app resets a:outline) */
+.focusUa:focus-visible {
+  outline: revert;
+}
+
+/* TextLink 890803 (theme inherit, size medium): hover opacity .7 at once, arrow translate-x-1 300ms ease-out */
+.textLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: inherit;
+  font-size: 1rem;
+  line-height: 1.65;
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+.textLink:hover {
+  opacity: 0.7;
+}
+.textLink > span:first-child {
+  font-weight: 500;
+}
+.textArrow {
+  display: inline-block;
+  font-family: system-ui, -apple-system, Arial, sans-serif;
+  transition-property: transform, translate, scale, rotate;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+.textLink:hover .textArrow {
+  translate: 0.25rem 0;
+}
+
+/* BlogPreview image hover (Tailwind 4 `scale` property, transition-transform 1000ms ease-out) */
+.bpImg {
+  transition-property: transform, translate, scale, rotate;
+  transition-duration: 1000ms;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+@media (hover: hover) {
+  .bpImgWrap:hover .bpImg {
+    scale: 1.05;
+  }
+}
+
+/* BlogPreview grid (808358 + gUrnSq CSS module) with this page's lBBaeq overrides from 1024px:
+ * res1 1/1/3/3 aspect 605/552 align-self start (tile padding 32, image aspect auto); res2 1/3/2/5 and res3 2/3/3/5
+ * aspect 605/400. */
+.bpGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: auto;
+  gap: 16px 8px;
+}
+@media (min-width: 1024px) {
+  .bpGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: minmax(70px, auto);
+    gap: 8px;
+  }
+  .bpSlot {
+    grid-area: var(--bp-grid-area);
+    min-width: 0;
+    min-height: 0;
+    aspect-ratio: var(--bp-aspect);
+    align-self: var(--bp-align, stretch);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ctaFill,
+  .ctaLabel,
+  .ctaTrack,
+  .textLink,
+  .textArrow,
+  .bpImg {
+    transition: none !important;
+  }
+}
+
+/* ---------- SgpFlywheel page overrides (lBBaeq) ---------- */
+.fwPara {
+  line-height: 2.25rem; /* blockClassNames h4: leading-9 */
+}
+/* the RichText blocks are children of a flex-col gap-4 / xl:gap-6 column; the page CSS pulls the second one back by
+ * the gap, so the paragraphs read as one block */
+.fwNext {
+  margin-top: -1rem;
+}
+@media (min-width: 1280px) {
+  .fwNext {
+    margin-top: -1.5rem;
+  }
+  .fwPanel {
+    min-height: clamp(792px, 1362px - 29.7vw, 982px);
+    max-height: 900px;
+  }
+}
+@media (max-width: 1279px) {
+  .fwPara {
+    font-size: 17px !important;
+    line-height: 24px !important;
+  }
+  .fwImage {
+    max-height: 240px;
+  }
+  .fwStep {
+    justify-content: flex-start;
+    padding-top: calc(4.5rem + 240px);
+  }
+}
+
+/* page CSS lBBaeq: BlogPreview3D padding-top 3rem below 768 (the shared carousel has pt-0 there) */
+@media (max-width: 767px) {
+  .root :global(.BlogPreview3D) {
+    padding-top: 3rem;
+  }
+}

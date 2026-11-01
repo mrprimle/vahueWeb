@@ -1,0 +1,81 @@
+/* scale.com/enterprise page-specific CSS */
+
+/*
+ * Hero graph node (CSS module fp2EVW_root, chunk 2h0gxg24im1sd.css).
+ * Positions are authored on a 1550x880 desktop / 390x844 mobile design frame and pinned to a corner:
+ *   --_x = x * 100vw / design-w, --_y = y / design-h * 100dvh
+ *   size = clamp(w * .75px, w * 100vw / 1550 (mobile: w * 100dvh / 844), w * 1.5px)
+ */
+.node {
+  z-index: 1000;
+  --design-w: 1550;
+  --design-h: 880;
+  --layout-x: var(--x-desktop);
+  --layout-y: var(--y-desktop);
+  --pin-left: var(--pin-left-desktop);
+  --pin-right: var(--pin-right-desktop);
+  --pin-top: var(--pin-top-desktop);
+  --pin-bottom: var(--pin-bottom-desktop);
+  --node-size-unit: 100vw;
+  --node-size-design: var(--design-w);
+  --node-w-out: var(--node-w);
+  --node-h-out: var(--node-h);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: absolute;
+}
+@media (max-width: 767px) {
+  .node {
+    --layout-x: var(--x-mobile);
+    --layout-y: var(--y-mobile);
+    --pin-left: var(--pin-left-mobile);
+    --pin-right: var(--pin-right-mobile);
+    --pin-top: var(--pin-top-mobile);
+    --pin-bottom: var(--pin-bottom-mobile);
+    --design-w: 390;
+    --design-h: 844;
+    --node-size-unit: 100dvh;
+    --node-size-design: var(--design-h);
+    --node-w-out: var(--node-w-mobile);
+    --node-h-out: var(--node-h-mobile);
+  }
+}
+.node {
+  --_x: calc(var(--layout-x) * 100vw / var(--design-w));
+  --_y: calc(var(--layout-y) / var(--design-h) * 100dvh);
+  left: var(--pin-left);
+  right: var(--pin-right);
+  top: var(--pin-top);
+  bottom: var(--pin-bottom);
+  width: clamp(var(--node-w-out) * 0.75 * 1px, var(--node-w-out) * var(--node-size-unit) / var(--node-size-design), var(--node-w-out) * 1.5 * 1px);
+  height: clamp(var(--node-h-out) * 0.75 * 1px, var(--node-h-out) * var(--node-size-unit) / var(--node-size-design), var(--node-h-out) * 1.5 * 1px);
+}
+
+/* The hero subtitle is capped at 75% of the headline column on md+ (JeqlvG_root .HeadlineWithCta > .RichText). */
+@media (min-width: 768px) {
+  .heroBody {
+    max-width: calc(75% - 0.125rem);
+    margin-inline: auto;
+  }
+}
+
+/* LogoMarquee: two copies of the row, 40s linear loop to -50% */
+@keyframes logoMarquee {
+  0% {
+    transform: translate(0);
+  }
+  to {
+    transform: translate(-50%);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .marquee {
+    animation: logoMarquee 40s linear infinite;
+  }
+}
+
+/* Blog card image gradient (bg-image-gradient) */
+.imageGradient {
+  background-image: linear-gradient(rgba(0, 0, 0, 0) 45.1%, rgba(0, 0, 0, 0.6) 100%);
+}

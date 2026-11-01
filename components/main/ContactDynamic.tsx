@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import ContactContainer from '@/components/engineering/ContactContainer'
 
-const rotatingValues = [
+const defaultValues = [
   'agentic back-office',
   'AI-assisted SDLC',
   'customer ops automation',
@@ -18,7 +18,12 @@ const TYPE_DELAY = 60
 const DELETE_DELAY = 32
 const HOLD_DELAY = 1400
 
-export default function ContactDynamic() {
+export default function ContactDynamic({
+  values: rotatingValues = defaultValues,
+}: {
+  /** Phrases typed after "We're here to deliver" */
+  values?: string[]
+} = {}) {
   const [valueIndex, setValueIndex] = useState(0)
   const [subIndex, setSubIndex] = useState(0)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -60,10 +65,11 @@ export default function ContactDynamic() {
   return (
     <section id="contact" className="relative scroll-mt-20">
       {/* Intro with typewriter */}
-      <div className="max-w-wide mx-auto px-6 md:px-8 pt-20 md:pt-28 pb-10 md:pb-14">
+      <div className="max-w-shell mx-auto px-6 pt-12 md:pt-24 pb-8 md:pb-12">
         <div className="max-w-3xl">
           <p className="eyebrow mb-4">Contact</p>
-          <h2 className="text-display font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.05]">
+          {/* data-no-reveal: the typewriter rewrites this heading, so it can't be line-split */}
+          <h2 data-no-reveal className="font-display text-section font-light">
             We&apos;re here to deliver
             <br />
             <span className="typewriter-caret bg-gradient-to-r from-white to-[#b99dff] bg-clip-text text-transparent">

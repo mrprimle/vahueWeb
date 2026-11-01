@@ -30,13 +30,13 @@ export default function FounderAndTeam() {
     <section
       id="team"
       ref={ref}
-      className="relative py-20 md:py-28 scroll-mt-20"
+      className="relative py-12 md:py-24 scroll-mt-20"
     >
-      <div className="max-w-wide mx-auto px-6 md:px-8">
+      <div className="max-w-shell mx-auto px-6">
         {/* Heading */}
         <div className="mb-12 md:mb-16 max-w-2xl">
           <p className="eyebrow mb-4">Founder & team</p>
-          <h2 className="text-display font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.05]">
+          <h2 className="font-display text-section font-light">
             Senior humans,
             <br />
             <span className="text-white/55">AI-native craft.</span>
@@ -53,7 +53,7 @@ export default function FounderAndTeam() {
               }`}
               style={{ transitionDelay: isVisible ? `${i * 80}ms` : '0ms' }}
             >
-              <p className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold tracking-tight leading-none mb-2 gradient-text-scale">
+              <p className="font-display text-section font-light leading-none mb-2 text-white">
                 {stat.value}
               </p>
               <p className="text-xs md:text-sm text-white/55 font-mono uppercase tracking-widest">
@@ -75,7 +75,7 @@ export default function FounderAndTeam() {
           <div className="relative bg-surface p-8 md:p-12 grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-10 items-center">
             <div className="flex flex-col">
               <p className="eyebrow mb-4">Talk to the founder</p>
-              <h3 className="text-display font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.05] mb-5">
+              <h3 className="font-display text-lead font-light mb-5">
                 Mike Doroshenko
               </h3>
               <p className="text-white/65 text-sm md:text-base leading-relaxed max-w-xl mb-6">

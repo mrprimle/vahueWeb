@@ -1,0 +1,17 @@
+/*
+ * /contact keeps the scale.com/demo clone's own colours (the --demo-* defaults in
+ * components/templates/demo/demo.module.css); only Vahue's fonts and logo differ.
+ * Layout only: Vahue's navbar is sticky in the flow (88px) and turns light on /contact (components/Navbar.tsx), so the
+ * white page is pulled up under it, as Scale's page sits under its floating header. Doubled class beats pt-24.
+ */
+.layout.layout {
+  margin-top: -88px;
+}
+.layout.layout > section {
+  padding-top: calc(88px + 32px);
+}
+@media (min-width: 768px) {
+  .layout.layout > section {
+    padding-top: calc(88px + 40px);
+  }
+}

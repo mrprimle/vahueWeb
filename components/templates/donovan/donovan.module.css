@@ -1,0 +1,328 @@
+/* scale.com/donovan clone: page-specific styles. Sizes measured at 1440x900 and 390x844. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .pending {
+    opacity: 0;
+  }
+}
+
+/* ---------- type scale (Scale sizes, Vahue faces) ---------- */
+.header2 {
+  font-size: clamp(2rem, 0.5rem + 5vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.body1 {
+  font-size: 16px;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.header3 {
+  font-size: 24px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.header5 {
+  font-size: 22px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.body2 {
+  font-size: 14px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+.detailMono {
+  font-size: 10px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+.overtitle {
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #525252;
+  margin-bottom: 20px;
+}
+.sectionTitle {
+  font-size: 30px;
+  line-height: 1.375;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  color: #000;
+}
+.sectionSub {
+  margin-top: 16px;
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  color: rgb(0 0 0 / 0.7);
+}
+.quote {
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: -0.05em;
+}
+@media (min-width: 768px) {
+  .body1 {
+    font-size: 20px;
+    line-height: 1.5;
+  }
+  .header3 {
+    font-size: 40px;
+    line-height: 1.25;
+  }
+  .header5 {
+    font-size: 24px;
+    line-height: 1.5;
+  }
+  .body2 {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .detailMono {
+    font-size: 13px;
+  }
+  .sectionTitle {
+    font-size: 42px;
+  }
+}
+@media (min-width: 1024px) {
+  .sectionTitle {
+    font-size: 48px;
+    line-height: 1.25;
+  }
+  .sectionSub {
+    margin-top: 8px;
+    font-size: 20px;
+  }
+  .quote {
+    font-size: 40px;
+    line-height: 44px;
+  }
+}
+
+/* ---------- FlatCta (hover fill + arrow track) ---------- */
+.cta {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 21px;
+}
+.ctaArrow {
+  border-radius: 8px;
+}
+.ctaFill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: currentColor;
+  transition-property: translate;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+.ctaLabel {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  font-weight: 500;
+  transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1);
+}
+.cta:not(.ctaArrow):hover .ctaLabel {
+  transform: scale(0.9);
+}
+.ctaIcon {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  height: 32px;
+  width: 32px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 6px;
+}
+.ctaTrack {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  width: 200%;
+  transform: translateX(-50%);
+  transition: transform 0.6s cubic-bezier(0, 0, 0.2, 1);
+}
+.cta:hover .ctaTrack {
+  transform: translateX(0);
+}
+.ctaTrack > span {
+  display: flex;
+  height: 100%;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ctaFill,
+  .ctaLabel,
+  .ctaTrack {
+    transition: none !important;
+  }
+  .cta:hover .ctaTrack {
+    transform: translateX(-50%);
+  }
+  .cta:hover .ctaLabel {
+    transform: none;
+  }
+}
+
+
+/* ---------- Section header (overtitle / title / subtitle) ---------- */
+/* Overtitle mono 12/24 +1px #525252 mb 20; title 30/1.375 -> md 42 -> lg 48/60; sub 16/1.6 -> lg 20/32, black/70 */
+.sectionHeaderTitle {
+  font-size: 30px;
+  line-height: 1.375;
+}
+@media (min-width: 768px) {
+  .sectionHeaderTitle {
+    font-size: 42px;
+  }
+}
+@media (min-width: 1024px) {
+  .sectionHeaderTitle {
+    font-size: 48px;
+    line-height: 1.25;
+  }
+}
+
+/* ---------- Product overview mock cards ---------- */
+.mockGlow {
+  background:
+    radial-gradient(ellipse 90% 65% at 50% 0%, rgba(124, 106, 247, 0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 50% 105%, rgba(14, 165, 233, 0.07) 0%, transparent 60%), #0c0b0f;
+}
+
+/* ---------- Tabbed showcase (CSS module _5VC0Rq_ on scale.com) ---------- */
+.tabsWrap {
+  --marker-color: 0, 0, 0;
+}
+.tabs {
+  border: 1px solid rgba(var(--marker-color), 0.15);
+  border-radius: 100px;
+  min-width: max-content;
+  max-width: max-content;
+  padding: 4px;
+  font-size: 14px;
+  line-height: 22px;
+  display: flex;
+  position: relative;
+}
+.tab::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  display: inline-block;
+  height: 50%;
+  width: 1px;
+  transform: translateY(-50%) scaleY(1);
+  background: rgb(0 0 0 / 0.2);
+  transition: transform 100ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tab:last-child::after {
+  content: none;
+}
+.tabNoSep::after {
+  transform: translateY(-50%) scaleY(0);
+}
+.box {
+  box-sizing: border-box;
+  z-index: 1;
+  background: rgba(var(--marker-color), 0.01);
+  border-radius: 16px;
+  position: relative;
+}
+.box::before,
+.box::after {
+  content: '';
+  box-sizing: border-box;
+  border-radius: 16px;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.box::before {
+  border: 1px solid rgba(var(--marker-color), 0.06);
+}
+.box::after {
+  background: rgba(var(--marker-color), 0.02);
+  box-shadow: 0 0 12px 0 rgba(var(--marker-color), 0.08) inset;
+}
+/* _5fl2pa_background _5fl2pa_background-white (white radial glow, pushed up by -50%) */
+.boxGlow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(50% 36.46%, rgba(255, 255, 255, 0.04) 0%, rgba(5, 5, 11, 0) 100%),
+    radial-gradient(50% 38.81%, rgba(255, 255, 255, 0.08) 0%, rgba(5, 5, 11, 0) 100%);
+}
+.bullet {
+  position: relative;
+  padding-left: 24px;
+  font-size: 16px;
+  line-height: 28px;
+  color: #000;
+}
+.bullet:not(:last-of-type) {
+  margin-bottom: 14px;
+}
+.bullet > picture,
+.bullet > span:first-child {
+  position: absolute;
+  left: 0;
+  margin-top: 4px;
+}
+@media (min-width: 1024px) {
+  .bullet {
+    padding-left: 32px;
+  }
+}
+.imageBorder {
+  border: 1px solid rgba(209, 170, 215, 0.16);
+}
+.swipe {
+  touch-action: pan-y;
+  user-select: none;
+}
+
+/* ---------- Mobile logo marquee (react-fast-marquee, speed 50px/s) ---------- */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+.marqueeTrack {
+  display: flex;
+  flex: 0 0 auto;
+  min-width: 100%;
+  animation: marquee var(--marquee-duration, 10s) linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marqueeTrack {
+    animation: none;
+  }
+}

@@ -8,7 +8,7 @@ Plain-text, retrieval-friendly mirrors of every key Vahue page. Each file is a s
 - [AI-Native Engineering](./ai-native-engineering.md)
 - [AI Team Training](./team-training.md)
 - [Enterprise AI / Vahue AI Hub](./enterprise-ai.md)
-- [AI Strategy & Advisory](./ai-strategy.md)
+- [Workflow Audit](./ai-strategy.md)
 - [AEO / LLM Discoverability](./ai-seo.md)
 - [Vahue Incubator](./vahue-incubator.md)
 

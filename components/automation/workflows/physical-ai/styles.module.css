@@ -1,0 +1,16 @@
+/* Styles for workflow pages built on the physical-ai clone (values measured on scale.com/physical-ai). */
+
+/* Integrations strip: two copies of the row, 40s linear loop to -50% (animate-logo-marquee on scale.com). */
+@keyframes logoMarquee {
+  0% {
+    transform: translate(0);
+  }
+  to {
+    transform: translate(-50%);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .marquee {
+    animation: logoMarquee 40s linear infinite;
+  }
+}

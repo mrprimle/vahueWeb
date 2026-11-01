@@ -14,8 +14,8 @@ const companies = [
 
 export default function ClientsStrip() {
   return (
-    <section className="relative px-6 md:px-8 pb-16 md:pb-20">
-      <div className="max-w-wide mx-auto">
+    <section className="relative px-6 pb-12 md:pb-16">
+      <div className="max-w-shell mx-auto">
         <div className="flex items-center justify-center mb-6">
           <p className="eyebrow">Trusted by teams at</p>
         </div>

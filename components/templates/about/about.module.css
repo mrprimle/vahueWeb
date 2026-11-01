@@ -1,0 +1,345 @@
+/* scale.com/about clone: page styles. Sizes measured at 1440x900 and 390x844 (computed styles, 2026-11-01).
+ * Colours read --abt-* variables (defaults = Scale's light palette, set on .root) so a wrapper can restyle the page. */
+
+.root {
+  --abt-bg: #fff;
+  --abt-fg: #000;
+  --abt-ink: #010101;
+  /* scale-gray-10 / 60 / 90 / 95 */
+  --abt-fg-2: #212121;
+  --abt-muted: #929292;
+  --abt-line: #eaeaea;
+  --abt-card: #f2f2f2;
+  --abt-over: #525252;
+  --abt-accent: #193a29;
+  --abt-dark: #000;
+  background: var(--abt-bg);
+  color: var(--abt-fg);
+}
+
+/* scale.com sets letter-spacing -0.01em on p and headings only (spans, buttons and links stay normal) */
+.root :is(p, h1, h2, h3, h4, h5, h6) {
+  letter-spacing: -0.01em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pending {
+    opacity: 0;
+  }
+}
+
+/* ---------- Scale grid helpers ---------- */
+/* grid-layout-mobile: 8 cols, gap .5rem, padding 0 1.5rem; md: grid-layout-desktop 12 x minmax(0,150px) centred */
+.gridLayout {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 0.5rem;
+  /* padding: 0 1.5rem on Scale; inline only here so Tailwind py-* utilities on the same element still apply */
+  padding-inline: 1.5rem;
+}
+@media (min-width: 768px) {
+  .gridLayout {
+    grid-template-columns: repeat(12, minmax(0, 150px));
+    justify-content: center;
+  }
+}
+/* Tailwind `container` as configured on scale.com: max 1280, px 1.5rem -> 2rem from 1024 */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+@media (min-width: 1024px) {
+  .container {
+    padding-inline: 2rem;
+  }
+}
+
+/* ---------- type scale (Scale sizes, Vahue faces) ---------- */
+/* header2: 32/1.05 -> clamp(2rem,.5rem+5vw,4rem) (FullBleed adds the clamp) */
+.header2 {
+  font-size: clamp(2rem, 0.5rem + 5vw, 4rem);
+  line-height: 1.05;
+  text-wrap: balance;
+}
+/* header3-regular: 24/1.05 -> 40/1.25 */
+.header3 {
+  font-size: 24px;
+  line-height: 1.05;
+}
+/* CardGrid headerSize "lg" (s.b): 32/1.05 -> md 40/44 */
+.headerLg {
+  font-size: 2rem;
+  line-height: 1.05;
+}
+/* stats value inside RichText: .header2 64/1.05 overridden by BaseCard [&_h2] -> 32/1.05, md 40/44 */
+.statValue {
+  font-size: 2rem;
+  line-height: 1.05;
+  margin-bottom: 8px;
+}
+/* header5-regular inside a LinkCard: max-xl 18/1.35, xl 24/1.5 */
+.cardTitle {
+  font-size: 18px;
+  line-height: 1.35;
+}
+.body16 {
+  font-size: 16px;
+  line-height: 1.5;
+}
+/* HeadlineWithCta subtitle: RichText p 16/1.5, max-md:text-sm (14/1.5) */
+.missionSub {
+  font-size: 14px;
+  line-height: 1.5;
+}
+/* detail-mono: 10/1.2 -> 13/1.2 uppercase */
+.detailMono {
+  font-size: 10px;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+/* CMS SectionHeader: overtitle text-xs leading-6 tracking-[1px] mb-5 uppercase mono #525252 */
+.overtitle {
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+/* title: leading-snug (1.375) text-3xl / md:text-4.5xl / lg:text-5xl lg:leading-[1.25], balanced */
+.sectionTitle {
+  font-size: 30px;
+  line-height: 1.375;
+  text-wrap: balance;
+}
+@media (min-width: 768px) {
+  .header3 {
+    font-size: 40px;
+    line-height: 1.25;
+  }
+  .headerLg,
+  .statValue {
+    font-size: 40px;
+    line-height: 44px;
+  }
+  .missionSub {
+    font-size: 16px;
+  }
+  .detailMono {
+    font-size: 13px;
+  }
+  .sectionTitle {
+    font-size: 40px;
+  }
+}
+@media (min-width: 1024px) {
+  .sectionTitle {
+    font-size: 48px;
+    line-height: 1.25;
+  }
+}
+@media (min-width: 1280px) {
+  .cardTitle {
+    font-size: 24px;
+    line-height: 1.5;
+  }
+}
+
+/* ---------- CardGrid (What we do: 3 LinkCards; stats: fluid grid-cols-6) ---------- */
+.cardGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+@media (min-width: 1024px) {
+  .cardGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .cardGridFluid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+/* fluid cells: @container min-w-0 + lg:min-h-[calc(100cqw*268/320)] (row of 3) / [calc(100cqw*218/485)] (row of 2) */
+.fluidCell {
+  container-type: inline-size;
+  min-width: 0;
+}
+@media (min-width: 1024px) {
+  .fluidCell {
+    height: 100%;
+  }
+  .fluidThird {
+    min-height: calc(100cqw * 268 / 320);
+  }
+  .fluidHalf {
+    min-height: calc(100cqw * 218 / 485);
+  }
+}
+
+/* ---------- Gallery (VideoWithImages, Keen Slider; CSS module PwGuRW_video-container) ---------- */
+.videoContainer {
+  position: relative;
+  height: fit-content;
+  border-radius: 16px;
+  background: radial-gradient(398.67% 398.67% at 50% 100%, #ffffff4d 0%, #fff0 17.67%), linear-gradient(#f3eeff00 0%, #f3eeff0a 100%);
+  box-shadow: inset 0 0 317.538px #ffffff14;
+}
+.videoContainer::before {
+  content: '';
+  pointer-events: none;
+  user-select: none;
+  border-radius: inherit;
+  border: 2px solid #fff3;
+  position: absolute;
+  inset: 0;
+}
+.galleryImg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+  translate: -50% -50%;
+  border-radius: 12px;
+  object-fit: cover;
+  /* the app sets user-drag via img defaults; keep drag to Keen */
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* ---------- BlogPreview (CSS module gUrnSq) ---------- */
+.bpGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: auto;
+  gap: 16px 8px;
+}
+@media (min-width: 1024px) {
+  .bpGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: minmax(70px, auto);
+    gap: 8px;
+  }
+  .bpSlot {
+    grid-area: var(--bp-grid-area);
+    min-width: 0;
+    min-height: 0;
+  }
+}
+
+/* tile image: group-hover/(full-bleed|caption):scale-105, transition-transform duration-1000 ease-out (Tailwind 4) */
+.bpImg {
+  transition-property: transform, translate, scale, rotate;
+  transition-duration: 1000ms;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+@media (hover: hover) {
+  .bpImgWrap:hover .bpImg {
+    scale: 1.05;
+  }
+}
+
+/* ---------- mobile logo marquee (react-fast-marquee defaults: speed 50px/s, left, no autoFill) ---------- */
+.marqueeGroup {
+  animation: rfm-scroll var(--rfm-duration, 10s) linear infinite;
+}
+@keyframes rfm-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* ---------- FlatCta (hover fill + arrow track), same Scale component as the careers / security clones ---------- */
+.cta {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 21px;
+  text-transform: capitalize;
+}
+.ctaArrow {
+  border-radius: 8px;
+}
+.ctaStatic {
+  border-radius: 6px;
+}
+.ctaFill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: currentColor;
+  /* Tailwind 4 translate-* animate `translate`, so Scale's `transform` transitionend check never fires */
+  transition-property: translate;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+}
+.ctaLabel {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  font-weight: 500;
+  transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1);
+}
+.ctaIcon {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  height: 32px;
+  width: 32px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 6px;
+}
+.ctaTrack {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  width: 200%;
+  transform: translateX(-50%);
+  transition: transform 0.6s cubic-bezier(0, 0, 0.2, 1);
+}
+.ctaTrack > span {
+  display: flex;
+  height: 100%;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+}
+.ctaBorderArrow {
+  border-radius: 6px;
+}
+/* CMSLink internal: focus:outline-1 focus:outline-scale-skyblue */
+.ctaFocus:focus {
+  outline: 1px solid #86bff2;
+}
+/* plain links / CMSLink external: no focus classes on Scale, so the UA focus ring shows (the app resets a:outline) */
+.focusUa:focus-visible {
+  outline: revert;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ctaFill,
+  .ctaLabel,
+  .ctaTrack {
+    transition: none !important;
+  }
+  .ctaTrack {
+    transform: translateX(0) !important;
+  }
+  .marqueeGroup {
+    animation: none;
+  }
+}

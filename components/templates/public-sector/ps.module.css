@@ -1,0 +1,153 @@
+/* scale.com/public-sector clone: page styles (measured at 1440x900 and 390x844, 2026-11-01).
+ * Colours read --ps-* variables (defaults = Scale's light palette, set on .root) so a Vahue wrapper can restyle.
+ * The hero / pre-footer reuse the evaluation-public-sector FullBleedMedia, which reads --eps-* (also set on <main>). */
+
+.root {
+  --ps-bg: #fff;
+  --ps-fg: #000;
+  /* SectionHeader eyebrow + FeaturesWithIcons body */
+  --ps-muted: #525252;
+  /* text-black/70 */
+  --ps-soft: rgba(0, 0, 0, 0.7);
+  /* tick / icon tiles: bg-black/9 + border-black/10 */
+  --ps-tile: rgba(0, 0, 0, 0.09);
+  --ps-line: rgba(0, 0, 0, 0.1);
+  /* St. Louis banner card: bg-black/10 */
+  --ps-banner: rgba(0, 0, 0, 0.1);
+  /* ResourcesSlider overtitle (white variant) */
+  --ps-tag: #d1aad7;
+  background: var(--ps-bg);
+  color: var(--ps-fg);
+}
+
+/* .PrXvJq_feature: r12, overflow hidden, 1px #fff3 inner border via ::after */
+.feature {
+  border-radius: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+.feature::after {
+  pointer-events: none;
+  user-select: none;
+  content: '';
+  border: 1px solid #fff3;
+  border-radius: 0.75rem;
+  position: absolute;
+  inset: 0;
+}
+
+/* ---- Glass "Learn more" button (module 225913 in 058pnujclak3f / 0_fm2xcv8_y2d), CSS-only hovers ---- */
+/* outer: h-8 p-[1px] rounded-full, gradient-to-br #9a9a9a -> #1a1a1a -> #6a6a6a (oklab), transition-all 500ms ease-out;
+ * hover: scale 1.02 + 0 0 20px rgba(255,255,255,.12) */
+.glass {
+  height: 2rem;
+  position: relative;
+  padding: 1px;
+  display: flex;
+  border-radius: 9999px;
+  color: #fff;
+  background-image: linear-gradient(to bottom right in oklab, #9a9a9a 0%, #1a1a1a 50%, #6a6a6a 100%);
+  transition: all 0.5s cubic-bezier(0, 0, 0.2, 1);
+}
+/* inner link: bg-custom-gradient, backdrop-blur-xs (4px), inset 0 1px 1px white/10; hover inset 0 2px 4px white/25 +
+ * brightness 1.15; active scale .97 + brightness 1.05; ::before white/30 sheen fades in and drifts (+8px, -8px) */
+.glassLink {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  position: relative;
+  overflow: hidden;
+  background-image: linear-gradient(#1a1a1a 0% 100%), linear-gradient(#0000 0%, #0a0a0a 100%);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 0 #0000, 0 0 #0000, inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  transition: all 0.5s cubic-bezier(0, 0, 0.2, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+.glassLink::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background-image: linear-gradient(to bottom right in oklab, rgba(255, 255, 255, 0.3) 0%, transparent 50%, transparent 100%);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* TdsvaW_button--primary + --glass: 14/20 500, px 17 py 8, white */
+.glassBtn {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  border-radius: 10px;
+  padding: 8px 17px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+/* the arrow's `transition-translate` matches no rule, so `duration-300` runs on all properties with the UA ease */
+.glassArrow {
+  font-family: system-ui, -apple-system, Arial, sans-serif;
+  display: inline-block;
+  margin-left: 4px;
+  font-weight: 400;
+  width: fit-content;
+  transition: all 0.3s ease;
+}
+@media (hover: hover) {
+  /* Tailwind 4 composes box-shadow as inset-shadow, inset-ring, ring-offset, ring, shadow */
+  .glass:hover {
+    scale: 1.02;
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 0 #0000, 0 0 #0000, 0 0 20px rgba(255, 255, 255, 0.12);
+  }
+  .glassLink:hover {
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 0 #0000, 0 0 #0000, inset 0 2px 4px rgba(255, 255, 255, 0.25);
+    filter: brightness(1.15);
+  }
+  .glassLink:hover::before {
+    opacity: 1;
+    translate: 8px -8px;
+  }
+  .glassBtn:hover .glassArrow {
+    translate: 4px 0;
+  }
+}
+/* active: variants come after hover: in Tailwind's output, so the press state wins while hovered */
+.glassLink:active {
+  scale: 0.97;
+  filter: brightness(1.05);
+}
+
+/* keen-slider base (the package stylesheet, scoped) + `!overflow-visible` */
+.keen {
+  display: flex;
+  position: relative;
+  user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+  overflow: visible !important;
+  align-content: flex-start;
+}
+.keen > :global(.keen-slider__slide) {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* CMSLink internal links: focus:outline-1 focus:outline-scale-skyblue */
+.focusLink:focus {
+  outline: 1px solid #86bff2;
+}

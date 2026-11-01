@@ -30,7 +30,7 @@ export default function SeniorSMMPage() {
   ]
 
   return (
-    <div className="min-h-[80vh] bg-[#f4f5f6] text-[#111]">
+    <div data-page-theme="careers" className="min-h-[80vh] bg-[#f4f5f6] text-[#111]">
       <main className="mx-auto max-w-[1280px] px-6 py-16 md:px-8 md:py-24">
         <Link
           href="/careers/vacancies"
