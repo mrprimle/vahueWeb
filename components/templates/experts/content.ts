@@ -32,7 +32,12 @@ export type DomainContent = {
 }
 
 export type TestimonialItem = { name: string; title: string; quote: string; logo: Logo }
-export type TestimonialsContent = { heading: string; items: TestimonialItem[] }
+export type TestimonialsContent = {
+  heading: string
+  items: TestimonialItem[]
+  /** Drops the quotation marks, for case outcomes in the quote slot that are not anyone's own words. */
+  plainText?: boolean
+}
 
 export type ResourcePost = { title: string; category: string; href: string; image?: string }
 export type ResourcesContent = { heading: string; posts: ResourcePost[] }
