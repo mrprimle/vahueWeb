@@ -57,8 +57,13 @@ Each is ported once from the module named. Before reimplementing something, chec
 | ThreeCanvas | `shared/ThreeCanvas.tsx` | 955774 | `3rls9s4y8-e83.js` | home | hero runtime on `/`; OrbitControls attached as on Scale |
 | FullWidthCardCarousel | `shared/FullWidthCardCarousel.tsx` | 424625 | `0sni47mcvnqwg.js` | home | `/`: drag, arrows, keyboard equal |
 | BlogPreview, CategoryIcon | `shared/BlogPreview.tsx` | 808358, 189756, 280239 | `3x8z3_0hhtdcb.js` | 9 | `/`: tiles and zoom equal. Video tile branch not ported |
+| LogoCloud (with react-fast-marquee on phones) | `shared/LogoCloud.tsx` | 970272, 922998 | `3hpmz3b0is2de.js` | not counted | `/generative-ai-data-engine`: boxes, marquee 8.58s, 50px/s equal. Carousel branch not ported |
+| FeaturesWithIcons | `shared/FeaturesWithIcons.tsx` | 460138 | same | 9 | `/generative-ai-data-engine`: 3 columns at 1440, stack at 390, equal. `bgImage` and bullets not ported |
+| SectionTitle | `shared/SectionTitle.tsx` | 1900 | `059q_ihpcslaa.js` | not counted | `/generative-ai-data-engine` |
+| GlowBackground | `shared/GlowBackground.tsx` | 799808 (CSS module `_5fl2pa`) | `30w17vppvfdah.js` | not counted | `/generative-ai-data-engine` |
+| ResourcesCarousel | `shared/ResourcesCarousel.tsx`, wheel plugin `shared/keenWheelControls.ts` | 382790, 29713 | same | not counted | `/generative-ai-data-engine`: `desktopGrid` off, drag and Tab equal. `/data-engine` keeps its own copy with the grid on |
 
-Other shared modules a page may meet, not ported yet because few pages use them: `FeaturesWithIcons` 460138 (9), `EnterprisePillars` 909085, `HeadlineWithCta` 925107 (8), `MeshGlobeHero` 478135, plus everything in the 975 KB `0sni47mcvnqwg.js` (`SideBySide`, `TabbedPanel`, `MilestoneTimeline`…, 7 pages). If you port one, put it in `components/site/shared` and add a row here.
+Other shared modules a page may meet, not ported yet because few pages use them: `EnterprisePillars` 909085, `HeadlineWithCta` 925107 (8), `MeshGlobeHero` 478135, plus everything in the 975 KB `0sni47mcvnqwg.js` (`SideBySide`, `TabbedPanel`, `MilestoneTimeline`…, 7 pages). If you port one, put it in `components/site/shared` and add a row here.
 
 ## Reading Scale's code
 - Chunks are Turbopack: `push([..., <moduleId>, e=>{...}, ...])`. Find a module by a class name in it (`"FlatCta group/cta…"`) and read it directly. Fetching chunks with `curl` is cheaper than holding them in a browser.

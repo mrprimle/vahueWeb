@@ -37,6 +37,7 @@ export const scaleContent: GenAiContent = {
     colorTheme: { tailwindClass: 'evergreen', hex: '#193A29', contrastColor: 'white' },
     items: [
       {
+        nameTile: true,
         clientName: 'Nat Friedman',
         title: 'Investor, Entrepreneur',
         testimonial:

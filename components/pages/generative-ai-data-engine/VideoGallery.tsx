@@ -85,7 +85,8 @@ export function VideoGallery({ videos, className }: { videos: Video[]; className
         setAutoPlay(false)
       },
       breakpoints: {
-        '(min-width: 0px) and (max-width: 639px)': { slides: { perView: 1, spacing: 32 }, mode: 'snap', centered: true },
+        // Scale also passes `centered: true` here. Keen 6 has no such option and ignores it.
+        '(min-width: 0px) and (max-width: 639px)': { slides: { perView: 1, spacing: 32 }, mode: 'snap' },
         '(min-width: 640px) and (max-width: 767px)': { slides: { perView: 2, spacing: 32 }, mode: 'free' },
         '(min-width: 768px) and (max-width: 1040px)': { slides: { perView: 3.1, spacing: 32 }, mode: 'snap' },
         '(min-width: 1041px)': { slides: { perView: 3, spacing: 32 }, mode: 'snap' },
