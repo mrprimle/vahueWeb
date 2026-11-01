@@ -2,7 +2,6 @@
 import type { AnnouncementContent, FooterContent, NavContent } from './content.types'
 
 const img = (slug: string, alt: string) => ({ path: `/site/nav/${slug}.webp`, alt })
-const neutral = (alt: string) => ({ path: '/site/nav/neutral.svg', alt })
 
 export const nav: NavContent = {
   logoLink: '/',
@@ -16,20 +15,20 @@ export const nav: NavContent = {
       leftColumn: [
         { text: 'Build AI' },
         { href: '/data-engine', name: 'Vahue Context Engine', image: img('data-engine', 'Context Engine') },
-        { href: '/generative-ai-data-engine', name: 'For Back-office Sync', image: neutral('For Back-office Sync') },
-        { href: '/physical-ai', name: 'For Document Intake', image: img('physical-ai', 'For Document Intake') },
-        { href: '/public-sector-data-engine', name: 'For Revenue Teams', image: img('public-sector-data-engine', 'For Government') },
-        { href: '/automotive', name: 'For Scoring and Decisions', image: img('automotive', 'For Scoring and Decisions') },
+        { href: '/generative-ai-data-engine', name: 'For Back-office Sync', image: img('back-office-sync', 'For Back-office Sync') },
+        { href: '/physical-ai', name: 'For Document Intake', image: img('document-intake', 'For Document Intake') },
+        { href: '/public-sector-data-engine', name: 'For Revenue Teams', image: img('revenue-teams', 'For Revenue Teams') },
+        { href: '/automotive', name: 'For Scoring and Decisions', image: img('scoring-decisions', 'For Scoring and Decisions') },
         { href: '/rlenvironments', name: 'Agent Environments', image: img('rlenvironments', 'Agent Environments') },
         { href: '/experts', name: 'Experts', image: img('experts', 'Experts') },
       ],
       rightColumn: [
         { text: 'Apply AI' },
         { href: '/genai-portfolio', name: 'Knowledge Agents', image: img('genai-portfolio', 'Knowledge Agents') },
-        { href: '/donovan', name: 'Support and Voice Agents', image: img('donovan', 'Support and Voice Agents') },
+        { href: '/donovan', name: 'Support and Voice Agents', image: img('support-voice', 'Support and Voice Agents') },
         { text: 'Evaluate AI' },
         { href: '/evaluation/model-developers', name: 'For Operations Teams', image: img('evaluation-model-developers', 'For Operations Teams') },
-        { href: '/evaluation/public-sector', name: 'For Regulated Teams', image: img('evaluation-public-sector', 'Public Sector') },
+        { href: '/evaluation/public-sector', name: 'For Regulated Teams', image: img('evaluation-public-sector', 'For Regulated Teams') },
         { href: '/evaluation/enterprise', name: 'For Enterprise', image: img('evaluation-enterprise', 'For Enterprise') },
       ],
     },
@@ -37,14 +36,14 @@ export const nav: NavContent = {
       name: 'Solutions',
       leftColumn: [
         { href: '/enterprise', name: 'Enterprise', image: img('enterprise', 'Enterprise') },
-        { href: '/public-sector', name: 'Scale-ups', image: img('public-sector', 'US Public Sector') },
-        { href: '/global-public-sector', name: 'Professional Services', image: img('global-public-sector', 'Global Public Sector') },
+        { href: '/public-sector', name: 'Scale-ups', image: img('scale-ups', 'Scale-ups') },
+        { href: '/global-public-sector', name: 'Professional Services', image: img('professional-services', 'Professional Services') },
       ],
       rightColumn: [
         { text: 'By Industry' },
-        { href: '/enterprise/insurance', name: 'Insurance', image: img('enterprise-insurance', 'Enterprise Insurance') },
-        { href: '/enterprise/healthcare', name: 'Healthcare', image: img('enterprise-healthcare', 'Enterprise Healthcare') },
-        { href: '/public-sector/national-security', name: 'Regulated Industries', image: img('public-sector-national-security', 'Regulated Industries') },
+        { href: '/enterprise/insurance', name: 'Insurance', image: img('enterprise-insurance', 'Insurance') },
+        { href: '/enterprise/healthcare', name: 'Healthcare', image: img('enterprise-healthcare', 'Healthcare') },
+        { href: '/public-sector/national-security', name: 'Regulated Industries', image: img('regulated-industries', 'Regulated Industries') },
       ],
     },
     {
@@ -53,8 +52,8 @@ export const nav: NavContent = {
         { text: 'Research' },
         { href: '/labs/papers', name: 'Research Papers', image: img('labs-papers', 'Research Papers') },
         { href: '/labs/leaderboard', name: 'Agent Evals', image: img('labs-papers', 'Agent Evals') },
-        { href: '/labs', name: 'Labs', image: img('physical-ai', 'Labs') },
-        { href: '/labs/blog', name: 'Research Blog', image: img('automotive', 'Research Blog') },
+        { href: '/labs', name: 'Labs', image: img('document-intake', 'Labs') },
+        { href: '/labs/blog', name: 'Research Blog', image: img('scoring-decisions', 'Research Blog') },
         { href: '/labs/jobs', name: 'Research Careers', image: img('labs-papers', 'Research Careers') },
       ],
       rightColumn: [],
@@ -65,7 +64,7 @@ export const nav: NavContent = {
       leftColumn: [
         { text: 'In Vahue' },
         { href: '/about', name: 'About', image: img('about', 'About Vahue') },
-        { href: '/security', name: 'Security', image: img('security', 'Security') },
+        { href: '/security', name: 'Security', image: img('security-controls', 'Security') },
         { href: '/guides', name: 'Guides' },
         { href: '/careers', name: 'Careers', image: img('labs-papers', 'Careers') },
       ],
@@ -77,8 +76,8 @@ export const nav: NavContent = {
         { href: '/partnership', name: 'Partnerships' },
       ],
       featuredPosts: [
-        { url: '/guides', title: 'Read the Agentic Planning eBook', image: neutral('Agentic Planning eBook') }, // PLACEHOLDER
-        { url: '/blog', title: 'Reliable AI: Building From the Ground Up', image: img('featured-2', 'Earth with Arab world at the center') }, // PLACEHOLDER
+        { url: '/guides', title: 'Read the Agentic Planning eBook', image: img('featured-planning', 'Agentic Planning eBook') }, // PLACEHOLDER
+        { url: '/blog', title: 'Reliable AI: Building From the Ground Up', image: img('featured-context', 'Systems connected through the Context Engine') }, // PLACEHOLDER
       ],
     },
   ],
@@ -107,8 +106,8 @@ export const footer: FooterContent = {
         { text: 'Insurance', href: '/enterprise/insurance' },
         { text: 'Healthcare', href: '/enterprise/healthcare' },
         { text: 'Regulated Industries', href: '/public-sector/national-security' },
-        { text: 'US Public Sector', href: '/public-sector' },
-        { text: 'Global Public Sector', href: '/global-public-sector' },
+        { text: 'Scale-ups', href: '/public-sector' },
+        { text: 'Professional Services', href: '/global-public-sector' },
       ],
     },
     {
@@ -141,7 +140,7 @@ export const footer: FooterContent = {
         { text: 'AI Agent Evaluation', href: '/guides' },
         { text: 'Document Intake', href: '/guides' },
         { text: 'Guide to AI for eCommerce', href: '/guides' },
-        { text: 'Computer Vision Applications', href: '/guides' },
+        { text: 'Workflow Automation', href: '/guides' },
         { text: 'Large Language Models', href: '/guides' },
       ],
     },
