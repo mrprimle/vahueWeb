@@ -1,4 +1,4 @@
-// Vahue chrome copy from research/research.ts. Same shape and counts as content.scale.ts.
+// Scale's chrome labels under the 80% rule. Same shape and counts as content.scale.ts.
 import type { AnnouncementContent, FooterContent, NavContent } from './content.types'
 
 const img = (slug: string, alt: string) => ({ path: `/site/nav/${slug}.webp`, alt })
@@ -14,48 +14,48 @@ export const nav: NavContent = {
     {
       name: 'Products',
       leftColumn: [
-        { text: 'Workflows' },
-        { href: '/data-engine', name: 'All Workflows', image: img('data-engine', 'Person reviewing work at a screen') },
-        { href: '/generative-ai-data-engine', name: 'Back-office Sync', image: neutral('Back-office sync') },
-        { href: '/physical-ai', name: 'Document Intake', image: img('physical-ai', 'Operator working beside automated equipment') },
-        { href: '/public-sector-data-engine', name: 'For Government', image: img('public-sector-data-engine', 'For government') },
-        { href: '/automotive', name: 'Scoring and Decisions', image: img('automotive', 'Scoring and decisions') },
-        { href: '/rlenvironments', name: 'Engineering Enablement', image: img('rlenvironments', 'Engineering enablement') },
-        { href: '/experts', name: 'Reviewers', image: img('experts', 'A reviewer checking agent output') },
+        { text: 'Build AI' },
+        { href: '/data-engine', name: 'Vahue Context Engine', image: img('data-engine', 'Context Engine') },
+        { href: '/generative-ai-data-engine', name: 'For Back-office Sync', image: neutral('For Back-office Sync') },
+        { href: '/physical-ai', name: 'For Document Intake', image: img('physical-ai', 'For Document Intake') },
+        { href: '/public-sector-data-engine', name: 'For Government', image: img('public-sector-data-engine', 'For Government') },
+        { href: '/automotive', name: 'For Scoring and Decisions', image: img('automotive', 'For Scoring and Decisions') },
+        { href: '/rlenvironments', name: 'Agent Environments', image: img('rlenvironments', 'Agent Environments') },
+        { href: '/experts', name: 'Experts', image: img('experts', 'Experts') },
       ],
       rightColumn: [
-        { text: 'Apply Agents' },
-        { href: '/genai-portfolio', name: 'Knowledge Agents', image: img('genai-portfolio', 'Knowledge agents') },
-        { href: '/donovan', name: 'Support and Voice Agents', image: img('donovan', 'Support and voice agents') },
-        { text: 'Run the Work' },
-        { href: '/evaluation/model-developers', name: 'Audit in Two Weeks', image: img('evaluation-model-developers', 'Audit') },
-        { href: '/evaluation/public-sector', name: 'Pilot in Six Weeks', image: img('evaluation-public-sector', 'Pilot') },
-        { href: '/evaluation/enterprise', name: 'Operate Monthly', image: img('evaluation-enterprise', 'Operate') },
+        { text: 'Apply AI' },
+        { href: '/genai-portfolio', name: 'Knowledge Agents', image: img('genai-portfolio', 'Knowledge Agents') },
+        { href: '/donovan', name: 'Support and Voice Agents', image: img('donovan', 'Support and Voice Agents') },
+        { text: 'Evaluate AI' },
+        { href: '/evaluation/model-developers', name: 'For Operations Teams', image: img('evaluation-model-developers', 'For Operations Teams') },
+        { href: '/evaluation/public-sector', name: 'For Public Sector', image: img('evaluation-public-sector', 'Public Sector') },
+        { href: '/evaluation/enterprise', name: 'For Enterprise', image: img('evaluation-enterprise', 'For Enterprise') },
       ],
     },
     {
       name: 'Solutions',
       leftColumn: [
-        { href: '/enterprise', name: 'Operations Teams', image: img('enterprise', 'Operations teams') },
-        { href: '/public-sector', name: 'US Public Sector', image: img('public-sector', 'US public sector') },
-        { href: '/global-public-sector', name: 'Global Public Sector', image: img('global-public-sector', 'Global public sector') },
+        { href: '/enterprise', name: 'Enterprise', image: img('enterprise', 'Enterprise') },
+        { href: '/public-sector', name: 'US Public Sector', image: img('public-sector', 'US Public Sector') },
+        { href: '/global-public-sector', name: 'Global Public Sector', image: img('global-public-sector', 'Global Public Sector') },
       ],
       rightColumn: [
         { text: 'By Industry' },
-        { href: '/enterprise/insurance', name: 'Insurance', image: img('enterprise-insurance', 'Insurance') },
-        { href: '/enterprise/healthcare', name: 'Healthcare', image: img('enterprise-healthcare', 'Healthcare') },
-        { href: '/public-sector/national-security', name: 'National Security', image: img('public-sector-national-security', 'National security') },
+        { href: '/enterprise/insurance', name: 'Insurance', image: img('enterprise-insurance', 'Enterprise Insurance') },
+        { href: '/enterprise/healthcare', name: 'Healthcare', image: img('enterprise-healthcare', 'Enterprise Healthcare') },
+        { href: '/public-sector/national-security', name: 'Regulated Industries', image: img('public-sector-national-security', 'Regulated Industries') },
       ],
     },
     {
       name: 'Research',
       leftColumn: [
         { text: 'Research' },
-        { href: '/labs/papers', name: 'Research Papers', image: img('labs-papers', 'Research papers') },
-        { href: '/labs/leaderboard', name: 'Agency Leaderboards', image: img('labs-papers', 'Agency leaderboards') },
+        { href: '/labs/papers', name: 'Research Papers', image: img('labs-papers', 'Research Papers') },
+        { href: '/labs/leaderboard', name: 'Agent Evals', image: img('labs-papers', 'Agent Evals') },
         { href: '/labs', name: 'Labs', image: img('physical-ai', 'Labs') },
-        { href: '/labs/blog', name: 'Research Blog', image: img('automotive', 'Research blog') },
-        { href: '/labs/jobs', name: 'Research Careers', image: img('labs-papers', 'Research careers') },
+        { href: '/labs/blog', name: 'Research Blog', image: img('automotive', 'Research Blog') },
+        { href: '/labs/jobs', name: 'Research Careers', image: img('labs-papers', 'Research Careers') },
       ],
       rightColumn: [],
     },
@@ -77,17 +77,17 @@ export const nav: NavContent = {
         { href: '/partnership', name: 'Partnerships' },
       ],
       featuredPosts: [
-        { url: '/guides', title: 'Read the Workflow Audit Guide', image: neutral('Workflow audit guide') },
-        { url: '/blog', title: 'Measured From Day One: Baselines Before Agents', image: img('featured-2', 'Baselines before agents') },
+        { url: '/guides', title: 'Read the Agentic Planning eBook', image: neutral('Agentic Planning eBook') }, // PLACEHOLDER
+        { url: '/blog', title: 'Reliable AI: Building From the Ground Up', image: img('featured-2', 'Earth with Arab world at the center') }, // PLACEHOLDER
       ],
     },
   ],
 }
 
 export const announcement: AnnouncementContent = {
-  text: 'Two-Week Workflow Audits Now Open for Mid-Market Operations Teams',
+  text: 'Vahue Partners With Enterprises to Bring AI Agents to Production', // PLACEHOLDER
   variant: 'evergreen',
-  cta: { label: 'Learn more', href: '/evaluation/model-developers' },
+  cta: { label: 'Learn more', href: '/blog' },
 }
 
 export const footer: FooterContent = {
@@ -95,7 +95,7 @@ export const footer: FooterContent = {
     {
       title: 'Products',
       links: [
-        { text: 'All workflows', href: '/data-engine' },
+        { text: 'Vahue context engine', href: '/data-engine' },
         { text: 'Knowledge Agents', href: '/genai-portfolio' },
         { text: 'Support and Voice Agents', href: '/donovan' },
       ],
@@ -103,10 +103,10 @@ export const footer: FooterContent = {
     {
       title: 'Solutions',
       links: [
-        { text: 'Operations Teams', href: '/enterprise' },
+        { text: 'Enterprise', href: '/enterprise' },
         { text: 'Insurance', href: '/enterprise/insurance' },
         { text: 'Healthcare', href: '/enterprise/healthcare' },
-        { text: 'National Security', href: '/public-sector/national-security' },
+        { text: 'Regulated Industries', href: '/public-sector/national-security' },
         { text: 'US Public Sector', href: '/public-sector' },
         { text: 'Global Public Sector', href: '/global-public-sector' },
       ],
@@ -129,7 +129,7 @@ export const footer: FooterContent = {
         { text: 'Contact Us', href: '/demo' },
         { text: 'Events', href: '/events' },
         { text: 'Partnerships', href: '/partnership' },
-        { text: 'Integrations', href: '/partnership' },
+        { text: 'Data Partnerships', href: '/partnership' },
         { text: 'Documentation', href: '/docs' },
         { text: 'Brand Guidelines', href: '/about' },
       ],
@@ -137,16 +137,16 @@ export const footer: FooterContent = {
     {
       title: 'Guides',
       links: [
-        { text: 'Back-office Sync', href: '/guides' },
+        { text: 'Data Preparation', href: '/guides' },
+        { text: 'AI Agent Evaluation', href: '/guides' },
         { text: 'Document Intake', href: '/guides' },
-        { text: 'Knowledge Agents', href: '/guides' },
-        { text: 'Support and Voice Agents', href: '/guides' },
-        { text: 'Scoring and Decisions', href: '/guides' },
-        { text: 'Engineering Enablement', href: '/guides' },
+        { text: 'Guide to AI for eCommerce', href: '/guides' },
+        { text: 'Computer Vision Applications', href: '/guides' },
+        { text: 'Large Language Models', href: '/guides' },
       ],
     },
   ],
-  title: 'Your busiest workflows, run and measured by agents',
+  title: 'Reliable AI for the world’s most important workflows',
   smallPrint: 'Copyright © 2026 Vahue. All rights reserved', // PLACEHOLDER: legal entity name for Mike
   cookiesPrefix: 'Manage your',
   cookiesLink: 'cookie preferences',

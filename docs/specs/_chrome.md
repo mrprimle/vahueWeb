@@ -68,10 +68,12 @@ See the Lenis section of stack.md.
 - **Favicon:** none yet, so browsers log one 404.
 
 ## Copy mapping
-Products: hub and the six workflows, plus government and reviewers; "Evaluate AI" became "Run the Work" with Audit, Pilot and Operate. Solutions: operations teams, public sector and the industries, same labels where they carry no Scale brand. Research: same roles, "Frontier Leaderboards" became "Agency Leaderboards". Footer title is shortened from the research line, "Your busiest workflows, run by agents. Measured from day one.", so it stays on Scale's 2 lines at 1440.
+Keep rule (Mike, 2026-11-01): each string starts from Scale's text, stays verbatim if true for Vahue with the brand swapped, otherwise changes only the words the swap dictionary and phrase bank require, same template and word count. Counts come from a path-by-path compare with `content.scale.ts`, alt text, code samples and URLs excluded. Verbatim means equal after Scale to Vahue. Light means up to 3 words or about a third changed.
+
+Scale's column heads are back: Build AI, Apply AI, Evaluate AI, By Industry. Scale Data Engine became Vahue Context Engine, with For Back-office Sync, For Document Intake, For Government, For Scoring and Decisions, Agent Environments, Experts under it. Knowledge Agents and Support and Voice Agents stay, matching those pages. Evaluate AI reads For Operations Teams, For Public Sector, For Enterprise. National Security became Regulated Industries. Frontier Leaderboards became Agent Evals. Footer title uses "workflows", which holds Scale's 2 lines at 390 where "work" drops one. Data Processing Terms stays in place of Modern Slavery Statement, as that is the stub route that exists. 88 strings: 66 verbatim, 20 light, 2 rewritten.
 
 ## Placeholders
-`// PLACEHOLDER` in `content.ts`: legal entity name in the copyright line, LinkedIn URL, X URL. Terms, Privacy and Data Processing are stub pages. One menu image and one card image are neutral (`public/site/nav/neutral.svg`): the back-office image was a collage of Scale's research papers, the eBook card a military photo.
+`// PLACEHOLDER` in `content.ts`, 6 lines: the announcement, the eBook card, the second featured post, legal entity name in the copyright line, LinkedIn URL, X URL. Terms, Privacy and Data Processing are stub pages. One menu image and one card image are neutral (`public/site/nav/neutral.svg`): the back-office image was a collage of Scale's research papers, the eBook card a military photo.
 
 ## Gaps
 - Not sampled on the live site, ported from source only: header hover reveal, same-page link reset, route change effects, anchor scroll, `oml:` landscape, portrait tablet footer.
