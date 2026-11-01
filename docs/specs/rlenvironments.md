@@ -28,7 +28,7 @@ Other widths, Scale then filled, page height:
 - **1280:** 6811, 6811. Equal in every section.
 - **1024:** 6487, 6466. All body sections equal. The 21px gap is the shared footer, 1151.6 vs 1130.6.
 - **768:** 7941, 7926. The overview row is 13.2px taller, one extra line in a 176px column, and the shared footer is 27.8px shorter (1472 vs 1444.2).
-- **1920:** the overview row is 13.3px taller for the same reason. The measured page height is not comparable here (8102 vs 7036): Scale's two lazy capability images had not loaded when the script read it, and that accounts for 1,042px of the gap. Sections that do not depend on those images are equal in size.
+- **1920:** the overview row is 13.3px taller for the same reason. The measured page height is not comparable here (8102 vs 7036): Scale's two lazy capability images had not loaded when the script read it. They add 1,079px on Scale's side, and the 13.3px row above takes the gap to 1,066. Sections that do not depend on those images are equal in size.
 
 On the clone, before fill, the only body wrap gap was one paragraph at 768 (159.3 vs 136.5, Aeonik vs Aeonik Pro, no effect on the row). The footer gaps at 768 and 1024 were already there: they come from the shared footer, not this page.
 
@@ -51,17 +51,17 @@ Same script on both sites (`new-qa/rlenvironments/instr.cjs` in the scratchpad).
 |---|---|---|---|---|---|
 | Section roots, cards, rows | any | None: `.FullBleedMediaSection` `ev_31ddba2c…`, `.CardGrid` `ev_b43e2b63…`, `.LinkCard` `ev_42afa231…`, overview `ev_f074d6bf…`, overview card `ev_78483351…`, `article` `ev_5ffb3761…`, `.EnterprisePillars` `ev_a42d5351…`, its `article` `ev_cfbf1128…` | | No hover, no pointer tracking | Pointer grid at 8 scroll stops at 1440 and 390: 0 style changes on any node, both |
 | Link card link | | `.LinkCard a` not found, `ev_3a5ddfe7…` | 874328 | Scale passes no `link`, so cards are not links | Tab skips them, both |
-| Hero text | load | ScrollTrigger `top center`, retroactive | 540431, 947153 | Lines and words, .2s between h2 and p | Same curve. Line y 70.7, 33.6, 13.6, 4.1, .8 vs 102.3, 52.6, 28.3, 13.7, 5.6 sampled at different phases, both at 0 by the same elapsed time |
-| Hero and pre-footer CTA | load, trigger | gsap, delay .5 | 961870 | .85s, `filledWhiteArrow` | Opacity .44, .75, .91, .98 vs .46, .75, .91, .98 |
+| Hero text | load | ScrollTrigger `top center`, retroactive | 540431, 947153 | Lines and words, .2s between h2 and p | Same curve, not time-aligned, since the recording starts mid-animation on Scale. Line y and opacity keep the same ratio from the same 268.75 start: 70.74 at .7368 vs 102.3 at .6194 |
+| Hero and pre-footer CTA | load, trigger | gsap, delay .5 | 961870 | .85s, `filledWhiteArrow` | Hero, different sample steps: .456, .753, .909, .976 at about 133ms vs .276, .581, .777, .895, .958 at 100ms. Same .85s end. Module verified on physical-ai |
 | Hero restart | `refresh` before the text ends | `retroactiveOnEnter` | 210104, 540431 | `onEnter` runs again until the text is done, so the CTA resets | Seen on both sites in repeat runs: Scale hidden, visible, hidden, visible; ours the same on the second run. A race, not fixed in either direction |
 | Hero video | scroll | None | 310080, 540431 | Scale's `ref` never reaches the video, so no scale | `transform: none` at 11 stops, identical. Top 135.3, 85.3, 35.3… identical |
 | Hero video element, pillars video | play | 24 React media listeners, `ev_892d703a…` | 310080 | Plays only while on screen | Ported |
-| Link cards | scroll | ScrollTrigger scrub `top bottom` to `top 50%` | 317967 | Scale .96 to 1, opacity 0 to 1, x -160, 0, 0, 160, stagger .1 | 15 stops at 1440 and 390, identical strings on clone and filled |
+| Link cards | scroll | ScrollTrigger scrub `top bottom` to `top 50%` | 317967 | Scale .96 to 1, opacity 0 to 1, x -160, 0, 0, 160, stagger .1 | 14 to 15 stops at 1440 and 390, identical strings on clone and filled |
 | Card icon, title, body | `top bottom`, once | ScrollTrigger | 874328 | Clip .5s, icon 1s, title at +.16, body at +.34, stagger .05 per card | Clip 90.25, 72.25, 56.25… vs the same. Title opacity .2357, .5139, .7082 vs the same |
 | Pillars icon | `top 80%`, once | ScrollTrigger | 909085 | Opacity .5s | .363, .64, .842, .96 vs .36, .64, .842, .96 |
 | Pillars rule | same | same | 909085 | `scaleX` .5s, delay .2i + .2 | .19, .51, .752, .911 vs .19, .51, .75, .91 |
 | Pillars headline, subtitle | same | setTimeout 200i ms | 909085, 925107 | Delay .2 and .4 | p0 line 65.4, 21.4, 4.5 vs 64.5, 21, 4.4; p2 same at +400ms |
-| Pre-footer clip, media | scroll | ScrollTrigger scrub | 656598, 540431 | Inset 5% to 0, scale 1.25 to 1 | 14 stops, identical strings |
+| Pre-footer clip, media | scroll | ScrollTrigger scrub | 656598, 540431 | Inset 5% to 0, scale 1.25 to 1 | 12 to 13 stops, identical strings on clone and filled |
 | CTA wash and arrow | enter, leave, re-enter | React, HubSpot `mousedown` on Scale only, `ev_3a4da873…` | 892855 | Fill 600ms | Enter -67.1, -38.4 vs -61.2, -38.4 (frame phase). Leave 32.9, 61.6 vs 32.9, 61.6 |
 | Page body | Tab | Native | | Hero CTA, then the footer | Same order and the same focus ring (`1px solid rgb(134,191,242)`) |
 | Images | load, error | React, `ev_4b9f169e…` | 325164 | Lazy | Same sizes at 1440 |
@@ -114,7 +114,7 @@ Engineering Enablement, the research's own mapping for this template (`research.
 
 Features became the promises. Overview became the trigger, the measurement and the coaching. Capabilities became the agents. Environment Types became the three stages. "Features", "Overview", "Capabilities" and "Available as" are unchanged generic labels.
 
-Word counts: 45 strings compared, 38 within 15%. Of the other 7, 5 are one or two words off, on the title metadata, short titles and one alt. "Inside Vahue's Engineering Rollout" and "Try Engineering Enablement" are one word short so they keep Scale's line count. The largest gap is "Agents and practices, measured on one team for 12 weeks.", 10 words against 6, which keeps the two-line row at 390, 1024 and 1280.
+Word counts: 45 strings compared, 38 within 15%. Of the other 7, 5 are one or two words off: one card description, one alt and three short titles. "Inside Vahue's Engineering Rollout" and "Try Engineering Enablement" are one word short so they keep Scale's line count. The two larger gaps are the metadata title (9 to 4) and "Agents and practices, measured on one team for 12 weeks." (6 to 10), which keeps the two-line row at 390, 1024 and 1280.
 
 ## Placeholders
 None. Scale's page has no numbers, customers, case studies or quotes, so there are no `// PLACEHOLDER` lines. "12 weeks" comes from `research.ts`.
