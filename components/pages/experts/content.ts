@@ -9,7 +9,7 @@ const logos = (sizes: [number, number][]): DomainLogo[] => sizes.map(([width, he
 export const content: ExpertsContent = {
   meta: {
     title: 'Expert AI Engineers | Vahue',
-    description: "Build your AI agents with Vahue's network of verified PhDs, MDs, engineers, and domain experts. Bring research-grade expertise to your hardest problems.", // PLACEHOLDER
+    description: "Build your AI agents with Vahue's network of verified engineers, operators, and domain experts. Bring production-grade expertise to your hardest workflows.", // PLACEHOLDER
   },
   hero: {
     headline: 'The human experts behind AI agents.',
@@ -30,7 +30,7 @@ export const content: ExpertsContent = {
   },
   domains: {
     headline: "The best minds in",
-    labels: {"who":"Who they are","expertise":"Expertise","projectType":"Project Type","publications":"Peer Reviewed Publications"},
+    labels: {"who":"Who they are","expertise":"Expertise","projectType":"Project Type","publications":"Track Record"},
     items: [
       {
         label: "Finance",
@@ -38,53 +38,53 @@ export const content: ExpertsContent = {
         color: "#193A29",
         whoTheyAre: "Investment bankers, sell-side analysts, portfolio managers, quant researchers, risk & compliance officers, buy-side private equity analysts", // PLACEHOLDER
         skills: "Financial statement analysis, earnings modeling, valuation methodology, trading logic",
-        projectType: "Financial reasoning evaluation, content understanding, prompt generation, and model preference ranking",
+        projectType: "Financial reasoning evaluation, content understanding, prompt generation, and agent output ranking",
         logos: logos([[70, 29], [110, 22], [100, 12], [110, 29], [120, 17], [44, 44], [110, 21], [60, 38], [110, 11], [110, 19], [110, 43], [60, 25], [110, 16], [110, 21], [110, 14], [100, 15], [100, 21], [80, 25]]), // PLACEHOLDER
       },
       {
         label: "Law & Policy",
         key: "law & policy",
         color: "#273252",
-        whoTheyAre: "Verified big law partners & practicing attorneys, public policy specialists, regulatory & compliance professionals, M&A corporate counsel, federal litigators, state prosecutors, defense lawyers, appellate attorneys", // PLACEHOLDER
-        skills: "Contract review & clause-level annotation, Regulatory interpretation, Legislative drafting & policy analysis, Case law reasoning & legal citation verification",
-        projectType: "Legal reasoning evaluation, content understanding, prompt generation, and model preference ranking",
+        whoTheyAre: "Verified big law partners & practicing attorneys, public policy specialists, regulatory & compliance professionals, M&A corporate counsel, commercial litigators, contract managers, employment lawyers, privacy counsel", // PLACEHOLDER
+        skills: "Contract review & clause-level annotation, Regulatory interpretation, Policy drafting & compliance analysis, Case law reasoning & legal citation verification",
+        projectType: "Legal reasoning evaluation, content understanding, prompt generation, and agent output ranking",
         logos: logos([[55, 56], [36, 36], [120, 22], [140, 22], [150, 9], [140, 24], [100, 22], [140, 22], [150, 14], [140, 20], [110, 13], [130, 22], [44, 44], [56, 22], [70, 40], [120, 22], [130, 17], [100, 20], [110, 42], [56, 22]]), // PLACEHOLDER
       },
       {
         label: "Healthcare",
         key: "healthcare",
         color: "#1A4A5A",
-        whoTheyAre: "Attending physicians, board-certified specialists, postdoctoral researchers, registered nurses, computational biologists — including oncologists, cardiologists, radiologists, dermatologists, and neurologists", // PLACEHOLDER
-        skills: "Diagnostic reasoning, medical imaging annotation, trial data review",
-        projectType: "Clinical reasoning evaluation, content understanding, prompt generation, and model preference ranking",
+        whoTheyAre: "Attending physicians, registered nurses, clinical coders, practice managers, patient intake leads — including claims, billing, scheduling, referrals, and revenue cycle specialists", // PLACEHOLDER
+        skills: "Clinical documentation review, claims and coding checks, patient intake workflows",
+        projectType: "Clinical workflow evaluation, content understanding, prompt generation, and agent output ranking",
         logos: logos([[170, 52], [190, 56], [180, 26], [36, 36], [120, 25], [120, 19], [90, 44], [110, 36], [80, 34], [170, 26], [140, 33]]), // PLACEHOLDER
       },
       {
         label: "Software Engineering",
         key: "software engineering",
         color: "#839CB2",
-        whoTheyAre: "Engineers specializing in backend, system & infrastructure, frontend, data, distributed systems, performance, hardware architecture, cryptography, network and protocols", // PLACEHOLDER
+        whoTheyAre: "Engineers specializing in backend, system & infrastructure, frontend, data, distributed systems, performance, integrations, APIs, automation and security", // PLACEHOLDER
         skills: "Code generation and correctness evaluation, security vulnerability identification, system architecture review, debugging",
-        projectType: "Code generation and review, reinforcement learning with verifiable rewards, tool use evaluation, and model preference ranking",
+        projectType: "Code generation and review, agent testing with verifiable outcomes, tool use evaluation, and agent output ranking",
         logos: logos([[110, 29], [110, 21], [100, 12], [110, 14], [90, 82], [65, 31], [110, 27], [110, 25], [44, 44]]), // PLACEHOLDER
       },
       {
         label: "Other Engineering",
         key: "other engineering",
         color: "#A8927C",
-        whoTheyAre: "Mechanical and chemical engineers with hands-on domain expertise across industrial systems, materials science, and process engineering", // PLACEHOLDER
-        skills: "Technical analysis, system design, quality assurance, CAD review",
-        projectType: "Technical task completion, chain-of-thought reasoning, tool use, and model preference ranking",
+        whoTheyAre: "Industrial and process engineers with hands-on domain expertise across manufacturing, supply chain, and field service operations", // PLACEHOLDER
+        skills: "Technical analysis, system design, quality assurance, process review",
+        projectType: "Technical task completion, chain-of-thought reasoning, tool use, and agent output ranking",
         logos: logos([[44, 44], [110, 18], [110, 20], [110, 25], [48, 44], [44, 44], [100, 33], [80, 42], [90, 36], [110, 21]]), // PLACEHOLDER
       },
       {
-        label: "Research & Academia",
-        key: "research & academia",
+        label: "Revenue & Customer Ops",
+        key: "revenue & customer ops",
         color: "#79648C",
-        whoTheyAre: "Postdoctoral researchers, research scientists, tenure-track faculty, and verified h-index contributors — published in Nature, Science, or Cell", // PLACEHOLDER
-        skills: "Published in Nature, Science, or Cell — plus recipients of Rhodes, Fulbright, and NSF fellowships", // PLACEHOLDER
-        projectType: "Research reasoning tasks, content understanding, tool use, and model preference ranking",
-        peerReviewedPublications: "Verified peer reviewed publications in top-tier journals including Nature, Science, and Cell", // PLACEHOLDER
+        whoTheyAre: "Sales operations leaders, revenue managers, contact centre heads, and support team leads — running high-volume desks at scale-up B2B companies", // PLACEHOLDER
+        skills: "Lead qualification, quoting and booking flows, CRM hygiene, call quality review, clean handoffs to sales",
+        projectType: "Sales and support reasoning tasks, content understanding, tool use, and agent output ranking",
+        peerReviewedPublications: "Verified track records running high-volume sales and support desks across B2B industries", // PLACEHOLDER
         logos: logos([[110, 36], [110, 30], [110, 30], [110, 36], [110, 21], [80, 32], [110, 32], [80, 40], [110, 32], [110, 28], [110, 28], [80, 36], [100, 24], [100, 28], [100, 18], [36, 36], [60, 8], [170, 26]]), // PLACEHOLDER
       },
       {
