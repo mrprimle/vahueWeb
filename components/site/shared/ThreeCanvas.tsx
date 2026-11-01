@@ -3,7 +3,7 @@
 // Scale module 955774 (chunk 3rls9s4y8-e83.js): three.js runtime for a section. Driven by the gsap ticker,
 // paused off screen by an IntersectionObserver. OrbitControls stay attached to the canvas exactly as on Scale.
 import { useLenis } from 'lenis/react'
-import { useEffect, useId, useLayoutEffect, useRef } from 'react'
+import { useEffect, useId, useRef } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils.js'
@@ -259,7 +259,6 @@ export function ThreeCanvas({
   useEffect(() => {
     register(readyKey)
   }, [readyKey, register])
-  useLayoutEffect(() => {}, [])
   useEffect(() => {
     latest.current = scene
   })

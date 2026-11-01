@@ -692,5 +692,3 @@ export function createHomeHeroScene(assets: { video: string; perlin: string; num
     },
   }
 }
-
-export const HOME_HERO_VIDEO_MARKER = 'packed.mp4'

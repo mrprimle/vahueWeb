@@ -54,8 +54,11 @@ Each is ported once from the module named. Before reimplementing something, chec
 | ClientTestimonials | `shared/ClientTestimonials.tsx` | 685963 | same | 14 | `/enterprise`: panel width curve within 1.1px, tabs and arrows equal, flip and chip sequence equal; height 817 vs 834 is font wrap |
 | ScrollRevealSection | `shared/ScrollRevealSection.tsx` | 756386 | `058pnujclak3f.js` (`b0ed240d21441c66`) | 8 | ported, not driven live |
 | SectionThemeWatcher, PageThemeSetter | `shared/SectionTheme.tsx` | 995634, 243385 | `058pnujclak3f.js`, `0_fm2xcv8_y2d.js` | 9, 6 | `/enterprise`: flips at scroll + 35 = dark section top, 50ms debounce; bar fades back on the same frames |
+| ThreeCanvas | `shared/ThreeCanvas.tsx` | 955774 | `3rls9s4y8-e83.js` | home | hero runtime on `/`; OrbitControls attached as on Scale |
+| FullWidthCardCarousel | `shared/FullWidthCardCarousel.tsx` | 424625 | `0sni47mcvnqwg.js` | home | `/`: drag, arrows, keyboard equal |
+| BlogPreview, CategoryIcon | `shared/BlogPreview.tsx` | 808358, 189756, 280239 | `3x8z3_0hhtdcb.js` | 9 | `/`: tiles and zoom equal. Video tile branch not ported |
 
-Other shared modules a page may meet, not ported yet because few pages use them: `BlogPreview` 808358 (9 pages), `FeaturesWithIcons` 460138 (9), `EnterprisePillars` 909085, `HeadlineWithCta` 925107 (8), `MeshGlobeHero` 478135, plus everything in the 975 KB `0sni47mcvnqwg.js` (`HomeHero`, `SideBySide`, `TabbedPanel`, `FullWidthCardCarousel`, `MilestoneTimeline`…, 7 pages). If you port one, put it in `components/site/shared` and add a row here.
+Other shared modules a page may meet, not ported yet because few pages use them: `FeaturesWithIcons` 460138 (9), `EnterprisePillars` 909085, `HeadlineWithCta` 925107 (8), `MeshGlobeHero` 478135, plus everything in the 975 KB `0sni47mcvnqwg.js` (`SideBySide`, `TabbedPanel`, `MilestoneTimeline`…, 7 pages). If you port one, put it in `components/site/shared` and add a row here.
 
 ## Reading Scale's code
 - Chunks are Turbopack: `push([..., <moduleId>, e=>{...}, ...])`. Find a module by a class name in it (`"FlatCta group/cta…"`) and read it directly. Fetching chunks with `curl` is cheaper than holding them in a browser.
