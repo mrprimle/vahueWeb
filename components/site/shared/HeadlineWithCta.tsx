@@ -10,7 +10,7 @@ import { AnimatedText, type AnimatedTextHandle } from './AnimatedText'
 import type { FlatCtaVariant } from './FlatCta'
 import { RichText, type RichBlock } from './RichText'
 
-export type HeadlineCta = { url: string; text: string; variant?: FlatCtaVariant; theme?: 'white' | 'black' }
+export type HeadlineCta = { url: string; text: string; variant?: FlatCtaVariant; theme?: 'white' | 'black' | 'evergreen' }
 
 export type HeadlineWithCtaHandle = {
   animateIn: (o?: { delay?: number; delayHeadline?: number; delaySubtitle?: number; delayCta?: number }) => void

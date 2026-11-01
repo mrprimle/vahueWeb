@@ -1,0 +1,59 @@
+/* Scale CSS modules 595396 and 699148 (2h0gxg24im1sd.css). */
+@media (min-width: 768px) {
+  .hero :global(.HeadlineWithCta) > :global(.RichText) {
+    max-width: calc(75% - 0.125rem);
+    margin-inline: auto;
+  }
+}
+
+.node {
+  z-index: 1000;
+  --design-w-desktop: 1550;
+  --design-h-desktop: 880;
+  --design-w-mobile: 390;
+  --design-h-mobile: 844;
+  --design-w: var(--design-w-desktop);
+  --design-h: var(--design-h-desktop);
+  --layout-x: var(--x-desktop);
+  --layout-y: var(--y-desktop);
+  --pin-left: var(--pin-left-desktop);
+  --pin-right: var(--pin-right-desktop);
+  --pin-top: var(--pin-top-desktop);
+  --pin-bottom: var(--pin-bottom-desktop);
+  --node-size-unit: 100vw;
+  --node-size-design: var(--design-w);
+  --node-w-out: var(--node-w);
+  --node-h-out: var(--node-h);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: absolute;
+}
+
+@media (max-width: 767px) {
+  .node {
+    --layout-x: var(--x-mobile);
+    --layout-y: var(--y-mobile);
+    --pin-left: var(--pin-left-mobile);
+    --pin-right: var(--pin-right-mobile);
+    --pin-top: var(--pin-top-mobile);
+    --pin-bottom: var(--pin-bottom-mobile);
+    --design-w: var(--design-w-mobile);
+    --design-h: var(--design-h-mobile);
+    --node-size-unit: 100dvh;
+    --node-size-design: var(--design-h);
+    --node-w-out: var(--node-w-mobile);
+    --node-h-out: var(--node-h-mobile);
+  }
+}
+
+.node {
+  --_x: calc(var(--layout-x) * 100vw / var(--design-w));
+  --_y: calc(var(--layout-y) / var(--design-h) * 100dvh);
+  left: var(--pin-left);
+  right: var(--pin-right);
+  top: var(--pin-top);
+  bottom: var(--pin-bottom);
+  width: clamp(var(--node-w-out) * 0.75 * 1px, var(--node-w-out) * var(--node-size-unit) / var(--node-size-design), var(--node-w-out) * 1.5 * 1px);
+  height: clamp(var(--node-h-out) * 0.75 * 1px, var(--node-h-out) * var(--node-size-unit) / var(--node-size-design), var(--node-h-out) * 1.5 * 1px);
+}

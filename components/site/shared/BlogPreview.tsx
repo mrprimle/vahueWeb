@@ -55,11 +55,11 @@ const THRESHOLD = 0.12
 const MOBILE_QUERY = '(max-width: 1023px)'
 const slotAt = (i: number) => (i < 0 || i >= SLOTS.length ? null : SLOTS[i])
 
-function CategoryIcon({ category, colorHex, labelClassName }: { category: BlogCategory; colorHex?: string; labelClassName?: string }) {
+export function CategoryIcon({ category, colorHex, labelClassName, className }: { category: BlogCategory; colorHex?: string; labelClassName?: string; className?: string }) {
   const name = category.name?.trim()
   if (!name) return null
   return (
-    <div className="CategoryIcon inline-flex max-w-full min-w-0 items-center gap-2 justify-center rounded-sm p-1">
+    <div className={cn('CategoryIcon inline-flex max-w-full min-w-0 items-center gap-2 justify-center rounded-sm p-1', className)}>
       <span className="inline-flex size-[26px] shrink-0 items-center justify-center rounded-[5px] shadow-sm" style={{ backgroundColor: colorHex ?? '#525252' }} aria-hidden>
         <svg className="block size-[8px] shrink-0" width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M6.79229 0H0.500785C0.0554314 0 -0.167603 0.538452 0.14731 0.853365L6.43881 7.14487C6.75373 7.45978 7.29218 7.23675 7.29218 6.79139V0.499889C7.29218 0.223808 7.06837 0 6.79229 0Z" fill="white" />

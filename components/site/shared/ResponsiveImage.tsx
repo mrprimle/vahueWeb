@@ -17,17 +17,19 @@ export type ResponsiveImageProps = {
   objectContain?: boolean
   alt?: string
   noBackground?: boolean
+  /** Scale's per-image palette colour behind the image while it loads. */
+  backgroundColor?: string
 }
 
 export const ResponsiveImage = forwardRef<HTMLImageElement, ResponsiveImageProps>(function ResponsiveImage(
-  { asset, fill, className, sizes, priority, objectCover = false, objectContain = false, alt, noBackground = false },
+  { asset, fill, className, sizes, priority, objectCover = false, objectContain = false, alt, noBackground = false, backgroundColor },
   ref,
 ) {
   if (!asset?.path) return null
   return (
     <div
       className={cn('ResponsiveImage', fill && 'relative h-full w-full', className)}
-      style={{ backgroundColor: noBackground ? 'transparent' : '#193A29' }}
+      style={{ backgroundColor: noBackground ? 'transparent' : (backgroundColor ?? '#193A29') }}
     >
       <Image
         ref={ref}

@@ -1,6 +1,7 @@
 'use client'
 
 // Scale modules 540409 (CardGrid + Card) and 874328 (LinkCard).
+import Image from 'next/image'
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, type ReactNode } from 'react'
 import { gsap } from '../lib/gsap'
 import { cn } from '../lib/cn'
@@ -48,6 +49,8 @@ export type LinkCardData = Common & {
   hoveredColor?: { tailwindClass: string; hex?: string }
   gap?: 'sm' | 'md'
   iconColor?: { hex?: string }
+  /** Scale's CMS icon asset branch: a file path instead of `icon`. */
+  iconImage?: string
 }
 
 export const Card = forwardRef<CardHandle, Omit<CardData, '_type'>>(function Card(
@@ -175,6 +178,7 @@ export const LinkCard = forwardRef<CardHandle, Omit<LinkCardData, '_type'>>(func
     fillFluidCell = false,
     iconBgColor,
     iconColor,
+    iconImage,
   },
   ref,
 ) {
@@ -255,6 +259,10 @@ export const LinkCard = forwardRef<CardHandle, Omit<LinkCardData, '_type'>>(func
                   <span ref={iconInner} className="flex items-center justify-center" style={iconColor?.hex ? { color: iconColor.hex } : undefined}>
                     <Icon size={px} className={iconTone} />
                   </span>
+                </div>
+              ) : iconImage ? (
+                <div ref={iconBox} className={cn('relative overflow-hidden', size)}>
+                  <Image src={iconImage} alt="" fill unoptimized sizes="(max-width: 768px) 40px, 64px" className="object-contain" />
                 </div>
               ) : null}
               {label ? <p className="font-mono text-sm uppercase">{label}</p> : null}
