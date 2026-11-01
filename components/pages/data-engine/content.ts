@@ -49,7 +49,7 @@ export const content: DataEngineContent = {
     subtitle: 'Next Generation AI powered by world-class data.',
     showcaseTitle: 'Generative AI',
     showcaseSubtitle: 'Powering the next generation of Generative AI',
-    body: 'Vahue Context Engine powers many of the most reliable agents and generative workflows in the world through world-class context, data preparation, agent evaluation, safety, and alignment.',
+    body: 'Vahue Context Engine powers many of the most reliable agents and generative workflows in the world through world-class context, data preparation, agent evaluation, guardrails, and review.',
     primaryCta: { text: 'Book a Demo', url: '/demo' },
     secondaryCta: { text: 'Build AI', url: '/generative-ai-data-engine' },
     chat: {
@@ -70,10 +70,10 @@ export const content: DataEngineContent = {
     overtitle: 'WHAT IS THE CONTEXT ENGINE',
     title: 'The One-Stop-Shop For Building AI',
     subtitle: 'Context engine is the process of improving AI agents with high quality, diverse and large datasets powered by experts. Unlock agent performance with the Vahue Context Engine.',
-    image: { src: '/data-engine/diagram-workflow.webp', alt: 'Records move from your systems through Watch, Match and Write, with exceptions going to review, and a daily report at the end', width: 2432, height: 1274 },
+    image: { src: '/data-engine/diagram-context-loop.webp', alt: 'Your data moves through Generation, Human Review, Evaluation and Red Teaming in a loop until the agent is reliable', width: 2432, height: 1274 },
     label: 'Generative AI Context Engine',
     items: [
-      { title: 'Generation', body: 'After initial setup, create complex prompt-response pairs from scratch.' },
+      { title: 'Generation', body: 'After initial setup, create complex test cases from your own history.' },
       { title: 'Human Review', body: 'Apply human preferences to agent outputs.' },
       { title: 'Red Teaming', body: 'Use prompt injection techniques to find vulnerabilities.' },
       { title: 'Evaluation', body: 'Evaluate your agent against a set of complex and diverse prompts to find weak points.' },
@@ -93,9 +93,9 @@ export const content: DataEngineContent = {
     overtitle: 'RESOURCES',
     title: 'Learn More About Context Engine',
     items: [
-      { id: 'chatgpt-rlhf', overtitle: 'Blog', title: 'Why Is ChatGPT So Good?', image: { src: '/data-engine/01.png', alt: 'Human feedback' }, description: 'OpenAI applied reinforcement learning with human feedback (RLHF) to enhance ChatGPT. Understand the role RLHF plays in enhancing large language models and how to implement it.', link: '/blog' },
+      { id: 'pilot-to-production', overtitle: 'Blog', title: 'Why Do AI Pilots Stall?', image: { src: '/data-engine/01.png', alt: 'Human feedback' }, description: 'Most pilots work in the demo and stall in production. Understand the role human feedback and clean context play in getting agents live, and how to measure it against a baseline.', link: '/blog' },
       { id: 'guide-data-preparation', overtitle: 'Guide', title: 'Guide to Data Preparation', image: { src: '/data-engine/02.png', alt: 'Blur' }, description: 'The success of AI agents is dependent on data and context quality. Read our authoritative guide to ensure you get the highest quality context.', link: '/guides' },
-      { id: 'guide-computer-vision', overtitle: 'Guide', title: 'Guide: Computer Vision', image: { src: '/data-engine/03.png' }, description: 'Computer Vision focuses on developing systems that can process, analyze, and make sense of visual data. Read our guide to learn about how it works and top use cases by industry.', link: '/guides' },
+      { id: 'guide-document-intake', overtitle: 'Guide', title: 'Guide: Document Intake', image: { src: '/data-engine/03.png' }, description: 'Document Intake focuses on developing agents that can read, check, and make sense of incoming invoices, claims and forms. Read our guide to learn how it works and top use cases by industry.', link: '/guides' },
       { id: 'guide-building-agents', overtitle: 'Guide', title: 'Guide: Building & Testing Agents', image: { src: '/data-engine/04.png' }, description: 'AI agents take data as inputs and deliver a classification, a prediction, or some other indicator as an output. Read our guide to learn more about how to evaluate agents.', link: '/guides' },
     ],
   },
