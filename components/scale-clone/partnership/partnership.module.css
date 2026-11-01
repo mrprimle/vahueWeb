@@ -1,0 +1,117 @@
+/* scale.com/partnership clone. Sizes from Scale's CSS (header2, body1, header4-regular, body2-regular) and computed
+ * styles at 1440x900 / 390x844. Colours read --pts-* variables (defaults = Scale light) so a wrapper can restyle. */
+
+.root {
+  --pts-bg: #fff;
+  --pts-fg: #000;
+  /* scale-gray-30 */
+  --pts-muted: #575757;
+  --pts-tile: #000;
+  --pts-card-fg: #000;
+  background: var(--pts-bg);
+  color: var(--pts-fg);
+}
+
+/* scale.com: letter-spacing -0.01em, weight 400 on p and headings */
+.root :is(p, h1, h2, h3) {
+  letter-spacing: -0.01em;
+  font-weight: 400;
+}
+
+/* header2: 64/1.05, <768 32/1.05 */
+.title {
+  color: var(--pts-fg);
+  font-size: 4rem;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+/* body1: 20/1.5, <768 16/1.45 */
+.lede {
+  color: var(--pts-muted);
+  font-size: 1.25rem;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+/* header4-regular: 32/1.5 -0.03em, <768 24/1.05 */
+.root .cardTitle {
+  color: var(--pts-card-fg);
+  font-size: 2rem;
+  line-height: 1.5;
+  letter-spacing: -0.03em;
+}
+/* body2-regular: 16/1.5, <768 14/1.35; text-black/60; line-clamp-2 */
+.cardBody {
+  color: color-mix(in srgb, var(--pts-card-fg) 60%, transparent);
+  font-size: 1rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  .title {
+    font-size: 2rem;
+  }
+  .lede {
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+  .root .cardTitle {
+    font-size: 1.5rem;
+    line-height: 1.05;
+  }
+  .cardBody {
+    font-size: 0.875rem;
+    line-height: 1.35;
+  }
+}
+
+/* TextLink theme "inherit", size "small": text-sm (14/21 on Scale), gap-1, hover:opacity-70 (instant: opacity is not in
+ * the transition-colors list). No w-fit: as a flex-col child it stretches to the card's content width, so the whole
+ * row is the hover target (612px at 1440, 262px at 390), as on Scale. */
+.textLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: inherit;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke,
+    --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+.textLink:hover {
+  opacity: 0.7;
+}
+.textLink > span:first-child {
+  font-weight: 500;
+}
+/* arrow: transition-transform 300ms ease-out, group-hover:translate-x-1 (Tailwind v4 `translate` property).
+ * font-unicode = Aeonik's arrow (9.2px wide at 14px). Aeonik is commercial; system-ui's arrow is the closest
+ * free glyph measured (12.5px; inherit 14.2, Arial 14). */
+.arrow {
+  display: inline-block;
+  font-family: system-ui, -apple-system, Arial, sans-serif;
+  transition-property: transform, translate, scale, rotate;
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+.textLink:hover .arrow {
+  translate: 0.25rem 0;
+}
+
+/* next/link without focus classes: the UA focus ring (auto 1px rgb(0,95,204), offset 1px on Scale) */
+.card:focus-visible {
+  outline: revert;
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .textLink,
+  .arrow {
+    transition: none;
+  }
+}
