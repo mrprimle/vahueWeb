@@ -1,0 +1,44 @@
+/* Scale's CSS modules, copied rule for rule. ekJjCG (tabs), A3Y_tG (audio box) and PrXvJq (feature) from 0npdyq12us3md.css, TdsvaW (button) from 2h0gxg24im1sd.css, it_l1W (modal) from 0iw3n0ipld-_4.css, _1N8NtW (modal width) from 0wrf93oshhpjv.css. */
+.tabs { border: 1px solid #ffffff26; border-radius: 100px; min-width: max-content; max-width: max-content; padding: 4px; font-size: 14px; line-height: 22px; display: flex; position: relative; }
+
+.wrapper { aspect-ratio: 649/402; background: #111519; border-radius: 8px; flex-direction: column; width: 100%; min-width: 100%; max-width: 50%; margin-bottom: 36px; padding: 16px 12px; display: flex; position: relative; }
+@media screen and (min-width: 1024px) { .wrapper { min-width: 50%; margin-bottom: 0; position: absolute; top: 50%; transform: translate(40px, -50%); } }
+@media screen and (min-width: 1280px) { .wrapper { min-width: none; padding: 36px 32px; max-width: 649px !important; } }
+@media screen and (min-width: 1450px) { .wrapper { transform: translate(72px, -50%); } }
+.wrapper { box-shadow: 0 20px 25px -5px #0000001a, 0 8px 10px -6px #0000001a; }
+@media (min-width: 1280px) { .wrapper { box-shadow: 0 100px 80px #00000030, 0 50.0488px 40.0391px #00000024, 0 30.1471px 24.1177px #0000001f, 0 30.1471px 24.1177px #0000001f, 0 19.3198px 15.4559px #0000001c, 0 12.5216px 10.0172px #0000001a, 0 7.88218px 6.30574px #00000014, 0 4.5288px 3.62304px #00000012, 0 1.99324px 1.59459px #0000000d; } }
+.result { -ms-overflow-style: none; scrollbar-width: none; background-color: #111519; border-radius: 8px; min-width: 90%; max-width: 90%; animation: 0.5s ease-out forwards fadeIn; position: absolute; top: 88%; left: 50%; }
+.result ::-webkit-scrollbar { display: none; }
+.result:after { content: ''; pointer-events: none; -webkit-user-select: none; user-select: none; border-radius: inherit; -webkit-mask-composite: xor; background: linear-gradient(257.92deg, #fff0 -15.06%, #ffffff60 56.1%, #fff6 80.48%); padding: 1px; position: absolute; inset: 0; -webkit-mask: linear-gradient(#fff, #fff) content-box, linear-gradient(#fff, #fff); }
+@media screen and (min-width: 1024px) { .result { min-width: 85%; max-width: 85%; } }
+.result pre { overflow: auto; }
+.transcribe { color: #fff; background-image: linear-gradient(90.26deg, #ffffff47 0.09%, #ffffff02 97.98%); border-radius: 4px; align-items: center; margin-bottom: 8px; padding: 4px 8px; font-size: 9px; display: flex; position: relative; }
+.transcribe:after { content: ''; pointer-events: none; -webkit-user-select: none; user-select: none; border-radius: inherit; -webkit-mask-composite: xor; background: linear-gradient(257.92deg, #fff0 -15.06%, #fffffff0 56.1%, #fff 80.48%); padding: 1px; position: absolute; inset: 0; -webkit-mask: linear-gradient(#fff, #fff) content-box, linear-gradient(#fff, #fff); }
+@media screen and (min-width: 1024px) { .transcribe { border-radius: 8px; margin-bottom: 12px; padding: 8px 12px; font-size: 10px; } }
+@media screen and (min-width: 1280px) { .transcribe { margin-bottom: 16px; font-size: 13px; } }
+.contentBox { color: #fff; background-image: linear-gradient(90.25deg, #36363647 0.09%, #ffffff02 163.42%); border-radius: 8px; margin-bottom: 8px; padding: 8px; position: relative; }
+.contentBox:after { content: ''; pointer-events: none; -webkit-user-select: none; user-select: none; border-radius: inherit; -webkit-mask-composite: xor; background: linear-gradient(257.92deg, #fff0 -15.06%, #ffffff60 56.1%, #fff6 80.48%); padding: 1px; position: absolute; inset: 0; -webkit-mask: linear-gradient(#fff, #fff) content-box, linear-gradient(#fff, #fff); }
+@media screen and (min-width: 1024px) { .contentBox { margin-bottom: 12px; padding: 16px 12px; font-size: 13px; } }
+@media screen and (min-width: 1280px) { .contentBox { margin-bottom: 16px; padding: 25px 18px; } }
+.contentBoxCode { color: #fff; background-image: linear-gradient(90.25deg, #36363647 0.09%, #ffffff02 163.42%); border-radius: 8px; flex: 1; padding: 8px; font-size: 7px; position: relative; }
+.contentBoxCode:after { content: ''; pointer-events: none; -webkit-user-select: none; user-select: none; border-radius: inherit; -webkit-mask-composite: xor; background: linear-gradient(257.92deg, #fff0 -15.06%, #ffffff60 56.1%, #fff6 80.48%); padding: 1px; position: absolute; inset: 0; -webkit-mask: linear-gradient(#fff, #fff) content-box, linear-gradient(#fff, #fff); }
+@media screen and (min-width: 1024px) { .contentBoxCode { padding: 16px 12px; font-size: 9px; } }
+@media screen and (min-width: 1280px) { .contentBoxCode { padding: 25px 18px; } }
+.progressBar { background: linear-gradient(90.13deg, #d0f 0.11%, #c88bc4 25.06%, #7b8fdd 50%, #86bff2 74.8%, #00a2ff 99.76%); border-radius: 8px; width: 100%; height: 3px; position: relative; }
+.progress { background: #111519; border: 1px solid #111519; border-radius: 0 8px 8px 0; width: 100%; height: 3px; position: absolute; top: 0; right: 0; }
+@keyframes fadeIn { 0% { opacity: 0; transform: translate(-50%, -40%); } to { opacity: 1; transform: translate(-50%, -50%); } }
+
+.feature { border-radius: 0.75rem; position: relative; overflow: hidden; }
+.feature:after { pointer-events: none; -webkit-user-select: none; user-select: none; content: ''; border: 1px solid #fff3; border-radius: 0.75rem; position: absolute; inset: 0; }
+.number { font-family: Inter; font-weight: 600; }
+.number:after { content: ''; z-index: 10; border: 1px solid #ffffff29; border-radius: 9999px; position: absolute; inset: 0; }
+
+.buttonPrimary { z-index: 1; text-align: center; border-radius: 10px; font-weight: 500; line-height: 20px; transition: background-color 0.3s, border-color 0.3s; position: relative; }
+.buttonGlass { color: #fff; }
+
+.modalOverlay { opacity: 0; animation: 0.35s ease-out forwards modalFade; }
+.modal { color: #000; text-align: left; opacity: 0; height: -webkit-fill-available; animation: 0.35s ease-out 0.55s forwards modalShow; }
+@keyframes modalFade { 0% { opacity: 0; } to { opacity: 1; } }
+@keyframes modalShow { 0% { opacity: 0; transform: scale(1.1); } to { opacity: 1; transform: scale(1); } }
+@media screen and (min-width: 768px) { .modalWidth { min-width: 50vw; } }
+@media screen and (min-width: 1024px) { .modalWidth { min-width: 540px; } }
