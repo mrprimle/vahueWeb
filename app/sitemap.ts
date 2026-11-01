@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { caseStudies } from '@/lib/case-studies'
+import { vahueBlogTags } from '@/components/blog/vahue-blog-content'
 
 export const dynamic = 'force-static'
 
@@ -30,6 +31,9 @@ const staticRoutes: { path: string; priority: number; changeFrequency: MetadataR
   { path: '/blog/aeo-content-system',                priority: 0.75, changeFrequency: 'monthly' },
   { path: '/blog/claude-fable-5-agentic-ai',         priority: 0.7,  changeFrequency: 'monthly' },
   { path: '/blog/trumps-ai-order-decoded',           priority: 0.7,  changeFrequency: 'monthly' },
+  { path: '/blog/secure-llm-deployment-enterprise',  priority: 0.65, changeFrequency: 'monthly' },
+  { path: '/blog/code-data-sources-for-llm-training', priority: 0.65, changeFrequency: 'monthly' },
+  { path: '/blog/human-written-code-llm-training',   priority: 0.65, changeFrequency: 'monthly' },
   { path: '/case-studies',                           priority: 0.7,  changeFrequency: 'monthly' },
   { path: '/guides',                                 priority: 0.65, changeFrequency: 'weekly'  },
   { path: '/marketplace',                            priority: 0.65, changeFrequency: 'weekly'  },
@@ -70,7 +74,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: 'monthly' as const,
   }))
 
-  return [...staticRoutes, ...caseStudyRoutes].map(({ path, priority, changeFrequency }) => ({
+  // /blog/category/<slug>: one page per real post category (app/blog/category/[slug]).
+  const blogCategoryRoutes = vahueBlogTags.map(({ slug }) => ({
+    path: `/blog/category/${slug}`,
+    priority: 0.5,
+    changeFrequency: 'weekly' as const,
+  }))
+
+  return [...staticRoutes, ...caseStudyRoutes, ...blogCategoryRoutes].map(({ path, priority, changeFrequency }) => ({
     url: `${BASE}${path}`,
     lastModified: now,
     changeFrequency,
