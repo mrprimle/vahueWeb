@@ -308,7 +308,7 @@ export default function Testimonials({ content }: { content: TestimonialsContent
                           className="max-w-none pr-2.5 text-[24px] font-normal leading-7 tracking-[-0.05em] text-white lg:text-[40px] lg:leading-[44px]"
                         >
                           <span className="inline-block w-[100px] lg:w-40"> </span>
-                          {`“${it.quote}”`}
+                          {content.plainText ? it.quote : `“${it.quote}”`}
                         </AnimatedText>
                       </div>
                     )

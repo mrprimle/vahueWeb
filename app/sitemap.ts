@@ -48,6 +48,7 @@ const staticRoutes: { path: string; priority: number; changeFrequency: MetadataR
   { path: '/labs/papers',                            priority: 0.6,  changeFrequency: 'monthly' },
   { path: '/labs',                                   priority: 0.6,  changeFrequency: 'monthly' },
   { path: '/docs',                                   priority: 0.6,  changeFrequency: 'monthly' },
+  { path: '/global-public-sector',                     priority: 0.6,  changeFrequency: 'monthly' },
   { path: '/public-sector',                            priority: 0.6,  changeFrequency: 'monthly' },
   { path: '/evaluation/public-sector',                 priority: 0.6,  changeFrequency: 'monthly' },
   { path: '/evaluation/model-developers',              priority: 0.6,  changeFrequency: 'monthly' },

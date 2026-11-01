@@ -27,6 +27,14 @@ function Player({ video, className = '' }: { video: VideoContent; className?: st
       </div>
     )
   }
+  // No video to play: the poster stays as a still, in the same box, with no play control.
+  if (!video.embedSrc) {
+    return (
+      <div className={`relative block aspect-video w-full overflow-hidden rounded-2xl bg-[var(--gps-card)] ${className}`}>
+        {video.poster ? <img src={video.poster} alt="" className="absolute inset-0 h-full w-full object-cover" /> : null}
+      </div>
+    )
+  }
   return (
     <button
       type="button"
