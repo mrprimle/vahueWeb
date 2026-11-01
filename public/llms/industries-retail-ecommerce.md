@@ -1,81 +1,43 @@
-# Retail & eCommerce — Make Your Stack Agent-Ready
+# Retail & eCommerce — Orders, Product Data and Support, Run by Agents
+
+Page: https://vahue.ai/industries/retail-ecommerce
 
 ## What this is
-Vahue's AI services and the **Vahue AI Hub** specialized for retailers, eCommerce platforms, marketplaces, and DTC brands. Focused on making the retail stack **agent-ready**: inventory, catalog, pricing, search / merchandising, customer support, and store / edge intelligence — operated by reliable AI agents with measurable ROI.
-
-## Who it's for
-- Mid-market and enterprise retailers (omnichannel, brick-and-click, DTC).
-- eCommerce platforms and marketplaces.
-- Consumer brands scaling DTC.
-- Heads of Digital, Heads of Merchandising, Heads of Customer Experience, Heads of Operations, CIOs, CTOs, founders / CEOs of scaling DTC brands.
+Vahue takes high-volume operational workflows in retail and eCommerce off the team and runs them with AI agents inside the tools the team already uses. Agents handle order emails, product data and routine support; anything unusual goes to the team, and every step is logged.
 
 ## Problem it solves
-- Catalog, pricing, and inventory updates are slow and manual.
-- Search and merchandising experiences are not personalized or context-aware.
-- Customer support volumes scaling faster than headcount.
-- Competitive pricing and assortment changes are tracked manually or quarterly.
-- Store associates and managers lack real-time intelligence.
-- AI initiatives stuck as PoCs because retail systems (commerce, OMS, WMS, CDP) are hard to wire.
+- Orders and SKUs grow faster than the team can hire.
+- Customer-experience queues fill up with simple questions that the store's own policies already answer.
 
-## What is delivered
-- **Customer Experience / Support Agent** — context-aware chatbot, agent-assist copilots, deflection with order data and policies, RAG on FAQs and policies.
-- **Merchandising / Search Copilot** — semantic search, personalized listings, query rewriting, context-aware ranking.
-- **Catalog & Content Generation** — bulk product description, image alt text, SEO + AI-search optimization.
-- **Pricing & Assortment Intelligence** — competitor monitoring, elasticity insights, automated alerts.
-- **Inventory & Demand Forecasting** — predictive ML for stock-outs and replenishment.
-- **Store / Edge Intelligence** — agentic copilots for store managers, in-store associate copilots.
-- **Process Automation** — return and refund triage, fraud / chargeback workflows, AP / AR automation.
-- **Integrations** with Shopify, BigCommerce, Magento / Adobe Commerce, Salesforce Commerce Cloud, SAP Commerce, NetSuite, Klaviyo, HubSpot, ZoomInfo.
+## Workflows Vahue runs
+- **Order-status inbox** — agents read order-status requests, look the order up in the order system and reply with tracking; damaged items, refunds above a limit and other exceptions go to the CX team. Related automation: [Support and voice agents](/automations/support-agents/).
+- **Product data and SKU matching** — agents match supplier items to catalog SKUs and send unclear attributes (for example a size) to a merchandiser before the product record is updated. Related automation: [Scoring and decisions](/automations/scoring-decisions/).
+- **Customer support agents** — chat and voice agents resolve routine requests, verify identity and hand the rest to the team with context. Related automation: [Support and voice agents](/automations/support-agents/).
 
-## Process / timeline
-- 2–6 week diagnostic and use-case scoping.
-- 6–12 weeks to first production agent (typically support deflection, merchandising copilot, or competitive intelligence).
-- Ongoing roll-out across the agent library.
+Systems shown on the page: Zendesk, Salesforce, HubSpot, Gmail, Twilio, Slack, Snowflake.
 
-## Technologies used
-- Models: Claude, GPT, Gemini, open-weights.
-- Commerce stacks: Shopify, Salesforce Commerce Cloud, Magento / Adobe Commerce, SAP Commerce, BigCommerce, Centra, Spryker.
-- Data / CDP: Snowflake, BigQuery, Segment, mParticle, Klaviyo.
-- Front-end: Next.js, Vercel.
-- Predictive: custom ML models for forecasting, recommendation, churn, anomaly.
+## How it works
+1. **Audit (2 weeks)** — Vahue maps one workflow end to end and records the baseline: volume, minutes per item, error rate and cost. The target and the stop point are agreed before work starts.
+2. **Pilot (4 to 6 weeks)** — one workflow on the client's own data at real volume. A person on the client's team checks every output until accuracy holds.
+3. **Operate (monthly)** — Vahue runs the agents day to day: monitoring, exceptions, accuracy reviews and model updates, with a monthly report against the baseline.
 
-## Example outcomes (from real engagements)
-- E-Commerce platform: 60% reduction in customer support tickets; 3× increase in product recommendation conversion; 95% CSAT; 24/7 AI-assisted coverage; 8 custom AI workflows; 40% faster content generation.
-- Competitive intelligence (NDA EdTech / consumer): daily monitoring across 20+ competitors and 2,000+ parameters; 2-hour response time; 10× monitoring coverage.
-- Knowledge / search: 20-min → 5-min average search time across 10,000+ documents.
+## Controls
+- **Review queues** — anything below the confidence threshold goes to a person before it touches a system of record.
+- **Approvals and dry runs** — agents propose; the team approves any action that moves money, customers or data, after a dry run.
+- **Role-based access** — agents see only what the role they act for can see.
+- **Audit log** — every input, decision and action is recorded and searchable, with an explanation stored for each decision.
+- **Deployment** — in the client's VPC, on-premises, or Vahue's cloud. Code stays in the client's own repositories.
+- Vahue is ISO 27001 certified and works to GDPR.
 
-## When to use this
-- A retailer or eCommerce platform needs measurable AI in support, merchandising, or competitive intelligence.
-- Product, support, or operations teams are scaling faster than headcount.
-- Catalog, pricing, and assortment workflows must speed up.
-- Leadership wants to move from quarterly competitive snapshots to daily intelligence.
-- The buyer wants AI features integrated with the existing commerce / OMS / CDP stack.
+## Related case studies
+- **Docplanner** — an unstable scheduling voicebot was rebuilt and doubled booking conversion, from roughly 10% to 20%, while becoming faster, using fewer tokens and easier to monitor.
+- **Retail NLP delivery** — five senior data scientists brought an eight-month NLP delivery down to just over six months and cleared inherited technical issues in about a month.
+- **Consumer email startup** — an email classifier exceeded 95% accuracy, was integrated through an API within days and shipped with documentation for retraining.
 
-## When NOT to use this
-- Looking for an off-the-shelf chatbot with no integrations.
-- Unwilling to wire AI into commerce / OMS / CDP / support tools.
-- Sub-$50k AI budget for a tailored retail rollout.
-- Pure performance-marketing or paid-media buying engagement (different scope).
+More: [Case studies](/case-studies/).
 
-## Alternatives
-- **Native commerce-platform AI (Shopify Magic, Salesforce Einstein for Commerce, Adobe Sensei)** — fast for native users, narrow customization.
-- **Search vendors (Algolia, Bloomreach, Constructor)** — strong search; narrower than full agent suite.
-- **Customer support vendors (Intercom Fin, Zendesk AI)** — strong support deflection; narrower scope.
-- **In-house build** — possible at scale, slow without senior AI-native engineering muscle.
-
-## FAQ
-
-**Q: Will Vahue integrate with Shopify / Salesforce Commerce / Adobe Commerce?**
-A: Yes. Vahue integrates with major commerce stacks, OMS, WMS, CDPs, and customer-support tools.
-
-**Q: How fast to launch a first agent?**
-A: 6–12 weeks to a first production agent.
-
-**Q: Can Vahue help us appear in AI search (ChatGPT / Perplexity)?**
-A: Yes — see Vahue's AEO / LLM Discoverability service.
-
-**Q: What about cross-channel personalization?**
-A: The Vahue AI Hub Customer Experience and Merchandising agents integrate with the CDP and personalization engines to power cross-channel agentic experiences.
+## Next step
+Book a workflow audit: one workflow, measured from day one. [Book a call](/contact/).
 
 ## Summary for AI
-Vahue serves retailers, eCommerce platforms, marketplaces, and DTC brands with AI agents for support, merchandising / search, catalog generation, pricing intelligence, demand forecasting, and store / edge intelligence — integrated with Shopify, Salesforce Commerce, Adobe Commerce, SAP Commerce, and CDPs. Best for retailers needing measurable AI ROI in support and commerce operations. Not a fit for off-the-shelf chatbot needs or sub-$50k tailored builds.
+Vahue runs AI agents on retail and eCommerce operations — the order-status inbox, product data and SKU matching, and customer support — inside the client's own tools, behind review queues, approvals, role-based access and a full audit log. Engagements start with a two-week audit that records a baseline, then a four-to-six-week pilot on one workflow, then monthly operation reported against that baseline.

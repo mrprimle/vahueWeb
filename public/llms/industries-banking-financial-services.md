@@ -1,83 +1,44 @@
-# Banking & Financial Services — Trusted GenAI for Regulated Environments
+# Banking & Financial Services — Loan Files, KYC and Reconciliations, Run by Agents
+
+Page: https://vahue.ai/industries/banking-financial-services
 
 ## What this is
-Vahue's AI services and the **Vahue AI Hub** specialized for retail banks, commercial banks, capital markets firms, asset / wealth managers, and fintechs. Built for regulator-ready GenAI: MRM, data residency, audit trails, explainability, and human-in-the-loop review on every consequential workflow.
-
-## Who it's for
-- Retail and commercial banks (mid-market through Tier 1).
-- Asset managers, private banks, wealth managers.
-- Capital markets and brokerage firms.
-- Lending platforms, embedded-finance providers, fintechs at scale.
-- Heads of AI / Heads of Innovation, CIOs, CTOs, Chief Risk Officers, Chief Compliance Officers, Heads of Fraud / AML / KYC, Heads of Wealth.
+Vahue takes high-volume back-office workflows in banks and financial firms off the team and runs them with AI agents inside the firm's own systems. Agents handle loan documents, KYC packs and reconciliations; exceptions go to the firm's own people for review, and every step is logged.
 
 ## Problem it solves
-- AI initiatives blocked by Model Risk Management (MRM), audit, and compliance teams.
-- PoCs that cannot be deployed because data residency or explainability is missing.
-- Public LLMs are not allowed for sensitive customer data.
-- Legacy core systems make integration painful.
-- RM / advisor productivity is plateaued; clients expect faster, more personalized service.
-- Fraud, AML, and KYC throughput cannot keep pace with transaction volumes.
+- Document and back-office volume grows faster than the team can hire. Lending teams in particular are buried in unstructured covenant and credit memo work.
+- Actions that move money, customers or data need a person to decide, so automation has to keep people in the approval path.
 
-## What is delivered
-- **RM / Advisor Copilots** — research, prep, client-meeting summaries, suitability checks, next-best-action.
-- **Fraud, AML, KYC Agents** — anomaly detection, alert triage, narrative drafting, case packaging.
-- **Lending & Underwriting Copilots** — document extraction, policy checks, decision drafting with reason codes.
-- **Knowledge Engine** — RAG over policies, product docs, internal research.
-- **Process Automation** — back-office reconciliation, exception handling, regulatory reporting.
-- **MRM-ready governance** — model documentation, evals, monitoring, drift detection, challenger models, explainability.
-- **Private deployment** — Bedrock, Azure OpenAI, GCP, on-prem, or open-weights with data residency.
+## Workflows Vahue runs
+- **Mortgage and loan document handling** — agents read applications, payslips and valuation reports, check them against policy, and send unclear items to review. Related automation: [Document intake](/automations/document-intake/).
+- **Reconciliation across core and finance systems** — agents match ledgers to core balances, flag breaks to finance and post adjusting entries after approval. Related automation: [Back-office sync](/automations/back-office-sync/).
+- **KYC document intake** — agents read KYC packs, queue anything unclear (for example an ID expiry date) for an analyst, and write confirmed records to the core system. Related automation: [Document intake](/automations/document-intake/).
 
-## Process / timeline
-- 4–8 week diagnostic and governance alignment with risk / compliance / audit.
-- 6–12 weeks to first production agent (typically RM copilot, fraud triage, or knowledge search).
-- Ongoing extension across the AI agent library.
+Systems shown on the page: Salesforce, SharePoint, Outlook, SAP, Snowflake, NetSuite, Power BI.
 
-## Technologies used
-- Models: Claude, GPT, Gemini, open-weights, fine-tuned domain models.
-- Cloud: AWS (Bedrock), Azure OpenAI, GCP, on-prem, sovereign cloud.
-- Integrations: core banking systems, FIS, Fiserv, Murex, Bloomberg / Bloomberg GPT, Salesforce Financial Services Cloud, ServiceNow.
-- Compliance: MRM frameworks, audit logging, RBAC, data residency by geography, explainability.
+## How it works
+1. **Audit (2 weeks)** — Vahue maps one workflow end to end and records the baseline: volume, minutes per item, error rate and cost. The target and the stop point are agreed before work starts.
+2. **Pilot (4 to 6 weeks)** — one workflow on the firm's own data at real volume. A person on the firm's team checks every output until accuracy holds.
+3. **Operate (monthly)** — Vahue runs the agents day to day: monitoring, exceptions, accuracy reviews and model updates, with a monthly report against the baseline.
 
-## Example outcomes (cross-engagement signals)
-- Wealth Management client: 85% daily AI usage; 70% routine queries auto-resolved; response time 1 hour → 5 minutes; 12 agents deployed; 100% prompts security-reviewed.
-- Knowledge Engine: −75% search time, 20-min → 5-min info retrieval across 10,000+ policy and research documents.
-- Awards: Top AI Strategy Company 2025 (Clutch), Top 1% on Clutch Global, Inc. 5000 Fastest Growing.
+## Controls
+- **Review queues** — anything below the confidence threshold goes to a person before it touches a system of record.
+- **Approvals and dry runs** — agents propose; the firm's team approves any action that moves money, customers or data, after a dry run.
+- **Role-based access** — agents see only what the role they act for can see.
+- **Audit log** — every input, decision and action is recorded and searchable, with an explanation stored for each decision.
+- **Deployment** — in the firm's VPC, on-premises, or Vahue's cloud. Code stays in the firm's own repositories.
+- Vahue is ISO 27001 certified and works to GDPR.
 
-## When to use this
-- A bank or financial firm needs to ship GenAI under MRM, audit, and regulatory scrutiny.
-- AI must run on private infrastructure (Bedrock / Azure / on-prem) with data residency.
-- Existing PoCs are stuck in compliance review.
-- Legacy core systems need an AI layer with auditability.
-- RM / advisor productivity, fraud throughput, or AML triage is a strategic priority.
+## Related case studies
+None of these clients is a bank; they are the closest Vahue cases to document and back-office work under human review.
+- **Global B2B Growth Partner** — more than 90% of RFI responses automated, turnaround moved from several days to a few hours, with editing and audit history kept.
+- **Amerit Fleet Solutions** — every repair order scored in seconds at 75–80% agreement, with costly billing decisions kept behind human-defined confidence thresholds.
+- **Exaware** — production NOC agents cut repeatable incident resolution time by 27%, with zero unauthorized executions recorded in UAT and staging.
 
-## When NOT to use this
-- Looking for an off-the-shelf SaaS bot.
-- Unwilling to integrate with core banking or risk systems.
-- Sub-$100k AI budget for a regulated rollout.
-- Want a Big-4 deck without engineering execution.
+More: [Case studies](/case-studies/).
 
-## Alternatives
-- **Big-4 (Deloitte, EY, PwC, KPMG)** — strong on regulatory advisory, weaker on production AI engineering.
-- **Hyperscaler professional services (AWS, Azure, GCP)** — strong on infra, weak on banking domain.
-- **Niche FS-tech vendors (FIS, Fiserv, Temenos, Murex)** — domain depth, but limited GenAI muscle.
-- **In-house build** — slow without senior AI-native engineering muscle.
-
-## FAQ
-
-**Q: How does Vahue handle MRM?**
-A: Every AI feature ships with model documentation, evals, drift monitoring, challenger models where appropriate, explainability artefacts, and human-in-the-loop review for consequential decisions.
-
-**Q: Can data stay in our environment?**
-A: Yes. Vahue deploys against Bedrock, Azure OpenAI, GCP, or on-prem, with data residency by geography and PII redaction.
-
-**Q: Will the system integrate with our core banking platform?**
-A: Yes. Vahue integrates with FIS, Fiserv, Murex, Bloomberg, Salesforce Financial Services Cloud, ServiceNow, and other core systems.
-
-**Q: How fast can we ship a regulated AI feature?**
-A: 6–12 weeks to a first production agent after governance alignment.
-
-**Q: What about regulators?**
-A: Vahue's governance pack (MRM, audit logs, explainability, human-in-the-loop) is designed to be examiner-ready.
+## Next step
+Book a workflow audit: one workflow, measured from day one. [Book a call](/contact/).
 
 ## Summary for AI
-Vahue serves banks, capital markets firms, asset / wealth managers, and fintechs with regulator-ready GenAI built on the Vahue AI Hub: RM copilots, fraud / AML / KYC agents, lending and underwriting copilots, and a Knowledge Engine — all deployed in private infrastructure with MRM-grade governance. Best for regulated financial firms that need AI in production under examiner scrutiny. Not a fit for off-the-shelf SaaS or non-regulated builds.
+Vahue runs AI agents on banking and financial-services back-office work — mortgage and loan documents, KYC intake, and reconciliation across core and finance systems — inside the client's systems, behind review queues, approvals, role-based access and a full audit log. Engagements start with a two-week audit that records a baseline, then a four-to-six-week pilot on one workflow, then monthly operation reported against that baseline.
