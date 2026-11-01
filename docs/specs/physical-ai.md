@@ -94,21 +94,19 @@ Render counts on ours double because the dev server runs React Strict Mode. The 
 - **Image quality:** Scale asks `q=80` for two images. Here Next's default 75: `images.qualities` is outside this page.
 - **Pre-footer image:** Scale's payload names `prefooter.webp` while its DOM loads `prefooter.jpg`. Here a 1920-wide webp from the 7952-wide source.
 - **Images replaced at fill:** `img-embodiment-1` (Scale's logo on a cap) and `img-embodiment-3` (a small maker's mark on the robot) became `site/nav/neutral.svg`. The multimodal screenshot had robot instructions baked in, so `review.webp` is redrawn at the same 1920 x 1248 and layout, with an invoice and the intake steps. Removed from `public/` with the logos: recover from commit 22daeef to re-check the clone, since `content.scale.ts` still points at them.
-- **Security sentence:** Scale claims SOC 2 Type II and ISO 27001. Neither is in the research, so the second sentence states the audit log instead.
+- **Security sentence:** Scale's text is kept, including SOC 2 Type II and ISO 27001, and marked `// PLACEHOLDER`. Neither is in the research.
 
 ## Copy mapping
-Document Intake, the research's own mapping for this template. Substance: the Core Job from the full research (a high-volume document workflow, no added headcount, control over exceptions), the Critical Chain from inbox to system of record, and its success order: control first, then throughput. Names stay as in `research/research.ts`: Audit, Pilot, Operate, Document Intake.
+Keep rule (Mike, 2026-11-01): each string starts from Scale's text, stays verbatim if true for Vahue with the brand swapped, otherwise changes only the words the swap dictionary and phrase bank require, same template and word count. Counts come from a path-by-path compare with `content.scale.ts`, alt text, code samples and URLs excluded. Verbatim means equal after Scale to Vahue. Light means up to 3 words or about a third changed.
 
-Product overview became the chain and the four promises. Use case became the backlog trigger. Embodiments became document types, environments the intake channels, the annotation block the side-by-side review, model improvements the shadow-mode Pilot. CTA "Build AI" became Back-office Sync, its destination's menu label. "Product Overview", "Use Case", "Key Features" and the testimonial label are unchanged generic labels.
-
-Word counts: 75 strings compared, 61 within 15%. The other 14 are one or two words off, mostly on very short strings, for example "Residential" to "Web Portals". Two are the "Role, Company" placeholders. The longest are the use case line (11 to 13) and the Pilot line (12 to 14), which needed the length to keep Scale's line count. Line counts equal Scale at both widths except "Field-by-field extraction…" on one card at 1440, which does not change the row height.
+Menu label: For Document Intake. Page name: Document Intake Agents. Robotics became documents and operations. Models became agents. CTAs are Scale's. 72 strings: 30 verbatim, 37 light, 5 rewritten (meta description, hero title, embodiment subtitle, first card body, Born in Pilots body). Section heights equal the previous fill at 1440 and 390.
 
 ## Placeholders
-`// PLACEHOLDER` in `content.ts`: 5 marquee tiles (one line), two names, two roles, two quotes, the "1000+" figure, the chart curves. 9 lines. Chart shapes are Scale's and illustrative.
+`// PLACEHOLDER` in `content.ts`, 12 lines: trust line, 5 marquee tiles (one line), two names, two roles, two quotes, the "1000+" figure, the chart curves, the partners feature, the security feature. Chart shapes are Scale's and illustrative.
 
 ## For Mike
 - Non-brand photos of robots and collection rigs stay under document copy: hero, the isometric plate, Lab Reports, and the three intake channels. They carry no brand, so the rule keeps them, but they do not show documents. "SA3" on a sign in the Email Inboxes photo is not ours.
-- Add SOC 2 or ISO lines only if they are true.
+- The security feature now claims SOC 2 Type II and ISO 27001, GDPR and CCPA support. Confirm or remove them before publishing.
 - Announcement bar first paint, above.
 
 ## Gaps
