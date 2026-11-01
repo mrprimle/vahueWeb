@@ -26,7 +26,7 @@ export default function LabsFooter({ year = 2026 }: { year?: number }) {
     <footer className="w-full border-t border-[color:var(--color-hairline)] bg-white">
       <div className="mx-auto max-w-[1400px] px-6 lg:px-10 py-8 border-b border-[#e5e5e5] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <button type="button" onClick={() => setOpen(true)} className="text-left group">
-          <p className="text-[14px] leading-[1.5] font-medium text-[color:var(--color-ink)] uppercase tracking-[0.05em] mb-1 m-0 group-hover:underline underline-offset-2">
+          <p className="text-[14px] leading-[1.5] font-medium text-[color:var(--color-ink)] uppercase tracking-[0.05em] mb-1 m-0 [@media(hover:hover){.group:hover_&}]:underline underline-offset-2">
             Scale Labs Newsletter
           </p>
           <p className="text-[12px] leading-[1.5] text-[#525252] m-0">Research, benchmarks, and insights — delivered to your inbox.</p>
@@ -81,14 +81,14 @@ export default function LabsFooter({ year = 2026 }: { year?: number }) {
       <div className="mx-auto max-w-[1400px] px-6 lg:px-10 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p className="text-[12px] leading-[1.5] text-[#525252] m-0">
           Copyright {year}{' '}
-          <a href="https://scale.com/" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-[color:var(--color-ink)] hover:underline hover:underline-offset-2">
+          <a href="https://scale.com/" target="_blank" rel="noopener noreferrer" className="transition-colors [@media(hover:hover){&:hover}]:text-[color:var(--color-ink)] [@media(hover:hover){&:hover}]:underline [@media(hover:hover){&:hover}]:underline-offset-2">
             Scale Inc.
           </a>{' '}
           All rights reserved.
         </p>
         <div className="flex items-center gap-4">
           {FOOTER_LINKS.map((l) => (
-            <a key={l.label} href={l.url} target="_blank" rel="noopener noreferrer" className="text-[12px] leading-[1.5] text-[#525252] hover:text-[color:var(--color-ink)] transition-colors">
+            <a key={l.label} href={l.url} target="_blank" rel="noopener noreferrer" className="text-[12px] leading-[1.5] text-[#525252] [@media(hover:hover){&:hover}]:text-[color:var(--color-ink)] transition-colors">
               {l.label}
             </a>
           ))}

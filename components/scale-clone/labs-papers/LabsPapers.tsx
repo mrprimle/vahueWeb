@@ -109,7 +109,7 @@ export default function LabsPapers({ content }: { content: LabsPapersContent }) 
         }
         setActive(0)
       }}
-      className="text-[12px] leading-[1.5] text-[color:var(--color-ink)] font-semibold flex items-center gap-1.5 uppercase hover:text-[#525252] transition-colors bg-transparent border-0 p-0 cursor-pointer text-left"
+      className="text-[12px] leading-[1.5] text-[color:var(--color-ink)] font-semibold flex items-center gap-1.5 uppercase [@media(hover:hover){&:hover}]:text-[#525252] transition-colors bg-transparent border-0 p-0 cursor-pointer text-left"
     >
       <Dot /> {label}
       {field === f && <ArrowUpDown className="w-2.5 h-2.5 text-[#737373]" />}
@@ -137,7 +137,7 @@ export default function LabsPapers({ content }: { content: LabsPapersContent }) 
                   className={`shrink-0 whitespace-nowrap text-[12px] leading-[1.5] px-3 py-1.5 border border-solid transition-colors cursor-pointer rounded-none ${
                     category === o
                       ? 'border-[color:var(--color-ink)] text-[color:var(--color-ink)] bg-[#f5f5f5]'
-                      : 'border-[color:var(--color-hairline)] text-[#525252] bg-transparent hover:border-[color:var(--color-ink)] hover:text-[color:var(--color-ink)]'
+                      : 'border-[color:var(--color-hairline)] text-[#525252] bg-transparent [@media(hover:hover){&:hover}]:border-[color:var(--color-ink)] [@media(hover:hover){&:hover}]:text-[color:var(--color-ink)]'
                   }`}
                 >
                   {o}
@@ -168,7 +168,7 @@ export default function LabsPapers({ content }: { content: LabsPapersContent }) 
                 key={p._id}
                 {...rowProps(p)}
                 onMouseEnter={() => setActive(i)}
-                className="hidden md:grid min-w-0 grid-cols-[100px_minmax(0,1fr)_100px_28px] gap-x-3 py-3.5 border-b border-[#e5e5e5] hover:bg-[#fafafa] transition-colors group cursor-pointer"
+                className="hidden md:grid min-w-0 grid-cols-[100px_minmax(0,1fr)_100px_28px] gap-x-3 py-3.5 border-b border-[#e5e5e5] [@media(hover:hover){&:hover}]:bg-[#fafafa] transition-colors group cursor-pointer"
               >
                 <span className={`${s.mono} min-w-0 text-[12px] leading-[1.5] text-[#737373]`}>{p.date}</span>
                 <span className="min-w-0 flex flex-col gap-0.5">
@@ -185,7 +185,7 @@ export default function LabsPapers({ content }: { content: LabsPapersContent }) 
               <div
                 key={`m-${p._id}`}
                 {...rowProps(p)}
-                className="grid grid-cols-[70px_1fr_28px] gap-x-3 py-3.5 border-b border-[#e5e5e5] hover:bg-[#fafafa] transition-colors group md:hidden cursor-pointer"
+                className="grid grid-cols-[70px_1fr_28px] gap-x-3 py-3.5 border-b border-[#e5e5e5] [@media(hover:hover){&:hover}]:bg-[#fafafa] transition-colors group md:hidden cursor-pointer"
               >
                 <span className={`${s.mono} text-[12px] leading-[1.5] text-[#737373]`}>{p.date}</span>
                 <div className="min-w-0">

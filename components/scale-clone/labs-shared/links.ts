@@ -30,10 +30,10 @@ export function labsSection(pathname: string | null): '/' | '/papers' | '/blog' 
 
 /** shadcn Button `outline` variant as labs overrides it (components/ui/button). Combine with s.btn. */
 export const BTN_OUTLINE =
-  'border border-[color:var(--color-ink)] bg-transparent text-[color:var(--color-ink)] hover:bg-[color:var(--color-ink)] hover:text-white text-[12px] leading-[1.5] uppercase tracking-[0.05em] rounded-none h-10 px-4 py-2'
+  'border border-[color:var(--color-ink)] bg-transparent text-[color:var(--color-ink)] [@media(hover:hover){&:hover}]:bg-[color:var(--color-ink)] [@media(hover:hover){&:hover}]:text-white text-[12px] leading-[1.5] uppercase tracking-[0.05em] rounded-none h-10 px-4 py-2'
 /** size="icon" */
 export const BTN_ICON =
-  'border bg-transparent text-[color:var(--color-ink)] hover:bg-[color:var(--color-ink)] hover:text-white text-[12px] leading-[1.5] uppercase tracking-[0.05em] rounded-none h-10 w-10 border-[#d4d4d4]'
+  'border bg-transparent text-[color:var(--color-ink)] [@media(hover:hover){&:hover}]:bg-[color:var(--color-ink)] [@media(hover:hover){&:hover}]:text-white text-[12px] leading-[1.5] uppercase tracking-[0.05em] rounded-none h-10 w-10 border-[#d4d4d4]'
 /** variant="black" (HubSpot dialog submit) */
 export const BTN_BLACK =
-  'bg-[color:var(--color-ink)] text-white text-[12px] leading-[1.5] uppercase tracking-[0.05em] rounded-none hover:opacity-75 transition-opacity h-10 px-4 py-2 w-fit'
+  'bg-[color:var(--color-ink)] text-white text-[12px] leading-[1.5] uppercase tracking-[0.05em] rounded-none [@media(hover:hover){&:hover}]:opacity-75 transition-opacity h-10 px-4 py-2 w-fit'

@@ -92,7 +92,7 @@ export default function LabsDialog({
         <button
           type="button"
           onClick={() => onOpenChange(false)}
-          className="absolute right-4 top-4 rounded-sm text-[#525252] hover:text-[color:var(--color-ink)] transition-colors focus:outline-none focus:ring-2 focus:ring-[#111] focus:ring-offset-2"
+          className="absolute right-4 top-4 rounded-sm text-[#525252] [@media(hover:hover){&:hover}]:text-[color:var(--color-ink)] transition-colors focus:outline-none focus:ring-2 focus:ring-[#111] focus:ring-offset-2"
         >
           <XIcon className="h-3.5 w-3.5" />
           <span className="sr-only">Close</span>

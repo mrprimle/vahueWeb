@@ -139,8 +139,7 @@ export default function LabsBlog({ content }: { content: LabsBlogContent }) {
 
         {/* CategoryFilterPills (353007) */}
         <div className="mb-10 border-b border-[#e5e5e5] pb-5">
-          {/* [scroll-behavior:auto]: neutralise the Vahue global `* { scroll-behavior: smooth }` (labs scrolls instantly) */}
-          <div className="-mx-6 overflow-x-auto px-6 md:mx-0 md:overflow-visible md:px-0 [scroll-behavior:auto]">
+          <div className="-mx-6 overflow-x-auto px-6 md:mx-0 md:overflow-visible md:px-0">
             <div className="flex w-max gap-2 md:w-auto md:flex-wrap">
               {options.map((o) => (
                 <button

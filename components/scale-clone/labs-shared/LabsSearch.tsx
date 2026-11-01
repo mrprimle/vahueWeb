@@ -109,7 +109,7 @@ export default function LabsSearch({ open, onOpenChange, items = [] }: { open: b
           <button
             type="button"
             onClick={() => setMode('chat')}
-            className="flex items-center justify-between gap-3 rounded-[6px] border border-[#e5e7eb] px-4 h-[44px] text-left hover:bg-[#f9fafb]"
+            className="flex items-center justify-between gap-3 rounded-[6px] border border-[#e5e7eb] px-4 h-[44px] text-left [@media(hover:hover){&:hover}]:bg-[#f9fafb]"
           >
             <span className="flex items-center gap-2.5 text-[17px] text-[#111] min-w-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -135,7 +135,7 @@ export default function LabsSearch({ open, onOpenChange, items = [] }: { open: b
                     href={labsHref(r.href)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group block rounded-[6px] border px-4 py-[13px] hover:bg-[#fafaff]"
+                    className="group block rounded-[6px] border px-4 py-[13px] [@media(hover:hover){&:hover}]:bg-[#fafaff]"
                     style={{ borderColor: i === 0 ? '#c4c0f7' : '#e5e7eb' }}
                   >
                     <span className="block text-[12px] text-[#4b5563] mb-[6px]">{r.kind}</span>

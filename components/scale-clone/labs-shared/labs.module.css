@@ -102,6 +102,21 @@
 :global(html):has(.root) {
   scroll-behavior: auto;
 }
+/* Same global also makes overflow strips (filter pills, search results, dialogs) scroll smoothly on scrollLeft/
+   scrollIntoView; labs scrolls them instantly. Elements that opt in with `scroll-smooth` (home blog carousel) keep it.
+   Lenis drives the window, not these, so it is unaffected. */
+.root :where(:not(:global(.scroll-smooth))),
+.portal :where(:not(:global(.scroll-smooth))) {
+  scroll-behavior: auto;
+}
+
+/* Vahue globals set `a { outline: 2px solid transparent }` (Tailwind 3 outline-none). labs keeps the UA keyboard
+   focus ring (auto 1px, offset 1px) on its links; shadcn buttons (.btn) keep their own ring. */
+.root a:not(.btn):focus-visible,
+.portal a:not(.btn):focus-visible {
+  outline: auto 1px -webkit-focus-ring-color;
+  outline-offset: 1px;
+}
 
 /* HubSpot newsletter form as rendered inside the labs dialog (form__wrapper__modal) */
 .hsInput {

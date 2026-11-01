@@ -57,7 +57,7 @@ function Leaderboards({ c }: { c: LabsHomeContent['leaderboards'] }) {
               <Link
                 key={l.href}
                 href={labsHref(l.href)}
-                className={`flex items-center py-2.5 border-t ${i === 0 ? 'border-t-[#d4d4d4]' : 'border-[#e5e5e5]'} hover:bg-[#fafafa] transition-colors -mx-2 px-2`}
+                className={`flex items-center py-2.5 border-t ${i === 0 ? 'border-t-[#d4d4d4]' : 'border-[#e5e5e5]'} [@media(hover:hover){&:hover}]:bg-[#fafafa] transition-colors -mx-2 px-2`}
               >
                 <span className="text-[12px] leading-[1.5] font-medium text-[color:var(--color-ink)] truncate">{l.name}</span>
                 <ArrowRight className="w-3 h-3 ml-auto text-[#a3a3a3] shrink-0" />
@@ -109,7 +109,7 @@ function Papers({ c }: { c: LabsHomeContent['papers'] }) {
                   key={p.href}
                   href={labsHref(p.href)}
                   onMouseEnter={() => setActive(i)}
-                  className="grid min-w-0 grid-cols-[100px_minmax(0,1fr)_100px_minmax(0,1fr)_28px] gap-x-3 py-3.5 border-b border-[#e5e5e5] hover:bg-[#fafafa] transition-colors group"
+                  className="grid min-w-0 grid-cols-[100px_minmax(0,1fr)_100px_minmax(0,1fr)_28px] gap-x-3 py-3.5 border-b border-[#e5e5e5] [@media(hover:hover){&:hover}]:bg-[#fafafa] transition-colors group"
                 >
                   <span className={`${s.mono} min-w-0 text-[12px] leading-[1.5] text-[#737373]`}>{p.date}</span>
                   <span className="min-w-0 truncate text-[14px] leading-[1.5] text-[color:var(--color-ink)] font-medium">{p.title}</span>
@@ -125,7 +125,7 @@ function Papers({ c }: { c: LabsHomeContent['papers'] }) {
               <Link
                 key={`m-${p.href}`}
                 href={labsHref(p.href)}
-                className="grid grid-cols-[70px_1fr_28px] gap-x-3 py-3.5 border-b border-[#e5e5e5] hover:bg-[#fafafa] transition-colors group md:hidden"
+                className="grid grid-cols-[70px_1fr_28px] gap-x-3 py-3.5 border-b border-[#e5e5e5] [@media(hover:hover){&:hover}]:bg-[#fafafa] transition-colors group md:hidden"
               >
                 <span className={`${s.mono} text-[12px] leading-[1.5] text-[#737373]`}>{p.date}</span>
                 <div className="min-w-0">
@@ -229,17 +229,17 @@ function Blog({ c }: { c: LabsHomeContent['blog'] }) {
                 )}
                 <span className={`${s.mono} text-[12px] leading-[1.5] text-[color:var(--color-ink-faint)] tracking-[0.05em] uppercase`}>{p.date}</span>
               </div>
-              <h3 className="text-[14px] font-medium text-[color:var(--color-ink)] tracking-normal mt-1.5 mb-0 leading-[1.375] line-clamp-2 group-hover:underline underline-offset-2 decoration-[color:var(--color-ink-faint)]">
+              <h3 className="text-[14px] font-medium text-[color:var(--color-ink)] tracking-normal mt-1.5 mb-0 leading-[1.375] line-clamp-2 [@media(hover:hover){.group:hover_&}]:underline underline-offset-2 decoration-[color:var(--color-ink-faint)]">
                 {p.title}
               </h3>
               <p className="text-[12px] text-[#737373] mt-2 mb-0 leading-[1.625] line-clamp-2">{p.intro}</p>
             </Link>
           ))}
           <Link href={labsHref('/blog')} className="group shrink-0 w-[180px] snap-start flex flex-col justify-center border-l border-[#d4d4d4] pl-6">
-            <span className="text-[12px] leading-[1.5] text-[#525252] group-hover:text-[color:var(--color-ink)] tracking-[0.05em] uppercase transition-colors">View all</span>
+            <span className="text-[12px] leading-[1.5] text-[#525252] [@media(hover:hover){.group:hover_&}]:text-[color:var(--color-ink)] tracking-[0.05em] uppercase transition-colors">View all</span>
             <span className="flex items-center gap-1.5 mt-1.5">
               <span className="text-[14px] leading-[1.5] font-medium text-[color:var(--color-ink)]">All posts</span>
-              <ArrowRight className="w-3.5 h-3.5 text-[color:var(--color-ink)] group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-3.5 h-3.5 text-[color:var(--color-ink)] [@media(hover:hover){.group:hover_&}]:translate-x-1 transition-transform" />
             </span>
           </Link>
         </div>
@@ -272,7 +272,7 @@ function Jobs({ c }: { c: LabsHomeContent['jobs'] }) {
             href={j.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="grid grid-cols-[1fr_24px] md:grid-cols-[100px_1fr_1fr_24px] gap-x-3 md:gap-x-4 py-3 border-b border-[#e5e5e5] hover:bg-[#fafafa] transition-colors cursor-pointer group"
+            className="grid grid-cols-[1fr_24px] md:grid-cols-[100px_1fr_1fr_24px] gap-x-3 md:gap-x-4 py-3 border-b border-[#e5e5e5] [@media(hover:hover){&:hover}]:bg-[#fafafa] transition-colors cursor-pointer group"
           >
             <span className={`${s.mono} hidden md:block text-[12px] leading-[1.5] text-[#737373]`}>{j.date}</span>
             <div>
@@ -283,7 +283,7 @@ function Jobs({ c }: { c: LabsHomeContent['jobs'] }) {
             </div>
             <span className="hidden md:block text-[12px] leading-[1.5] text-[#737373] uppercase">{j.location}</span>
             <span className="flex items-center justify-end">
-              <ArrowDown className="w-3.5 h-3.5 text-[#737373] group-hover:translate-y-0.5 transition-transform" />
+              <ArrowDown className="w-3.5 h-3.5 text-[#737373] [@media(hover:hover){.group:hover_&}]:translate-y-0.5 transition-transform" />
             </span>
           </a>
         ))}

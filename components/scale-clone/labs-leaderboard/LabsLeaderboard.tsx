@@ -232,7 +232,7 @@ function boardHref(b: Board) {
 /* card qG */
 function Card({ item, colorConfig }: { item: Board; colorConfig: LabsBrandColor[] }) {
   return (
-    <a href={boardHref(item)} className="border border-solid border-[color:var(--color-hairline)] p-6 flex flex-col justify-between bg-white hover:bg-[#f5f5f5] group relative overflow-hidden no-underline text-inherit">
+    <a href={boardHref(item)} className="border border-solid border-[color:var(--color-hairline)] p-6 flex flex-col justify-between bg-white [@media(hover:hover){&:hover}]:bg-[#f5f5f5] group relative overflow-hidden no-underline text-inherit">
       <div className="flex flex-col justify-between h-full">
         <div>
           <div className="flex gap-2 mb-2">
@@ -252,7 +252,7 @@ function Card({ item, colorConfig }: { item: Board; colorConfig: LabsBrandColor[
               ))}
             </div>
           )}
-          <span className="text-[12px] leading-[1.5] text-[#525252] group-hover:text-[color:var(--color-ink)] group-hover:underline underline-offset-2">
+          <span className="text-[12px] leading-[1.5] text-[#525252] [@media(hover:hover){.group:hover_&}]:text-[color:var(--color-ink)] [@media(hover:hover){.group:hover_&}]:underline underline-offset-2">
             View Full Ranking <span style={{ fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif' }}>→</span>
           </span>
         </div>
@@ -370,7 +370,7 @@ export default function LabsLeaderboard({ content }: { content: LabsLeaderboardC
               <button
                 type="button"
                 onClick={() => document.getElementById('leaderboards')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-                className={`${s.btn} bg-[color:var(--color-ink)] text-white text-[12px] leading-[1.5] uppercase tracking-[0.05em] rounded-none hover:opacity-75 h-10 px-4 py-2 border-0 cursor-pointer`}
+                className={`${s.btn} bg-[color:var(--color-ink)] text-white text-[12px] leading-[1.5] uppercase tracking-[0.05em] rounded-none [@media(hover:hover){&:hover}]:opacity-75 h-10 px-4 py-2 border-0 cursor-pointer`}
               >
                 Start Exploring
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -469,7 +469,7 @@ export default function LabsLeaderboard({ content }: { content: LabsLeaderboardC
                     e.stopPropagation()
                   }}
                 >
-                  <InfoIcon className="w-4 h-4 text-[#525252] hover:text-[color:var(--color-ink)]" />
+                  <InfoIcon className="w-4 h-4 text-[#525252] [@media(hover:hover){&:hover}]:text-[color:var(--color-ink)]" />
                 </button>
               )}
             </LabsTooltip>
@@ -491,7 +491,7 @@ export default function LabsLeaderboard({ content }: { content: LabsLeaderboardC
             <h2 className="mb-4 mt-0 text-[14px] leading-[1.5] font-medium text-[color:var(--color-ink)] tracking-[0.025em]">[EVALUATE YOUR MODEL]</h2>
             <p className="max-w-3xl mx-auto mb-6 mt-0 text-[12px] leading-[1.625] text-center text-[#525252]">
               If you&apos;d like to add your model to this leaderboard or a future version, please contact{' '}
-              <a href="mailto:leaderboards@scale.com" className="text-[color:var(--color-ink)] underline hover:text-[#525252]">
+              <a href="mailto:leaderboards@scale.com" className="text-[color:var(--color-ink)] underline [@media(hover:hover){&:hover}]:text-[#525252]">
                 leaderboards@scale.com
               </a>
               . To ensure leaderboard integrity, we require that models can only be featured the FIRST TIME when an organization encounters the prompts.
@@ -501,7 +501,7 @@ export default function LabsLeaderboard({ content }: { content: LabsLeaderboardC
                 <button
                   type="button"
                   onClick={() => setEvalOpen(true)}
-                  className={`${s.btn} bg-[color:var(--color-ink)] text-white text-[12px] leading-[1.5] uppercase tracking-[0.05em] rounded-none hover:opacity-75 h-10 px-4 py-2 border-0 cursor-pointer`}
+                  className={`${s.btn} bg-[color:var(--color-ink)] text-white text-[12px] leading-[1.5] uppercase tracking-[0.05em] rounded-none [@media(hover:hover){&:hover}]:opacity-75 h-10 px-4 py-2 border-0 cursor-pointer`}
                 >
                   Evaluate your Model
                 </button>

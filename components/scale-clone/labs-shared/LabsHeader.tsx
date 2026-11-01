@@ -24,7 +24,7 @@ function SearchButton({ onClick }: { onClick: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="flex cursor-pointer items-center gap-1.5 px-2 py-1.5 text-[#525252] transition-colors hover:text-[color:var(--color-ink)]"
+      className="flex cursor-pointer items-center gap-1.5 px-2 py-1.5 text-[#525252] transition-colors [@media(hover:hover){&:hover}]:text-[color:var(--color-ink)]"
       aria-label="Search"
     >
       <SearchIcon className="w-4 h-4" />
@@ -53,7 +53,7 @@ export default function LabsHeader({ searchItems }: { searchItems?: LabsSearchIt
   return (
     <header className="sticky top-0 z-30 w-full bg-white/70 backdrop-blur-xl border-b border-[color:var(--color-hairline)]">
       <div className="flex items-center justify-between px-6 h-14">
-        <Link href={labsHref('/')} className="flex items-center transition-opacity hover:opacity-80">
+        <Link href={labsHref('/')} className="flex items-center transition-opacity [@media(hover:hover){&:hover}]:opacity-80">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/scale-clone/labs/logo-scale-labs.svg" alt="Scale Labs" width={140} height={19} />
         </Link>
@@ -67,7 +67,7 @@ export default function LabsHeader({ searchItems }: { searchItems?: LabsSearchIt
               <Link
                 key={n.href}
                 href={labsHref(n.href)}
-                className="text-[12px] leading-[1.5] tracking-[0.025em] transition-colors px-1.5 py-1 text-[#525252] hover:text-[color:var(--color-ink)] hover:bg-[#f5f5f5]"
+                className="text-[12px] leading-[1.5] tracking-[0.025em] transition-colors px-1.5 py-1 text-[#525252] [@media(hover:hover){&:hover}]:text-[color:var(--color-ink)] [@media(hover:hover){&:hover}]:bg-[#f5f5f5]"
               >
                 {n.label}
               </Link>
@@ -77,7 +77,7 @@ export default function LabsHeader({ searchItems }: { searchItems?: LabsSearchIt
         </nav>
         <div className="flex items-center gap-2 md:hidden">
           <SearchButton onClick={() => setSearch(true)} />
-          <button className="p-2 -m-2 text-[#525252] hover:text-[color:var(--color-ink)]" onClick={() => setMenu(!menu)} aria-label="Toggle mobile menu">
+          <button className="p-2 -m-2 text-[#525252] [@media(hover:hover){&:hover}]:text-[color:var(--color-ink)]" onClick={() => setMenu(!menu)} aria-label="Toggle mobile menu">
             {menu ? <XIcon className="w-5 h-5" /> : <MenuIcon className="w-5 h-5" />}
           </button>
         </div>
@@ -97,7 +97,7 @@ export default function LabsHeader({ searchItems }: { searchItems?: LabsSearchIt
                     key={n.href}
                     href={labsHref(n.href)}
                     onClick={() => setMenu(false)}
-                    className="text-[12px] leading-[1.5] tracking-[0.025em] transition-colors text-[#525252] hover:text-[color:var(--color-ink)]"
+                    className="text-[12px] leading-[1.5] tracking-[0.025em] transition-colors text-[#525252] [@media(hover:hover){&:hover}]:text-[color:var(--color-ink)]"
                   >
                     {n.label}
                   </Link>

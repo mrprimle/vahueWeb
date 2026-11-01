@@ -30,7 +30,7 @@ const XS = 'text-[12px] leading-[1.5]'
 const HEAD = `${XS} ${s.sans} text-[color:var(--color-ink)] font-semibold flex items-center uppercase`
 // The Vahue globals set `a { outline: 2px solid transparent }`; labs keeps the UA focus ring (auto 1px, offset 1px).
 const ROW =
-  'border-b border-[#e5e5e5] hover:bg-[#fafafa] transition-colors cursor-pointer group focus-visible:[outline:auto_1px_-webkit-focus-ring-color] focus-visible:[outline-offset:1px]'
+  'border-b border-[#e5e5e5] [@media(hover:hover){&:hover}]:bg-[#fafafa] transition-colors cursor-pointer group focus-visible:[outline:auto_1px_-webkit-focus-ring-color] focus-visible:[outline-offset:1px]'
 
 export default function LabsJobs({ content }: { content: LabsJobsContent }) {
   const jobs = content.greenhouseJobs.length > 0 ? content.greenhouseJobs : content.fallbackJobs
@@ -72,7 +72,7 @@ export default function LabsJobs({ content }: { content: LabsJobsContent }) {
             <span className={`${XS} ${s.sans} text-[color:var(--color-ink)] font-medium uppercase`}>{j.title}</span>
             <span className={`${XS} ${s.sans} text-[#737373] uppercase`}>{j.location.name}</span>
             <span className="flex items-center justify-end">
-              <ArrowDown className="w-3.5 h-3.5 text-[#737373] group-hover:[translate:0_2px] transition-transform" />
+              <ArrowDown className="w-3.5 h-3.5 text-[#737373] [@media(hover:hover){.group:hover_&}]:[translate:0_2px] transition-transform" />
             </span>
           </a>
         ))}
