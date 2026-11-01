@@ -16,6 +16,8 @@ export type TestimonialsContent = {
   /** colorTheme: panel / active tile text (hex) and the contrast colour (borders, tile fill, arrows) */
   theme: { hex: string; contrast: string }
   items: TestimonialItem[]
+  /** Case outcomes rather than spoken quotes: render without quotation marks. */
+  plainText?: boolean
 }
 export type ResourcePost = { title: string; category: string; href: string; image: string }
 export type ResourcesContent = { header: HeaderContent; posts: ResourcePost[] }
