@@ -7,8 +7,6 @@ const EVERGREEN: HomeColor = { hex: '#193A29', contrastColor: '#FFFFFF', tailwin
 const PURPLE: HomeColor = { hex: '#79648C', contrastColor: '#FFFFFF', tailwindClass: 'archive-purple' }
 const CLOUD: HomeColor = { hex: '#839CB2', contrastColor: '#010101', tailwindClass: 'cloud-slate' }
 
-// Neutral stand-in for images with another company's name or product baked in.
-const NEUTRAL = '/site/nav/neutral.svg'
 const logo = (id: number, width: number): HeroLogo => ({ _id: `logo-${id}`, alt: 'Logo', width, height: 30 })
 
 export const content: HomeContent = {
@@ -33,10 +31,10 @@ export const content: HomeContent = {
       },
       {
         _key: '113c973e5bc7',
-        category: 'Engineers',
-        title: [{ text: "The engineers powering the world's best AI agents." }],
-        body: [{ text: 'The agents in production run on Vahue engineers. We select experts with precision (25% have shipped production AI) and deliver at the bar enterprise AI demands.' }], // PLACEHOLDER
-        cta: { text: 'Explore Our Experts', url: '/experts' },
+        category: 'Evaluation',
+        title: [{ text: "The evals behind the world's most reliable AI." }],
+        body: [{ text: 'Every agent we run is proven on your own past cases first. We test against how your team really works (25% fewer errors before launch) and deliver at the bar production AI demands.' }], // PLACEHOLDER: 25% fewer errors
+        cta: { text: 'Explore Evaluation', url: '/evaluation/model-developers' },
       },
     ],
   },
@@ -49,18 +47,18 @@ export const content: HomeContent = {
     realWord: 'Real',
     cta: { text: 'Get started', url: '/demo', variant: 'fill' },
     items: [
-      { _key: '278a91960588', applicationType: 'Finance', image: { path: '/home/app-research.webp', alt: 'Finance image' }, link: { url: '/enterprise' }, textColor: FOUNDRY },
-      { _key: '6f8b0063ba12', applicationType: 'Life Science', image: { path: '/home/app-life-science.webp', alt: 'Life science image' }, link: { url: '/enterprise/healthcare' }, textColor: FOUNDRY },
-      { _key: '139aba2ad2f1', applicationType: 'Insurance', image: { path: '/home/app-medicine.webp', alt: 'Insurance image' }, link: { url: '/enterprise/insurance' }, textColor: EVERGREEN, animationDirection: 'right' },
+      { _key: '278a91960588', applicationType: 'Finance', image: { path: '/home/app-finance.webp', alt: 'Finance image' }, link: { url: '/enterprise' }, textColor: FOUNDRY },
+      { _key: '6f8b0063ba12', applicationType: 'Life Science', image: { path: '/home/app-life-sciences.webp', alt: 'Life science image' }, link: { url: '/enterprise/healthcare' }, textColor: FOUNDRY },
+      { _key: '139aba2ad2f1', applicationType: 'Insurance', image: { path: '/home/app-insurance.webp', alt: 'Insurance image' }, link: { url: '/enterprise/insurance' }, textColor: EVERGREEN, animationDirection: 'right' },
       { _key: '106cd65eb545', applicationType: 'Energy', image: { path: '/home/app-energy.webp', alt: 'Energy image' }, link: { url: '/enterprise' }, textColor: FOUNDRY },
       { _key: 'a84fabdf3395', applicationType: 'Infrastructure', image: { path: '/home/app-infrastructure.webp', alt: 'Infrastructure image' }, link: { url: '/enterprise' }, textColor: EVERGREEN, animationDirection: 'right' },
-      { _key: 'ac4820379d42', applicationType: 'Legal', image: { path: '/home/app-sovereignty.webp', alt: 'Legal image' }, link: { url: '/enterprise' }, textColor: EVERGREEN, animationDirection: 'right' },
-      { _key: '695de232a42d', applicationType: 'Manufacturing', image: { path: '/home/app-robotics.webp', alt: 'Manufacturing image' }, link: { url: '/physical-ai' }, textColor: PURPLE },
-      { _key: '85cba285fa3f', applicationType: 'Retail', image: { path: '/home/app-defense.webp', alt: 'Retail image' }, link: { url: '/enterprise' }, textColor: FOUNDRY },
-      { _key: '8352cf9b1cd8', applicationType: 'Operations', image: { path: '/home/app-operations.webp', alt: 'Operations image' }, link: { url: '/data-engine' }, textColor: PURPLE },
+      { _key: 'ac4820379d42', applicationType: 'Legal', image: { path: '/home/app-legal.webp', alt: 'Legal image' }, link: { url: '/enterprise' }, textColor: EVERGREEN, animationDirection: 'right' },
+      { _key: '695de232a42d', applicationType: 'Manufacturing', image: { path: '/home/app-manufacturing.webp', alt: 'Manufacturing image' }, link: { url: '/physical-ai' }, textColor: PURPLE },
+      { _key: '85cba285fa3f', applicationType: 'Retail', image: { path: '/home/app-retail.webp', alt: 'Retail image' }, link: { url: '/enterprise' }, textColor: FOUNDRY },
+      { _key: '8352cf9b1cd8', applicationType: 'Operations', image: { path: '/home/app-ops.webp', alt: 'Operations image' }, link: { url: '/data-engine' }, textColor: PURPLE },
       { _key: '7d2b48afb58a', applicationType: 'Healthcare', image: { path: '/home/app-healthcare.webp', alt: 'Healthcare image' }, link: { url: '/enterprise/healthcare' }, textColor: FOUNDRY },
-      { _key: 'b0731c77da57', applicationType: 'Customer Service', image: { path: '/home/app-autonomy.webp', alt: 'Customer service image' }, link: { url: '/donovan' }, textColor: FOUNDRY },
-      { _key: '55ff0680e844', applicationType: 'Logistics', image: { path: '/home/app-logistics.webp', alt: 'Logistics image' }, link: { url: '/enterprise' }, textColor: EVERGREEN, animationDirection: 'right' },
+      { _key: 'b0731c77da57', applicationType: 'Customer Service', image: { path: '/home/app-customer-service.webp', alt: 'Customer service image' }, link: { url: '/donovan' }, textColor: FOUNDRY },
+      { _key: '55ff0680e844', applicationType: 'Logistics', image: { path: '/home/app-shipping.webp', alt: 'Logistics image' }, link: { url: '/enterprise' }, textColor: EVERGREEN, animationDirection: 'right' },
     ],
     carousel: {
       header: [{ text: 'Proven across every industry.' }],
@@ -118,20 +116,20 @@ export const content: HomeContent = {
     heading: [{ text: 'From the Lab to the real world.\nThe latest from Vahue.' }],
     posts: [
       { _key: 'p1', title: 'Introducing Vahue Labs', url: '/blog', alt: '', imageGradientOverlay: false, titleOnly: true }, // PLACEHOLDER
-      { _key: 'p2', title: 'Regional Hospital + Vahue: Reliable AI for Better Healthcare', url: '/blog', image: NEUTRAL, alt: '', imageGradientOverlay: false, titleOnly: false }, // PLACEHOLDER
-      { _key: 'p3', title: 'How a mid-market insurer deploys AI that actually works (hint: it’s evals) | Human in the Loop: Episode 13', url: '/blog', image: NEUTRAL, alt: '', category: { name: 'Company', color: { hex: '#A8927C' } }, textColor: 'light', imageGradientOverlay: false, titleOnly: false }, // PLACEHOLDER
-      { _key: 'p4', title: 'The Next Phase of U.S. AI Policy: Governance, Implementation, and Global Leadership', url: '/blog', image: '/home/blog-4.webp', alt: '', category: { name: 'Public Sector' }, textColor: 'light', imageGradientOverlay: false, titleOnly: false }, // PLACEHOLDER
-      { _key: 'p5', title: 'Vahue and a National Agency Combine Forces to Modernize the Back Office', url: '/blog', image: NEUTRAL, alt: '', category: { name: 'Public Sector' }, textColor: 'light', imageGradientOverlay: null, titleOnly: false }, // PLACEHOLDER
-      { _key: 'p6', title: 'Agent Evals: Raising the Bar for Agentic Coding', url: '/blog', image: NEUTRAL, alt: '', category: { name: 'Research', color: { hex: '#273252' } }, textColor: 'light', imageGradientOverlay: true, titleOnly: false }, // PLACEHOLDER
-      { _key: 'p7', title: 'Regional Bank & Vahue: Paving the Way for a Digital Future', url: '/blog', image: '/home/blog-7.webp', alt: '', category: { name: 'Company', color: { hex: '#A8927C' } }, textColor: 'light', imageGradientOverlay: true, titleOnly: false }, // PLACEHOLDER
-      { _key: 'p8', title: 'Expanding Our Context Engine for Document Intake', url: '/blog', image: '/home/blog-8.webp', alt: '', category: { name: 'Product', color: { hex: '#575757' } }, textColor: 'light', imageGradientOverlay: true, titleOnly: false }, // PLACEHOLDER
+      { _key: 'p2', title: 'Regional Hospital + Vahue: Reliable AI for Better Healthcare', url: '/blog', image: '/home/post-2.webp', alt: '', imageGradientOverlay: false, titleOnly: false }, // PLACEHOLDER
+      { _key: 'p3', title: 'How a mid-market insurer deploys AI that actually works (hint: it’s evals) | Human in the Loop: Episode 13', url: '/blog', image: '/home/post-3.webp', alt: '', category: { name: 'Company', color: { hex: '#A8927C' } }, textColor: 'light', imageGradientOverlay: false, titleOnly: false }, // PLACEHOLDER
+      { _key: 'p4', title: 'The Next Phase of AI Operations: Governance, Implementation, and Measured Results', url: '/blog', image: '/home/post-4.webp', alt: '', category: { name: 'Operations' }, textColor: 'light', imageGradientOverlay: false, titleOnly: false }, // PLACEHOLDER
+      { _key: 'p5', title: 'Vahue and a Scale-up Distributor Combine Forces to Modernize the Back Office', url: '/blog', image: '/home/post-5.webp', alt: '', category: { name: 'Customers' }, textColor: 'light', imageGradientOverlay: null, titleOnly: false }, // PLACEHOLDER
+      { _key: 'p6', title: 'Agent Evals: Raising the Bar for Agentic Coding', url: '/blog', image: '/home/post-6.webp', alt: '', category: { name: 'Research', color: { hex: '#273252' } }, textColor: 'light', imageGradientOverlay: true, titleOnly: false }, // PLACEHOLDER
+      { _key: 'p7', title: 'Regional Bank & Vahue: Paving the Way for a Digital Future', url: '/blog', image: '/home/post-7.webp', alt: '', category: { name: 'Company', color: { hex: '#A8927C' } }, textColor: 'light', imageGradientOverlay: true, titleOnly: false }, // PLACEHOLDER
+      { _key: 'p8', title: 'Expanding Our Context Engine for Document Intake', url: '/blog', image: '/home/post-8.webp', alt: '', category: { name: 'Product', color: { hex: '#575757' } }, textColor: 'light', imageGradientOverlay: true, titleOnly: false }, // PLACEHOLDER
     ],
   },
   videoCta: {
     backgroundColor: FOUNDRY,
     headline: 'Our legacy, your success.',
-    description: 'Book a demo today and see how Vahue can build reliable AI for your organization.',
+    description: 'Book a demo today and see how Vahue can run reliable AI for your organization.',
     cta: { text: 'Get started', url: '/demo', variant: 'arrow' },
-    video: { url: '/home/satellite.mp4' },
+    video: { url: '/home/workflow-lines.mp4' },
   },
 }
