@@ -27,7 +27,7 @@ Clone also measured at 1920, 1450, 1280, 1279, 1024, 1023, 900, 768, 767, 640, 4
 - 1px on the tabs section below `lg`: the dots row is 25 tall on Scale and 26 here. Line box from font metrics, font gap.
 - 1024 Trusted: 560 vs 536. "DISA IL4 and FedRAMP High Authorized" wraps on Scale in Aeonik Pro. Font gap.
 
-Filled, final copy, at 1920, 1440, 1280, 1024, 1023, 768, 767, 640 and 390: section heights equal the clone's result, so the same two font gaps remain. Exceptions: 1100 and 480, where card 1 body or the overview subtitle takes one line fewer (26.4px, 25.6px).
+Filled, final copy, at 1920, 1440, 1280, 1100, 1023, 768, 767, 640 and 390: section heights equal the clone's result, so the same two font gaps remain. Exceptions: 1024, where the overview runs 26.3px taller, and 480, 25.6px shorter, each one line of card text. No overflow at any width.
 
 Layout changes by width: tabs pill from `lg`, dots below; panel grid `1.5fr 2fr`, `1.2fr 2fr` from `xl`; figure above the text below `lg`; cards 1, 2, 3 columns at `md`, `lg`; features `basis-1/4` from `lg`; logos marquee below `md`.
 
@@ -54,6 +54,7 @@ Same script on both sites (`inter.cjs` in `new-qa/donovan`). React handlers sit 
 | Video overlay | click, `lg` up | React | 647980 | `absolute inset-0 z-10`, opens modal | Box 672 x 378, pointer cursor, equal |
 | Play trap | tap below `lg` | React | 647980 | First tap sets `pointer-events: none`, no modal | auto then none, equal |
 | Modal | open | React | 582844 | Overlay .35s, dialog `scale(1.1)` .35s delay .55s, `body` overflow hidden, close button hidden | Opacity per 100ms identical; box 1008 x 581 at 216, 159.5 |
+| Local player (filled only) | click play in modal; second tap at 390 | React | not on Scale | Plays local mp4, native controls appear once playing | Modal: paused at 0, then playing at 1.43s with controls. 390: first tap leaves it paused, second plays, as the trap requires |
 | Modal | Escape, click outside | `document` keydown, React | 582844 | Unmounts, overflow restored | Same |
 | Pre-footer clip | scroll | Scrub | 656598, 540431 | Inset 5% to 0, scale 1.25 to 1 | 10 stops at 1440 and 5 at 390, identical strings |
 | Gradient tiles | none | | Mocks | Scale's CSS has `bg-gradient-to-br`, `to-indigo-600`, `to-red-600` and no other stop for these tiles, so 2 of 6 tiles draw transparent to colour and the others nothing. Reproduced by leaving the others out | Computed `backgroundImage` strings equal |
@@ -84,7 +85,7 @@ Same by eye: direction of movement, what the header covers, rounded corners from
 - **Videos:** clone keeps Scale's three Wistia iframes. Filled uses local mp4s.
 - **Images replaced at fill:** `hero.webp` (military operator), `ingest.png` (vendor logos), `agent-arsenal.webp` (Scale's product). Redrawn at the same size. Removed from `public/`: recover from commit 5a6c592 to re-check the clone.
 - **Agent Library image and videos:** drawn screens with support scenarios, so they read closer to the menu label than the copy beside them.
-- **Footer height:** chrome, not this page. Footer below the last section differs at 1279 (1015 vs 1054), 1024 (1152 vs 1170), 768 (1511 vs 1483) and 480 (1383 vs 1422). Equal at 1920 and 1440. For the lead.
+- **Footer height:** chrome, not this page. Footer plus anything below the last section, Scale vs ours, in the last run: 1920 938, 938; 1024 1191, 1075; 1023 1191, 1075; 768 1511, 1504. Earlier runs also showed 1279 at 1015, 1054 and 480 at 1383, 1422. Values at 1023 and 1024 moved between runs, so the shared footer may have changed meanwhile. Cause not traced. For the lead.
 
 ## Copy mapping
 Follows Mike's copy rule and `vahue-positioning-copy-source.md` (§0, §5, §6 "/donovan: keep the platform template"), not `research.ts`. Keep first, swap a few words second, rewrite last.
