@@ -62,6 +62,8 @@ Each is ported once from the module named. Before reimplementing something, chec
 | SectionTitle | `shared/SectionTitle.tsx` | 1900 | `059q_ihpcslaa.js` | not counted | `/generative-ai-data-engine` |
 | GlowBackground | `shared/GlowBackground.tsx` | 799808 (CSS module `_5fl2pa`) | `30w17vppvfdah.js` | not counted | `/generative-ai-data-engine` |
 | ResourcesCarousel | `shared/ResourcesCarousel.tsx`, wheel plugin `shared/keenWheelControls.ts` | 382790, 29713 | same | not counted | `/generative-ai-data-engine`: `desktopGrid` off, drag and Tab equal. `/data-engine` keeps its own copy with the grid on |
+| ChecklistWithMedia | `shared/ChecklistWithMedia.tsx` | 872447 | `3_bsw0kgw5l_w.js` (`a08f46ff155ccd7b`) | not counted | `/public-sector-data-engine`: 3 items and image, equal at 11 widths. `mockup` branch not ported |
+| VideoGallery (page-level, shared by import) | `components/pages/generative-ai-data-engine/VideoGallery.tsx` | 482270, 832862 | `30w17vppvfdah.js` | not counted | `/generative-ai-data-engine`, `/public-sector-data-engine`: drag, click, dots equal |
 
 Other shared modules a page may meet, not ported yet because few pages use them: `EnterprisePillars` 909085, `HeadlineWithCta` 925107 (8), `MeshGlobeHero` 478135, plus everything in the 975 KB `0sni47mcvnqwg.js` (`SideBySide`, `TabbedPanel`, `MilestoneTimeline`…, 7 pages). If you port one, put it in `components/site/shared` and add a row here.
 
