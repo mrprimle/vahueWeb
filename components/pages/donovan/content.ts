@@ -7,11 +7,11 @@ const WHITE = { tailwindClass: 'white', contrastColor: '#010101' }
 export const content: DonovanContent = {
   meta: {
     title: 'Support and Voice Agents for Operations Teams | Vahue',
-    description: 'Vahue empowers operations teams to field specialized Agents for mission-critical workflows.',
+    description: 'Vahue empowers operations teams to deploy specialized Agents for business-critical workflows.',
   },
   hero: {
     headline: 'Support and Voice Agents',
-    body: 'Deploy specialized AI Agents for mission-critical workflows.',
+    body: 'Deploy specialized AI Agents for business-critical workflows.',
     cta: { text: 'Book a Demo', url: '/demo' },
     backdrop: WHITE,
     image: { path: '/donovan/support-floor.jpg' },
@@ -26,7 +26,7 @@ export const content: DonovanContent = {
   overview: {
     overtitle: 'Product Overview',
     title: 'Customize, Evaluate, and Deploy Support and Voice Agents',
-    subtitle: 'Deploy mission-tailored AI agents from concept to production in record time with Vahue. Put advanced agentic capabilities in the hands of your team when and where they need it most.',
+    subtitle: 'Deploy custom-tailored AI agents from concept to production in record time with Vahue. Put advanced agentic capabilities in the hands of your team when and where they need it most.',
     cards: [
       {
         title: 'Agent Factory',
@@ -44,12 +44,12 @@ export const content: DonovanContent = {
     "System Prompt",
     "You are a customer intelligence analyst. Analyze documents accurately and always cite sources.",
     "Knowledge Base",
-    "GDELT Event Data",
+    "Order History Data",
     "Returns Policy Documents",
     "Support Operations DB",
     "Llama 3.3 70B Instruct",
     "Active Pipeline",
-    "GDELT Connector",
+    "Helpdesk Connector",
     "Source",
     "Knowledge Base",
     "Retrieval",
@@ -58,14 +58,14 @@ export const content: DonovanContent = {
     "Llama 3.3 70B",
     "LLM",
     "Output Preview",
-    "Based on GDELT event data from Q4 2024, the situation in the specified region shows escalating activity with 3 key flash points identified..." // PLACEHOLDER
+    "Based on helpdesk data from Q4 2024, the returns queue in the specified region shows rising volume with 3 key order issues identified..." // PLACEHOLDER
   ],
   "w": []
 },
       },
       {
         title: 'Test & Evaluate',
-        body: 'Compare model responses and performance metrics from leading models to determine which model is best suited for your mission and workflow, backed by rigorous testing frameworks that prioritize reliability, security, and alignment with your AI readiness goals.',
+        body: 'Compare model responses and performance metrics from leading models to determine which model is best suited for your use case and workflow, backed by rigorous testing frameworks that prioritize reliability, security, and alignment with your AI readiness goals.',
         mock: {
   "t": [
     "Models",
@@ -107,30 +107,30 @@ export const content: DonovanContent = {
 },
       },
       {
-        title: 'Agent Arsenal',
-        body: 'Discover and operationalize agents and applications designed to force-multiply your organization, aligned with your ethics principles and engineered for accountability, speed, and scale.',
+        title: 'Agent Library',
+        body: 'Discover and operationalize agents and applications designed to multiply your team’s capacity, aligned with your support policies and engineered for accountability, speed, and scale.',
         mock: {
   "t": [
-    "Agent Arsenal",
-    "Discover AI Agents optimized for mission-critical workflows",
+    "Agent Library",
+    "Discover AI Agents optimized for business-critical workflows",
     "Search for agents and applications...",
     "All",
-    "Intelligence",
-    "Planning",
+    "Support",
+    "Voice",
     "Analysis",
     "Reports",
-    "GDELT Agent",
-    "Multi-tool analysis of global events and tabular intelligence data",
+    "Order Status Agent",
+    "Multi-tool analysis of orders, returns and tabular customer data",
     "Exhaustive Search",
     "Discover all relevant documents across knowledge bases",
-    "Booking Capabilities",
-    "Analyze capabilities and produce mission announcements",
-    "Flashpoint Chat",
-    "Real-time intelligence analysis and threat monitoring",
-    "Mission Analyst",
-    "Analyze mission data and craft detailed operational reports",
+    "Booking Agent",
+    "Answer, qualify and book every caller while intent is live",
+    "Escalation Chat",
+    "Real-time ticket analysis and escalation monitoring",
+    "Queue Analyst",
+    "Analyze queue data and craft detailed operational reports",
     "Address Extraction",
-    "Extract location data from unstructured intelligence text"
+    "Extract delivery data from unstructured customer text"
   ],
   "w": []
 },
@@ -140,7 +140,7 @@ export const content: DonovanContent = {
   foundation: {
     overtitle: 'Why Vahue',
     title: 'Foundation of AI Agents',
-    subtitle: 'Discover the core building blocks that power effective mission-ready AI agents.',
+    subtitle: 'Discover the core building blocks that power effective production-ready AI agents.',
     top: [
       { icon: 'applications', label: 'Vahue Applications' },
       { icon: 'assistants', label: 'Vahue Assistants' },
@@ -158,7 +158,7 @@ export const content: DonovanContent = {
   tabs: [
   {
     "label": "Ingest Data",
-    "content": " - Access fresh intelligence with Vahue’s prebuilt data connectors. \n - Securely interact with your documents via local upload, cloud, or API.\n - Leverage data connectors to external databases like GDELT.",
+    "content": " - Access fresh customer data with Vahue’s prebuilt data connectors. \n - Securely interact with your documents via local upload, cloud, or API.\n - Leverage data connectors to external systems like your CRM.",
     "image": {
       "src": "/donovan/channels-tiles.png",
       "alt": "Ingest Data",
@@ -176,11 +176,11 @@ export const content: DonovanContent = {
     }
   },
   {
-    "label": "Agent Arsenal",
+    "label": "Agent Library",
     "content": "- Access out-of-the-box AI Agents, Applications, and Assistants designed to support workflows including: coding assistance, report-writing, and insight discovery.\n- Leverage custom agents for your support organization including agents created for each support team. \n- Orchestrate multi-agent coordination — specialized to collaborate on specific tasks. \n",
     "image": {
       "src": "/donovan/agent-library.jpg", // PLACEHOLDER
-      "alt": "Agent Arsenal",
+      "alt": "Agent Library",
       "width": 1896,
       "height": 912,
       "cover": true
@@ -205,13 +205,13 @@ export const content: DonovanContent = {
 ],
   overmatch: {
     overtitle: 'Why Vahue',
-    title: 'Achieve AI Overmatch',
-    subtitle: 'Your competitors aren’t waiting to field AI systems. Ensure decisive advantage with the most advanced, mission-ready AI capabilities your team has in its toolkit.',
+    title: 'Achieve AI Advantage',
+    subtitle: 'Your competitors aren’t waiting to deploy AI systems. Ensure lasting advantage with the most advanced, production-ready AI capabilities your team has in its toolkit.',
     features: [
   {
     "icon": "expertise",
     "title": "AI Expertise",
-    "subtitle": "Vahue works with the leading commercial foundation model providers and brings lessons learned to our public sector engagements."
+    "subtitle": "Vahue works with the leading commercial foundation model providers and brings lessons learned to our customer engagements."
   },
   {
     "icon": "performance",
@@ -236,14 +236,14 @@ export const content: DonovanContent = {
   {
     "icon": "agnostic",
     "title": "Model Agnostic",
-    "subtitle": "Leverage your preferred model provider with Vahue. Select models that account for mission parameters like cost, speed, and expert capabilities."
+    "subtitle": "Leverage your preferred model provider with Vahue. Select models that account for business parameters like cost, speed, and expert capabilities."
   }
 ],
   },
   trusted: {
     overtitle: 'Supported Environments',
     title: 'Trusted & Secure',
-    subtitle: 'Vahue is available on private and air gapped networks.',
+    subtitle: 'Vahue is available on private and isolated company networks.',
     features: [
   {
     "icon": "check",
@@ -253,7 +253,7 @@ export const content: DonovanContent = {
   {
     "icon": "check",
     "title": "Private Networks",
-    "subtitle": "Field-ready on secure company networks"
+    "subtitle": "Ready to run on secure company networks"
   },
   {
     "icon": "check",
