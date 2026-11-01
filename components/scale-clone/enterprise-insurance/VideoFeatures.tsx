@@ -12,6 +12,10 @@ import s from './insurance.module.css'
  * overlay #060606/70, panel w-[95vw] md:80vw lg:70vw max-w-7xl rounded-2xl bg-white/15 backdrop-blur-xl,
  * 24px close button, Esc closes, body scroll locked, click outside [data-modal] closes; content is an
  * aspect-video Wistia iframe with autoplay. The clone shows an empty 16:9 placeholder instead.
+ * Modal CSS module (it_l1W_*): overlay fades in 0.35s ease-out; the dialog layer starts at opacity 0 and plays
+ * showUp (scale 1.1 -> 1, opacity 0 -> 1) 0.35s ease-out after 0.55s (it also sets color #000, text-align left).
+ * The panel's form__wrapper__modal comes from the forms module, which has no ::after glow (measured: none).
+ * With a visible close button and no title the content has no pt-4 (panel measured 1008x589 on both).
  * Title mt-8 lg:mt-12 24/36; description mt-3 16/26.4 text-black/70.
  */
 
@@ -32,9 +36,9 @@ function Modal({ open, onClose }: { open: boolean; onClose: () => void }) {
   if (!open) return null
   return createPortal(
     <>
-      <div className="fixed inset-0 h-screen w-screen bg-[#060606]/70" style={{ zIndex: 60 }} />
+      <div className={`${s.modalOverlay} fixed inset-0 h-screen w-screen bg-[#060606]/70`} style={{ zIndex: 60 }} />
       <div
-        className="fixed inset-0 h-screen w-full overflow-y-scroll"
+        className={`${s.modal} fixed inset-0 h-screen w-full overflow-y-scroll outline-none`}
         style={{ zIndex: 60 }}
         role="dialog"
         aria-modal="true"
@@ -46,7 +50,7 @@ function Modal({ open, onClose }: { open: boolean; onClose: () => void }) {
         <div className="relative z-40 flex min-h-screen items-center justify-center sm:py-6">
           <div
             data-modal
-            className="relative flex w-[95vw] max-w-7xl flex-col rounded-2xl bg-white/[15%] pb-8 backdrop-blur-xl sm:pb-0 md:w-[80vw] md:text-center lg:w-[70vw]"
+            className={`relative flex w-[95vw] max-w-7xl flex-col rounded-2xl bg-white/[15%] pb-8 backdrop-blur-xl sm:min-h-[auto] sm:pb-0 md:w-[80vw] md:text-center lg:w-[70vw]`}
           >
             <div>
               <button
@@ -65,7 +69,7 @@ function Modal({ open, onClose }: { open: boolean; onClose: () => void }) {
                 </svg>
               </button>
             </div>
-            <div className="h-auto overflow-hidden px-4 pb-4 pt-4 text-white/70">
+            <div className="h-auto overflow-hidden px-4 pb-4 text-white/70">
               {/* TODO: Vahue video embed */}
               <div className="flex aspect-video w-full items-center justify-center rounded-2xl bg-neutral-950 font-mono text-xs uppercase tracking-[1px] text-white/50">
                 Video placeholder
