@@ -8,12 +8,11 @@ import type { LabsSearchItem } from './LabsSearch'
 import s from './labs.module.css'
 
 /*
- * Chrome for every labs.scale.com clone (/labs, labs-papers, labs-leaderboard, labs-blog, labs-jobs).
- * labs is a separate Next 16 app (Turbopack, Tailwind v4, Inter + Geist Mono) with its own UnifiedHeader /
- * UnifiedFooter; it brings all of its own chrome.
- * Layout mirrors labs' root: <div class="min-h-screen bg-white text-ink"> header, <main>, footer.
- *   smoothScroll: labs mounts Lenis only on its home route ("/"), so only the labs home clone sets it.
- *   searchItems: static index for the search modal (stand-in for Inkeep).
+ * Chrome for every /labs route (/labs, /labs/papers, /labs/leaderboard, /labs/blog, /labs/jobs). The site's Navbar and
+ * Footer are hidden on these routes (components/SiteChrome.tsx).
+ * Layout: <div class="min-h-screen bg-white text-ink"> header, <main>, footer.
+ *   smoothScroll: Lenis runs on the home route only, as on the page this layout comes from.
+ *   searchItems: static index for the search modal.
  */
 export default function LabsShell({ children, smoothScroll = false, searchItems }: { children: ReactNode; smoothScroll?: boolean; searchItems?: LabsSearchItem[] }) {
   return (

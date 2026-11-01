@@ -13,6 +13,10 @@ export type LabsScore = {
   isNew: boolean
   deprecated: boolean
   maxScore: number
+  /** Replaces the formatted score on the row. */
+  display?: string
+  /** Replaces the "Score: n" line in the bar tooltip. */
+  tip?: string
 }
 export type LabsLeaderboard = {
   id: string
@@ -24,12 +28,73 @@ export type LabsLeaderboard = {
   isSinglePage: boolean
   icon: string
   scores: LabsScore[]
+  /** Rows shown on the card (3 unless set). */
+  rows?: number
+  /** Card link target and label (default: the board's own ranking page). */
+  href?: string
+  cta?: string
 }
 export type LabsBrandColor = { code: string; name: string; color: string }
-export type LabsLeaderboardContent = { capturedAt: string; categories: LabsLeaderboard[]; colorConfig: LabsBrandColor[] }
+export type LabsLeaderboardCopy = {
+  route: string
+  tabs: { v: string; label: string }[]
+  hero: { overtitle: string; title: string; body: string; cta: string; stats: { label: string; value: string; body: string }[] }
+  about: { title: string; body: string }[]
+  deprecatedLabel: string
+  deprecatedInfo: string
+  evaluate: {
+    title: string
+    before: string
+    email: string
+    after: string
+    button: string
+    dialogTitle: string
+    messagePlaceholder: string
+    success: string
+    privacyHref: string
+  }
+}
+export type LabsLeaderboardContent = { capturedAt: string; categories: LabsLeaderboard[]; colorConfig: LabsBrandColor[]; copy: LabsLeaderboardCopy }
 
 export const LABS_LEADERBOARD: LabsLeaderboardContent = {
   capturedAt: '2026-11-01',
+  copy: {
+    route: '/labs-leaderboard/',
+    tabs: [
+      { v: 'all', label: 'All' },
+      { v: 'agentic', label: 'Agentic' },
+      { v: 'safety', label: 'Safety' },
+      { v: 'frontier', label: 'Frontier' },
+    ],
+    hero: {
+      overtitle: '[LEADERBOARDS]',
+      title: 'testing the limits of AI.',
+      body: 'Benchmarks for frontier, agentic, and safety capabilities',
+      cta: 'Start Exploring',
+      stats: [
+        { label: 'Benchmarks', value: '20+', body: 'Including benchmarks on agentic coding, frontier reasoning, and safety alignment.' },
+        { label: 'Models evaluated', value: '100+', body: 'From leading AI labs including OpenAI, Anthropic, Google, Meta, and open-source contributors.' },
+      ],
+    },
+    about: [
+      { title: 'Frontier AI Model Evaluations & Benchmarks', body: 'We conduct high-complexity evaluations to expose model failures, prevent benchmark saturation, and push model capabilities--while continuously evaluating the latest frontier models.' },
+      { title: 'Scaling with Human Expertise', body: 'Humans design complex evaluations and define precise criteria to assess models, while LLMs scale evaluations--ensuring efficiency and alignment with human judgment.' },
+      { title: 'Robust Datasets for Reliable AI Benchmarks', body: 'Our leaderboards are built on carefully curated evaluation sets, combining private datasets to prevent overfitting and open-source datasets for broad benchmarking and comparability.' },
+    ],
+    deprecatedLabel: 'Show Deprecated Leaderboards',
+    deprecatedInfo: "As models advance, benchmarks must evolve. We're retiring the saturated legacy leaderboards and introducing new benchmarks targeting complex reasoning, robustness, and emerging AI capabilities.",
+    evaluate: {
+      title: '[EVALUATE YOUR MODEL]',
+      before: "If you'd like to add your model to this leaderboard or a future version, please contact ",
+      email: 'leaderboards@scale.com',
+      after: '. To ensure leaderboard integrity, we require that models can only be featured the FIRST TIME when an organization encounters the prompts.',
+      button: 'Evaluate your Model',
+      dialogTitle: 'Evaluate your Model',
+      messagePlaceholder: 'Please provide details on your project.*',
+      success: 'Thanks for your interest! A member of the team will be in touch with you shortly.',
+      privacyHref: 'https://scale.com/legal/privacy',
+    },
+  },
   colorConfig: [{"code": "anthropic", "name": "Anthropic", "color": "#E27553"}, {"code": "openai", "name": "OpenAI", "color": "#65C2B9"}, {"code": "google", "name": "Google", "color": "#598DD2"}, {"code": "amazon", "name": "Amazon", "color": "#E09A3B"}, {"code": "moonshot", "name": "Moonshot AI", "color": "#A37CAD"}, {"code": "alibaba", "name": "Qwen", "color": "#E072AF"}, {"code": "meta", "name": "Meta", "color": "#6FCBEF"}, {"code": "xai", "name": "xAI", "color": "#817EAD"}, {"code": "zai", "name": "Z.ai", "color": "#D1B745"}, {"code": "mistral", "name": "Mistral", "color": "#FF6F00"}, {"code": "minimax", "name": "Minimax", "color": "#8D86E8"}, {"code": "microsoft", "name": "Microsoft (Phi)", "color": "#D95358"}, {"code": "deepseek", "name": "DeepSeek", "color": "#E39CAB"}, {"code": "xiaomi", "name": "Xiaomi Mimo", "color": "#BD836F"}, {"code": "liquid", "name": "LiquidLFM2Audio", "color": "#A69E66"}, {"code": "manus", "name": "Manus", "color": "#62A16E"}, {"code": "thinkingmachines", "name": "Thinking Machines", "color": "#9ACD32"}, {"code": "nvidia", "name": "NVIDIA", "color": "#76B900"}],
   categories: [
     {"id": "hss", "name": "Humanity's Sixth Sense", "description": "HSS, in partnership with Elorian, is a benchmark for intuitive visual reasoning across diverse image and video inputs.", "category": "frontier", "deprecated": false, "isSinglePage": false, "icon": "", "scores": [{"model": "Gemini-4-Argon (high)", "rank": 1, "score": 55.4, "confidenceInterval_upper": 4.2, "contaminationMessage": "", "company": "Google", "isNew": true, "deprecated": false, "maxScore": 61.388000000000005}, {"model": "GPT-6-Astra (max)", "rank": 2, "score": 53.6, "confidenceInterval_upper": 4.1, "contaminationMessage": "", "company": "OpenAI", "isNew": true, "deprecated": false, "maxScore": 61.388000000000005}, {"model": "GPT-6.1-Sol (max)", "rank": 3, "score": 46.6, "confidenceInterval_upper": 3.8, "contaminationMessage": "", "company": "OpenAI", "isNew": true, "deprecated": false, "maxScore": 61.388000000000005}]},

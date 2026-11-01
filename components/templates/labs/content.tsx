@@ -1,8 +1,10 @@
 // Static snapshot of https://labs.scale.com/ (captured 2026-11-01). labs renders these from Sanity at request time;
 // the clone keeps them as data so the page never calls an API.
+import type { ReactNode } from 'react'
+
 export type LabsHomeContent = {
-  hero: { title: string; body: string }
-  leaderboards: { title: string; intro: string; items: { name: string; href: string }[]; more: string }
+  hero: { title: string; body: string; logo: ReactNode }
+  leaderboards: { title: string; intro: string; items: { name: string; href: string; value?: string }[]; more: string }
   papers: {
     title: string
     intro: string
@@ -16,6 +18,8 @@ export type LabsHomeContent = {
 export const LABS_HOME: LabsHomeContent = {
   hero: {
     title: 'Research to Advance AI',
+    // eslint-disable-next-line @next/next/no-img-element
+    logo: <img src="/templates/labs/logo-scale-labs.svg" alt="Scale Labs" width={834} height={115} className="w-full max-w-[834px] h-auto" />,
     body: 'Scale Labs advances AI through research. Our research focuses on agents, post-training, reasoning, safety, evaluation, and alignment, and the science of data.',
   },
   leaderboards: {

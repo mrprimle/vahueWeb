@@ -10,6 +10,8 @@ export type LabsBlogPost = {
   categories: string[]
   authorNames: string[]
   intro: string | null
+  /** Where "Read post" opens. */
+  href?: string
 }
 
 export type LabsBlogContent = {

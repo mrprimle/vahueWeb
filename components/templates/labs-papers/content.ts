@@ -12,15 +12,20 @@ export type LabsPaper = {
   authors: string
   authorNames: string[]
   image: string
+  /** Where the row opens. */
+  href: string
 }
 
 export type LabsPapersContent = {
   title: string
   intro: string
+  /** Singular noun for the "N found" line. */
+  noun: string
   papers: LabsPaper[]
 }
 
-export const LABS_PAPERS: LabsPapersContent = {
+export const LABS_PAPERS: Omit<LabsPapersContent, 'papers'> & { papers: Omit<LabsPaper, 'href'>[] } = {
+  noun: 'paper',
   title: '[Papers]',
   intro: 'Research papers and publications from Scale Labs covering AI evaluation, safety, benchmarking, and frontier model analysis.',
   papers: [

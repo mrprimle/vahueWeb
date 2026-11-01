@@ -1,32 +1,29 @@
-// labs.scale.com is its own site. Its top-level pages are cloned under /labs*; everything else
-// (paper/post/leaderboard detail pages) links to the live site.
-export const LABS_ORIGIN = 'https://labs.scale.com'
-
+// Section keys as the labs chrome writes them, mapped to their routes. Any other href is already a real route.
 export const LABS_ROUTES: Record<string, string> = {
   '/': '/labs/',
-  '/papers': '/labs-papers/',
-  '/blog': '/labs-blog/',
-  '/leaderboard': '/labs-leaderboard/',
-  '/jobs': '/labs-jobs/',
+  '/papers': '/labs/papers/',
+  '/blog': '/labs/blog/',
+  '/leaderboard': '/labs/leaderboard/',
+  '/jobs': '/labs/jobs/',
 }
 
-/** Map a labs.scale.com href to the clone route when one exists, else the absolute live URL. */
 export function labsHref(href: string): string {
-  if (/^https?:\/\//.test(href)) return href
-  return LABS_ROUTES[href] ?? LABS_ORIGIN + href
+  return LABS_ROUTES[href] ?? href
 }
 
-/** Which labs section a clone pathname belongs to (for the header's active state). */
+/** Which labs section a pathname belongs to (for the header's active state). */
 export function labsSection(pathname: string | null): '/' | '/papers' | '/blog' | '/leaderboard' | '/jobs' | null {
   if (!pathname) return null
   const p = pathname.replace(/\/$/, '')
   if (p === '/labs') return '/'
-  if (p.startsWith('/labs-papers')) return '/papers'
-  if (p.startsWith('/labs-blog')) return '/blog'
-  if (p.startsWith('/labs-leaderboard')) return '/leaderboard'
-  if (p.startsWith('/labs-jobs')) return '/jobs'
+  if (p.startsWith('/labs/papers')) return '/papers'
+  if (p.startsWith('/labs/blog')) return '/blog'
+  if (p.startsWith('/labs/leaderboard')) return '/leaderboard'
+  if (p.startsWith('/labs/jobs')) return '/jobs'
   return null
 }
+
+export const CONTACT_EMAIL = 'human@vahue.ai'
 
 /** shadcn Button `outline` variant as labs overrides it (components/ui/button). Combine with s.btn. */
 export const BTN_OUTLINE =

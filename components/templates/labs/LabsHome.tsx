@@ -10,7 +10,7 @@ import s from '@/components/templates/labs-shared/labs.module.css'
 import type { LabsHomeContent } from './content'
 
 /*
- * 1:1 clone of https://labs.scale.com/ (app/(home)/page). Sections, in order:
+ * Labs home layout (app/(home)/page). Sections, in order:
  *   Hero (WgslGridBg + logo + H1/body) · [LEADERBOARDS] · [PAPERS] (ResearchSection, hover-to-preview) ·
  *   [BLOG] (BlogSection carousel) · [Jobs]; each section below the hero wrapped in ScrollReveal.
  * Spec: reference-snapshots/scale-clone/labs.md
@@ -29,8 +29,7 @@ function Hero({ c }: { c: LabsHomeContent['hero'] }) {
       <WgslGridBg />
       <div className={`relative z-10 ${WRAP} pt-16 md:pt-24 lg:pt-32 pb-16 lg:pb-24`}>
         <div className="mb-20 md:mb-28 lg:mb-36">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/templates/labs/logo-scale-labs.svg" alt="Scale Labs" width={834} height={115} className="w-full max-w-[834px] h-auto" />
+          {c.logo}
         </div>
         <div className="max-w-[640px]">
           <h1 className="text-[24px] leading-[1.5] md:text-[30px] md:leading-[1.5] lg:text-[36px] lg:leading-[1.25] font-semibold tracking-normal text-[color:var(--color-ink)] mb-6 mt-0 [text-wrap:balance]">
@@ -60,7 +59,8 @@ function Leaderboards({ c }: { c: LabsHomeContent['leaderboards'] }) {
                 className={`flex items-center py-2.5 border-t ${i === 0 ? 'border-t-[#d4d4d4]' : 'border-[#e5e5e5]'} [@media(hover:hover){&:hover}]:bg-[#fafafa] transition-colors -mx-2 px-2`}
               >
                 <span className="text-[12px] leading-[1.5] font-medium text-[color:var(--color-ink)] truncate">{l.name}</span>
-                <ArrowRight className="w-3 h-3 ml-auto text-[#a3a3a3] shrink-0" />
+                {l.value && <span className={`${s.mono} ml-auto pl-3 text-[12px] leading-[1.5] text-[#737373] shrink-0`}>{l.value}</span>}
+                <ArrowRight className={`w-3 h-3 ${l.value ? 'ml-3' : 'ml-auto'} text-[#a3a3a3] shrink-0`} />
               </Link>
             ))}
           </div>
@@ -270,8 +270,6 @@ function Jobs({ c }: { c: LabsHomeContent['jobs'] }) {
           <a
             key={j.href}
             href={j.href}
-            target="_blank"
-            rel="noopener noreferrer"
             className="grid grid-cols-[1fr_24px] md:grid-cols-[100px_1fr_1fr_24px] gap-x-3 md:gap-x-4 py-3 border-b border-[#e5e5e5] [@media(hover:hover){&:hover}]:bg-[#fafafa] transition-colors cursor-pointer group"
           >
             <span className={`${s.mono} hidden md:block text-[12px] leading-[1.5] text-[#737373]`}>{j.date}</span>

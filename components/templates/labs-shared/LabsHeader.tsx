@@ -9,9 +9,9 @@ import LabsSearch, { type LabsSearchItem } from './LabsSearch'
 import s from './labs.module.css'
 
 /*
- * labs.scale.com UnifiedHeader (chunk 2bejownx-dgf7.js, module 595877): sticky, h-14, white/70 + backdrop-blur-xl,
+ * The labs UnifiedHeader (chunk 2bejownx-dgf7.js, module 595877): sticky, h-14, white/70 + backdrop-blur-xl,
  * hairline bottom border; bracketed nav links with an active state; search button (+ Cmd/Ctrl+K on document keydown)
- * opening the Inkeep modal; below md a search + menu toggle and an in-flow mobile nav panel.
+ * opening the search modal; below md a search + menu toggle and an in-flow mobile nav panel.
  */
 const NAV = [
   { href: '/papers', label: '[PAPERS]' },
@@ -53,9 +53,11 @@ export default function LabsHeader({ searchItems }: { searchItems?: LabsSearchIt
   return (
     <header className="sticky top-0 z-30 w-full bg-white/70 backdrop-blur-xl border-b border-[color:var(--color-hairline)]">
       <div className="flex items-center justify-between px-6 h-14">
-        <Link href={labsHref('/')} className="flex items-center transition-opacity [@media(hover:hover){&:hover}]:opacity-80">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/templates/labs/logo-scale-labs.svg" alt="Scale Labs" width={140} height={19} />
+        <Link href={labsHref('/')} className="flex items-center gap-2 transition-opacity [@media(hover:hover){&:hover}]:opacity-80">
+          <svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true" className="shrink-0">
+            <circle cx="7" cy="7" r="7" fill="currentColor" />
+          </svg>
+          <span className="text-[20px] leading-[1.2] font-bold tracking-[-0.025em] text-[color:var(--color-ink)]">vahue.ai</span>
         </Link>
         <nav className="hidden md:flex items-center gap-1">
           {NAV.map((n) =>
