@@ -18,7 +18,7 @@ export const nav: NavContent = {
         { href: '/data-engine', name: 'Vahue Context Engine', image: img('data-engine', 'Context Engine') },
         { href: '/generative-ai-data-engine', name: 'For Back-office Sync', image: neutral('For Back-office Sync') },
         { href: '/physical-ai', name: 'For Document Intake', image: img('physical-ai', 'For Document Intake') },
-        { href: '/public-sector-data-engine', name: 'For Government', image: img('public-sector-data-engine', 'For Government') },
+        { href: '/public-sector-data-engine', name: 'For Revenue Teams', image: img('public-sector-data-engine', 'For Government') },
         { href: '/automotive', name: 'For Scoring and Decisions', image: img('automotive', 'For Scoring and Decisions') },
         { href: '/rlenvironments', name: 'Agent Environments', image: img('rlenvironments', 'Agent Environments') },
         { href: '/experts', name: 'Experts', image: img('experts', 'Experts') },
@@ -29,7 +29,7 @@ export const nav: NavContent = {
         { href: '/donovan', name: 'Support and Voice Agents', image: img('donovan', 'Support and Voice Agents') },
         { text: 'Evaluate AI' },
         { href: '/evaluation/model-developers', name: 'For Operations Teams', image: img('evaluation-model-developers', 'For Operations Teams') },
-        { href: '/evaluation/public-sector', name: 'For Public Sector', image: img('evaluation-public-sector', 'Public Sector') },
+        { href: '/evaluation/public-sector', name: 'For Regulated Teams', image: img('evaluation-public-sector', 'Public Sector') },
         { href: '/evaluation/enterprise', name: 'For Enterprise', image: img('evaluation-enterprise', 'For Enterprise') },
       ],
     },
@@ -37,8 +37,8 @@ export const nav: NavContent = {
       name: 'Solutions',
       leftColumn: [
         { href: '/enterprise', name: 'Enterprise', image: img('enterprise', 'Enterprise') },
-        { href: '/public-sector', name: 'US Public Sector', image: img('public-sector', 'US Public Sector') },
-        { href: '/global-public-sector', name: 'Global Public Sector', image: img('global-public-sector', 'Global Public Sector') },
+        { href: '/public-sector', name: 'Scale-ups', image: img('public-sector', 'US Public Sector') },
+        { href: '/global-public-sector', name: 'Professional Services', image: img('global-public-sector', 'Global Public Sector') },
       ],
       rightColumn: [
         { text: 'By Industry' },
