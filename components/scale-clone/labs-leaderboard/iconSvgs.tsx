@@ -1,0 +1,39 @@
+// lucide icons used on the leaderboard page, generated from the icon node data in labs' chunk 2jo7h7vmxpuz6.js
+// (lucide-react Mountain, PencilRuler, Shield in the about section of module 218341).
+// Card icons: labs resolves `icon` against lucide (LucideIcons[icon]) and country flags (Flags[icon]). Lucide exports are
+// forwardRef objects and labs keeps a match only when `typeof === "function"`, so no lucide card icon ever renders;
+// the flags are plain function components and do render.
+type P = { className?: string }
+const base = { xmlns: 'http://www.w3.org/2000/svg', width: 24, height: 24, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, 'aria-hidden': true }
+export const MountainIcon = ({ className }: P) => (
+  <svg {...base} className={`lucide lucide-mountain ${className ?? ''}`}>
+    <path d="m8 3 4 8 5-5 5 15H2L8 3z"/>
+  </svg>
+)
+export const PencilRulerIcon = ({ className }: P) => (
+  <svg {...base} className={`lucide lucide-pencil-ruler ${className ?? ''}`}>
+    <path d="M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13"/><path d="m8 6 2-2"/><path d="m18 16 2-2"/><path d="m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17"/><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/>
+  </svg>
+)
+export const ShieldIcon = ({ className }: P) => (
+  <svg {...base} className={`lucide lucide-shield ${className ?? ''}`}>
+    <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+  </svg>
+)
+
+// country-flag-icons (3x2 set) that labs resolves for the language leaderboards' `icon` (SA, CN, JP, KR, ES),
+// copied from the rendered DOM: <svg viewBox class="w-5 h-5 mt-0.5 overflow-hidden rounded grayscale">.
+export const FLAGS: Record<string, { viewBox: string; inner: string }> = {
+  SA: { viewBox: "0 0 513 342", inner: "<path d=\"M0 0h513v342H0z\" fill=\"#fff\"></path><g fill=\"#055e1c\"><path d=\"M0 0v342h513V0zm218 76q1 2-2 5-3 2-1 4 3 4 0 6-2 1-5-1-6-6 0-14 6-4 8 0m-102 2 1 6q0 4-2 4-5 1-5-6l2-4zm39 1 1 2q-1 4-5 4-5 0-6-4c0-4 7-6 10-2m47 2q3 4 2 9c-1 2-22 19-24 19q-3 0-4-4l6-6 6-5v-3c-5-10 7-18 14-10m35-3q3 1 0 7-2 8-6 6c-3-1-3 14 0 19q2 4 7-1c2-3 2-5 2-15 0-12 0-13 2-13q5-2 5 13 1 11 3 13 3 6 6 3 3-2-1-12-3-12 1-16h9q2-2 9 1l6 2 1-2q4-4 6-1l3 17c3 16 3 16 7 24l15 30q1 6-4 5l-8-14-6-12 1 20c1 21 1 23-4 23q-4 2-4-15l-1-27-1-16-9-13c-8-12-8-13-11-13q-6-1-2 6l2 7q0 4 3 2 6-2 6 3-1 4-8 5l-5 2-5 2q-6 0-10-3-2-3-5 1-5 5-12 2-5-1-7-10l-1-3-1 3q-3 7-9 8-7 0-9-11-3-10 2-10 4-1 5 7l2 6q1 0 4-7 6-17 13-12h1c-1-1 2-10 4-11zm-97 10 2 16 1 9h4q5 2 6-1c2-1 2-2-1-11l-3-12 3-1 11 5V82q4-2 6 1l3 23 1 20h2q5 0 5 5 1 6 3 0 3-9 8-2 1 3 2 0 3-7 4-6c5 0 6 7 1 13q-3 3-7 3l-6 1q-5 4-10 0l-2-2v5c0 21-16 42-33 42q-21-1-23-21 0-5 2-6 4-1 6 6 1 12 12 13 14 2 24-15 6-11 1-5-12 18-28 11-7-5-9-17-2-6 1-7 5-3 6 6 1 12 10 12 7 0 13-8 5-8-1-7-11-1-8-12 8-11 17-5l3 2-1-12-4-22q-3 1 0 7c2 6 2 6 0 10l-5 5q-3 3-7 1h-5l-1 16c-1 19-1 20-4 21-4 1-4-2-4-19l1-15-3 1q-3 1-6-2c-2-2-2-2-3-14l-1-12q-2-1-2 10l-1 13q-3 6-8 4c-3-2-4-4-7-15q-4-15 2-14 4-1 5 8l1 5 1-6q0-13 9-12l6 2c2 3 2 4 2 14l1 11 2-1 1-8-2-16q-3-12 2-11 3-1 5 7m163-3q4 10 1 13-4 3-7-7-3-11 2-10zm12-3 3 7q2 6 1 8v16l2 27c2 22 2 21 6 21h3l-1-5-2-23-3-33c-2-16-1-19 3-19 3 0 8 14 6 16v24c5 47 5 48 0 47q-3-2-1 4l2 6q2 1 5-9 7-18 10-16 3 0 7 5 4 7 7 7 4-1 1-33l-1-21-10-12-9-15q0-5 8-1 5 2 6 6l2 6q3 4 1-4 0-10 3-10c4 0 9 10 7 13l-1 8q1 8 4 12l3 3-2-15c-2-16-2-19 1-20q3 0 5 4l4 5h2q6-4 8 9 0 8-4 8-3 0-4-6 1-8-3-5c-1 2-1 3 1 19l2 17 5 7c6 10 12 21 11 22q-2 3-5 2l-5-8-5-8 1 8c0 11 0 11-3 11q-5 3-5-7l-1-16c0-8-1-10-4-15l-4-5v19c1 21 0 25-5 28q-6 5-13-3l-4-5-4 9q-6 14-11 15-9-1-11-16-1-8-5-1c-3 5-12 13-19 17q-8 4-8-2-1-2 6-6c9-5 17-14 17-18l-5-78q2-4 5-1m89 5 4 6q1 1-2 3l-2 2 4 24q4 25 4 35c0 10 0 11-3 17q-7 13-19 14-8 0-7-2-2-4 7-6 15-2 14-23a708 708 0 0 0-8-75c3-2 3-1 8 5m-211 19 1 4q0 3 2 2 5 0 5 4c0 4-9 6-13 2-4-5 0-17 5-12m108 1h2l4-1q4 2 0 7-7 6-11-1v-5q3-2 5 0m55 2q3 4-1 6-2 0-1 5t-1 6q-1 2-10-6-8-7-6-9 3-4 7 0l2 2 2-3q5-3 8-1m-131 13c3 2 6 14 6 17q-1 6 6 1l10-4q5-1 7-4 4-9 10-12 10 0 11 9 0 7-16 13l-2 1 13 1c16 0 16 0 13 9q-2 7-4 7l-10 2q-19 3-17 9 1 2 4 3 6 3 3 7l-7 1q-13-2-21-10l-3-3-2 3q-7 10-19 13-10 2-15-10l-5 2q-18 10-19 8l-2-3c0-2 1-2 15-11l9-6q1-3 5-4c3 1 10-5 12-9q3-6-1-15l-2-8q1-5 6-6c3 0 8 5 8 7q-1 4-4 3v1l1 10c1 9-1 13-10 21l-7 6 2 3q5 9 15-2 10-8 10-23 0-10-6-24v-4q3-4 6 1m17 2q2 3 4 0 11-3 5 5c-4 5-12 5-15-1v-4zm118 5 1 2q1 2-7 8c-8 6-9 7-11 5q-5-4 6-10c8-6 8-6 11-5m-229 3q3 2-10 10-12 8-13 3-5-3 9-10 13-8 14-3m229 10c3 2 4 9 3 11q-3 3-6 1c-2-2-3-11-1-13q1-2 4 1m-172 7q3 3 2 7 1 5-3 5-3 1-3-3l-2-4q-3-3-1-6 4-2 7 1m-79 9 1 8q0 9 3 6 4-1 4 3-1 7-7 7-7-1-7-14-1-9 2-10zm168 12q0 4 3 2t4 3q-2 6-8 8l-4-2q-3-3-4-2-4 0-5-4l5-6q7-6 7-4 3 1 2 5m102 3q4 4 1 9-7 7-7-4t6-5m-42 73c0 2 1 2 12 2q24-1 22 11 0 7-6 10c-4 1-31 2-34 0q-2-1-2-6v-4h-82l-74-1c-16 0-28-10-28-10h92c91 0 92-1 92-2q-1-3 4-5c5-2 4 4 4 5\"></path><path d=\"m195 86 1 1 1-1-1-1q-2 0-1 1m84 5q-2 2 1 5l3 3-1-4-1-5zm-125 45q-3 3-1 4 5-1 6-4zm110-7q-4 5 0 3 6-4 2-4zm-31 30q0 6 4 8l5 4q3 2 2-3 0-3 4-7 4-3 2-4l-13-3h-5zm104 101q-1 3 13 2c11 0 13 0 14-2l-13-1z\"></path></g>" },
+  CN: { viewBox: "0 0 513 342", inner: "<path fill=\"#D80027\" d=\"M0 0h513v342H0z\"></path><path d=\"m226.8 239.2-9.7-15.6-17.9 4.4 11.9-14.1-9.7-15.6 17.1 6.9 11.8-14.1-1.3 18.4 17.1 6.9-17.9 4.4zM290.6 82l-10.1 15.4 11.6 14.3-17.7-4.8-10.1 15.5-1-18.4-17.7-4.8 17.2-6.6-1-18.4 11.6 14.3zm-54.4-56.6-2 18.3 16.8 7.6-18 3.8-2 18.3-9.2-16-17.9 3.8 12.3-13.7-9.2-15.9 16.8 7.5zm56.6 136.4-14.9 10.9 5.8 17.5-14.9-10.8-14.9 11 5.6-17.6-14.9-10.7 18.4-.1 5.6-17.6 5.8 17.5zM115 46.3l17.3 53.5h56.2l-45.4 32.9 17.3 53.5-45.4-33-45.5 33 17.4-53.5-45.5-32.9h56.3z\" fill=\"#FFDA44\"></path>" },
+  JP: { viewBox: "0 0 513 342", inner: "<path fill=\"#FFF\" d=\"M0 0h512v342H0z\"></path><circle fill=\"#D80027\" cx=\"256.5\" cy=\"171\" r=\"96\"></circle>" },
+  KR: { viewBox: "0 0 513 342", inner: "<path fill=\"#FFF\" d=\"M0 0h513v342H0z\"></path><path d=\"M84.6 107.8 132 36.6m-29.7 83 47.4-71.1m-29.6 83 47.4-71.1m177.9 221.3 47.4-71.1m-29.6 82.9 47.4-71.1m-29.6 83 47.4-71.1M132 305.4l-47.4-71.1m65.2 59.2-47.4-71.1m65.2 59.3-47.4-71.1m272.6-79.1-47.4-71.1m65.2 59.2-47.4-71.1m65.2 59.3L381 36.6\" stroke=\"#000\" stroke-width=\"14.25\"></path><path d=\"m357.3 238.2 59.3 39.5m-299.4-13.8L135 252m222.3-148.2L378 90m17.8-11.9 17.8-11.9\" stroke=\"#FFF\" stroke-width=\"12.5\"></path><circle fill=\"#CA163A\" cx=\"256.5\" cy=\"171\" r=\"85.5\"></circle><path fill=\"#0E4896\" d=\"M185.3 123.6c-13.1 19.6-7.8 46.2 11.9 59.3s46.2 7.8 59.3-11.9 39.6-24.9 59.3-11.9c19.6 13.1 24.9 39.6 11.9 59.3-26.2 39.3-79.3 49.9-118.6 23.7s-49.9-79.3-23.8-118.5z\"></path>" },
+  ES: { viewBox: "0 0 22.5 15", inner: "<path fill=\"#FFF\" d=\"M0 0h22.5v15H0V0z\"></path><path fill=\"#D03433\" d=\"M0 0h22.5v4H0V0zm0 11h22.5v4H0v-4z\"></path><path fill=\"#FBCA46\" d=\"M0 4h22.5v7H0V4z\"></path><path fill=\"#FFF\" d=\"M7.8 7h1v.5h-1V7z\"></path><path fill=\"#A41517\" d=\"M7.2 8.5c0 .3.3.5.6.5s.6-.2.6-.5L8.5 7H7.1l.1 1.5zM6.6 7c0-.3.2-.5.4-.5h1.5c.3 0 .5.2.5.4V7l-.1 1.5c-.1.6-.5 1-1.1 1-.6 0-1-.4-1.1-1L6.6 7z\"></path><path fill=\"#A41517\" d=\"M6.8 7.5h2V8h-.5l-.5 1-.5-1h-.5v-.5zM5.3 6h1v3.5h-1V6zm4 0h1v3.5h-1V6zm-2.5-.5c0-.3.2-.5.5-.5h1c.3 0 .5.2.5.5v.2c0 .2-.1.3-.3.3H7c-.1 0-.2-.1-.2-.2v-.3z\"></path>" },
+}
+
+export const Flag = ({ code, className }: { code: string; className?: string }) => {
+  const f = FLAGS[code]
+  if (!f) return null
+  // eslint-disable-next-line react/no-danger
+  return <svg xmlns="http://www.w3.org/2000/svg" viewBox={f.viewBox} className={className} dangerouslySetInnerHTML={{ __html: f.inner }} />
+}
