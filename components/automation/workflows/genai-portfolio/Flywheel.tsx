@@ -255,8 +255,11 @@ const StepItem = forwardRef<StepHandle, { label: string; body: string; color: st
       aria-hidden={!active}
     >
       <div className="flex flex-col gap-4 xl:gap-6">
-        <div ref={row} className="flex items-center gap-2">
-          <Triangle color={color} />
+        <div className="flex items-center gap-2">
+          {/* the template fades only the triangle; the label is AnimatedText */}
+          <div ref={row} data-qa="fw-tri" style={{ color }}>
+            <Triangle color="currentColor" />
+          </div>
           <p ref={lab} className={`${s.mono} ${s.pending} font-mono !leading-none text-[#575757]`}>
             {label}
           </p>
@@ -343,7 +346,9 @@ export default function Flywheel({ heading, body, labels, steps }: Props) {
     const p = prog.current.progress
     const narrow = window.innerWidth < 1280
     const l = (1 - vid.clientWidth / box.clientWidth) * 100
-    const i = narrow ? (1 - vid.clientHeight / box.clientHeight) * 100 : 0
+    // template (not stepsOnly): the grey box starts just under the intro copy: (A.offsetTop + G.offsetHeight + 32) / box
+    const inner = wrap.parentElement as HTMLElement
+    const i = narrow ? ((inner.offsetTop + wrap.offsetHeight + 32) / box.clientHeight) * 100 : 0
     const { width: w, height: hh } = box.getBoundingClientRect()
     const half = hh / 2
     const d = mapRange(p, 0, 1, narrow ? i : l, 0)
@@ -390,7 +395,8 @@ export default function Flywheel({ heading, body, labels, steps }: Props) {
     const ctx = gsap.context(() => {
       apply()
       list.forEach((t) => t.set(true))
-      gsap.set([btnL.current, btnR.current], { opacity: 0, scale: 0.9 })
+      // template mount-time collapse leaves the buttons at opacity 1 / scale .9 (the arrow row itself is at opacity 0)
+      gsap.set([btnL.current, btnR.current], { opacity: 1, scale: 0.9 })
       if (reduced) {
         prog.current.progress = 1
         apply()
@@ -408,11 +414,17 @@ export default function Flywheel({ heading, body, labels, steps }: Props) {
         scrub: true,
         onUpdate: (self) => sc.setIntro(self.progress),
         onRefresh: (self) => sc.setIntro(self.progress),
+        // template useScrubTimeline: onLeave kills the intro scrub (no re-scrub after the first pass)
+        onLeave: (self) => {
+          sc.setIntro(1)
+          self.kill()
+        },
       })
       ScrollTrigger.create({
         trigger: root,
         start: 'top top',
-        end: 'bottom bottom-=50%',
+        // template end "bottom bottom-=50%" measures as a 450px pin at 1440x900 (spacer padding 450): "bottom bottom"
+        end: 'bottom bottom',
         pin: pinEl.current,
         pinSpacing: true,
         onEnter: () => expand(),
@@ -472,18 +484,14 @@ export default function Flywheel({ heading, body, labels, steps }: Props) {
     shown.current = k
   }, [step, total])
 
-  const next = () => {
-    if (step >= total) return
-    setStep(Math.min(step + 1, total))
-  }
-  const prev = () => {
-    if (step <= 1) return
-    setStep(Math.max(step - 1, 1))
-  }
+  // template: next = min(step + 1, total), prev = max(step - 1, 1) (so prev from the collapsed step 0 opens step 1)
+  const next = () => setStep(Math.min(step + 1, total))
+  const prev = () => setStep(Math.max(step - 1, 1))
 
   return (
     <div
       ref={section}
+      data-qa="flywheel"
       tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === 'ArrowRight') next()
@@ -494,7 +502,7 @@ export default function Flywheel({ heading, body, labels, steps }: Props) {
     >
       <div ref={pinEl} className={`${s.grid} h-dvh min-h-0 w-full !py-6 md:!py-24`}>
         <div className="relative col-span-full flex h-full w-full flex-col md:col-span-10 md:col-start-2 xl:flex-row">
-          <div ref={bg} className="absolute left-0 top-0 z-10 h-full w-full bg-[#eaeaea]" />
+          <div ref={bg} data-qa="fw-bg" className="absolute left-0 top-0 z-10 h-full w-full bg-[#eaeaea]" />
           <div ref={introCol} className="absolute -z-10 h-full w-full p-8 xl:w-[36%] xl:p-12">
             <div className="flex h-full w-full flex-col justify-start xl:justify-center">
               <div ref={introWrap}>
@@ -509,6 +517,7 @@ export default function Flywheel({ heading, body, labels, steps }: Props) {
           </div>
           <div
             ref={label}
+            data-qa="fw-label"
             className={`${s.mono} absolute left-6 top-6 z-10 w-fit rounded-sm bg-white px-2 py-1 font-mono tracking-[-0.01em] text-black md:left-16 md:top-16`}
           >
             <p className="relative flex flex-col items-center overflow-clip">
@@ -522,12 +531,12 @@ export default function Flywheel({ heading, body, labels, steps }: Props) {
           </div>
           <div className="absolute right-6 z-10 flex h-full items-end p-6 xl:right-16 xl:items-start xl:p-16">
             <div className={`${s.mono} mb-6 w-fit overflow-clip rounded-sm font-mono tracking-[-0.01em] text-black xl:mb-0`}>
-              <p ref={counter} className="relative flex flex-col items-center overflow-clip">
+              <p ref={counter} data-qa="fw-counter" className="relative flex flex-col items-center overflow-clip">
                 {`${String(step).padStart(2, '0')} | ${String(total).padStart(2, '0')}`}
               </p>
             </div>
           </div>
-          <div ref={stepsPanel} className="absolute z-20 h-full w-full flex-1 p-8 xl:relative xl:p-12">
+          <div ref={stepsPanel} data-qa="fw-steps" className="absolute z-20 h-full w-full flex-1 p-8 xl:relative xl:p-12">
             <div className="absolute left-0 top-0 flex h-full w-full flex-col justify-end p-8 xl:p-16">
               {steps.map((st, i) => (
                 <StepItem
@@ -537,7 +546,7 @@ export default function Flywheel({ heading, body, labels, steps }: Props) {
                   }}
                   label={`${String(i + 1).padStart(2, '0')} ${st.title}`}
                   body={st.body}
-                  color={STEP_TINT[i % STEP_TINT.length]}
+                  color={STEP_TINT[(Math.max(1, Math.min(step, total)) - 1) % STEP_TINT.length]}
                   active={step === i + 1}
                 />
               ))}

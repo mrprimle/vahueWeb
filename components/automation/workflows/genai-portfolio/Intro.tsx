@@ -313,15 +313,18 @@ export default function Intro({ heading, body, steps, sources }: Props) {
   const go = (delta: number) => {
     const cur = activeRef.current
     if (cur === null) return
-    const k = Math.max(1, Math.min(n, cur + delta))
+    // Template eR(): clamp to 0..n (step 0 = the intro window 0..18%), scroll with Lenis.scrollTo(y) (default lerp)
+    const k = Math.max(0, Math.min(n, cur + delta))
     const root = section.current
     if (!root) return
-    const w = pct[k - 1]
+    const w = k === 0 ? ([0, pct[0]?.[0] ?? 18] as [number, number]) : pct[k - 1]
     if (!w) return
     const t = (w[0] + w[1]) / 200
-    const top = root.getBoundingClientRect().top + window.scrollY
-    const y = Math.min(top + t * Math.max(0, root.offsetHeight - window.innerHeight), document.documentElement.scrollHeight - window.innerHeight)
-    gsap.to(window, { scrollTo: y, duration: prefersReducedMotion() ? 0 : 1.2, ease: 'power2.inOut', overwrite: true })
+    const lenis = (window as unknown as { __lenis?: { scroll: number; scrollTo: (y: number) => void } }).__lenis
+    const top = root.getBoundingClientRect().top + (lenis?.scroll ?? window.scrollY)
+    const y = Math.max(0, Math.min(top + t * Math.max(0, root.offsetHeight - window.innerHeight), document.documentElement.scrollHeight - window.innerHeight))
+    if (lenis) lenis.scrollTo(y)
+    else gsap.to(window, { scrollTo: y, duration: prefersReducedMotion() ? 0 : 1.2, ease: 'power2.inOut', overwrite: true })
     requestAnimationFrame(() => {
       activeRef.current = k
       setActive(k)
@@ -334,6 +337,7 @@ export default function Intro({ heading, body, steps, sources }: Props) {
   return (
     <div
       ref={section}
+      data-qa="intro"
       role="region"
       tabIndex={0}
       aria-label="How it works, step by step"
