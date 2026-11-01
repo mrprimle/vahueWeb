@@ -87,12 +87,14 @@ Same by eye: direction of movement, what the header covers, rounded corners from
 - **Audio:** Scale plays a graduation speech. Here a 10-second synthetic support call, `say` voice.
 
 ## Copy mapping
-Scoring and Decisions. Substance: the research's scoring cases and its Job: verify every item at volume without delaying service or automating beyond confidence, with criteria coverage, speed, accuracy, explainability, safe thresholds. Names stay as in `research/research.ts`. Learn, Score, Route, Monitor became the three checklist items and the loop image. Autonomy stack became the work types (Risk, Image, Routing, Text, Audio). Base, Improvement, Target became Audit, Pilot, Operate. Foundation Model became the scoring agent demo. Sample order in panels (repair order, support call) comes from the research's repair-order and support-case jobs, without client names.
+Keep rule (Mike, 2026-11-01): each string starts from Scale's text, stays verbatim if true for Vahue with the brand swapped, otherwise changes only the words the swap dictionary and phrase bank require, same template and word count. Counts come from a path-by-path compare with `content.scale.ts`, alt text, code samples and URLs excluded. Verbatim means equal after Scale to Vahue. Light means up to 3 words or about a third changed.
 
-Word counts: 81 strings compared, 63 within 15%. Most of the 18 others are one word off on short strings, alt text or the meta lines. Feature bodies run 3 to 5 words over because they matched character count and Scale's line count. Line counts and section heights equal Scale at 1440 and 390.
+Menu label: For Scoring and Decisions. Page name: Scoring and Decision Agents. Autonomy became decisions and agents. Scale's Base, Improvement and Target phases, and Why features, are back. CTAs are Scale's. 57 strings: 21 verbatim, 32 light, 4 rewritten (meta title, hero title, first resource title, foundation heading). Panel tab titles, audio prompt, code and result stay as they were because they match the panels and the audio file. Section heights equal the previous fill at 1440 and 390.
+
+**Images no longer fit:** `phase-audit`, `phase-pilot` and `phase-operate` images and videos show the old Audit, Pilot and Operate story under Base, Improvement and Target. `webinar.webp` has "Checking Every Repair Order Before It Is Billed" baked in. `scoring-loop.png` shows scoring, routing and monitoring beside Data Scoring, Data Curation and Agent Evaluation.
 
 ## Placeholders
-`// PLACEHOLDER` in `content.ts`, 11 lines: 2 logo tiles, risk queue frame, Text artwork, audio result, 3 phase videos (6s stills), 2 resource links, foundation image. Numbers inside the images and panels are sample values. No customer names or quotes on this page; "Trusted by Operations and Finance Leaders" keeps Scale's claim slot, so it needs real backing.
+`// PLACEHOLDER` in `content.ts`, 12 lines: 2 logo tiles, the trusted-by title, risk queue frame, Text artwork, audio result, 3 phase videos (6s stills), 2 resource links, foundation image. Numbers inside the images and panels are sample values. No customer names or quotes on this page.
 
 ## For Mike
 - The hero photo (a street with a boxed car) and the `Image` tab photo (a living room with boxed furniture) carry no brand, so the rule keeps them, but they are off topic for scoring. The pre-footer photo is the shared one.

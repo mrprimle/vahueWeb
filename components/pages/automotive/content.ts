@@ -1,16 +1,16 @@
-// Copy for /automotive ("Scoring and Decisions" in the menu), from research/research.ts and the NMT research (Job: verify every item at volume without automating beyond confidence).
-// Same shape and counts as content.scale.ts. Lines marked PLACEHOLDER are for Mike to replace with real data.
+// Scale's copy under the 80% rule for /automotive ("For Scoring and Decisions" in the menu). Same shape and counts as content.scale.ts.
+// Lines marked PLACEHOLDER are for Mike to replace with real data.
 import { TEXT_PANEL } from './textPanel'
 import type { AutomotiveContent } from './types'
 
 const WHITE = { tailwindClass: 'white', contrastColor: '#010101' }
 
 export const content: AutomotiveContent = {
-  meta: { title: 'Scoring and Decisions | Vahue', description: 'Score, classify and route work at volume, with every decision explained and logged.' },
+  meta: { title: 'Scoring and Decision Agents | Vahue', description: "Vahue's Scoring and Decisions Engine provides all the tools you need to drive agent improvements with data." },
   hero: {
-    headline: 'Scoring and Decisions',
-    body: 'Score, classify and route work at volume.',
-    cta: { text: 'Book an Audit', url: '/demo' },
+    headline: 'Scoring and Decision Agents',
+    body: 'Unlocking Decisions with best-in-class data.',
+    cta: { text: 'Book a Demo', url: '/demo' },
     backdrop: WHITE,
     image: { path: '/automotive/hero.webp' },
   },
@@ -19,22 +19,22 @@ export const content: AutomotiveContent = {
     { alt: 'Logo', width: 96, height: 32 }, // PLACEHOLDER
   ],
   overview: {
-    title: 'The Scoring Agent Workflow',
-    subtitle: "Vahue's scoring agents have everything you need to make consistent decisions at real volume.",
+    title: 'The Scoring and Decisions Engine',
+    subtitle: "Vahue's Scoring and Decisions Engine has everything you need to drive agent improvements with data.",
     features: [
-      { title: 'Item Scoring', description: 'Scores for tickets, quality checks, risk files and submissions, learned from your past decisions and the reasons behind them. Every item gets a score and an explanation in seconds, inside the tools you already use.' },
-      { title: 'Work Routing', description: 'Send clear cases straight on to the next system. Send borderline cases to a reviewer with explanations attached, and log every decision against its reason.' },
-      { title: 'Agreement Monitoring', description: 'Track agreement with your reviewers every week. Explore decision logs, identify drift and grow scope only once agreement holds against baseline.' },
+      { title: 'Data Scoring', description: 'Industry-leading scoring of tickets and files sourced from multiple systems. Achieve high quality decisions at low cost from ML-assisted scoring workflows, best in class operations, and advanced review interfaces.' },
+      { title: 'Data Curation', description: 'Explore both scored and unscored data. Understand dataset distribution, curate data matching target scenarios and send data for review.' },
+      { title: 'Agent Evaluation', description: 'Analyze the performance of your production AI agents. Explore agent metrics, identify agent weaknesses and evaluate your agent on scenario tests.' },
     ],
     image: { src: '/automotive/scoring-loop.png', alt: 'Scoring, routing and monitoring loop', width: 662, height: 594 },
   },
   stack: {
     overtitle: 'Decision tech stack',
-    title: 'How to Score at Volume',
+    title: 'How to Build Agents',
     tabs: {
-      panelTitle: 'Supported Work',
-      panelSubtitle: 'Every judgement your team repeats',
-      description: 'Vahue takes over the judgement your team repeats thousands of times a month, pairing language models with human review, so decisions stay consistent, explained and logged.',
+      panelTitle: 'Supported Data',
+      panelSubtitle: 'Best-in-class data to fuel decisions',
+      description: 'Vahue has pioneered in the data scoring industry by combining AI-based techniques with human-in-the-loop, delivering scored data at unprecedented quality, scalability, and efficiency.',
       cta: { text: 'Score My Data', href: '/demo' },
       titles: ['Risk', 'Image', 'Routing', 'Text', 'Audio'],
       frame: {
@@ -78,55 +78,55 @@ export const content: AutomotiveContent = {
     },
   },
   phases: {
-    title: 'Phases of Decision Automation',
-    subtitle: 'We work with you at every stage, from the first baseline to running decisions live.',
+    title: 'Phases of Agent Development',
+    subtitle: 'Vahue partners with you at every stage of developing agents within the Context Engine.',
     items: [
       {
-        title: 'Audit Phase',
-        subtitle: 'In two weeks we map one scoring workflow end to end and record the baseline: volume, minutes per item, error rate, cost and reviewer agreement. We agree the target, the human-control boundary and the point at which we stop.',
-        image: { src: '/automotive/phase-audit.webp', alt: 'Audit Phase' },
+        title: 'Base Phase',
+        subtitle: "Vahue's Context Engine helps you collect and prepare a base dataset to unlock initial agent performance. Our platform lets you randomly sample data or add constraints (ex. Claim value = high) matching your intended distribution.",
+        image: { src: '/automotive/phase-audit.webp', alt: 'Base Phase' },
         video: '/automotive/phase-audit.mp4', // PLACEHOLDER
       },
       {
-        title: 'Pilot Phase',
-        subtitle: 'In this phase, one workflow runs on your own data at real volume for four to six weeks. A person on your team checks every output until agreement holds against the baseline.',
-        image: { src: '/automotive/phase-pilot.webp', alt: 'Pilot Phase' },
+        title: 'Improvement Phase',
+        subtitle: 'In this phase, the Context Engine ensures new cases continually challenge your agent and maximally improve performance. To achieve this, Vahue offers both automated (ML-based) and manual review methods.',
+        image: { src: '/automotive/phase-pilot.webp', alt: 'Improvement Phase' },
         video: '/automotive/phase-pilot.mp4', // PLACEHOLDER
       },
       {
-        title: 'Operate Phase',
-        subtitle: 'We run the scoring agents day to day, with monitoring, exception handling, accuracy reviews and model updates. Borderline cases reach your reviewers with reasons attached, and scope grows only once agreement holds. Each month we close the loop with a report against your audited baseline.',
-        image: { src: '/automotive/phase-operate.webp', alt: 'Operate Phase' },
+        title: 'Target Phase',
+        subtitle: 'Vahue helps you collect and curate data targeted to specific scenarios with Natural Language Search and Autotag, we then review that data and improve your agent performance on those specific scenarios. Vahue helps you close the loop by evaluating your agent on scenario tests.',
+        image: { src: '/automotive/phase-operate.webp', alt: 'Target Phase' },
         video: '/automotive/phase-operate.mp4', // PLACEHOLDER
       },
     ],
   },
   why: {
     overtitle: 'Why Vahue',
-    title: 'Trusted by Operations and Finance Leaders',
-    subtitle: 'Operations leaders work with Vahue on scoring and decisions for the following reasons:',
+    title: 'Trusted by Leading Operations Teams', // PLACEHOLDER
+    subtitle: 'Operations leaders work with Vahue for building agents for the following reasons:',
     features: [
-      { icon: 'flame', title: 'Consistent Decisions', subtitle: 'Reviewers disagree and rules cannot keep up. With every past decision and reason it learns from, Vahue helps your team judge each item the same way.' },
-      { icon: 'gauge', title: 'Explained Scores', subtitle: 'Every score is stored with its reasons beside the decision, so reviewers, owners and auditors can trace any call.' },
-      { icon: 'bolt', title: 'Faster Reviews', subtitle: 'Vahue shortens the review loop - scoring each item in seconds, routing clear cases on, and leaving your reviewers only the borderline calls that need their judgement.' },
+      { icon: 'flame', title: 'Sure-Fire Improvements', subtitle: 'Data is the sure-fire way to improve your agents. With every larger/higher quality/more diverse dataset, Vahue helps your production AI agents improve.' },
+      { icon: 'gauge', title: 'Maximum Performance', subtitle: 'All the components of the Vahue Context Engine maximize the value of each reviewed decision to improve agent performance.' },
+      { icon: 'bolt', title: 'Faster Development', subtitle: 'Vahue accelerates the context engine loop - improving review speed, curating optimal datasets, and scaling up the engineering team to drive faster development of AI applications.' },
     ],
   },
   resources: {
     overtitle: 'RESOURCES',
-    title: 'Learn More About Scoring Agents',
+    title: 'Learn More About Context Engine',
     items: [
       {
-        id: 'checking-repair-orders',
-        overtitle: 'Scoring',
-        title: 'Checking Every Repair Order Before It Is Billed',
-        image: { src: '/automotive/webinar.webp', alt: 'Checking Every Repair Order Before It Is Billed' },
+        id: 'upgrading-workflow-context-engine',
+        overtitle: 'Context Engine',
+        title: 'Upgrading Your Workflow Into a Context Engine',
+        image: { src: '/automotive/webinar.webp', alt: 'Upgrading Your Workflow Into a Context Engine' },
         link: '/events', // PLACEHOLDER
       },
       {
-        id: 'guide-reviewer-agreement',
+        id: 'guide-authoritative',
         overtitle: 'Guides',
-        title: 'The Reviewer Agreement Guide',
-        image: { src: '/automotive/guide-computer-vision.png', alt: 'The Reviewer Agreement Guide' },
+        title: 'The Authoritative Guide',
+        image: { src: '/automotive/guide-computer-vision.png', alt: 'The Authoritative Guide' },
         link: '/guides', // PLACEHOLDER
       },
     ],
@@ -135,14 +135,14 @@ export const content: AutomotiveContent = {
     title: 'The Decision Scoring Agent',
     overtitle: 'Live Demo',
     heading: "Introducing Vahue's Decision Scoring Agent Demo",
-    body: 'A tested, source-grounded scoring agent that learns your past decisions and explains every score it gives.',
-    link: { text: 'Book a Scoring Audit →', href: '/demo' },
+    body: 'State of the art, language-grounded, scoring agent to accelerate the review of high-volume decisions.',
+    link: { text: 'Test Drive the Agent →', href: '/demo' },
     image: { src: '/automotive/foundation.webp', alt: 'Decision Scoring Agent', width: 544, height: 306 }, // PLACEHOLDER
   },
   prefooter: {
-    headline: 'The end of guessing starts here',
-    cta: { text: 'Book an Audit', url: '/demo' },
-    secondaryCta: { text: 'All Workflows', url: '/data-engine' },
+    headline: 'The future of your industry starts here',
+    cta: { text: 'Book a Demo', url: '/demo' },
+    secondaryCta: { text: 'Build AI', url: '/data-engine' },
     backdrop: WHITE,
     image: { path: '/automotive/prefooter.webp' },
   },
