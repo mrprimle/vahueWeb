@@ -62,6 +62,7 @@ export default function FullBleedMedia({ image, imageBg, headline, body, primary
     if (!root) return
     const reduced = prefersReducedMotion()
     const texts: ReturnType<typeof createAnimatedText>[] = []
+    let offRetro = () => {}
 
     const ctx = gsap.context(() => {
       if (!reduced && startPercentage > 0) {
@@ -87,10 +88,8 @@ export default function FullBleedMedia({ image, imageBg, headline, body, primary
           trigger: root,
           start: 'top bottom',
           end: 'center center',
+          // onUpdate only, as on Scale: no initial set, so the media sits at scale 1 until the trigger first updates
           onUpdate: ({ progress }) => {
-            if (media.current) gsap.set(media.current, { scale: 1.25 - 0.25 * progress })
-          },
-          onRefresh: ({ progress }) => {
             if (media.current) gsap.set(media.current, { scale: 1.25 - 0.25 * progress })
           },
         })
@@ -144,18 +143,19 @@ export default function FullBleedMedia({ image, imageBg, headline, body, primary
             },
           })
       }
-      ScrollTrigger.create({
-        trigger: root,
-        start: 'top center',
-        once: true,
-        onEnter: play,
-        onRefresh: (self) => {
-          if (self.progress > 0) play()
-        },
-      })
+      // useScrollTrigger (chunk 37xz28pjbnlx4, module 210104): start `top center`, default end `bottom 20%`,
+      // retroactiveOnEnter: on every refresh, fire onEnter once progress > 0 or the scroll is at/after start - 1.
+      const st = ScrollTrigger.create({ trigger: root, start: 'top center', end: 'bottom 20%', onEnter: play })
+      const retro = () => {
+        if (st.progress > 0 || st.scroll() >= st.start - 1) play()
+      }
+      ScrollTrigger.addEventListener('refresh', retro)
+      retro()
+      offRetro = () => ScrollTrigger.removeEventListener('refresh', retro)
     }, root)
 
     return () => {
+      offRetro()
       texts.forEach((t) => t.revert())
       ctx.revert()
     }

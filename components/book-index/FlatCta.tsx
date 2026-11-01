@@ -1,15 +1,16 @@
 'use client'
 
-import { forwardRef, useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
+import { forwardRef, useCallback, useEffect, useRef, useState, type ReactNode, type TransitionEvent } from 'react'
 import s from './book-index.module.css'
 
 /*
- * Copied from components/scale-clone/guides/FlatCta.tsx (only the white "arrow" variant is used on the book index pages).
- * scale.com FlatCta (originally from the security clone. Originally from automotive, plus the outlined "borderArrow" variant used on
- * /security promo cards: 1px border, transparent 32px icon box, fill slides in from the left at 600ms).
+ * Copied from the enterprise-insurance clone (Scale chunk 1h0nvyhf5gbrf.js sha256 10b2627a… is byte-identical on /guides).
  * scale.com FlatCta. Hover slides a currentColor layer (opacity .35 / .30) in from below
  * (from the left for the arrow variant), and out the opposite side on leave.
- * Fill / border: 300ms, label scales to .9. Arrow: 600ms, chevron track slides one slot.
+ * Fill / border: 300ms, label scales to .9. Arrow: 600ms, chevron track slides one slot in, snaps back on leave.
+ * "borderArrow" = Scale's `arrowOutline` variant (promo cards): 1px border, transparent 32px icon box, fill on x
+ * like the arrow variant, opacity .35 on black. Internal links (Scale's CMSLink → next/link) also carry
+ * `focus:outline-1 focus:outline-scale-skyblue` (1px #86bff2 on :focus); external ones don't (pass `external`).
  */
 
 type Variant = 'fill' | 'border' | 'arrow' | 'borderArrow'
@@ -21,6 +22,8 @@ type Props = {
   theme?: Theme
   children: ReactNode
   className?: string
+  /** Scale's CMSLink external branch: no focus outline classes. */
+  external?: boolean
 }
 
 export const Chevron = () => (
@@ -33,38 +36,103 @@ export const Chevron = () => (
 )
 
 const FlatCta = forwardRef<HTMLAnchorElement, Props>(function FlatCta(
-  { href, variant = 'fill', theme = 'black', children, className = '' },
+  { href, variant = 'fill', theme = 'black', children, className = '', external = false },
   ref,
 ) {
   const arrow = variant === 'arrow' || variant === 'borderArrow'
   const outline = variant === 'border' || variant === 'borderArrow'
   const bordered = variant === 'borderArrow'
-  // idle -> in (hovered) -> out (leaving) -> reset (snap back without transition) -> idle
-  const [phase, setPhase] = useState<'idle' | 'in' | 'out' | 'reset'>('idle')
+  // Same state machine as Scale's FlatCta (chunk 1h0nvyhf5gbrf.js, module 892855):
+  //   hovered (U) -> fill at 0; leaving (D) -> fill exits the far side; resetting (j) -> fill snaps back to the
+  //   start with no transition, released after two rAFs. Leave resets on the fill's transform transitionend,
+  //   or after 680ms. Scale's fill moves with the CSS `translate` property (Tailwind v4 translate-*), so the
+  //   transitionend it gets is 'translate' and the 'transform' check never matches: in practice the reset is the
+  //   680ms timeout (measured: the border fill still sits at -100% 320ms after leaving). The fill here uses
+  //   `translate` too, so the same check behaves the same way. Re-entering while the fill is still leaving snaps it back first, so it always enters
+  //   from the start side. Arrow track: hovered slides -50% -> 0 (600ms); leave snaps it back (transition none).
+  const [hovered, setHovered] = useState(false)
+  const [leaving, setLeaving] = useState(false)
+  const [resetting, setResetting] = useState(false)
+  const [trackIn, setTrackIn] = useState(false)
+  const [trackSnap, setTrackSnap] = useState(false)
+  const pending = useRef(false)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const duration = arrow ? 600 : 300
 
-  useEffect(() => () => {
-    if (timer.current) clearTimeout(timer.current)
+  const clear = () => {
+    if (timer.current != null) clearTimeout(timer.current)
+    timer.current = null
+  }
+  useEffect(() => clear, [])
+
+  const finishLeave = useCallback(() => {
+    if (!pending.current) return
+    clear()
+    pending.current = false
+    setLeaving(false)
+    setResetting(true)
   }, [])
 
   useEffect(() => {
-    if (phase !== 'reset') return
-    const id = requestAnimationFrame(() => requestAnimationFrame(() => setPhase('idle')))
-    return () => cancelAnimationFrame(id)
-  }, [phase])
+    if (!resetting) return
+    let b = 0
+    const a = requestAnimationFrame(() => {
+      b = requestAnimationFrame(() => setResetting(false))
+    })
+    return () => {
+      cancelAnimationFrame(a)
+      cancelAnimationFrame(b)
+    }
+  }, [resetting])
+
+  useEffect(() => {
+    if (!trackSnap) return
+    let b = 0
+    const a = requestAnimationFrame(() => {
+      b = requestAnimationFrame(() => setTrackSnap(false))
+    })
+    return () => {
+      cancelAnimationFrame(a)
+      cancelAnimationFrame(b)
+    }
+  }, [trackSnap])
 
   const enter = useCallback(() => {
-    if (timer.current) clearTimeout(timer.current)
-    setPhase('in')
-  }, [])
-  const leave = useCallback(() => {
-    setPhase('out')
-    timer.current = setTimeout(() => setPhase('reset'), arrow ? 680 : 380)
+    clear()
+    setResetting(pending.current)
+    pending.current = false
+    setLeaving(false)
+    setHovered(true)
+    if (arrow) {
+      setTrackSnap(false)
+      setTrackIn(true)
+    }
   }, [arrow])
 
-  const offset = arrow ? 'translateX(-100%)' : 'translateY(100%)'
-  const fillTransform =
-    phase === 'in' ? 'translate(0,0)' : phase === 'out' ? (arrow ? 'translateX(100%)' : 'translateY(-100%)') : offset
+  const leave = useCallback(() => {
+    if (arrow) {
+      setTrackIn(false)
+      setTrackSnap(true)
+    }
+    setHovered(false)
+    if (resetting) return
+    setLeaving(true)
+    pending.current = true
+    clear()
+    timer.current = setTimeout(() => {
+      timer.current = null
+      finishLeave()
+    }, 680)
+  }, [arrow, resetting, finishLeave])
+
+  const onFillEnd = (e: TransitionEvent<HTMLSpanElement>) => {
+    if (e.target !== e.currentTarget) return
+    if (e.propertyName === 'transform' || e.propertyName === '-webkit-transform') finishLeave()
+  }
+
+  const start = arrow ? '-100% 0' : '0 100%'
+  const fillTranslate = resetting ? start : hovered ? '0 0' : leaving ? (arrow ? '100% 0' : '0 -100%') : start
+  const trackTransform = trackIn && !trackSnap ? 'translateX(0)' : 'translateX(-50%)'
 
   const colours = outline
     ? theme === 'white'
@@ -81,15 +149,17 @@ const FlatCta = forwardRef<HTMLAnchorElement, Props>(function FlatCta(
       href={href}
       onPointerEnter={enter}
       onPointerLeave={leave}
-      className={`${s.cta} ${arrow && !bordered ? s.ctaArrow : ''} ${bordered ? s.ctaBorderArrow : ''} ${colours} ${className}`}
+      className={`${s.cta} ${arrow && !bordered ? s.ctaArrow : ''} ${bordered ? s.ctaBorderArrow : ''} ${external ? '' : s.ctaFocus} ${colours} ${className}`}
     >
       <span
         aria-hidden="true"
         className={s.ctaFill}
+        onTransitionEnd={onFillEnd}
         style={{
           opacity: fillOpacity,
-          transform: fillTransform,
-          transitionDuration: phase === 'reset' ? '0ms' : arrow ? '600ms' : '300ms',
+          translate: fillTranslate,
+          transition: resetting ? 'none' : undefined,
+          transitionDuration: resetting ? undefined : `${duration}ms`,
         }}
       />
       {arrow ? (
@@ -112,7 +182,10 @@ const FlatCta = forwardRef<HTMLAnchorElement, Props>(function FlatCta(
             }`}
             data-cta-arrow
           >
-            <span className={s.ctaTrack}>
+            <span
+              className={s.ctaTrack}
+              style={{ transform: trackTransform, transition: trackSnap ? 'none' : undefined }}
+            >
               <span>
                 <Chevron />
               </span>
