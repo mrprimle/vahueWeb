@@ -110,7 +110,7 @@ export function FullBleedMediaSection({
       clipContainerClassName="col-span-full"
     >
       <section ref={section} className={cn('text-black bg-white FullBleedMediaSection', rounded && ROUNDED, sectionClassName)}>
-        <div className={cn('relative p-8 md:p-16 min-h-[480] md:min-h-[720] flex items-end', rounded ? ROUNDED : 'overflow-clip')}>
+        <div className={cn('relative p-8 md:p-16 min-h-[480px] md:min-h-[720px] flex items-end', rounded ? ROUNDED : 'overflow-clip')}>
           <div className={cn('relative z-20 flex flex-col gap-6 w-full max-w-[72rem]', backdropColor?.contrastColor === '#010101' ? 'text-black' : 'text-white')}>
             <AnimatedText
               tagName="h2"

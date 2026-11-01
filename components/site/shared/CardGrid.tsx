@@ -10,6 +10,7 @@ import { AnimatedText, type AnimatedTextHandle } from './AnimatedText'
 import { BaseCard, CARD_HEADER2, CARD_PADDING, GRID_COLS, directionalEntrance, resolveColumns } from './BaseCard'
 import { CMSLink } from './CMSLink'
 import { FlatCta, type FlatCtaProps } from './FlatCta'
+import { RichText, type RichBlock } from './RichText'
 
 type CardHandle = { animateIn: (o?: { delay?: number; index?: number }) => Promise<void>; animateSet: () => void }
 type IconComponent = (p: { size?: number; className?: string }) => ReactNode
@@ -34,7 +35,7 @@ type Common = {
 export type CardData = Common & {
   _type: 'card'
   labelEnd?: string
-  description?: string
+  description?: string | RichBlock[]
   theme?: 'dark' | 'light'
   titleSize?: 'header5-regular' | 'header2' | string
   iconBgClass?: string
@@ -42,7 +43,7 @@ export type CardData = Common & {
 
 export type LinkCardData = Common & {
   _type: 'linkCard'
-  description?: string
+  description?: RichBlock[]
   link?: { url: string; text?: string }
   hoveredColor?: { tailwindClass: string; hex?: string }
   gap?: 'sm' | 'md'
@@ -137,10 +138,12 @@ export const Card = forwardRef<CardHandle, Omit<CardData, '_type'>>(function Car
             ) : null}
           </div>
           <div className="flex flex-col gap-4">
-            {description ? (
+            {description && typeof description === 'string' ? (
               <AnimatedText ref={bodyRef} tagName="p" className={cn('body2-regular', theme === 'light' ? 'text-scale-gray-30' : 'text-white')}>
                 {description}
               </AnimatedText>
+            ) : description?.length ? (
+              <RichText value={description as RichBlock[]} animatedTextRef={bodyRef} animatedTextClassName="min-h-16" className="[&_.header2]:mb-2" />
             ) : null}
           </div>
         </div>
@@ -262,11 +265,9 @@ export const LinkCard = forwardRef<CardHandle, Omit<LinkCardData, '_type'>>(func
               </AnimatedText>
             ) : null}
             <div className="flex flex-col justify-end flex-1 gap-4">
-              {description ? (
+              {description?.length ? (
                 <div className="text-scale-gray-10 CardGridDescription md:min-h-(--cg-desc-min-h,0px)">
-                  <AnimatedText ref={bodyRef} tagName="div" className="RichText text-scale-gray-10" preserveLinesMatchingSelector="figure">
-                    <p className="body1">{description}</p>
-                  </AnimatedText>
+                  <RichText value={description} animatedTextRef={bodyRef} animatedTextClassName="text-scale-gray-10" />
                 </div>
               ) : null}
               {link?.text ? (
