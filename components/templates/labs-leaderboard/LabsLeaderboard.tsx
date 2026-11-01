@@ -10,21 +10,14 @@ import { Flag, MountainIcon, PencilRulerIcon, ShieldIcon } from './iconSvgs'
 import type { LabsBrandColor, LabsLeaderboard as Board, LabsLeaderboardContent, LabsScore } from './content'
 
 /*
- * 1:1 clone of https://labs.scale.com/leaderboard: labs' `Home` (chunk 2jo7h7vmxpuz6.js, module 218341).
+ * Labs leaderboard layout: `Home` (chunk 2jo7h7vmxpuz6.js, module 218341).
  *   hero (qX) -> #leaderboards: Radix Tabs All/Agentic/Safety/Frontier, card grid (qG) -> about (qK) ->
- *   #deprecated: Radix Switch + Info tooltip, deprecated grid (br) -> [EVALUATE YOUR MODEL] (bp) + HubSpot dialog.
+ *   #deprecated: Radix Switch + Info tooltip, deprecated grid (br) -> [EVALUATE YOUR MODEL] (bp) + contact dialog.
  * Card scores: `LeaderboardScoreEntry` (37yhmp3ou6exv.js, module 41336), top 3 per board.
  * Spec: reference-snapshots/scale-clone/labs-leaderboard.md
  */
 
-type Tab = 'all' | 'agentic' | 'safety' | 'frontier'
-const TABS: { v: Tab; label: string }[] = [
-  { v: 'all', label: 'All' },
-  { v: 'agentic', label: 'Agentic' },
-  { v: 'safety', label: 'Safety' },
-  { v: 'frontier', label: 'Frontier' },
-]
-const ROUTE = '/labs-leaderboard/'
+type Tab = string
 
 /* ---------- brand colour (module 371198 getProviderKeyFromModelOrOrg + 41336 fallback) ---------- */
 const BRAND = [
@@ -176,7 +169,7 @@ function ScoreEntry({ e, colorConfig }: { e: LabsScore; colorConfig: LabsBrandCo
             ) : null}
           </Contamination>
           <p className={`${MONO} ml-auto text-[12px] leading-[1.5] whitespace-nowrap space-x-1.5 max-sm:basis-full max-sm:text-right m-0`}>
-            <span className={v ? 'text-[#d4d4d4]' : 'text-[color:var(--color-ink)]'}>{e.score.toFixed(2)}</span>
+            <span className={v ? 'text-[#d4d4d4]' : 'text-[color:var(--color-ink)]'}>{e.display ?? e.score.toFixed(2)}</span>
             {ci !== 0 && <span className={v ? 'text-[#d4d4d4]' : 'text-[#525252]'}>±{ci.toFixed(2)}</span>}
           </p>
         </div>
@@ -186,7 +179,7 @@ function ScoreEntry({ e, colorConfig }: { e: LabsScore; colorConfig: LabsBrandCo
           content={
             <>
               {v && <p className="mb-2 mt-0 font-semibold text-[#d4d4d4]">Deprecated</p>}
-              <p className="m-0">Score: {e.score}</p>
+              <p className="m-0">{e.tip ?? `Score: ${e.score}`}</p>
               {ci !== 0 && (
                 <>
                   <p className="m-0">± {ci}</p>
@@ -225,6 +218,7 @@ function ScoreEntry({ e, colorConfig }: { e: LabsScore; colorConfig: LabsBrandCo
 }
 
 function boardHref(b: Board) {
+  if (b.href) return b.href
   const h = `/leaderboard/${b.id}`
   return labsHref(b.tabKey ? `${h}?tab=${b.tabKey}` : h)
 }
@@ -245,7 +239,7 @@ function Card({ item, colorConfig }: { item: Board; colorConfig: LabsBrandColor[
         <div>
           {item.scores.length > 0 && (
             <div className="flex flex-col gap-3 mt-4 mb-4">
-              {item.scores.slice(0, 3).map((e) => (
+              {item.scores.slice(0, item.rows ?? 3).map((e) => (
                 <div key={e.model}>
                   <ScoreEntry e={e} colorConfig={colorConfig} />
                 </div>
@@ -253,7 +247,7 @@ function Card({ item, colorConfig }: { item: Board; colorConfig: LabsBrandColor[
             </div>
           )}
           <span className="text-[12px] leading-[1.5] text-[#525252] [@media(hover:hover){.group:hover_&}]:text-[color:var(--color-ink)] [@media(hover:hover){.group:hover_&}]:underline underline-offset-2">
-            View Full Ranking <span style={{ fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif' }}>→</span>
+            {item.cta ?? 'View Full Ranking'} <span style={{ fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif' }}>→</span>
           </span>
         </div>
       </div>
@@ -267,7 +261,7 @@ const H2 = 'mb-3 mt-0 text-[14px] leading-[1.5] font-medium text-[color:var(--co
 const P = 'text-[12px] leading-[1.625] text-[#525252] m-0'
 
 /* Radix Tabs: automatic activation, roving focus with loop, Home/End, mouse-down selects */
-function TabList({ value, onChange, tabs }: { value: Tab; onChange: (t: Tab, fromClick: boolean) => void; tabs: typeof TABS }) {
+function TabList({ value, onChange, tabs }: { value: Tab; onChange: (t: Tab, fromClick: boolean) => void; tabs: { v: Tab; label: string }[] }) {
   const refs = useRef<(HTMLButtonElement | null)[]>([])
   const key = (e: KeyboardEvent<HTMLButtonElement>, i: number) => {
     if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return
@@ -334,10 +328,10 @@ function Switch({ checked, onChange }: { checked: boolean; onChange: () => void 
 }
 
 export default function LabsLeaderboard({ content }: { content: LabsLeaderboardContent }) {
-  const { categories, colorConfig } = content
+  const { categories, colorConfig, copy } = content
   const active = categories.filter((e) => !e.isSinglePage && !e.deprecated)
   const deprecated = categories.filter((e) => !e.isSinglePage && e.deprecated)
-  const tabs = TABS.filter((t) => (t.v === 'all' ? active.length > 0 : active.some((e) => e.category === t.v)))
+  const tabs = copy.tabs.filter((t) => (t.v === 'all' ? active.length > 0 : active.some((e) => e.category === t.v)))
   const [tab, setTab] = useState<Tab>('all')
   const [showDep, setShowDep] = useState(false)
   const [evalOpen, setEvalOpen] = useState(false)
@@ -346,13 +340,13 @@ export default function LabsLeaderboard({ content }: { content: LabsLeaderboardC
   // labs reads ?category= on the server (Tabs defaultValue); the static clone reads it once on mount.
   useEffect(() => {
     const c = new URLSearchParams(location.search).get('category') || ''
-    if (c === 'agentic' || c === 'safety' || c === 'frontier') setTab(c)
-  }, [])
+    if (c !== 'all' && copy.tabs.some((t) => t.v === c)) setTab(c)
+  }, [copy.tabs])
 
   const onTab = (t: Tab, fromClick: boolean) => {
     setTab(t)
     // TabsTrigger onClick: history.replaceState({category}, "", buildUrlWithCategory("", t))
-    if (fromClick) window.history.replaceState({ ...window.history.state, category: t }, '', t === 'all' ? ROUTE : `${ROUTE}?category=${t}`)
+    if (fromClick) window.history.replaceState({ ...window.history.state, category: t }, '', t === 'all' ? copy.route : `${copy.route}?category=${t}`)
   }
 
   const shown = tab === 'all' ? active : active.filter((e) => e.category === tab)
@@ -362,31 +356,28 @@ export default function LabsLeaderboard({ content }: { content: LabsLeaderboardC
       {/* hero qX */}
       <section className="w-full border-b border-solid border-[color:var(--color-hairline)] border-x-0 border-t-0">
         <div className={`${WRAP} py-16 md:py-20 lg:py-24`}>
-          <h2 className="text-[12px] leading-[1.5] font-medium text-[color:var(--color-ink)] tracking-[0.025em] uppercase mb-10 mt-0">[LEADERBOARDS]</h2>
+          <h2 className="text-[12px] leading-[1.5] font-medium text-[color:var(--color-ink)] tracking-[0.025em] uppercase mb-10 mt-0">{copy.hero.overtitle}</h2>
           <div className="flex flex-col lg:flex-row lg:gap-20">
             <div className="flex-1 max-w-2xl">
-              <h1 className="text-[36px] leading-[1.25] sm:text-[48px] md:text-[60px] font-light tracking-[-0.05em] text-[color:var(--color-ink)] mb-6 mt-0 [text-wrap:balance]">testing the limits of AI.</h1>
-              <p className="text-[12px] text-[#525252] leading-[1.8] max-w-lg mb-8 mt-0">Benchmarks for frontier, agentic, and safety capabilities</p>
+              <h1 className="text-[36px] leading-[1.25] sm:text-[48px] md:text-[60px] font-light tracking-[-0.05em] text-[color:var(--color-ink)] mb-6 mt-0 [text-wrap:balance]">{copy.hero.title}</h1>
+              <p className="text-[12px] text-[#525252] leading-[1.8] max-w-lg mb-8 mt-0">{copy.hero.body}</p>
               <button
                 type="button"
                 onClick={() => document.getElementById('leaderboards')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
                 className={`${s.btn} bg-[color:var(--color-ink)] text-white text-[12px] leading-[1.5] uppercase tracking-[0.05em] rounded-none [@media(hover:hover){&:hover}]:opacity-75 h-10 px-4 py-2 border-0 cursor-pointer`}
               >
-                Start Exploring
+                {copy.hero.cta}
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
             <div className="mt-10 lg:mt-0 lg:w-[320px] shrink-0 flex flex-row lg:flex-col gap-8">
-              <div>
-                <span className="text-[12px] leading-[1.5] text-[color:var(--color-ink-faint)] tracking-[0.025em] uppercase block mb-2">Benchmarks</span>
-                <span className="text-[30px] leading-[1.5] font-light text-[color:var(--color-ink)] tracking-[-0.025em]">20+</span>
-                <p className="text-[12px] text-[#525252] leading-[1.7] mt-2 mb-0">Including benchmarks on agentic coding, frontier reasoning, and safety alignment.</p>
-              </div>
-              <div className="border-solid border-0 border-l lg:border-l-0 lg:border-t border-[color:var(--color-hairline)] pl-8 lg:pl-0 lg:pt-8">
-                <span className="text-[12px] leading-[1.5] text-[color:var(--color-ink-faint)] tracking-[0.025em] uppercase block mb-2">Models evaluated</span>
-                <span className="text-[30px] leading-[1.5] font-light text-[color:var(--color-ink)] tracking-[-0.025em]">100+</span>
-                <p className="text-[12px] text-[#525252] leading-[1.7] mt-2 mb-0">From leading AI labs including OpenAI, Anthropic, Google, Meta, and open-source contributors.</p>
-              </div>
+              {copy.hero.stats.map((st, i) => (
+                <div key={st.label} className={i ? 'border-solid border-0 border-l lg:border-l-0 lg:border-t border-[color:var(--color-hairline)] pl-8 lg:pl-0 lg:pt-8' : undefined}>
+                  <span className="text-[12px] leading-[1.5] text-[color:var(--color-ink-faint)] tracking-[0.025em] uppercase block mb-2">{st.label}</span>
+                  <span className="text-[30px] leading-[1.5] font-light text-[color:var(--color-ink)] tracking-[-0.025em]">{st.value}</span>
+                  <p className="text-[12px] text-[#525252] leading-[1.7] mt-2 mb-0">{st.body}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -417,26 +408,19 @@ export default function LabsLeaderboard({ content }: { content: LabsLeaderboardC
       <section className="w-full py-16 border-0 border-t border-solid border-[color:var(--color-hairline)]">
         <div className={WRAP}>
           <div className="grid w-full gap-8 md:grid-cols-3">
-            <div>
-              <MountainIcon className="w-5 h-5 mb-4 text-[#525252] block" />
-              <h2 className={H2}>Frontier AI Model Evaluations &amp; Benchmarks</h2>
-              <p className={P}>We conduct high-complexity evaluations to expose model failures, prevent benchmark saturation, and push model capabilities--while continuously evaluating the latest frontier models.</p>
-            </div>
-            <div>
-              <PencilRulerIcon className="w-5 h-5 mb-4 text-[#525252] block" />
-              <h2 className={H2}>Scaling with Human Expertise</h2>
-              <p className={P}>Humans design complex evaluations and define precise criteria to assess models, while LLMs scale evaluations--ensuring efficiency and alignment with human judgment.</p>
-            </div>
-            <div>
-              <ShieldIcon className="w-5 h-5 mb-4 text-[#525252] block" />
-              <h2 className={H2}>Robust Datasets for Reliable AI Benchmarks</h2>
-              <p className={P}>Our leaderboards are built on carefully curated evaluation sets, combining private datasets to prevent overfitting and open-source datasets for broad benchmarking and comparability.</p>
-            </div>
+            {[MountainIcon, PencilRulerIcon, ShieldIcon].map((Ic, i) => (
+              <div key={copy.about[i].title}>
+                <Ic className="w-5 h-5 mb-4 text-[#525252] block" />
+                <h2 className={H2}>{copy.about[i].title}</h2>
+                <p className={P}>{copy.about[i].body}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* deprecated br */}
+      {/* deprecated br: the slot exists only when there are deprecated boards to show */}
+      {deprecated.length > 0 && (
       <section id="deprecated" className="w-full py-8">
         <div className={WRAP}>
           <div className="flex items-center justify-center w-full gap-2">
@@ -448,13 +432,13 @@ export default function LabsLeaderboard({ content }: { content: LabsLeaderboardC
                 if (!(e.target as HTMLElement).closest('button, input, select, textarea') && e.detail > 1) e.preventDefault()
               }}
             >
-              Show Deprecated Leaderboards
+              {copy.deprecatedLabel}
             </label>
             <LabsTooltip
               provider={infoTip}
               sideOffset={5}
               contentClassName="max-w-[calc(100vw-2rem)] w-[400px]"
-              content={<p className="m-0 text-[14px] [text-wrap:balance]">As models advance, benchmarks must evolve. We&apos;re retiring the saturated legacy leaderboards and introducing new benchmarks targeting complex reasoning, robustness, and emerging AI capabilities.</p>}
+              content={<p className="m-0 text-[14px] [text-wrap:balance]">{copy.deprecatedInfo}</p>}
             >
               {({ ref, onClick, ...p }) => (
                 <button
@@ -483,18 +467,19 @@ export default function LabsLeaderboard({ content }: { content: LabsLeaderboardC
           )}
         </div>
       </section>
+      )}
 
       {/* evaluate bp */}
       <section className="w-full py-16 border-0 border-t border-solid border-[color:var(--color-hairline)]">
         <div className={WRAP}>
           <div className="border border-solid border-[color:var(--color-hairline)] p-8 flex flex-col items-center">
-            <h2 className="mb-4 mt-0 text-[14px] leading-[1.5] font-medium text-[color:var(--color-ink)] tracking-[0.025em]">[EVALUATE YOUR MODEL]</h2>
+            <h2 className="mb-4 mt-0 text-[14px] leading-[1.5] font-medium text-[color:var(--color-ink)] tracking-[0.025em]">{copy.evaluate.title}</h2>
             <p className="max-w-3xl mx-auto mb-6 mt-0 text-[12px] leading-[1.625] text-center text-[#525252]">
-              If you&apos;d like to add your model to this leaderboard or a future version, please contact{' '}
-              <a href="mailto:leaderboards@scale.com" className="text-[color:var(--color-ink)] underline [@media(hover:hover){&:hover}]:text-[#525252]">
-                leaderboards@scale.com
+              {copy.evaluate.before}
+              <a href={`mailto:${copy.evaluate.email}`} className="text-[color:var(--color-ink)] underline [@media(hover:hover){&:hover}]:text-[#525252]">
+                {copy.evaluate.email}
               </a>
-              . To ensure leaderboard integrity, we require that models can only be featured the FIRST TIME when an organization encounters the prompts.
+              {copy.evaluate.after}
             </p>
             <div className="flex items-center">
               <div>
@@ -503,14 +488,14 @@ export default function LabsLeaderboard({ content }: { content: LabsLeaderboardC
                   onClick={() => setEvalOpen(true)}
                   className={`${s.btn} bg-[color:var(--color-ink)] text-white text-[12px] leading-[1.5] uppercase tracking-[0.05em] rounded-none [@media(hover:hover){&:hover}]:opacity-75 h-10 px-4 py-2 border-0 cursor-pointer`}
                 >
-                  Evaluate your Model
+                  {copy.evaluate.button}
                 </button>
               </div>
             </div>
           </div>
         </div>
       </section>
-      <EvaluateDialog open={evalOpen} onOpenChange={setEvalOpen} />
+      <EvaluateDialog open={evalOpen} onOpenChange={setEvalOpen} copy={copy.evaluate} />
     </div>
   )
 }
