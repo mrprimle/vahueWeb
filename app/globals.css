@@ -10,7 +10,7 @@
 @plugin "@tailwindcss/typography";
 
 /* Classes Scale builds at runtime from CMS colours. */
-@source inline("{bg,text,border}-{white,black,evergreen,atlas-blue,archive-purple,cloud-slate,foundry-tan,foundry-tan-lt,scale-gray-10,scale-gray-30,scale-gray-90,scale-gray-95}");
+@source inline("{bg,text,border}-{white,black,gray-50,evergreen,atlas-blue,archive-purple,cloud-slate,foundry-tan,foundry-tan-lt,scale-gray-10,scale-gray-30,scale-gray-90,scale-gray-95}");
 
 /* Orientation landscape phones; Scale uses this as `oml:` everywhere. */
 @custom-variant oml (@media (orientation: landscape) and (max-height: 500px));
