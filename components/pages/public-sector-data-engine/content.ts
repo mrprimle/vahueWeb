@@ -1,5 +1,5 @@
-// Copy for /public-sector-data-engine ("For Government" in the menu), from research/research.ts and the NMT research's public-service jobs.
-// Same shape and counts as content.scale.ts. Lines marked PLACEHOLDER are for Mike to replace with real data.
+// Scale's copy under the 80% rule for /public-sector-data-engine ("For Government" in the menu). Same shape and counts as content.scale.ts.
+// Lines marked PLACEHOLDER are for Mike to replace with real data.
 import type { PublicSectorContent } from './types'
 
 const WHITE = { tailwindClass: 'white', contrastColor: '#010101' }
@@ -7,18 +7,18 @@ const DIR = '/public-sector-data-engine'
 
 export const content: PublicSectorContent = {
   meta: {
-    title: 'For Government | Vahue',
-    description: 'Vahue runs high-volume public-sector workflows with AI agents, measured against your baseline, with review queues, audit logs and deployment in your cloud or on-premises.',
+    title: 'Public Sector Agents | Vahue',
+    description: "Vahue's Public Sector Agents improve reliable AI systems for critical public services by providing high-quality data through expert labeling and best-in-class tooling.",
   },
   hero: {
-    headline: 'Agents for Government',
-    body: 'Running Your Busiest Workflows Inside Federal, State, and Local Government Agencies.',
-    cta: { text: 'Book an Audit', url: '/demo' },
+    headline: 'Public Sector Agents',
+    body: 'Powering Reliable AI for Federal, State, and Civilian Agencies.',
+    cta: { text: 'Book a Demo', url: '/demo' },
     image: { path: `${DIR}/hero.webp` },
     backdrop: WHITE,
   },
   logos: {
-    copy: 'Trusted by agencies that outgrew headcount.', // PLACEHOLDER
+    copy: "Trusted by the world's most ambitious teams.", // PLACEHOLDER
     link: { title: 'Meet our customers', href: '/public-sector' },
     items: [
       { alt: 'Logo', width: 48, height: 63 }, // PLACEHOLDER
@@ -30,22 +30,22 @@ export const content: PublicSectorContent = {
   },
   overview: {
     overtitle: 'PRODUCT OVERVIEW',
-    title: 'Agents for Government',
-    subtitle: 'Return staff hours and keep public records accurate with audited agents.',
+    title: 'Public Sector Agents',
+    subtitle: 'Enhance AI agent performance and reliability with industry-leading data annotations.',
     items: [
-      { icon: 'monitor', title: 'Document Intake', subtitle: 'Read diverse document types from forms, permits, claims, scans and more. Quickly post clean records with AI-assisted extraction tools and a review team from your own agency.' },
-      { icon: 'sparkle', title: 'Knowledge Agents', subtitle: 'Get sourced answers from your own records. Explore policies and case files in plain English. Prioritize unanswered questions and address content gaps first.' },
-      { icon: 'trend', title: 'Accuracy Reviews', subtitle: 'Compare agent output to reviewer decisions. Measure agent accuracy and returned hours over time. Pinpoint weaknesses at granular record fields.' },
+      { icon: 'monitor', title: 'Data Annotation', subtitle: 'Annotate diverse data types from text, video, geospatial, image and more. Quickly turnaround high-quality data with AI-assisted annotation tools and a team of subject matter experts.' },
+      { icon: 'sparkle', title: 'Data Curation', subtitle: 'Get unparalleled visibility into your data. Explore datasets through natural language search. Prioritize slices of data to annotate and address agent vulnerabilities.' },
+      { icon: 'trend', title: 'Agent Evaluation', subtitle: 'Compare agent predictions to ground-truth data. Measure agent performance over time. Pinpoint agent weaknesses at granular case classifications.' },
     ],
   },
   why: {
     overtitle: 'Why Vahue',
-    title: 'Accuracy and Accountability are Critical for Public Services',
-    subtitle: 'Accuracy and control are achieved with measured workflows powered by supervised agents, full audit logs and your own reviewers.',
+    title: 'Agent Performance is Critical for Public Institutions',
+    subtitle: 'Agent precision and accuracy are achieved with high-quality data powered by advanced AI software and subject matter experts.',
     items: [
-      { title: 'Governed Agent Software', description: 'A unified record of every agent action. Deploy in your cloud or on-premises, apply role-based access, log every decision, and approve actions that touch public records.' },
-      { title: 'Baseline-First Workflow Delivery', description: 'Record volume, minutes per item, error rate and operating cost before production. Agree the measurable target and stopping point, then report returned hours against baseline.' },
-      { title: 'Human-in-the-Loop Review', description: 'Send anything below your confidence threshold to reviewers on your own team for approval, exception handling, and continuous refinement of your agent rules.' },
+      { title: 'Advanced AI Software', description: 'A unified platform for end-to-end agent ops. Process and calibrate data, conduct benchmark testing and error-analysis, uncover edge cases, and audit data annotations.' },
+      { title: 'State-of-the-Art Machine Learning', description: 'Leverage machine learning strategies to accelerate and strategically approach data annotation. Curate diverse multimodal datasets, predict errors, and conduct uncertainty sampling.' },
+      { title: 'Human-in-the-Loop Expertise', description: 'Leverage subject matter experts with decades of experience and domain depth for quality assurance, red-teaming, and continuous iteration of annotation strategies.' },
     ],
     image: { src: `${DIR}/why.webp`, alt: 'Governed agent software, baseline-first workflow delivery and human-in-the-loop review feed each other in a loop', width: 662, height: 592 },
   },
@@ -58,32 +58,32 @@ export const content: PublicSectorContent = {
         clientName: 'Full Name', // PLACEHOLDER
         title: 'Role, Company', // PLACEHOLDER
         testimonial:
-          'Vahue has reduced the backlog in our permit and benefits casework by taking document intake off our team and running it inside the systems we already use, with our own reviewers checking every exception. Our team returned more hours in the 3 months working with Vahue than in the last 15 months.', // PLACEHOLDER
+          "Vahue has accelerated the improvement of our AI agent's accuracy by providing a comprehensive data infrastructure component in addition to bringing cutting edge private sector technology to our team. Our agent's accuracy has improved more in the 3 months working with Vahue than in the last 15 months.", // PLACEHOLDER
       },
     ],
   },
   demos: {
     overtitle: 'Demos',
-    title: 'Agents for Government Demos',
+    title: 'Public Sector Agents Demos',
     videos: [
-      { src: `${DIR}/demo-1.mp4`, title: 'Case Answers from Your Records', cover: `${DIR}/poster-1.webp`, description: '' }, // PLACEHOLDER
-      { src: `${DIR}/demo-2.mp4`, title: 'Permit Intake and Agent Accuracy Review', cover: `${DIR}/poster-2.webp`, description: '' }, // PLACEHOLDER
-      { src: `${DIR}/demo-3.mp4`, title: 'Accelerate Reviews with Prefilled Data', cover: `${DIR}/poster-3.webp`, description: '' }, // PLACEHOLDER
+      { src: `${DIR}/demo-1.mp4`, title: 'Data Exploration with Context Engine', cover: `${DIR}/poster-1.webp`, description: '' }, // PLACEHOLDER
+      { src: `${DIR}/demo-2.mp4`, title: 'Document Detection and Agent Evaluation', cover: `${DIR}/poster-2.webp`, description: '' }, // PLACEHOLDER
+      { src: `${DIR}/demo-3.mp4`, title: 'Accelerate Annotations with Prelabel', cover: `${DIR}/poster-3.webp`, description: '' }, // PLACEHOLDER
     ],
   },
   resources: {
     overtitle: 'RESOURCES',
     title: 'Learn More About Our Work',
     items: [
-      { id: 'county-permit-intake', overtitle: 'Blog', title: 'Vahue chosen by a County Agency for Its Permit Intake Workflow', image: { src: `${DIR}/resource-1.webp` }, link: '/blog' }, // PLACEHOLDER
-      { id: 'state-agency-operate', overtitle: 'Blog', title: 'Operate Contract Across a State Agency', image: { src: `${DIR}/resource-2.webp` }, link: '/blog' }, // PLACEHOLDER
-      { id: 'audit-table-stakes', overtitle: 'Blog', title: 'Audit Table Stakes: Your Workflow Baseline', image: { src: `${DIR}/resource-3.webp` }, link: '/blog' }, // PLACEHOLDER
-      { id: 'public-service-commitments', overtitle: 'Blog', title: 'Our Public-Service Data Commitments', image: { src: `${DIR}/resource-4.webp` }, link: '/blog' }, // PLACEHOLDER
+      { id: 'state-agency-intake', overtitle: 'Blog', title: 'Vahue chosen by a State Agency for Its Permit Intake Program', image: { src: `${DIR}/resource-1.webp` }, link: '/blog' }, // PLACEHOLDER
+      { id: 'agency-contract', overtitle: 'Blog', title: 'Agency Contract Across the Whole State', image: { src: `${DIR}/resource-2.webp` }, link: '/blog' }, // PLACEHOLDER
+      { id: 'automation-table-stakes', overtitle: 'Blog', title: "Automation Table Stakes: Your Agency's Data Layer", image: { src: `${DIR}/resource-3.webp` }, link: '/blog' }, // PLACEHOLDER
+      { id: 'public-sector-commitments', overtitle: 'Blog', title: 'Public Sector Voluntary Commitments', image: { src: `${DIR}/resource-4.webp` }, link: '/blog' }, // PLACEHOLDER
     ],
   },
   prefooter: {
-    headline: 'The future of your agency starts here',
-    cta: { text: 'Book an Audit', url: '/demo' },
+    headline: 'The future of your industry starts here',
+    cta: { text: 'Book a Demo', url: '/demo' },
     image: { path: `${DIR}/prefooter.webp` },
     backdrop: { tailwindClass: 'gray-50', contrastColor: '#010101' },
   },

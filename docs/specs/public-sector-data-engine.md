@@ -114,15 +114,11 @@ Other tooling: Playwright and CDP. Harness in the scratchpad: `new-qa/public-sec
 - Motion sampled at 100ms in a dev build, under load from other agents: mid-curve values differ by phase, end states match.
 
 ## Copy mapping
-Scale's page sells a data engine to defense and civilian agencies. Here it sells the same offer as the rest of the site to public-sector buyers: agents that run high-volume workflows, measured against a baseline. The research has no public-sector workflow of its own, so the substance comes from its public-service cases (North Yorkshire adoption, NSW Health planning, the Azerbaijan workshop) and two of its jobs: using AI in daily public-service work "without taking unmanaged data or quality risks", and regulated document work, where the criteria run coverage and accuracy, traceability, human review, then speed. The military and intelligence angle is gone.
+Keep rule (Mike, 2026-11-01): each string starts from Scale's text, stays verbatim if true for Vahue with the brand swapped, otherwise changes only the words the swap dictionary and phrase bank require, same template and word count. Counts come from a path-by-path compare with `content.scale.ts`, alt text, code samples and URLs excluded. Verbatim means equal after Scale to Vahue. Light means up to 3 words or about a third changed.
 
-- Hero and overview: "Agents for Government", matching the menu label. Federal, state and local replace defense, intelligence and civilian.
-- Three features follow Scale's roles. Annotation became Document Intake, Curation became Knowledge Agents (ask, then prioritize gaps), Evaluation became Accuracy Reviews.
-- "Why Scale" became "Why Vahue". The three checklist items are control features, baseline-first delivery and human review from `research.ts`.
-- "Book a Demo" became "Book an Audit". "Meet our customers" points at `/public-sector`. The four blog tiles point at `/blog`, as their posts do not exist.
-- Unchanged generic labels: "PRODUCT OVERVIEW", "Demos", "RESOURCES", "Blog", "Learn More About Our Work", "Don’t just take our word for it", "Meet our customers".
+Menu label: For Government. Page name: Public Sector Agents. Super Intelligence (SI) became AI, and defense and national security became public-sector wording. "Clearance" is dropped because Vahue can't claim it. CTAs are Scale's. 46 strings: 21 verbatim, 22 light, 3 rewritten (meta description, hero body, first blog title). Section heights equal the previous fill at 1440 and 390.
 
-Word counts are within 15% of Scale's for 40 of 46 strings. The six exceptions, each one word off apart from the meta title: hero, overview and demos titles, two demo titles, meta title (4 vs 6). Line counts were matched first, so heights hold.
+**Images no longer fit:** `why.webp` carries the old labels (governed agent software, baseline-first delivery, human review). `poster-1` to `poster-3` have the old demo titles baked in, for example "Case Answers from Your Records". The dictionary keeps "government" only if Mike confirms public-sector work.
 
 **Images replaced at fill**, removed from `public/` (recover from commit b855dad to re-check the clone):
 - Hero: was a Scale product map with heat zones and small labels. Now an unlabelled dark district map with amber density at 1920 x 1078.
