@@ -51,7 +51,7 @@ function nodeDefs(k: number, landscape: boolean): NodeDef[] {
     {
       id: 4,
       desktop: { x: 124, y: 250, xStartOffset: -100, yStartOffset: -100, horizontal: 'right', vertical: 'top', ...box(132) },
-      mobile: { x: 0, y: 260, xStartOffset: 50, yStartOffset: -100, horizontal: 'right', vertical: 'top', ...box(63) },
+      mobile: { x: 0, y: 205, xStartOffset: 50, yStartOffset: -100, horizontal: 'right', vertical: 'top', ...box(63) },
       delay: 0.3,
       connections: [3, 5],
     },
@@ -64,7 +64,7 @@ function nodeDefs(k: number, landscape: boolean): NodeDef[] {
     },
     {
       id: 6,
-      desktop: { x: 452, y: 90, xStartOffset: 600, yStartOffset: -200, horizontal: 'right', vertical: 'bottom', ...box(116) },
+      desktop: { x: 340, y: 78, xStartOffset: 600, yStartOffset: -200, horizontal: 'right', vertical: 'bottom', ...box(116) },
       mobile: { x: 5, y: 115, xStartOffset: 100, yStartOffset: 100, horizontal: 'left', vertical: 'top', ...box(90) },
       delay: 0.3,
     },
@@ -354,7 +354,7 @@ const GraphNode = forwardRef<
         </div>
         <div className="flex items-center justify-start w-full oml:w-[150px] oml:justify-center oml:mx-auto oml:text-center gap-2 text-cloud-slate">
           <svg ref={mark} xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" className="scale-0" aria-hidden>
-            <path d="M6.79229 0H0.500785C0.0554314 0 -0.167603 0.538452 0.14731 0.853365L6.43881 7.14487C6.75373 7.45978 7.29218 7.23675 7.29218 6.79139V0.499889C7.29218 0.223808 7.06837 0 6.79229 0Z" fill="currentColor" />
+            <rect width="8" height="8" rx="1" fill="currentColor" />
           </svg>
           <AnimatedText ref={label} tagName="div" className="text-black font-mono text-[0.5rem] md:text-[0.625rem] text-left w-full mt-1 uppercase">
             {image?.label ?? ''}

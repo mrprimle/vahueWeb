@@ -5,7 +5,7 @@
 .category > div:first-child > div:first-child::before {
   content: '';
   vertical-align: top;
-  background: linear-gradient(to top right, #0000 50%, currentColor 50%);
+  background: currentColor;
   width: 0.45rem;
   height: 0.45rem;
   margin: 0.225rem 0.45rem 0 0;

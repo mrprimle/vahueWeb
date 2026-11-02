@@ -67,7 +67,7 @@ export function CategoryIcon({ category, colorHex, labelClassName, className }: 
     <div className={cn('CategoryIcon inline-flex max-w-full min-w-0 items-center gap-2 justify-center rounded-sm p-1', className)}>
       <span className="inline-flex size-[26px] shrink-0 items-center justify-center rounded-[5px] shadow-sm" style={{ backgroundColor: colorHex ?? '#525252' }} aria-hidden>
         <svg className="block size-[8px] shrink-0" width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6.79229 0H0.500785C0.0554314 0 -0.167603 0.538452 0.14731 0.853365L6.43881 7.14487C6.75373 7.45978 7.29218 7.23675 7.29218 6.79139V0.499889C7.29218 0.223808 7.06837 0 6.79229 0Z" fill="white" />
+          <rect width="8" height="8" rx="1" fill="currentColor" />
         </svg>
       </span>
       <span className={cn('flex min-h-[26px] min-w-0 flex-1 items-center self-center truncate detail-mono text-[11px] tracking-wider leading-none', labelClassName ?? 'text-white')}>{name}</span>
