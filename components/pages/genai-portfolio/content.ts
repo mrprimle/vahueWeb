@@ -129,7 +129,7 @@ export const content: GenAiContent = {
   },
   security: {
     heading: "Security that holds up to regulated industries",
-    labels: ['Enterprise Security Review Passed', 'SOC 2 Type II', 'ISO 27001', 'GDPR Compliant Deployment'], // PLACEHOLDER: same certification slots as Scale, confirm before shipping
+    labels: ['Enterprise Security Review Passed', 'SOC 2', 'ISO 27001', 'GDPR Compliant Deployment'], // PLACEHOLDER: "Enterprise Security Review Passed" is not confirmed
     link: { text: "View safety standards", url: "/security" },
     image: { path: `${DIR}/security.svg` },
   },

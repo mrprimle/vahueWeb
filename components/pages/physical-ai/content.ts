@@ -107,7 +107,7 @@ export const content: PhysicalAiContent = {
       { icon: 'partners', title: 'Deep Technical Partnerships', body: 'Our data platform supports cutting-edge operations teams and industry leaders such as insurers and distributors.' }, // PLACEHOLDER
       { icon: 'quality', title: 'Quality Guarantees', body: 'Rigorous schema calibration and data validation protocols ensure that only the highest quality data is available on our platform.' },
       { icon: 'pin', title: 'Born in Pilots; Scaled Globally', body: 'Intake agents are developed, tested, and validated in shadow mode on your real cases before deployment to your global network of teams.' },
-      { icon: 'security', title: 'Security and Compliance', body: 'Our infrastructure supports GDPR, CCPA, and customer-specific audit requirements with optional onshore data processing. We are SOC 2 Type II and ISO 27001 certified.' }, // PLACEHOLDER
+      { icon: 'security', title: 'Security and Compliance', body: 'Our infrastructure supports GDPR, CCPA, and customer-specific audit requirements with optional onshore data processing. We are SOC 2 and ISO 27001 certified.' },
     ],
   },
   prefooter: {

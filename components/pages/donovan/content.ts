@@ -248,7 +248,7 @@ export const content: DonovanContent = {
   {
     "icon": "check",
     "title": "Private Cloud",
-    "subtitle": "SOC 2 Type II and ISO 27001 Certified"
+    "subtitle": "SOC 2 and ISO 27001 Certified"
   },
   {
     "icon": "check",
