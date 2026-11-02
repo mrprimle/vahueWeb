@@ -489,7 +489,7 @@ export function Applications({ content, phaseOffset = 0.25, scalePhaseOffset = 0
                   <h2 ref={realRef} className="text-black max-md:text-[28px] max-md:leading-[30px] md:text-[4rem] md:leading-[1.05]">
                     {realWord}
                   </h2>
-                  <div ref={dynamicBox} className="relative flex flex-col items-start overflow-clip min-h-[30px] md:min-h-[72px]">
+                  <div ref={dynamicBox} className="relative flex flex-col items-start overflow-clip min-h-[30px] md:min-h-[72px] md:max-lg:min-h-[59px]">
                     {types.map((t, i) => (
                       <h2
                         className="absolute dynamic-header whitespace-nowrap max-md:text-[28px] max-md:leading-[30px] md:text-[4rem] md:leading-[1.05] md:max-lg:text-[3.5rem]"
