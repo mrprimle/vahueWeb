@@ -42,7 +42,7 @@ export const content: AboutContent = {
     heading: 'Vahue at a glance',
     cards: [
       { icon: 'psychology', label: 'AI Decisions', stat: '15M', description: 'Human decisions to oversee AI agents.' }, // PLACEHOLDER
-      { icon: 'people', label: 'Savings', stat: '$10M', description: 'Run costs removed from client workflows.' }, // PLACEHOLDER
+      { icon: 'people', label: 'Savings', stat: '$10M', description: 'Run costs removed for clients.' }, // PLACEHOLDER
       { icon: 'trendingUp', label: 'Valuation', stat: '$29M' }, // PLACEHOLDER
       { icon: 'badge', label: 'Employees', stat: '100+' }, // PLACEHOLDER
       { icon: 'rocket', label: 'Founded', stat: '2016' }, // PLACEHOLDER
