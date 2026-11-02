@@ -14,7 +14,26 @@ Read from live scale.com on 2026-11-01 with REA (`analyze_web_bundle`, evidence 
 | Embla | yes, 8.6-era options (`watchFocus`) | `embla-carousel-react` 8.6.0 | `dragThreshold:10` in `0sni47mcvnqwg.js` |
 | Rive | **Not used.** No `rive`, `@rive-app`, `.riv` or state machine in any of the 122 chunks fetched (HTML and lazy references). The old note matched "derive" and "drive" | not installed | word-boundary scan |
 | Others | Vidstack and prism-react-renderer (`/automotive`, in package.json), zustand (stores), clsx (`cn`, no tailwind-merge), lucide (icons), Headless UI `Transition` and react-type-animation (module 386218 in `1a9k8nwrsxal6.js`), Radix Dialog and Tooltip, react-spring (`2oqqgjzhyolwf.js`), TanStack Query, Sanity CMS, Plasmic CSS | zustand, clsx, lucide-react, `@headlessui/react` 2.2.9 and `react-type-animation` 3.2.0 (chat window, `/data-engine`; versions chosen, not read from Scale). `framer-motion` ^12.43.0 (`/experts` tabs; 12.x inferred from module 88653's props, no version string shipped). Add the rest only on the page that needs it | module census |
-| Separate sites | `/docs` is Mintlify (`x-mint-proxy-version`). `labs.scale.com` is its own build: its page agents must fingerprint it first | `SEPARATE_CHROME_PREFIXES` in `components/site/SiteChrome.tsx` | response headers |
+| Separate sites | `/docs` is Mintlify (`x-mint-proxy-version`). `labs.scale.com` is its own build, see the section below | `isLabsRoute` and `SEPARATE_CHROME_PREFIXES` in `components/site/SiteChrome.tsx` | response headers |
+
+## labs.scale.com (separate site, `/labs*` here)
+Read from live labs.scale.com on 2026-11-02 with REA (`analyze_web_bundle` `ev_65bdd537aa175325…`, 30 of 30 scripts parsed), plus every chunk of `/` read by module. It is its own build, not the scale.com one.
+
+| Layer | labs.scale.com | This repo | Evidence |
+|---|---|---|---|
+| Next.js (App Router, Turbopack) | 16.3.6 | Shared 16.4.2 install, one `next` per repo | `version:"16.3.6"` in `3k3q0u73winx8.js`; `x-nextjs-prerender`, `x-vercel-id` headers |
+| React | 19.3.0-canary-cbb046ab-20260731 | Shared | same chunk |
+| Tailwind | v4 with lightningcss output, shadcn tokens (`--radius: 0rem`, `--border: 0 0% 85%`, `--ring: 0 0% 7%`) | 4.3.3; `--color-ink*`, `--color-hairline` added to `@theme`; the rest in `components/site/labs/labs.css`, scoped to `.labs-root` | `3mzo0hj4e57ag.css` |
+| Fonts | InterVariable, Geist Mono (`next/font`) | Inter (opsz axis) and Geist Mono from Google Fonts in `app/labs/layout.tsx`. Measured widths equal to 0.1px, apart from the `→` glyph (1.4px) | html class, `@font-face` |
+| Motion | framer-motion: `ScrollReveal` only, `{opacity:0,y:14}`, `.5s`, `[.16,1,.3,1]`, once, amount .06 | `framer-motion` ^12.43.0 | module 953971 |
+| Smooth scroll | Lenis 1.3.21, on `/` only, `{lerp:.1,smoothWheel:true}`, own rAF loop. No GSAP on this page | `LabsLenis`, on `/labs` only; `SiteChrome` removes the main Lenis on `/labs*` | `2ri_cj1i8zivb.js`, function `w` |
+| Hero | Private `@vgpu` WebGPU wrapper, WGSL `grid-bg.wgsl`, canvas 2D fallback `AnimatedGridBg` | Same shader through raw WebGPU, `heroGridShader.ts`; fallback ported | modules 539120, 726785 |
+| Transitions | Unlayered `html.loaded *` sets colour transitions of .2s after 100ms, which overrides every `transition-*` utility: preview cross-fade, arrow nudges and logo hover are instant | `html.labs-loaded .labs-root *` | `3mzo0hj4e57ag.css`; sampled |
+| Search | Inkeep `InkeepModalSearchAndChat` (1.5 MB chunk, live API, shadow DOM) | `LabsSearch`, same modal from measurements over a static index. Not installed | `25n1aq7vxfxt3.js`, `GetSearchResults` |
+| Dialog, form | Radix Dialog, HubSpot embed | `LabsDialog`, `LabsNewsletterDialog`, no network | modules 523384, 385368 |
+| Other | Radix Tooltip, next-themes, katex, plotly CSS for other routes, Vercel analytics | Not needed on `/`. Later labs pages add what they use | module census |
+
+Reusable labs chrome: `components/site/labs/` (`LabsChrome`, `LabsHeader`, `LabsFooter`, `LabsSearch`, `LabsNewsletterDialog`, `LabsDialog`, `LabsButton`, `ScrollReveal`, `HeroGrid`, `content.ts`, `searchIndex.ts`). `app/labs/layout.tsx` mounts it for every `/labs*` route, so pages under it render only their sections. Use labs class strings verbatim, with `ring-offset-white` and `ring-[hsl(0_0%_7%)]` for `ring-*-background` and `ring-ring`. `rounded-sm`, `-md` and `-lg` are 0 inside `.labs-root`, as on Scale. Portals mount into `.labs-root` so they get the fonts. Add new labs items to `searchIndex.ts`.
 
 ## Lenis and ScrollTrigger (exact, `2d7ykwtxp_8ed.js` function `eR`)
 `ReactLenis root`, options `{ autoRaf: false, allowNestedScroll: true, autoResize: false, syncTouch: matchMedia('(pointer: coarse)').matches, lerp: 0.14, wheelMultiplier: 0.8 }`. `gsap.ticker` drives `lenis.raf`, `lagSmoothing(0)`. `ScrollTrigger.config({ limitCallbacks: false, autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load', syncInterval: 999999999, ignoreMobileResize: true })` and a `scrollerProxy` on `documentElement`. Body `ResizeObserver` and window resize refresh ScrollTrigger after 90ms. Already running in `components/site/SmoothScroll.tsx`: pages do not add their own. Measured: `wheel(500)` samples match Scale (172, 270, 325, 351, 372, 384 …).

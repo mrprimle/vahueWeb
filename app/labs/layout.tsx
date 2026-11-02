@@ -1,7 +1,7 @@
 import { Geist_Mono, Inter } from 'next/font/google'
 import type { ReactNode } from 'react'
-import { contentScale as home } from '@/components/pages/labs/content.scale'
-import { labsChromeScale as chrome } from '@/components/site/labs/content.scale'
+import { content as home } from '@/components/pages/labs/content'
+import { labsChrome as chrome } from '@/components/site/labs/content'
 import { LabsChrome } from '@/components/site/labs/LabsChrome'
 import { buildLabsSearchIndex } from '@/components/site/labs/searchIndex'
 import '@/components/site/labs/labs.css'
@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({ subsets: ['latin'], display: 'swap', variable: '-
 /** Every /labs* route gets labs.scale.com's own chrome here; `SiteChrome` skips the main site's chrome and Lenis for these routes. */
 export default function LabsLayout({ children }: { children: ReactNode }) {
   return (
-    <LabsChrome content={chrome} searchIndex={buildLabsSearchIndex(home, 'Scale Labs')} className={`${inter.variable} ${geistMono.variable}`}>
+    <LabsChrome content={chrome} searchIndex={buildLabsSearchIndex(home, chrome.logo.alt)} className={`${inter.variable} ${geistMono.variable}`}>
       {children}
     </LabsChrome>
   )

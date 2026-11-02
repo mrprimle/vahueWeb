@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import { contentScale as content } from '@/components/pages/labs/content.scale'
+import { content } from '@/components/pages/labs/content'
 import { LabsPage } from '@/components/pages/labs/LabsPage'
-import { labsChromeScale as chrome } from '@/components/site/labs/content.scale'
+import { labsChrome as chrome } from '@/components/site/labs/content'
 
 export const metadata: Metadata = { title: content.meta.title, description: content.meta.description }
 

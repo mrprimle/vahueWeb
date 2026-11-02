@@ -79,15 +79,15 @@ function Mark({ className }: { className?: string }) {
 
 function CloseButton({ onClick, label }: { onClick: () => void; label: string }) {
   return (
-    <button type="button" onClick={onClick} aria-label={label} className="flex size-6 shrink-0 items-center justify-center rounded-[6px] text-[#9ca3af] min-[769px]:hidden">
+    <button type="button" onClick={onClick} aria-label={label} className="flex size-6 shrink-0 items-center justify-center rounded-[6px] text-[#9ca3af] md:hidden">
       <X className="size-[18px]" />
     </button>
   )
 }
 
-function PoweredBy({ content }: { content: LabsChromeContent['search'] }) {
+function PoweredBy({ content, className = 'pb-3' }: { content: LabsChromeContent['search']; className?: string }) {
   return (
-    <div className="shrink-0 px-5 pt-1 pb-3 text-sm text-[#9ca3af]">
+    <div className={cn('shrink-0 px-5 pt-1 text-sm text-[#9ca3af]', className)}>
       {content.poweredBy} <span className="tracking-tight">{content.poweredByName}</span>
     </div>
   )
@@ -159,7 +159,7 @@ export function LabsSearch({ open, onOpenChange, content, index }: { open: boole
         role="dialog"
         aria-modal="true"
         aria-label={content.searchTab}
-        className={cn('labs-search-fade flex w-full flex-col overflow-hidden bg-white text-[#374151] shadow-lg max-[768px]:h-full min-[769px]:w-[min(90vw,720px)] min-[769px]:rounded-[6px]', hasQuery && view === 'search' ? 'min-[769px]:h-[min(662px,calc(581px+9vh))]' : '')}
+        className={cn('labs-search-fade flex w-full flex-col overflow-hidden bg-white text-[#374151] shadow-lg max-[768.5px]:h-full min-[769px]:w-[min(90vw,720px)] min-[769px]:rounded-[6px]', hasQuery && view === 'search' ? 'min-[769px]:h-[min(662px,calc(581px+9vh))]' : '')}
       >
         {view === 'search' ? (
           <>
@@ -238,7 +238,7 @@ export function LabsSearch({ open, onOpenChange, content, index }: { open: boole
             {hasQuery ? <PoweredBy content={content} /> : null}
           </>
         ) : (
-          <div className="flex min-h-0 flex-col max-[768px]:h-full">
+          <div className="flex min-h-0 flex-col max-[768.5px]:h-full">
             <div className="flex h-[54px] shrink-0 items-center justify-between px-5 pt-4 pb-2">
               <div className="text-sm text-[#6b7280]">{content.askTab}</div>
               <div className="flex items-center">
@@ -246,10 +246,10 @@ export function LabsSearch({ open, onOpenChange, content, index }: { open: boole
                 <CloseButton onClick={close} label={content.close} />
               </div>
             </div>
-            <div className="max-h-[440px] min-h-[174px] overflow-y-auto px-8 pt-6 pb-4 max-[768px]:max-h-none max-[768px]:flex-1">
+            <div className="max-h-[440px] min-h-[199px] overflow-y-auto px-8 pt-[30px] pb-4 max-[768.5px]:max-h-none max-[768.5px]:flex-1">
               <div className="flex gap-6">
-                <Mark className="mt-1.5 size-8 text-[24px]" />
-                <div className="min-w-0 flex-1 space-y-3 text-base text-[#374151]">
+                <Mark className="mt-2 size-8 text-[24px]" />
+                <div className="min-w-0 flex-1 space-y-3.5 text-[15px] text-[#374151]">
                   <p>{content.chatGreeting}</p>
                   <p>{content.chatIntro}</p>
                   <p>
@@ -270,7 +270,7 @@ export function LabsSearch({ open, onOpenChange, content, index }: { open: boole
               </div>
             </div>
             <ChatInput draft={draft} setDraft={setDraft} onSubmit={ask} content={content} />
-            <PoweredBy content={content} />
+            <PoweredBy content={content} className="pb-4" />
           </div>
         )}
       </div>
@@ -289,7 +289,7 @@ function ChatInput({ draft, setDraft, onSubmit, content }: { draft: string; setD
     onSubmit(draft)
   }
   return (
-    <form onSubmit={submit} className="mx-5 mb-1 flex h-[55px] shrink-0 items-center gap-3 rounded-[6px] bg-[#f9fafb] px-6 shadow-md">
+    <form onSubmit={submit} className="mx-5 mb-3 flex h-[55px] shrink-0 items-center gap-3 rounded-[6px] bg-[#f9fafb] px-6 shadow-md">
       <input ref={ref} value={draft} onChange={(e) => setDraft(e.target.value)} placeholder={content.chatPlaceholder} aria-label={content.chatPlaceholder} className="min-w-0 flex-1 border-0 bg-transparent p-0 text-base text-[#374151] shadow-none outline-none placeholder:text-[#9ca3af] focus:ring-0" />
       <button type="submit" aria-label={content.askTab} className="shrink-0 text-[#9ca3af]">
         <Send className="size-4" />

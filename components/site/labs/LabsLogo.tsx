@@ -16,10 +16,10 @@ export function LabsLogo({ logo, width, height, className }: { logo: LabsLogoCon
       <text x="46" y="84" textAnchor="middle" fontSize="88" fill="#fff" style={font}>
         v
       </text>
-      <text x="124" y="95" fontSize="132" letterSpacing="-3" fill="#111" style={font}>
+      <text x="118" y="100" fontSize="140" letterSpacing="-3" fill="#111" style={font}>
         vahue
       </text>
-      <text x="566" y="95" fontSize="132" letterSpacing="-3" fill="#808080" style={font}>
+      <text x="520" y="100" fontSize="140" letterSpacing="-3" fill="#808080" style={font}>
         labs
       </text>
     </svg>
