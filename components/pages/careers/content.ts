@@ -47,10 +47,10 @@ const jobs: CareersJob[] = [
   role(1002, 'Evaluation Data Analyst', 'Data Science and Analytics', 'Remote'), // PLACEHOLDER
   role(1003, 'Associate Forward-Deployed Engineer', 'Early Careers', 'New York, NY'), // PLACEHOLDER
   role(1004, 'Forward-Deployed Engineer', 'Engineering', 'San Francisco, CA; New York, NY'), // PLACEHOLDER
-  role(1005, 'Senior Forward-Deployed Engineer, Back-office Sync', 'Engineering', 'New York, NY'), // PLACEHOLDER
-  role(1006, 'Forward-Deployed Engineer, Document Intake', 'Engineering', 'London, UK'), // PLACEHOLDER
-  role(1007, 'Agent Engineer, Support and Voice', 'Engineering', 'Austin, TX'), // PLACEHOLDER
-  role(1008, 'Staff Software Engineer, Context Engine', 'Engineering', 'San Francisco, CA'), // PLACEHOLDER
+  role(1005, 'Senior Forward-Deployed Engineer, Back-office Sync Agents', 'Engineering', 'New York, NY'), // PLACEHOLDER
+  role(1006, 'Forward-Deployed Engineer, Document Intake Agents', 'Engineering', 'London, UK'), // PLACEHOLDER
+  role(1007, 'Agent Engineer, Support and Voice Agents', 'Engineering', 'Austin, TX'), // PLACEHOLDER
+  role(1008, 'Staff Software Engineer, Context and Integrations', 'Engineering', 'San Francisco, CA'), // PLACEHOLDER
   role(1009, 'Domain Expert, Insurance Claims', 'Expert Network', 'Remote'), // PLACEHOLDER
   role(1010, 'Finance Manager', 'Finance', 'New York, NY'), // PLACEHOLDER
   role(1011, 'IT Systems Engineer', 'IT', 'Austin, TX'), // PLACEHOLDER
@@ -59,8 +59,8 @@ const jobs: CareersJob[] = [
   role(1014, 'Agent Operations Lead', 'Operations', 'Toronto, Canada'), // PLACEHOLDER
   role(1015, 'Delivery Manager, Operated Workflows', 'Operations', 'London, UK'), // PLACEHOLDER
   role(1016, 'Technical Recruiter', 'People', 'Remote'), // PLACEHOLDER
-  role(1017, 'Product Manager, Agent Evals', 'Product and Design', 'San Francisco, CA'), // PLACEHOLDER
-  role(1018, 'Product Designer, Control Plane', 'Product and Design', 'New York, NY'), // PLACEHOLDER
+  role(1017, 'Product Manager, Evals and Guardrails', 'Product and Design', 'San Francisco, CA'), // PLACEHOLDER
+  role(1018, 'Product Designer, Exception Review', 'Product and Design', 'New York, NY'), // PLACEHOLDER
   role(1019, 'Solutions Architect, Regulated Industries', 'Regulated Industries', 'Toronto, Canada'), // PLACEHOLDER
   role(1020, 'Applied Research Engineer, Agent Evaluation', 'Research', 'San Francisco, CA'), // PLACEHOLDER
   role(1021, 'Account Executive, Mid-market', 'Sales', 'New York, NY'), // PLACEHOLDER
@@ -84,9 +84,9 @@ export const content: CareersContent = {
     title: 'Vahue In The News',
     cta: 'Read Article',
     items: [
-      { key: 'news-1', label: 'Publication', title: "Vahue AI CEO Full Name pushes 'reliability' reality", href: '/blog', bgClass: 'bg-evergreen' }, // PLACEHOLDER
+      { key: 'news-1', label: 'Publication', title: "Vahue CEO Full Name pushes 'reliability' reality", href: '/blog', bgClass: 'bg-evergreen' }, // PLACEHOLDER
       { key: 'news-2', label: 'Publication', title: "Vahue's CEO says AI-related layoffs are often theater", href: '/blog', bgClass: 'bg-atlas-blue' }, // PLACEHOLDER
-      { key: 'news-3', label: 'Publication', title: 'Most AI Pilots Are Stalling Before Full Production, Vahue AI Says', href: '/blog', bgClass: 'bg-scale-gray-10' }, // PLACEHOLDER
+      { key: 'news-3', label: 'Publication', title: 'Most AI Pilots Are Stalling Before Full Production, Vahue Says', href: '/blog', bgClass: 'bg-scale-gray-10' }, // PLACEHOLDER
     ],
   },
   mission: {
@@ -94,15 +94,15 @@ export const content: CareersContent = {
     title: 'Our Mission',
     lead: "At Vahue, our mission is to develop reliable AI systems for the world's most important workflows. ",
     body: "Every industry across mid-market and enterprise is bringing AI to the center of operations. Yet despite this explosion of investment, there's still no clear blueprint for organizations to move from pilot to profit.",
-    products: 'Our agents for back-office sync, document intake, knowledge Q&A, support and voice, scoring and decisions, and engineering enablement are trusted by industry leaders and deliver world-class accuracy. ',
+    products: 'We run Back-office Sync, Document Intake, Sales and Booking, Scoring and Decision, Knowledge, and Support and Voice Agents inside the systems our customers already use, measured against a baseline we record on day one. ',
     engine: {
-      before: 'Our proprietary ',
-      firstLink: { text: 'Context Engine', href: '/data-engine' },
-      middle: ' powers the most demanding agents, workflows, and enterprise knowledge systems with high-quality context. We then apply our experience partnering with operations teams running these agents to help more organizations customize and ',
+      before: 'Our ',
+      firstLink: { text: 'Context and Integrations', href: '/data-engine' },
+      middle: ' layer powers the most demanding agents, workflows, and enterprise knowledge systems with high-quality context. We then apply our experience partnering with operations teams running these agents to help more organizations customize and ',
       secondLink: { text: 'Apply AI', href: '/data-engine' },
       after: ' in their organizations.',
     },
-    platform: 'And we encode our tradecraft into the Vahue Agent Control Platform to help organizations successfully apply AI to their most critical business and operating decisions.',
+    platform: 'And we encode our tradecraft into our Evals and Guardrails to help organizations successfully apply AI to their most critical business and operating decisions.',
   },
   credos: {
     overtitle: 'OUR CREDOS',
