@@ -204,7 +204,7 @@ function DesktopPanel({
             <div className={cn('col-span-full md:col-span-3 xl:col-span-2 md:col-start-1 xl:col-start-2 md:row-start-1 md:self-start', featured && 'row-start-2')}>
               <MenuColumn blocks={category.leftColumn} onHoverPageLink={onHover} staggerIndexStart={0} />
             </div>
-            <div className={cn('col-span-full md:col-span-3 xl:col-span-2 md:col-start-4 xl:col-start-4 md:row-start-1 md:self-start', featured && 'row-start-3', category.wideLeftColumn && 'md:pl-14 md:max-lg:pl-[72px]')}>
+            <div className={cn('col-span-full md:col-span-3 xl:col-span-2 md:col-start-4 xl:col-start-4 md:row-start-1 md:self-start', featured && 'row-start-3', category.wideLeftColumn && 'md:pl-8 md:max-lg:pl-[72px] xl:max-[1439px]:pl-14')}>
               <MenuColumn blocks={category.rightColumn} onHoverPageLink={onHover} staggerIndexStart={leftCount} />
             </div>
           </>
