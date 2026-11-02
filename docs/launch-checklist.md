@@ -13,10 +13,10 @@ Not everything here is marked in the code, so go through this list as well.
 ## Decide first
 
 - [ ] **Scale's design and media.** The site copies Scale's design, behaviour, images, videos and most of its copy. Check the legal risk before publishing, and replace the media listed below.
-- [ ] **URLs.** Routes still use Scale's paths, such as `/public-sector`, `/automotive`, `/donovan`, and `/blog/category/defense` (labelled Regulated), `/blog/category/robotics` (Operations), `/blog/category/autonomous-vehicle` (Voice Agents). Rename them?
+- [ ] **URLs.** Routes still use Scale's paths, such as `/public-sector`, `/automotive`, `/donovan`, `/docs` slugs such as `sensor-fusion-*` and `nucleus`, and `/blog/category/defense` (labelled Regulated), `/blog/category/robotics` (Operations), `/blog/category/autonomous-vehicle` (Voice Agents). Rename them?
 - [ ] **Names.** Confirm "Vahue Context Engine", "Agent Environments" and "Vahue Baselines", the menu labels, and the "Book a Demo" button.
 - [ ] **Shorter lists.** Long lists stop at 24 invented rows instead of matching Scale's count: `/labs/papers` 24 of 88, `/events` 24 of 88, `/careers` 24 of 275. At rest only `/labs/papers` is visibly shorter than Scale's. Tell me if you want more rows.
-- [ ] **Proof pages.** Blog, customer and guide cards link to the nearest existing page because no detail pages exist. Build them, or remove the cards?
+- [ ] **Detail pages.** The 33 pages are Scale's menu pages. Scale's detail pages under them aren't built: blog and customer posts, guides, events, jobs, partner pages, `/careers/university`, papers, leaderboards. Cards link to the nearest existing page. Build them, or remove the cards?
 
 ## Certifications
 
@@ -72,6 +72,12 @@ Vahue holds: SOC 2, ISO 27001, ISO 42001, HIPAA, GDPR, EU AI Act, CSA STAR, CCPA
 - [ ] `/partnership`: both partner cards are invented ("CRM Implementers", "Telephony Firms x Vahue") with neutral logo tiles, and they link to product pages because there are no partner pages. Add real partners or drop the page. Also check the footer's "Data Partnerships" link.
 
 - [ ] `/labs/jobs`: all 11 roles are invented, including "VP, Research", with `City, Country` locations and a date carried over from Scale. Rows link to `/careers#open-roles`, and those 11 roles may not be on that board. The heading says `[Research Careers]` here and `[Jobs]` on `/labs`, so pick one. "advancing AI through rigorous evaluation and research" is Scale's claim.
+
+- [ ] `/docs`: only the landing page and its chrome are cloned. Scale has 40 docs pages, and the other 39 are stubs with a title and a Placeholder note. Write them or remove them from the sidebar.
+- [ ] `/docs`: Vahue has no public API, so every API Reference row has a Placeholder pill and no endpoints are shown. Keep the tab or hide it? The API names are invented or carried over from Scale.
+- [ ] `/docs`: sidebar names imply features that aren't confirmed: Customer Dashboard, Data Hosting (S3, Google Cloud Storage, Azure, IP Allowlisting), Agent Evals, Technical Limits, API Compatibility Policy.
+- [ ] `/docs` landing paragraph: "we began with context" is an origin story. Is it true?
+- [ ] `/docs` search only matches page titles. Ask Assistant returns a placeholder reply, but the "Responses are generated using AI" line still shows. Keep the assistant? Also check "Vahue Documentation" as the site name, and system font (what Scale actually renders) vs Aeonik.
 
 ## Numbers
 
