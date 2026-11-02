@@ -49,9 +49,9 @@ Listeners read directly on the node. All section roots have none: animation is S
 | Blog tile | scroll | `.BlogPreviewTile`: only HubSpot `mousedown` on Scale `ev_d57648…`, not ported | 808358 | Scale 1.08 to 1 | Within .05px of `translate` at one row, otherwise equal |
 | Blog tile image | hover | CSS | 808358 | `scale` 1.05, 1000ms | 1.020, 1.034, 1.042, 1.047, 1.049, 1.05 vs 1.022, 1.034, 1.042, 1.047, 1.049, 1.05; leave 1.025, 1.012, 1.005 vs the same |
 | Careers CTA | hover, focus | React, shared | 892855 | Wash and arrow 600ms | -61.2%, -34.8%, -18.2%, -7.8% vs -61.2%, -34.8%, -18.2%, -7.8%; focus ring solid 1px `#86bff2`, equal |
-| Page | keyboard | None on the page's own sections | | Tab reaches CTA and tiles; no key handlers | Equal |
+| Blog tiles, careers CTA | Tab | Native links | 808358, 892855 | No key handlers on the page's own sections | Real Tab from the first tile: 5 tiles (`_blank`), then 2 links with a solid 1px ring, same sequence on both. Carousel has no focus stops |
 
-`html`, `body` and window listeners are the shared chrome's (Lenis and analytics), covered in `_chrome.md`. Not re-read here.
+`html` (`ev_c57953…`): `scroll` from GSAP's cache bump in `1h0nvyhf5gbrf.js`, plus OneTrust `click` and `keydown`, which are not built here. `body` (`ev_a34f3e…`): ScrollTrigger's `touchstart`. CTA (`ev_0d3bee…`): HubSpot `mousedown` capture, not built, and React root `click`. Window listeners can't be selected by REA's CSS match, so they weren't read on this page; the Lenis ones are in `_chrome.md`.
 
 ### Execution coverage (`ev_c9e14f9f…`)
 
