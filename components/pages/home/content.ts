@@ -1,5 +1,6 @@
 // Home copy from the AJTBD research in Scale's slots: same shape and counts as content.scale.ts.
 // Lines marked PLACEHOLDER are for Mike to replace with real numbers, clients and logos.
+import { fitProofLogo, type ProofLogo } from '@/components/site/proofLogos'
 import type { HeroLogo, HomeColor, HomeContent } from './content.types'
 
 const FOUNDRY: HomeColor = { hex: '#A8927C', contrastColor: '#010101', tailwindClass: 'foundry-tan' }
@@ -7,7 +8,10 @@ const EVERGREEN: HomeColor = { hex: '#193A29', contrastColor: '#FFFFFF', tailwin
 const PURPLE: HomeColor = { hex: '#79648C', contrastColor: '#FFFFFF', tailwindClass: 'archive-purple' }
 const CLOUD: HomeColor = { hex: '#839CB2', contrastColor: '#010101', tailwindClass: 'cloud-slate' }
 
-const logo = (id: number, width: number): HeroLogo => ({ _id: `logo-${id}`, alt: 'Logo', width, height: 30 })
+const logo = (id: number, name: ProofLogo): HeroLogo => {
+  const fitted = fitProofLogo(name, 68, 30)
+  return { _id: `logo-${id}`, alt: fitted.alt, path: fitted.src, width: fitted.width, height: fitted.height }
+}
 
 export const content: HomeContent = {
   hero: {
@@ -28,7 +32,7 @@ export const content: HomeContent = {
         title: [{ text: 'AI systems that actually work.' }],
         body: [{ text: 'Most AI pilots stall after the demo. We build the system inside the tools you already use and run it in shadow mode on your real cases, so you see it work before it goes live.' }],
         cta: { text: 'For Enterprise', url: '/enterprise' },
-        logos: [logo(1, 40.5), logo(2, 27.5), logo(3, 36), logo(4, 27.5), logo(5, 27.5), logo(6, 27.5)], // PLACEHOLDER
+        logos: [logo(1, 'qonto'), logo(2, 'verbit'), logo(3, 'etoro'), logo(4, 'inspera'), logo(5, 'winningtemp'), logo(6, 'wisestamp')], // FROM OLD SITE: confirm
       },
       {
         _key: '113c973e5bc7',
@@ -48,26 +52,26 @@ export const content: HomeContent = {
     realWord: 'Real',
     cta: { text: 'Get started', url: '/demo', variant: 'fill' },
     items: [
-      { _key: '278a91960588', applicationType: 'Back-office Sync Agents', image: { path: '/home/app-finance.webp', alt: 'Month-end close report' }, link: { url: '/services/back-office-sync' }, textColor: FOUNDRY },
-      { _key: '6f8b0063ba12', applicationType: 'Knowledge Agents', image: { path: '/home/app-life-sciences.webp', alt: 'Sourced answers list' }, link: { url: '/services/knowledge-agents' }, textColor: FOUNDRY },
-      { _key: '139aba2ad2f1', applicationType: 'Document Intake Agents', image: { path: '/home/app-insurance.webp', alt: 'Claim form and extracted fields' }, link: { url: '/services/document-intake' }, textColor: EVERGREEN, animationDirection: 'right' },
+      { _key: '278a91960588', applicationType: 'Back-office Sync', image: { path: '/home/app-finance.webp', alt: 'Month-end close report' }, link: { url: '/services/back-office-sync' }, textColor: FOUNDRY },
+      { _key: '6f8b0063ba12', applicationType: 'Knowledge', image: { path: '/home/app-life-sciences.webp', alt: 'Sourced answers list' }, link: { url: '/services/knowledge-agents' }, textColor: FOUNDRY },
+      { _key: '139aba2ad2f1', applicationType: 'Document Intake', image: { path: '/home/app-insurance.webp', alt: 'Claim form and extracted fields' }, link: { url: '/services/document-intake' }, textColor: EVERGREEN, animationDirection: 'right' },
       { _key: '106cd65eb545', applicationType: 'Production Rescue', image: { path: '/home/app-energy.webp', alt: 'Offshore platform at dusk' }, link: { url: '/services/production-rescue' }, textColor: FOUNDRY },
-      { _key: 'a84fabdf3395', applicationType: 'Context and Integrations', image: { path: '/home/app-infrastructure.webp', alt: 'Network tower in a forest' }, link: { url: '/services/context-and-integrations' }, textColor: EVERGREEN, animationDirection: 'right' },
-      { _key: 'ac4820379d42', applicationType: 'AI Strategy and Audit', image: { path: '/home/app-legal.webp', alt: 'Reviewed document with highlights' }, link: { url: '/services/ai-strategy-and-audit' }, textColor: EVERGREEN, animationDirection: 'right' },
-      { _key: '695de232a42d', applicationType: 'Scoring and Decision Agents', image: { path: '/home/app-manufacturing.webp', alt: 'Quote check with a score' }, link: { url: '/services/scoring-and-decisions' }, textColor: PURPLE },
-      { _key: '85cba285fa3f', applicationType: 'Sales and Booking Agents', image: { path: '/home/app-retail.webp', alt: 'Orders and bookings queue' }, link: { url: '/services/sales-and-booking' }, textColor: FOUNDRY },
-      { _key: '8352cf9b1cd8', applicationType: 'AI Product Engineering', image: { path: '/home/app-ops.webp', alt: 'Product board' }, link: { url: '/services/ai-product-engineering' }, textColor: PURPLE },
-      { _key: '7d2b48afb58a', applicationType: 'Embedded AI Specialists', image: { path: '/home/app-healthcare.webp', alt: 'Specialist at work' }, link: { url: '/services/embedded-specialists' }, textColor: FOUNDRY },
-      { _key: 'b0731c77da57', applicationType: 'Support and Voice Agents', image: { path: '/home/app-customer-service.webp', alt: 'Voice agent conversation' }, link: { url: '/services/support-and-voice' }, textColor: FOUNDRY },
+      { _key: 'a84fabdf3395', applicationType: 'Integrations', image: { path: '/home/app-infrastructure.webp', alt: 'Network tower in a forest' }, link: { url: '/services/context-and-integrations' }, textColor: EVERGREEN, animationDirection: 'right' },
+      { _key: 'ac4820379d42', applicationType: 'Strategy and Audit', image: { path: '/home/app-legal.webp', alt: 'Reviewed document with highlights' }, link: { url: '/services/ai-strategy-and-audit' }, textColor: EVERGREEN, animationDirection: 'right' },
+      { _key: '695de232a42d', applicationType: 'Decision Scoring', image: { path: '/home/app-manufacturing.webp', alt: 'Quote check with a score' }, link: { url: '/services/scoring-and-decisions' }, textColor: PURPLE },
+      { _key: '85cba285fa3f', applicationType: 'Sales and Booking', image: { path: '/home/app-retail.webp', alt: 'Orders and bookings queue' }, link: { url: '/services/sales-and-booking' }, textColor: FOUNDRY },
+      { _key: '8352cf9b1cd8', applicationType: 'Product Engineering', image: { path: '/home/app-ops.webp', alt: 'Product board' }, link: { url: '/services/ai-product-engineering' }, textColor: PURPLE },
+      { _key: '7d2b48afb58a', applicationType: 'AI Specialists', image: { path: '/home/app-healthcare.webp', alt: 'Specialist at work' }, link: { url: '/services/embedded-specialists' }, textColor: FOUNDRY },
+      { _key: 'b0731c77da57', applicationType: 'Support and Voice', image: { path: '/home/app-customer-service.webp', alt: 'Voice agent conversation' }, link: { url: '/services/support-and-voice' }, textColor: FOUNDRY },
       { _key: '55ff0680e844', applicationType: 'Evals and Guardrails', image: { path: '/home/app-shipping.webp', alt: 'Status checks on real cases' }, link: { url: '/services/evals-and-guardrails' }, textColor: EVERGREEN, animationDirection: 'right' },
     ],
     carousel: {
       header: [{ text: 'Proven across every workflow.' }], // PLACEHOLDER: until real cases are in
       cards: [
-        { _key: 'c1', heading: [{ text: 'Turning thousands of incoming claims into clean, checked records.' }], imageSubtitle: 'Insurer' }, // PLACEHOLDER
-        { _key: 'c2', heading: [{ text: 'Partnering to keep CRM, ERP and finance in step.' }], imageSubtitle: 'Distributor' }, // PLACEHOLDER
-        { _key: 'c3', heading: [{ text: 'Reducing analyst load by turning complex reports into sourced answers.' }], imageSubtitle: 'Financial services group' }, // PLACEHOLDER
-        { _key: 'c4', heading: [{ text: 'Powering a voice agent that answers, qualifies and books every call.' }], imageSubtitle: 'Property manager', link: { url: '/services/support-and-voice' } }, // PLACEHOLDER
+        { _key: 'c1', heading: [{ text: 'Cutting response time from 1 hour to 5 minutes, with 70% of routine queries auto-resolved.' }], image: { path: '/site/nav/neutral.svg', alt: '' }, imageSubtitle: 'Wealth management firm' }, // FROM OLD SITE: confirm
+        { _key: 'c2', heading: [{ text: 'Tracking 20+ competitors across 2,000+ parameters daily, with a 2-hour response to changes.' }], image: { path: '/site/nav/neutral.svg', alt: '' }, imageSubtitle: 'EdTech company, NDA' }, // FROM OLD SITE: confirm
+        { _key: 'c3', heading: [{ text: 'Cutting search time by 75% across 10,000+ documents with smart AI search.' }], image: { path: '/site/nav/neutral.svg', alt: '' }, imageSubtitle: 'Home appliance brand, NDA' }, // FROM OLD SITE: confirm
+        { _key: 'c4', heading: [{ text: 'Cutting support tickets by 60% with 24/7 AI support and 95% CSAT.' }], image: { path: '/site/nav/neutral.svg', alt: '' }, imageSubtitle: 'E-commerce platform', link: { url: '/services/support-and-voice' } }, // FROM OLD SITE: confirm
         { _key: 'c5', heading: [{ text: 'Accelerating month-end close across finance and operations.' }], imageSubtitle: 'Services group' }, // PLACEHOLDER
         { _key: 'c6', heading: [{ text: 'Fuelling faster supplier onboarding with agents that read every incoming sheet.' }], imageSubtitle: 'Manufacturer' }, // PLACEHOLDER
         { _key: 'c7', heading: [{ text: 'Enabling quotes in minutes from drawings, photos and price rules.' }], imageSubtitle: 'Equipment maker' }, // PLACEHOLDER
