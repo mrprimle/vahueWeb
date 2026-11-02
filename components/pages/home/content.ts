@@ -1,4 +1,4 @@
-// Scale's copy under the 80% rule, following the worked home example in the positioning doc: same shape and counts as content.scale.ts.
+// Home copy from the AJTBD research in Scale's slots: same shape and counts as content.scale.ts.
 // Lines marked PLACEHOLDER are for Mike to replace with real numbers, clients and logos.
 import type { HeroLogo, HomeColor, HomeContent } from './content.types'
 
@@ -11,35 +11,36 @@ const logo = (id: number, width: number): HeroLogo => ({ _id: `logo-${id}`, alt:
 
 export const content: HomeContent = {
   hero: {
-    headline: 'The world’s most important work needs reliable AI systems.',
+    headline: 'Your busiest workflows need reliable AI agents. We run them.',
     scrollHint: 'Scroll to explore',
     video: '/home/packed.mp4',
     textures: { perlin: '/home/perlin256.png', numbers: '/home/numbers.png', fallback: '/home/home-fallback-small.jpg' },
     items: [
       {
         _key: '278857e80932',
+        category: 'Audit · 2 weeks',
         title: [{ text: 'Reliable AI has no shortcuts.' }],
-        body: [{ text: 'Vahue works across the AI stack, from the data and context your agents rely on, to the systems that put them to work. Humans stay in the loop.' }],
+        body: [{ text: 'For operations, finance and support teams still moving work between systems by hand. In two weeks we find the right use case and record your baseline: volume, errors and cost.' }],
       },
       {
         _key: 'fb20b03e7a10',
-        category: 'Applications',
+        category: 'Pilot · 4 to 6 weeks',
         title: [{ text: 'AI systems that actually work.' }],
-        body: [{ text: 'Most AI deployments in enterprise and mid-market fail. We find the right use case, build the system, and own the outcome.' }],
+        body: [{ text: 'Most AI pilots stall after the demo. We build the system inside the tools you already use and run it in shadow mode on your real cases, so you see it work before it goes live.' }],
         cta: { text: 'For Enterprise', url: '/enterprise' },
         logos: [logo(1, 40.5), logo(2, 27.5), logo(3, 36), logo(4, 27.5), logo(5, 27.5), logo(6, 27.5)], // PLACEHOLDER
       },
       {
         _key: '113c973e5bc7',
-        category: 'Evaluation',
-        title: [{ text: "The evals behind the world's most reliable AI." }],
-        body: [{ text: 'Every agent we run is proven on your own past cases first. We test against how your team really works (25% fewer errors before launch) and deliver at the bar production AI demands.' }], // PLACEHOLDER: 25% fewer errors
-        cta: { text: 'Explore Evaluation', url: '/evaluation/model-developers' },
+        category: 'Operate · Monthly',
+        title: [{ text: 'We stay and own the outcome.' }],
+        body: [{ text: 'We run and monitor your agents every month and report against your baseline. Risky cases wait for a person, so humans stay in the loop and your team stops babysitting automation.' }],
+        cta: { text: 'Explore Evals and Guardrails', url: '/evaluation/model-developers' },
       },
     ],
   },
   quote: {
-    quote: [{ text: '90% of the AI pilots we take on reach production with Vahue.' }], // PLACEHOLDER
+    quote: [{ text: 'We run your busiest workflow with agents, measured against your baseline from day one.' }],
     video: { url: '/home/homepage-secondary.mp4' },
   },
   applications: {
@@ -47,21 +48,21 @@ export const content: HomeContent = {
     realWord: 'Real',
     cta: { text: 'Get started', url: '/demo', variant: 'fill' },
     items: [
-      { _key: '278a91960588', applicationType: 'Finance', image: { path: '/home/app-finance.webp', alt: 'Finance image' }, link: { url: '/enterprise' }, textColor: FOUNDRY },
-      { _key: '6f8b0063ba12', applicationType: 'Life Science', image: { path: '/home/app-life-sciences.webp', alt: 'Life science image' }, link: { url: '/enterprise/healthcare' }, textColor: FOUNDRY },
-      { _key: '139aba2ad2f1', applicationType: 'Insurance', image: { path: '/home/app-insurance.webp', alt: 'Insurance image' }, link: { url: '/enterprise/insurance' }, textColor: EVERGREEN, animationDirection: 'right' },
-      { _key: '106cd65eb545', applicationType: 'Energy', image: { path: '/home/app-energy.webp', alt: 'Energy image' }, link: { url: '/enterprise' }, textColor: FOUNDRY },
-      { _key: 'a84fabdf3395', applicationType: 'Infrastructure', image: { path: '/home/app-infrastructure.webp', alt: 'Infrastructure image' }, link: { url: '/enterprise' }, textColor: EVERGREEN, animationDirection: 'right' },
-      { _key: 'ac4820379d42', applicationType: 'Legal', image: { path: '/home/app-legal.webp', alt: 'Legal image' }, link: { url: '/enterprise' }, textColor: EVERGREEN, animationDirection: 'right' },
-      { _key: '695de232a42d', applicationType: 'Manufacturing', image: { path: '/home/app-manufacturing.webp', alt: 'Manufacturing image' }, link: { url: '/physical-ai' }, textColor: PURPLE },
-      { _key: '85cba285fa3f', applicationType: 'Retail', image: { path: '/home/app-retail.webp', alt: 'Retail image' }, link: { url: '/enterprise' }, textColor: FOUNDRY },
-      { _key: '8352cf9b1cd8', applicationType: 'Operations', image: { path: '/home/app-ops.webp', alt: 'Operations image' }, link: { url: '/data-engine' }, textColor: PURPLE },
-      { _key: '7d2b48afb58a', applicationType: 'Healthcare', image: { path: '/home/app-healthcare.webp', alt: 'Healthcare image' }, link: { url: '/enterprise/healthcare' }, textColor: FOUNDRY },
-      { _key: 'b0731c77da57', applicationType: 'Customer Service', image: { path: '/home/app-customer-service.webp', alt: 'Customer service image' }, link: { url: '/donovan' }, textColor: FOUNDRY },
-      { _key: '55ff0680e844', applicationType: 'Logistics', image: { path: '/home/app-shipping.webp', alt: 'Logistics image' }, link: { url: '/enterprise' }, textColor: EVERGREEN, animationDirection: 'right' },
+      { _key: '278a91960588', applicationType: 'Back-office Sync Agents', image: { path: '/home/app-finance.webp', alt: 'Month-end close report' }, link: { url: '/generative-ai-data-engine' }, textColor: FOUNDRY },
+      { _key: '6f8b0063ba12', applicationType: 'Knowledge Agents', image: { path: '/home/app-life-sciences.webp', alt: 'Sourced answers list' }, link: { url: '/genai-portfolio' }, textColor: FOUNDRY },
+      { _key: '139aba2ad2f1', applicationType: 'Document Intake Agents', image: { path: '/home/app-insurance.webp', alt: 'Claim form and extracted fields' }, link: { url: '/physical-ai' }, textColor: EVERGREEN, animationDirection: 'right' },
+      { _key: '106cd65eb545', applicationType: 'Production Rescue', image: { path: '/home/app-energy.webp', alt: 'Offshore platform at dusk' }, link: { url: '/evaluation/public-sector' }, textColor: FOUNDRY },
+      { _key: 'a84fabdf3395', applicationType: 'Context and Integrations', image: { path: '/home/app-infrastructure.webp', alt: 'Network tower in a forest' }, link: { url: '/data-engine' }, textColor: EVERGREEN, animationDirection: 'right' },
+      { _key: 'ac4820379d42', applicationType: 'AI Strategy and Audit', image: { path: '/home/app-legal.webp', alt: 'Reviewed document with highlights' }, link: { url: '/evaluation/enterprise' }, textColor: EVERGREEN, animationDirection: 'right' },
+      { _key: '695de232a42d', applicationType: 'Scoring and Decision Agents', image: { path: '/home/app-manufacturing.webp', alt: 'Quote check with a score' }, link: { url: '/automotive' }, textColor: PURPLE },
+      { _key: '85cba285fa3f', applicationType: 'Sales and Booking Agents', image: { path: '/home/app-retail.webp', alt: 'Orders and bookings queue' }, link: { url: '/public-sector-data-engine' }, textColor: FOUNDRY },
+      { _key: '8352cf9b1cd8', applicationType: 'AI Product Engineering', image: { path: '/home/app-ops.webp', alt: 'Product board' }, link: { url: '/rlenvironments' }, textColor: PURPLE },
+      { _key: '7d2b48afb58a', applicationType: 'Embedded AI Specialists', image: { path: '/home/app-healthcare.webp', alt: 'Specialist at work' }, link: { url: '/experts' }, textColor: FOUNDRY },
+      { _key: 'b0731c77da57', applicationType: 'Support and Voice Agents', image: { path: '/home/app-customer-service.webp', alt: 'Voice agent conversation' }, link: { url: '/donovan' }, textColor: FOUNDRY },
+      { _key: '55ff0680e844', applicationType: 'Evals and Guardrails', image: { path: '/home/app-shipping.webp', alt: 'Status checks on real cases' }, link: { url: '/evaluation/model-developers' }, textColor: EVERGREEN, animationDirection: 'right' },
     ],
     carousel: {
-      header: [{ text: 'Proven across every industry.' }],
+      header: [{ text: 'Proven across every workflow.' }], // PLACEHOLDER: until real cases are in
       cards: [
         { _key: 'c1', heading: [{ text: 'Turning thousands of incoming claims into clean, checked records.' }], imageSubtitle: 'Insurer' }, // PLACEHOLDER
         { _key: 'c2', heading: [{ text: 'Partnering to keep CRM, ERP and finance in step.' }], imageSubtitle: 'Distributor' }, // PLACEHOLDER
@@ -82,8 +83,8 @@ export const content: HomeContent = {
     cards: [
       {
         _key: 'fc154877c430',
-        title: "10 years putting AI to work in the world's busiest operations.", // PLACEHOLDER
-        description: [{ text: "Since 2016, we've been at the forefront; from machine learning to AI agents solving the world's hardest problems." }], // PLACEHOLDER
+        title: 'Grow volume without growing the team.',
+        description: [{ text: 'When volume outgrows the team, a pilot stalls or the next hire is refused, we take the workflow on, so service capacity grows faster than cost.' }],
         icon: 'trendingUp',
         iconColor: PURPLE,
         iconBgColor: { hex: '#FFFFFF' },
@@ -93,42 +94,42 @@ export const content: HomeContent = {
       {
         _key: '23a3ecc9cdae',
         title: 'The standard every agent we ship is measured against.',
-        description: [{ text: 'Our evals run private benchmarks on your own cases so every agent proves itself before it goes live.' }],
+        description: [{ text: 'Your own past cases and your recorded baseline are the test. You see the share handled correctly and the exceptions flagged before anything goes live.' }],
         icon: 'leaderboard',
         iconColor: FOUNDRY,
         iconBgColor: { hex: '#FFFFFF' },
         hoveredColor: FOUNDRY,
-        link: { url: '/labs/leaderboard', text: 'Learn more' },
+        link: { url: '/evaluation/model-developers', text: 'Learn more' },
       },
       {
         _key: '3288b0a5e585',
         title: 'Behind the agent. Behind  the mission. Behind it all.',
-        description: [{ text: 'Only Vahue has the applied research, world’s best engineers, and deployment experience to build AI that works in the real world.' }],
+        description: [{ text: 'We find the right use case, build the system, and own the outcome, with forward-deployed engineers working inside the systems your team already uses.' }],
         icon: 'joinLeft',
         iconColor: CLOUD,
         iconBgColor: { hex: '#FFFFFF' },
         hoveredColor: CLOUD,
-        link: { url: '/generative-ai-data-engine', text: 'Learn more' },
+        link: { url: '/experts', text: 'Learn more' },
       },
     ],
   },
   blog: {
-    heading: [{ text: 'From the Lab to the real world.\nThe latest from Vahue.' }],
+    heading: [{ text: 'From the pilot to the real world.\nThe latest from Vahue.' }],
     posts: [
-      { _key: 'p1', title: 'Introducing Vahue Labs', url: '/blog', alt: '', imageGradientOverlay: false, titleOnly: true }, // PLACEHOLDER
+      { _key: 'p1', title: 'Introducing the Two-Week AI Audit', url: '/blog', alt: '', imageGradientOverlay: false, titleOnly: true }, // PLACEHOLDER
       { _key: 'p2', title: 'Regional Hospital + Vahue: Reliable AI for Better Healthcare', url: '/blog', image: '/home/post-2.webp', alt: '', imageGradientOverlay: false, titleOnly: false }, // PLACEHOLDER
       { _key: 'p3', title: 'How a mid-market insurer deploys AI that actually works (hint: it’s evals) | Human in the Loop: Episode 13', url: '/blog', image: '/home/post-3.webp', alt: '', category: { name: 'Company', color: { hex: '#A8927C' } }, textColor: 'light', imageGradientOverlay: false, titleOnly: false }, // PLACEHOLDER
       { _key: 'p4', title: 'The Next Phase of AI Operations: Governance, Implementation, and Measured Results', url: '/blog', image: '/home/post-4.webp', alt: '', category: { name: 'Operations' }, textColor: 'light', imageGradientOverlay: false, titleOnly: false }, // PLACEHOLDER
       { _key: 'p5', title: 'Vahue and a Scale-up Distributor Combine Forces to Modernize the Back Office', url: '/blog', image: '/home/post-5.webp', alt: '', category: { name: 'Customers' }, textColor: 'light', imageGradientOverlay: null, titleOnly: false }, // PLACEHOLDER
-      { _key: 'p6', title: 'Agent Evals: Raising the Bar for Agentic Coding', url: '/blog', image: '/home/post-6.webp', alt: '', category: { name: 'Research', color: { hex: '#273252' } }, textColor: 'light', imageGradientOverlay: true, titleOnly: false }, // PLACEHOLDER
+      { _key: 'p6', title: 'Agent Evals: Raising the Bar for Production AI', url: '/blog', image: '/home/post-6.webp', alt: '', category: { name: 'Research', color: { hex: '#273252' } }, textColor: 'light', imageGradientOverlay: true, titleOnly: false }, // PLACEHOLDER
       { _key: 'p7', title: 'Regional Bank & Vahue: Paving the Way for a Digital Future', url: '/blog', image: '/data-engine/prefooter.webp', alt: '', category: { name: 'Company', color: { hex: '#A8927C' } }, textColor: 'light', imageGradientOverlay: true, titleOnly: false }, // PLACEHOLDER
-      { _key: 'p8', title: 'Expanding Our Context Engine for Document Intake', url: '/blog', image: '/home/post-8.webp', alt: '', category: { name: 'Product', color: { hex: '#575757' } }, textColor: 'light', imageGradientOverlay: true, titleOnly: false }, // PLACEHOLDER
+      { _key: 'p8', title: 'Expanding Context and Integrations for Document Intake', url: '/blog', image: '/home/post-8.webp', alt: '', category: { name: 'Services', color: { hex: '#575757' } }, textColor: 'light', imageGradientOverlay: true, titleOnly: false }, // PLACEHOLDER
     ],
   },
   videoCta: {
     backgroundColor: FOUNDRY,
-    headline: 'Our legacy, your success.',
-    description: 'Book a demo today and see how Vahue can run reliable AI for your organization.',
+    headline: 'Our agents, your success.',
+    description: 'Book a demo today and see it work on your own cases before it goes live.',
     cta: { text: 'Get started', url: '/demo', variant: 'arrow' },
     video: { url: '/home/workflow-lines.mp4' },
   },

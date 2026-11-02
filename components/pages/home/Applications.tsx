@@ -485,14 +485,14 @@ export function Applications({ content, phaseOffset = 0.25, scalePhaseOffset = 0
                 <h2 ref={headlineRef} className="text-black max-md:text-[28px] max-md:leading-[30px] md:text-[4rem] md:leading-[1.05]">
                   {headline}
                 </h2>
-                <div ref={rowRef} className="flex justify-center gap-2">
+                <div ref={rowRef} className="flex justify-center gap-2 max-lg:flex-col max-lg:items-center max-lg:gap-0">
                   <h2 ref={realRef} className="text-black max-md:text-[28px] max-md:leading-[30px] md:text-[4rem] md:leading-[1.05]">
                     {realWord}
                   </h2>
                   <div ref={dynamicBox} className="relative flex flex-col items-start overflow-clip min-h-[30px] md:min-h-[72px]">
                     {types.map((t, i) => (
                       <h2
-                        className="absolute dynamic-header whitespace-nowrap max-md:text-[28px] max-md:leading-[30px] md:text-[4rem] md:leading-[1.05]"
+                        className="absolute dynamic-header whitespace-nowrap max-md:text-[28px] max-md:leading-[30px] md:text-[4rem] md:leading-[1.05] md:max-lg:text-[3.5rem]"
                         style={t.textColor?.hex ? { color: t.textColor.hex.startsWith('#') ? t.textColor.hex : `#${t.textColor.hex}` } : undefined}
                         data-type={t.title.toLowerCase()}
                         data-direction={t.direction}
