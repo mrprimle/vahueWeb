@@ -83,7 +83,7 @@ Every sheet of the final sets was opened. Clone: 23 at 1440, 16 at 390. Filled: 
 Same by eye: direction of movement, what the header covers, rounded corners, what is visible when, every layout branch at 1024 and 1280.
 
 Differences:
-- **Open: raised words in cards of the pinned scenes.** On Scale all 28 words of step 1 end at `translate(0, -30%)`, 3 of 3 runs, because the in-animation does not reset word `y` after the out state. On ours, over repeated runs of the dev server, the same words end in one of three states: all raised like Scale, all level, or mixed, where the first words sit level and the last are raised. The mixed state is visible, for example "structures it," and "Every query" 6px apart. At step 1 it was mixed in 3 of the 5 full 1440 captures checked at that stop (one clone, two filled), and the first flywheel card was mixed in the final filled capture. Not seen at 390, 1024 or 1280. Root cause not found. `AnimatedText` is ported from Scale and I did not add a workaround. Production could not be tested here, so whether dev Strict Mode contributes is unknown.
+- **Raised words in the pinned scene cards, resolved 2026-11-02 on production, 1440:** not a gap. `animateIn` does not stop a running out-timeline, so words end at `translate(0, -30%)` when a card is re-entered while its out-timeline is still running. Forward scrolling on fresh loads: all words level, 5 of 5 loads on ours, 3 of 3 on Scale, at every stop. Leaving step 1 and returning after a delay, 2 loads each on both sites, the same result at each delay: 150ms and 300ms level, 450ms, 700ms and 1000ms all raised, 1400ms level. No mixed state on production on either site. The run-to-run variation and mixed state came from dev server timing.
 - **Scale loads its scene later:** in headless runs Scale's bins arrive late, so Scale shows empty scenes, a black box on the flywheel at 1280 and 390, and no step cards where ours already plays. At 390 Scale's bins had not loaded by y 2296 in the instrument run. Compared only after load.
 - **Intro heading reveal:** on Scale it starts by y 900, on ours at y 939. Likely Scale's trigger start is measured before its announcement bar mounts, not confirmed. 39px earlier.
 - **Hero wrap at 1440:** a font gap. "Reliable infrastructure is at / the core", subtitle 3 lines vs 4, heading top 347.4 vs 334.5.
@@ -131,7 +131,6 @@ No-niche swaps: "government standards" to "regulated industries"; deploying "for
 - **Unverified claims kept by the keep rule:** "We are the industry leading experts in GenAI red teaming", "largely open-source technology toolkit", "evaluation datasets in days".
 - **Two blog tiles have an image and no title or link**, as on Scale, where the CMS reference does not resolve. Keep, or give them titles.
 - **`demo-2` and `demo-3`** are Scale's UI screenshots with generic content, dimmed behind the front card. No brand visible.
-- **Raised-word state above.**
 
 ## Gaps
 - Timings measured against Scale's production build on our dev server. Production not measured.
