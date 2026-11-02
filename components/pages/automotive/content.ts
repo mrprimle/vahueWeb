@@ -22,8 +22,8 @@ export const content: AutomotiveContent = {
     title: 'Scoring and Decision Agents',
     subtitle: 'Hours of manual QA per batch, and no two reviewers deciding quite alike. Agents learn from your past decisions and the reasons behind them, so every item gets the same judgement.',
     features: [
-      { title: 'Data Scoring', description: 'Every ticket, claim, invoice or file gets a score and a reason in seconds, from the systems you already use. Clear cases flow on instead of waiting hours in a queue.' },
-      { title: 'Data Curation', description: 'Explore both scored and unscored cases. See where your reviewers disagree, curate cases matching target scenarios and send them for review.' },
+      { title: 'Case Scoring', description: 'Every ticket, claim, invoice or file gets a score and a reason in seconds, from the systems you already use. Clear cases flow on instead of waiting hours in a queue.' },
+      { title: 'Case Review', description: 'Explore both scored and unscored cases. See where your reviewers disagree, pull the cases that match a target scenario and send them for review.' },
       { title: 'Agent Evaluation', description: 'Track agreement with your reviewers every week. Identify agent weaknesses and evaluate your agent on scenario tests before its scope grows.' },
     ],
     image: { src: '/automotive/scoring-curation-evaluation.png', alt: 'Data scoring, data curation and agent evaluation loop', width: 662, height: 594 },
@@ -118,8 +118,8 @@ export const content: AutomotiveContent = {
       {
         id: 'upgrading-workflow-context-engine',
         overtitle: 'Webinar',
-        title: 'Upgrading Your Workflow Into a Context Engine',
-        image: { src: '/automotive/webinar-context.webp', alt: 'Upgrading Your Workflow Into a Context Engine' },
+        title: 'Connecting Your Workflow to Its Context',
+        image: { src: '/automotive/webinar-context.webp', alt: 'Connecting Your Workflow to Its Context' },
         link: '/events', // PLACEHOLDER
       },
       {
