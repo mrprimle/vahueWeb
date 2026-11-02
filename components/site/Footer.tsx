@@ -3,6 +3,7 @@
 // Port of Scale's footer (module 260646, chunk 2psemgdyngpil.js).
 import { Fragment } from 'react'
 import { cn } from './lib/cn'
+import { openCookiePreferences } from './CookieBanner'
 import { LogoMark } from './Logo'
 import { CMSLink } from './shared/CMSLink'
 import type { FooterContent } from './content.types'
@@ -83,7 +84,7 @@ export function Footer({ content }: { content: FooterContent }) {
         </div>
         <div className="flex flex-col gap-2 text-right">
           <p className="detail-mono text-scale-gray-30">
-            {content.cookiesPrefix} <button type="button" className="underline uppercase cursor-pointer">{content.cookiesLink}</button>
+            {content.cookiesPrefix} <button type="button" onClick={openCookiePreferences} className="underline uppercase cursor-pointer">{content.cookiesLink}</button>
           </p>
           <div className="flex flex-col-reverse gap-2 small-print text-scale-gray-30 md:flex-row">
             <p className="detail-mono">{content.smallPrint}</p>

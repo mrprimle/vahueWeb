@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { DM_Mono } from 'next/font/google'
 import localFont from 'next/font/local'
 import type { ReactNode } from 'react'
+import { CookieBanner } from '@/components/site/CookieBanner'
 import { SiteChrome } from '@/components/site/SiteChrome'
 import './globals.css'
 
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" data-theme="light" suppressHydrationWarning>
       <body className={`${aeonik.variable} ${aeonikBold.variable} ${mono.variable} font-sans`}>
         <SiteChrome>{children}</SiteChrome>
+        <CookieBanner />
       </body>
     </html>
   )

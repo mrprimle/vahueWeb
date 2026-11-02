@@ -1,0 +1,141 @@
+/* Values from Scale's overrides of OneTrust (#onetrust-banner-sdk.otFlat) and OneTrust's own dark filter. */
+.overlay,
+.overlayOut {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483645;
+  background: rgba(0, 0, 0, 0.5);
+}
+.overlay {
+  animation: fadeIn 400ms ease-in-out;
+}
+.overlayOut {
+  animation: fadeOut 400ms linear forwards;
+  pointer-events: none;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.banner {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2147483645;
+  max-width: 1216px;
+  margin: 0 0.75rem 0.75rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  outline: none;
+  background: #26262699;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  font-family: var(--font-aeonik), system-ui, -apple-system, Arial, sans-serif;
+}
+.row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.text {
+  width: 100%;
+  margin: 0;
+  color: #fff;
+  font-size: 0.875rem;
+  line-height: 1.375rem;
+}
+.text a {
+  margin-left: 5px;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* The two choices are the same size, side by side, one click each. */
+.buttons {
+  display: grid;
+  flex-shrink: 0;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  width: 100%;
+}
+.reject,
+.accept {
+  border: 0;
+  border-radius: 0.5rem;
+  outline-offset: 1px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.14px;
+  line-height: 1.5rem;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+.reject {
+  background: #fff3;
+  color: #fff;
+}
+.reject:hover {
+  filter: brightness(0.75);
+}
+.accept {
+  position: relative;
+  padding-right: 1.75rem;
+  background: #fff;
+  color: #000;
+}
+.accept:hover {
+  opacity: 0.95;
+}
+.accept::before {
+  content: "\2192";
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  /* Scale's arrow is 8px wide at 12px. Our Aeonik file draws a wider one, so this uses the system glyph at the size that gives 8px. */
+  font-family: system-ui, -apple-system, Arial, sans-serif;
+  font-size: 8.75px;
+  transition: all 0.4s;
+  transform: translateY(-50%);
+}
+.accept:hover::before {
+  transform: translate(0.25rem, -50%);
+}
+
+@media (min-width: 640px) {
+  .banner {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+  }
+  .row {
+    gap: 1.5rem;
+  }
+  .buttons {
+    width: fit-content;
+  }
+}
+@media (min-width: 1024px) {
+  .banner {
+    width: 91.6667%;
+    margin: 0 auto 1.5rem;
+  }
+}
+@media (min-width: 1280px) {
+  .row {
+    flex-direction: row;
+  }
+  .text {
+    flex: 1;
+    width: auto;
+  }
+}
