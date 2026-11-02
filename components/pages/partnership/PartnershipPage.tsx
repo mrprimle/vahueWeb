@@ -21,7 +21,7 @@ function Card({ card }: { card: PartnerCard }) {
           {card.logo.path ? (
             <ResponsiveImage asset={{ path: card.logo.path, alt: card.logo.alt }} alt={card.logo.alt} fill objectContain noBackground sizes="55px" />
           ) : (
-            <LogoTile label={card.logo.alt} className="h-full w-full text-white" />
+            <LogoTile label={card.logo.alt} className="text-white" style={{ width: 55, height: 36 }} />
           )}
         </div>
       </div>

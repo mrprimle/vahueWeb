@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { PartnershipPage } from '@/components/pages/partnership/PartnershipPage'
-import { contentScale } from '@/components/pages/partnership/content.scale'
+import { content } from '@/components/pages/partnership/content'
 
-export const metadata: Metadata = { title: contentScale.meta.title, description: contentScale.meta.description }
+export const metadata: Metadata = { title: content.meta.title, description: content.meta.description }
 
 export default function Page() {
-  return <PartnershipPage content={contentScale} />
+  return <PartnershipPage content={content} />
 }
