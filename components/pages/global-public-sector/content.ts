@@ -62,7 +62,7 @@ export const content: GlobalPublicSectorContent = {
   },
   stats: [
     { key: 'stat-contracts', icon: 'drafting', label: 'Engagement contracts', description: stat('85%', 'Reduced drafting & benchmarking time') }, // PLACEHOLDER
-    { key: 'stat-experts', icon: 'students', label: 'Experts', description: stat('100K+', 'Sourced answers delivered to experts') }, // PLACEHOLDER
+    { key: 'stat-experts', icon: 'students', label: 'Experts', description: stat('100K+', 'Sourced answers for experts') }, // PLACEHOLDER
     { key: 'stat-rfi', icon: 'regulatory', label: 'RFI responses', description: stat('50%', 'Faster proposals and client decks') }, // PLACEHOLDER
   ],
   solutions: {
