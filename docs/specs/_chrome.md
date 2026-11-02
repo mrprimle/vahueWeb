@@ -27,6 +27,8 @@ Below `md`. Same 4 rows at y 74, 140, 206, 272, 66 tall, 32/34 type. CTA bar at 
 ### Footer
 Module 260646. 898.6 tall at 1440, 1360.3 at 390, equal to Scale. Columns at x 140.7, 374, 607.3, 840.7, 1074. Title `header1 md:text-[7.25rem]`, 232 tall on 2 lines at 1440, 160 at 390. No motion. Note the mono label is 13.008px at 1440 and 10px at 390.
 
+Height is driven by line wraps only: with Scale's strings injected the structure matches at every width. Two strings were therefore aligned to Scale's wrap: `Workflow Automation Guide` sits in Scale's `Computer Vision Applications` slot (the 2-line row at 768 to 1100), and the copyright line reads like Scale's `Scale AI, Inc.` line (wraps at 320 and 768). Equal to Scale at 390, 480x800, 768, 900, 1023, 1024, 1100, 1279, 1280, 1440. Left open: 320 is 40 short, because Aeonik Pro sets "most important" at 272.45 in a 272 column and Aeonik at 269.38, so Scale wraps one more line (font, leave). `workflows` is wider than `decisions`, so the title holds one more line than Scale in 400 to 407, 500 to 507, 1060 to 1091 and 1356 to 1379 (1366 laptops: 1014.6 against 898.6).
+
 ### Smooth scroll
 See the Lenis section of stack.md.
 

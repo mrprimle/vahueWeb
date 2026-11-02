@@ -140,13 +140,13 @@ export const footer: FooterContent = {
         { text: 'AI Agent Evaluation', href: '/guides' },
         { text: 'Document Intake', href: '/guides' },
         { text: 'Guide to AI for eCommerce', href: '/guides' },
-        { text: 'Workflow Automation', href: '/guides' },
+        { text: 'Workflow Automation Guide', href: '/guides' },
         { text: 'Large Language Models', href: '/guides' },
       ],
     },
   ],
   title: 'Reliable AI for the world’s most important workflows',
-  smallPrint: 'Copyright © 2026 Vahue. All rights reserved', // PLACEHOLDER: legal entity name for Mike
+  smallPrint: 'Copyright © 2026 Vahue AI, Inc. All rights reserved', // PLACEHOLDER: legal entity name for Mike
   cookiesPrefix: 'Manage your',
   cookiesLink: 'cookie preferences',
   tos: [
