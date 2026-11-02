@@ -1,6 +1,6 @@
 // Copy for the labs chrome. Same shape as content.scale.ts. Inkeep's and HubSpot's live services are replaced by static behaviour.
 // [AGENT EVALS] follows the site menu's name for /labs/leaderboard (components/site/content.ts).
-import { labsChromeScale } from './content.scale'
+import { countries } from './countries'
 import type { LabsChromeContent } from './types'
 
 export const labsChrome: LabsChromeContent = {
@@ -30,7 +30,7 @@ export const labsChrome: LabsChromeContent = {
     title: 'Subscribe to Vahue Labs',
     emailPlaceholder: 'Work email*',
     countryPlaceholder: 'Country*',
-    countries: labsChromeScale.newsletter.countries,
+    countries,
     legalBefore: 'By submitting this form, your information will be processed in accordance with our',
     legalLink: { label: 'Privacy Policy.', href: '/legal/privacy' },
     submit: 'Submit →',
