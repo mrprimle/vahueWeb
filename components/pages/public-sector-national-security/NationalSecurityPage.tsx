@@ -77,7 +77,7 @@ function NatSecHero({ c }: { c: NationalSecurityContent['hero'] }) {
                           // eslint-disable-next-line @next/next/no-img-element
                           <img src={logo.src} alt={copy === 0 ? logo.alt : ''} className="max-h-full max-w-full object-contain select-none pointer-events-none [filter:brightness(0)_invert(1)]" />
                         ) : (
-                          <LogoTile className="h-[27px]" />
+                          <LogoTile className="h-[27px]" style={{ width: '100%' }} />
                         )}
                       </span>
                     ))}
