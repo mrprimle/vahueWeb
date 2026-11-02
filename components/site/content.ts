@@ -12,6 +12,7 @@ export const nav: NavContent = {
   categories: [
     {
       name: 'Services',
+      wideLeftColumn: true,
       leftColumn: [
         { text: 'Automate a Workflow' },
         { href: '/data-engine', name: 'Context and Integrations', image: img('data-engine', 'Context and Integrations') },

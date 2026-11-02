@@ -5,6 +5,8 @@ export type FeaturedPost = { url: string; title: string; image?: { path: string;
 export type NavCategory = {
   name: string
   featureBlogPosts?: boolean
+  /** Left column labels are longer than Scale's: pushes the right column over so they can't touch. */
+  wideLeftColumn?: boolean
   leftColumn: NavBlock[]
   rightColumn: NavBlock[]
   featuredPosts?: FeaturedPost[]
