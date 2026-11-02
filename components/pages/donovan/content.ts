@@ -1,5 +1,6 @@
 // Copy for /donovan (Support and Voice Agents). AJTBD copy in Scale's sections.
 // Same shape and counts as content.scale.ts. Lines marked PLACEHOLDER are for Mike to replace with real data.
+import { fitProofLogo } from '@/components/site/proofLogos'
 import type { DonovanContent } from './types'
 
 const WHITE = { tailwindClass: 'white', contrastColor: '#010101' }
@@ -17,11 +18,11 @@ export const content: DonovanContent = {
     image: { path: '/donovan/support-floor.jpg' },
   },
   logos: [
-    { alt: 'Logo', width: 65, height: 45 }, // PLACEHOLDER
-    { alt: 'Logo', width: 48, height: 63 }, // PLACEHOLDER
-    { alt: 'Logo', width: 68, height: 53 }, // PLACEHOLDER
-    { alt: 'Logo', width: 79, height: 22 }, // PLACEHOLDER
-    { alt: 'Logo', width: 70, height: 16 }, // PLACEHOLDER
+    fitProofLogo('inspera', 68, 36), // FROM OLD SITE: confirm
+    fitProofLogo('ica', 60, 30), // FROM OLD SITE: confirm
+    fitProofLogo('svea-solar', 68, 36), // FROM OLD SITE: confirm
+    fitProofLogo('qonto', 79, 22), // FROM OLD SITE: confirm
+    fitProofLogo('wisestamp', 80, 20), // FROM OLD SITE: confirm
   ],
   overview: {
     overtitle: 'Service Overview',
@@ -206,7 +207,7 @@ export const content: DonovanContent = {
   overmatch: {
     overtitle: 'Why Vahue',
     title: 'Achieve AI Advantage',
-    subtitle: 'Your customers won’t wait two to five days for a reply. Support more customers with less effort, and avoid the next hire, with production-ready AI capabilities we run for you.',
+    subtitle: 'Your customers won’t wait two to five days for a reply. On one e-commerce platform, 24/7 AI support cut tickets by 60% and reached 95% CSAT. Support more customers with production-ready AI capabilities we run for you.', // FROM OLD SITE: confirm
     features: [
   {
     "icon": "expertise",
