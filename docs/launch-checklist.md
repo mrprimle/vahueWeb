@@ -35,7 +35,8 @@ Vahue holds: SOC 2, ISO 27001, ISO 42001, HIPAA, GDPR, EU AI Act, CSA STAR, CCPA
 - [ ] `/about` stats, all invented: 15M decisions, $10M paid to experts, $29M valuation, 100+ employees, founded 2016.
 - [ ] Home: "10 years putting AI to work" and "Since 2016".
 - [ ] `/about`: headquarters caption is "City, Country", and the press tiles have invented headlines with "Full Name".
-- [ ] Footer: legal entity name, LinkedIn and X links.
+- [ ] Footer: legal entity name, LinkedIn and X links. The footer says "Vahue AI, Inc." and `/labs` says "Vahue Inc.", and neither is confirmed. A much shorter real name brings small footer height gaps back at 320 and 768.
+- [ ] Footer wording changed to fit Scale's line breaks: "Workflow Automation Guide", and "Teams" in the announcement bar. The footer headline's "workflows" is wider than Scale's "decisions", so the footer is 116px taller at 1366 wide, a common laptop size. Switch to "decisions" to close that?
 - [ ] Announcement bar and menu featured cards: titles are placeholders.
 
 ## Demo form
