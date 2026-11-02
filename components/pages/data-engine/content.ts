@@ -1,8 +1,11 @@
 // Copy for /data-engine: the Context and Integrations service, the layer every workflow agent runs on. Same shape and counts as content.scale.ts.
 // Lines marked PLACEHOLDER are for Mike to replace with real data.
+import { fitProofLogo } from '@/components/site/proofLogos'
+import type { ProofLogo } from '@/components/site/proofLogos'
 import type { DataEngineContent, LogoItem } from './types'
 
 const logo = (key: string, width: number, height: number): LogoItem => ({ key, alt: 'Logo', width, height })
+const customer = (key: string, name: ProofLogo, width: number, height: number): LogoItem => ({ key, ...fitProofLogo(name, width, height) })
 
 export const content: DataEngineContent = {
   meta: {
@@ -11,19 +14,19 @@ export const content: DataEngineContent = {
   },
   hero: {
     headline: 'Context and Integrations',
-    body: 'For teams whose work is scattered across systems: we connect your CRM, ERP, documents and MCP tools, so agents can find the context and act on it.',
+    body: 'We connect your CRM, ERP, documents and MCP tools, so agents can find the context and act on it.',
     cta: { text: 'Book a Demo', url: '/demo' },
     image: { path: '/data-engine/hero.webp' },
     backdrop: { tailwindClass: 'white', contrastColor: '#010101' },
   },
   logos: [
-    logo('customer-1', 90, 23), // PLACEHOLDER
-    logo('customer-2', 100, 24), // PLACEHOLDER
-    logo('customer-3', 100, 20), // PLACEHOLDER
-    logo('customer-4', 112, 20), // PLACEHOLDER
-    logo('customer-5', 111, 23), // PLACEHOLDER
-    logo('customer-6', 60, 24), // PLACEHOLDER
-    logo('customer-7', 100, 24), // PLACEHOLDER
+    customer('customer-1', 'qonto', 90, 23), // FROM OLD SITE: confirm
+    customer('customer-2', 'verbit', 70, 30), // FROM OLD SITE: confirm
+    customer('customer-3', 'winningtemp', 100, 22), // FROM OLD SITE: confirm
+    customer('customer-4', 'zwapgrid', 100, 22), // FROM OLD SITE: confirm
+    customer('customer-5', 'wisestamp', 100, 23), // FROM OLD SITE: confirm
+    customer('customer-6', 'etoro', 78, 24), // FROM OLD SITE: confirm
+    customer('customer-7', 'inspera', 60, 30), // FROM OLD SITE: confirm
   ],
   best: {
     title: 'The Best In The Business',
@@ -47,8 +50,8 @@ export const content: DataEngineContent = {
     overtitle: 'Automate a Workflow',
     title: 'Powering Reliable Agents',
     subtitle: 'Every agent runs on the same connected context.',
-    showcaseTitle: 'Back-office Sync Agents',
-    showcaseSubtitle: 'Keep CRM, ERP and finance in step',
+    showcaseTitle: 'Back-office Sync',
+    showcaseSubtitle: 'CRM, ERP and finance in step',
     body: 'Back-office Sync Agents are one of six workflow services built on this layer. They read your systems, ask a person when a case is risky, and update the system of record.',
     primaryCta: { text: 'Book a Demo', url: '/demo' },
     secondaryCta: { text: 'Explore Agents', url: '/services/back-office-sync' },
@@ -69,12 +72,12 @@ export const content: DataEngineContent = {
   whatIs: {
     overtitle: 'WHAT IS CONTEXT AND INTEGRATIONS',
     title: 'The One Layer Every Agent Runs On',
-    subtitle: 'The layer that lets an agent find the right context and update the system of record: live connections to your systems, the right permissions, and the current version of every record.',
+    subtitle: 'The layer that lets an agent find the right context and update the system of record: live connections, the right permissions, and the current version of every record.',
     image: { src: '/data-engine/diagram-context-integrations.webp', alt: 'Your systems move through Connect, Permissions, Evaluation and Grounding in a loop until the agent is reliable', width: 2432, height: 1274 },
     label: 'Context and Integrations',
     items: [
       { title: 'Connect', body: 'Link CRM, ERP, inbox, helpdesk and document stores through APIs and MCP servers.' },
-      { title: 'Permissions', body: 'Agents see only what their role can see. Every read and write is logged.' },
+      { title: 'Permissions', body: 'Agents see only what their role can see.' },
       { title: 'Grounding', body: 'Agents answer from current, cited sources, so every figure traces to a record.' },
       { title: 'Evaluation', body: 'Evaluate retrieval and actions against your past cases to find weak points.' },
     ],
