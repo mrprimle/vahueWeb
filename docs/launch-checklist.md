@@ -71,6 +71,8 @@ Vahue holds: SOC 2, ISO 27001, ISO 42001, HIPAA, GDPR, EU AI Act, CSA STAR, CCPA
 
 - [ ] `/partnership`: both partner cards are invented ("CRM Implementers", "Telephony Firms x Vahue") with neutral logo tiles, and they link to product pages because there are no partner pages. Add real partners or drop the page. Also check the footer's "Data Partnerships" link.
 
+- [ ] `/labs/jobs`: all 11 roles are invented, including "VP, Research", with `City, Country` locations and a date carried over from Scale. Rows link to `/careers#open-roles`, and those 11 roles may not be on that board. The heading says `[Research Careers]` here and `[Jobs]` on `/labs`, so pick one. "advancing AI through rigorous evaluation and research" is Scale's claim.
+
 ## Numbers
 
 - [ ] Home: "25% fewer errors", "90% of the AI pilots".
