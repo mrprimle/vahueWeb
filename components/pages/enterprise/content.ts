@@ -1,9 +1,11 @@
 // Copy for /enterprise from the AJTBD research in Scale's slots. Same shape as content.scale.ts.
 // Lines marked PLACEHOLDER are for Mike to replace with real numbers, clients, quotes and logos.
+import { fitProofLogo, type ProofLogo } from '@/components/site/proofLogos'
 import type { EnterpriseContent, EnterpriseLogo } from './types'
 
 const P = '/enterprise'
-const LOGO: EnterpriseLogo = { alt: 'Logo' } // PLACEHOLDER
+const NO_LOGO: EnterpriseLogo = { alt: 'Logo' } // no logo on the old site: the testimonial tab shows the name, Scale's no-logo branch
+const logos = (names: ProofLogo[]): EnterpriseLogo[] => names.map((name) => { const { alt, src } = fitProofLogo(name, 70, 28); return { alt, src } })
 
 export const content: EnterpriseContent = {
   meta: {
@@ -43,7 +45,7 @@ export const content: EnterpriseContent = {
     headline: 'Vahue bridges the gap between AI models & business outcomes',
     subtitle: [{ style: 'normal', text: 'We find the right use case, build the system, and own the outcome. Agents learn from your team’s corrections, so the workflow keeps improving against your baseline.' }],
     trustedBy: 'Trusted by',
-    logos: [LOGO, LOGO, LOGO, LOGO, LOGO, LOGO], // PLACEHOLDER
+    logos: logos(['qonto', 'etoro', 'verbit', 'inspera', 'winningtemp', 'monocl']), // FROM OLD SITE: confirm
     video: { webm: `${P}/squares-filled.webm`, mov: `${P}/squares-filled-hevc.mp4`, poster: `${P}/squares-filled-poster.webp`, name: 'Squares' },
   },
   blog: {
@@ -56,40 +58,39 @@ export const content: EnterpriseContent = {
     ],
   },
   logoCloud: {
-    headline: "Trusted by the world's most ambitious enterprises.", // PLACEHOLDER
-    logos: [LOGO, LOGO, LOGO, LOGO, LOGO, LOGO, LOGO, LOGO, LOGO], // PLACEHOLDER
+    headline: 'Trusted by 20+ ambitious companies.', // FROM OLD SITE: confirm
+    logos: logos(['qonto', 'etoro', 'verbit', 'inspera', 'winningtemp', 'svea-solar', 'ica', 'wisestamp', 'zwapgrid']), // FROM OLD SITE: confirm
   },
   results: {
     heading: 'Real customers, real results.',
     cards: [
-      { label: 'Time Saved', stat: '93%', description: 'faster invoice reviews for finance teams (15 hours > 1 hour)', icon: 'time' }, // PLACEHOLDER
-      { label: 'Cost', stat: '$4M+', description: 'cost removed after implementing agents across finance reconciliations.', icon: 'revenue' }, // PLACEHOLDER
-      { label: 'Accuracy', stat: '100%', description: 'source-cited, regulator-defensive audit-trail.', icon: 'accuracy' }, // PLACEHOLDER
-      { label: 'Adoption', stat: '36,000+', description: 'cases handled without a person within 3 months of rollout.', icon: 'adoption' }, // PLACEHOLDER
-      { label: 'Delivery Speed', stat: '6 weeks', description: 'pilot timeline to put agents to work on your real cases.', icon: 'speed' }, // PLACEHOLDER
+      { label: 'Time Saved', stat: '5 min', description: 'average response time at a wealth management firm, down from 1 hour.', icon: 'time' }, // FROM OLD SITE: confirm
+      { label: 'Support Load', stat: '60%', description: 'fewer customer support tickets on an e-commerce platform.', icon: 'revenue' }, // FROM OLD SITE: confirm
+      { label: 'Satisfaction', stat: '95%', description: 'CSAT with 24/7 AI support on the same e-commerce platform.', icon: 'accuracy' }, // FROM OLD SITE: confirm
+      { label: 'Adoption', stat: '85%', description: 'of employees at a wealth management firm use AI tools daily.', icon: 'adoption' }, // FROM OLD SITE: confirm
+      { label: 'Delivery Speed', stat: '2 weeks', description: 'to resolve 70% of routine queries automatically at that firm.', icon: 'speed' }, // FROM OLD SITE: confirm
     ],
   },
   testimonials: {
     heading: "Don't just take our word for it",
     items: [
       {
-        clientName: 'Full Name', // PLACEHOLDER
-        title: 'Head of Support, Company', // PLACEHOLDER
-        testimonial: "Customers used to wait two to five days for a reply. Now our agent resolves 97% of conversations instantly, and we didn't need a third hire. I genuinely don't think we'd function without it.", // PLACEHOLDER
-        logo: LOGO,
+        clientName: 'Chad Willard', // FROM OLD SITE: confirm
+        title: 'CEO, Straddle', // FROM OLD SITE: confirm
+        testimonial: 'Their speed and professionalism are really impressive.', // FROM OLD SITE: confirm
+        logo: NO_LOGO,
       },
       {
-        clientName: 'Full Name', // PLACEHOLDER
-        title: 'CTO, Company', // PLACEHOLDER
-        testimonial:
-          'We wanted to not just stand up a demo or POC, but deploy production-ready use cases and infrastructure. With Vahue, we were able to quickly launch our first use case: an agent that makes it easy for users across the business to get information out of our own documents and systems. This is enabling data-driven decision making and shortening the time to insights from days or weeks down to seconds.', // PLACEHOLDER
-        logo: LOGO,
+        clientName: 'Steinar Aas', // FROM OLD SITE: confirm
+        title: 'CEO & Co-Founder, Asio AS', // FROM OLD SITE: confirm
+        testimonial: 'Their flexibility and genuine interest in finding the best solution for the product was impressive.', // FROM OLD SITE: confirm
+        logo: NO_LOGO,
       },
       {
-        clientName: 'Full Name', // PLACEHOLDER
-        title: 'CFO, Company', // PLACEHOLDER
-        testimonial: "Vahue is really the backbone of our AI success. It's critical and I'm excited to keep building forward that relationship and delivering more for our operations team every single month.", // PLACEHOLDER
-        logo: LOGO,
+        clientName: 'Patrik Dvořák', // FROM OLD SITE: confirm
+        title: 'CEO, SECTOR 31', // FROM OLD SITE: confirm
+        testimonial: "Vahue's responsiveness and accuracy were impressive. We highly recommend them.", // FROM OLD SITE: confirm
+        logo: NO_LOGO,
       },
     ],
   },
@@ -122,9 +123,13 @@ export const content: EnterpriseContent = {
   trusted: {
     headline: 'Built to Be Trusted.',
     image: `${P}/trusted-filled.webp`,
-    overlay: [{ style: 'h6', text: 'Trusted by finance and support operations, Vahue delivers AI systems that meet the highest standards for security, oversight, and operational reliability.' }], // PLACEHOLDER
-    trustedBy: 'Trusted by',
-    logos: [LOGO, LOGO, LOGO], // PLACEHOLDER
+    overlay: [{ style: 'h6', text: 'Top 1% on Clutch Global and Top AI Strategy Company 2025, Vahue delivers AI systems that meet the highest standards for security, oversight, and operational reliability.' }], // FROM OLD SITE: confirm
+    trustedBy: 'Recognized by',
+    logos: [
+      { alt: 'Clutch Top AI Strategy Company 2025', src: '/awards/clutch-ai-strategy-2025.webp', plain: true }, // FROM OLD SITE: confirm
+      { alt: 'Clutch Champion Fall 2024', src: '/awards/clutch-fall-champion-2024.webp', plain: true }, // FROM OLD SITE: confirm
+      { alt: 'Inc. 5000', src: '/awards/inc-5000.webp', plain: true }, // FROM OLD SITE: confirm
+    ],
     cards: [
       {
         title: 'Security & Compliance',

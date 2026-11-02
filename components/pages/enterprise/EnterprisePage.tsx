@@ -58,6 +58,8 @@ function MdIcon({ base, d, size, className, color }: { base: string; d: string; 
 /** Scale module 964254: a logo as a CSS mask, in the current colour. A logo with no `src` draws the neutral tile. */
 function CustomerLogo({ logo, width, height, className, bounds, tileClassName }: { logo: EnterpriseLogo; width?: number; height?: number; className?: string; bounds?: { width: number; height: number }; tileClassName?: string }) {
   if (!logo.src) return <LogoTile className={tileClassName} />
+  // eslint-disable-next-line @next/next/no-img-element
+  if (logo.plain) return <img src={logo.src} alt={logo.alt} width={width} height={height} className={cn('object-contain', className)} />
   const url = `url("${logo.src}")`
   return (
     <div
@@ -358,6 +360,7 @@ export function EnterprisePage({ content: c }: { content: EnterpriseContent }) {
         title: t.title,
         testimonial: t.testimonial,
         logoLabel: 'Logo',
+        nameTile: !t.logo.src,
         logoNode: t.logo.src ? <CustomerLogo logo={t.logo} width={54} height={54} className="block w-10 h-10" /> : undefined,
       })),
     [c.testimonials.items],

@@ -2,7 +2,12 @@ import type { RichBlock } from '@/components/site/shared/RichText'
 
 export type EnterpriseCta = { url: string; text: string }
 /** `src` is a logo file on the clone. Filled pages leave it out and get the neutral tile. */
-export type EnterpriseLogo = { alt: string; src?: string }
+export type EnterpriseLogo = {
+  alt: string
+  src?: string
+  /** A full-colour badge, drawn as it is instead of as a one-colour mask. */
+  plain?: boolean
+}
 export type CardIconKey = 'time' | 'revenue' | 'accuracy' | 'adoption' | 'speed'
 export type PillarIconKey = 'experts' | 'technology' | 'research'
 export type BlogCategory = { name: string; color?: { hex: string } | null }
