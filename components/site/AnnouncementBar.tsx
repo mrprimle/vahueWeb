@@ -1,9 +1,10 @@
 'use client'
 
 // Scale module 677474. On Scale it renders in the layout, above everything, on every page (displayScope "all").
-import { useLayoutEffect, useRef, useState } from 'react'
+// Scale's CMS entry is `scheduled`, so the server renders nothing and the first effect mounts the bar: it appears
+// at hydration and pushes the page down. There is no timer; the roughly 350ms after first paint is hydration time.
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { ArrowUpRight, X } from 'lucide-react'
 import { LogoMark } from './Logo'
 import type { AnnouncementContent } from './content.types'
 
@@ -23,10 +24,12 @@ const VARIANTS: Record<string, string> = {
 export function AnnouncementBar({ data }: { data: AnnouncementContent }) {
   const ref = useRef<HTMLDivElement>(null)
   const [dismissed, setDismissed] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
   useLayoutEffect(() => {
     const root = document.documentElement
     const el = ref.current
-    if (!el) {
+    if (!mounted || !el) {
       root.style.setProperty('--announcement-offset', '0px')
       return
     }
@@ -48,7 +51,8 @@ export function AnnouncementBar({ data }: { data: AnnouncementContent }) {
       ro.disconnect()
       root.style.setProperty('--announcement-offset', '0px')
     }
-  }, [])
+  }, [mounted])
+  if (!mounted) return null
   const tone = VARIANTS[data.variant] ?? VARIANTS.dark
   return (
     <div
@@ -65,7 +69,10 @@ export function AnnouncementBar({ data }: { data: AnnouncementContent }) {
           <span>{data.text}</span>
           <Link href={data.cta.href} className="inline-flex items-center gap-1 font-medium underline-offset-4 hover:underline">
             {data.cta.label}
-            <ArrowUpRight className="h-4 w-4" aria-hidden />
+            <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true" height="1em" width="1em">
+              <path fill="none" d="M0 0h24v24H0z" />
+              <path d="M6 6v2h8.59L5 17.59 6.41 19 16 9.41V18h2V6z" />
+            </svg>
           </Link>
         </div>
       </div>
@@ -75,7 +82,10 @@ export function AnnouncementBar({ data }: { data: AnnouncementContent }) {
         aria-label="Dismiss announcement"
         className="absolute right-3 top-1/2 inline-flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full opacity-70 transition-opacity hover:opacity-100"
       >
-        <X className="h-4 w-4" aria-hidden />
+        <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true" height="1em" width="1em">
+          <path fill="none" d="M0 0h24v24H0z" />
+          <path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+        </svg>
       </button>
     </div>
   )

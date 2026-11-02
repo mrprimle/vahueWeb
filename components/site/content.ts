@@ -84,7 +84,7 @@ export const nav: NavContent = {
 }
 
 export const announcement: AnnouncementContent = {
-  text: 'Vahue Partners With Enterprises to Bring AI Agents to Production', // PLACEHOLDER
+  text: 'Vahue Partners With Teams to Bring AI Agents to Production', // PLACEHOLDER
   variant: 'evergreen',
   cta: { label: 'Learn more', href: '/blog' },
 }

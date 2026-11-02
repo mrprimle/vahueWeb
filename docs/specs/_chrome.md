@@ -15,6 +15,8 @@ Live source: https://scale.com (checked on `/data-engine`, `/about`, `/enterpris
 ### Announcement bar
 Module 677474. Region in normal flow above the header, `z-30`, evergreen `#193a29`, on all pages. 39.25 tall at 1440, 101.75 at 390. A scroll listener and `ResizeObserver` write `--announcement-offset = max(0, bar.bottom)`, so the fixed header rides up with it. Dismiss: `max-h-40` to 0, 300ms ease-out, no persistence (Scale also comes back on reload).
 
+Mount: Scale's CMS entry has `scheduled: true`, so `C` is false while `p` is null, the server HTML has no bar, and the first `useEffect` mounts it. There is no timer: it appears at hydration, after first paint, and pushes the page down 39.25 (layout shift 0.0273 on both). `--announcement-offset` goes empty, `0px`, then `39.25px`, same order on both. The `ResizeObserver` on `body` in `SmoothScroll` refreshes ScrollTrigger afterwards. Measured first paint to bar: Scale 280 to 490ms (production), ours 250 to 280ms (dev). Icons are Scale's filled 24px glyphs, not lucide. Bar height equals Scale at every even width from 320 to 900 except 426, 454 and 556, a 2px font band at each wrap point.
+
 ### Header
 Module 511174. `fixed`, `top: var(--announcement-offset)`. 88 tall at 1440, 70 at 390. Row is `grid-layout-desktop` from `md`; triggers at x 140.7, 224.7, 310.1, 396.2 (Scale 140.7, 225.2, 311.2, 397.4: Aeonik vs Aeonik Pro widths). 4 categories with 12, 6, 5 and 11 links.
 
