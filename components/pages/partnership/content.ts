@@ -5,11 +5,11 @@ import type { PartnershipContent } from './types'
 export const content: PartnershipContent = {
   meta: {
     title: 'Vahue Partners | Vahue',
-    description: 'Vahue enables enterprises to accelerate AI development with high-quality data, rigorous agent evaluation, and secure solutions designed to deliver reliable outcomes at scale.',
+    description: 'Vahue works with partners to bring enterprises and scale-ups reliable agents, rigorous evaluation, and secure integrations, with results measured against a baseline.',
   },
   hero: {
     title: 'Vahue Partners',
-    body: 'Vahue enables enterprises to accelerate AI development with high-quality data, rigorous agent evaluation, and secure solutions designed to deliver reliable outcomes at scale.',
+    body: 'Vahue works with partners to bring enterprises and scale-ups reliable agents, rigorous evaluation, and secure integrations, with results measured against a baseline.',
   },
   cards: [
     {
