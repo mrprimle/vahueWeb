@@ -15,7 +15,7 @@ export type UseCase = {
   image: { src: string; alt: string }
 }
 
-export type SolutionCategory = { name: string; color: string; solutions: string[] }
+export type SolutionCategory = { name: string; color: string; href?: string; solutions: string[] }
 
 export type GlobalPublicSectorContent = {
   meta: { title: string; description: string }

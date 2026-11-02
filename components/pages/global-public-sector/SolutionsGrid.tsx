@@ -1,12 +1,24 @@
 'use client'
 
 // Scale module 297990 (AISolutionsGrid). A table from `md`, a list with "See all" below it. Rows and lines reveal once.
+import Link from 'next/link'
 import { useLayoutEffect, useRef, useState } from 'react'
 import { gsap } from '@/components/site/lib/gsap'
 import { cn } from '@/components/site/lib/cn'
 import { useInViewTrigger } from '@/components/site/lib/useInViewTrigger'
 import { AnimatedText, type AnimatedTextHandle } from '@/components/site/shared/AnimatedText'
 import type { GlobalPublicSectorContent } from './types'
+
+// A chip looks the same with or without a link; Vahue's chips open the service that does the job.
+function Chip({ href, className, children }: { href?: string; className: string; children: string }) {
+  return href ? (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
+  ) : (
+    <span className={className}>{children}</span>
+  )
+}
 
 export function SolutionsGrid({ content: c }: { content: GlobalPublicSectorContent['solutions'] }) {
   const [expanded, setExpanded] = useState(false)
@@ -51,7 +63,7 @@ export function SolutionsGrid({ content: c }: { content: GlobalPublicSectorConte
               {c.solutionsHeader}
             </p>
           </div>
-          {categories.map(({ name, color, solutions }, i) => (
+          {categories.map(({ name, color, href, solutions }, i) => (
             <div key={name} className={cn('grid-layout-desktop relative py-6', i % 2 === 0 ? 'bg-white' : 'bg-scale-gray-95')} role="row">
               <span
                 ref={(el) => {
@@ -79,9 +91,9 @@ export function SolutionsGrid({ content: c }: { content: GlobalPublicSectorConte
                   <span className="body2-regular italic text-scale-gray-60">{c.comingSoon}</span>
                 ) : (
                   solutions.map((title) => (
-                    <span key={title} className="rounded-lg border border-scale-gray-80 bg-scale-gray-95 px-4 py-2 text-sm text-scale-gray-30">
+                    <Chip key={title} href={href} className="rounded-lg border border-scale-gray-80 bg-scale-gray-95 px-4 py-2 text-sm text-scale-gray-30">
                       {title}
-                    </span>
+                    </Chip>
                   ))
                 )}
               </div>
@@ -90,7 +102,7 @@ export function SolutionsGrid({ content: c }: { content: GlobalPublicSectorConte
         </div>
         <div className="flex flex-col md:hidden">
           <div className="divide-y divide-scale-gray-80">
-            {visible.map(({ name, color, solutions }, i) => (
+            {visible.map(({ name, color, href, solutions }, i) => (
               <div key={name} className={cn('px-4 py-5', i % 2 === 0 ? 'bg-white' : 'bg-scale-gray-95')}>
                 <div className="flex items-center gap-2 mb-3">
                   <span aria-hidden className="inline-block shrink-0 rounded-full" style={{ width: 7, height: 7, backgroundColor: color }} />
@@ -101,9 +113,9 @@ export function SolutionsGrid({ content: c }: { content: GlobalPublicSectorConte
                 ) : (
                   <div className="flex flex-wrap gap-1.5">
                     {solutions.map((title) => (
-                      <span key={title} className="rounded-md border border-scale-gray-80 px-3 py-1 text-sm text-scale-gray-30">
+                      <Chip key={title} href={href} className="rounded-md border border-scale-gray-80 px-3 py-1 text-sm text-scale-gray-30">
                         {title}
-                      </span>
+                      </Chip>
                     ))}
                   </div>
                 )}
