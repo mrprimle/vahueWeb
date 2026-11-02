@@ -72,7 +72,7 @@ Side-by-side sheets in the scratchpad `new-qa/guides/`, all opened: first paint 
 - 11 Guide to AI for the Intelligence Community to Guide to AI for the Revenue Team, same template. 3 lines become 2.
 - Kept verbatim: 04 eCommerce, 06 Large Language Models, 07 Generative AI for the Enterprise, 08 Insurance, 09 Finance, 10 Test and Evaluation Vision, 12 Build vs. Buy, intro, pre-footer, CTA.
 
-The titles line up with the footer's Guides column in `components/site/content.ts`: Data Preparation, AI Agent Evaluation, Document Intake, Guide to AI for eCommerce, Workflow Automation, Large Language Models.
+The titles line up with the footer's Guides column in `components/site/content.ts`: Data Preparation, AI Agent Evaluation, Document Intake, Guide to AI for eCommerce, Workflow Automation Guide, Large Language Models.
 
 Placeholders, 12 `// PLACEHOLDER` lines, one per book: the guides themselves are not written.
 
