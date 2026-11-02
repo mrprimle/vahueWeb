@@ -1,9 +1,10 @@
 // AJTBD copy for /physical-ai (Document Intake Agents). Same shape and counts as content.scale.ts.
 // Lines marked PLACEHOLDER are for Mike to replace with real data.
+import { proofLogoAlt, proofLogoSrc, type ProofLogo } from '@/components/site/proofLogos'
 import type { MarqueeLogoItem, PhysicalAiContent } from './types'
 
 const card = (slug: string, alt: string) => ({ src: `/physical-ai/${slug}.webp`, alt, width: 480, height: 360 })
-const logo = (i: number): MarqueeLogoItem => ({ key: `customer-${i}`, alt: 'Logo', src: null })
+const logo = (i: number, name: ProofLogo): MarqueeLogoItem => ({ key: `customer-${i}`, alt: proofLogoAlt(name), src: proofLogoSrc(name) })
 
 export const content: PhysicalAiContent = {
   meta: { title: 'Document Intake Agents | Vahue', description: 'Agents read every invoice, claim and form, check it against your rules, and post a clean record to your systems, measured against your baseline.' },
@@ -15,7 +16,7 @@ export const content: PhysicalAiContent = {
     image: { path: '/physical-ai/hero-documents.webp' },
     logos: {
       label: "Trusted by the world's busiest operations teams", // PLACEHOLDER
-      items: [logo(1), logo(2), logo(3), logo(4), logo(5)], // PLACEHOLDER
+      items: [logo(1, 'qonto'), logo(2, 'verbit'), logo(3, 'etoro'), logo(4, 'inspera'), logo(5, 'circle-economy')], // FROM OLD SITE: confirm
     },
   },
   overview: {
