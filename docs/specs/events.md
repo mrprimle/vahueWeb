@@ -40,7 +40,7 @@ Same scripts on both sites, real wheel, pointer, key and touch input, headless a
 | Past card and CTA | hover | HubSpot only `ev_703ce06f…` | 187078 | Same values | 242, 239, 237, 236 and .0407 to .08, equal |
 | Show more button | hover enter, leave | HubSpot `mousedown`, React root `click` in `42ixmvih7808g.js` `ev_8d6e9f76…` | 187078 | `black/.04` to `black/.08`, 200ms | .0407, .0583, .0745, .0793 and back, equal |
 | Show more button | click | Coverage `ev_0bfbe956…`: `onClick` 1, `n` and `l` 12 (the 12 cards rendered) | 187078 | `useState(6)`, `+6` per click, no animation; button unmounts when `count >= length` | Clone: 12, 18, … 72, 75, then gone, equal. Filled: 11 then gone (Scale 12, button stays), see Deviations |
-| Show more button | Enter, Space | Native button | 187078 | Same as click | Scale 12 both, ours 11 both. Focus stays on the button on Scale and falls to `body` on ours, as the button unmounts: Scale does the same at its last click |
+| Show more button | Enter, Space | Native button | 187078 | Same as click | Scale 12 both, ours 11 both. Focus stays on the button on Scale and falls to `body` on ours, as the button unmounts: the same code path on Scale's last click, not driven there |
 | Show more button | touch tap at 390 | Same | 187078 | Same | 12 vs 11, width stays 390 |
 | Cards, button | Tab, focus | Native | | `outline: auto 1px`; card offset 1px, button 0 | Equal. Order: 13 upcoming, 6 past, button, footer |
 | Upcoming card | click | `EventLink` | 187078 `l`, RSC | http(s): new tab. Other: next/link | Scale opens `/events/scale-at-mwc-doha-2026` or the conference site; ours opens the site route |
@@ -57,16 +57,16 @@ REA execution windows, one-tab headless Chrome on private port 9291, closed and 
 Side-by-side sheets in the scratchpad `new-qa/events/clone/` and `new-qa/events/fill/`, all opened: first frame and every 50% viewport at 1440 and 390, plus the frame after Show more for the filled page. No pinned or scrubbed range exists here. Same corners, same header cover, same hovered card at the same stops, same footer entry. By eye the differences are the logo, the shared footer and announcement copy, and the placeholder text.
 
 ## Deviations from Scale
-- **List length, filled page:** 13 upcoming plus 11 past is 24, the brief's cap, where Scale has 13 plus 75. So one click ends the list: `#past` is 2066.3 vs 2143.3 after it at 1440 and 5257.6 vs 5795.5 at 390, and the button goes. The clone commit carries all 75 and matches every step. More past entries are a data-only change.
+- **List length, filled page:** 13 upcoming plus 11 past is 24, the brief's cap, where Scale has 13 plus 75. So one click ends the list: `#past` is 2066.3 vs 2143.3 after it at 1440 and 5257.6 vs 5795.5 at 390, and the button goes. The clone commit carries all 75 and matches every step's card count. More past entries are a data-only change.
 - **Links, filled page:** every card opens a site route in the same tab, as external links were removed. Scale opens most cards in a new tab.
-- **Fonts:** Aeonik, not Aeonik Pro: `Events` is 277.4 wide vs 279.5, the button 164.2 vs 164.8. In the 75-event clone this moves one wrap at the 6th click, 26px on `#past`.
+- **Fonts:** Aeonik, not Aeonik Pro: `Events` is 277.4 wide vs 279.5, the button 164.2 vs 164.8. In the 75-event clone this moves one wrap at the 5th click, 26px on `#past` from there on.
 - **Colour serialisation:** `oklab(0 0 0 / .08)` vs `lab(0 0 0 / .08)`, from Scale's minifier. Same black, same alpha.
 - **Consent, analytics:** OneTrust, HubSpot and the rest are not built.
 
 ## Copy
 Keep rule, with the 22:46 niche rule on top. Page strings, 9 distinct: 8 verbatim (description, Events, intro, Past Events, its line, Show more events, Learn more, Conference), 1 light (`AI Events & Conferences | Vahue`).
 
-Event strings, 48: 1 verbatim, 21 light, 26 rewritten. By kind, descriptions are 1, 19, 4, which is the 80% rule in spirit: same sentence, a few words swapped. Titles are 0, 2, 22, because Scale's titles are real third-party event names, or niche ones (defence, robotics, pharma), and neither can stand. Light means up to a third of the words changed. Description word count averages 1.00 of Scale's per slot. Per-slot line counts match at 1440 and 390.
+Event strings, 48: 1 verbatim, 21 light, 26 rewritten. By kind, descriptions are 1, 19, 4, which is the 80% rule in spirit: same sentence, a few words swapped. Titles are 0, 2, 22, because Scale's titles are real third-party event names, or niche ones (defence, robotics, pharma), and neither can stand. Light means up to a third of the words changed. Description word count averages 1.00 of Scale's per slot. Card heights match slot by slot at 1440 and 390.
 
 ## Placeholders
 24 `// PLACEHOLDER` lines, one per event: name, date and blurb are invented stand-ins on the research's workflows and segments (revenue, back office, documents, support, finance close, evals). No real third-party event is named, so nothing claims attendance. "Vahue at Ops Summit 2026" keeps Scale's own-booth slot. Superlatives ("world's largest") and "9,000+ professionals" are Scale's phrasing in placeholder text. Past dates are Scale's; upcoming dates are Scale's except the first two, moved to stay in the future.
