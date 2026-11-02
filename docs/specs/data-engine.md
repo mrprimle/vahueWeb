@@ -53,9 +53,9 @@ Listeners: REA `inspect_web_event_listeners`, plus `DOMDebugger.getEventListener
 - **Fonts:** see stack.md. New copy also changes text widths.
 - **`pageTheme`-driven classes** are kept, though this page is always light.
 - **Case study tile:** `bg-evergreen` replaces TIME's red. The logo tile is 240 x 75, Scale's rendered box (`height: auto` on a 240 x 96 image).
-- **Images replaced at fill:** resource tile 1 was OpenAI's mark, now a neutral icon at 280 x 228. The training-loop diagram had Scale's process baked in, now `diagram-workflow.webp`, redrawn at the same 1920 x 1005 and layout with the Back-office Sync steps. Logos removed from `public/`; recover them from commit 7b500fa to re-check the clone.
+- **Images replaced at fill:** resource tile 1 was OpenAI's mark, now a neutral icon at 280 x 228. The training-loop diagram had Scale's process baked in, now `diagram-context-loop.webp`, redrawn at the same 1920 x 1005 and layout with Generation, Human Review, Evaluation and Red Teaming. Logos removed from `public/`; recover them from commit 7b500fa to re-check the clone.
 - **Pre-footer image:** downscaled from 7952 to 1920 wide.
-- **Image quality:** Scale requests `q=85` for the two large images. Here they use Next's default 75: 85 is not in `images.qualities`, and `next.config.ts` is outside this page.
+- **Image quality:** Scale requests `q=85` for the two large images. Here they use Next's default 75. `next.config.ts` now allows 85, as Scale does, but this page doesn't request it yet.
 
 ## REA evidence
 Live page, 47 of 47 scripts parsed, no failures: `analyze_web_bundle` `ev_43864d21fdb3dec7040d9536d473b1153dd1fbaec677891f634d5dee69c04106`.
@@ -111,7 +111,7 @@ Keep rule (Mike, 2026-11-01): each string starts from Scale's text, stays verbat
 
 Menu label: Vahue Context Engine. Data Engine became Context Engine, the dictionary's swap, in every line. Frontier AI became Reliable AI. CTAs are Scale's: Book a Demo, Build AI. The chat showcase, including the garden gnomes line, is unchanged. 82 strings: 48 verbatim, 34 light, 0 rewritten. Section heights equal the previous fill at 1440 and 390. Case study follows the Insurer proof pattern.
 
-**Image no longer fits:** `diagram-workflow.webp` shows Watch, Match, Write and Review Queue, while the label and steps now read Generation, Human Review, Red Teaming, Evaluation.
+**Image now fits:** `diagram-context-loop.webp` shows Generation, Human Review, Evaluation and Red Teaming, the same as the label and steps.
 
 ## Placeholders
 `// PLACEHOLDER` in `content.ts`, 13 lines: trust line, 7 logo tiles, case study text and logo tile, testimonial name, role and quote.

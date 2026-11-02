@@ -79,7 +79,7 @@ Read the real WebGL uniforms on both sites by hooking `uniform1f` and `uniformMa
 ## Assets
 - `packed.mp4` is Scale's 10 MB `Packed.mp4` re-encoded at 1920x1080 to 2.8 MB. Same size, so the shader's texture lookups hold. Its top strip holds the outline matte and its corner the frame offset, so it cannot be swapped for an ordinary video.
 - Also in `public/home`: orbit tiles, quote video, Satellite video, and Scale's two scene textures.
-- Scale's logos and brand images remain in `public/home` for `content.scale.ts`. They are not rendered on the filled page.
+- Scale's logos are removed from `public/home`. `content.scale.ts` still names them; recover them from commit 72ff4ae to re-check the clone.
 
 ## Placeholders
 24 lines marked `// PLACEHOLDER` in `content.ts`: 6 hero logos (one line), the "25%" engineers figure, the 90% quote, 11 carousel clients (neutral 40px "Logo" tile), the 10 years title and the 2016 year, 8 blog posts.

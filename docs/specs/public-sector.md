@@ -56,7 +56,7 @@ Images, same display size:
 - `callout-steps.webp` replaces the St. Louis Arch with rising bars, same 1500 square and grey gradient.
 - Resource icons are generic line art and stay.
 
-Scale's originals remain in `public/public-sector/` only for `content.scale.ts`.
+Scale's originals are removed from `public/public-sector/`; recover them from commit 72ff4ae to re-check the clone.
 
 Links: `/stl` has no route, so the callout goes to `/experts`. Computer Vision's link was `/public-sector-data-engine`; Document Intake goes to `/physical-ai`. Blog posts have no routes, so all 9 resources go to `/blog`.
 

@@ -48,7 +48,7 @@ REA evidence: `analyze_web_bundle` `ev_d29fd514…`. `observe_web_execution` dur
 
 Mapping: categories keep their order, colours and counts; Oil & Gas stays the empty "Coming soon" row, as Tax Advisory. Use case 1 follows research M016 (legal drafts), use case 2 follows M104 and M030 (RFI answers, cited knowledge). Copy was tuned so line counts equal Scale's, so heights hold.
 
-Images (Scale originals stay in `public/global-public-sector/` for `content.scale.ts` only):
+Images (Scale's originals are removed from `public/global-public-sector/`; recover them from commit 72ff4ae to re-check the clone):
 - `hero-professional.webp`, 1920 x 1280: replaces the national museum photo. Rendered scene: client report and "Ask your documents" panel.
 - `case-contract-review.png`: Scale's illustration with the stamp's PERMIT label changed to REVIEW.
 - `case-proposal-review.webp`: Scale's illustration with the robot arm replaced by a document stack and the generator's sparkle mark removed. Its background is baked to the panel's `#f2f2f2`, where Scale's is transparent.

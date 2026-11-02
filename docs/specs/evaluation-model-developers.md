@@ -96,7 +96,7 @@ CTA stays "Book a Demo" per the swap dictionary, where some earlier filled pages
 `// PLACEHOLDER` in `content.ts`, 9 lines: red team staff number ("100s"), "selected by a mid-market insurer", "Mid-Market Launch Partner", and for the 2 testimonials the name, role and quote lines (6, with their figures 97% and 40%).
 
 ## Images
-- **Hero:** Scale's image shows its own product UI with satellite imagery on the monitor. `hero-filled.webp` keeps the monitor and plinth at the same 1920x1280 and draws a neutral baseline dashboard on the screen, with zeroed figures. `hero.webp` stays for `content.scale.ts`.
+- **Hero:** Scale's image shows its own product UI with satellite imagery on the monitor. `hero-filled.webp` keeps the monitor and plinth at the same 1920x1280 and draws a neutral baseline dashboard on the screen, with zeroed figures. Scale's `hero.webp` is removed from `public/`; recover it from commit 72ff4ae to re-check the clone.
 - **Taxonomy:** Scale's image is kept as is. It names harms such as "Promotion of violence", which an operations buyer may find odd. Mike to decide.
 - **Resource icons, pre-footer:** kept, nothing brand-baked.
 

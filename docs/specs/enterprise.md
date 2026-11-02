@@ -113,7 +113,7 @@ The generated panels show labels and no figures. `public/home/app-logistics.webp
 - **`isDesktop`:** Scale reads react-device-detect. Here `(hover: hover) and (pointer: fine)`, so a touch laptop counts as not desktop.
 - **Curves:** `pull-apart-curves.json` is fetched, where Scale bundles the module.
 - **Intro:** starts one frame later than Scale, for Strict Mode.
-- **Videos:** cables, stacking and squares re-encoded under 3 MB, except `squares.webm` and `squares-filled.webm` at about 3.2 MB.
+- **Videos:** cables, stacking and squares re-encoded under 3 MB, except `squares-filled.webm` at about 3.2 MB.
 - **Blog links:** the two external-style posts go to `/blog`.
 - **Category filter:** Scale's sphere buttons come from an empty list, so none render on Scale either. Selection code not ported.
 

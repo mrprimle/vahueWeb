@@ -58,4 +58,4 @@ Links: `/customers` has no route, so "Meet our customers" goes to `/enterprise`.
 - **Footer at 768:** 7px shorter than Scale from shared footer copy, not this page.
 - **Not driven:** `oml:` landscape. At 390 the stages used `scrollTo` in a touch context, not touch or wheel input. Side-by-side sheets exist for 1440 and 390; the other seven widths were compared by numbers only.
 - **Filled run hover:** the final run only counted identical samples (9 of 16 customers link, 10 of 16 Read more, 3 of 16 primary CTA, 0 of 16 article, where every difference on the article is `lab` vs `oklab` serialisation of the same colour). Per-frame values above are from the clone run. The hover code and classes did not change between them.
-- **Scale originals:** `public/evaluation-public-sector/hero.webp` (satellites) and `logos/` (CDAO, White House) remain only for `content.scale.ts`.
+- **Scale originals:** `hero.webp` (satellites) and `logos/` (CDAO, White House) are removed from `public/evaluation-public-sector/`. `content.scale.ts` still names them; recover them from commit 72ff4ae to re-check the clone.

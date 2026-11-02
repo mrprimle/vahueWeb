@@ -79,11 +79,11 @@ Keep rule, plus Mike's 22:46 rule: defense wording becomes the regulated B2B job
 `// PLACEHOLDER` in `content.ts`, 28 lines: hero trust line and label, 8 logo tiles, 6 stats, the 40% claim, 4 case studies, certifications, vendor risk and partners, 3 resources.
 
 ## Images
-Scale's military photos stay only for `content.scale.ts`. Filled versions, same sizes and aspect, built from neutral photos already on this site's other pages:
+Scale's military photos are removed from `public/`; recover them from commit 72ff4ae to re-check the clone. Filled versions, same sizes and aspect, built from neutral photos already on this site's other pages:
 - `hero-filled.webp`: same 4 tilted panels and geometry as Scale (skewY 30, 866 x 634, same offsets), showing homes, a meeting, a skyline, a risk queue.
 - `stats-bg-filled`, `buy-filled`, `prefooter-filled` (darkened to 62% so the white headline reads), `rc1-4-filled`, `res1-3-filled`.
-- `ch1-4-filled.svg`: Scale's diagrams with the DATA ENGINE label replaced by CONTEXT ENGINE as live text, in a system mono because an SVG in `<img>` can't load the page font.
-- `fly1-4.webp` stay: abstract, no brand or military content. The small triangles are generic glyphs in the diagram, though they resemble Scale's mark.
+- `ch1-filled.svg` to `ch4-filled.svg`: Scale's diagrams with the DATA ENGINE label replaced by CONTEXT ENGINE as live text, in a system mono because an SVG in `<img>` can't load the page font.
+- `fly1.webp` to `fly4.webp` stay: abstract, no brand or military content. The small triangles are generic glyphs in the diagram, though they resemble Scale's mark.
 
 ## Gaps
 - 8 Scale logos are neutral tiles, as placeholders.

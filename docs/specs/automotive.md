@@ -91,7 +91,7 @@ Keep rule (Mike, 2026-11-01): each string starts from Scale's text, stays verbat
 
 Menu label: For Scoring and Decisions. Page name: Scoring and Decision Agents. Autonomy became decisions and agents. Scale's Base, Improvement and Target phases, and Why features, are back. CTAs are Scale's. 57 strings: 21 verbatim, 32 light, 4 rewritten (meta title, hero title, first resource title, foundation heading). Panel tab titles, audio prompt, code and result stay as they were because they match the panels and the audio file. Section heights equal the previous fill at 1440 and 390.
 
-**Images no longer fit:** `phase-audit`, `phase-pilot` and `phase-operate` images and videos show the old Audit, Pilot and Operate story under Base, Improvement and Target. `webinar.webp` has "Checking Every Repair Order Before It Is Billed" baked in. `scoring-loop.png` shows scoring, routing and monitoring beside Data Scoring, Data Curation and Agent Evaluation.
+**Images no longer fit:** `phase-audit.mp4`, `phase-pilot.mp4` and `phase-operate.mp4` show the old Audit, Pilot and Operate story under Base, Improvement and Target. Now fixed: `phase-base.webp`, `phase-improvement.webp` and `phase-target.webp` replace the old stills, `webinar-context.webp` reads "Upgrading Your Workflow Into a Context Engine", and `scoring-curation-evaluation.png` shows Data Scoring, Data Curation and Agent Evaluation.
 
 ## Placeholders
 `// PLACEHOLDER` in `content.ts`, 12 lines: 2 logo tiles, the trusted-by title, risk queue frame, Text artwork, audio result, 3 phase videos (6s stills), 2 resource links, foundation image. Numbers inside the images and panels are sample values. No customer names or quotes on this page.

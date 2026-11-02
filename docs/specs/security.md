@@ -63,7 +63,7 @@ Clone with Scale's copy: equal at 1440, 640, 768, 1024, 1920. 390: 22.8 shorter 
 41 visible strings: 32 verbatim (78%), 2 light, 7 rewritten. Rewritten: DoD IL4 and FedRAMP became GDPR and HIPAA (no military or federal topics, same template, word counts 35 of 35 and 40 of 41); the Public Sector card became Scale-ups, matching the menu mapping for `/public-sector`, and the second card's Department of Defense list became the site's segments. Light: "government" to "customers" in card 3; "computer vision" to "back-office" in the Scale-ups body.
 
 ## Placeholders
-18 lines with `// PLACEHOLDER` in `content.ts`: compliance intro, 4 certification logos, titles and bodies, the shared Trust Center link, both program claims on the split cards, the Trust Center CTA, `vulnerabilities@vahue.ai`. Capitol became a neutral line drawing of an office block (`office-tower.webp`, drawn for this page). GDPR and HIPAA badges come from `/enterprise/healthcare`. `capitol.webp`, `logo-disa.png` and `logo-fedramp.png` stay in `public/security/` for `content.scale.ts` only; the filled page does not load them.
+18 lines with `// PLACEHOLDER` in `content.ts`: compliance intro, 4 certification logos, titles and bodies, the shared Trust Center link, both program claims on the split cards, the Trust Center CTA, `vulnerabilities@vahue.ai`. Capitol became a neutral line drawing of an office block (`office-tower.webp`, drawn for this page). GDPR and HIPAA badges come from `/enterprise/healthcare`. Scale's `capitol.webp`, `logo-disa.png` and `logo-fedramp.png` are removed from `public/security/`. `content.scale.ts` still names them; recover them from commit 72ff4ae to re-check the clone.
 
 ## Gaps
 - **Fonts:** Aeonik vs Aeonik Pro, DM Mono for Aeonik Mono, see stack.md.

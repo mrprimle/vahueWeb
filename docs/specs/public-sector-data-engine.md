@@ -118,7 +118,7 @@ Keep rule (Mike, 2026-11-01): each string starts from Scale's text, stays verbat
 
 Menu label: For Government. Page name: Public Sector Agents. Super Intelligence (SI) became AI, and defense and national security became public-sector wording. "Clearance" is dropped because Vahue can't claim it. CTAs are Scale's. 46 strings: 21 verbatim, 22 light, 3 rewritten (meta description, hero body, first blog title). Section heights equal the previous fill at 1440 and 390.
 
-**Images no longer fit:** `why.webp` carries the old labels (governed agent software, baseline-first delivery, human review). `poster-1` to `poster-3` have the old demo titles baked in, for example "Case Answers from Your Records". The dictionary keeps "government" only if Mike confirms public-sector work.
+**Images no longer fit:** `why-revenue.webp` carries Advanced AI Software, State-of-the-Art Machine Learning and Human-in-the-Loop Expertise. `poster-revenue-1.webp` to `poster-revenue-3.webp` have demo titles baked in, for example "Enquiry Answers from Your CRM". The dictionary keeps "government" only if Mike confirms public-sector work.
 
 **Images replaced at fill**, removed from `public/` (recover from commit b855dad to re-check the clone):
 - Hero: was a Scale product map with heat zones and small labels. Now an unlabelled dark district map with amber density at 1920 x 1078.

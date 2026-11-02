@@ -105,7 +105,7 @@ Keep rule (Mike, 2026-11-01): each string starts from Scale's text, stays verbat
 
 Menu label: For Back-office Sync. Page name: Back-office Sync Agents. Models became agents, and CTAs are Scale's. 49 strings: 26 verbatim, 18 light, 5 rewritten (meta title and description, hero and overview title, case study line). Section heights equal the previous fill at 1440 and 390.
 
-**Images that fit less well now:** `sync-loop.webp` and `capabilities.webp` still show the Back-office Sync steps and integrations, while the text around them is more general. Demo wireframes are generic.
+**Images that fit less well now:** `sync-capabilities.webp` still shows the Back-office Sync systems and integrations, while the text around it is more general. `data-improvement-loop.webp` shows Collect, Curate, Improve and Evaluate. Demo wireframes are generic.
 
 **Images replaced at fill**, removed from `public/` (recover from commit fde0271 to re-check the clone):
 - Hero: was a collage of Scale's research papers. Now a neutral field of records at 1920 x 686.

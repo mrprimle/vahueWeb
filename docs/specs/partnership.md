@@ -5,7 +5,7 @@ Live source: https://scale.com/partnership, read 2026-11-02 at 1440x900 and 390x
 ## Stack
 Next 16.4.2 App Router route, no page-specific library. Scale renders this page entirely on the server: the RSC payload holds plain markup for both sections, and the only client modules are the theme setter 243385, the header 511174 and the watcher 995634. No GSAP, Lenis effect, reveal or scrub belongs to the page, so nothing needed porting. See [../stack.md](../stack.md) for the chrome.
 
-Files: `app/partnership/page.tsx`, `components/pages/partnership/` (`PartnershipPage.tsx`, `content.scale.ts`, `content.ts`, `types.ts`), `public/partnership/`.
+Files: `app/partnership/page.tsx`, `components/pages/partnership/` (`PartnershipPage.tsx`, `content.scale.ts`, `content.ts`, `types.ts`).
 
 The payload passes `border: true` to the header. The rendered header on this page has no border class, and the sheets match, so nothing was added.
 
@@ -70,7 +70,7 @@ Rule from `vahue-positioning-copy-source.md` §0. 8 visible strings: 3 verbatim 
 Google Cloud and NVIDIA became partner types from the research's channel hypotheses (CRM and field-service implementers, telephony and contact-centre firms). Those are hypotheses, not partners. Scale's sub-pages `/partnership/google-cloud` and `/partnership/nvidia` return 200 live, but no such routes exist here, so the filled cards link to the products they name: `/generative-ai-data-engine` (For Back-office Sync) and `/donovan` (Support and Voice Agents).
 
 ## Placeholders
-6 lines with `// PLACEHOLDER` in `content.ts`: 2 logo tiles, 2 card titles, 2 card bodies. `google-cloud.png` and `nvidia.svg` stay in `public/partnership/` for `content.scale.ts` only; the filled page does not load them.
+6 lines with `// PLACEHOLDER` in `content.ts`: 2 logo tiles, 2 card titles, 2 card bodies. Scale's `google-cloud.png` and `nvidia.svg` are removed, so `public/partnership/` no longer exists. `content.scale.ts` still names them; recover them from commit 72ff4ae to re-check the clone.
 
 ## Gaps
 - **Arrow glyph:** 14.2px wide vs 9.2px, from `font-unicode`, with Aeonik in place of Aeonik Pro. It is visibly longer. Whether our Aeonik has its own arrow or the browser falls back to `system-ui` was not checked. Other pages with this class share the gap, so it was not patched here.
