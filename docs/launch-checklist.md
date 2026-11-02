@@ -57,6 +57,8 @@ Vahue holds: SOC 2, ISO 27001, ISO 42001, HIPAA, GDPR, EU AI Act, CSA STAR, CCPA
 
 - [ ] `/events`: all 24 events are invented, so replace them with real ones. Event cards link to site pages because `/events/<slug>` pages don't exist. Do you want them?
 
+- [ ] `/careers`: 23 roles and their locations are invented, and Apply goes to `/demo`. Benefits still use Scale's wording, so confirm they're true for Vahue. "Graduate Engineer Careers" and Early Careers imply a programme Vahue may not run, and the press cards are placeholders. Scale's office photos are still used.
+
 ## Numbers
 
 - [ ] Home: "25% fewer errors", "90% of the AI pilots".
