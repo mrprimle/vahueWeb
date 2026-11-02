@@ -1,0 +1,18 @@
+/* Scale's CSS module 333470 (PwGuRW_video-container). */
+.videoContainer {
+  background: radial-gradient(398.67% 398.67% at 50% 100%, #ffffff4d 0%, #fff0 17.67%), linear-gradient(#f3eeff00 0%, #f3eeff0a 100%);
+  border-radius: 16px;
+  height: fit-content;
+  position: relative;
+  box-shadow: inset 0 0 317.538px #ffffff14;
+}
+.videoContainer::before {
+  content: '';
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+  border-radius: inherit;
+  border: 2px solid #fff3;
+  position: absolute;
+  inset: 0;
+}
