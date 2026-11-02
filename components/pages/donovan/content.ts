@@ -1,4 +1,4 @@
-// Copy for /donovan ("Support and Voice Agents" in the menu). Method: vahue-positioning-copy-source.md. Scale's copy stays, brand words swap, and a string changes by only a couple of words where it can't stay.
+// Copy for /donovan (Support and Voice Agents). AJTBD copy in Scale's sections.
 // Same shape and counts as content.scale.ts. Lines marked PLACEHOLDER are for Mike to replace with real data.
 import type { DonovanContent } from './types'
 
@@ -6,12 +6,12 @@ const WHITE = { tailwindClass: 'white', contrastColor: '#010101' }
 
 export const content: DonovanContent = {
   meta: {
-    title: 'Support and Voice Agents for Operations Teams | Vahue',
-    description: 'Vahue empowers operations teams to deploy specialized Agents for business-critical workflows.',
+    title: 'Support and Voice Agents | Vahue',
+    description: 'Vahue runs chat and voice agents that resolve routine requests around the clock and hand the rest to your team with context, measured against your baseline from day one.',
   },
   hero: {
     headline: 'Support and Voice Agents',
-    body: 'Deploy specialized AI Agents for business-critical workflows.',
+    body: 'For support teams running at maximum capacity: chat and voice agents that resolve routine requests around the clock and hand the rest to a person with context.',
     cta: { text: 'Book a Demo', url: '/demo' },
     backdrop: WHITE,
     image: { path: '/donovan/support-floor.jpg' },
@@ -25,12 +25,12 @@ export const content: DonovanContent = {
   ],
   overview: {
     overtitle: 'Product Overview',
-    title: 'Customize, Evaluate, and Deploy Support and Voice Agents',
-    subtitle: 'Deploy custom-tailored AI agents from concept to production in record time with Vahue. Put advanced agentic capabilities in the hands of your team when and where they need it most.',
+    title: 'Build, Evaluate, and Run Support and Voice Agents',
+    subtitle: 'Customers wait hours for a reply while your team answers the same questions again. We take agents tailored to your policies from concept to production, then keep running them, so every customer gets an answer when and where they need it.',
     cards: [
       {
         title: 'Agent Factory',
-        body: 'Use Vahue’s orchestration layer and connectors to build and customize AI agents with a no-code interface by accessing data sources, creating knowledge bases, leveraging state-of-the-art models, assigning agent instructions, and connecting agents to existing systems and tools.',
+        body: 'We build your agents on your helpdesk, phone lines and knowledge bases: your policies as agent instructions, state-of-the-art models, and connections to your CRM, order and booking systems, so they can look up and act, not just reply.',
         mock: {
   "t": [
     "Support Agent",
@@ -42,7 +42,7 @@ export const content: DonovanContent = {
     "Tools",
     "Settings",
     "System Prompt",
-    "You are a customer intelligence analyst. Analyze documents accurately and always cite sources.",
+    "You are a support agent. Answer from approved policies and hand off to a person when unsure.",
     "Knowledge Base",
     "Order History Data",
     "Returns Policy Documents",
@@ -65,7 +65,7 @@ export const content: DonovanContent = {
       },
       {
         title: 'Test & Evaluate',
-        body: 'Compare model responses and performance metrics from leading models to determine which model is best suited for your use case and workflow, backed by rigorous testing frameworks that prioritize reliability, security, and alignment with your AI readiness goals.',
+        body: 'Test agents on your own past calls and tickets, not a demo. Listen back, see where each one handled a request well or got something wrong, and compare results with what your team did, before anything goes live.',
         mock: {
   "t": [
     "Models",
@@ -108,7 +108,7 @@ export const content: DonovanContent = {
       },
       {
         title: 'Agent Library',
-        body: 'Discover and operationalize agents and applications designed to multiply your team’s capacity, aligned with your support policies and engineered for accountability, speed, and scale.',
+        body: 'Start from agents for the requests that fill your queue: order status, bookings, returns and escalations. Each is aligned with your support policies and engineered for accountability, speed, and scale.',
         mock: {
   "t": [
     "Agent Library",
@@ -120,9 +120,9 @@ export const content: DonovanContent = {
     "Analysis",
     "Reports",
     "Order Status Agent",
-    "Multi-tool analysis of orders, returns and tabular customer data",
-    "Exhaustive Search",
-    "Discover all relevant documents across knowledge bases",
+    "Look up orders and returns, then answer or act within limits",
+    "Policy Search",
+    "Find the right answer across your knowledge bases",
     "Booking Agent",
     "Answer, qualify and book every caller while intent is live",
     "Escalation Chat",
@@ -142,9 +142,9 @@ export const content: DonovanContent = {
     title: 'Foundation of AI Agents',
     subtitle: 'Discover the core building blocks that power effective production-ready AI agents.',
     top: [
-      { icon: 'applications', label: 'Vahue Applications' },
-      { icon: 'assistants', label: 'Vahue Assistants' },
-      { icon: 'agents', label: 'Vahue Agents' },
+      { icon: 'applications', label: 'Chat Agents' },
+      { icon: 'assistants', label: 'Voice Agents' },
+      { icon: 'agents', label: 'Ticket Agents' },
     ],
     bottom: [
       { icon: 'models', label: 'Models' },
@@ -157,19 +157,19 @@ export const content: DonovanContent = {
   },
   tabs: [
   {
-    "label": "Ingest Data",
-    "content": " - Access fresh customer data with Vahue’s prebuilt data connectors. \n - Securely interact with your documents via local upload, cloud, or API.\n - Leverage data connectors to external systems like your CRM.",
+    "label": "Every Channel",
+    "content": " - Answer calls, chat, email and tickets, with identity checks where needed. \n - Access fresh customer data through connectors to your helpdesk and CRM.\n - Securely connect your documents and policies via upload, cloud, or API.",
     "image": {
       "src": "/donovan/channels-tiles.png",
-      "alt": "Ingest Data",
+      "alt": "Every Channel",
       "width": 992,
       "height": 445,
       "cover": true
     }
   },
   {
-    "label": "Agentic RAG",
-    "content": "- Curate knowledge bases so Vahue’s AI Agents only interact with relevant data.\n- Observe Agent chain-of-thought reasoning to validate adherence to standard operating procedures.",
+    "label": "Resolve",
+    "content": "- Agents look up orders, bookings or accounts and act within limits, so routine requests resolve end to end.\n- Observe Agent chain-of-thought reasoning to validate adherence to standard operating procedures.",
     "video": {
       "src": "/donovan/resolve.mp4", // PLACEHOLDER
       "poster": "/donovan/resolve.jpg"
@@ -177,7 +177,7 @@ export const content: DonovanContent = {
   },
   {
     "label": "Agent Library",
-    "content": "- Access out-of-the-box AI Agents, Applications, and Assistants designed to support workflows including: coding assistance, report-writing, and insight discovery.\n- Leverage custom agents for your support organization including agents created for each support team. \n- Orchestrate multi-agent coordination — specialized to collaborate on specific tasks. \n",
+    "content": "- Start from agents designed for workflows including: order status, bookings, returns, and escalations.\n- Leverage custom agents for your support organization including agents created for each support team. \n- Orchestrate multi-agent coordination — specialized to collaborate on specific tasks. \n",
     "image": {
       "src": "/donovan/agent-library.jpg", // PLACEHOLDER
       "alt": "Agent Library",
@@ -187,16 +187,16 @@ export const content: DonovanContent = {
     }
   },
   {
-    "label": "Agent Interaction",
-    "content": "- Ensure your team has visibility into previous queries with thread sharing.\n- Iterate with Vahue through thread forking — creating a new thread while still preserving the original queries. ",
+    "label": "Human Handoff",
+    "content": "- Anything outside the agent's limits goes to a person with a summary, so nobody re-asks for context.\n- Customers can ask for a human at any time, and risky actions wait for one. ",
     "video": {
       "src": "/donovan/handoff.mp4", // PLACEHOLDER
       "poster": "/donovan/handoff.jpg"
     }
   },
   {
-    "label": "Report Generation",
-    "content": "- Draft summaries, handovers, QBRs, SOPs, or other reports with pre-existing templates.\n- Accelerate writing reports that align with the tone and style guide all while using the latest available information.\n",
+    "label": "Review and Report",
+    "content": "- Listen back to calls and review escalations every week to set the next things to automate.\n- Get a monthly report against your baseline: resolution rate, response time, hours returned and cost.\n",
     "video": {
       "src": "/donovan/review.mp4", // PLACEHOLDER
       "poster": "/donovan/review.jpg"
@@ -206,7 +206,7 @@ export const content: DonovanContent = {
   overmatch: {
     overtitle: 'Why Vahue',
     title: 'Achieve AI Advantage',
-    subtitle: 'Your competitors aren’t waiting to deploy AI systems. Ensure lasting advantage with the most advanced, production-ready AI capabilities your team has in its toolkit.',
+    subtitle: 'Your customers won’t wait two to five days for a reply. Support more customers with less effort, and avoid the next hire, with production-ready AI capabilities we run for you.',
     features: [
   {
     "icon": "expertise",
@@ -216,39 +216,39 @@ export const content: DonovanContent = {
   {
     "icon": "performance",
     "title": "Model Performance",
-    "subtitle": "One of Vahue’s core competencies is model fine-tuning. Vahue can customize models specific to your use case or leverage pre-existing models like Meta Llama."
+    "subtitle": "Voice agents that don’t sound like a robot. We tune on your real call transcripts, and can customize models specific to your use case or leverage pre-existing models like Meta Llama."
   },
   {
     "icon": "time",
     "title": "Time to Value",
-    "subtitle": "Access no-code tools to customize AI agents on your own without reliance on external developers."
+    "subtitle": "Record your baseline in 2 weeks, then run on real calls and tickets in shadow mode within 4 to 6 weeks, without pulling in your developers."
   },
   {
     "icon": "flexibility",
     "title": "Flexibility",
-    "subtitle": "Select your preferred method for agent and model deployment and hosting. Seamlessly embed Vahue with your existing applications and tools."
+    "subtitle": "Select your preferred method for agent and model deployment and hosting. Seamlessly embed Vahue with your helpdesk, phone system and existing tools."
   },
   {
     "icon": "traceability",
     "title": "Traceability",
-    "subtitle": "Transparent detailed reasoning helps users understand the steps and resources AI agents used to arrive at an answer."
+    "subtitle": "Transparent detailed reasoning helps your team understand the steps and resources AI agents used to arrive at an answer."
   },
   {
     "icon": "agnostic",
     "title": "Model Agnostic",
-    "subtitle": "Leverage your preferred model provider with Vahue. Select models that account for business parameters like cost, speed, and expert capabilities."
+    "subtitle": "Leverage your preferred model provider with Vahue. Select models that account for cost, speed, and quality, and see cost per resolution in every report."
   }
 ],
   },
   trusted: {
     overtitle: 'Supported Environments',
     title: 'Trusted & Secure',
-    subtitle: 'Vahue is available on private and isolated company networks.',
+    subtitle: 'Vahue runs in your cloud or on private company networks.',
     features: [
   {
     "icon": "check",
     "title": "Private Cloud",
-    "subtitle": "SOC 2 and ISO 27001 Certified"
+    "subtitle": "SOC 2, ISO 27001, HIPAA and GDPR"
   },
   {
     "icon": "check",
@@ -263,9 +263,9 @@ export const content: DonovanContent = {
 ],
   },
   prefooter: {
-    headline: 'The future of your industry starts here',
+    headline: 'See it work on your own cases before it goes live.',
     cta: { text: 'Book a Demo', url: '/demo' },
-    secondaryCta: { text: 'Try Vahue', url: '/demo' },
+    secondaryCta: { text: 'Talk to an Expert', url: '/demo' },
     backdrop: WHITE,
     image: { path: '/donovan/prefooter.webp' },
   },
