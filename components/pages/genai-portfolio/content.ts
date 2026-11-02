@@ -64,9 +64,9 @@ export const content: GenAiContent = {
     labels: { performance: 'PERFORMANCE OVER TIME', process: 'THE FLYWHEEL PROCESS' },
     steps: [
       { title: "Usage becomes data", description: [{ style: 'h4', text: "Every question, answer, and outcome is captured and structured automatically. Nothing is wasted." }] },
-      { title: "Human in the loop", description: [{ style: 'h4', text: "Experts correct answers in the tools they already use, and each correction becomes high-quality data." }] },
-      { title: "Data fuels improvement", description: [{ style: 'h4', text: "Corrections and unanswered questions become targeted improvements; no manual work, no waiting." }] },
-      { title: "Improvement compounds", description: [{ style: 'h4', text: "Better answers get used more. More usage generates better data. Experts handle only new questions." }] },
+      { title: "Human in the loop", description: [{ style: 'h4', text: "Experts correct answers where they already work. Each correction becomes high-quality data." }] },
+      { title: "Data fuels improvement", description: [{ style: 'h4', text: "Corrections and open questions become targeted improvements; no manual work, no waiting." }] },
+      { title: "Improvement compounds", description: [{ style: 'h4', text: "Better answers get used more. Usage makes better data. Experts handle only new questions." }] },
     ],
   },
   dialect: {
