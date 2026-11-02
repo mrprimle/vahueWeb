@@ -37,6 +37,15 @@ Vahue holds: SOC 2, ISO 27001, ISO 42001, HIPAA, GDPR, EU AI Act, CSA STAR, CCPA
 - [ ] Footer: legal entity name, LinkedIn and X links.
 - [ ] Announcement bar and menu featured cards: titles are placeholders.
 
+## Demo form
+
+- [ ] **The `/demo` form sends nothing.** It shows the success message and the lead is lost. You asked for it to go to human@vahue.ai, which needs an email service and its keys. See `TODO(backend)` in `components/pages/demo/DemoForm.tsx`.
+- [ ] Heading "Let's Scale Together": keep it? "Scale" is a verb there, but it's also the name of the site we copied.
+- [ ] Budget bands `<$100k` to `$1M+` are Scale's. Do they fit scale-ups?
+- [ ] Free-mail addresses are refused, as on Scale, using a local list of 19 domains. Keep that?
+- [ ] "Review Site" replaces Scale's "Billboard" under how you heard about us. Company types were also reworded.
+- [ ] Quote, name, role, "Trusted by" line and 7 logo tiles are placeholders.
+
 ## Customers and quotes
 
 - [ ] Customer logos are neutral tiles on home, `/data-engine`, `/automotive`, `/donovan`, `/enterprise`, `/enterprise/healthcare`, `/about`, `/experts`.
