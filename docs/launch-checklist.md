@@ -18,6 +18,9 @@ Not everything here is marked in the code, so go through this list as well.
 - [ ] **Shorter lists.** Long lists stop at 24 invented rows instead of matching Scale's count: `/labs/papers` 24 of 88, `/events` 24 of 88, `/careers` 24 of 275. At rest only `/labs/papers` is visibly shorter than Scale's. Tell me if you want more rows.
 - [ ] **Detail pages.** The 33 pages are Scale's menu pages. Scale's detail pages under them aren't built: blog and customer posts, guides, events, jobs, partner pages, `/careers/university`, papers, leaderboards. Cards link to the nearest existing page. Build them, or remove the cards?
 
+- [ ] **Home hero corners below 1450 wide.** Scale's top corners are square at the top of the page between 768 and 1449 wide, and round after about 30px of scroll. From 1450 up they're round from the start. Ours now does the same. Tell me if you want round corners from the start at every width, which would differ from Scale.
+- [ ] **How much copy changed.** About 59% of Scale's words are kept across pages, against your 80% target, but that number is rough and includes the pages of invented lists. Main pages: home 62%, `/automotive` 67%, `/enterprise` 71%, `/experts` 75%, `/data-engine` 80%, `/physical-ai` 81%, `/donovan` 82%, `/rlenvironments` 86%. Do you want home and `/automotive` pulled closer to Scale?
+
 ## Certifications
 
 Vahue holds: SOC 2, ISO 27001, ISO 42001, HIPAA, GDPR, EU AI Act, CSA STAR, CCPA (Mike, 2026-11-02).
