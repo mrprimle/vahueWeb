@@ -13,7 +13,7 @@ export const content: SecurityContent = {
   },
   hero: {
     headline: 'Security at Vahue',
-    body: 'At Vahue, our customers trust us to develop reliable systems for their most important applications. This trust is our driving principle — we embed security into our platform at every level.',
+    body: 'At Vahue, our customers trust us to develop reliable systems for their most important applications. This trust is our driving principle — we embed security into every agent we build and run.',
     backdrop: { tailwindClass: 'white', contrastColor: '#010101' },
     image: { path: `${A}/hero.webp` },
   },
@@ -69,14 +69,14 @@ export const content: SecurityContent = {
     {
       label: 'Scale-Ups',
       title: 'Vahue for Scale-Ups',
-      body: 'Vahue powers key back-office and agentic AI programs across various Scale-Up partners.', // PLACEHOLDER: customer claim
+      body: 'Vahue runs your busiest workflow with agents inside the systems you already use, measured against your baseline from day one.',
       cta: { text: 'Learn more', url: '/public-sector' },
       image: { src: `${A}/office-tower.webp`, alt: 'Office building', className: 'object-cover object-top' },
     },
     {
       label: 'Trust Center',
       title: 'Learn about how we protect ourselves and our customers',
-      body: 'Vahue powers key back-office and agentic AI programs across Operations, Revenue and Support teams, Professional Services firms, and Regulated Industries.', // PLACEHOLDER: customer claim
+      body: 'Agents see only what their role can see. Risky actions wait for a person, and every input, decision, and action goes in an audit log.',
       cta: { text: "Visit Vahue's Trust Center", url: '/demo' }, // PLACEHOLDER: no Trust Center exists yet, point at the real one
       image: { src: `${A}/shield-nobg.webp`, alt: 'Trust Center', className: 'object-contain' },
     },
