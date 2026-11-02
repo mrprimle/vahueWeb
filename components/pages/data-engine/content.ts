@@ -27,18 +27,18 @@ export const content: DataEngineContent = {
   ],
   best: {
     title: 'The Best In The Business',
-    body: 'Agents are only as good as what they can reach. Vahue connects them to the systems your team already uses, so no one moves information between them by hand.',
+    body: 'Agents are only as good as what they can reach. Vahue connects them to the systems your team already uses.',
     image: { src: '/data-engine/the-business.webp', alt: '', width: 2048, height: 2048 },
     cards: [
-      { title: 'Quality', body: 'Every answer and action traces back to its source: the record, the clause, the page. Stale or conflicting data gets flagged before an agent uses it.', iconClass: 'text-archive-purple' },
-      { title: 'Cost Effective', body: 'Stop building API integrations by hand for each new agent. One context layer serves every workflow, and usage is tracked so run costs stay predictable.', iconClass: 'text-foundry-tan' },
+      { title: 'Quality', body: 'Every answer and action traces back to its source: the record, the clause, the page.', iconClass: 'text-archive-purple' },
+      { title: 'Cost Effective', body: 'Stop building integrations by hand for each new agent. One context layer serves every workflow.', iconClass: 'text-foundry-tan' },
       { title: 'Scalability', body: 'Start with one workflow and two systems. Add the next workflow on the same integrations. Scale up, or down, as needed.', iconClass: 'text-atlas-blue' },
       { title: 'Coverage', body: 'CRM, ERP, inbox, helpdesk, documents, data warehouses and MCP servers. If your team works in it, your agents can too.', iconClass: 'text-evergreen' },
     ],
   },
   caseStudy: {
     overtitle: 'Customer Case Study',
-    description: 'A mid-market distributor and Vahue partnered to keep CRM, ERP and finance in step, with every agent working from one connected source of context.', // PLACEHOLDER
+    description: 'A mid-market distributor and Vahue partnered to keep CRM, ERP and finance in step, with every agent on one source.', // PLACEHOLDER
     cta: { text: 'Read customer story', url: '/generative-ai-data-engine' },
     tileClass: 'bg-evergreen',
     logo: { key: 'case-study', alt: 'Logo', width: 240, height: 75, className: 'text-white' }, // PLACEHOLDER
@@ -46,10 +46,10 @@ export const content: DataEngineContent = {
   buildAi: {
     overtitle: 'Automate a Workflow',
     title: 'Powering Reliable Agents',
-    subtitle: 'Every agent we run is powered by the same connected context.',
+    subtitle: 'Every agent runs on the same connected context.',
     showcaseTitle: 'Back-office Sync Agents',
-    showcaseSubtitle: 'Keep CRM, ERP and finance in step without re-keying',
-    body: 'Back-office Sync Agents are one of six workflow services built on this layer. Each one reads from your systems, asks a person when a case is risky, and writes back to the system of record. Your next workflow starts with the integrations already in place.',
+    showcaseSubtitle: 'Keep CRM, ERP and finance in step',
+    body: 'Back-office Sync Agents are one of six workflow services built on this layer. They read your systems, ask a person when a case is risky, and update the system of record.',
     primaryCta: { text: 'Book a Demo', url: '/demo' },
     secondaryCta: { text: 'Explore Agents', url: '/generative-ai-data-engine' },
     chat: {
@@ -69,14 +69,14 @@ export const content: DataEngineContent = {
   whatIs: {
     overtitle: 'WHAT IS CONTEXT AND INTEGRATIONS',
     title: 'The One Layer Every Agent Runs On',
-    subtitle: 'Work arrives, an agent understands it, finds the right context, applies your rules, and updates the system of record. This layer is what makes that possible: live connections to your systems, the right permissions, and the current version of every record.',
+    subtitle: 'The layer that lets an agent find the right context and update the system of record: live connections to your systems, the right permissions, and the current version of every record.',
     image: { src: '/data-engine/diagram-context-integrations.webp', alt: 'Your systems move through Connect, Permissions, Evaluation and Grounding in a loop until the agent is reliable', width: 2432, height: 1274 },
     label: 'Context and Integrations',
     items: [
-      { title: 'Connect', body: 'Link CRM, ERP, inbox, helpdesk and document stores through APIs and MCP servers, in your cloud or ours.' },
-      { title: 'Permissions', body: 'Agents see only what the role they act for can see. Every read and write goes in the audit log.' },
-      { title: 'Grounding', body: 'Agents answer from current, cited sources rather than from memory, so every figure traces back to a query.' },
-      { title: 'Evaluation', body: 'Evaluate retrieval and actions against your own past cases to find weak points before go-live.' },
+      { title: 'Connect', body: 'Link CRM, ERP, inbox, helpdesk and document stores through APIs and MCP servers.' },
+      { title: 'Permissions', body: 'Agents see only what their role can see. Every read and write is logged.' },
+      { title: 'Grounding', body: 'Agents answer from current, cited sources, so every figure traces to a record.' },
+      { title: 'Evaluation', body: 'Evaluate retrieval and actions against your past cases to find weak points.' },
     ],
   },
   types: {
@@ -91,7 +91,7 @@ export const content: DataEngineContent = {
   },
   resources: {
     overtitle: 'RESOURCES',
-    title: 'Learn More About Context and Integrations',
+    title: 'Learn More About Integrations',
     items: [
       { id: 'pilot-to-production', overtitle: 'Blog', title: 'Why Do AI Pilots Stall?', image: { src: '/data-engine/01.png', alt: 'Human feedback' }, description: 'Most pilots work in the demo and stall in production. Understand the role clean context and live integrations play in getting agents live, and how to measure it against a baseline.', link: '/blog' }, // PLACEHOLDER
       { id: 'guide-connecting-systems', overtitle: 'Guide', title: 'Guide: Connecting Agents to CRM and ERP', image: { src: '/data-engine/02.png', alt: 'Blur' }, description: 'The success of AI agents is dependent on data and context quality. Read our guide to prepare your systems of record, so agents read and write the right fields.', link: '/guides' }, // PLACEHOLDER
@@ -111,7 +111,7 @@ export const content: DataEngineContent = {
     ],
   },
   prefooter: {
-    headline: 'See it work on your own systems before it goes live',
+    headline: 'See it work before it goes live',
     cta: { text: 'Book a Demo', url: '/demo' },
     secondaryCta: { text: 'Explore Agents', url: '/generative-ai-data-engine' },
     image: { path: '/data-engine/prefooter.webp' },
