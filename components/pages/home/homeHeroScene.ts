@@ -61,51 +61,6 @@ function roundedFrame(options: { count?: number; radius?: number; width?: number
   return out
 }
 
-// Scale module 637160: cursor-arrow polyline used by the dotted "front" markers.
-function cursorArrow(options: { cornerRadius?: number; cornerResolution?: number; width?: number; height?: number; offset?: number[] } = {}) {
-  const { cornerRadius: t, cornerResolution: r, width: n, height: i, offset } = { cornerRadius: 0.1, cornerResolution: 7, width: 1, height: 1, offset: [0, 0, 0], ...options }
-  const o: number[] = []
-  const a = { x: 0, y: 0, z: 0 }
-  let s = { ...a }
-  a.y -= 0.175 * i
-  a.x -= 0.175 * n
-  a.x += 0.5 * n
-  a.y -= 0.5 * i - t
-  let l = { ...a }
-  l.x -= t
-  for (let k = 0; k < r; k++) {
-    const g = (k / (r - 1)) * Math.PI * 0.75 - 0.75 * Math.PI
-    a.x = Math.cos(g) * t + l.x + offset[0]
-    a.y = Math.sin(g) * t + l.y + offset[1]
-    o.push(a.x, a.y, a.z)
-    if (k === 0) s = { ...a }
-  }
-  a.y += 0.5 * i - t
-  o.push(a.x, a.y, a.z)
-  a.y += 0.5 * i - t
-  l = { ...a }
-  l.x -= t
-  for (let k = 0; k < r; k++) {
-    const g = (k / (r - 1)) * Math.PI * 0.5
-    a.x = Math.cos(g) * t + l.x + offset[0]
-    a.y = Math.sin(g) * t + l.y + offset[1]
-    o.push(a.x, a.y, a.z)
-  }
-  a.x -= 0.5 * n - t
-  o.push(a.x, a.y, a.z)
-  a.x -= 0.5 * n - t
-  l = { ...a }
-  l.y -= t
-  for (let k = 0; k < r; k++) {
-    const g = (k / (r - 1)) * Math.PI * 0.75 + 0.5 * Math.PI
-    a.x = Math.cos(g) * t + l.x + offset[0]
-    a.y = Math.sin(g) * t + l.y + offset[1]
-    o.push(a.x, a.y, a.z)
-  }
-  o.push(s.x, s.y, s.z)
-  return o
-}
-
 // Scale module 19490: camera parallax rig.
 class Gaze {
   lookAt = new THREE.Vector3(0, 5, 5)
@@ -411,7 +366,7 @@ export function createHomeHeroScene(assets: { video: string; perlin: string; num
 
       const arrowPos: number[] = []
       const arrowOff: number[] = []
-      const arrow = cursorArrow()
+      const arrow = roundedFrame({ count: 24, radius: 0.1 })
       for (let e = 0; e < points.length / 3; e++) {
         const ox = points[3 * e]
         const oy = points[3 * e + 1]

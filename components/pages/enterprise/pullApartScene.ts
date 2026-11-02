@@ -48,52 +48,6 @@ function roundedSquareLine(o: { count?: number; radius?: number; width?: number;
   return a
 }
 
-/** Module 637160: the folded-corner marker outline. */
-function markerLine(opts: { cornerRadius?: number; cornerResolution?: number; width?: number; height?: number; offset?: number[] } = {}) {
-  const e = { cornerRadius: 0.1, cornerResolution: 7, width: 1, height: 1, offset: [0, 0, 0], ...opts }
-  const { cornerRadius: t, cornerResolution: r, width: n, height: i } = e
-  const o: number[] = []
-  const a = { x: 0, y: 0, z: 0 }
-  let s = { ...a }
-  a.y -= 0.175 * i
-  a.x -= 0.175 * n
-  a.x += 0.5 * n
-  a.y -= 0.5 * i - t
-  let l = { ...a }
-  l.x -= t
-  for (let k = 0; k < r; k++) {
-    const ang = (k / (r - 1)) * Math.PI * 0.75 - 0.75 * Math.PI
-    a.x = Math.cos(ang) * t + l.x + e.offset[0]
-    a.y = Math.sin(ang) * t + l.y + e.offset[1]
-    o.push(a.x, a.y, a.z)
-    if (k === 0) s = { ...a }
-  }
-  a.y += 0.5 * i - t
-  o.push(a.x, a.y, a.z)
-  a.y += 0.5 * i - t
-  l = { ...a }
-  l.x -= t
-  for (let k = 0; k < r; k++) {
-    const ang = (k / (r - 1)) * Math.PI * 0.5
-    a.x = Math.cos(ang) * t + l.x + e.offset[0]
-    a.y = Math.sin(ang) * t + l.y + e.offset[1]
-    o.push(a.x, a.y, a.z)
-  }
-  a.x -= 0.5 * n - t
-  o.push(a.x, a.y, a.z)
-  a.x -= 0.5 * n - t
-  l = { ...a }
-  l.y -= t
-  for (let k = 0; k < r; k++) {
-    const ang = (k / (r - 1)) * Math.PI * 0.75 + 0.5 * Math.PI
-    a.x = Math.cos(ang) * t + l.x + e.offset[0]
-    a.y = Math.sin(ang) * t + l.y + e.offset[1]
-    o.push(a.x, a.y, a.z)
-  }
-  o.push(s.x, s.y, s.z)
-  return o
-}
-
 /** Module 19490: camera parallax rig. */
 class Gaze {
   lookAt = new THREE.Vector3(0, 5, 5)
@@ -190,7 +144,7 @@ export function createPullApartScene(assets: { video: string; logoTexture: strin
       const points: number[] = []
       const miniPos: number[] = []
       const miniOffset: number[] = []
-      const square = markerLine()
+      const square = roundedSquareLine({ count: 24, radius: 0.1 })
       for (let e = 0; e < 32; e++) {
         const px = (2 * Math.random() - 1) * 0.2655
         const py = (2 * Math.random() - 1) * 0.15
