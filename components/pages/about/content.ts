@@ -33,16 +33,16 @@ export const content: AboutContent = {
   whatWeDo: {
     heading: 'What we do',
     cards: [
-      { icon: 'storage', title: 'Context and Integrations', description: "High-quality context, system integrations, and expert review to power the world's most advanced AI agents." },
+      { icon: 'storage', title: 'Context and Integrations', description: "High-quality context, system integrations, and expert review to power reliable AI agents." },
       { icon: 'barChart', title: 'Evals and Guardrails', description: 'Rigorous evals and red-teaming on your own cases to measure, benchmark, and improve AI performance.' },
-      { icon: 'autoAwesome', title: 'Applied AI', description: 'Full-stack AI systems that help enterprises and scale-ups build, deploy, and oversee reliable AI.' },
+      { icon: 'autoAwesome', title: 'Workflow Agents', description: 'Agents that run the busiest workflows of enterprises and scale-ups, measured against a baseline.' },
     ],
   },
   glance: {
     heading: 'Vahue at a glance',
     cards: [
       { icon: 'psychology', label: 'AI Decisions', stat: '15M', description: 'Human decisions to oversee AI agents.' }, // PLACEHOLDER
-      { icon: 'people', label: 'Experts', stat: '$10M', description: 'Paid to experts globally.' }, // PLACEHOLDER
+      { icon: 'people', label: 'Savings', stat: '$10M', description: 'Run costs removed from client workflows.' }, // PLACEHOLDER
       { icon: 'trendingUp', label: 'Valuation', stat: '$29M' }, // PLACEHOLDER
       { icon: 'badge', label: 'Employees', stat: '100+' }, // PLACEHOLDER
       { icon: 'rocket', label: 'Founded', stat: '2016' }, // PLACEHOLDER
