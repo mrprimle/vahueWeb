@@ -18,9 +18,12 @@ export const DARK_CHROME_ROUTES = ['/public-sector/national-security', '/genai-p
 /** labs.scale.com runs on its own stack: `app/labs/layout.tsx` mounts its header, footer, <main> and its own Lenis. */
 export const isLabsRoute = (pathname: string | null) => pathname === '/labs' || !!pathname?.startsWith('/labs/')
 
+/** Scale's docs are Mintlify: native scroll, no Lenis, its own <main>. `components/pages/docs/DocsShell.tsx` mounts the rest. */
+export const isDocsRoute = (pathname: string | null) => pathname === '/docs' || !!pathname?.startsWith('/docs/')
+
 export function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname()
-  if (isLabsRoute(pathname)) {
+  if (isLabsRoute(pathname) || isDocsRoute(pathname)) {
     return (
       <>
         <RouteEffects />

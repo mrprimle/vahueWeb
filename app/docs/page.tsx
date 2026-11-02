@@ -1,15 +1,6 @@
-// Stub: the page agent for /docs replaces this file.
-import Link from 'next/link'
+import { DocsLanding } from '@/components/pages/docs/DocsLanding'
+import { content } from '@/components/pages/docs/content.scale'
 
 export default function Page() {
-  return (
-    <section className="min-h-svh px-6 pt-40 pb-24 text-center">
-      <h1 className="header2">Documentation</h1>
-      <p className="mt-6 body2-regular">
-        <Link className="underline" href="/">
-          Home
-        </Link>
-      </p>
-    </section>
-  )
+  return <DocsLanding content={content} />
 }
