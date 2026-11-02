@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { content } from '@/components/pages/labs-leaderboard/content.scale'
+import { content } from '@/components/pages/labs-leaderboard/content'
 import { LeaderboardPage } from '@/components/pages/labs-leaderboard/LeaderboardPage'
 import { labsChrome as chrome } from '@/components/site/labs/content'
 
