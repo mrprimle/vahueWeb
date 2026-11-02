@@ -1,5 +1,6 @@
 // Copy for /public-sector ("Scale-ups" in the menu: B2B scale-ups whose volume has outgrown the team), written from the AJTBD research into Scale's slots. Same shape and counts as content.scale.ts.
 // Lines marked PLACEHOLDER are for Mike to replace with real data.
+import { fitProofLogo } from '@/components/site/proofLogos'
 import type { PublicSectorContent } from './types'
 
 const A = '/public-sector'
@@ -19,13 +20,13 @@ export const content: PublicSectorContent = {
   },
   logos: {
     items: [
-      { alt: 'Logo', width: 65, height: 45 }, // PLACEHOLDER
-      { alt: 'Logo', width: 48, height: 63 }, // PLACEHOLDER
-      { alt: 'Logo', width: 68, height: 53 }, // PLACEHOLDER
-      { alt: 'Logo', width: 79, height: 22 }, // PLACEHOLDER
-      { alt: 'Logo', width: 70, height: 16 }, // PLACEHOLDER
-      { alt: 'Logo', width: 79, height: 14 }, // PLACEHOLDER
-      { alt: 'Logo', width: 82, height: 22 }, // PLACEHOLDER
+      fitProofLogo('inspera', 68, 36), // FROM OLD SITE: confirm
+      fitProofLogo('ica', 60, 30), // FROM OLD SITE: confirm
+      fitProofLogo('verbit', 76, 32), // FROM OLD SITE: confirm
+      fitProofLogo('qonto', 79, 22), // FROM OLD SITE: confirm
+      fitProofLogo('zwapgrid', 80, 18), // FROM OLD SITE: confirm
+      fitProofLogo('winningtemp', 80, 18), // FROM OLD SITE: confirm
+      fitProofLogo('monocl', 82, 22), // FROM OLD SITE: confirm
     ],
   },
   useCases: {
