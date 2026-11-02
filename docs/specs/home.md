@@ -71,8 +71,7 @@ Read the real WebGL uniforms on both sites by hooking `uniform1f` and `uniformMa
 - **Scroll mapping:** 23 scroll points at 1440x900, 1728x1000 and 390x844 (headless), and 25 real wheel steps down and 25 up at 1512x860 DPR 2 on the real GPU (headed). `uTransition1..3`, `uAlpha`, `uColorMix`, group rotation, group z scale, camera, pulled-apart block visibility and pin offset all agree. The only deltas are short tweens read at slightly different moments and the camera still settling just after load.
 - **Pointer:** camera at the four corners matches to .001 (for example -.595, -.296 at the top left).
 - **Layout depends on width, on Scale too:** from 1450 the scene moves sideways and the text sits beside it. Below 1450 there is no sideways move and the text sits underneath.
-- **Video frame on Scale:** rounded and clear of the header from 1450 and on phones. Between 768 and 1449 Scale's own frame starts at 75px under an 88px header, so the header cuts its rounded top. Ours did the same.
-- **Change, a deliberate deviation from Scale:** between 768 and 1449 our frame starts at 88px (`navBarPad` in two hero shaders, and the black loading panel), so the rounded top shows. Phone and 1450+ are unchanged. Chrome header untouched.
+- **Video frame, re-measured on production 2026-11-02 at 768, 1024, 1280, 1366, 1440, 1449, 1450, 1512, 1728, 1920, first paint through scroll:** from 1450 the frame starts at 88px, under the 88px header, so its 16px corners show from the first paint. From 768 to 1449 `isMobile` is .8, so the frame starts at 75px (`mix(88, 72, .8)`) and the header covers its top 13px: the top corners look square at scroll 0 and turn round after about 30px of scroll, once the frame shrinks away from the header. The announcement bar is the same 39.25px on both sites and moves frame and header together, so it does not cause the 13px. Commit 07b65af had moved our frame to 88px at those widths, which was the only difference. Reverted: frame top, pixel profile and black panel now equal Scale at all ten widths.
 - **REA:** `ev_df4bbf68…`, foreground tab, wheel and pointer through the hero: `onTick` 702 calls, `onMouseMove` 23, section callbacks and the `uTransition2`/`uTransition3` tween callbacks all ran. It matches the source mapping: progress = animated scroll / (4.7 x viewport height, phone 2.15), rotation -.6 to -1 linear after the intro, `uTransition1` over the first .2.
 - **Still open:** no motion difference reproduced at equal viewport, so no motion code changed. Needed from Mike: the URL and window width of the Vahue view.
 
@@ -86,7 +85,7 @@ Read the real WebGL uniforms on both sites by hooking `uniform1f` and `uniformMa
 
 ## Deviations and gaps
 - **Fonts:** Aeonik and DM Mono, see stack.md. Causes the small text-width deltas above.
-- **Timing, unverified:** the reveal lag was measured against Scale's production build on our dev server. Params are the same, and a production build was not run, so the cause is not proven.
+- **Reveal timing, production 2026-11-02:** the block CTA starts within the same 250ms sample as Scale's at equal scroll and ends green-filled on both. The lag measured earlier on the dev server does not show on production.
 - **Scene:** uniforms now compared numerically, see Hero review. The video frame and 30 random scene points differ per load, on Scale too.
 - **Not sampled:** 768 to 1449 band beyond 1440, tablet, `oml:` landscape, the fallback image path, reduced motion on blog images.
 - **Touch:** carousel checked with a tap on Next. Touch drag was not run.

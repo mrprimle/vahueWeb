@@ -530,7 +530,7 @@ export function HomeHero({ content, className }: { content: HomeContent['hero'];
               className={cn(
                 'absolute overflow-hidden rounded-2xl bg-black',
                 'top-[88px] bottom-6 left-6 right-6',
-                'md:max-3xl:top-[88px] md:max-3xl:bottom-[18px] md:max-3xl:left-[18px] md:max-3xl:right-[18px]',
+                'md:max-3xl:top-[75px] md:max-3xl:bottom-[18px] md:max-3xl:left-[18px] md:max-3xl:right-[18px]',
                 'max-md:top-[72px] max-md:bottom-4 max-md:left-4 max-md:right-4',
               )}
             />
