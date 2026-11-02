@@ -1,5 +1,5 @@
-// Copy for /evaluation/enterprise ("For Enterprise" in the menu). Keep first: Scale's string stays unless it is false for Vahue,
-// brand words swap, and the rest changes by a few words. Same shape and counts as content.scale.ts. PLACEHOLDER lines are for Mike.
+// Copy for /evaluation/enterprise: the AI Strategy and Audit service, a two-week decision before the full build.
+// Same shape and counts as content.scale.ts. PLACEHOLDER lines are for Mike.
 import type { EvaluationEnterpriseContent } from './types'
 
 const A = '/evaluation-enterprise'
@@ -7,79 +7,79 @@ const FRAME = 'app.vahue.ai' // PLACEHOLDER
 
 export const content: EvaluationEnterpriseContent = {
   meta: {
-    title: 'Enterprise AI Evaluation and Monitoring | Vahue',
-    description: 'Bridge the trust gap to deploy production-grade generative AI applications. Evaluate and monitor applications for performance, reliability, and safety.',
+    title: 'AI Strategy and Audit | Find the Right Use Case in 2 Weeks | Vahue',
+    description: 'In two weeks we find the workflow worth automating, record your baseline, test feasibility on your own cases, and give you a clear go or no-go.',
   },
   hero: {
-    headline: 'Generative AI Evaluation for Enterprise',
-    body: 'Bridge the trust gap to deploy product-grade genAI applications.',
+    headline: 'AI Strategy and Audit',
+    body: 'For leaders under pressure to act on AI: in two weeks we find the workflow worth automating, record your baseline, and give you a clear go or no-go.',
     cta: { text: 'Book a Demo', url: '/demo' },
-    secondaryCta: { text: 'Learn more', url: '/genai-portfolio' },
+    secondaryCta: { text: 'Learn more', url: '/evaluation/model-developers' },
     backdrop: { tailwindClass: 'white', contrastColor: '#010101' },
     image: { path: `${A}/hero-filled.webp` },
   },
   challenge: {
     overtitle: 'The challenge',
-    title: 'Lack of Trust Stalls Enterprise AI Adoption',
-    subtitle: 'Only 10% of enterprises have Gen AI in production, and more than 30% of Gen AI projects are abandoned after POC. The number one reason why companies stall is a lack of trust stemming from:', // PLACEHOLDER
+    title: 'Lack of Clarity Stalls Enterprise AI Adoption',
+    subtitle: 'Only 10% of enterprises have Gen AI in production, and more than 30% of Gen AI projects are abandoned after POC. The number one reason why companies stall is committing to a build before they know:', // PLACEHOLDER
     items: [
-      { icon: 'performance', title: 'Poor Performance', subtitle: 'Models hallucinate, exhibit unsafe behavior, or pose security risks.' },
-      { icon: 'roi', title: 'Unproven ROI', subtitle: 'Use cases are not adopted and targeted workflows remain unchanged.' },
-      { icon: 'costs', title: 'Escalating Costs', subtitle: 'Unmonitored usage leads to extensive cloud or vendor bills.' },
+      { icon: 'performance', title: 'The Right Use Case', subtitle: 'Teams start with what demos well, not with the workflow that costs the most.' },
+      { icon: 'roi', title: 'The Real ROI', subtitle: 'With no baseline, “we think it saves time” is all anyone can tell the board.' },
+      { icon: 'costs', title: 'The Run Costs', subtitle: 'Usage bills and upkeep only surface once you start scaling.' },
     ],
   },
   solution: {
     overtitle: 'The Solution',
-    title: 'Bridge the Trust Gap for Enterprise Gen AI',
-    subtitle: 'The path to deploying with confidence in production is to systematically evaluate, improve and monitor GenAI systems for performance, safety, and reliability.',
+    title: 'Bridge the Gap From AI Mandate to Working Proof',
+    subtitle: 'The path to a confident AI decision is to map the real workflow, record its baseline, and test feasibility on your own cases before anyone commits to the full build.',
     features: [
-      { title: 'Get Trusted Insights', description: 'Use the trusted evaluation and benchmarking system for enterprise-grade GenAI.' },
-      { title: 'Ensure Safety and Reliability', description: 'Avoid bias, hallucinations, poor accuracy, harmful responses, and malicious behavior.' },
-      { title: 'Monitor for Peace of Mind', description: 'Keep track of latency and cost and get alerted for any issues or regressions.' },
+      { title: 'Get Trusted Insights', description: 'A ranked list of use cases, scored by volume, cost, data readiness, and risk, built with the people doing the work.' },
+      { title: 'Define Human Control', description: 'Decide where agents act alone, where a person approves, and what data they can touch, with security and compliance at the table.' },
+      { title: 'Decide with Peace of Mind', description: 'Get a target, a stop point, and a production plan with costs, and no pressure to buy the build.' },
     ],
     image: { src: `${A}/bridge-trust-gap-filled.webp`, alt: 'With Vahue enterprises can move faster and safer', width: 646, height: 390 },
   },
   how: {
     overtitle: 'How it Works',
-    title: 'How Vahue Knowledge Agents Evaluate Applications',
-    subtitle: 'Trust in AI is earned through better data. Vahue Knowledge Agents combine automated evaluations with an expert workforce for human evaluations to build a “Trust Feedback Loop” of evaluation, improvement and monitoring.',
+    title: 'How the Vahue Audit Works',
+    subtitle: 'Trust in AI is earned through better data. Over two weeks, our engineers sit with the people doing the work, then turn what they learn into a measured decision. Instead of a roadmap for the shelf, you get a path to production.',
     items: [
       {
-        title: 'Measure your AI',
-        description: "Automatically test your GenAI system against auto-generated evaluation datasets as well as against Vahue's private baselines built on your own cases.",
+        title: 'Measure your baseline',
+        description: 'We map one workflow end to end and record volume, minutes per item, error rate, and cost, so everything that follows has a before.',
         textSide: 'left',
-        image: { src: `${A}/measure-your-ai-filled.webp`, alt: 'Measure your AI', width: 644, height: 415, mockup: true, mockupUrl: FRAME },
+        image: { src: `${A}/measure-your-ai-filled.webp`, alt: 'Measure your baseline', width: 644, height: 415, mockup: true, mockupUrl: FRAME },
       },
       {
         title: 'Set your own bar',
-        description: 'Augment our industry best practice rubrics and datasets with custom metrics and datasets tailored for your domain and use case.',
+        description: 'Agree the target with your team: the accuracy, coverage, and payback that make this worth doing, and the point at which we stop.',
         textSide: 'right',
         image: { src: `${A}/set-your-own-bar-filled.webp`, alt: 'Set your own bar', width: 644, height: 430, mockup: true, mockupUrl: FRAME },
       },
       {
-        title: 'Verify with Human-in-the-Loop (HiTL)',
-        description: 'Ensure quality control of auto-evaluation with industry-leading, efficient HiTL evaluation for the highest complexity test cases.',
+        title: 'Prove it on your own cases',
+        description: 'We run a proof of concept on your past cases, and your experts check the output next to what your team actually did.',
         textSide: 'left',
-        image: { src: `${A}/verify-hitl.webp`, alt: 'Verify with Human-in-the-Loop (HiTL)', width: 644, height: 430, mockup: true, mockupUrl: FRAME },
+        image: { src: `${A}/verify-hitl.webp`, alt: 'Prove it on your own cases', width: 644, height: 430, mockup: true, mockupUrl: FRAME },
       },
       {
-        title: 'Iterate',
-        description: 'Programmatically turn your evaluations into actions that improve your GenAI systems through RAG optimization and fine-tuning, then see your scores improve over time.',
+        title: 'Map the build',
+        description: 'Lay out the integrations, data access, architecture, and risks the build needs, then rank the next workflows that could share them.',
         textSide: 'right',
-        image: { src: `${A}/iterate.webp`, alt: 'Iterate', width: 644, height: 430, mockup: true, mockupUrl: FRAME },
+        image: { src: `${A}/iterate.webp`, alt: 'Map the build', width: 644, height: 430, mockup: true, mockupUrl: FRAME },
       },
       {
-        title: 'Deploy',
-        description: 'Monitor production traffic to surface quality metrics, issues and alerts. Detect anomalies (e.g. prompts that are not covered by your evaluation datasets) to add them to your test suite.',
+        title: 'Decide',
+        description: 'You get a go or no-go, expected run costs, and a next step: a Pilot in shadow mode on real cases, or a clear reason to stop.',
         textSide: 'left',
-        image: { src: `${A}/deploy-filled.webp`, alt: 'Deploy', width: 644, height: 430, mockup: true, mockupUrl: FRAME },
+        image: { src: `${A}/deploy-filled.webp`, alt: 'Decide', width: 644, height: 430, mockup: true, mockupUrl: FRAME },
       },
     ],
   },
   prefooter: {
-    headline: 'The future of your industry starts here',
+    headline: 'Find the right use case before you build',
     cta: { text: 'Book a Demo', url: '/demo' },
-    secondaryCta: { text: 'Build AI', url: '/data-engine' },
+    secondaryCta: { text: 'Explore Evals', url: '/evaluation/model-developers' },
     backdrop: { tailwindClass: 'gray-50', contrastColor: '#010101' },
     image: { path: `${A}/prefooter.webp` },
   },
