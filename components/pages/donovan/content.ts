@@ -24,7 +24,7 @@ export const content: DonovanContent = {
     { alt: 'Logo', width: 70, height: 16 }, // PLACEHOLDER
   ],
   overview: {
-    overtitle: 'Product Overview',
+    overtitle: 'Service Overview',
     title: 'Build, Evaluate, and Run Support and Voice Agents',
     subtitle: 'Customers wait hours for a reply while your team answers the same questions again. We take agents tailored to your policies from concept to production, then keep running them, so every customer gets an answer when and where they need it.',
     cards: [
@@ -72,7 +72,7 @@ export const content: DonovanContent = {
     "/",
     "Compare Models",
     "Model 1",
-    "Vahue Gemma 7B Instruct",
+    "Tuned Gemma 7B Instruct",
     "Model 2",
     "Llama 3.1 70B Instruct",
     "Compare Metrics",
