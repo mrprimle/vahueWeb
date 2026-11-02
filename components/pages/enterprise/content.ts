@@ -1,4 +1,4 @@
-// Filled copy for /enterprise. Same shape as content.scale.ts. Keep rule: Scale's line stays unless it is false for Vahue.
+// Copy for /enterprise from the AJTBD research in Scale's slots. Same shape as content.scale.ts.
 // Lines marked PLACEHOLDER are for Mike to replace with real numbers, clients, quotes and logos.
 import type { EnterpriseContent, EnterpriseLogo } from './types'
 
@@ -7,12 +7,12 @@ const LOGO: EnterpriseLogo = { alt: 'Logo' } // PLACEHOLDER
 
 export const content: EnterpriseContent = {
   meta: {
-    title: 'Agentic Solutions for Enterprise | Vahue',
-    description: 'Enterprises trust Vahue to build, deploy and operate AI systems that perform in production.',
+    title: 'AI Agents for Enterprise Operations | Vahue',
+    description: 'We run your busiest workflow with agents, measured against your baseline from day one. See it work on your own cases before it goes live.',
   },
   hero: {
-    headline: 'Reliable AI for the decisions your business runs on.',
-    subtitle: [{ style: 'normal', text: 'Enterprises trust Vahue to build, deploy and operate AI systems that perform in production.' }],
+    headline: 'Reliable AI for the work your business runs on.',
+    subtitle: [{ style: 'normal', text: 'For operations, finance and support leaders: we run your busiest workflow with agents, measured against your baseline from day one.' }],
     cta: { url: '/demo', text: 'Schedule a consult' },
     scrollLabel: 'Scroll to explore',
     images: [
@@ -31,17 +31,17 @@ export const content: EnterpriseContent = {
     textItems: [
       {
         headline: [{ style: 'normal', text: 'Most AI initiatives never make it past pilot.' }],
-        subheading: [{ style: 'normal', text: 'Models are powerful, but turning them into reliable systems is the challenge.' }],
+        subheading: [{ style: 'normal', text: 'Models are powerful, but your team still moves the work between systems by hand.' }],
       },
       {
-        headline: [{ style: 'normal', text: 'We turn models into reliable systems' }],
-        subheading: [{ style: 'normal', text: 'From rebuilding infrastructure to redesigning workflows, we connect your operation with solutions that transform.' }],
+        headline: [{ style: 'normal', text: 'We turn pilots into reliable systems' }],
+        subheading: [{ style: 'normal', text: 'We connect your inbox, documents, CRM and ERP, redesign the workflow, and run agents inside the tools your team already uses.' }],
       },
     ],
   },
   bridge: {
     headline: 'Vahue bridges the gap between AI models & business outcomes',
-    subtitle: [{ style: 'normal', text: 'By connecting your data and models with tangible human feedback, we turn workflows into systems that continuously improve over time.' }],
+    subtitle: [{ style: 'normal', text: 'We find the right use case, build the system, and own the outcome. Agents learn from your team’s corrections, so the workflow keeps improving against your baseline.' }],
     trustedBy: 'Trusted by',
     logos: [LOGO, LOGO, LOGO, LOGO, LOGO, LOGO], // PLACEHOLDER
     video: { webm: `${P}/squares-filled.webm`, mov: `${P}/squares-filled-hevc.mp4`, poster: `${P}/squares-filled-poster.webp`, name: 'Squares' },
@@ -66,7 +66,7 @@ export const content: EnterpriseContent = {
       { label: 'Cost', stat: '$4M+', description: 'cost removed after implementing agents across finance reconciliations.', icon: 'revenue' }, // PLACEHOLDER
       { label: 'Accuracy', stat: '100%', description: 'source-cited, regulator-defensive audit-trail.', icon: 'accuracy' }, // PLACEHOLDER
       { label: 'Adoption', stat: '36,000+', description: 'cases handled without a person within 3 months of rollout.', icon: 'adoption' }, // PLACEHOLDER
-      { label: 'Delivery Speed', stat: '6 weeks', description: 'production timeline to implement Vahue AI in your system.', icon: 'speed' }, // PLACEHOLDER
+      { label: 'Delivery Speed', stat: '6 weeks', description: 'pilot timeline to put agents to work on your real cases.', icon: 'speed' }, // PLACEHOLDER
     ],
   },
   testimonials: {
@@ -95,8 +95,8 @@ export const content: EnterpriseContent = {
   },
   race: {
     heading: [{ style: 'h2', text: 'The race is on.' }],
-    left: [{ style: 'h4', text: 'Everyone is using AI. But only Vahue makes it truly yours.' }],
-    right: [{ style: 'normal', text: 'Most AI gets smarter for everyone. Vahue learns from your experts every day, turning their judgment into a compounding advantage that grows more powerful, and more uniquely yours, over time.' }],
+    left: [{ style: 'h4', text: 'Everyone is using AI. Few have it running the work.' }],
+    right: [{ style: 'normal', text: 'Platforms leave your team tuning, testing and watching the bill. Firms that build and leave hand you a demo and a handover. We prove the agents on your own cases, then run them, so nobody on your team becomes their full-time babysitter.' }],
     cta: { url: '/demo', text: 'Learn More' },
     video: `${P}/cables.mp4`,
   },
@@ -104,19 +104,19 @@ export const content: EnterpriseContent = {
     heading: [{ style: 'h3', text: 'Three Pillars.\nOne Unfair Advantage.' }],
     video: `${P}/stacking.mp4`,
     cards: [
-      { headline: 'Integrated experts', subtitle: 'We embed directly in your organization to identify the right use cases, build them from your office, not ours, and stay to run them.', icon: 'experts', color: '#A8927C' },
-      { headline: 'Technology', subtitle: 'Our platform and internal tooling are built to move fast, ready to stand up in your environment within a day of a demo.', icon: 'technology', color: '#839CB2' },
-      { headline: 'Applied AI Research', subtitle: "Our applied research team isn't just following the technology, they're building and evaluating it on your own past cases.", icon: 'research', color: '#193A29' },
+      { headline: 'Integrated experts', subtitle: 'We embed directly in your organization to find the right use case, build it inside your systems, not ours, and stay to run it.', icon: 'experts', color: '#A8927C' },
+      { headline: 'Technology', subtitle: 'Our internal tooling connects to your CRM, ERP, documents and MCP servers, so agents work in the systems you already use, with no migration.', icon: 'technology', color: '#839CB2' },
+      { headline: 'Evals and Guardrails', subtitle: 'We test every agent on your own past cases in shadow mode, next to what your team actually did, so accuracy is proven before go-live.', icon: 'research', color: '#193A29' },
     ],
   },
   poweredBy: {
-    headline: 'Powered by the Vahue Agentic AI Platform',
-    subtitle: [{ style: 'normal', text: 'Agentic solutions are built and deployed on Vahue’s platform, enabling the full lifecycle of AI systems – from development to real-world operation.' }],
-    cta: { url: '/genai-portfolio', text: 'Learn More' },
+    headline: 'Audit, Pilot, Operate with one accountable team',
+    subtitle: [{ style: 'normal', text: 'Start with a 2-week Audit that records your baseline. Run a 4 to 6-week Pilot in shadow mode on real cases. Then we operate it monthly and report against that baseline.' }],
+    cta: { url: '/evaluation/enterprise', text: 'Learn More' },
     image: { path: `${P}/platform.webp`, alt: 'AI Platform' },
     cards: [
-      { headline: 'Build & Improve AI Systems', subtitle: 'Create, evaluate, and refine AI systems with the data, feedback, and workflows needed to make them reliable.', icon: `${P}/icon-powered.svg` },
-      { headline: 'Deploy & run in production', subtitle: 'Integrate AI into your business workflows and operate it reliably—with the controls needed to scale safely.', icon: `${P}/icon-powered.svg` },
+      { headline: 'Audit & Pilot', subtitle: 'Find the right use case, record the baseline, and see the agents work on your own cases before they go live.', icon: `${P}/icon-powered.svg` },
+      { headline: 'Operate in production', subtitle: 'We run, monitor and fix the agents every month, with a person approving every risky action and a report against your baseline.', icon: `${P}/icon-powered.svg` },
     ],
   },
   trusted: {
@@ -128,14 +128,14 @@ export const content: EnterpriseContent = {
     cards: [
       {
         title: 'Security & Compliance',
-        description: 'Enterprise-grade security with strict data controls, privacy safeguards, and compliance with industry standards.', // PLACEHOLDER
+        description: 'SOC 2, ISO 27001, ISO 42001, HIPAA and GDPR, with strict data controls and privacy safeguards.',
         icon: `${P}/icon-security.svg`,
         hover: { tailwindClass: 'cloud-slate', hex: '#839CB2' },
         link: { url: '/security', text: 'Learn more' },
       },
       {
         title: 'Reliable Agentic Execution',
-        description: 'Vahue gives autonomous agents a framework to execute complex, multi-step operations across your enterprise.',
+        description: 'Agents read the work, find the context, apply your rules and update your systems. Every risky action waits for a person.',
         icon: `${P}/icon-agentic.svg`,
         hover: { tailwindClass: 'foundry-tan', hex: '#A8927C' },
       },
@@ -144,7 +144,7 @@ export const content: EnterpriseContent = {
         description: 'The right model for every use case. Our stack integrates seamlessly with any frontier model or custom open-source.',
         icon: `${P}/icon-model.svg`,
         hover: { tailwindClass: 'archive-purple', hex: '#79648C' },
-        link: { url: '/generative-ai-data-engine', text: 'Learn more' },
+        link: { url: '/data-engine', text: 'Learn more' },
       },
     ],
   },
