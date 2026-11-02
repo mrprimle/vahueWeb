@@ -59,7 +59,7 @@ export function LabsDialog({ open, onOpenChange, title, closeLabel, className, c
     setRoot(document.querySelector('.labs-root'))
   }, [])
   useEffect(() => {
-    if (open) ref.current?.querySelector<HTMLElement>(FOCUSABLE)?.focus()
+    if (open) ref.current?.focus()
   }, [open])
   if (!open || !root) return null
   return createPortal(
@@ -72,7 +72,7 @@ export function LabsDialog({ open, onOpenChange, title, closeLabel, className, c
         aria-labelledby="labs-dialog-title"
         tabIndex={-1}
         data-lenis-prevent
-        className={cn('fixed left-[50%] top-[50%] z-50 max-w-lg translate-x-[-50%] translate-y-[-50%] border bg-white shadow-lg w-[calc(100vw-2rem)] p-0 gap-0 rounded-none border-neutral-200 flex flex-col max-h-[calc(100vh-4rem)]', className)}
+        className={cn('fixed left-[50%] top-[50%] z-50 outline-none max-w-lg translate-x-[-50%] translate-y-[-50%] border bg-white shadow-lg w-[calc(100vw-2rem)] p-0 gap-0 rounded-none border-neutral-200 flex flex-col max-h-[calc(100vh-4rem)]', className)}
       >
         <div className="flex flex-col space-y-1.5 text-center sm:text-left px-6 pt-6 pb-4 border-b border-neutral-200 shrink-0">
           <h2 id="labs-dialog-title" className="text-sm font-sans font-medium text-ink uppercase tracking-wider">

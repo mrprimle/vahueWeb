@@ -37,6 +37,8 @@
 .input:focus,
 .select:focus {
   border-color: #111;
+  outline-color: transparent;
+  box-shadow: none;
 }
 .error {
   position: absolute;
