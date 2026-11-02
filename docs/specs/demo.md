@@ -29,7 +29,7 @@ One section in a two-column grid, then the shared footer. Page body from the RSC
 
 Equal to Scale, clone and filled, in all of these form states at 1440 and 390: resting, each of the 7 company types, and France + budget + Other. Every field's x, y, width and height is compared in each state, within 0.6px. Filled resting state also equal at 1920. At 768 and 1024 only the footer differs (1472 vs 1444.2, 1151.6 vs 1130.6), the known shared chrome issue.
 
-The panel shrinks after the first change on the page (555.1 to 544.5 at 1440, 756.9 to 733.3 at 390), on Scale and here: SplitText re-splits when the body resizes, and the unmasked lines take less room. Line breaks also change. Same in both.
+The panel shrinks after the first change on the page (555.1 to about 544 at 1440, 756.9 to 733.3 at 390), on Scale and here: SplitText re-splits when the body resizes, and the unmasked lines take less room. Line breaks also change. Same in both.
 
 New here: `DemoForm.tsx` (the HubSpot behaviour written out), `DemoForm.css` (module 877420 with the modal variant removed), `DemoPage.tsx`. FlatCta, AnimatedText, useInViewTrigger and SectionTheme are shared ports.
 
@@ -85,7 +85,7 @@ Every native listener REA found is HubSpot's or React's. HubSpot adds `input` (`
 | Submit | click | React `onClick` | 721992 | Clicks the hidden input | Ours only |
 | Submit | focus | Native | | `auto 1px` outline | Tab order equal |
 | Success | valid submit | | 721992, definition | Form and Submit replaced by `.submitted-message`, 16/24 `#171717`, no scroll. `TODO(backend)` in `DemoForm.tsx`, nothing sent | Ours: no request other than page assets (`nonLocalOrNonGet` empty) |
-| Quote, name | reveal | `ScrollTrigger` | 659050, 947153 | `top 85%`, lines, delay 0 and .15 | Line y 49.9, 7.2, .1 vs same curve at matched phase |
+| Quote, name | reveal | `ScrollTrigger` | 659050, 947153 | `top 85%`, lines, delay 0 and .15 | Shared port. Scale's line y 49.9, 7.2, .1 sampled live; ours compared by eye on the 390 scroll sheets, mid-reveal frames match. Not sampled at matched phase |
 | Logos | reveal | gsap | 659050 | `opacity` 0, `y` 8 to rest, `stagger` .06, `delay` .3, `.5s power2.out` | t 200ms: .78, .62, .39, .1 vs .75, .6, .4, .06 |
 | Privacy link | hover | None | | No hover state | Same |
 | Panel, form root | | `ev_3f5c9239…`, `ev_3ef31eb9…`: 0 listeners | | | Same |
