@@ -51,7 +51,7 @@ const jobs: CareersJob[] = [
   role(1006, 'Forward-Deployed Engineer, Document Intake Agents', 'Engineering', 'London, UK'), // PLACEHOLDER
   role(1007, 'Agent Engineer, Support and Voice Agents', 'Engineering', 'Austin, TX'), // PLACEHOLDER
   role(1008, 'Staff Software Engineer, Context and Integrations', 'Engineering', 'San Francisco, CA'), // PLACEHOLDER
-  role(1009, 'Domain Expert, Insurance Claims', 'Expert Network', 'Remote'), // PLACEHOLDER
+  role(1009, 'Domain Expert, Insurance Claims', 'Domain Specialists', 'Remote'), // PLACEHOLDER
   role(1010, 'Finance Manager', 'Finance', 'New York, NY'), // PLACEHOLDER
   role(1011, 'IT Systems Engineer', 'IT', 'Austin, TX'), // PLACEHOLDER
   role(1012, 'Compliance Counsel, AI Governance', 'Legal & GRC', 'London, UK'), // PLACEHOLDER
@@ -99,7 +99,7 @@ export const content: CareersContent = {
       before: 'Our ',
       firstLink: { text: 'Context and Integrations', href: '/data-engine' },
       middle: ' layer powers the most demanding agents, workflows, and enterprise knowledge systems with high-quality context. We then apply our experience partnering with operations teams running these agents to help more organizations customize and ',
-      secondLink: { text: 'Apply AI', href: '/data-engine' },
+      secondLink: { text: 'Apply AI', href: '/enterprise' },
       after: ' in their organizations.',
     },
     platform: 'And we encode our tradecraft into our Evals and Guardrails to help organizations successfully apply AI to their most critical business and operating decisions.',
@@ -113,7 +113,7 @@ export const content: CareersContent = {
       { title: 'Team Flow', image: `${DIR}/img-team-flow.svg`, description: "We work as one Vahue. Ideas, energy, and support flow freely across teams because we are invested in each other's success. Optimize for the whole." },
       { title: 'Quality is Our Cheat Code', image: `${DIR}/img-quality-fractal.svg`, description: 'The systems that deliver quality are rare enough to be a structural advantage. When we deliver effectively and consistently, the economics change. Deals get bigger, cycles get shorter, and growth stops being incremental.' },
       { title: 'Find the 20%', image: `${DIR}/img-find-20.svg`, description: 'Not all hard work is equal. 80% of outcomes come from 20% of inputs. We find that 20% and execute completely, even when the work is tedious or meticulous. What we reject is effort without impact.' },
-      { title: 'Write the Market', image: `${DIR}/img-write-the-market.svg`, description: "We don't read the market. We write it. Our research puts us at the frontier before anyone else, and our job is to bring our partners there first." },
+      { title: 'Write the Market', image: `${DIR}/img-write-the-market.svg`, description: "We don't read the market. We write it. Running live workflows puts us ahead of the market, and our job is to bring our partners there first." },
       { title: 'Three Moves Ahead', image: `${DIR}/img-three-moves-ahead.svg`, description: 'When making decisions, consider the consequences of consequences. Plan accordingly.' },
     ],
   },
