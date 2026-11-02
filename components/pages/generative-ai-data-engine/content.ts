@@ -1,5 +1,6 @@
 // AJTBD copy for /generative-ai-data-engine (Back-office Sync Agents). Same shape and counts as content.scale.ts.
 // Lines marked PLACEHOLDER are for Mike to replace with real data.
+import { fitProofLogo } from '@/components/site/proofLogos'
 import type { GenAiContent } from './types'
 
 const WHITE = { tailwindClass: 'white', contrastColor: '#010101' }
@@ -21,9 +22,9 @@ export const content: GenAiContent = {
     copy: "Trusted by the world's busiest operations teams.", // PLACEHOLDER
     link: { title: 'Meet our customers', href: '/enterprise' },
     items: [
-      { alt: 'Logo', width: 100, height: 20 }, // PLACEHOLDER
-      { alt: 'Logo', width: 108, height: 18 }, // PLACEHOLDER
-      { alt: 'Logo', width: 77, height: 28 }, // PLACEHOLDER
+      fitProofLogo('qonto', 100, 24), // FROM OLD SITE: confirm
+      fitProofLogo('zwapgrid', 108, 22), // FROM OLD SITE: confirm
+      fitProofLogo('verbit', 77, 32), // FROM OLD SITE: confirm
     ],
   },
   overview: {
