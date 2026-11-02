@@ -6,7 +6,7 @@ import { cn } from '../lib/cn'
 import { AnimatedText, type AnimatedTextHandle, type TextAnimation } from './AnimatedText'
 import { CMSLink } from './CMSLink'
 
-export type RichSpan = { text: string; highlightGray?: boolean; href?: string }
+export type RichSpan = { text: string; highlightGray?: boolean; href?: string; strong?: boolean }
 export type RichBlock = {
   style?: 'normal' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'subheader1' | 'body1' | 'body2' | 'body3' | 'detailRegular' | 'detailMono'
   text?: string
@@ -41,7 +41,7 @@ function renderSpans(block: RichBlock): ReactNode {
     ))
   }
   return block.children.map((s, i) => {
-    const inner = s.highlightGray ? <span className="highlight gray text-scale-gray-60" key={i}>{s.text}</span> : s.text
+    const inner = s.highlightGray ? <span className="highlight gray text-scale-gray-60" key={i}>{s.text}</span> : s.strong ? <strong>{s.text}</strong> : s.text
     return s.href ? (
       <CMSLink href={s.href} className="underline" key={i}>
         {inner}

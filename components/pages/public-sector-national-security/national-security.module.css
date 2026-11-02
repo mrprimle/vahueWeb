@@ -1,0 +1,42 @@
+/* Scale's lBBaeq CSS module (chunk 0npdyq12us3md.css), verbatim, with one change: Aeonik Pro Medium in Scale's @font-face is not in Mike's licence set,
+   so the card title is Aeonik Regular with a hairline stroke to read as Medium. */
+.page :global(.Section.bg-foundry-tan .Card) { background-color: #ebebeb21; border-radius: 14px; color: #000; }
+.page :global(.Section.bg-foundry-tan .Card .RichText), .page :global(.Section.bg-foundry-tan .Card .RichText p) { color: #212121; }
+.page :global(.Section.bg-foundry-tan .Card svg) { color: #a8927c; }
+.page :global(.Section.bg-foundry-tan .Card .rounded-xl) { border-radius: 4px; }
+@media (min-width: 1280px) {
+  .page :global(.Section.bg-foundry-tan .Card > div) { padding: 32px; }
+  .page :global(.Section.bg-foundry-tan .Card) { min-height: 378px; }
+}
+.page :global(.Section.bg-foundry-tan .Card .header5-regular) { font-family: var(--font-aeonik), sans-serif; font-weight: 500; -webkit-text-stroke: 0.3px currentColor; }
+.page :global(.Section.bg-foundry-tan .Card > div) { justify-content: flex-start; }
+@media (min-width: 1024px) { .page :global(.Section.bg-foundry-tan .Card .header5-regular) { min-height: 4.75rem; } }
+@media (min-width: 1024px) and (max-width: 1535px) { .page :global(.CardGridContainer.grid-cols-4) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.page :global(.SgpFlywheel .intro-wrapper h4.AnimatedText) { text-align: center; }
+.page :global(.SgpFlywheel .intro-wrapper h4.AnimatedText .word) { color: #000 !important; }
+.page :global(.SgpFlywheel .RichText + .RichText) { margin-top: -1rem; }
+@media (min-width: 1280px) {
+  .page :global(.SgpFlywheel .RichText + .RichText) { margin-top: -1.5rem; }
+  .page :global(.SgpFlywheel > div:first-child) { min-height: clamp(792px, 1362px - 29.7vw, 982px); max-height: 900px; }
+}
+@media (max-width: 1279px) {
+  .page :global(.SgpFlywheel h4.header4-regular) { font-size: 17px; line-height: 24px; }
+  .page :global(.SgpFlywheel .ResponsiveImage) { max-height: 240px; }
+  .page :global(.SgpFlywheel .absolute.flex-col.justify-start) { justify-content: flex-start; padding-top: calc(4.5rem + 240px); }
+}
+.page :global(.FullBleedMediaSection) { padding-bottom: 1rem; }
+.page :global(.Section .HeadlineWithCta) { padding-top: 5rem; }
+@media (min-width: 768px) { .page :global(.Section .HeadlineWithCta) { padding-top: 7rem; } }
+.page :global(.Section .HeadlineWithCta > .AnimatedText:not(.RichText)) { text-wrap: balance; max-width: 22ch; margin-inline: auto; }
+.page :global(.Section .HeadlineWithCta > .RichText) { text-wrap: pretty; max-width: 52rem; margin-inline: auto; }
+.page :global(.Section .HeadlineWithCta .FlatCta) { color: #fff; background-color: #a8927c; }
+.page :global(.Section .HeadlineWithCta .FlatCta .icon) { background-color: #0000; }
+.page :global(.Section .HeadlineWithCta .FlatCta > [aria-hidden][class*='translate-x']), .page :global(.NatSecHowToBuy .FlatCta > [aria-hidden][class*='translate-x']) { width: calc(100% + 4px); left: -2px; }
+@media (max-width: 767px) { .page :global(.BlogPreview3D) { padding-top: 3rem; } }
+@media (min-width: 1024px) {
+  .page :global(.BlogPreview [data-tile-key='res1']) { aspect-ratio: 605 / 552; grid-area: 1 / 1 / 3 / 3; align-self: start; }
+  .page :global(.BlogPreview [data-tile-key='res2']) { aspect-ratio: 605 / 400; grid-area: 1 / 3 / 2 / 5; }
+  .page :global(.BlogPreview [data-tile-key='res3']) { aspect-ratio: 605 / 400; grid-area: 2 / 3 / 3 / 5; }
+  .page :global(.BlogPreview [data-tile-key='res1'] .BlogPreviewTile > div) { padding: 32px; }
+  .page :global(.BlogPreview [data-tile-key='res1'] .BlogPreviewTile > div > div:first-child) { aspect-ratio: auto; }
+}
