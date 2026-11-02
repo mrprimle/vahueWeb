@@ -1,5 +1,6 @@
 // Copy for /public-sector-data-engine (Sales and Booking Agents, research segment 2). AJTBD copy in Scale's sections: same shape and counts as content.scale.ts.
 // Lines marked PLACEHOLDER are for Mike to replace with real data.
+import { fitProofLogo } from '@/components/site/proofLogos'
 import type { PublicSectorContent } from './types'
 
 const WHITE = { tailwindClass: 'white', contrastColor: '#010101' }
@@ -21,11 +22,11 @@ export const content: PublicSectorContent = {
     copy: "Trusted by the world's most ambitious teams.", // PLACEHOLDER
     link: { title: 'Meet our customers', href: '/enterprise' },
     items: [
-      { alt: 'Logo', width: 48, height: 63 }, // PLACEHOLDER
-      { alt: 'Logo', width: 113, height: 30 }, // PLACEHOLDER
-      { alt: 'Logo', width: 65, height: 51 }, // PLACEHOLDER
-      { alt: 'Logo', width: 140, height: 31 }, // PLACEHOLDER
-      { alt: 'Logo', width: 182, height: 20 }, // PLACEHOLDER
+      fitProofLogo('ica', 60, 30), // FROM OLD SITE: confirm
+      fitProofLogo('qonto', 113, 30), // FROM OLD SITE: confirm
+      fitProofLogo('inspera', 70, 36), // FROM OLD SITE: confirm
+      fitProofLogo('wisestamp', 120, 31), // FROM OLD SITE: confirm
+      fitProofLogo('winningtemp', 120, 28), // FROM OLD SITE: confirm
     ],
   },
   overview: {
