@@ -1,4 +1,4 @@
-// Scale's chrome labels under the 80% rule. Same shape and counts as content.scale.ts.
+// Site chrome labels. Same shape and row counts as content.scale.ts; service names are the single source of truth for every page.
 import type { AnnouncementContent, FooterContent, NavContent } from './content.types'
 
 const img = (slug: string, alt: string) => ({ path: `/site/nav/${slug}.webp`, alt })
@@ -11,25 +11,25 @@ export const nav: NavContent = {
   bookDemoCtaHref: '/demo',
   categories: [
     {
-      name: 'Products',
+      name: 'Services',
       leftColumn: [
-        { text: 'Build AI' },
-        { href: '/data-engine', name: 'Vahue Context Engine', image: img('data-engine', 'Context Engine') },
-        { href: '/generative-ai-data-engine', name: 'For Back-office Sync', image: img('back-office-sync', 'For Back-office Sync') },
-        { href: '/physical-ai', name: 'For Document Intake', image: img('document-intake', 'For Document Intake') },
-        { href: '/public-sector-data-engine', name: 'For Revenue Teams', image: img('revenue-teams', 'For Revenue Teams') },
-        { href: '/automotive', name: 'For Scoring and Decisions', image: img('scoring-decisions', 'For Scoring and Decisions') },
-        { href: '/rlenvironments', name: 'Agent Environments', image: img('rlenvironments', 'Agent Environments') },
-        { href: '/experts', name: 'Experts', image: img('experts', 'Experts') },
-      ],
-      rightColumn: [
-        { text: 'Apply AI' },
+        { text: 'Automate a Workflow' },
+        { href: '/data-engine', name: 'Context and Integrations', image: img('data-engine', 'Context and Integrations') },
+        { href: '/generative-ai-data-engine', name: 'Back-office Sync Agents', image: img('back-office-sync', 'Back-office Sync Agents') },
+        { href: '/physical-ai', name: 'Document Intake Agents', image: img('document-intake', 'Document Intake Agents') },
+        { href: '/public-sector-data-engine', name: 'Sales and Booking Agents', image: img('revenue-teams', 'Sales and Booking Agents') },
+        { href: '/automotive', name: 'Scoring and Decision Agents', image: img('scoring-decisions', 'Scoring and Decision Agents') },
         { href: '/genai-portfolio', name: 'Knowledge Agents', image: img('genai-portfolio', 'Knowledge Agents') },
         { href: '/donovan', name: 'Support and Voice Agents', image: img('support-voice', 'Support and Voice Agents') },
-        { text: 'Evaluate AI' },
-        { href: '/evaluation/model-developers', name: 'For Operations Teams', image: img('evaluation-model-developers', 'For Operations Teams') },
-        { href: '/evaluation/public-sector', name: 'For Regulated Teams', image: img('evaluation-public-sector', 'For Regulated Teams') },
-        { href: '/evaluation/enterprise', name: 'For Enterprise', image: img('evaluation-enterprise', 'For Enterprise') },
+      ],
+      rightColumn: [
+        { text: 'Build AI' },
+        { href: '/rlenvironments', name: 'AI Product Engineering', image: img('rlenvironments', 'AI Product Engineering') },
+        { href: '/experts', name: 'Embedded AI Specialists', image: img('experts', 'Embedded AI Specialists') },
+        { text: 'Prove and Fix' },
+        { href: '/evaluation/enterprise', name: 'AI Strategy and Audit', image: img('evaluation-enterprise', 'AI Strategy and Audit') },
+        { href: '/evaluation/model-developers', name: 'Evals and Guardrails', image: img('evaluation-model-developers', 'Evals and Guardrails') },
+        { href: '/evaluation/public-sector', name: 'Production Rescue', image: img('evaluation-public-sector', 'Production Rescue') },
       ],
     },
     {
@@ -84,19 +84,23 @@ export const nav: NavContent = {
 }
 
 export const announcement: AnnouncementContent = {
-  text: 'Vahue Partners With Teams to Bring AI Agents to Production', // PLACEHOLDER
+  text: 'For Operations, Finance and Support Teams: Start With a 2-Week Audit',
   variant: 'evergreen',
-  cta: { label: 'Learn more', href: '/blog' },
+  cta: { label: 'Learn more', href: '/evaluation/enterprise' },
 }
 
 export const footer: FooterContent = {
   linkLists: [
     {
-      title: 'Products',
+      title: 'Services',
       links: [
-        { text: 'Vahue context engine', href: '/data-engine' },
-        { text: 'Knowledge Agents', href: '/genai-portfolio' },
+        { text: 'Back-office Sync Agents', href: '/generative-ai-data-engine' },
+        { text: 'Document Intake Agents', href: '/physical-ai' },
+        { text: 'Sales and Booking Agents', href: '/public-sector-data-engine' },
         { text: 'Support and Voice Agents', href: '/donovan' },
+        { text: 'AI Product Engineering', href: '/rlenvironments' },
+        { text: 'AI Strategy and Audit', href: '/evaluation/enterprise' },
+        { text: 'Production Rescue', href: '/evaluation/public-sector' },
       ],
     },
     {
@@ -128,7 +132,7 @@ export const footer: FooterContent = {
         { text: 'Contact Us', href: '/demo' },
         { text: 'Events', href: '/events' },
         { text: 'Partnerships', href: '/partnership' },
-        { text: 'Data Partnerships', href: '/partnership' },
+        { text: 'Technology Partnerships', href: '/partnership' },
         { text: 'Documentation', href: '/docs' },
         { text: 'Brand Guidelines', href: '/about' },
       ],
@@ -136,16 +140,16 @@ export const footer: FooterContent = {
     {
       title: 'Guides',
       links: [
-        { text: 'Data Preparation', href: '/guides' },
+        { text: 'Context and Integrations', href: '/guides' },
         { text: 'AI Agent Evaluation', href: '/guides' },
         { text: 'Document Intake', href: '/guides' },
-        { text: 'Guide to AI for eCommerce', href: '/guides' },
+        { text: 'Support and Voice Agents', href: '/guides' },
         { text: 'Workflow Automation Guide', href: '/guides' },
-        { text: 'Large Language Models', href: '/guides' },
+        { text: 'AI Pilot to Production', href: '/guides' },
       ],
     },
   ],
-  title: 'Reliable AI for the world’s most important workflows',
+  title: 'Reliable AI for your busiest workflows',
   smallPrint: 'Copyright © 2026 Vahue AI, Inc. All rights reserved', // PLACEHOLDER: legal entity name for Mike
   cookiesPrefix: 'Manage your',
   cookiesLink: 'cookie preferences',
