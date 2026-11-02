@@ -14,7 +14,7 @@ export const content: PartnershipContent = {
   cards: [
     {
       key: 'page-partnership-crm-implementers',
-      url: '/generative-ai-data-engine',
+      url: '/services/back-office-sync',
       color: '#839CB2',
       logo: { alt: 'Logo' }, // PLACEHOLDER
       title: 'CRM Implementers', // PLACEHOLDER
@@ -23,7 +23,7 @@ export const content: PartnershipContent = {
     },
     {
       key: 'page-partnership-telephony-firms',
-      url: '/donovan',
+      url: '/services/support-and-voice',
       color: '#A8927C',
       logo: { alt: 'Logo' }, // PLACEHOLDER
       title: 'Telephony Firms x Vahue', // PLACEHOLDER

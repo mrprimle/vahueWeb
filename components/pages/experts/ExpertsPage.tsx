@@ -15,7 +15,7 @@ const WEBGL_RESTORE = `
   const restoreWebGLIfNeeded = event => {
     const navEntry = performance.getEntriesByType('navigation')[0];
     const isHistoryRestore = Boolean(event?.persisted || navEntry?.type === 'back_forward');
-    if (!isHistoryRestore || !location.pathname.startsWith('/experts')) return;
+    if (!isHistoryRestore || !location.pathname.startsWith('/services/embedded-specialists')) return;
     setTimeout(() => {
       const isDesktop = matchMedia('(min-width: 768px)').matches;
       const webglContainer = document.querySelector('#domain-expertise [style*="touch-action"]');

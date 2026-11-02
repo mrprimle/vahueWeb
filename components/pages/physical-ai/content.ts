@@ -113,7 +113,7 @@ export const content: PhysicalAiContent = {
   prefooter: {
     headline: 'See it work on your own documents before it goes live',
     cta: { text: 'Book a Demo', url: '/demo' },
-    secondaryCta: { text: 'Back-office Sync Agents', url: '/generative-ai-data-engine' },
+    secondaryCta: { text: 'Back-office Sync Agents', url: '/services/back-office-sync' },
     backdrop: { tailwindClass: 'gray-50', contrastColor: '#010101' },
     image: { path: '/physical-ai/prefooter.webp' },
   },

@@ -1,10 +1,14 @@
 import { Geist_Mono, Inter } from 'next/font/google'
+import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import { content as home } from '@/components/pages/labs/content'
 import { labsChrome as chrome } from '@/components/site/labs/content'
 import { LabsChrome } from '@/components/site/labs/LabsChrome'
 import { buildLabsSearchIndex } from '@/components/site/labs/searchIndex'
 import '@/components/site/labs/labs.css'
+
+// Hidden until Vahue has published research: no links from the main site, and out of search results.
+export const metadata: Metadata = { robots: { index: false, follow: false } }
 
 // labs.scale.com ships InterVariable and Geist Mono. Same families from Google Fonts; Scale's font files are not shipped.
 const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-brand', axes: ['opsz'] })

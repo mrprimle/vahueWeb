@@ -39,7 +39,7 @@ export const content: DataEngineContent = {
   caseStudy: {
     overtitle: 'Customer Case Study',
     description: 'A mid-market distributor and Vahue partnered to keep CRM, ERP and finance in step, with every agent on one source.', // PLACEHOLDER
-    cta: { text: 'Read customer story', url: '/generative-ai-data-engine' },
+    cta: { text: 'Read customer story', url: '/services/back-office-sync' },
     tileClass: 'bg-evergreen',
     logo: { key: 'case-study', alt: 'Logo', width: 240, height: 75, className: 'text-white' }, // PLACEHOLDER
   },
@@ -51,7 +51,7 @@ export const content: DataEngineContent = {
     showcaseSubtitle: 'Keep CRM, ERP and finance in step',
     body: 'Back-office Sync Agents are one of six workflow services built on this layer. They read your systems, ask a person when a case is risky, and update the system of record.',
     primaryCta: { text: 'Book a Demo', url: '/demo' },
-    secondaryCta: { text: 'Explore Agents', url: '/generative-ai-data-engine' },
+    secondaryCta: { text: 'Explore Agents', url: '/services/back-office-sync' },
     chat: {
       windowTitle: 'Knowledge Agent',
       question: 'What renewal discount does this customer get?',
@@ -113,7 +113,7 @@ export const content: DataEngineContent = {
   prefooter: {
     headline: 'See it work before it goes live',
     cta: { text: 'Book a Demo', url: '/demo' },
-    secondaryCta: { text: 'Explore Agents', url: '/generative-ai-data-engine' },
+    secondaryCta: { text: 'Explore Agents', url: '/services/back-office-sync' },
     image: { path: '/data-engine/prefooter.webp' },
     backdrop: { tailwindClass: 'gray-50', contrastColor: '#010101' },
   },

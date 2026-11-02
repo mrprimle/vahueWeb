@@ -97,7 +97,7 @@ export const content: CareersContent = {
     products: 'We run Back-office Sync, Document Intake, Sales and Booking, Scoring and Decision, Knowledge, and Support and Voice Agents inside the systems our customers already use, measured against a baseline we record on day one. ',
     engine: {
       before: 'Our ',
-      firstLink: { text: 'Context and Integrations', href: '/data-engine' },
+      firstLink: { text: 'Context and Integrations', href: '/services/context-and-integrations' },
       middle: ' layer powers the most demanding agents, workflows, and enterprise knowledge systems with high-quality context. We then apply our experience partnering with operations teams running these agents to help more organizations customize and ',
       secondLink: { text: 'Apply AI', href: '/enterprise' },
       after: ' in their organizations.',

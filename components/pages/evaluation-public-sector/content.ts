@@ -14,7 +14,7 @@ export const content: EvaluationPublicSectorContent = {
     headline: 'Production Rescue',
     body: 'For teams with a live AI system that is unstable, slow, or orphaned by its vendor: we find out why, fix it, and keep it reliable.',
     cta: { text: 'Book a Demo', url: '/demo' },
-    secondaryCta: { text: 'Learn more', url: '/evaluation/model-developers' },
+    secondaryCta: { text: 'Learn more', url: '/services/evals-and-guardrails' },
     backdrop: WHITE,
     image: { path: `${A}/hero-filled.webp` },
   },
@@ -56,7 +56,7 @@ export const content: EvaluationPublicSectorContent = {
       { title: 'Hand back a documented system, or let us run it monthly against an agreed baseline', description: '' },
     ],
     image: { src: `${A}/methodology-filled.png`, alt: 'Production Rescue Methodology', width: 644, height: 430, mockup: true, mockupUrl: 'evals.vahue.ai' }, // PLACEHOLDER (host in the mock browser bar)
-    cta: { text: 'Read more', href: '/evaluation/model-developers' },
+    cta: { text: 'Read more', href: '/services/evals-and-guardrails' },
   },
   platform: {
     overtitle: 'Why Vahue',

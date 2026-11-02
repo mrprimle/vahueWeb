@@ -45,11 +45,11 @@ export const content: EnterpriseInsuranceContent = {
     overtitle: '',
     title: 'How Smart Insurers Turn Data Chaos Into Unfair Advantage',
     subtitle: 'We take the three biggest challenges off your claims team with agents proven on your own past claims, so they transform documents, detect waste, and preserve expertise.',
-    cta: { children: 'See Document Intake Agents', href: '/physical-ai' },
+    cta: { children: 'See Document Intake Agents', href: '/services/document-intake' },
     items: [
-      { icon: 'assignment', title: 'Document Intake Agents', subtitle: 'Turn first notices of loss, claims correspondence, and phone calls into clean records in your claims system', href: '/physical-ai' },
-      { icon: 'psychology', title: 'Scoring and Decision Agents', subtitle: 'Expand claims review with agents that score waste patterns across thousands of documents and route borderline cases to a person', href: '/automotive' },
-      { icon: 'lightbulb', title: 'Knowledge Agents', subtitle: "Capture your best adjusters' decision-making patterns and put sourced answers in front of every team member and claim", href: '/genai-portfolio' },
+      { icon: 'assignment', title: 'Document Intake Agents', subtitle: 'Turn first notices of loss, claims correspondence, and phone calls into clean records in your claims system', href: '/services/document-intake' },
+      { icon: 'psychology', title: 'Scoring and Decision Agents', subtitle: 'Expand claims review with agents that score waste patterns across thousands of documents and route borderline cases to a person', href: '/services/scoring-and-decisions' },
+      { icon: 'lightbulb', title: 'Knowledge Agents', subtitle: "Capture your best adjusters' decision-making patterns and put sourced answers in front of every team member and claim", href: '/services/knowledge-agents' },
     ],
   },
   strategy: {

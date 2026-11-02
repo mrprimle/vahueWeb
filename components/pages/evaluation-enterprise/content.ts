@@ -14,7 +14,7 @@ export const content: EvaluationEnterpriseContent = {
     headline: 'AI Strategy and Audit',
     body: 'For leaders under pressure to act on AI: in two weeks we find the workflow worth automating, record your baseline, and give you a clear go or no-go.',
     cta: { text: 'Book a Demo', url: '/demo' },
-    secondaryCta: { text: 'Learn more', url: '/evaluation/model-developers' },
+    secondaryCta: { text: 'Learn more', url: '/services/evals-and-guardrails' },
     backdrop: { tailwindClass: 'white', contrastColor: '#010101' },
     image: { path: `${A}/hero-filled.webp` },
   },
@@ -79,7 +79,7 @@ export const content: EvaluationEnterpriseContent = {
   prefooter: {
     headline: 'Find the right use case before you build',
     cta: { text: 'Book a Demo', url: '/demo' },
-    secondaryCta: { text: 'Explore Evals', url: '/evaluation/model-developers' },
+    secondaryCta: { text: 'Explore Evals', url: '/services/evals-and-guardrails' },
     backdrop: { tailwindClass: 'gray-50', contrastColor: '#010101' },
     image: { path: `${A}/prefooter.webp` },
   },

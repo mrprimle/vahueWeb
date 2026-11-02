@@ -71,18 +71,18 @@ export const content: NationalSecurityContent = {
   mission: {
     steps: [
       { title: 'VAHUE AGENTIC WORKFLOW SOLUTIONS', description: [{ style: 'h4', text: 'Vahue’s agentic workflow solutions are designed for trust, transparency and control.' }, { style: 'h4', text: 'Vahue agents run your most critical workflows, across claims, KYC, finance, and care, with built-in Evals and Guardrails to ensure outputs are secure, auditable, and decision-ready.' }], image: { path: `${DIR}/fly1.webp`, alt: '', width: 1758, height: 1617 } },
-      { title: 'Knowledge Agents', description: [{ style: 'h4', text: 'Knowledge Agents work with any data, model, or infrastructure. They learn how your organization thinks and decides, embedding your policies into AI agents that produce audit-ready analysis, reports, briefs, and presentations.' }], image: { path: `${DIR}/fly2.webp`, alt: '', width: 1758, height: 1617 }, link: [{ text: 'Learn more', url: '/genai-portfolio' }] },
-      { title: 'Document Intake Agents', description: [{ style: 'h4', text: 'Poor quality data fails the workflow. Vahue transforms claims, invoices, KYC files, clinical notes, audio, text, and more into clean, checked context, 40% faster than alternatives with expert human reviewers. And you own 100% of your data and insights.' }], image: { path: `${DIR}/fly3.webp`, alt: '', width: 1758, height: 1617 }, link: [{ text: 'Learn more', url: '/physical-ai' }] }, // PLACEHOLDER (40% faster)
-      { title: 'Evals and Guardrails', description: [{ style: 'h4', text: 'AI is not optimized for regulated work. Vahue is AI’s judgment layer: private evals on your own cases, shadow mode before go-live, and monitoring after it, so teams can de-risk and trust AI.' }], image: { path: `${DIR}/fly4.webp`, alt: '', width: 1758, height: 1617 }, link: [{ text: 'Learn more', url: '/evaluation/model-developers' }] },
+      { title: 'Knowledge Agents', description: [{ style: 'h4', text: 'Knowledge Agents work with any data, model, or infrastructure. They learn how your organization thinks and decides, embedding your policies into AI agents that produce audit-ready analysis, reports, briefs, and presentations.' }], image: { path: `${DIR}/fly2.webp`, alt: '', width: 1758, height: 1617 }, link: [{ text: 'Learn more', url: '/services/knowledge-agents' }] },
+      { title: 'Document Intake Agents', description: [{ style: 'h4', text: 'Poor quality data fails the workflow. Vahue transforms claims, invoices, KYC files, clinical notes, audio, text, and more into clean, checked context, 40% faster than alternatives with expert human reviewers. And you own 100% of your data and insights.' }], image: { path: `${DIR}/fly3.webp`, alt: '', width: 1758, height: 1617 }, link: [{ text: 'Learn more', url: '/services/document-intake' }] }, // PLACEHOLDER (40% faster)
+      { title: 'Evals and Guardrails', description: [{ style: 'h4', text: 'AI is not optimized for regulated work. Vahue is AI’s judgment layer: private evals on your own cases, shadow mode before go-live, and monitoring after it, so teams can de-risk and trust AI.' }], image: { path: `${DIR}/fly4.webp`, alt: '', width: 1758, height: 1617 }, link: [{ text: 'Learn more', url: '/services/evals-and-guardrails' }] },
     ],
   },
   customers: {
     heading: 'Real Customers. Business Critical Work.',
     posts: [
       { title: 'AI Claims Intake for a Mid-market Insurer’s Program', url: '/enterprise/insurance', image: `${DIR}/rc1-filled.webp`, category: INSURANCE }, // PLACEHOLDER
-      { title: 'Vahue Creates an Insurer’s First AI Scorecard', url: '/evaluation/model-developers', image: `${DIR}/rc2-filled.webp`, category: INSURANCE }, // PLACEHOLDER
+      { title: 'Vahue Creates an Insurer’s First AI Scorecard', url: '/services/evals-and-guardrails', image: `${DIR}/rc2-filled.webp`, category: INSURANCE }, // PLACEHOLDER
       { title: 'Agentic Alerting Accelerates Clinical Referral Decisions', url: '/enterprise/healthcare', image: `${DIR}/rc3-filled.webp`, category: HEALTHCARE }, // PLACEHOLDER
-      { title: 'AI-powered KYC Review for a Lender and a Payments Group', url: '/automotive', image: `${DIR}/rc4-filled.webp`, category: FINANCE }, // PLACEHOLDER
+      { title: 'AI-powered KYC Review for a Lender and a Payments Group', url: '/services/scoring-and-decisions', image: `${DIR}/rc4-filled.webp`, category: FINANCE }, // PLACEHOLDER
     ],
   },
   howToBuy: {
@@ -100,9 +100,9 @@ export const content: NationalSecurityContent = {
   resources: {
     heading: [{ text: 'Resources' }],
     posts: [
-      { _key: 'res1', title: 'AI Strategy and Audit: Find the Workflow That Is Ready', url: '/evaluation/enterprise', image: `${DIR}/res1-filled.webp`, alt: 'Two colleagues working on laptops', category: PROVE_FIX_BLUE, variantOverride: 'caption' },
-      { _key: 'res2', title: 'Evals and Guardrails: Prove It on Your Own Cases', url: '/evaluation/model-developers', image: `${DIR}/res2-filled.webp`, alt: 'An office staircase', category: PROVE_FIX, imageGradientOverlay: true, textColor: 'light', variantOverride: 'overlay' },
-      { _key: 'res3', title: 'Production Rescue: Repair a Live AI System', url: '/evaluation/public-sector', image: `${DIR}/res3-filled.webp`, alt: 'An office interior', category: PROVE_FIX, imageGradientOverlay: true, textColor: 'light', variantOverride: 'overlay' },
+      { _key: 'res1', title: 'AI Strategy and Audit: Find the Workflow That Is Ready', url: '/services/ai-strategy-and-audit', image: `${DIR}/res1-filled.webp`, alt: 'Two colleagues working on laptops', category: PROVE_FIX_BLUE, variantOverride: 'caption' },
+      { _key: 'res2', title: 'Evals and Guardrails: Prove It on Your Own Cases', url: '/services/evals-and-guardrails', image: `${DIR}/res2-filled.webp`, alt: 'An office staircase', category: PROVE_FIX, imageGradientOverlay: true, textColor: 'light', variantOverride: 'overlay' },
+      { _key: 'res3', title: 'Production Rescue: Repair a Live AI System', url: '/services/production-rescue', image: `${DIR}/res3-filled.webp`, alt: 'An office interior', category: PROVE_FIX, imageGradientOverlay: true, textColor: 'light', variantOverride: 'overlay' },
     ],
   },
   prefooter: {

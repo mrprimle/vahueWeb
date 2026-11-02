@@ -13,7 +13,7 @@ import { SmoothScroll } from './SmoothScroll'
 export const SEPARATE_CHROME_PREFIXES = ['/docs', '/labs']
 
 // Scale marks these pages' root `data-initial-chrome-theme="dark"`: the header keeps dark tokens at any scroll.
-export const DARK_CHROME_ROUTES = ['/public-sector/national-security', '/genai-portfolio']
+export const DARK_CHROME_ROUTES = ['/solutions/regulated-industries', '/services/knowledge-agents']
 
 /** labs.scale.com runs on its own stack: `app/labs/layout.tsx` mounts its header, footer, <main> and its own Lenis. */
 export const isLabsRoute = (pathname: string | null) => pathname === '/labs' || !!pathname?.startsWith('/labs/')

@@ -120,11 +120,11 @@ export const content: ExpertsContent = {
   resources: {
     heading: 'Resources',
     posts: [
-      { _key: 'evals', title: 'Evals and Guardrails: See It Work on Your Own Cases', category: 'Service', image: NEUTRAL, url: '/evaluation/model-developers' },
+      { _key: 'evals', title: 'Evals and Guardrails: See It Work on Your Own Cases', category: 'Service', image: NEUTRAL, url: '/services/evals-and-guardrails' },
       { _key: 'careers', title: 'Careers: Join Vahue as an Embedded Specialist', category: 'Careers', image: '/experts/resources-hfc.webp', url: '/careers' },
-      { _key: 'rescue', title: 'Production Rescue: Fix or Scale a Live AI System', category: 'Service', image: NEUTRAL, url: '/evaluation/public-sector' },
-      { _key: 'product-engineering', title: 'AI Product Engineering: From Prototype to Production', category: 'Service', image: '/experts/resources-rlenvironments.webp', url: '/rlenvironments' },
-      { _key: 'audit', title: 'AI Strategy and Audit: Find the Right Use Case', category: 'Service', image: NEUTRAL, url: '/evaluation/enterprise' },
+      { _key: 'rescue', title: 'Production Rescue: Fix or Scale a Live AI System', category: 'Service', image: NEUTRAL, url: '/services/production-rescue' },
+      { _key: 'product-engineering', title: 'AI Product Engineering: From Prototype to Production', category: 'Service', image: '/experts/resources-rlenvironments.webp', url: '/services/ai-product-engineering' },
+      { _key: 'audit', title: 'AI Strategy and Audit: Find the Right Use Case', category: 'Service', image: NEUTRAL, url: '/services/ai-strategy-and-audit' },
     ],
   },
   prefooter: {

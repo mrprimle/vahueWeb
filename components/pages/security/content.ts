@@ -70,7 +70,7 @@ export const content: SecurityContent = {
       label: 'Scale-ups',
       title: 'Vahue for Scale-ups',
       body: 'Vahue runs your busiest workflow with agents inside the systems you already use, measured against your baseline from day one.',
-      cta: { text: 'Learn more', url: '/public-sector' },
+      cta: { text: 'Learn more', url: '/solutions/scale-ups' },
       image: { src: `${A}/office-tower.webp`, alt: 'Office building', className: 'object-cover object-top' },
     },
     {

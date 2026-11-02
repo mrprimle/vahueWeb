@@ -142,7 +142,7 @@ export const content: AutomotiveContent = {
   prefooter: {
     headline: 'See it work on your own cases before it goes live',
     cta: { text: 'Book a Demo', url: '/demo' },
-    secondaryCta: { text: 'Context and Integrations', url: '/data-engine' },
+    secondaryCta: { text: 'Context and Integrations', url: '/services/context-and-integrations' },
     backdrop: WHITE,
     image: { path: '/automotive/prefooter.webp' },
   },

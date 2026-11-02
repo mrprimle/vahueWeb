@@ -112,7 +112,7 @@ export const content: EnterpriseContent = {
   poweredBy: {
     headline: 'Audit, Pilot, Operate with one accountable team',
     subtitle: [{ style: 'normal', text: 'Start with a 2-week Audit that records your baseline. Run a 4 to 6-week Pilot in shadow mode on real cases. Then we operate it monthly and report against that baseline.' }],
-    cta: { url: '/evaluation/enterprise', text: 'Learn More' },
+    cta: { url: '/services/ai-strategy-and-audit', text: 'Learn More' },
     image: { path: `${P}/platform.webp`, alt: 'AI Platform' },
     cards: [
       { headline: 'Audit & Pilot', subtitle: 'Find the right use case, record the baseline, and see the agents work on your own cases before they go live.', icon: `${P}/icon-powered.svg` },
@@ -144,7 +144,7 @@ export const content: EnterpriseContent = {
         description: 'The right model for every use case. Our stack integrates seamlessly with any frontier model or custom open-source.',
         icon: `${P}/icon-model.svg`,
         hover: { tailwindClass: 'archive-purple', hex: '#79648C' },
-        link: { url: '/data-engine', text: 'Learn more' },
+        link: { url: '/services/context-and-integrations', text: 'Learn more' },
       },
     ],
   },

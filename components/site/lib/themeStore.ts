@@ -47,5 +47,5 @@ export function useTheme() {
 
 /** Scale `ep()` in module 474053: the route's default theme. Add dark-first routes here. */
 export function routeTheme(pathname: string | null): PageTheme {
-  return pathname === '/genai-portfolio' || pathname?.startsWith('/genai-portfolio/') || pathname === '/public-sector/national-security' ? 'dark' : 'light'
+  return pathname === '/services/knowledge-agents' || pathname?.startsWith('/services/knowledge-agents/') || pathname === '/solutions/regulated-industries' ? 'dark' : 'light'
 }
