@@ -1,6 +1,7 @@
 // AJTBD copy for /automotive (Scoring and Decision Agents). Same shape and counts as content.scale.ts.
 // Lines marked PLACEHOLDER are for Mike to replace with real data.
 import { TEXT_PANEL } from './textPanel'
+import { fitProofLogo } from '@/components/site/proofLogos'
 import type { AutomotiveContent } from './types'
 
 const WHITE = { tailwindClass: 'white', contrastColor: '#010101' }
@@ -15,8 +16,8 @@ export const content: AutomotiveContent = {
     image: { path: '/automotive/hero-scoring.webp' },
   },
   logos: [
-    { alt: 'Logo', width: 92, height: 40 }, // PLACEHOLDER
-    { alt: 'Logo', width: 96, height: 32 }, // PLACEHOLDER
+    fitProofLogo('etoro', 92, 32), // FROM OLD SITE: confirm
+    fitProofLogo('qonto', 96, 32), // FROM OLD SITE: confirm
   ],
   overview: {
     title: 'Scoring and Decision Agents',
