@@ -36,7 +36,7 @@ export function Features({ features, className }: { features: FeatureItem[]; cla
               {f.bullets.map((text) => (
                 <li key={text} className="flex items-start text-lg">
                   <picture className={`relative translate-y-0.5 w-[18px] h-[18px] rounded-full justify-center flex items-center shrink-0 ${dark ? 'bg-white/[0.09] border border-white/10' : 'bg-black/[0.09] border border-black/10'}`}>
-                    <Image src="/public-sector/check.svg" alt="" width={10} height={8} sizes="10px" />
+                    <Image src="/site/features-check.svg" alt="" width={10} height={8} sizes="10px" />
                   </picture>
                   <p className={`flex-1 text-base leading-6 translate-x-3 ${dark ? 'text-white/70' : 'text-black/70'}`}>{text}</p>
                 </li>
