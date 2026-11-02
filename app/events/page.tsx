@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { EventsPage } from '@/components/pages/events/EventsPage'
-import { content } from '@/components/pages/events/content.scale'
+import { content } from '@/components/pages/events/content'
 
 export const metadata: Metadata = { title: content.meta.title, description: content.meta.description }
 
