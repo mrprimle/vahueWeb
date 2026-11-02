@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { AboutPage } from '@/components/pages/about/AboutPage'
-import { content } from '@/components/pages/about/content.scale'
+import { content } from '@/components/pages/about/content'
 
 export const metadata: Metadata = { title: content.meta.title, description: content.meta.description }
 

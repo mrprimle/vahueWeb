@@ -79,6 +79,7 @@ Each is ported once from the module named. Before reimplementing something, chec
 | LogoCarousel | `shared/LogoCarousel.tsx` | 236943 | `01xb85jkvr5_y.js` (`dffba02723ca9734`) | not counted | `/enterprise/insurance`: pages of 4, 4.5s, 700ms cross-fade, native row below `md`, equal |
 | VideoFeatures (Features with video thumb and modal, Wistia iframe or local file) | `shared/VideoFeatures.tsx` | 450359, 582844, 832862 | `17ea4hx823ss4.js` (`c43bcba50a21f636`) | not counted | `/enterprise/insurance`: 2 items, modal timing, close paths equal at 1440 and 390. `numbers`, bullets, `cta` not ported (`/automotive` keeps its own) |
 | GlassButtonLink | `shared/NewButtonLink.tsx` | 408298 glass branch via 51051 | `17ea4hx823ss4.js` | not counted | `/enterprise/insurance`: hover curves equal. Width differs by the arrow glyph |
+| VideoWithImages (office slider, page-level) | `components/pages/about/OfficeCarousel.tsx` | 939985, CSS module 333470 | `0orpgukdq33u3.js` | not counted | `/about`: mouse and touch drag, cursor, 4 breakpoints equal. `showVideo` branch not ported |
 
 Other shared modules a page may meet, not ported yet because few pages use them: `MeshGlobeHero` 478135, plus everything in the 975 KB `0sni47mcvnqwg.js` (`SideBySide`, `TabbedPanel`, `MilestoneTimeline`…, 7 pages). If you port one, put it in `components/site/shared` and add a row here.
 
