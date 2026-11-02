@@ -69,6 +69,8 @@ Vahue holds: SOC 2, ISO 27001, ISO 42001, HIPAA, GDPR, EU AI Act, CSA STAR, CCPA
 - [ ] `/labs/leaderboard`: all 132 score rows use invented labels (`Model A` to `Model J`) with Scale's real numbers kept so the bars hold their shape, so replace them all. Also `20+` benchmarks, `100+` models, and "From leading AI labs including OpenAI, Anthropic, Google, Meta", which is only true if Vahue evaluates them. All 44 benchmark names are invented or inherited, and some read as real programmes (`Fortress`, `Remote Labor Index`). The first five must match `/labs`. Also `PartnerCo` and "82 expert-curated tasks".
 - [ ] `/labs/leaderboard`: confirm the `evals@vahue.ai` mailbox exists. The Evaluate form sends nothing and needs a backend. "View Full Ranking" links back to the same page because ranking pages aren't built.
 
+- [ ] `/partnership`: both partner cards are invented ("CRM Implementers", "Telephony Firms x Vahue") with neutral logo tiles, and they link to product pages because there are no partner pages. Add real partners or drop the page. Also check the footer's "Data Partnerships" link.
+
 ## Numbers
 
 - [ ] Home: "25% fewer errors", "90% of the AI pilots".
