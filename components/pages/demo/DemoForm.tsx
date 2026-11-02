@@ -1,7 +1,7 @@
 'use client'
 
 // Scale's StaticForm (module 721992) plus the behaviour of the HubSpot embed it mounts (js.hsforms.net/forms/embed/v2.js, form 0babf6e5).
-// The markup, class names and validation timing follow HubSpot's so Scale's CSS module applies unchanged. No script is loaded and nothing is sent.
+// The markup, class names and validation timing follow HubSpot's so Scale's CSS module applies unchanged. No HubSpot script is loaded: a valid form goes to human@vahue.ai through EmailJS.
 import Link from 'next/link'
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { cn } from '@/components/site/lib/cn'
@@ -16,6 +16,54 @@ const STALE_MS = 1000
 
 type Values = Record<string, string | string[] | boolean>
 type ErrorKey = 'required' | 'emailFormat' | 'blockedEmail'
+
+const isEmpty = (v: Values[string] | undefined) => v == null || v === '' || v === false || (Array.isArray(v) && v.length === 0)
+
+const EMAILJS_SEND_URL = 'https://api.emailjs.com/api/v1.0/email/send'
+const SEND_TIMEOUT_MS = 15000
+/** Fields with their own variable in the EmailJS template; everything else on screen goes into "other info". */
+const OWN_VARIABLE = new Set(['firstname', 'lastname', 'email', 'company', 'message', 'partnership_message'])
+
+const text = (v: Values[string] | undefined) => (Array.isArray(v) ? v.join(', ') : String(v ?? '')).trim()
+
+/** The line for one answer: the label the visitor read, with option values turned back into their labels. */
+function describe(f: FormField, v: Values[string]) {
+  const name = f.label || f.placeholder || f.unselectedLabel || (f.fieldType === 'booleancheckbox' ? 'Marketing consent' : f.name)
+  const answer = typeof v === 'boolean' ? (v ? 'Yes' : 'No') : (Array.isArray(v) ? v : [v]).map((x) => f.options?.find((o) => o.value === x)?.label ?? x).join(', ')
+  return `${name}: ${answer}`
+}
+
+/**
+ * The old site's /contact sender, with the same EmailJS service, template and variables. It posts to EmailJS's REST API, which is what
+ * `@emailjs/browser` calls, so the site needs no extra package. It throws on missing configuration, a network failure, a timeout or a non-2xx.
+ */
+async function sendToVahue(values: Values, onScreen: FormField[]) {
+  const service = process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID
+  const template = process.env.NEXT_PUBLIC_EMAIL_TEMPLATE_ID
+  const publicKey = process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY
+  if (!service || !template || !publicKey) throw new Error('EmailJS configuration missing')
+  const res = await fetch(EMAILJS_SEND_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    signal: AbortSignal.timeout(SEND_TIMEOUT_MS),
+    body: JSON.stringify({
+      service_id: service,
+      template_id: template,
+      user_id: publicKey,
+      template_params: {
+        // Recipient for a template that uses {{to_email}}; the template's own "To" field wins otherwise.
+        to_email: 'human@vahue.ai',
+        name: `${text(values.firstname)} ${text(values.lastname)}`.trim(),
+        email: text(values.email),
+        company: text(values.company),
+        headcount: 'Not specified', // The template has this variable; the /demo form doesn't ask for it.
+        message: text(values.message) || text(values.partnership_message),
+        'other info': ['Source: /demo', ...onScreen.filter((f) => !OWN_VARIABLE.has(f.name) && !isEmpty(values[f.name])).map((f) => describe(f, values[f.name]))].join('\n'),
+      },
+    }),
+  })
+  if (!res.ok) throw new Error(`EmailJS answered ${res.status}`)
+}
 
 function Rich({ parts }: { parts: RichPart[] }) {
   return (
@@ -32,8 +80,6 @@ function Rich({ parts }: { parts: RichPart[] }) {
     </>
   )
 }
-
-const isEmpty = (v: Values[string] | undefined) => v == null || v === '' || v === false || (Array.isArray(v) && v.length === 0)
 
 /** The fields on screen for these values, in document order. */
 function visibleFields(fields: FormField[], values: Values): FormField[] {
@@ -53,6 +99,8 @@ export function DemoForm({ form }: { form: DemoContent['form'] }) {
   const [muted, setMuted] = useState<Record<string, boolean>>({})
   const [attempted, setAttempted] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [sendFailed, setSendFailed] = useState(false)
   const wrapper = useRef<HTMLDivElement>(null)
   const timers = useRef<Record<string, number>>({})
 
@@ -104,8 +152,9 @@ export function DemoForm({ form }: { form: DemoContent['form'] }) {
 
   const allFields = useMemo(() => form.groups.flatMap((g) => g.fields), [form.groups])
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (sending) return
     const onScreen = visibleFields(allFields, values).filter((f) => !f.hidden)
     const next: Record<string, ErrorKey | null> = {}
     for (const f of onScreen) next[f.name] = validate(f, values[f.name])
@@ -114,10 +163,17 @@ export function DemoForm({ form }: { form: DemoContent['form'] }) {
     setMuted({})
     setAttempted(true)
     if (Object.values(next).some(Boolean)) return
-    const payload = Object.fromEntries(onScreen.filter((f) => !isEmpty(values[f.name])).map((f) => [f.name, values[f.name]]))
-    // TODO(backend): send `payload` to the CRM or API once one exists. Today the form is client-side only and nothing leaves the browser.
-    void payload
-    setSubmitted(true)
+    setSending(true)
+    setSendFailed(false)
+    try {
+      await sendToVahue(values, onScreen)
+      setSubmitted(true)
+    } catch {
+      // The form keeps what the visitor typed, so they can try again or use the address in the message.
+      setSendFailed(true)
+    } finally {
+      setSending(false)
+    }
   }
 
   const onScreenNow = visibleFields(allFields, values)
@@ -368,6 +424,17 @@ export function DemoForm({ form }: { form: DemoContent['form'] }) {
                 </ul>
               </div>
             ) : null}
+            {sendFailed ? (
+              <div className="hs_error_rollup" role="alert">
+                <ul className="no-list hs-error-msgs inputs-list" style={{ display: 'block' }}>
+                  <li>
+                    <label className="hs-main-font-element">
+                      <Rich parts={form.errors.sendFailed} />
+                    </label>
+                  </li>
+                </ul>
+              </div>
+            ) : null}
             <div className="hs_submit hs-submit">
               <div className="hs-field-desc" style={{ display: 'none' }} />
               <div className="actions">
@@ -383,7 +450,8 @@ export function DemoForm({ form }: { form: DemoContent['form'] }) {
           type="button"
           variant="arrow"
           theme="black"
-          text={form.submitText}
+          text={sending ? form.sendingText : form.submitText}
+          disabled={sending}
           onClick={() => {
             wrapper.current?.querySelector<HTMLInputElement>('div.hs-submit input[type="submit"]')?.click()
           }}

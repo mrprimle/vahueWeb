@@ -30,6 +30,8 @@ export type DemoContent = {
   form: {
     groups: FormGroup[]
     submitText: string
+    /** Button text while the message is on its way. */
+    sendingText: string
     submittedMessage: string
     legal: RichPart[]
     consent: RichPart[]
@@ -41,6 +43,8 @@ export type DemoContent = {
       blockedEmail: string
       rollupRequired: string
       rollupBlocked: string
+      /** Shown when the message could not be sent. The form keeps its values. */
+      sendFailed: RichPart[]
     }
   }
   sidebar: {

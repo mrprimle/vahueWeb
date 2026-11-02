@@ -323,6 +323,7 @@ export const content: DemoContent = {
       },
     ],
     submitText: 'Submit',
+    sendingText: 'Sending...',
     submittedMessage: "Thanks for reaching out! We'll be in touch shortly.",
     legal: ['By submitting this form, your information will be processed in accordance with our ', { text: 'Privacy Policy.', href: '/legal/privacy' }],
     consent: [
@@ -339,6 +340,7 @@ export const content: DemoContent = {
       blockedEmail: 'Please enter a different email address. This form does not accept addresses from {{ domain }}.',
       rollupRequired: 'Please complete all required fields.',
       rollupBlocked: 'Please change your email address to continue.',
+      sendFailed: ['Your message was not sent. Please try again, or email ', { text: 'human@vahue.ai', href: 'mailto:human@vahue.ai' }, '.'],
     },
   },
   sidebar: {
