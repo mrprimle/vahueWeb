@@ -15,6 +15,7 @@ Not everything here is marked in the code, so go through this list as well.
 - [ ] **Scale's design and media.** The site copies Scale's design, behaviour, images, videos and most of its copy. Check the legal risk before publishing, and replace the media listed below.
 - [ ] **URLs.** Routes still use Scale's paths, such as `/public-sector`, `/automotive`, `/donovan`. Rename them?
 - [ ] **Names.** Confirm "Vahue Context Engine", "Agent Environments" and "Vahue Baselines", the menu labels, and the "Book a Demo" button.
+- [ ] **Shorter lists.** Long lists stop at 24 invented rows instead of matching Scale's count: `/labs/papers` 24 of 88, `/events` 24 of 88, `/careers` 24 of 275. At rest only `/labs/papers` is visibly shorter than Scale's. Tell me if you want more rows.
 - [ ] **Proof pages.** Blog, customer and guide cards link to the nearest existing page because no detail pages exist. Build them, or remove the cards?
 
 ## Certifications
@@ -58,6 +59,8 @@ Vahue holds: SOC 2, ISO 27001, ISO 42001, HIPAA, GDPR, EU AI Act, CSA STAR, CCPA
 - [ ] `/events`: all 24 events are invented, so replace them with real ones. Event cards link to site pages because `/events/<slug>` pages don't exist. Do you want them?
 
 - [ ] `/careers`: 23 roles and their locations are invented, and Apply goes to `/demo`. Benefits still use Scale's wording, so confirm they're true for Vahue. "Graduate Engineer Careers" and Early Careers imply a programme Vahue may not run, and the press cards are placeholders. Scale's office photos are still used.
+
+- [ ] `/labs/papers`: all 24 papers are invented (titles, dates, benchmark names, `Full Name` authors), and rows 1 to 6 also appear on `/labs`. Rows go nowhere because there are no paper pages. The blurb says Vahue publishes research, so confirm you want this page before there are real papers.
 
 ## Numbers
 
