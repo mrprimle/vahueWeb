@@ -53,7 +53,7 @@ export const content: GenAiContent = {
   trust: {
     heading: "Agents are easy to build and hard to trust. (That’s where we come in.)",
     cards: [
-      { title: "All Your Data. AI-Ready.", description: [{ text: "Every agent is tested on your own past questions against your specific standards — your workflows, your rules, your definition of good — before it ever touches production." }] },
+      { title: "Tested on your own questions", description: [{ text: "Every agent is tested on your own past questions against your specific standards — your workflows, your rules, your definition of good — before it ever touches production." }] },
       { title: "Agent execution + operation", description: [{ text: "Vahue keeps running the agents after launch — monitoring, fixes and updates as your documents change — so nobody on your team works full-time just to maintain them." }] },
       { title: "Reliable and trustworthy deployment", description: [{ text: "Every agent that goes into production comes with a full audit trail, source-cited outputs, and enterprise-specific oversight built in so you always know what your AI did and why." }] },
     ],
@@ -152,7 +152,7 @@ export const content: GenAiContent = {
     ctaText: 'Talk to an expert',
     ctaHref: '/demo',
     items: [
-      { question: "Is there any vendor lock-in?", answer: [{ text: "Vahue's flexible, interoperable, and largely open-source technology toolkit ensures no platform lock-in, with your enterprise retaining full ownership of their data and agent code." }], includeCta: true },
+      { question: "Is there any vendor lock-in?", answer: [{ text: "Vahue builds inside your own tools, models, and cloud, so there is no platform lock-in, and your company keeps full ownership of its data and agent code." }], includeCta: true },
       { question: "Will I still own my IP?", answer: [{ text: "Yes. You retain full ownership of your data, business logic, and any custom AI solutions we build for you. Vahue owns the underlying technical frameworks, but your solution is yours. No vendor lock-in, ever." }], includeCta: true },
       { question: "How do I measure reliability?", answer: [{ text: "We record your baseline in the Audit, then test agents on your own past questions in the Pilot. Correct answers, coverage, exceptions and time saved are reported every month." }], includeCta: true },
       { question: "What stops an agent making things up?", answer: [{ text: "Proper guardrails. Agents answer only from your approved sources, cite every claim and say when they don't know, and anything risky goes to a person. We also red-team them against prompt attacks and data extraction before go-live." }], includeCta: true },
