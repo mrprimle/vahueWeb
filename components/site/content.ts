@@ -12,16 +12,15 @@ export const nav: NavContent = {
   categories: [
     {
       name: 'Services',
-      wideLeftColumn: true,
       leftColumn: [
         { text: 'Automate a Workflow' },
-        { href: '/services/context-and-integrations', name: 'Context and Integrations', image: img('data-engine', 'Context and Integrations') },
-        { href: '/services/back-office-sync', name: 'Back-office Sync Agents', image: img('back-office-sync', 'Back-office Sync Agents') },
-        { href: '/services/document-intake', name: 'Document Intake Agents', image: img('document-intake', 'Document Intake Agents') },
-        { href: '/services/sales-and-booking', name: 'Sales and Booking Agents', image: img('revenue-teams', 'Sales and Booking Agents') },
-        { href: '/services/scoring-and-decisions', name: 'Scoring and Decision Agents', image: img('scoring-decisions', 'Scoring and Decision Agents') },
+        { href: '/services/context-and-integrations', name: 'Integrations', image: img('data-engine', 'Context and Integrations') },
+        { href: '/services/back-office-sync', name: 'Back-office Sync', image: img('back-office-sync', 'Back-office Sync Agents') },
+        { href: '/services/document-intake', name: 'Document Intake', image: img('document-intake', 'Document Intake Agents') },
+        { href: '/services/sales-and-booking', name: 'Sales and Booking', image: img('revenue-teams', 'Sales and Booking Agents') },
+        { href: '/services/scoring-and-decisions', name: 'Decision Scoring', image: img('scoring-decisions', 'Scoring and Decision Agents') },
         { href: '/services/knowledge-agents', name: 'Knowledge Agents', image: img('genai-portfolio', 'Knowledge Agents') },
-        { href: '/services/support-and-voice', name: 'Support and Voice Agents', image: img('support-voice', 'Support and Voice Agents') },
+        { href: '/services/support-and-voice', name: 'Support and Voice', image: img('support-voice', 'Support and Voice Agents') },
       ],
       rightColumn: [
         { text: 'Build AI' },
