@@ -59,7 +59,7 @@ Images (Scale originals stay in `public/global-public-sector/` for `content.scal
 Links: both CTAs go to `/demo`, as on Scale.
 
 ## Placeholders
-19 lines with `// PLACEHOLDER`: client name, role and quote; 3 stats; video; 8 use case stats and 5 outcome lines carrying numbers, plus use case 1's subtitle. The "Experience supporting…" and "leading firms" claims are written as the offer, per Mike's 22:43 note; Mike should confirm them when real proof exists.
+19 lines with `// PLACEHOLDER`: client name, role and quote; 3 stats; video; 6 use case stats, 5 outcome lines carrying numbers and use case 1's subtitle. The "Experience supporting…" and "leading firms" claims are written as the offer, per Mike's 22:43 note; Mike should confirm them when real proof exists.
 
 ## Gaps
 - **Font wraps, same on clone and fill:** at 1024 the Trusted heading takes 3 lines where Scale has 4 (60 shorter). At 640 and 639 one Delivers card is one line shorter (20.6). Aeonik vs Aeonik Pro, per stack.md.
