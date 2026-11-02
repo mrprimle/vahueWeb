@@ -35,7 +35,7 @@ export const content: SecurityContent = {
         key: 'tab1',
         logo: { src: `${A}/soc2-type-ii.png`, alt: 'SOC 2', invert: false },
         title: 'SOC 2',
-        body: 'SOC stands for the Service Organization Controls created by the American Institute of Certified Public Accounts ("AICPA"). Vahue has a SOC 2 report demonstrating its commitment to protecting customer data through security, availability, and confidentiality controls that align with the AICPA Trust Services Criteria.',
+        body: 'SOC stands for the Service Organization Controls created by the American Institute of Certified Public Accountants ("AICPA"). Vahue has a SOC 2 report demonstrating its commitment to protecting customer data through security, availability, and confidentiality controls that align with the AICPA Trust Services Criteria.',
         reportLead: LEAD,
         reportLink: TRUST,
       },
@@ -43,7 +43,7 @@ export const content: SecurityContent = {
         key: 'tab2',
         logo: { src: `${A}/iso-27001.png`, alt: 'ISO 27001', invert: true },
         title: 'ISO 27001',
-        body: 'The International Organization for Standardization (ISO) is an independent, global entity that brings experts together to create and maintain various management system standards. Vahue has certified its product and services against ISO/IEC 27001 and makes its ISO certificate available for download.', // PLACEHOLDER: the download needs the Trust Center
+        body: 'The International Organization for Standardization (ISO) is an independent, global entity that brings experts together to create and maintain various management system standards. Vahue has certified its services against ISO/IEC 27001 and makes its ISO certificate available for download.', // PLACEHOLDER: the download needs the Trust Center
         reportLead: LEAD,
         reportLink: TRUST,
       },
@@ -67,8 +67,8 @@ export const content: SecurityContent = {
   },
   cards: [
     {
-      label: 'Scale-Ups',
-      title: 'Vahue for Scale-Ups',
+      label: 'Scale-ups',
+      title: 'Vahue for Scale-ups',
       body: 'Vahue runs your busiest workflow with agents inside the systems you already use, measured against your baseline from day one.',
       cta: { text: 'Learn more', url: '/public-sector' },
       image: { src: `${A}/office-tower.webp`, alt: 'Office building', className: 'object-cover object-top' },
