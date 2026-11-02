@@ -1,0 +1,276 @@
+<svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="500" fill="#080808"/>
+
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="20" flood-color="rgba(0,0,0,0.7)"/>
+    </filter>
+  </defs>
+
+  <!-- Floating card -->
+  <rect x="72" y="40" width="656" height="420" rx="16" fill="#1C1C1C" stroke="rgba(255,255,255,0.14)" stroke-width="1" filter="url(#shadow)"/>
+
+  <g transform="translate(72, 40)">
+
+    <!-- ══════════════ SIDEBAR (x: 0–170) ══════════════ -->
+
+    <!-- Workspace header -->
+    <rect x="13" y="13" width="12" height="12" rx="2" fill="rgba(255,255,255,0.16)"/>
+    <text x="31" y="23" font-family="-apple-system, system-ui, sans-serif" font-size="12" font-weight="600" fill="#DDDDDD">Vahue</text>
+    <text x="77" y="23" font-family="-apple-system, system-ui, sans-serif" font-size="9" fill="#444">⌄</text>
+
+    <!-- Divider -->
+    <rect x="0" y="35" width="170" height="0.5" fill="rgba(255,255,255,0.07)"/>
+
+    <!-- Top nav -->
+    <text x="18" y="53" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#666">Inbox</text>
+    <rect x="140" y="43" width="16" height="14" rx="3" fill="rgba(255,255,255,0.08)"/>
+    <text x="148" y="53.5" font-family="-apple-system, system-ui, sans-serif" font-size="8.5" fill="#888" text-anchor="middle">3</text>
+    <text x="18" y="69" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#666">My Issues</text>
+    <text x="18" y="85" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#555">All Issues</text>
+
+    <!-- Separator -->
+    <rect x="12" y="95" width="148" height="0.5" fill="rgba(255,255,255,0.05)"/>
+
+    <!-- Teams section -->
+    <text x="18" y="109" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#444" letter-spacing="0.06em">TEAMS</text>
+
+    <!-- Data Engineering (active) -->
+    <rect x="8" y="114" width="154" height="20" rx="3.5" fill="rgba(255,255,255,0.07)"/>
+    <text x="18" y="128" font-family="-apple-system, system-ui, sans-serif" font-size="11" font-weight="500" fill="#DDDDDD">Data Engineering</text>
+
+    <!-- Sub-items -->
+    <text x="28" y="145" font-family="-apple-system, system-ui, sans-serif" font-size="10.5" fill="#666">In Progress</text>
+    <text x="155" y="145" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#555" text-anchor="end">2</text>
+    <text x="28" y="160" font-family="-apple-system, system-ui, sans-serif" font-size="10.5" fill="#555">Todo</text>
+    <text x="155" y="160" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#444" text-anchor="end">3</text>
+
+    <!-- Other teams -->
+    <text x="18" y="177" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#555">AI Research</text>
+    <text x="18" y="193" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#444">Infrastructure</text>
+
+    <!-- Separator -->
+    <rect x="12" y="203" width="148" height="0.5" fill="rgba(255,255,255,0.05)"/>
+
+    <text x="18" y="218" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#555">Projects</text>
+    <text x="18" y="234" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#444">Roadmap</text>
+
+    <!-- Separator -->
+    <rect x="12" y="244" width="148" height="0.5" fill="rgba(255,255,255,0.05)"/>
+    <text x="18" y="259" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#444">Settings</text>
+
+    <!-- Sidebar vertical divider -->
+    <rect x="170" y="0" width="0.5" height="420" fill="rgba(255,255,255,0.07)"/>
+
+    <!-- ══════════════ ISSUE LIST PANE (x: 171–460) ══════════════ -->
+
+    <!-- Header -->
+    <text x="188" y="24" font-family="-apple-system, system-ui, sans-serif" font-size="13" font-weight="600" fill="#DDDDDD">Data Engineering</text>
+
+    <!-- Action buttons -->
+    <rect x="350" y="12" width="44" height="20" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+    <text x="372" y="26" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#666" text-anchor="middle">Filter</text>
+    <rect x="400" y="12" width="52" height="20" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+    <text x="426" y="26" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#666" text-anchor="middle">Display</text>
+
+    <!-- Header divider -->
+    <rect x="171" y="36" width="289" height="0.5" fill="rgba(255,255,255,0.07)"/>
+
+    <!-- Tabs -->
+    <text x="188" y="52" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#AAAAAA">Issues</text>
+    <rect x="188" y="56" width="28" height="1.5" rx="0.75" fill="#777"/>
+    <text x="228" y="52" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#555">Cycles</text>
+    <text x="268" y="52" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#555">Roadmap</text>
+
+    <!-- Tab divider -->
+    <rect x="171" y="60" width="289" height="0.5" fill="rgba(255,255,255,0.06)"/>
+
+    <!-- ── IN PROGRESS GROUP ── -->
+    <!-- Status: half-filled circle (in progress indicator) -->
+    <circle cx="185" cy="73" r="4.5" fill="none" stroke="#777" stroke-width="1.2"/>
+    <path d="M 185 68.5 A 4.5 4.5 0 0 1 185 77.5 L 185 73 Z" fill="#777"/>
+    <text x="196" y="77" font-family="-apple-system, system-ui, sans-serif" font-size="10.5" font-weight="500" fill="#888">In Progress</text>
+    <text x="252" y="77" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#555">2</text>
+
+    <!-- Issue DAT-112 (selected) -->
+    <rect x="178" y="82" width="278" height="28" rx="4" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.09)" stroke-width="0.5"/>
+    <circle cx="191" cy="96" r="4" fill="none" stroke="#777" stroke-width="1.1"/>
+    <path d="M 191 92 A 4 4 0 0 1 191 100 L 191 96 Z" fill="#777"/>
+    <!-- Priority bars: high -->
+    <rect x="203" y="91" width="2" height="10" rx="0.5" fill="#888"/>
+    <rect x="207" y="93" width="2" height="8" rx="0.5" fill="#777"/>
+    <rect x="211" y="95" width="2" height="6" rx="0.5" fill="#555"/>
+    <text x="219" y="100" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#555">DAT-112</text>
+    <text x="264" y="100" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#DDDDDD">Engagement files batch</text>
+    <circle cx="444" cy="96" r="8.5" fill="rgba(255,255,255,0.09)" stroke="rgba(255,255,255,0.16)" stroke-width="0.5"/>
+    <text x="444" y="99.5" font-family="-apple-system, system-ui, sans-serif" font-size="7.5" fill="#AAAAAA" text-anchor="middle">SR</text>
+
+    <!-- Issue DAT-115 -->
+    <rect x="178" y="114" width="278" height="28" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/>
+    <circle cx="191" cy="128" r="4" fill="none" stroke="#666" stroke-width="1.1"/>
+    <path d="M 191 124 A 4 4 0 0 1 191 132 L 191 128 Z" fill="#666"/>
+    <rect x="203" y="123" width="2" height="10" rx="0.5" fill="#777"/>
+    <rect x="207" y="125" width="2" height="8" rx="0.5" fill="#666"/>
+    <rect x="211" y="127" width="2" height="6" rx="0.5" fill="#444"/>
+    <text x="219" y="132" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#555">DAT-115</text>
+    <text x="264" y="132" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#AAAAAA">Client FAQ answer pairs</text>
+    <circle cx="444" cy="128" r="8.5" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.10)" stroke-width="0.5"/>
+    <text x="444" y="131.5" font-family="-apple-system, system-ui, sans-serif" font-size="7.5" fill="#888" text-anchor="middle">JL</text>
+
+    <!-- ── TODO GROUP ── -->
+    <rect x="178" y="146" width="278" height="0.5" fill="rgba(255,255,255,0.04)"/>
+    <circle cx="185" cy="157" r="4.5" fill="none" stroke="#555" stroke-width="1.2"/>
+    <text x="196" y="161" font-family="-apple-system, system-ui, sans-serif" font-size="10.5" font-weight="500" fill="#666">Todo</text>
+    <text x="226" y="161" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#555">3</text>
+
+    <!-- Issue DAT-118 -->
+    <rect x="178" y="166" width="278" height="28" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/>
+    <circle cx="191" cy="180" r="4" fill="none" stroke="#555" stroke-width="1.1"/>
+    <rect x="203" y="175" width="2" height="10" rx="0.5" fill="#777"/>
+    <rect x="207" y="177" width="2" height="8" rx="0.5" fill="#555"/>
+    <rect x="211" y="179" width="2" height="6" rx="0.5" fill="#333"/>
+    <text x="219" y="184" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#555">DAT-118</text>
+    <text x="264" y="184" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#888">CRM and billing sync</text>
+    <circle cx="444" cy="180" r="8.5" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.09)" stroke-width="0.5"/>
+    <text x="444" y="183.5" font-family="-apple-system, system-ui, sans-serif" font-size="7.5" fill="#777" text-anchor="middle">MK</text>
+
+    <!-- Issue DAT-119 -->
+    <rect x="178" y="198" width="278" height="28" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/>
+    <circle cx="191" cy="212" r="4" fill="none" stroke="#555" stroke-width="1.1"/>
+    <rect x="203" y="207" width="2" height="10" rx="0.5" fill="#777"/>
+    <rect x="207" y="209" width="2" height="8" rx="0.5" fill="#555"/>
+    <rect x="211" y="211" width="2" height="6" rx="0.5" fill="#333"/>
+    <text x="219" y="216" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#555">DAT-119</text>
+    <text x="264" y="216" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#888">Proposal archive r2</text>
+    <circle cx="444" cy="212" r="8.5" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.09)" stroke-width="0.5"/>
+    <text x="444" y="215.5" font-family="-apple-system, system-ui, sans-serif" font-size="7.5" fill="#777" text-anchor="middle">FH</text>
+
+    <!-- Issue DAT-120 -->
+    <rect x="178" y="230" width="278" height="28" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/>
+    <circle cx="191" cy="244" r="4" fill="none" stroke="#555" stroke-width="1.1"/>
+    <rect x="203" y="239" width="2" height="10" rx="0.5" fill="#666"/>
+    <rect x="207" y="241" width="2" height="8" rx="0.5" fill="#444"/>
+    <rect x="211" y="243" width="2" height="6" rx="0.5" fill="#2C2C2C"/>
+    <text x="219" y="248" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#555">DAT-120</text>
+    <text x="264" y="248" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#888">Legal document QA</text>
+    <circle cx="444" cy="244" r="8.5" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.09)" stroke-width="0.5"/>
+    <text x="444" y="247.5" font-family="-apple-system, system-ui, sans-serif" font-size="7.5" fill="#777" text-anchor="middle">SR</text>
+
+    <!-- ── BACKLOG GROUP ── -->
+    <rect x="178" y="262" width="278" height="0.5" fill="rgba(255,255,255,0.04)"/>
+    <circle cx="185" cy="272" r="4.5" fill="none" stroke="#383838" stroke-width="1.2" stroke-dasharray="2 2"/>
+    <text x="196" y="276" font-family="-apple-system, system-ui, sans-serif" font-size="10.5" font-weight="500" fill="#555">Backlog</text>
+    <text x="236" y="276" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#444">4</text>
+
+    <!-- Issue DAT-108 -->
+    <rect x="178" y="281" width="278" height="28" rx="4" fill="rgba(255,255,255,0.01)" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+    <circle cx="191" cy="295" r="4" fill="none" stroke="#383838" stroke-width="1.1" stroke-dasharray="2 2"/>
+    <rect x="203" y="290" width="2" height="10" rx="0.5" fill="#555"/>
+    <rect x="207" y="292" width="2" height="8" rx="0.5" fill="#3A3A3A"/>
+    <rect x="211" y="294" width="2" height="6" rx="0.5" fill="#2A2A2A"/>
+    <text x="219" y="299" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#444">DAT-108</text>
+    <text x="264" y="299" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#666">Scanned contract labels</text>
+    <circle cx="444" cy="295" r="8.5" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.07)" stroke-width="0.5"/>
+    <text x="444" y="298.5" font-family="-apple-system, system-ui, sans-serif" font-size="7.5" fill="#555" text-anchor="middle">AT</text>
+
+    <!-- Issue DAT-110 -->
+    <rect x="178" y="313" width="278" height="28" rx="4" fill="rgba(255,255,255,0.01)" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+    <circle cx="191" cy="327" r="4" fill="none" stroke="#383838" stroke-width="1.1" stroke-dasharray="2 2"/>
+    <rect x="203" y="322" width="2" height="10" rx="0.5" fill="#555"/>
+    <rect x="207" y="324" width="2" height="8" rx="0.5" fill="#444"/>
+    <rect x="211" y="326" width="2" height="6" rx="0.5" fill="#2C2C2C"/>
+    <text x="219" y="331" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#444">DAT-110</text>
+    <text x="264" y="331" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#666">Audio transcription QA</text>
+    <circle cx="444" cy="327" r="8.5" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.07)" stroke-width="0.5"/>
+    <text x="444" y="330.5" font-family="-apple-system, system-ui, sans-serif" font-size="7.5" fill="#555" text-anchor="middle">PL</text>
+
+    <!-- Add issue row -->
+    <rect x="178" y="345" width="278" height="0.5" fill="rgba(255,255,255,0.04)"/>
+    <text x="192" y="363" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#383838">+ Add issue...</text>
+
+    <!-- Issue list / detail vertical divider -->
+    <rect x="460" y="0" width="0.5" height="420" fill="rgba(255,255,255,0.07)"/>
+
+    <!-- ══════════════ DETAIL PANEL (x: 461–656) ══════════════ -->
+
+    <!-- Close button -->
+    <text x="644" y="24" font-family="-apple-system, system-ui, sans-serif" font-size="11" fill="#3A3A3A" text-anchor="end">✕</text>
+
+    <!-- Header divider -->
+    <rect x="461" y="36" width="195" height="0.5" fill="rgba(255,255,255,0.07)"/>
+
+    <!-- Issue ID + title -->
+    <text x="476" y="54" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#555">DAT-112</text>
+    <text x="476" y="72" font-family="-apple-system, system-ui, sans-serif" font-size="13" font-weight="500" fill="#DDDDDD">Engagement files</text>
+    <text x="476" y="88" font-family="-apple-system, system-ui, sans-serif" font-size="13" font-weight="500" fill="#DDDDDD">annotation batch</text>
+
+    <!-- Properties divider -->
+    <rect x="468" y="98" width="180" height="0.5" fill="rgba(255,255,255,0.06)"/>
+
+    <!-- Status -->
+    <text x="476" y="114" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#555">Status</text>
+    <circle cx="531" cy="109.5" r="3.5" fill="none" stroke="#777" stroke-width="1.1"/>
+    <path d="M 531 106 A 3.5 3.5 0 0 1 531 113 L 531 109.5 Z" fill="#777"/>
+    <text x="539" y="114" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#888">In Progress</text>
+
+    <!-- Priority -->
+    <text x="476" y="130" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#555">Priority</text>
+    <rect x="531" y="121" width="2" height="9" rx="0.5" fill="#888"/>
+    <rect x="535" y="123" width="2" height="7" rx="0.5" fill="#777"/>
+    <rect x="539" y="125" width="2" height="5" rx="0.5" fill="#555"/>
+    <text x="546" y="130" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#888">High</text>
+
+    <!-- Assignee -->
+    <text x="476" y="146" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#555">Assignee</text>
+    <circle cx="534" cy="141.5" r="7" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.14)" stroke-width="0.5"/>
+    <text x="534" y="145" font-family="-apple-system, system-ui, sans-serif" font-size="6.5" fill="#AAAAAA" text-anchor="middle">SR</text>
+    <text x="545" y="146" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#888">Sarah R.</text>
+
+    <!-- Label -->
+    <text x="476" y="162" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#555">Label</text>
+    <rect x="529" y="153" width="58" height="14" rx="3" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.09)" stroke-width="0.5"/>
+    <text x="558" y="163.5" font-family="-apple-system, system-ui, sans-serif" font-size="9" fill="#888" text-anchor="middle">Annotation</text>
+
+    <!-- Due date -->
+    <text x="476" y="178" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#555">Due date</text>
+    <text x="531" y="178" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#777">Jan 15, 2025</text>
+
+    <!-- Description divider -->
+    <rect x="468" y="188" width="180" height="0.5" fill="rgba(255,255,255,0.06)"/>
+
+    <!-- Description -->
+    <text x="476" y="204" font-family="-apple-system, system-ui, sans-serif" font-size="10.5" font-weight="500" fill="#AAAAAA">Description</text>
+    <text x="476" y="219" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#666">4,200 documents needing clause</text>
+    <text x="476" y="232" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#666">labels — source citations.</text>
+
+    <!-- Sub-tasks divider -->
+    <rect x="468" y="242" width="180" height="0.5" fill="rgba(255,255,255,0.06)"/>
+
+    <!-- Sub-tasks -->
+    <text x="476" y="257" font-family="-apple-system, system-ui, sans-serif" font-size="10.5" font-weight="500" fill="#AAAAAA">Sub-tasks</text>
+    <text x="540" y="257" font-family="-apple-system, system-ui, sans-serif" font-size="9.5" fill="#555">3</text>
+
+    <!-- Sub-task 1: Done -->
+    <circle cx="482" cy="270" r="4" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.24)" stroke-width="0.8"/>
+    <text x="482" y="273.5" font-family="-apple-system, system-ui, sans-serif" font-size="7" fill="#DDDDDD" text-anchor="middle">✓</text>
+    <text x="492" y="274" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#666">Set up labeling environment</text>
+
+    <!-- Sub-task 2: In progress -->
+    <circle cx="482" cy="288" r="4" fill="none" stroke="#666" stroke-width="1"/>
+    <path d="M 482 284 A 4 4 0 0 1 482 292 L 482 288 Z" fill="#666"/>
+    <text x="492" y="292" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#888">Label batch A · 800 items</text>
+
+    <!-- Sub-task 3: Todo -->
+    <circle cx="482" cy="306" r="4" fill="none" stroke="#555" stroke-width="1"/>
+    <text x="492" y="310" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#777">QA review pass</text>
+
+    <!-- Activity divider -->
+    <rect x="468" y="322" width="180" height="0.5" fill="rgba(255,255,255,0.06)"/>
+
+    <!-- Activity / comment input -->
+    <text x="476" y="337" font-family="-apple-system, system-ui, sans-serif" font-size="10.5" font-weight="500" fill="#AAAAAA">Activity</text>
+    <rect x="469" y="346" width="179" height="26" rx="5" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.07)" stroke-width="0.5"/>
+    <text x="479" y="363" font-family="-apple-system, system-ui, sans-serif" font-size="10" fill="#3A3A3A">Leave a comment...</text>
+
+  </g>
+</svg>

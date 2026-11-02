@@ -9,7 +9,7 @@ import { FullBleedMediaSection } from '@/components/site/shared/FullBleedMediaSe
 import { GlowBackground } from '@/components/site/shared/GlowBackground'
 import { PageThemeSetter } from '@/components/site/shared/SectionTheme'
 import Image from 'next/image'
-import { Fragment } from 'react'
+import { Fragment, useMemo } from 'react'
 import { ICONS, type GpsIcon } from './icons'
 import { SolutionsGrid } from './SolutionsGrid'
 import type { GlobalPublicSectorContent } from './types'
@@ -25,7 +25,7 @@ const TITLE_BLOCK = 'flex flex-col justify-center mb-10 md:mb-20 md:mt-12'
 const TESTIMONIAL_CSS =
   '@media (width<=1023px){.global-public-sector-testimonial .ClientTestimonials [role=tabpanel]>div>div:first-child{max-height:none!important;overflow-y:visible!important}}@media (width>=1024px){.global-public-sector-testimonial [role=tablist]>p{max-width:96%}}'
 
-function icon(name: GpsIcon) {
+function makeIcon(name: GpsIcon) {
   const [base, ...rest] = ICONS[name]
   return function GpsIconGlyph({ size, className }: { size?: number; className?: string }) {
     return (
@@ -39,9 +39,12 @@ function icon(name: GpsIcon) {
   }
 }
 
+// Stable identities: CardGrid re-runs its reveal setup when `cards` changes.
+const GLYPHS = Object.fromEntries((Object.keys(ICONS) as GpsIcon[]).map((name) => [name, makeIcon(name)])) as Record<GpsIcon, ReturnType<typeof makeIcon>>
+
 export function GlobalPublicSectorPage({ content: c }: { content: GlobalPublicSectorContent }) {
-  const deliverCards: CardData[] = c.delivers.cards.map((card) => ({ _type: 'card', _key: card.key, icon: icon(card.icon), title: card.title, description: card.description }))
-  const statCards: CardData[] = c.stats.map((card) => ({ _type: 'card', _key: card.key, icon: icon(card.icon), label: card.label, description: card.description }))
+  const deliverCards = useMemo<CardData[]>(() => c.delivers.cards.map((card) => ({ _type: 'card', _key: card.key, icon: GLYPHS[card.icon], title: card.title, description: card.description })), [c.delivers.cards])
+  const statCards = useMemo<CardData[]>(() => c.stats.map((card) => ({ _type: 'card', _key: card.key, icon: GLYPHS[card.icon], label: card.label, description: card.description })), [c.stats])
   return (
     <div className="overflow-x-hidden">
       <PageThemeSetter theme="light" />
