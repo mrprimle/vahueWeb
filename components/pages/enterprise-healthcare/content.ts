@@ -238,14 +238,14 @@ export const content: EnterpriseHealthcareContent = {
     headline: 'Built for healthcare trust and privacy',
     subtitle: 'Meets the security, safety, and privacy standards required for healthcare.',
     badges: [
-      { key: 'soc2', alt: 'AICPA SOC 2 certified', path: `${A}/certs/soc2.webp`, width: 390 }, // PLACEHOLDER: confirm before launch
-      { key: 'iso27001', alt: 'ISO 27001 information security certified', path: `${A}/certs/iso27001.webp`, width: 412 }, // PLACEHOLDER: confirm before launch
-      { key: 'iso42001', alt: 'ISO 42001 artificial intelligence certified', path: `${A}/certs/iso42001.webp`, width: 412 }, // PLACEHOLDER: confirm before launch
-      { key: 'hipaa', alt: 'HIPAA compliant', path: `${A}/certs/hipaa.webp`, width: 364 }, // PLACEHOLDER: confirm before launch
-      { key: 'gdpr', alt: 'GDPR compliant', path: `${A}/certs/gdpr.webp`, width: 368 }, // PLACEHOLDER: confirm before launch
-      { key: 'euAiAct', alt: 'EU AI Act compliant', path: `${A}/certs/eu-ai-act.webp`, width: 364 }, // PLACEHOLDER: confirm before launch
-      { key: 'starLevelOne', alt: 'CSA STAR Level One self-assessment', path: `${A}/certs/star.webp`, width: 375 }, // PLACEHOLDER: confirm before launch
-      { key: 'ccpa', alt: 'CCPA compliant', path: `${A}/certs/ccpa.webp`, width: 366 }, // PLACEHOLDER: stands in for Scale's FedRAMP badge, confirm before launch
+      { key: 'soc2', alt: 'AICPA SOC 2 certified', path: `${A}/certs/soc2.webp`, width: 390 },
+      { key: 'iso27001', alt: 'ISO 27001 information security certified', path: `${A}/certs/iso27001.webp`, width: 412 },
+      { key: 'iso42001', alt: 'ISO 42001 artificial intelligence certified', path: `${A}/certs/iso42001.webp`, width: 412 },
+      { key: 'hipaa', alt: 'HIPAA compliant', path: `${A}/certs/hipaa.webp`, width: 364 },
+      { key: 'gdpr', alt: 'GDPR compliant', path: `${A}/certs/gdpr.webp`, width: 368 },
+      { key: 'euAiAct', alt: 'EU AI Act compliant', path: `${A}/certs/eu-ai-act.webp`, width: 364 },
+      { key: 'starLevelOne', alt: 'CSA STAR Level One self-assessment', path: `${A}/certs/star.webp`, width: 375 },
+      { key: 'ccpa', alt: 'CCPA compliant', path: `${A}/certs/ccpa.webp`, width: 366 },
     ],
   },
   prefooter: {

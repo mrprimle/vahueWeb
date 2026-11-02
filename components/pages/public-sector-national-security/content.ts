@@ -88,7 +88,7 @@ export const content: NationalSecurityContent = {
   },
   howToBuy: {
     heading: 'How to Buy Vahue',
-    body: [{ children: [{ text: 'Vahue products are authorized for ' }, { text: 'SOC 2, HIPAA, ISO 27001', strong: true }, { text: ', and PCI DSS environments; HITRUST certification is in progress.' }] }], // PLACEHOLDER
+    body: [{ children: [{ text: 'Vahue products are authorized for ' }, { text: 'SOC 2, HIPAA, ISO 27001', strong: true }, { text: ', and ISO 42001 environments; CSA STAR and EU AI Act are covered.' }] }],
     cta: { text: 'Contact Us', url: '/demo' },
     image: { path: `${DIR}/buy-filled.webp`, alt: 'A city skyline at dusk', width: 1920, height: 468 },
     items: [

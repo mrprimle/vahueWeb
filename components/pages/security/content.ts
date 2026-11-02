@@ -33,32 +33,32 @@ export const content: SecurityContent = {
     items: [
       {
         key: 'tab1',
-        logo: { src: `${A}/soc2-type-ii.png`, alt: 'SOC 2 Type II', invert: false }, // PLACEHOLDER
-        title: 'SOC 2 Type II', // PLACEHOLDER
+        logo: { src: `${A}/soc2-type-ii.png`, alt: 'SOC 2 Type II', invert: false },
+        title: 'SOC 2 Type II',
         body: 'SOC stands for the Service Organization Controls created by the American Institute of Certified Public Accounts ("AICPA"). Vahue has a SOC 2 Type 2 report demonstrating its commitment to protecting customer data through security, availability, and confidentiality controls that align with the AICPA Trust Services Criteria.', // PLACEHOLDER
         reportLead: LEAD,
         reportLink: TRUST,
       },
       {
         key: 'tab2',
-        logo: { src: `${A}/iso-27001.png`, alt: 'ISO 27001', invert: true }, // PLACEHOLDER
-        title: 'ISO 27001', // PLACEHOLDER
+        logo: { src: `${A}/iso-27001.png`, alt: 'ISO 27001', invert: true },
+        title: 'ISO 27001',
         body: 'The International Organization for Standardization (ISO) is an independent, global entity that brings experts together to create and maintain various management system standards. Vahue has certified its product and services against ISO/IEC 27001:2022 and makes its ISO certificate available for download.', // PLACEHOLDER
         reportLead: LEAD,
         reportLink: TRUST,
       },
       {
         key: 'tab3',
-        logo: { src: `${A}/gdpr.png`, alt: 'GDPR', invert: false }, // PLACEHOLDER: stands in for Scale's DISA logo
-        title: 'General Data Protection Regulation', // PLACEHOLDER: stands in for DoD IL4
+        logo: { src: `${A}/gdpr.png`, alt: 'GDPR', invert: false },
+        title: 'General Data Protection Regulation',
         body: 'The General Data Protection Regulation (GDPR) is issued by the European Union (EU) and defines how a service must collect, process, and store personal data to meet the rigorous requirements defined in its data protection principles.', // PLACEHOLDER
         reportLead: LEAD,
         reportLink: TRUST,
       },
       {
         key: 'tab4',
-        logo: { src: `${A}/hipaa.png`, alt: 'HIPAA', invert: false }, // PLACEHOLDER: stands in for Scale's FedRAMP logo
-        title: 'HIPAA Security Compliant', // PLACEHOLDER: stands in for FedRAMP High
+        logo: { src: `${A}/hipaa.png`, alt: 'HIPAA', invert: false },
+        title: 'HIPAA Security Compliant',
         body: 'HIPAA stands for the Health Insurance Portability and Accountability Act. It is a United States federal law that provides a standardized approach to security safeguards, access control, and continuous monitoring for all Protected Health Information (PHI) used by healthcare organizations.', // PLACEHOLDER
         reportLead: LEAD,
         reportLink: TRUST,
