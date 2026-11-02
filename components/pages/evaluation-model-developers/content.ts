@@ -18,7 +18,7 @@ export const content: EvaluationModelDevelopersContent = {
   },
   challenges: {
     overtitle: 'Evaluation Challenges',
-    title: 'The State of Evaluations Today is Limiting AI Progress',
+    title: 'The State of Evaluations Today is Limiting AI Adoption',
     cards: [
       { key: 'evaluation-challenge-1', icon: 'wq', iconColor: '#79648C', title: 'Agents judged on a polished demo, not on the messy cases your team handles every day.' },
       { key: 'evaluation-challenge-2', icon: 'bB', iconColor: '#A8927C', title: 'No baseline, so no one can say whether the agent beats the way the work gets done today.' },
@@ -31,7 +31,7 @@ export const content: EvaluationModelDevelopersContent = {
     subtitle: 'We build and run the evals for you, so you can see how each agent performs on accuracy, coverage, cost, and safety, without anyone on your team becoming its full-time babysitter.',
     cards: [
       { key: 'why-1', icon: 'AH', iconColor: '#79648C', title: 'Private Evaluation Sets', description: 'Built from your own past cases and edge cases, so scores reflect your real work rather than a vendor benchmark.' },
-      { key: 'why-2', icon: 'hd', iconColor: '#79648C', title: 'Rater Quality', description: 'Your experts and ours review the hard cases, backed by transparent scoring and agreement tracked over time.' },
+      { key: 'why-2', icon: 'hd', iconColor: '#79648C', title: 'Reviewer Quality', description: 'Your experts and ours review the hard cases, backed by transparent scoring and agreement tracked over time.' },
       { key: 'why-3', icon: 'I3', iconColor: '#839CB2', title: 'Shadow Mode', description: 'Agents run on real work alongside your team and touch nothing until accuracy holds. You compare results side by side.' },
       { key: 'why-4', icon: 'B5', iconColor: '#A8927C', title: 'Targeted Evaluations', description: 'Custom tests focus on the failures that would hurt you most, such as a wrong price, a bad refund, or a missed escalation.' },
       { key: 'why-5', icon: 'Wm', iconColor: '#79648C', title: 'Reporting Consistency', description: 'Monthly reports against your baseline, with true apples-to-apples comparisons across agent versions and models.' },
@@ -90,7 +90,7 @@ export const content: EvaluationModelDevelopersContent = {
     ],
   },
   prefooter: {
-    headline: 'Enable the safety of your agents today!',
+    headline: 'Make your agents safe today!',
     cta: { text: 'Book a Demo', url: '/demo' },
     backdrop: { tailwindClass: 'gray-50', contrastColor: '#010101' },
     image: { path: `${A}/prefooter.webp` },
