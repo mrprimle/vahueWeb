@@ -1,15 +1,15 @@
-// Scale's copy under the 80% rule for /rlenvironments ("Agent Environments" in the menu). Same shape and counts as content.scale.ts.
-// Scale's page has no numbers, customers, case studies or quotes, so nothing here is a placeholder.
+// Copy for /rlenvironments: the AI Product Engineering service. Same shape and counts as content.scale.ts.
+// Scale's page has no numbers, customers, case studies or quotes, so no line here needs a PLACEHOLDER mark.
 import type { RlEnvironmentsContent } from './types'
 
 export const content: RlEnvironmentsContent = {
   meta: {
-    title: 'Agent Environments for AI Agents | Vahue',
-    description: 'Accelerate agent deployment with realistic simulations. Vahue provides agent environments for testing agents on desktop VMs, MCP servers, and workflows.',
+    title: 'AI Product Engineering | From Prototype to Production | Vahue',
+    description: 'We build your AI product or feature and take it from prototype to production, for product and engineering leaders without every specialist in-house.',
   },
   hero: {
-    headline: 'Agent Environments',
-    body: 'Train and evaluate agents to excel at long-horizon, professional workflows.',
+    headline: 'AI Product Engineering',
+    body: 'We build your AI product or feature and take it from prototype to production, for product and engineering leaders without every specialist in-house.',
     cta: { text: 'Book a Demo', url: '/demo' },
     backdrop: { tailwindClass: 'white', contrastColor: '#ffffff' },
     video: { url: '/rlenvironments/hero.mp4' },
@@ -17,44 +17,44 @@ export const content: RlEnvironmentsContent = {
   },
   features: {
     overtitle: 'Features',
-    title: 'Made for Agent Testing',
+    title: 'Made for Production',
     cards: [
-      { key: 'at-1', icon: 'bv', iconColor: '#273252', title: 'Real Applications, Rebuilt for Agents', description: 'Simulated APIs, MCP servers, and GUIs that behave like the systems agents actually use.' },
-      { key: 'at-2', icon: 'dz', iconColor: '#193A29', title: 'Expert-Curated Artifacts', description: 'Files (PDFs, CSVs, PPTs, etc.), data, and state settings that reflect real professional workflows, sourced from real business settings, capturing natural messiness.' },
-      { key: 'at-3', icon: 'nz', iconColor: '#79648C', title: 'Hard Tasks with Verifiable Outcomes', description: 'Expert-designed objectives, rubrics, and automated verifiers that produce stable quality signals for programmatic process and outcome evaluation.' },
-      { key: 'at-4', icon: 'ba', iconColor: '#A8927C', title: 'Easy Integration and Environment Control', description: 'Compatible with standard environment interfaces, supporting run histories, resetting state, examining outcomes, and more.' },
+      { key: 'at-1', icon: 'bv', iconColor: '#273252', title: 'Built Into Your Real Product', description: 'Features, APIs, and MCP servers that work with your codebase, your data, and the systems your users already rely on.' },
+      { key: 'at-2', icon: 'dz', iconColor: '#193A29', title: 'Every Discipline, No Hiring Round', description: 'LLM, backend, data, evals, and product engineers on one team, so going from prototype to live does not wait on assembling every specialist yourself.' },
+      { key: 'at-3', icon: 'nz', iconColor: '#79648C', title: 'Hard Features with Verifiable Outcomes', description: 'Evals, rubrics, and automated checks built on your own cases, so quality is measured rather than argued and hallucinations get caught before your users see them.' },
+      { key: 'at-4', icon: 'ba', iconColor: '#A8927C', title: 'Your Code, Your IP, Your Control', description: 'You own the code and IP, in your repositories and your cloud. Documented for your team to extend, or we stay and run it.' },
     ],
   },
   overview: {
     overtitle: 'Overview',
-    title: "Inside Vahue's Agent Environments",
+    title: 'Inside a Vahue Product Build',
     cards: [
-      { title: 'Built to Advance Agent Capabilities', subtitle: "Vahue's Agent Environments are simulated collections of realistic applications designed to train and evaluate agent behavior.", image: { src: '/rlenvironments/product-built-to-advance.webp', alt: 'Dashboards and tables showing delivery metrics.' } },
-      { title: 'Systems for Stronger Test Signals', subtitle: 'They mirror real computer and API-based systems, supporting rich logs and application state that can be used for programmatic and rubric-based evaluation.', image: { src: '/rlenvironments/product-systems-signals.webp', alt: 'Code and developer tools connected to a review window.' } },
-      { title: 'Agent-Ready Expert Data', subtitle: 'Each environment combines simulated interfaces with expert-curated data and evaluators to produce reliable test signals. Vahue also provides analysis on complexity (pass rates) and anticipated production gains.', image: { src: '/rlenvironments/product-rl-ready-data.webp', alt: 'Shared folders with a checklist and two team members.' } },
+      { title: 'Built to Reach a Credible Release', subtitle: 'We start from the job your users need done, then scope the smallest AI feature that does it, with your data and a clear release target.', image: { src: '/rlenvironments/product-built-to-advance.webp', alt: 'Dashboards and tables showing delivery metrics.' } },
+      { title: 'Systems That Are Not a Black Box', subtitle: 'Logs, traces, and application state on every run, so your team can see why the AI did what it did. Latency and token cost get tracked under real load.', image: { src: '/rlenvironments/product-systems-signals.webp', alt: 'Code and developer tools connected to a review window.' } },
+      { title: 'Handover-Ready by Default', subtitle: 'Each release ships with docs, tests, evals, and runbooks, and we walk your engineers through them, so no one is left holding a system they cannot change.', image: { src: '/rlenvironments/product-rl-ready-data.webp', alt: 'Shared folders with a checklist and two team members.' } },
     ],
   },
   capabilities: {
     overtitle: 'Capabilities',
     title: 'Coverage That Matches Production-grade Systems',
     items: [
-      { title: 'Computer Use Environments', description: 'Train agents to navigate and operate realistic desktop and web environments, including macOS- and Windows-like systems.', textSide: 'left', image: { src: '/rlenvironments/capability-computer-use.webp', alt: 'Agent execution log beside its verifier.', width: 598, height: 820 } },
-      { title: 'MCP / Tool Use Environments', description: 'Train agents to reason over and use real tools via MCP servers — Slack, HubSpot, Linear, and more.', textSide: 'right', image: { src: '/rlenvironments/capability-tool-mcp.webp', alt: 'Agent working through a checklist of tool calls.', width: 598, height: 900 } },
+      { title: 'AI Features and Agents', description: 'Copilots, search, drafting, and agents that take real actions inside your product, tested on real user tasks before release.', textSide: 'left', image: { src: '/rlenvironments/capability-computer-use.webp', alt: 'Agent execution log beside its verifier.', width: 598, height: 820 } },
+      { title: 'MCP and Tool Integrations', description: 'Connect your product to real tools via MCP servers and APIs — Slack, HubSpot, Linear, and more — without building every connector by hand.', textSide: 'right', image: { src: '/rlenvironments/capability-tool-mcp.webp', alt: 'Agent working through a checklist of tool calls.', width: 598, height: 900 } },
     ],
   },
   pillars: {
     overtitle: 'Available as',
-    heading: 'Environment Types',
-    subtitle: 'Three types of simulated environments — each designed to match the systems agents operate in production.',
+    heading: 'Ways to Build',
+    subtitle: 'Three starting points — each designed around where your AI product stands today.',
     video: { url: '/rlenvironments/pillars.mp4' },
     cards: [
-      { key: 'ep-1', icon: 'y4', iconColor: '#273252', headline: 'Web Apps', subtitle: 'Browser-based SaaS and productivity apps.' },
-      { key: 'ep-2', icon: 'kb', iconColor: '#193A29', headline: 'Desktop VMs', subtitle: 'macOS- and Windows-like operating system environments.' },
-      { key: 'ep-3', icon: 'wc', iconColor: '#839CB2', headline: 'MCP Servers', subtitle: 'Real enterprise tools — Slack, HubSpot, Linear, and more.' },
+      { key: 'ep-1', icon: 'y4', iconColor: '#273252', headline: 'New Product', subtitle: 'An AI-first product or MVP, from first spec to first release.' },
+      { key: 'ep-2', icon: 'kb', iconColor: '#193A29', headline: 'New Feature', subtitle: 'An AI capability inside the product you already ship.' },
+      { key: 'ep-3', icon: 'wc', iconColor: '#839CB2', headline: 'Prototype to Production', subtitle: 'An internal proof of concept made reliable, scalable, and live.' },
     ],
   },
   prefooter: {
-    headline: 'Try Vahue Agent Environments',
+    headline: 'Take Your Prototype to Production',
     cta: { text: 'Book a Demo', url: '/demo' },
     backdrop: { tailwindClass: 'white', contrastColor: '#010101' },
     image: { path: '/rlenvironments/prefooter.webp' },
