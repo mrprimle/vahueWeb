@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   // The site launched on Scale's paths; old links keep working.
   async redirects() {
     return [
+      { source: '/terms', destination: '/legal/terms', permanent: true },
+      { source: '/privacy-policy', destination: '/legal/privacy', permanent: true },
+      { source: '/cookie-policy', destination: '/legal/cookie', permanent: true },
       { source: '/public-sector/national-security', destination: '/solutions/regulated-industries', permanent: true },
       { source: '/evaluation/model-developers', destination: '/services/evals-and-guardrails', permanent: true },
       { source: '/public-sector-data-engine', destination: '/services/sales-and-booking', permanent: true },
