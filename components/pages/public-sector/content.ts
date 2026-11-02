@@ -68,9 +68,9 @@ export const content: PublicSectorContent = {
       {
         title: 'Back-office Sync Agents',
         features: [
-          { title: 'Built for your busiest workflow', description: 'Match records across systems, check them against your rules, and write clean matches back with minimal intervention.' },
-          { title: 'Scalable multi-agent architecture', description: 'Designed to interact and scale with one another, including decomposable reasoning and integration with external data and systems.' },
-          { title: 'Role-based access', description: 'Agents see only what their role can see, on leading commercial and fine-tuned models in your VPC, on-premises, or our cloud.' },
+          { title: 'Built for your busiest workflow', description: 'Match records across systems, check your rules, and write clean matches back.' },
+          { title: 'Scalable multi-agent architecture', description: 'Designed to work with one another and with your external data and systems.' },
+          { title: 'Role-based access', description: 'Agents see only what their role can see, in your VPC, on-premises, or our cloud.' },
         ],
         image: { src: `${A}/agents-filled.webp`, alt: 'Back-office Sync Agents', width: 644, height: 430 },
         cta: { text: 'Learn more', href: '/generative-ai-data-engine' },
@@ -78,9 +78,9 @@ export const content: PublicSectorContent = {
       {
         title: 'Document Intake Agents',
         features: [
-          { title: 'Advanced Agentic AI Software', description: 'Every incoming document read from email, portals, and scans, then posted to the right system.' },
-          { title: 'State-of-the-Art Machine Learning', description: 'Language models and OCR read every field, and your rules check each value before it posts.' },
-          { title: 'Human-in-the-Loop Expertise', description: 'Uncertain fields go to a reviewer next to the source page, and risky actions wait for a person.' },
+          { title: 'Advanced Agentic AI Software', description: 'Every document read from email, portals, and scans, then posted.' },
+          { title: 'State-of-the-Art Machine Learning', description: 'Language models and OCR read every field, and your rules check each value.' },
+          { title: 'Human-in-the-Loop Expertise', description: 'Uncertain fields go to a reviewer next to the source page.' },
         ],
         image: { src: `${A}/document-intake-filled.webp`, alt: 'Document Intake Agents', width: 662, height: 592 },
         cta: { text: 'Learn more', href: '/physical-ai' },
@@ -98,7 +98,7 @@ export const content: PublicSectorContent = {
     ],
   },
   callout: {
-    title: 'Vahue is building your AI workforce, one workflow at a time.',
+    title: 'Your AI workforce, built one workflow at a time.',
     body: 'Audit in 2 weeks. Pilot on your own cases in 4 to 6 weeks. Then we Operate monthly, so volume keeps growing without the next hire.',
     cta: { text: 'Learn more', href: '/evaluation/enterprise' },
     image: { src: `${A}/callout-steps.webp`, alt: 'Volume growing step by step', width: 560, height: 378 },
