@@ -1,5 +1,6 @@
 // Copy for /genai-portfolio (Knowledge Agents, research segment 3). AJTBD copy in Scale's sections: same shape and counts as content.scale.ts.
 // PLACEHOLDER lines are for Mike.
+import { proofLogoAlt, proofLogoSrc } from '@/components/site/proofLogos'
 import type { GenAiContent } from './types'
 
 const DIR = '/genai-portfolio'
@@ -11,13 +12,13 @@ export const content: GenAiContent = {
     headline: "Sourced answers from your own data.",
     subtitle: [{ text: "Knowledge Agents for expert teams tired of answering the same questions. We build and run agents that give sourced answers from your documents and systems, inside Teams and Slack, and get smarter every time they're used." }],
     logos: [
-      { key: 'logo-1', alt: 'Logo' }, // PLACEHOLDER
-      { key: 'logo-2', alt: 'Logo' }, // PLACEHOLDER
-      { key: 'logo-3', alt: 'Logo' }, // PLACEHOLDER
-      { key: 'logo-4', alt: 'Logo' }, // PLACEHOLDER
-      { key: 'logo-5', alt: 'Logo' }, // PLACEHOLDER
-      { key: 'logo-6', alt: 'Logo' }, // PLACEHOLDER
-      { key: 'logo-7', alt: 'Logo' }, // PLACEHOLDER
+      { key: 'logo-1', alt: proofLogoAlt('qonto'), src: proofLogoSrc('qonto') }, // FROM OLD SITE: confirm
+      { key: 'logo-2', alt: proofLogoAlt('etoro'), src: proofLogoSrc('etoro') }, // FROM OLD SITE: confirm
+      { key: 'logo-3', alt: proofLogoAlt('verbit'), src: proofLogoSrc('verbit') }, // FROM OLD SITE: confirm
+      { key: 'logo-4', alt: proofLogoAlt('inspera'), src: proofLogoSrc('inspera') }, // FROM OLD SITE: confirm
+      { key: 'logo-5', alt: proofLogoAlt('winningtemp'), src: proofLogoSrc('winningtemp') }, // FROM OLD SITE: confirm
+      { key: 'logo-6', alt: proofLogoAlt('monocl'), src: proofLogoSrc('monocl') }, // FROM OLD SITE: confirm
+      { key: 'logo-7', alt: proofLogoAlt('circle-economy'), src: proofLogoSrc('circle-economy') }, // FROM OLD SITE: confirm
     ],
     video: { webm: `${DIR}/hero.webm`, mov: `${DIR}/hero.mov`, poster: `${DIR}/hero-poster.webp`, aspectRatio: '1080 / 1080' },
     scrollLabel: 'Scroll to explore',
@@ -161,7 +162,7 @@ export const content: GenAiContent = {
   blog: {
     heading: [{ style: 'h2', text: "Dive deeper" }],
     posts: [
-      { title: "Introducing Audits: The Missing Layer Between AI and Enterprise Trust", url: '/blog', category: { name: 'Product', color: { hex: '#575757' } }, textColor: 'light', imageGradientOverlay: true, titleOnly: false }, // PLACEHOLDER
+      { title: "Smart AI search for a home appliance brand: 75% less search time across 10,000+ documents", url: '/demo', category: { name: 'Case Study', color: { hex: '#575757' } }, textColor: 'light', imageGradientOverlay: true, titleOnly: false }, // FROM OLD SITE: confirm NDA client
       // As on Scale: this tile and the fourth have an image only, no title, no link.
       { title: '', image: `${DIR}/blog-2.webp`, textColor: 'light', imageGradientOverlay: true, titleOnly: false }, // PLACEHOLDER
       { title: "How do you make fundamentally nondeterministic agents trustable? | Human in the Loop: Episode 18", url: '/blog', image: `${DIR}/blog-3.webp`, textColor: 'dark', imageGradientOverlay: true, titleOnly: false }, // PLACEHOLDER
