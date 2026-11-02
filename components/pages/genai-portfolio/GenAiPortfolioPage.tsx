@@ -153,7 +153,7 @@ const StackCard = forwardRef<StackCardHandle, { card: GenAiContent['stack']['car
         </AnimatedText>
         <div ref={mark} className={cn(card.colorClass, 'w-[17px] h-[17px] opacity-0')}>
           <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block w-full h-full align-top" aria-hidden>
-            <path d="M5.0957 0H0.376033C0.041944 0 -0.125369 0.403928 0.110868 0.640165L4.83054 5.35983C5.06677 5.59607 5.4707 5.42876 5.4707 5.09467V0.375C5.4707 0.167893 5.30281 0 5.0957 0Z" fill="currentColor" />
+            <rect width="6" height="6" rx="0.5" fill="currentColor" />
           </svg>
         </div>
       </div>

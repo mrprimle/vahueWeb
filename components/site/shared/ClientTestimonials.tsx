@@ -29,7 +29,7 @@ const ClientName = forwardRef<NameHandle, { textColor: string; contrastColor: st
     <div ref={box} className={cn('text-sm rounded-sm leading-snug bg-black inline-block p-1 px-2 font-mono uppercase text-[10px] overflow-hidden', `text-${textColor} bg-${contrastColor}`)} style={{ color: themeHex }}>
       <div className="wrapper text-nowrap">
         <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block mr-1" aria-hidden>
-          <path d="M5.0957 0H0.376033C0.041944 0 -0.125369 0.403928 0.110868 0.640165L4.83054 5.35983C5.06677 5.59607 5.4707 5.42876 5.4707 5.09467V0.375C5.4707 0.167893 5.30281 0 5.0957 0Z" fill="currentColor" />
+          <rect width="6" height="6" rx="0.5" fill="currentColor" />
         </svg>
         <div ref={label} className={cn('inline-block text-nowrap', `text-${textColor}`)} style={{ color: themeHex }} />
       </div>
