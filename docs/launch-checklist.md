@@ -108,11 +108,16 @@ Vahue holds: SOC 2, ISO 27001, ISO 42001, HIPAA, GDPR, EU AI Act, CSA STAR, CCPA
 
 ## Media to replace
 
-Claude will confirm in the final pass exactly which of these are still on the site.
+Home, `/data-engine`, `/generative-ai-data-engine`, `/physical-ai`, `/public-sector-data-engine`, `/automotive` and `/rlenvironments` were re-checked by eye at the end. The other pages' items come from their own page checks.
 
 - [ ] `/about`: Scale's office photos, labelled "Vahue office".
-- [ ] Off-topic or Scale-specific images: military and government imagery on home and in menu photos, the Audio-Technica mark on the `/data-engine` hero, robot photos on `/physical-ai`, street and living-room photos on `/automotive`, tower, rig, X-ray and surgeon images and Scale's triangle mark on `/enterprise`, the capability map regions on `/generative-ai-data-engine`.
+- [ ] Home: the surgeon, rig and tower photos on the orbit tiles are still Scale's.
+- [ ] `/data-engine` hero: the headphones show an Audio-Technica mark, same as Scale.
+- [ ] `/enterprise`: tower, rig, X-ray and surgeon images, and Scale's small triangle in the pillars and cables videos, were reported on that page and not re-checked since. The same triangle was removed from the `/rlenvironments` video.
+- [ ] Menu photos: check for military or government imagery. They were flagged early and not re-checked by eye.
+- [ ] `/rlenvironments`: the capability screenshots show GUI and MCP executor screens with "GPT-5.1". `/experts` still has the Engineering Enablement card.
 - [ ] Demo videos are stand-ins: `/automotive`, `/donovan`, `/enterprise/insurance`, `/enterprise/healthcare`, `/generative-ai-data-engine`, `/global-public-sector`, `/public-sector-data-engine`.
+- [ ] Hero images were darkened or moved so headlines read: home video, `/physical-ai`, `/automotive`. Scale uses photos there, so these are stand-ins too.
 - [ ] Replaced visuals are drawn UI mocks, so they look more uniform than Scale's photos. Send real or stock photos if you want that look back.
 - [ ] `/evaluation/model-developers`: the taxonomy image names harms such as "Promotion of violence".
 - [ ] Loop diagrams are thinner than Scale's: smaller cards, smaller labels and fainter icons on `/automotive`, `/public-sector-data-engine`, `/data-engine` and `/generative-ai-data-engine`. Redrawn versions on Scale's geometry, same words, exist if you want them.
