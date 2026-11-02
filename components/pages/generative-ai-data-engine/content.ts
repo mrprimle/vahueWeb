@@ -1,4 +1,4 @@
-// Scale's copy under the 80% rule for /generative-ai-data-engine ("For Back-office Sync" in the menu). Same shape and counts as content.scale.ts.
+// AJTBD copy for /generative-ai-data-engine (Back-office Sync Agents). Same shape and counts as content.scale.ts.
 // Lines marked PLACEHOLDER are for Mike to replace with real data.
 import type { GenAiContent } from './types'
 
@@ -8,17 +8,17 @@ const DIR = '/generative-ai-data-engine'
 export const content: GenAiContent = {
   meta: {
     title: 'Back-office Sync Agents | Vahue',
-    description: 'Build reliable AI agents with Back-office Sync: human review, clean data, agent evaluation, and guardrails.',
+    description: 'Agents keep CRM, ERP and finance in step without re-keying, flag what does not match, and report against your baseline from day one.',
   },
   hero: {
     headline: 'Back-office Sync Agents',
-    body: 'Keeping CRM, ERP and Finance in Step.',
+    body: 'For finance and operations teams copying the same record between systems. Agents keep CRM, ERP and finance in step, and send you only what doesn’t match.',
     cta: { text: 'Book a Demo', url: '/demo' },
     image: { path: `${DIR}/hero.webp` },
     backdrop: WHITE,
   },
   logos: {
-    copy: "Trusted by the world's most ambitious AI teams.", // PLACEHOLDER
+    copy: "Trusted by the world's busiest operations teams.", // PLACEHOLDER
     link: { title: 'Meet our customers', href: '/enterprise' },
     items: [
       { alt: 'Logo', width: 100, height: 20 }, // PLACEHOLDER
@@ -27,9 +27,9 @@ export const content: GenAiContent = {
     ],
   },
   overview: {
-    overtitle: 'PRODUCT OVERVIEW',
+    overtitle: 'SERVICE OVERVIEW',
     title: 'Back-office Sync Agents',
-    subtitle: "Enables rapid creation of tailored, high-quality datasets curated by vetted subject matter experts to power the world's most reliable agents.",
+    subtitle: 'Your team spends its day moving information between systems that don’t talk to each other. Agents watch for new and changed records, match them across systems, and write back the clean ones.',
     image: { src: `${DIR}/sync-capabilities.webp`, alt: 'Back-office Sync Agents connect CRM records, ERP and finance, other systems and reconciliations', width: 1214, height: 720 },
   },
   testimonials: {
@@ -42,53 +42,53 @@ export const content: GenAiContent = {
         clientName: 'Full Name', // PLACEHOLDER
         title: 'Role, Company', // PLACEHOLDER
         testimonial:
-          'Experts are the new GPUs. The largest enterprises are spending huge amounts of money, like huge amounts of money to get more reliable agents live, either paying experts to build them, working through AI partners like Vahue or others.', // PLACEHOLDER
+          'We had people copying the same record into three systems and finding the mismatches at month-end. Now reconciliations are ready in the morning, the exception list is short, and we avoided the next hire. The agents run as part of our daily workflow.', // PLACEHOLDER
       },
     ],
   },
   product: {
-    body: 'Vahue’s Back-office Sync Agents combine automation and human intelligence to rapidly generate clean data tailored to your specific AI goals and data needs.',
+    body: 'Vahue’s Back-office Sync Agents combine automation and human review: routine records move on their own, and anything that touches money or doesn’t match waits for a person. We run them for you, measured against your baseline from day one.',
     image: { src: `${DIR}/product-overview.webp`, alt: '', width: 1214, height: 636 },
   },
   build: {
-    overtitle: 'Build AI',
+    overtitle: 'How It Works',
     title: 'Improve Your Agents By Improving Your Data',
-    subtitle: 'High-quality data, curated by subject matter experts, is crucial for developing powerful, accurate, Generative AI agents.',
+    subtitle: 'Agents collect records from your CRM, ERP and finance systems, and experts clean what matters most. Every run is scored against your past cases, so the exception list keeps getting shorter.',
     image: { src: `${DIR}/data-improvement-loop.webp`, alt: 'Data from your systems moves through Collect, Curate, Improve and Evaluate in a loop to produce reliable agents, with expert review', width: 1216, height: 638 },
   },
   features: {
     overtitle: 'Key Features',
-    title: 'Enabling the Next Generation of Agents',
-    subtitle: 'Vahue has deep experience providing the data underpinning the most reliable agents.',
+    title: 'Enabling a Back Office Without Re-keying',
+    subtitle: 'Point tools fix one link. Vahue takes the whole chain off your team, from the changed record to the morning report.',
     items: [
-      { icon: 'gauge', title: 'Ops Center for Quality Control', subtitle: 'Real-time visibility into data collection and curation' },
-      { icon: 'hub', title: 'Experts, Engineers, and Coders', subtitle: 'Access a global network of hand-picked experts across diverse fields to build the highest quality datasets' },
-      { icon: 'trend', title: 'Improved Agents', subtitle: 'Train your agents with advanced datasets delivered through our purpose-built infrastructure' },
-      { icon: 'bolt', title: 'Increased Efficiency', subtitle: 'Faster, more cost-effective dataset creation' },
-      { icon: 'microscope', title: 'Agent Evaluation', subtitle: 'Vahue proactively finds and surfaces agent weaknesses, including targeted red-teaming.' },
-      { icon: 'handshake', title: 'Responsible Development', subtitle: 'Upholding privacy, fairness, transparency and ethics' },
+      { icon: 'gauge', title: 'Ops Center for Quality Control', subtitle: 'Real-time visibility into what moved, what matched and what needs a person' },
+      { icon: 'hub', title: 'Watch and Match', subtitle: 'Agents listen for new or changed records in each system, match them, and check the rules you set' },
+      { icon: 'trend', title: 'Clean Write-back', subtitle: 'Clean matches are written back as records change, inside the systems you already use, with no manual back and forth' },
+      { icon: 'bolt', title: 'Reconciliations Overnight', subtitle: 'Reconciliations are prepared overnight, so month-end stops running late' },
+      { icon: 'microscope', title: 'Exceptions, Not Surprises', subtitle: 'Mismatches arrive as a short exception list, instead of being found by your customers.' },
+      { icon: 'handshake', title: 'Approval Before Money Moves', subtitle: 'A person approves any payment or credit action, and every record keeps a full audit log' },
     ],
   },
   demos: {
     overtitle: 'Demos',
-    title: 'Context Engine Demos',
+    title: 'Back-office Sync Demos',
     videos: [
-      { src: `${DIR}/demo-1.mp4`, title: 'Assisted Record Matching Demo', cover: `${DIR}/demo-1.webp`, description: '' }, // PLACEHOLDER
-      { src: `${DIR}/demo-2.mp4`, title: 'Record Match Review', cover: `${DIR}/demo-2.webp`, description: '' }, // PLACEHOLDER
-      { src: `${DIR}/demo-3.mp4`, title: 'Human Feedback and Preference Ranking', cover: `${DIR}/demo-3.webp`, description: '' }, // PLACEHOLDER
+      { src: `${DIR}/demo-1.mp4`, title: 'Record Matching Across Systems', cover: `${DIR}/demo-1.webp`, description: '' }, // PLACEHOLDER
+      { src: `${DIR}/demo-2.mp4`, title: 'The Daily Exception List', cover: `${DIR}/demo-2.webp`, description: '' }, // PLACEHOLDER
+      { src: `${DIR}/demo-3.mp4`, title: 'Exception Review and Approval', cover: `${DIR}/demo-3.webp`, description: '' }, // PLACEHOLDER
     ],
   },
   resources: {
     overtitle: 'RESOURCES',
     title: 'Case Studies & Resources',
-    subtitle: "We've worked with the world's leading AI teams for years, and developed more high-quality data than anybody else.", // PLACEHOLDER
+    subtitle: 'See how operations teams took re-keying off their people, and what it really takes to get from a stalled pilot to production.',
     items: [
-      { id: 'case-back-office-sync', overtitle: 'Case Studies', title: 'Case Study: Distributor', image: { src: `${DIR}/resource-1.webp` }, description: 'A distributor partnered with Vahue to keep CRM, ERP and finance in step.', link: '/enterprise' }, // PLACEHOLDER
-      { id: 'ai-readiness-report', overtitle: 'Zeitgeist', title: 'AI Readiness Report', image: { src: `${DIR}/resource-2.webp` }, description: 'The 2nd edition of our AI Readiness Report helps you get past the hype and understand what it really takes to adopt Generative AI.', link: '/guides' }, // PLACEHOLDER
+      { id: 'case-back-office-sync', overtitle: 'Case Studies', title: 'Case Study: Distributor', image: { src: `${DIR}/resource-1.webp` }, description: 'A distributor partnered with Vahue to keep CRM, ERP and finance in step, with 30 to 40% less time spent on manual CRM updates.', link: '/enterprise' }, // PLACEHOLDER
+      { id: 'ai-readiness-report', overtitle: 'Zeitgeist', title: 'AI Readiness Report', image: { src: `${DIR}/resource-2.webp` }, description: 'Our AI Readiness Report helps you get past the hype and understand what it really takes to move a workflow from pilot to production.', link: '/guides' }, // PLACEHOLDER
     ],
   },
   prefooter: {
-    headline: 'The future of your industry starts here',
+    headline: 'See it work on your own records before it goes live',
     cta: { text: 'Book a Demo', url: '/demo' },
     image: { path: `${DIR}/prefooter.webp` },
     backdrop: WHITE,
