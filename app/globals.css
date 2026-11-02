@@ -16,6 +16,11 @@
 @custom-variant oml (@media (orientation: landscape) and (max-height: 500px));
 
 @theme {
+  /* labs.scale.com tokens (chunk 3mzo0hj4e57ag.css), used only by components/site/labs and /labs*. */
+  --color-ink: #111;
+  --color-ink-dim: #333;
+  --color-ink-faint: #999;
+  --color-hairline: #d9d9d9;
   --breakpoint-xs: 390px;
   --breakpoint-3xl: 90.625rem;
   --text-2xl: 1.5rem;

@@ -1,0 +1,86 @@
+/* labs.scale.com's base, scoped to its own chrome (chunk 3mzo0hj4e57ag.css). It is a separate site from scale.com:
+   Inter and Geist Mono, zero radius, its own hairline border default and no h1...p tracking.
+   Reused by every /labs* route through app/labs/layout.tsx. */
+@layer base {
+  .labs-root {
+    --font-sans: var(--font-brand), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-mono: var(--font-geist-mono), monospace;
+    --radius: 0rem;
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizelegibility;
+    line-height: 1.5;
+  }
+  .labs-root :is(h1, h2, h3, h4, h5, h6, p) {
+    font-family: var(--font-sans);
+    font-weight: inherit;
+    letter-spacing: normal;
+  }
+  .labs-root h3 {
+    font-weight: 500;
+  }
+  .labs-root *,
+  .labs-root ::before,
+  .labs-root ::after {
+    border-color: hsl(0 0% 85%);
+  }
+  .labs-root ::selection {
+    color: HighlightText;
+    -webkit-text-fill-color: HighlightText;
+    background-color: Highlight;
+  }
+}
+
+/* globals.css inlines --font-sans and --font-mono into the utilities (`@theme inline`), so overriding the variables is not enough. */
+@layer utilities {
+  .labs-root .font-sans {
+    font-family: var(--font-sans);
+  }
+  .labs-root .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+html:has(.labs-root),
+html:has(.labs-root) body {
+  max-width: 100vw;
+  color: #111;
+  background: #fff;
+  scrollbar-color: auto;
+  overscroll-behavior: none;
+}
+
+/* Scale: `html.loaded *`, unlayered, added 100ms after mount. It beats every `transition-*` utility, so opacity and
+   transform changes (paper preview cross-fade, arrow nudges, logo hover) are instant and colours take .2s. */
+@media (prefers-reduced-motion: no-preference) {
+  html.labs-loaded .labs-root,
+  html.labs-loaded .labs-root * {
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  }
+  /* The Inkeep modal sits in a shadow root on Scale, so that rule never reaches it. */
+  html.labs-loaded .labs-root .labs-search,
+  html.labs-loaded .labs-root .labs-search * {
+    transition: none;
+  }
+}
+
+/* Inkeep modal entrance: fade-in .15s on overlay and content. */
+@keyframes labs-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.labs-search-fade {
+  animation: labs-fade-in 0.15s;
+}
+.labs-search-list {
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
+  scrollbar-width: thin;
+}

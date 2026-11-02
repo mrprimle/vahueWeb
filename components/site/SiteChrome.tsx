@@ -15,8 +15,19 @@ export const SEPARATE_CHROME_PREFIXES = ['/docs', '/labs']
 // Scale marks these pages' root `data-initial-chrome-theme="dark"`: the header keeps dark tokens at any scroll.
 export const DARK_CHROME_ROUTES = ['/public-sector/national-security', '/genai-portfolio']
 
+/** labs.scale.com runs on its own stack: `app/labs/layout.tsx` mounts its header, footer, <main> and its own Lenis. */
+export const isLabsRoute = (pathname: string | null) => pathname === '/labs' || !!pathname?.startsWith('/labs/')
+
 export function SiteChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname()
+  if (isLabsRoute(pathname)) {
+    return (
+      <>
+        <RouteEffects />
+        {children}
+      </>
+    )
+  }
   const own = SEPARATE_CHROME_PREFIXES.some((p) => pathname === p || pathname?.startsWith(`${p}/`))
   return (
     <>
