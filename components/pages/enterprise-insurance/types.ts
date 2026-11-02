@@ -4,7 +4,7 @@ import type { VideoFeature } from '@/components/site/shared/VideoFeatures'
 export type CtaLink = { text: string; url: string }
 export type Backdrop = { tailwindClass: string; contrastColor: string }
 export type InsuranceIcon = 'layers' | 'manageSearch' | 'lock' | 'assignment' | 'psychology' | 'lightbulb'
-export type IconFeature = { icon: InsuranceIcon; title: string; subtitle: string }
+export type IconFeature = { icon: InsuranceIcon; title: string; subtitle: string; href?: string }
 
 export type EnterpriseInsuranceContent = {
   meta: { title: string; description: string }

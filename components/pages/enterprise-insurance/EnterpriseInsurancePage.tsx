@@ -9,6 +9,7 @@ import { PageThemeSetter } from '@/components/site/shared/SectionTheme'
 import { SectionTitle } from '@/components/site/shared/SectionTitle'
 import { VideoFeatures } from '@/components/site/shared/VideoFeatures'
 import { Icon } from './icons'
+import { ServiceFeatures } from './ServiceFeatures'
 import type { EnterpriseInsuranceContent, IconFeature } from './types'
 
 const HERO_MEDIA = '[&_.ResponsiveImage]:absolute [&_.ResponsiveImage]:inset-0 [&_.ResponsiveImage_img]:absolute [&_.ResponsiveImage_img]:inset-0'
@@ -54,7 +55,7 @@ export function EnterpriseInsurancePage({ content: c }: { content: EnterpriseIns
               </div>
             }
           />
-          <FeaturesWithIcons columns="3" featuresIconColor="white" features={features(c.solutions.items)} />
+          <ServiceFeatures items={c.solutions.items} />
         </div>
       </section>
 

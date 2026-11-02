@@ -1,5 +1,5 @@
-// Copy for /enterprise/insurance ("Insurance" in the menu). Keep first: Scale's string stays unless it is false for Vahue,
-// brand words swap, and the rest changes by a few words. Same shape and counts as content.scale.ts. PLACEHOLDER lines are for Mike.
+// Copy for /enterprise/insurance ("Insurance" in the menu), written from the AJTBD research into Scale's slots; Scale's line stays where it's already right.
+// Same shape and counts as content.scale.ts. PLACEHOLDER lines are for Mike.
 import type { EnterpriseInsuranceContent } from './types'
 
 const A = '/enterprise-insurance'
@@ -7,11 +7,11 @@ const A = '/enterprise-insurance'
 export const content: EnterpriseInsuranceContent = {
   meta: {
     title: 'Agentic Solutions for Insurance | Vahue',
-    description: 'Turn claims data, reports, and documents into actionable insights with AI agents that reduce claims leakage and improve insurance operations.',
+    description: 'Vahue runs your claims intake with AI agents, turning claims, reports, and documents into clean, checked records, measured against your baseline from day one.',
   },
   hero: {
     headline: 'Turn Insurance Documents Into Intelligence',
-    body: 'Deploy AI agents to transform unstructured claims data, reports, and documents into actionable insights that prevent claims leakage, reduce customer churn, and eliminate costly manual document processing.',
+    body: 'We run your claims intake with AI agents, turning unstructured claims, reports, and documents into clean, checked records that clear the backlog, prevent claims leakage, and eliminate costly re-keying, measured against your baseline from day one.',
     cta: { text: 'Book a Meeting', url: '/demo' },
     backdrop: { tailwindClass: 'white', contrastColor: '#010101' },
     image: { path: `${A}/hero.webp` },
@@ -36,20 +36,20 @@ export const content: EnterpriseInsuranceContent = {
     title: "Insurance's 3 Most Expensive Blind Spots",
     subtitle: 'Every insurer faces these same costly challenges:',
     items: [
-      { icon: 'layers', title: 'Unstructured Data Chaos', subtitle: "Critical insights trapped in PDFs, reports, and invoices that aren't AI-ready and can't be analyzed at scale" },
-      { icon: 'manageSearch', title: 'Hidden Benefits Waste', subtitle: 'Small fraction of cases analyzed for leakage, leaving companies to miss millions of dollars in recoverable waste patterns' },
+      { icon: 'layers', title: 'Unstructured Data Chaos', subtitle: "Critical details trapped in PDFs, reports, and invoices that staff key in by hand, and that backlog at every peak" },
+      { icon: 'manageSearch', title: 'Hidden Claims Leakage', subtitle: 'Small fraction of claims analyzed for leakage, leaving companies to miss millions of dollars in recoverable waste patterns' },
       { icon: 'lock', title: 'Vanishing Expertise', subtitle: 'Expert knowledge disappears when adjusters leave, creating costly training gaps' },
     ],
   },
   solutions: {
     overtitle: '',
     title: 'How Smart Insurers Turn Data Chaos Into Unfair Advantage',
-    subtitle: 'We directly solve the three biggest challenges facing insurance operations with purpose-built solutions that transform documents, detect waste, and preserve expertise.',
-    cta: { children: 'View all applications', href: '/enterprise' },
+    subtitle: 'We take the three biggest challenges off your claims team with agents proven on your own past claims, so they transform documents, detect waste, and preserve expertise.',
+    cta: { children: 'See Document Intake Agents', href: '/physical-ai' },
     items: [
-      { icon: 'assignment', title: 'Document Intelligence Transformation', subtitle: 'Transform messy unstructured reports and phone calls into machine-native structured data' },
-      { icon: 'psychology', title: 'AI-Powered Pattern\nRecognition', subtitle: 'Expand case analysis with AI that identifies benefits waste patterns across thousands of documents simultaneously' },
-      { icon: 'lightbulb', title: 'Knowledge Capture & Scaling Technology', subtitle: "Capture your best adjusters' decision-making patterns and scale that expertise across every team member and claim" },
+      { icon: 'assignment', title: 'Document Intake Agents', subtitle: 'Turn first notices of loss, claims correspondence, and phone calls into clean records in your claims system', href: '/physical-ai' },
+      { icon: 'psychology', title: 'Scoring and Decision Agents', subtitle: 'Expand claims review with agents that score waste patterns across thousands of documents and route borderline cases to a person', href: '/automotive' },
+      { icon: 'lightbulb', title: 'Knowledge Agents', subtitle: "Capture your best adjusters' decision-making patterns and put sourced answers in front of every team member and claim", href: '/genai-portfolio' },
     ],
   },
   strategy: {
@@ -58,15 +58,15 @@ export const content: EnterpriseInsuranceContent = {
     subtitle: 'Learn how we run AI Agents for Insurance',
     items: [
       {
-        title: 'Vahue AI Agentic Claims Processing',
+        title: 'Document Intake Agents for Claims',
         subtitle: 'Accelerate claims with AI that works alongside your team, delivering fast, accurate outcomes.',
-        image: { src: `${A}/claims.webp`, alt: 'Vahue AI Agentic Claims Processing' },
+        image: { src: `${A}/claims.webp`, alt: 'Document Intake Agents for Claims' },
         videoLink: `${A}/claims-filled.mp4`, // PLACEHOLDER
       },
       {
-        title: 'Vahue AI Autonomous Customer Retention',
-        subtitle: 'Stop customer churn before it happens with AI agents that predict issues and act proactively, not reactively.',
-        image: { src: `${A}/customer-retention.webp`, alt: 'Vahue AI Autonomous Customer Retention' },
+        title: 'Support and Voice Agents for Retention',
+        subtitle: 'Stop customer churn before it happens with agents that answer every call, update your systems, and hand risky cases to a person.',
+        image: { src: `${A}/customer-retention.webp`, alt: 'Support and Voice Agents for Retention' },
         videoLink: `${A}/customer-retention-filled.mp4`, // PLACEHOLDER
       },
     ],
