@@ -18,8 +18,9 @@ const ClientName = forwardRef<NameHandle, { textColor: string; contrastColor: st
   const animateToText = useCallback(async ({ text, delay = 0 }: { text: string; delay?: number }) => {
     const value = text.trim()
     await gsap.to(box.current, { width: 20, duration: 0.5, ease: 'power3.out', delay })
-    label.current!.textContent = value
-    const w = label.current!.getBoundingClientRect().width
+    if (!label.current) return
+    label.current.textContent = value
+    const w = label.current.getBoundingClientRect().width
     await new Promise((r) => setTimeout(r, 10))
     gsap.to(label.current, { opacity: 1, duration: 0.5, ease: 'none' })
     await gsap.to(box.current, { width: w + 26, duration: 0.5, ease: 'power3.out' })
