@@ -1,4 +1,4 @@
-// Copy for /enterprise/healthcare ("Healthcare" in the menu). Keep first: Scale's string stays unless it is false for Vahue. Healthcare here means
+// Copy for /enterprise/healthcare ("Healthcare" in the menu), written from the AJTBD research into Scale's slots; Scale's line stays where it's already right. Healthcare here means
 // administrative workflows (referrals, documents, scheduling, authorizations), so clinical decision wording swaps. The mock UIs keep Scale's layout
 // and timing with administrative records. People and records in the mocks are made up. PLACEHOLDER lines are for Mike.
 import type { EnterpriseHealthcareContent } from './types'
@@ -11,11 +11,11 @@ const LOGO = { alt: 'Logo' } // PLACEHOLDER: neutral tile, customer logo goes he
 export const content: EnterpriseHealthcareContent = {
   meta: {
     title: 'Agentic Solutions for Healthcare | Vahue',
-    description: 'Turn unstructured healthcare data into operational intelligence with Vahue. Build reliable AI systems that improve care operations.',
+    description: 'Vahue runs referrals, scheduling, and authorizations with AI agents, inside your workflows and measured against your baseline from day one.',
   },
   hero: {
     headline: 'Reliable AI for Healthcare’s Most Critical Workflows',
-    body: 'Vahue builds AI that care teams can trust, embedded inside your workflows and evaluated continuously so it stays accountable for outcomes.',
+    body: 'Vahue runs referrals, scheduling, and authorizations with agents care teams can trust, embedded inside your workflows and measured against your baseline from day one.',
     backdrop: { tailwindClass: 'white', contrastColor: '#010101' },
     image: { path: `${A}/hero-admin.webp`, alt: 'Referral packet checked by an agent next to an intake queue and a schedule', width: 1920, height: 1080 },
     imageColor: '#2c3a4a',
@@ -29,8 +29,8 @@ export const content: EnterpriseHealthcareContent = {
         key: 'referralIntake',
         label: 'Referral Intake',
         title: 'Synthesize referral records to reduce delays',
-        body: "Consolidates a patient's full paperwork to route the right referrals, records, and approvals, so coordinators spend less time piecing together files.",
-        cta: { text: 'Book a Demo', url: '/demo' },
+        body: "Our Document Intake Agents consolidate a patient's full paperwork to route the right referrals, records, and approvals, so coordinators spend less time piecing together files.",
+        cta: { text: 'See Document Intake Agents', url: '/physical-ai' },
         color: '#273252',
         image: { path: `${A}/hero-admin.webp`, width: 1920, height: 1080, alt: 'Referral Intake panel reviewing a referral with AI-powered assistance' },
       },
@@ -38,8 +38,8 @@ export const content: EnterpriseHealthcareContent = {
         key: 'schedulingIntelligence',
         label: 'Scheduling Intelligence',
         title: 'Get patients to the right appointment, faster',
-        body: 'Automate appointment scheduling across patient records, booking rules, and operational constraints - reducing manual coordinator work.',
-        cta: { text: 'Book a Demo', url: '/demo' },
+        body: 'Our Sales and Booking Agents automate appointment scheduling across patient records, booking rules, and operational constraints - reducing manual coordinator work.',
+        cta: { text: 'See Sales and Booking Agents', url: '/public-sector-data-engine' },
         color: '#839CB2',
         image: { path: `${A}/hero-admin.webp`, width: 1920, height: 1080, alt: 'Scheduling Engine dashboard recommending an open appointment slot' },
       },
@@ -47,8 +47,8 @@ export const content: EnterpriseHealthcareContent = {
         key: 'customAgents',
         label: 'Custom Agents & Applications',
         title: 'Build to the unique needs of your healthcare organization',
-        body: 'From claims follow-up sequencing to automated patient intake, Vahue builds custom agents for the workflows unique to your health system.',
-        cta: { text: 'Book a Demo', url: '/demo' },
+        body: 'From prior authorization follow-ups to claims status checks, our Back-office Sync Agents take on the workflows unique to your health system.',
+        cta: { text: 'See Back-office Sync Agents', url: '/generative-ai-data-engine' },
         color: '#A8927C',
         image: { path: `${A}/hero-admin.webp`, width: 1920, height: 1080, alt: 'Prior Authorization Agent and Referral Follow-Up Agent dashboards' },
       },
@@ -215,8 +215,8 @@ export const content: EnterpriseHealthcareContent = {
   reliability: {
     heading: 'Built on Vahue’s reliability layer for healthcare',
     cards: [
-      { key: 'forwardDeployed', title: 'Forward-deployed service and engineering teams', description: 'Applied AI engineers and workflow specialists embedded inside your health system, accountable for outcomes, not just delivery.' },
-      { key: 'evaluationsCompound', title: 'Evaluations compound workflow value', description: "Case-based evals and healthcare ops experts encode institutional knowledge to continually improve every agent's accuracy and safety." },
+      { key: 'forwardDeployed', title: 'Forward-deployed service and engineering teams', description: 'Applied AI engineers and workflow specialists embedded inside your health system, accountable for outcomes, not just delivery. They stay to run it.' },
+      { key: 'evaluationsCompound', title: 'Evaluations compound workflow value', description: "Evals on your own past cases and healthcare ops experts encode institutional knowledge to continually improve every agent's accuracy and safety." },
       { key: 'deployAnywhere', title: 'Deploy anywhere, on your terms', description: 'Vahue connects to your existing EHR, scheduling, and billing systems. No migration required, and it works with any model.' },
     ],
     layers: [
@@ -229,7 +229,7 @@ export const content: EnterpriseHealthcareContent = {
     heading: [{ text: 'Fuel Your AI Strategy' }],
     category: 'Healthcare',
     posts: [
-      { _key: 'referralAgent', title: 'Referral Agent Multi-Agent Intake Solution', image: `${A}/referral-agent.webp`, alt: 'Referral Agent Multi-Agent Intake Solution', imageGradientOverlay: true, textColor: 'light', variantOverride: 'overlay', videoUrl: `${A}/referral-agent.mp4` }, // PLACEHOLDER: neutral motion, real demo video goes here
+      { _key: 'referralAgent', title: 'Document Intake Agents for Referrals', image: `${A}/referral-agent.webp`, alt: 'Document Intake Agents for Referrals', imageGradientOverlay: true, textColor: 'light', variantOverride: 'overlay', videoUrl: `${A}/referral-agent.mp4` }, // PLACEHOLDER: neutral motion, real demo video goes here
       { _key: 'enterpriseReadyAgents', title: 'Scalable Infrastructure for Enterprise-Ready AI Agents', image: `${A}/agent-infrastructure.webp`, alt: 'Scalable Infrastructure for Enterprise-Ready AI Agents', imageGradientOverlay: true, videoUrl: `${A}/agent-infrastructure.mp4` }, // PLACEHOLDER: neutral motion, real demo video goes here
       { _key: 'partnership', title: 'Care Group + Vahue: Reliable AI for Better Healthcare', image: `${A}/partnership.webp`, imageGradientOverlay: true, url: '/blog' }, // PLACEHOLDER: case study, client name and link
     ],
