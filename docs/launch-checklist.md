@@ -64,6 +64,8 @@ Vahue holds: SOC 2, ISO 27001, ISO 42001, HIPAA, GDPR, EU AI Act, CSA STAR, CCPA
 
 - [ ] `/blog`: all 24 posts are invented (Scale has 164). `/blog/<slug>` is a stub with a title and a back link, not a real post page. Search is a static filter, not a real index.
 
+- [ ] `/labs/blog`: all 24 posts are invented, with invented figures (for example IntakeBench "40,000 plus documents", ExceptionBench "718 cases") and claims ("Every agent Vahue runs is proven on CaseEnv", open-source releases). **Five posts still carry Scale's own wording about its real research:** "MCP vs. CLI", "Insights Generator", "Coverage Not Averages" (title and intro), and "Introducing READY", "Who Grades the Graders?", "HiL-Dynamics", "Long Horizon Augmented Workflows" (title). Those must not go live as Vahue's. "Read post" goes nowhere because there are no post pages.
+
 ## Numbers
 
 - [ ] Home: "25% fewer errors", "90% of the AI pilots".
