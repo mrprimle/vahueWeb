@@ -66,6 +66,9 @@ Vahue holds: SOC 2, ISO 27001, ISO 42001, HIPAA, GDPR, EU AI Act, CSA STAR, CCPA
 
 - [ ] `/labs/blog`: all 24 posts are invented, with invented figures (for example IntakeBench "40,000 plus documents", ExceptionBench "718 cases") and claims ("Every agent Vahue runs is proven on CaseEnv", open-source releases). **Five posts still carry Scale's own wording about its real research:** "MCP vs. CLI", "Insights Generator", "Coverage Not Averages" (title and intro), and "Introducing READY", "Who Grades the Graders?", "HiL-Dynamics", "Long Horizon Augmented Workflows" (title). Those must not go live as Vahue's. "Read post" goes nowhere because there are no post pages.
 
+- [ ] `/labs/leaderboard`: all 132 score rows use invented labels (`Model A` to `Model J`) with Scale's real numbers kept so the bars hold their shape, so replace them all. Also `20+` benchmarks, `100+` models, and "From leading AI labs including OpenAI, Anthropic, Google, Meta", which is only true if Vahue evaluates them. All 44 benchmark names are invented or inherited, and some read as real programmes (`Fortress`, `Remote Labor Index`). The first five must match `/labs`. Also `PartnerCo` and "82 expert-curated tasks".
+- [ ] `/labs/leaderboard`: confirm the `evals@vahue.ai` mailbox exists. The Evaluate form sends nothing and needs a backend. "View Full Ranking" links back to the same page because ranking pages aren't built.
+
 ## Numbers
 
 - [ ] Home: "25% fewer errors", "90% of the AI pilots".
