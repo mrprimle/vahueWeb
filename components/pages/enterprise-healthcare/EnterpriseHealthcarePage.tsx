@@ -37,7 +37,7 @@ function CustomerLogo({ logo, maxWidth, maxHeight, width, className, tileClassNa
 }
 
 export function EnterpriseHealthcarePage({ content: c }: { content: EnterpriseHealthcareContent }) {
-  const logos = useMemo(() => c.hero.logos.map((l) => ({ id: l.alt, label: 'Logo', node: l.src ? <CustomerLogo logo={l} maxWidth={70} maxHeight={28} /> : undefined })), [c.hero.logos])
+  const logos = useMemo(() => c.hero.logos.map((l, i) => ({ id: `${l.alt}-${i}`, label: 'Logo', node: l.src ? <CustomerLogo logo={l} maxWidth={70} maxHeight={28} /> : undefined })), [c.hero.logos])
   const w = c.workflows
   const media = [<OrderGuidanceMockup key="order" data={w.orderGuidance} />, <SchedulingMockup key="scheduling" data={w.scheduling} />, <CustomAgentsMockup key="custom" data={w.customAgents} />]
   const tabs: TabbedPanelTab[] = w.tabs.map((t, i) => ({
