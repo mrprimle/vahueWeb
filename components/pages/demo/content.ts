@@ -1,4 +1,4 @@
-// Rendered strings for /demo: same shape as content.scale.ts. Company types follow the research's segments; the form sends nothing (see DemoForm).
+// Rendered strings for /demo: same shape as content.scale.ts. Options follow the site's buyers and services; the form sends nothing (see DemoForm).
 import { countries } from './countries'
 import type { DemoContent } from './types'
 
@@ -7,10 +7,10 @@ const countryOptions = countries.map((c) => ({ value: c, label: c }))
 export const content: DemoContent = {
   meta: {
     title: 'Meet with our team | Vahue',
-    description: 'Vahue runs your busiest workflow with AI agents, measured against your baseline from day one, across document intake, back-office sync, support, voice, and more.',
+    description: 'We run your busiest workflow with agents, measured against your baseline from day one. Book a 1:1 intro call and see it work on your own cases before it goes live.',
   },
-  heading: "Let's Scale Together",
-  intro: 'Join leading scale-ups partnering with Vahue. Book a 1:1 intro call with us to get started.',
+  heading: "Let's Start With Your Busiest Workflow",
+  intro: 'Book a 1:1 intro call. Tell us which workflow is busiest, and we’ll show you how to see it work on your own cases before it goes live.',
   form: {
     groups: [
       {
@@ -116,170 +116,129 @@ export const content: DemoContent = {
             unselectedLabel: "What best describes your company?",
             required: true,
             options: [
-              { value: "operations", label: "Operations-Heavy Scale-up" },
-              { value: "product", label: "Software/Product Company" },
-              { value: "revenue", label: "Sales/Service-Led Company" },
-              { value: "regulated", label: "Regulated Company" },
+              { value: "enterprise", label: "Enterprise" },
+              { value: "scale-up", label: "Scale-up" },
               { value: "professional-services", label: "Professional Services Firm" },
+              { value: "insurance", label: "Insurance" },
+              { value: "healthcare", label: "Healthcare" },
+              { value: "regulated", label: "Regulated Industry" },
               { value: "Partners", label: "Partners" },
               { value: "Other", label: "Other" },
             ],
             dependents: [
               {
-                when: ["operations", "Other"],
+                when: ["enterprise", "scale-up", "Other"],
                 field: {
                   name: "industry",
                   fieldType: "select",
                   unselectedLabel: "What’s your industry?",
                   required: true,
                   options: [
-                    { value: "Healthcare & Life Sciences", label: "Healthcare & Life Sciences" },
-                    { value: "Financial Services / Professional Services", label: "Financial Services / Professional Services" },
-                    { value: "Consumer (Telecom, Media, Oil & Gas, Retail, Manufacturing)", label: "Consumer (Telecom, Media, Oil & Gas, Retail, Manufacturing)" },
-                  ],
-                },
-              },
-              {
-                when: ["operations", "Other"],
-                field: {
-                  name: "desired_solution",
-                  fieldType: "select",
-                  unselectedLabel: "What best describes the solution you’re seeking?",
-                  required: true,
-                  options: [
-                    { value: "AI applications or agentic systems", label: "AI applications or agentic systems" },
-                    { value: "Agent tuning and evaluation", label: "Agent tuning and evaluation" },
-                    { value: "Red-teaming, safety, or guardrails", label: "Red-teaming, safety, or guardrails" },
-                    { value: "Deployment, hosting, or integration", label: "Deployment, hosting, or integration" },
+                    { value: "Financial Services", label: "Financial Services" },
+                    { value: "Retail & E-commerce", label: "Retail & E-commerce" },
+                    { value: "Manufacturing & Logistics", label: "Manufacturing & Logistics" },
+                    { value: "Real Estate & Field Services", label: "Real Estate & Field Services" },
+                    { value: "Software & Technology", label: "Software & Technology" },
                     { value: "Other", label: "Other" },
-                  ],
-                },
-              },
-              {
-                when: ["product"],
-                field: {
-                  name: "product_desired_solution",
-                  fieldType: "select",
-                  unselectedLabel: "What best describes the solution you’re seeking?",
-                  required: true,
-                  options: [
-                    { value: "Expert-Prepared Context", label: "Expert-Prepared Context" },
-                    { value: "Agent Environments", label: "Agent Environments" },
-                    { value: "Agent Benchmarks & Evals", label: "Agent Benchmarks & Evals" },
-                    { value: "Agent tuning and evaluation", label: "Agent tuning and evaluation" },
-                    { value: "Independent research", label: "Independent research" },
-                  ],
-                },
-              },
-              {
-                when: ["product"],
-                field: {
-                  name: "product_agent_stage",
-                  fieldType: "select",
-                  unselectedLabel: "What stage is your agent at?",
-                  required: true,
-                  options: [
-                    { value: "Pre-build / early research", label: "Pre-build / early research" },
-                    { value: "Fine-tuning an existing foundation model", label: "Fine-tuning an existing foundation model" },
-                    { value: "Post-launch / evals / alignment", label: "Post-launch / evals / alignment" },
-                    { value: "Evaluating or benchmarking a completed agent", label: "Evaluating or benchmarking a completed agent" },
-                  ],
-                },
-              },
-              {
-                when: ["product"],
-                field: {
-                  name: "product_data_domain",
-                  fieldType: "checkbox",
-                  label: "What modality or data domain are you focused on?",
-                  required: true,
-                  options: [
-                    { value: "Text / language", label: "Text / language" },
-                    { value: "Code", label: "Code" },
-                    { value: "Tool use / agentic", label: "Tool use / agentic" },
-                    { value: "Multimodal (image, audio, video)", label: "Multimodal (image, audio, video)" },
-                    { value: "Other", label: "Other" },
-                  ],
-                },
-              },
-              {
-                when: ["product"],
-                field: {
-                  name: "product_current_resolution",
-                  fieldType: "select",
-                  unselectedLabel: "How are you currently handling this?",
-                  required: true,
-                  options: [
-                    { value: "In-house team", label: "In-house team" },
-                    { value: "Another vendor", label: "Another vendor" },
-                    { value: "Not yet started / exploring options", label: "Not yet started / exploring options" },
-                  ],
-                },
-              },
-              {
-                when: ["product"],
-                field: {
-                  name: "product_initiative_size",
-                  fieldType: "select",
-                  unselectedLabel: "How would you describe the size of this initiative?",
-                  required: true,
-                  options: [
-                    { value: "Exploratory / early-stage", label: "Exploratory / early-stage" },
-                    { value: "Mid-size, defined project", label: "Mid-size, defined project" },
-                    { value: "Large-scale or enterprise-wide", label: "Large-scale or enterprise-wide" },
-                  ],
-                },
-              },
-              {
-                when: ["revenue"],
-                field: {
-                  name: "revenue_org_type",
-                  fieldType: "select",
-                  unselectedLabel: "What best describes your org type?",
-                  required: true,
-                  options: [
-                    { value: "Inbound sales desk", label: "Inbound sales desk" },
-                    { value: "Manufacturer", label: "Manufacturer" },
-                    { value: "Property or booking team", label: "Property or booking team" },
-                    { value: "Customer support team", label: "Customer support team" },
-                    { value: "Other", label: "Other" },
-                  ],
-                },
-              },
-              {
-                when: ["regulated"],
-                field: {
-                  name: "regulated_needs",
-                  fieldType: "checkbox",
-                  label: "What best describes your needs or interests?",
-                  required: true,
-                  options: [
-                    { value: "Agentic Claims, Contract or Case Review", label: "Agentic Claims, Contract or Case Review" },
-                    { value: "Agentic Alerting, Risk & Exception Flags", label: "Agentic Alerting, Risk & Exception Flags" },
-                    { value: "Agentic PMO, Compliance and Portfolio Orchestration", label: "Agentic PMO, Compliance and Portfolio Orchestration" },
-                    { value: "Agentic Staff Support (Knowledge Agents)", label: "Agentic Staff Support (Knowledge Agents)" },
-                    { value: "AI Test & Evaluation", label: "AI Test & Evaluation" },
-                    { value: "AI Agent Tuning", label: "AI Agent Tuning" },
-                    { value: "Document Intake, Data Curation", label: "Document Intake, Data Curation" },
                   ],
                 },
               },
               {
                 when: ["professional-services"],
                 field: {
-                  name: "services_desired_solution",
+                  name: "services_firm_type",
                   fieldType: "select",
-                  unselectedLabel: "What best describes the solution you’re seeking?",
+                  unselectedLabel: "What best describes your firm?",
                   required: true,
                   options: [
                     { value: "Legal and Compliance", label: "Legal and Compliance" },
                     { value: "Consulting and Audit", label: "Consulting and Audit" },
-                    { value: "Document intake, datasets, or prompt development for expert teams", label: "Document intake, datasets, or prompt development for expert teams" },
-                    { value: "Agent tuning and evaluation", label: "Agent tuning and evaluation" },
-                    { value: "Red-teaming, safety, or guardrails", label: "Red-teaming, safety, or guardrails" },
-                    { value: "AI applications or agentic systems", label: "AI applications or agentic systems" },
-                    { value: "Deployment, hosting, or integration", label: "Deployment, hosting, or integration" },
+                    { value: "Accounting and Finance", label: "Accounting and Finance" },
+                    { value: "Other", label: "Other" },
                   ],
+                },
+              },
+              {
+                when: ["enterprise", "scale-up", "professional-services", "insurance", "healthcare", "regulated", "Other"],
+                field: {
+                  name: "desired_service",
+                  fieldType: "select",
+                  unselectedLabel: "Which service are you looking for?",
+                  required: true,
+                  options: [
+                    { value: "Context and Integrations", label: "Context and Integrations" },
+                    { value: "Back-office Sync Agents", label: "Back-office Sync Agents" },
+                    { value: "Document Intake Agents", label: "Document Intake Agents" },
+                    { value: "Sales and Booking Agents", label: "Sales and Booking Agents" },
+                    { value: "Scoring and Decision Agents", label: "Scoring and Decision Agents" },
+                    { value: "Knowledge Agents", label: "Knowledge Agents" },
+                    { value: "Support and Voice Agents", label: "Support and Voice Agents" },
+                    { value: "AI Product Engineering", label: "AI Product Engineering" },
+                    { value: "Embedded AI Specialists", label: "Embedded AI Specialists" },
+                    { value: "AI Strategy and Audit", label: "AI Strategy and Audit" },
+                    { value: "Evals and Guardrails", label: "Evals and Guardrails" },
+                    { value: "Production Rescue", label: "Production Rescue" },
+                    { value: "Not sure yet", label: "Not sure yet" },
+                  ],
+                },
+              },
+              {
+                when: ["enterprise", "scale-up", "professional-services", "insurance", "healthcare", "regulated", "Other"],
+                field: {
+                  name: "current_situation",
+                  fieldType: "select",
+                  unselectedLabel: "What brings you here now?",
+                  required: true,
+                  options: [
+                    { value: "Volume has outgrown the team", label: "Volume has outgrown the team" },
+                    { value: "An AI pilot or automation has stalled", label: "An AI pilot or automation has stalled" },
+                    { value: "We want to avoid the next hire", label: "We want to avoid the next hire" },
+                    { value: "Leadership asked for an AI plan", label: "Leadership asked for an AI plan" },
+                    { value: "A live AI system needs fixing", label: "A live AI system needs fixing" },
+                    { value: "We need AI in our product", label: "We need AI in our product" },
+                    { value: "Exploring options", label: "Exploring options" },
+                  ],
+                },
+              },
+              {
+                when: ["insurance", "healthcare", "regulated"],
+                field: {
+                  name: "compliance_needs",
+                  fieldType: "checkbox",
+                  label: "Which standards apply to this work?",
+                  options: [
+                    { value: "SOC 2", label: "SOC 2" },
+                    { value: "ISO 27001", label: "ISO 27001" },
+                    { value: "ISO 42001", label: "ISO 42001" },
+                    { value: "HIPAA", label: "HIPAA" },
+                    { value: "GDPR", label: "GDPR" },
+                    { value: "EU AI Act", label: "EU AI Act" },
+                    { value: "CSA STAR", label: "CSA STAR" },
+                    { value: "CCPA", label: "CCPA" },
+                  ],
+                },
+              },
+              {
+                when: ["enterprise", "scale-up", "professional-services", "insurance", "healthcare", "regulated", "Other"],
+                field: {
+                  name: "annual_budget",
+                  fieldType: "radio",
+                  label: "Project Budget",
+                  required: true,
+                  options: [
+                    { value: "<$100k", label: "<$100k" }, // PLACEHOLDER
+                    { value: "$100k-500k", label: "$100k-500k" }, // PLACEHOLDER
+                    { value: "$500k-1M", label: "$500k-1M" }, // PLACEHOLDER
+                    { value: "$1M+", label: "$1M+" }, // PLACEHOLDER
+                  ],
+                },
+              },
+              {
+                when: ["enterprise", "scale-up", "professional-services", "insurance", "healthcare", "regulated", "Other"],
+                field: {
+                  name: "message",
+                  fieldType: "textarea",
+                  placeholder: "Describe the workflow: what arrives, which systems it touches, monthly volume, and what slows it down",
                 },
               },
               {
@@ -290,11 +249,10 @@ export const content: DemoContent = {
                   unselectedLabel: "What partnership type are you seeking?",
                   required: true,
                   options: [
-                    { value: "Data partnership (data licensing / contributing, sourcing expert engineers)", label: "Data partnership (data licensing / contributing, sourcing expert engineers)" },
+                    { value: "Expert network (forward-deployed engineers)", label: "Expert network (forward-deployed engineers)" },
                     { value: "Technology / integration partnership (includes cloud & infrastructure)", label: "Technology / integration partnership (includes cloud & infrastructure)" },
                     { value: "Reseller / channel / referral partnership", label: "Reseller / channel / referral partnership" },
                     { value: "Systems integrator / consulting partnership", label: "Systems integrator / consulting partnership" },
-                    { value: "Research or academic collaboration", label: "Research or academic collaboration" },
                     { value: "Agent evaluation / benchmarking partnership", label: "Agent evaluation / benchmarking partnership" },
                     { value: "Other", label: "Other" },
                   ],
@@ -310,29 +268,6 @@ export const content: DemoContent = {
                   name: "partnership_message",
                   fieldType: "textarea",
                   description: "What are you hoping to achieve through this partnership?",
-                },
-              },
-              {
-                when: ["operations", "product", "revenue", "Other"],
-                field: {
-                  name: "annual_budget",
-                  fieldType: "radio",
-                  label: "Project Budget",
-                  required: true,
-                  options: [
-                    { value: "<$100k", label: "<$100k" }, // PLACEHOLDER
-                    { value: "$100k-500k", label: "$100k-500k" }, // PLACEHOLDER
-                    { value: "$500k-1M", label: "$500k-1M" }, // PLACEHOLDER
-                    { value: "$1M+", label: "$1M+" }, // PLACEHOLDER
-                  ],
-                },
-              },
-              {
-                when: ["operations", "product", "revenue"],
-                field: {
-                  name: "message",
-                  fieldType: "textarea",
-                  placeholder: "Please describe your project in detail (data type, volume, timeline, budget, etc.)",
                 },
               },
             ],
@@ -407,10 +342,10 @@ export const content: DemoContent = {
     },
   },
   sidebar: {
-    quote: "We're going to need a lot more investment in high-quality evals and benchmarks to help us understand the actual comparative utility of the various agents. This new set of private evals and baselines from Vahue is great to see", // PLACEHOLDER
+    quote: "We'd been burned by a pilot that only worked in the demo. Seeing the agents on our own past cases, next to what our team actually did, is what got this approved. Now the exceptions queue is small and we can explain it.", // PLACEHOLDER
     name: 'Full Name', // PLACEHOLDER
     position: 'Role, Company', // PLACEHOLDER
-    trustedBy: "Trusted by the world's most ambitious AI teams", // PLACEHOLDER
+    trustedBy: "Trusted by the world's most ambitious operations teams", // PLACEHOLDER
     logos: [
       { alt: 'Logo', displayWidth: 92, displayHeight: 16 }, // PLACEHOLDER
       { alt: 'Logo', displayWidth: 74, displayHeight: 25 }, // PLACEHOLDER
