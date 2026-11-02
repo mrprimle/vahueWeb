@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import { hasPage } from '@/components/pages/docs/DocsNav'
 import { DocsStub } from '@/components/pages/docs/DocsStub'
-import { content } from '@/components/pages/docs/content.scale'
+import { content } from '@/components/pages/docs/content'
 
 export default async function Page({ params }: { params: Promise<{ slug: string[] }> }) {
   const { slug } = await params

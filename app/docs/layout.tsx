@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 import { DocsShell } from '@/components/pages/docs/DocsShell'
-import { content } from '@/components/pages/docs/content.scale'
+import { content } from '@/components/pages/docs/content'
 import '@/components/pages/docs/docs.css'
 
 export const metadata: Metadata = {

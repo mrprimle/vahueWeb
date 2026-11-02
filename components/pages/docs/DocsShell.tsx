@@ -15,7 +15,7 @@ import { DocsSidebar } from './DocsSidebar'
 import { DocsThemeMenu, type ThemePreference, useDocsTheme } from './DocsTheme'
 import type { DocsContent } from './content.types'
 
-const THEME_BOOT = `(function(){var r=document.currentScript.parentElement,p=null;try{p=localStorage.getItem('isDarkMode')}catch(e){}if(p==='true')p='dark';else if(p==='false')p='light';if(p!=='light'&&p!=='dark'&&p!=='system')p='light';var m=p==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):p;r.setAttribute('data-mode',m)})()`
+const THEME_BOOT = `(function(){var r=document.currentScript.closest('.docs-root'),p=null;try{p=localStorage.getItem('isDarkMode')}catch(e){}if(p==='true')p='dark';else if(p==='false')p='light';if(p!=='light'&&p!=='dark'&&p!=='system')p='light';var m=p==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):p;r.setAttribute('data-mode',m)})()`
 
 export function DocsLogo({ content }: { content: DocsContent }) {
   return (
@@ -140,7 +140,8 @@ export function DocsShell({ content, children }: { content: DocsContent; childre
       style={assistant.open && assistant.isDesktop ? ({ '--assistant-sheet-width': `${assistant.width}px` } as CSSProperties) : undefined}
       suppressHydrationWarning
     >
-      <script dangerouslySetInnerHTML={{ __html: THEME_BOOT }} />
+      {/* Runs from the server HTML before first paint. Inside innerHTML so React never creates a <script> on the client. */}
+      <div hidden suppressHydrationWarning dangerouslySetInnerHTML={{ __html: `<script>${THEME_BOOT}</script>` }} />
       <a href="#content-area" className="docs-skip">
         {content.ui.skipToContent}
       </a>

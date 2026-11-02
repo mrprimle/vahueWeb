@@ -16,7 +16,7 @@ function PageRow({ node, active, child, tag }: { node: DocsPageNode; active: boo
       <Link href={node.href} className={`docs-row${child ? ' docs-row-child' : ''}`} data-active={active} aria-current={active ? 'page' : undefined}>
         <span className="docs-row-label">
           <span>{node.title}</span>
-          {node.placeholder ? <span className="docs-tag">{tag}</span> : null}
+          {node.placeholder && !node.quietTag ? <span className="docs-tag">{tag}</span> : null}
         </span>
       </Link>
     </li>

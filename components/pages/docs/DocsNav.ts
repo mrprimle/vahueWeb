@@ -54,7 +54,7 @@ export function resolvePage(content: DocsContent, pathname: string): ResolvedPag
         eyebrow: isLanding ? undefined : parent,
         tabIndex,
         isLanding,
-        isApi: tabIndex === 1,
+        isApi: tabIndex === 1 || !!node.placeholder,
         prev: isLanding || !prev ? undefined : { title: prev.pageTitle ?? prev.title, href: prev.href },
         next: next ? { title: next.pageTitle ?? next.title, href: next.href } : undefined,
       }

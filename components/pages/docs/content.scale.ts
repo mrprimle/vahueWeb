@@ -6,8 +6,9 @@ const page = (title: string, href: string) => ({ kind: 'page' as const, title, h
 
 export const content: DocsContent = {
   siteName: 'Scale Documentation',
-  // mintcdn.com/scale-full-docs/AJGSK20C0uN_df4o/assets/scale-wordmark.svg and scale-wordmark-dark.svg.
-  logo: { kind: 'image', light: '/docs/scale-wordmark.svg', dark: '/docs/scale-wordmark-dark.svg' },
+  // Scale's wordmarks, mintcdn.com/scale-full-docs/AJGSK20C0uN_df4o/assets/scale-wordmark.svg and scale-wordmark-dark.svg.
+  // Removed from public/docs with the fill: the filled page does not ship Scale's brand. Commit da34070 has them.
+  logo: { kind: 'image', light: 'https://mintcdn.com/scale-full-docs/AJGSK20C0uN_df4o/assets/scale-wordmark.svg', dark: 'https://mintcdn.com/scale-full-docs/AJGSK20C0uN_df4o/assets/scale-wordmark-dark.svg' },
   ui: {
     homeSuffix: 'home page',
     skipToContent: 'Skip to main content',

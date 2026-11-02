@@ -711,10 +711,12 @@
   height: 38.81px;
 }
 @media (hover: hover) {
-  .docs-mdx-h1:hover .docs-anchor,
-  .docs-anchor:focus {
+  .docs-mdx-h1:hover .docs-anchor {
     opacity: 1;
   }
+}
+.docs-anchor:focus {
+  opacity: 1;
 }
 .docs-anchor-box {
   display: flex;
@@ -1064,10 +1066,12 @@
   background: var(--c-scroll-thumb);
 }
 @media (hover: hover) {
-  .docs-scrollbar-thumb:hover,
-  .docs-scrollbar-thumb:active {
+  .docs-scrollbar-thumb:hover {
     background: var(--c-scroll-thumb-hover);
   }
+}
+.docs-scrollbar-thumb:active {
+  background: var(--c-scroll-thumb-hover);
 }
 
 /* Sidebar rows */
@@ -1180,15 +1184,13 @@
 .docs-row-group[aria-expanded='true'] .docs-row-chev svg {
   rotate: 90deg;
 }
-@media (hover: hover) {
-  .docs-row[data-active='true'],
-  .docs-row[data-active='true']:hover {
-    background: rgb(var(--primary) / 0.1);
-    color: rgb(var(--primary));
-    text-shadow:
-      -0.2px 0 0 currentColor,
-      0.2px 0 0 currentColor;
-  }
+.docs-row[data-active='true'],
+.docs-row[data-active='true']:hover {
+  background: rgb(var(--primary) / 0.1);
+  color: rgb(var(--primary));
+  text-shadow:
+    -0.2px 0 0 currentColor,
+    0.2px 0 0 currentColor;
 }
 .docs-root[data-mode='dark'] .docs-row[data-active='true'] {
   background: rgb(var(--primary-soft) / 0.1);

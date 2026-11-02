@@ -5,7 +5,7 @@
 // (icon column, title, path), so typing never leaves the page. See docs/specs/docs.md.
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { SearchIcon } from './DocsIcons'
+import { OptionKeyIcon, ReturnKeyIcon, SearchIcon } from './DocsIcons'
 import type { DocsContent } from './content.types'
 
 type Entry = { title: string; href: string; path: string }
@@ -35,6 +35,8 @@ export function DocsSearch({
   useEffect(() => {
     if (open) {
       returnFocus.current = document.activeElement as HTMLElement | null
+      setQuery('')
+      setActive(0)
       setMounted(true)
       const raf = requestAnimationFrame(() => requestAnimationFrame(() => setShown(true)))
       const html = document.documentElement
@@ -145,8 +147,8 @@ export function DocsSearch({
               <button type="button" className="docs-search-ask" aria-keyshortcuts="Alt+Enter" onClick={() => onAsk(query.trim())}>
                 {content.ui.askAssistant}
                 <span className="docs-search-hint" aria-hidden>
-                  <CmdGlyph />
-                  <ReturnGlyph />
+                  <OptionKeyIcon />
+                  <ReturnKeyIcon />
                 </span>
               </button>
             </div>
@@ -181,23 +183,5 @@ export function DocsSearch({
       </div>
     </div>,
     portalTarget,
-  )
-}
-
-function CmdGlyph() {
-  return (
-    <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <rect x="2" y="2" width="14" height="14" rx="4" fill="currentColor" stroke="none" />
-      <path stroke="var(--c-menu-bg)" d="M7 7h4v4H7zM7 7V5.5A1.5 1.5 0 1 0 5.5 7H7zM11 7h1.5A1.5 1.5 0 1 0 11 5.5V7zM7 11H5.5A1.5 1.5 0 1 0 7 12.5V11zM11 11v1.5a1.5 1.5 0 1 0 1.5-1.5H11z" strokeWidth={1} />
-    </svg>
-  )
-}
-
-function ReturnGlyph() {
-  return (
-    <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <rect x="2" y="2" width="14" height="14" rx="4" fill="currentColor" stroke="none" />
-      <path stroke="var(--c-menu-bg)" d="M12.5 6v3.5a1 1 0 0 1-1 1h-6M7.5 8.5l-2 2 2 2" strokeWidth={1.25} />
-    </svg>
   )
 }

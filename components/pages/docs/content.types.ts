@@ -8,6 +8,8 @@ export type DocsPageNode = {
   pageTitle?: string
   /** Shows the Placeholder pill in the sidebar: endpoint or product content with nothing behind it. */
   placeholder?: boolean
+  /** Placeholder page whose sidebar row has no room for the pill. */
+  quietTag?: boolean
 }
 
 export type DocsGroupNode = { kind: 'group'; title: string; items: DocsPageNode[] }
