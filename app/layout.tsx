@@ -28,6 +28,7 @@ const mono = DM_Mono({ weight: '400', subsets: ['latin'], display: 'swap', varia
 export const metadata: Metadata = {
   title: 'Vahue',
   description: 'Your busiest workflows, run by agents. Measured from day one.',
+  icons: { icon: '/favicon.ico' },
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
