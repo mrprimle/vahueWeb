@@ -10,16 +10,29 @@ git grep -n PLACEHOLDER -- 'components/**/content.ts'
 
 Not everything here is marked in the code, so go through this list as well.
 
+## Copy rewrite (2026-11-02)
+
+The 80% rule is gone. Menu and pages now follow the 12 services from the research's most common jobs. Routes haven't changed yet.
+
+- [ ] **Promises:** "we stay and run it" monthly is an untested bet. Also confirm the 2-week Audit and 4 to 6-week Pilot timelines, "you own the code and IP" and "your cloud or ours".
+- [ ] **Service names:** confirm the 12 names, and whether Team Training should be added. It's not a top job in the research, but your old site sold it.
+- [ ] **Invented proof still marked `PLACEHOLDER`:** home and `/enterprise` stats, cases and quotes; 75% entry, 30 to 40% CRM time and 200 to 500 cases on the workflow pages; 10%/30% on `/evaluation/enterprise`; the new Professional Services quote; specialist backgrounds on `/experts`.
+- [ ] **Unmarked claims to check:** NetSuite and SAP integrations; "leading foundation model providers"; red-teaming; "cost in every monthly report"; "Meet our customers"; "Best In The Business"; the `/genai-portfolio` comparison table against Platforms, In House and Dev Agencies.
+- [ ] **Old case studies:** six in the old site's `lib/case-studies.ts` match other firms' work in the research. They aren't used here. Check whether they're live on vahue.ai.
+- [ ] **Text baked into images and videos, now out of step:** `/enterprise/platform.webp` ("Training Datasets", "Publish Variant"); `/automotive` webinar ("Context Engine") and loop image ("Collect/Curate"); `/public-sector` capability image and `/public-sector/national-security` challenge SVGs ("Context Engine"); healthcare video ("on the Vahue Platform"); `/donovan` tab videos (62%, 14s); dashboards showing a "vahue" app UI, which implies a product; `app.vahue.ai` mock bars.
+- [ ] **Layout differences caused by service names:** the "Real" word stacks above the service name below 1024 wide, and is 56px at 768. The menu's right column sits 32 to 72px right. `/data-engine` is about 130px taller at 390.
+- [ ] **`/labs`** still claims a research lab and open-source benchmarks. Remove, or wait for real research?
+- [ ] **`/guides`** books open service pages because no guides exist. Healthcare hero text touches the card art at 390.
+- [ ] **"Log in"** goes to `/demo`.
+
 ## Decide first
 
 - [ ] **Scale's design and media.** The site copies Scale's design, behaviour, images, videos and most of its copy. Check the legal risk before publishing, and replace the media listed below.
 - [ ] **URLs.** Routes still use Scale's paths, such as `/public-sector`, `/automotive`, `/donovan`, `/docs` slugs such as `sensor-fusion-*` and `nucleus`, and `/blog/category/defense` (labelled Regulated), `/blog/category/robotics` (Operations), `/blog/category/autonomous-vehicle` (Voice Agents). Rename them?
-- [ ] **Names.** Confirm "Vahue Context Engine", "Agent Environments" and "Vahue Baselines", the menu labels, and the "Book a Demo" button.
 - [ ] **Shorter lists.** Long lists stop at 24 invented rows instead of matching Scale's count: `/labs/papers` 24 of 88, `/events` 24 of 88, `/careers` 24 of 275. At rest only `/labs/papers` is visibly shorter than Scale's. Tell me if you want more rows.
 - [ ] **Detail pages.** The 33 pages are Scale's menu pages. Scale's detail pages under them aren't built: blog and customer posts, guides, events, jobs, partner pages, `/careers/university`, papers, leaderboards. Cards link to the nearest existing page. Build them, or remove the cards?
 
 - [ ] **Home hero corners below 1450 wide.** Scale's top corners are square at the top of the page between 768 and 1449 wide, and round after about 30px of scroll. From 1450 up they're round from the start. Ours now does the same. Tell me if you want round corners from the start at every width, which would differ from Scale.
-- [ ] **How much copy changed.** About 59% of Scale's words are kept across pages, against your 80% target, but that number is rough and includes the pages of invented lists. Main pages: home 62%, `/automotive` 67%, `/enterprise` 71%, `/experts` 75%, `/data-engine` 80%, `/physical-ai` 81%, `/donovan` 82%, `/rlenvironments` 86%. Do you want home and `/automotive` pulled closer to Scale?
 
 ## Certifications
 
@@ -36,7 +49,6 @@ Vahue holds: SOC 2, ISO 27001, ISO 42001, HIPAA, GDPR, EU AI Act, CSA STAR, CCPA
 ## Company facts
 
 - [ ] `/about` stats, all invented: 15M decisions, $10M paid to experts, $29M valuation, 100+ employees, founded 2016.
-- [ ] Home: "10 years putting AI to work" and "Since 2016".
 - [ ] `/about`: headquarters caption is "City, Country", and the press tiles have invented headlines with "Full Name".
 - [ ] Footer: legal entity name, LinkedIn and X links. The footer says "Vahue AI, Inc." and `/labs` says "Vahue Inc.", and neither is confirmed. A much shorter real name brings small footer height gaps back at 320 and 768.
 - [ ] Footer wording changed to fit Scale's line breaks: "Workflow Automation Guide", and "Teams" in the announcement bar. The footer headline's "workflows" is wider than Scale's "decisions", so the footer is 116px taller at 1366 wide, a common laptop size. Switch to "decisions" to close that?
@@ -85,7 +97,6 @@ Vahue holds: SOC 2, ISO 27001, ISO 42001, HIPAA, GDPR, EU AI Act, CSA STAR, CCPA
 
 ## Numbers
 
-- [ ] Home: "25% fewer errors", "90% of the AI pilots".
 - [ ] `/enterprise`: 93%, $4M+, 100%, 36,000+, 6 weeks.
 - [ ] `/public-sector/national-security`: 36% faster, 80% reduction, 40% savings, 12x, 6+ years.
 - [ ] `/global-public-sector`: 85%, 100K+, 50%, 10x, 80%, 6 weeks, 5x, 32+.
