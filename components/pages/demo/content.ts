@@ -1,5 +1,6 @@
 // Rendered strings for /demo: same shape as content.scale.ts. Options follow the site's buyers and services; the form sends nothing (see DemoForm).
 import { countries } from './countries'
+import { proofLogoAlt, proofLogoSrc } from '@/components/site/proofLogos'
 import type { DemoContent } from './types'
 
 const countryOptions = countries.map((c) => ({ value: c, label: c }))
@@ -349,13 +350,13 @@ export const content: DemoContent = {
     position: 'Role, Company', // PLACEHOLDER
     trustedBy: "Trusted by the world's most ambitious operations teams", // PLACEHOLDER
     logos: [
-      { alt: 'Logo', displayWidth: 92, displayHeight: 16 }, // PLACEHOLDER
-      { alt: 'Logo', displayWidth: 74, displayHeight: 25 }, // PLACEHOLDER
-      { alt: 'Logo', displayWidth: 88, displayHeight: 18 }, // PLACEHOLDER
-      { alt: 'Logo', displayWidth: 64, displayHeight: 34 }, // PLACEHOLDER
-      { alt: 'Logo', displayWidth: 74, displayHeight: 23 }, // PLACEHOLDER
-      { alt: 'Logo', displayWidth: 40, displayHeight: 40 }, // PLACEHOLDER
-      { alt: 'Logo', displayWidth: 62, displayHeight: 35 }, // PLACEHOLDER
+      { alt: proofLogoAlt('zwapgrid'), src: proofLogoSrc('zwapgrid'), displayWidth: 92, displayHeight: 20 }, // FROM OLD SITE: confirm
+      { alt: proofLogoAlt('etoro'), src: proofLogoSrc('etoro'), displayWidth: 74, displayHeight: 23 }, // FROM OLD SITE: confirm
+      { alt: proofLogoAlt('qonto'), src: proofLogoSrc('qonto'), displayWidth: 88, displayHeight: 24 }, // FROM OLD SITE: confirm
+      { alt: proofLogoAlt('inspera'), src: proofLogoSrc('inspera'), displayWidth: 64, displayHeight: 33 }, // FROM OLD SITE: confirm
+      { alt: proofLogoAlt('winningtemp'), src: proofLogoSrc('winningtemp'), displayWidth: 74, displayHeight: 18 }, // FROM OLD SITE: confirm
+      { alt: proofLogoAlt('ica'), src: proofLogoSrc('ica'), displayWidth: 40, displayHeight: 20 }, // FROM OLD SITE: confirm
+      { alt: proofLogoAlt('verbit'), src: proofLogoSrc('verbit'), displayWidth: 62, displayHeight: 26 }, // FROM OLD SITE: confirm
     ],
   },
 }
