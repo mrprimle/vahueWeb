@@ -12,7 +12,6 @@ Page-only ports: `DomainExpertise.tsx` and `domainScene.ts` (558779), `CardGridS
 Three additive edits to shared code:
 - `ThreeCanvas.sceneProps`: Scale's 955774 forwards its remaining props to `preload`, `setup` and `onReady`. The port dropped them. Default behaviour is unchanged.
 - `Testimonial.logoNode`: Scale's mask-image logo, used by the clone only. The filled page gets `LogoTile`.
-- `FullBleedMediaSection.stableCtaIntro`: not on Scale, see Deviations.
 
 ## Sections
 Tops and heights at 1440, Scale then ours (filled page), measured after a full scroll.
@@ -108,7 +107,7 @@ Same by eye: direction of movement, what the header covers, rounded corners from
 `preload` and `onDestroy` double on ours because the dev server runs React Strict Mode. `onTick` depends on frame rate. The `onResize` gap of 2 has no confirmed cause.
 
 ## Deviations from Scale
-- **Hero CTA, `stableCtaIntro`:** Scale's order is retroactive enter in a layout effect, then prepare in a passive effect, then a refresh retries the enter. If the main thread blocks long enough, `lagSmoothing(0)` finishes the text at once, `started` turns true, the prepare hides the CTA and the retry returns early, so the CTA stays hidden for good. It happened on this page in dev, where the WebGL section and Strict Mode add the block. With the option on, prepare runs first and never after a reveal. Curves are unchanged. Only this hero uses it. Other heroes above a heavy section can hit the same race.
+- **Hero CTA:** an earlier `stableCtaIntro` option guarded a race seen on the dev server, where the WebGL section and Strict Mode block the main thread. On production the race did not occur in 24 of 24 loads of this page without the option (8 each at normal, 6x and 10x CPU throttle), so the option is removed and the order is Scale's. No other hero failed either: /data-engine and /physical-ai 12 of 12 each, Scale 6 of 6 each, at normal, 4x and 8x.
 - **Fonts:** see stack.md. Tabs are 2 to 5px narrower, one row fewer at 390 as above.
 - **Hero video:** re-encoded to 3.3 MB from 5.3 MB, same 1920 x 1080, no audio track. Scale's file has audio and plays muted.
 - **Logos on the filled page:** one `logo-tile.svg` at Scale's per-logo box. On the canvas the tile drawing uses the SVG's own aspect, not each box. Removed from `public/` with the three branded images: recover from commit a21bf98 to re-check the clone, since `content.scale.ts` still points at them.

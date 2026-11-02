@@ -45,7 +45,6 @@ export function ExpertsPage({ content: c }: { content: ExpertsContent }) {
             image={{ path: c.hero.poster }}
             startPercentage={0}
             sectionClassName={MEDIA}
-            stableCtaIntro
           />
         </div>
         <section className="relative z-0">

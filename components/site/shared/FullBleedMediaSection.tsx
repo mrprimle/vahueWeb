@@ -1,7 +1,7 @@
 'use client'
 
 // Scale module 540431 (FullBleedMediaSection, usually the pre-footer CTA).
-import { useCallback, useEffect, useLayoutEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { gsap } from '../lib/gsap'
 import { cn } from '../lib/cn'
 import { mapRange } from '../lib/math'
@@ -35,12 +35,6 @@ export type FullBleedMediaSectionProps = {
   logos?: { label?: string; logos?: MarqueeLogo[] } | null
   overlayVariant?: 'flat' | 'gradient'
   headlineWidth?: 'wide' | 'narrow'
-  /**
-   * Not on Scale. Prepares the CTA before the trigger's retroactive enter, not after it, and never once revealed.
-   * On Scale's order a long main-thread block during hydration (a WebGL section below, Strict Mode) can leave
-   * an in-view hero's CTA hidden for good: the prepare kills the intro, then `started` stops the retry.
-   */
-  stableCtaIntro?: boolean
   /** Scale's palette colour for this image, shown behind it while it loads (module 669677). */
   imageBackgroundColor?: string
 }
@@ -60,7 +54,6 @@ export function FullBleedMediaSection({
   logos = null,
   overlayVariant = 'flat',
   headlineWidth = 'wide',
-  stableCtaIntro = false,
   imageBackgroundColor,
 }: FullBleedMediaSectionProps) {
   const clip = useRef<ClipScrollHandle>(null)
@@ -76,12 +69,9 @@ export function FullBleedMediaSection({
     primary.current?.animateSet()
     secondary.current?.animateSet()
   }, [])
-  useLayoutEffect(() => {
-    if (stableCtaIntro && !started.current) prepare()
-  }, [prepare, stableCtaIntro])
   useEffect(() => {
-    if (!stableCtaIntro) prepare()
-  }, [prepare, stableCtaIntro])
+    prepare()
+  }, [prepare])
   useEffect(() => {
     marquee.current?.startMarquee()
   }, [])
