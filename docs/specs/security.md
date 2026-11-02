@@ -42,7 +42,7 @@ The response of `observe_web_execution` exceeded the MCP budget, so the retained
 |---|---|---|---|---|---|
 | Hero clip and media | scroll | ScrollTrigger on Lenis, `ev_e7f69668…` | 656598, 540431 | Clip `startPercentage: 0`, media scale 1.25 to 1, `top bottom` to `center center` | Clip 0 both; frames equal |
 | Hero text | load | `useInViewTrigger` `top center`, retroactive | 540431, 947153 | Headline then body, .2s apart | First-paint sheets equal at 1440 and 390 |
-| Cards scale and fade | scroll | `useScrubTrigger`, same evidence | 317967 | Scale .96 to 1, opacity 0 to 1 | At scroll 388: scale and opacity within .02 at all 35 stages, 40 at 390 |
+| Cards scale and fade | scroll | `useScrubTrigger`, same evidence | 317967 | Scale .96 to 1, opacity 0 to 1 | Scale and opacity within .02 at every stage: 35 at 1440, 40 at 390 |
 | Card title words | reveal | `useInViewTrigger` `top bottom` | 540409, 947153 | Delay .125, stagger .05 per card, title at +.16, body at +.34 | .23, .57, .77, .90, .96 vs .24, .54, .74, .87, .95 |
 | Card icon | reveal | same | 874328 | Clip right 100% to 0, .5s `power1.out`; opacity 1s from +.05 | t0 .99, .98, .96 equal at 1440 |
 | Reveal panel | scroll | `useScrubTrigger`, 136 calls in `ev_e7f69668…` | 756386 | `top bottom` to `top top`, scaleX from `1 - 48/width`, radius 16 to 0 in last half | .967 16px, .975 12px, .983 8px, .992 4px, .998 .76px equal |
@@ -51,11 +51,11 @@ The response of `observe_web_execution` exceeded the MCP budget, so the retained
 | Split card CTA | hover | React, FlatCta | 892855 | Fill 600ms from `-100%`, arrow slide, leave through +100% then reset | Enter -55.9, -31.5, -14.1, -4.5 vs -61.2, -34.8, -16.1, -6.6 (sample phase); leave 38.8, 68.5, 85.9, 95.5, 99.3 vs 38.8, 65.2, 83.9, 93.4, 98.5; reset -100 on the same sample; re-enter equal |
 | Pre-footer CTA | hover | same | 892855 | Same | Enter -55.8, -31.5, -16.1, -6.6 vs -61.2, -34.8, -16.1, -6.6; leave equal within .03 |
 | Links | Tab | Native | 463059 | Outline 1px `#86bff2` | `solid 1px rgb(134,191,242)` equal |
-| CTA | tap at 390 | React root `click` | 892855 | Client navigation | `/public-sector` both |
+| CTA | tap at 390 | React root `click` | 892855 | Client navigation | Ours reached `/public-sector` in 2 of 3 runs, the first only missed the 2.5s window on a dev compile. Scale reached it in 1 of 3 inside the window, on the same Playwright tap |
 | Split cards | hover | None | | No state | Colour and transform unchanged, both |
 
 ## Layout at widths, filled page vs Scale
-Equal section tops and heights at 1440, 640, 1920, and total height equal at 390 (two articles swap one line). Remaining deltas are one text line, 22.8px, from Vahue's longer name and Aeonik vs Aeonik Pro: 1024 reveal 1253.5 vs 1276.3, 768 reveal 1562 vs 1539.3. At 1280 card text wraps one line less, 627.6 vs 653.5, already in the clone with Scale's copy. Footer heights at 768 and 1024 are the known chrome issue.
+Equal section tops and heights at 1440 and 640, and total height equal at 390 (two articles swap one line). 1920 checked by eye on the full-page pair only. Remaining deltas are one text line, 22.8px, from Vahue's longer name and Aeonik vs Aeonik Pro: 1024 reveal 1253.5 vs 1276.3, 768 reveal 1562 vs 1539.3. At 1280 card text wraps one line less, 627.6 vs 653.5, already in the clone with Scale's copy. Footer heights at 768 and 1024 are the known chrome issue.
 
 Clone with Scale's copy: equal at 1440, 640, 768, 1024, 1920. 390: 22.8 shorter on Scale, FedRAMP body wraps one line less there (font). 1280: the card line above.
 
@@ -63,7 +63,7 @@ Clone with Scale's copy: equal at 1440, 640, 768, 1024, 1920. 390: 22.8 shorter 
 41 visible strings: 32 verbatim (78%), 2 light, 7 rewritten. Rewritten: DoD IL4 and FedRAMP became GDPR and HIPAA (no military or federal topics, same template, word counts 35 of 35 and 40 of 41); the Public Sector card became Scale-ups, matching the menu mapping for `/public-sector`, and the second card's Department of Defense list became the site's segments. Light: "government" to "customers" in card 3; "computer vision" to "back-office" in the Scale-ups body.
 
 ## Placeholders
-18 lines with `// PLACEHOLDER` in `content.ts`: compliance intro, 4 certification logos, titles and bodies, the shared Trust Center link, both program claims on the split cards, the Trust Center CTA, `vulnerabilities@vahue.ai`. Capitol became a neutral line drawing of an office block (`office-tower.webp`, drawn for this page). GDPR and HIPAA badges come from `/enterprise/healthcare`.
+18 lines with `// PLACEHOLDER` in `content.ts`: compliance intro, 4 certification logos, titles and bodies, the shared Trust Center link, both program claims on the split cards, the Trust Center CTA, `vulnerabilities@vahue.ai`. Capitol became a neutral line drawing of an office block (`office-tower.webp`, drawn for this page). GDPR and HIPAA badges come from `/enterprise/healthcare`. `capitol.webp`, `logo-disa.png` and `logo-fedramp.png` stay in `public/security/` for `content.scale.ts` only; the filled page does not load them.
 
 ## Gaps
 - **Fonts:** Aeonik vs Aeonik Pro, DM Mono for Aeonik Mono, see stack.md.
