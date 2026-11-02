@@ -66,6 +66,9 @@ Vahue holds: SOC 2, ISO 27001, ISO 42001, HIPAA, GDPR, EU AI Act, CSA STAR, CCPA
 - [ ] `/public-sector/national-security`: "available through systems integrators, managed service providers, and consulting partners".
 - [ ] `/rlenvironments`: has no marks in the code. Check "code stays in your repos" and the security review.
 
+- [ ] `/labs`: every benchmark, paper, post and job is invented, including "Open-Source" releases such as IntakeBench and CaseEnv. Also check job locations and dates, and the footer's "Vahue Inc." Does Vahue want a research lab section at all?
+- [ ] `/labs` newsletter form shows a thank-you message and sends nothing. It needs a backend.
+
 ## Media to replace
 
 Claude will confirm in the final pass exactly which of these are still on the site.
