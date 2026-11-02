@@ -1,15 +1,9 @@
-// Stub: the page agent for /demo replaces this file.
-import Link from 'next/link'
+import type { Metadata } from 'next'
+import { DemoPage } from '@/components/pages/demo/DemoPage'
+import { content } from '@/components/pages/demo/content.scale'
+
+export const metadata: Metadata = { title: content.meta.title, description: content.meta.description }
 
 export default function Page() {
-  return (
-    <section className="min-h-svh px-6 pt-40 pb-24 text-center">
-      <h1 className="header2">Contact</h1>
-      <p className="mt-6 body2-regular">
-        <Link className="underline" href="/">
-          Home
-        </Link>
-      </p>
-    </section>
-  )
+  return <DemoPage content={content} />
 }
