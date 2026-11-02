@@ -95,13 +95,9 @@ export const footer: FooterContent = {
     {
       title: 'Services',
       links: [
-        { text: 'Back-office Sync Agents', href: '/generative-ai-data-engine' },
-        { text: 'Document Intake Agents', href: '/physical-ai' },
-        { text: 'Sales and Booking Agents', href: '/public-sector-data-engine' },
-        { text: 'Support and Voice Agents', href: '/donovan' },
+        { text: 'Context and Integrations', href: '/data-engine' },
         { text: 'AI Product Engineering', href: '/rlenvironments' },
         { text: 'AI Strategy and Audit', href: '/evaluation/enterprise' },
-        { text: 'Production Rescue', href: '/evaluation/public-sector' },
       ],
     },
     {
