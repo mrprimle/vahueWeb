@@ -1,4 +1,4 @@
-// Scale's copy under the 80% rule for /physical-ai ("For Document Intake" in the menu). Same shape and counts as content.scale.ts.
+// AJTBD copy for /physical-ai (Document Intake Agents). Same shape and counts as content.scale.ts.
 // Lines marked PLACEHOLDER are for Mike to replace with real data.
 import type { MarqueeLogoItem, PhysicalAiContent } from './types'
 
@@ -6,26 +6,26 @@ const card = (slug: string, alt: string) => ({ src: `/physical-ai/${slug}.webp`,
 const logo = (i: number): MarqueeLogoItem => ({ key: `customer-${i}`, alt: 'Logo', src: null })
 
 export const content: PhysicalAiContent = {
-  meta: { title: 'Document Intake | Vahue', description: 'Building the Context Engine for Document Intake' },
+  meta: { title: 'Document Intake Agents | Vahue', description: 'Agents read every invoice, claim and form, check it against your rules, and post a clean record to your systems, measured against your baseline.' },
   hero: {
     headline: 'Document Intake Agents',
-    body: 'Powering the Next Generation of Operations',
+    body: 'Agents read, check and post every document your team keys in by hand.',
     cta: { text: 'Book a Demo', url: '/demo' },
     backdrop: { tailwindClass: 'white', contrastColor: '#010101' },
     image: { path: '/physical-ai/hero-documents.webp' },
     logos: {
-      label: "Trusted by the world's most ambitious AI teams", // PLACEHOLDER
+      label: "Trusted by the world's busiest operations teams", // PLACEHOLDER
       items: [logo(1), logo(2), logo(3), logo(4), logo(5)], // PLACEHOLDER
     },
   },
   overview: {
-    overtitle: 'Product Overview',
-    title: 'The Context Engine for Documents',
+    overtitle: 'Service Overview',
+    title: 'Every Document, From Inbox to System of Record',
     features: [
-      { icon: 'globe', title: 'Global Intake Network', body: 'Real-world high-quality data from a global network of inboxes, forms and portals, distributed document sources, and operating businesses' },
-      { icon: 'bolt', title: 'Unmatched Scalability', body: 'Scale to thousands of documents. Ingest peak-volume data through networking infrastructure engineered for maximum throughput.' },
-      { icon: 'diversity', title: 'Data Diversity Guaranteed', body: 'Improve agent robustness by testing on data collected from different formats, systems, and tasks.' },
-      { icon: 'verified', title: 'Validated Performance Gains', body: 'Datasets enriched with context and grounding annotations that are proven to improve agent performance.' },
+      { icon: 'globe', title: 'Receive From Anywhere', body: 'Invoices, claims, supplier sheets and contracts, from email, portals, scans and shared drives, with no change to how anyone sends them' },
+      { icon: 'bolt', title: 'Extract at Any Volume', body: 'Language models and OCR read every field, including at month-end and peak, when the backlog used to build.' },
+      { icon: 'diversity', title: 'Check Against Your Rules', body: 'Values are validated against your rules, and agents don’t just guess: unsure fields go to a person with the source page beside them.' },
+      { icon: 'verified', title: 'Post Clean Records', body: 'Clean records are written to your ERP, CRM or claims system, with every field traceable to its source page.' },
     ],
   },
   testimonials: {
@@ -36,65 +36,65 @@ export const content: PhysicalAiContent = {
       {
         clientName: 'Full Name', // PLACEHOLDER
         title: 'Role, Company', // PLACEHOLDER
-        testimonial: "Vahue has been a trusted partner in making abundant, high-quality, custom data. We're excited to be working with them on the future of document intake", // PLACEHOLDER
+        testimonial: "We used to key every invoice by hand and fall behind at month-end. Now our team only reviews the uncertain fields. We couldn't go back.", // PLACEHOLDER
       },
       {
         clientName: 'Full Name', // PLACEHOLDER
         title: 'Role, Company', // PLACEHOLDER
-        testimonial: "At our firm, our mission is to deploy AI agents at scale through our ops team. I feel fortunate to have worked with the Vahue team in the past and know first-hand that Vahue is unique in its ability to quickly adapt to the needs of their partners. We're excited by the work Vahue has already done in building this data set and look forward to partnering to raise the bar for quality in document intake.", // PLACEHOLDER
+        testimonial: "Volume was growing faster than the people keying documents in, and our last pilot had stalled on messy scans. Vahue ran the agents on our own past documents first, next to what our team had entered, so we saw the results before anything went live. Manual data entry fell by 75%, errors stopped turning up downstream, and we got through peak without a new hire. It was a relief, honestly.", // PLACEHOLDER
       },
     ],
   },
   useCase: {
     overtitle: 'Use Case',
     title: 'Break Through the Document Bottleneck',
-    heading: 'Expansive Workflows',
+    heading: 'No More Month-End Backlog',
     paragraphs: [
-      "1000+ hours of diverse document data are collected and uploaded to Vahue's data platform every day.", // PLACEHOLDER
-      'Leverage our platform to accelerate your program and supercharge agent performance.',
+      'Every document costs minutes of manual entry. Backlogs build at month-end and peaks, and errors are found downstream.',
+      'Agents post documents as they arrive, and your people review only the uncertain fields, for up to 75% less manual data entry.', // PLACEHOLDER
     ],
     image: { src: '/physical-ai/use-case-documents.png', alt: '', width: 1214, height: 636 },
   },
   embodiments: {
     overtitle: 'Key Features',
     title: 'Growing Document Portfolio',
-    subtitle: 'Access data from invoices, claims and reports calibrated for performant intake operations.',
+    subtitle: 'Agents read the documents your team keys in today, calibrated to your formats and your rules.',
     cards: [
-      { title: 'Invoices and Claims', body: 'Field-level extraction from industry-standard documents', image: card('img-portfolio-1', 'Invoices and Claims') },
-      { title: 'Vahue Harness', body: 'Agent platform designed for distributed document collection', image: card('img-portfolio-2', 'Vahue Harness') },
-      { title: 'Bespoke Document Types', body: 'Your formats, managed and operated by Vahue', image: card('img-portfolio-3', 'Bespoke Document Types') },
+      { title: 'Invoices and Claims', body: 'Field-level extraction from invoices, claims, purchase orders and remittance advice', image: card('img-portfolio-1', 'Invoices and Claims') },
+      { title: 'One Intake Agent', body: 'Reads your inboxes, forms and portals, and writes to your ERP, CRM and review queue', image: card('img-portfolio-2', 'One Intake Agent') },
+      { title: 'Bespoke Document Types', body: 'Contracts, supplier sheets, lab reports and KYC files: your formats, managed and operated by Vahue', image: card('img-portfolio-3', 'Bespoke Document Types') },
     ],
   },
   environments: {
     overtitle: '',
-    title: 'Expansive Global Environments',
-    subtitle: 'Train on data collected from diverse locations around the world.',
+    title: 'Wherever Your Documents Arrive',
+    subtitle: 'Agents work inside the inboxes and systems your team already uses.',
     cards: [
-      { title: 'Inboxes and Portals', body: 'High-volume centralized collection operations', image: card('img-sources-1', 'Inboxes and Portals') },
-      { title: 'Remote Teams', body: 'Remote review with globally-distributed operations teams', image: card('img-sources-2', 'Remote Teams') },
-      { title: 'Commercial and Industrial', body: 'In-field deployments of intake agents', image: card('img-sources-3', 'Commercial and Industrial') },
+      { title: 'Inboxes and Portals', body: 'High-volume shared inboxes, supplier portals, forms and scans', image: card('img-sources-1', 'Inboxes and Portals') },
+      { title: 'Review Teams', body: 'Your reviewers see only the uncertain fields, across teams and time zones', image: card('img-sources-2', 'Review Teams') },
+      { title: 'Commercial and Industrial', body: 'Delivery notes and packing slips matched to the order, line by line', image: card('img-sources-3', 'Commercial and Industrial') },
     ],
   },
   annotations: {
     image: { src: '/physical-ai/review.webp', alt: '', width: 627, height: 458 },
-    title: 'Multi-Modal Grounding Annotations',
-    body: 'Unlock the full potential of your document data with best-in-class annotations and human-expert feedback on all outputs.',
+    title: 'Side-by-Side Review',
+    body: 'Every uncertain field appears next to its source page, against a confidence threshold you set per field. Your team checks it once, and the correction improves the next run.',
   },
   improvements: {
-    title: 'Proven Agent Improvements',
+    title: 'Proven on Your Own Documents',
     paragraphs: [
-      "Agents go through Vahue's internal fine-tuning and evaluation process before going live.",
-      'Run agents with the reassurance that they have produced measurable performance improvements.',
+      'Agents run in shadow mode on your own past documents before going live, next to what your team actually entered.',
+      'Go live with the reassurance that they have produced measurable improvements against your baseline.',
     ],
     chart: {
-      ariaLabel: 'Chart: agent performance improves significantly with validated and annotated data vs raw data',
-      yLabel: 'Agent Performance',
-      xLabel: 'Data Volume',
+      ariaLabel: 'Chart: field accuracy improves significantly with rule checks and human review vs raw extraction',
+      yLabel: 'Field Accuracy',
+      xLabel: 'Documents Processed',
       // PLACEHOLDER: curve shapes are Scale's, illustrative until Mike has pilot data.
       series: [
-        { id: 'raw', label: ['Raw Data'], color: '#E05533', ceiling: 0.4, delay: 0, duration: 1.6 },
-        { id: 'validated', label: ['Validated Data'], color: '#7B6FF0', ceiling: 0.65, delay: 0.3, duration: 1.6 },
-        { id: 'annotated', label: ['Validated Data', 'with Annotations'], color: '#52C041', ceiling: 0.9, delay: 0.6, duration: 1.6 },
+        { id: 'raw', label: ['Raw Extraction'], color: '#E05533', ceiling: 0.4, delay: 0, duration: 1.6 },
+        { id: 'validated', label: ['With Rule Checks'], color: '#7B6FF0', ceiling: 0.65, delay: 0.3, duration: 1.6 },
+        { id: 'annotated', label: ['With Rule Checks', 'and Human Review'], color: '#52C041', ceiling: 0.9, delay: 0.6, duration: 1.6 },
       ],
     },
   },
@@ -102,18 +102,18 @@ export const content: PhysicalAiContent = {
     overtitle: '',
     title: 'The Vahue Difference',
     features: [
-      { icon: 'support', title: 'Responsive White Glove Service', body: 'Engagements are supported by a dedicated engineering and operations team that runs at your pace.' },
-      { icon: 'science', title: 'In-house AI Engineers', body: 'An internal team of experienced engineers will work with you to produce agent specifications tailored to your program.' },
-      { icon: 'partners', title: 'Deep Technical Partnerships', body: 'Our data platform supports cutting-edge operations teams and industry leaders such as insurers and distributors.' }, // PLACEHOLDER
-      { icon: 'quality', title: 'Quality Guarantees', body: 'Rigorous schema calibration and data validation protocols ensure that only the highest quality data is available on our platform.' },
-      { icon: 'pin', title: 'Born in Pilots; Scaled Globally', body: 'Intake agents are developed, tested, and validated in shadow mode on your real cases before deployment to your global network of teams.' },
+      { icon: 'support', title: 'Responsive White Glove Service', body: 'A dedicated engineering and operations team keeps running your agents after launch: monitoring, exceptions, accuracy reviews and a monthly report against your baseline.' },
+      { icon: 'science', title: 'In-house AI Engineers', body: 'Forward-deployed engineers map your documents, fields and rules with you, and build the agents inside your existing stack.' },
+      { icon: 'partners', title: 'Fits Your Systems', body: 'Agents read from and write to the tools you already run, such as Outlook, SharePoint, NetSuite and SAP, using your existing permissions.' },
+      { icon: 'quality', title: 'Quality You Can Trace', body: 'Rule checks and per-field confidence thresholds keep unsure values out of your systems, and every posted field points back to its source page.' },
+      { icon: 'pin', title: 'Born in Shadow Mode; Scaled Across Teams', body: 'Intake agents are developed, tested, and validated on your real documents in a 4 to 6 week pilot, and a person checks every output until accuracy holds.' },
       { icon: 'security', title: 'Security and Compliance', body: 'Our infrastructure supports GDPR, CCPA, and customer-specific audit requirements with optional onshore data processing. We are SOC 2 and ISO 27001 certified.' },
     ],
   },
   prefooter: {
-    headline: 'The future of your industry starts here',
+    headline: 'See it work on your own documents before it goes live',
     cta: { text: 'Book a Demo', url: '/demo' },
-    secondaryCta: { text: 'Build AI', url: '/generative-ai-data-engine' },
+    secondaryCta: { text: 'Back-office Sync Agents', url: '/generative-ai-data-engine' },
     backdrop: { tailwindClass: 'gray-50', contrastColor: '#010101' },
     image: { path: '/physical-ai/prefooter.webp' },
   },
