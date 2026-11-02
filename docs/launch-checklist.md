@@ -115,6 +115,10 @@ Claude will confirm in the final pass exactly which of these are still on the si
 - [ ] Demo videos are stand-ins: `/automotive`, `/donovan`, `/enterprise/insurance`, `/enterprise/healthcare`, `/generative-ai-data-engine`, `/global-public-sector`, `/public-sector-data-engine`.
 - [ ] Replaced visuals are drawn UI mocks, so they look more uniform than Scale's photos. Send real or stock photos if you want that look back.
 - [ ] `/evaluation/model-developers`: the taxonomy image names harms such as "Promotion of violence".
+- [ ] Loop diagrams are thinner than Scale's: smaller cards, smaller labels and fainter icons on `/automotive`, `/public-sector-data-engine`, `/data-engine` and `/generative-ai-data-engine`. Redrawn versions on Scale's geometry, same words, exist if you want them.
+- [ ] Words baked into images that sit next to page copy: "Reliable Agent" and "New Cases" (`/data-engine`), "Reliable Agents" and "Expert Review" (`/generative-ai-data-engine`), the webinar title (`/automotive`), poster captions (`/public-sector-data-engine`). Check them whenever that copy changes.
+- [ ] Home blog tiles: the category labels sit on top of the mock dashboards' own small text (Operations, Customers). The tile 7 image is now the shared pre-footer photo, a stand-in. `public/home/post-7.webp` is no longer used.
+- [ ] `/physical-ai`, "Expansive Global Environments": the heading and "Train on data collected from diverse locations" still sit over inbox and queue mocks.
 
 ## Missing from the site
 
