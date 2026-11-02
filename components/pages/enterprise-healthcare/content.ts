@@ -244,7 +244,7 @@ export const content: EnterpriseHealthcareContent = {
       { key: 'hipaa', alt: 'HIPAA compliant', path: `${A}/certs/hipaa.webp`, width: 364 },
       { key: 'gdpr', alt: 'GDPR compliant', path: `${A}/certs/gdpr.webp`, width: 368 },
       { key: 'euAiAct', alt: 'EU AI Act compliant', path: `${A}/certs/eu-ai-act.webp`, width: 364 },
-      { key: 'starLevelOne', alt: 'CSA STAR Level One self-assessment', path: `${A}/certs/star.webp`, width: 375 },
+      { key: 'starLevelOne', alt: 'CSA STAR', path: `${A}/certs/star.webp`, width: 375 },
       { key: 'ccpa', alt: 'CCPA compliant', path: `${A}/certs/ccpa.webp`, width: 366 },
     ],
   },
