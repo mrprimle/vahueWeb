@@ -78,7 +78,7 @@ export const nav: NavContent = {
       ],
       featuredPosts: [
         { url: '/guides', title: 'Read the Agentic Planning eBook', image: img('featured-planning', 'Agentic Planning eBook') }, // PLACEHOLDER
-        { url: '/blog', title: 'Reliable AI: Building From the Ground Up', image: img('featured-context', 'Systems connected through the Context Engine') }, // PLACEHOLDER
+        { url: '/blog', title: 'Reliable AI: Building From the Ground Up', image: img('featured-context', 'Systems connected through Context and Integrations') }, // PLACEHOLDER
       ],
     },
   ],
