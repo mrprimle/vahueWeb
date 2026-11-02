@@ -55,6 +55,8 @@ Vahue holds: SOC 2, ISO 27001, ISO 42001, HIPAA, GDPR, EU AI Act, CSA STAR, CCPA
 - [ ] Case studies: `/data-engine` insurer, `/generative-ai-data-engine` distributor, `/enterprise/healthcare` Care Group, `/global-public-sector` contract and proposal cases.
 - [ ] Blog tiles naming invented partners: home, `/enterprise`, `/genai-portfolio`, `/public-sector`, `/public-sector-data-engine`, `/public-sector/national-security`.
 
+- [ ] `/events`: all 24 events are invented, so replace them with real ones. Event cards link to site pages because `/events/<slug>` pages don't exist. Do you want them?
+
 ## Numbers
 
 - [ ] Home: "25% fewer errors", "90% of the AI pilots".
