@@ -148,7 +148,7 @@ function EnterpriseBridge({ content: c }: { content: EnterpriseContent['bridge']
           className="w-full px-0 mx-0 pt-0!"
         />
         <div className="flex items-center justify-center gap-2 md:justify-start">
-          <div className="w-[6px] h-[6px] bg-white triangle" style={{ clipPath: 'polygon(0 0, 100% 100%, 100% 0)' }} />
+          <div className="w-[6px] h-[6px] bg-white" />
           <p className="text-[0.625rem] md:text-xs font-aeonik tracking-wider uppercase text-white/80">{c.trustedBy}</p>
         </div>
         <LogoMarquee ref={marquee} logos={logos} className="w-full min-w-0" containerClassName="md:gap-3" />
@@ -289,7 +289,7 @@ function EnterpriseBuiltToBeTrusted({ content: c }: { content: EnterpriseContent
               </div>
               <div className="flex w-full shrink-0 flex-col gap-4 md:w-[min(100%,20rem)]">
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-white triangle" style={{ clipPath: 'polygon(0 0, 100% 100%, 100% 0)' }} />
+                  <div className="w-2 h-2 bg-white" />
                   <p className="text-xs font-medium tracking-wider uppercase text-white/80">{c.trustedBy}</p>
                 </div>
                 <ul className="flex gap-2">

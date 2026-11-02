@@ -135,7 +135,7 @@ export function FullBleedMediaSection({
               <div className="flex flex-col gap-2 w-full max-w-md min-w-0 mt-4">
                 {logos.label ? (
                   <div className="flex items-center gap-2">
-                    <span aria-hidden className="w-[6px] h-[6px] shrink-0 bg-scale-gray-60" style={{ clipPath: 'polygon(0 0, 100% 100%, 100% 0)' }} />
+                    <span aria-hidden className="w-[6px] h-[6px] shrink-0 bg-scale-gray-60" />
                     <p className="text-[0.625rem] font-aeonik tracking-wider uppercase text-scale-gray-60">{logos.label}</p>
                   </div>
                 ) : null}

@@ -12,7 +12,7 @@ export function Logo({ className }: { className?: string }) {
   )
 }
 
-/** Square mark for the small slots where Scale shows its triangle (footer, announcement bar). */
+/** Square mark for the small slots where Scale shows its own mark (footer, announcement bar). */
 export function LogoMark({ className, size = 24 }: { className?: string; size?: number }) {
   return (
     <span

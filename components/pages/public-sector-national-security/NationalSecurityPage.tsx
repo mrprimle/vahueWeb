@@ -64,7 +64,7 @@ function NatSecHero({ c }: { c: NationalSecurityContent['hero'] }) {
           />
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2 justify-center origin-left md:justify-start animate-[logo-rise_0.8s_cubic-bezier(0.22,0.61,0.36,1)_2s_both] motion-reduce:animate-none">
-              <span aria-hidden className="w-[6px] h-[6px] bg-white triangle" style={{ clipPath: 'polygon(0 0, 100% 100%, 100% 0)' }} />
+              <span aria-hidden className="w-[6px] h-[6px] bg-white" />
               <p className="text-[0.625rem] md:text-xs font-aeonik tracking-wider uppercase text-white">{c.trustedBy}</p>
             </div>
             <div className="relative overflow-hidden max-md:[mask-image:linear-gradient(to_right,transparent,black_1.5rem,black_calc(100%-1.5rem),transparent)]">

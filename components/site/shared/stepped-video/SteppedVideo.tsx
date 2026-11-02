@@ -142,9 +142,9 @@ const FlywheelStepCard = forwardRef<
     <div className={cn('absolute top-0 left-0 flex flex-col w-full h-full gap-16 p-8 pb-32 xl:p-16', top ? 'justify-start' : 'justify-end xl:justify-center', index == null || index === current ? 'pointer-events-auto' : 'pointer-events-none')}>
       <div className="flex flex-col gap-4 xl:gap-6">
         <div className="flex items-center gap-2">
-          <div ref={triangle} className={cn('triangle opacity-0', color)}>
+          <div ref={triangle} className={cn('opacity-0', color)}>
             <svg width={12} height={12} viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-              <path d="M10.6884 0H0.652204C0.0720246 0 -0.218065 0.700892 0.192105 1.11106L10.2283 11.1473C10.6385 11.5575 11.3394 11.2667 11.3394 10.6872V0.650964C11.3394 0.291354 11.048 0 10.6884 0Z" fill="currentColor" />
+              <rect width="12" height="12" rx="1" fill="currentColor" />
             </svg>
           </div>
           <AnimatedText ref={heading} tagName="p" className="leading-none detail-mono text-scale-gray-30">
@@ -477,9 +477,9 @@ function useFlywheelFrames({
   return { containerRef, pinRef, activeFrameInstance }
 }
 
-const Triangle = () => (
+const LabelMark = () => (
   <svg width={12} height={12} viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10.6884 0H0.652204C0.0720246 0 -0.218065 0.700892 0.192105 1.11106L10.2283 11.1473C10.6385 11.5575 11.3394 11.2667 11.3394 10.6872V0.650964C11.3394 0.291354 11.048 0 10.6884 0Z" fill="currentColor" />
+    <rect width="12" height="12" rx="1" fill="currentColor" />
   </svg>
 )
 
@@ -781,8 +781,8 @@ function SgpFlywheel({
               <div ref={introWrap} className="intro-wrapper">
                 {introLabel ? (
                   <div className="mb-4 flex items-center justify-center gap-2 xl:justify-start">
-                    <span ref={labelTriangle} className="triangle text-scale-gray-30 opacity-0" aria-hidden>
-                      <Triangle />
+                    <span ref={labelTriangle} className="text-scale-gray-30 opacity-0" aria-hidden>
+                      <LabelMark />
                     </span>
                     <AnimatedText ref={label} tagName="p" className="leading-none detail-mono text-scale-gray-30">
                       {introLabel}
@@ -918,7 +918,7 @@ const IntroStepCard = forwardRef<StepHandle, SteppedVideoStep & { current?: numb
     <div className="absolute inset-0 w-full overflow-y-auto oml:h-full oml:pt-5 overscroll-y-contain items-end pb-30 md:items-start md:inset-auto md:top-0 md:overflow-visible grid-layout-mobile md:grid-layout-desktop">
       <div className="flex flex-col gap-4 mb-8 col-span-full h-fit md:mb-0 md:col-start-2 md:col-span-5 xl:col-start-2 xl:col-span-3">
         <div ref={chip} className={`flex items-center gap-3 opacity-0 index ${counterFixedColor ?? 'bg-atlas-blue'} w-fit py-1.5 md:py-2 px-1.5 md:px-3 rounded`}>
-          <div ref={tri} className={`w-2 h-2 triangle ${counterFixedColor ? 'bg-black' : 'bg-white'}`} style={{ clipPath: 'polygon(0 0, 100% 100%, 100% 0)' }} />
+          <div ref={tri} className={`w-2 h-2 ${counterFixedColor ? 'bg-black' : 'bg-white'}`} />
           <p ref={count} className={`tracking-wider detail-mono ${counterFixedColor ? 'text-black' : 'text-scale-gray-80'}`}>
             {`${counterLabel ?? 'SGP'} ${Math.min(current, total)} ${counterSeparator ?? 'of'} ${total}`}
           </p>
