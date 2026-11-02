@@ -55,7 +55,7 @@ export const content: EvaluationPublicSectorContent = {
       { title: 'Rebuild what is failing, adding tests, monitoring, and safe rollbacks as we go', description: '' },
       { title: 'Hand back a documented system, or let us run it monthly against an agreed baseline', description: '' },
     ],
-    image: { src: `${A}/methodology-filled.png`, alt: 'Production Rescue Methodology', width: 644, height: 430, mockup: true, mockupUrl: 'evals.vahue.ai' }, // PLACEHOLDER (host in the mock browser bar)
+    image: { src: `${A}/methodology-filled.png`, alt: 'Production Rescue Methodology', width: 644, height: 430, mockup: true, mockupUrl: 'evals.yourcompany.com' }, // PLACEHOLDER (host in the mock browser bar)
     cta: { text: 'Read more', href: '/services/evals-and-guardrails' },
   },
   platform: {

@@ -3,7 +3,7 @@
 import type { EvaluationEnterpriseContent } from './types'
 
 const A = '/evaluation-enterprise'
-const FRAME = 'app.vahue.ai' // PLACEHOLDER
+const FRAME = 'agents.yourcompany.com'
 
 export const content: EvaluationEnterpriseContent = {
   meta: {
