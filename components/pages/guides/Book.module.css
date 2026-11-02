@@ -1,0 +1,69 @@
+/* Scale's CSS module `cfo7JW`, verbatim from 2h0gxg24im1sd.css. The hover is CSS only: no listener, no gsap. */
+.book {
+  text-align: center;
+  width: 280px;
+  height: 376px;
+  margin: 2.5%;
+  display: block;
+  position: relative;
+}
+.bookCover {
+  z-index: 1;
+  transform-origin: 0;
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  background: #fff 0 0 / cover;
+  border-radius: 0.125rem;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: -webkit-transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  position: absolute;
+}
+.book .bookCover {
+  background-size: 100% 100%;
+}
+.effect {
+  background-image: linear-gradient(90deg, #fff3 0%, #fff0 100%);
+  width: 20px;
+  height: 100%;
+  margin-left: 8px;
+  transition: width 0.3s ease-out;
+  position: absolute;
+  top: 0;
+}
+.light {
+  opacity: 0.1;
+  background-image: linear-gradient(90deg, #fff0 0%, #fff3 100%);
+  border-radius: 3px;
+  width: 90%;
+  height: 100%;
+  transition: opacity 0.3s ease-out, width 0.3s ease-out;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.book:hover {
+  cursor: pointer;
+}
+.book:hover .bookCover {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transform: perspective(2000px) rotateY(-30deg);
+  box-shadow: 10px 0 10px -5px #00000030;
+}
+.book:hover .effect {
+  width: 40px;
+}
+.book:hover .light {
+  opacity: 1;
+  width: 70%;
+}
+.bookInside {
+  background: #fff;
+  border: 1px solid #d4d4d4;
+  border-radius: 3px;
+  width: calc(100% - 2px);
+  height: 96%;
+  position: relative;
+  top: 2%;
+  box-shadow: 0 20px 25px #4a4a8b1a, 0 10px 10px #4a4a8b0a, inset -2px 0 #d4d4d4, inset -3px 0 #dbdbdb, inset -4px 0 #fff, inset -5px 0 #dbdbdb, inset -6px 0 #fff, inset -7px 0 #dbdbdb, inset -8px 0 #fff, inset -9px 0 #dbdbdb;
+}
