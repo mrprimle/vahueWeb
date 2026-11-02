@@ -121,7 +121,7 @@ export const content: HomeContent = {
       { _key: 'p4', title: 'The Next Phase of AI Operations: Governance, Implementation, and Measured Results', url: '/blog', image: '/home/post-4.webp', alt: '', category: { name: 'Operations' }, textColor: 'light', imageGradientOverlay: false, titleOnly: false }, // PLACEHOLDER
       { _key: 'p5', title: 'Vahue and a Scale-up Distributor Combine Forces to Modernize the Back Office', url: '/blog', image: '/home/post-5.webp', alt: '', category: { name: 'Customers' }, textColor: 'light', imageGradientOverlay: null, titleOnly: false }, // PLACEHOLDER
       { _key: 'p6', title: 'Agent Evals: Raising the Bar for Agentic Coding', url: '/blog', image: '/home/post-6.webp', alt: '', category: { name: 'Research', color: { hex: '#273252' } }, textColor: 'light', imageGradientOverlay: true, titleOnly: false }, // PLACEHOLDER
-      { _key: 'p7', title: 'Regional Bank & Vahue: Paving the Way for a Digital Future', url: '/blog', image: '/home/post-7.webp', alt: '', category: { name: 'Company', color: { hex: '#A8927C' } }, textColor: 'light', imageGradientOverlay: true, titleOnly: false }, // PLACEHOLDER
+      { _key: 'p7', title: 'Regional Bank & Vahue: Paving the Way for a Digital Future', url: '/blog', image: '/data-engine/prefooter.webp', alt: '', category: { name: 'Company', color: { hex: '#A8927C' } }, textColor: 'light', imageGradientOverlay: true, titleOnly: false }, // PLACEHOLDER
       { _key: 'p8', title: 'Expanding Our Context Engine for Document Intake', url: '/blog', image: '/home/post-8.webp', alt: '', category: { name: 'Product', color: { hex: '#575757' } }, textColor: 'light', imageGradientOverlay: true, titleOnly: false }, // PLACEHOLDER
     ],
   },
