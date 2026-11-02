@@ -1,15 +1,16 @@
-// Stub: the page agent for /labs/leaderboard replaces this file.
-import Link from 'next/link'
+import type { Metadata } from 'next'
+import { content } from '@/components/pages/labs-leaderboard/content.scale'
+import { LeaderboardPage } from '@/components/pages/labs-leaderboard/LeaderboardPage'
+import { labsChrome as chrome } from '@/components/site/labs/content'
 
-export default function Page() {
-  return (
-    <section className="min-h-svh px-6 pt-40 pb-24 text-center">
-      <h1 className="header2">Frontier Leaderboards</h1>
-      <p className="mt-6 body2-regular">
-        <Link className="underline" href="/">
-          Home
-        </Link>
-      </p>
-    </section>
-  )
+export const metadata: Metadata = {
+  title: content.meta.title,
+  description: content.meta.description,
+  keywords: content.meta.keywords,
+  openGraph: { title: content.meta.title.split(' | ')[0], description: content.meta.description, siteName: content.meta.siteName },
+}
+
+export default async function Page({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
+  const { category } = await searchParams
+  return <LeaderboardPage content={content} chrome={chrome} category={category} />
 }
